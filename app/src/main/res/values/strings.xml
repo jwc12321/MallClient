@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">MallClient</string>
+    <!--权限-->
+    <string name="common_request_permission">该操作需要开通权限</string>
+    <string name="common_allow_permission">允许</string>
+    <string name="snack_bar_exception_msg">请基于BaseActivity和BaseFragment来设计</string>
+    <string name="fail_to_access_servers">网络繁忙，请重试</string>
+    <string name="layoutManager_Gridlayout">GridLayoutManager</string>
+    <string name="layoutManager_LinearLayout">LinearLayoutManager</string>
+    <!--1.0.0-->
+    <string name="successfully_saved">保存成功</string>
+    <string name="signing_on">登录中</string>
+    <string name="loading">加载中</string>
+    <string name="processing">处理中</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="alipay_verify">支付宝认证</string>
+    <string name="input_phone_number">输入手机号</string>
+    <string name="input_vcode">输入验证码</string>
+    <string name="send_verification_code">发送验证码</string>
+    <string name="login">登录</string>
+    <string name="other_login">其他方式登录</string>
+    <string name="i_read_agree">我已阅读同意</string>
+    <string name="and">和</string>
+    <string name="registration_agreement">《注册协议》</string>
+    <string name="privacy_policy">《隐私政策》</string>
+    <string name="cerify_tip">为确保用户的真实性实名认证\n需要先缴纳费用。\n认证成功后会以等额购物券的\n形式发放到您的账户。</string>
+    <string name="cerify_tip_tv"> 1:身份证信息仅供平台提供诚信保证使用。\n 2:我方承诺不向其他第三方透露您的个人信息</string>
+    <string name="auth_now">立即认证</string>
 </resources>

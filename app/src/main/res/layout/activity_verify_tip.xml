@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appText1">
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_red_rl_style"
+        android:background="@color/backGround1">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/alipay_verify" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/bottom_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_82"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_alignParentBottom="true"
+        android:background="@color/backGround5">
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/bottom_tip_tv"
+            style="@style/size13_color_app2_text_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_17" />
+    </RelativeLayout>
+    <com.mall.sls.common.widget.textview.ConventionalTextView
+        android:id="@+id/cerify_tip"
+        style="@style/size16_color_app3_text_style"
+        android:text="@string/cerify_tip"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/title_rel"
+        android:layout_marginTop="@dimen/dp_129"/>
+    <com.mall.sls.common.widget.textview.MediumThickTextView
+        android:id="@+id/confirm_bt"
+       style="@style/common_next_bt_style"
+        android:text="@string/auth_now"
+        android:layout_below="@id/cerify_tip"
+        android:layout_marginTop="@dimen/dp_168"/>
+</RelativeLayout>
