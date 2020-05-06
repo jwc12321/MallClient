@@ -30,8 +30,8 @@ public interface RestApiService {
     Flowable<RemoteDataWrapper<TokenInfo>> loginIn(@Header("X-Hc-Sign") String sign, @Body LoginRequest loginRequest);
 
     //一键登录
-    @POST("api/public/f/login/code")
-    Flowable<RemoteDataWrapper<OneClickInfo>> oneClickLogin(@Header("X-Hc-Sign") String sign, @Body OneClickLoginRequest request);
+    @POST("wx/auth/login/ali")
+    Flowable<RemoteDataWrapper<TokenInfo>> oneClickLogin(@Header("X-Hc-Sign") String sign, @Body OneClickLoginRequest request);
 
     //发送验证码
     @POST("wx/auth/regCaptcha")

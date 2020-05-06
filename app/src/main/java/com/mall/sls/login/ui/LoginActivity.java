@@ -78,7 +78,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     private TokenResultListener mTokenListener;
     private String loginToken;
     private boolean checkRet;
-    private String loginKey ="ozKpEcrc85s93nYD6kB873ssRlzbe6y+UVdQxu+i2dy9IZY8w1vvGi0Nri390wE8IIIOJpdFqzCRjji52tjidO5MCF8v3DLNUpJT+dzCYKCZGocx6LhUkBot87XfF9wiG7kqdt4e9X3vKgqJfOBU4uMO6uN57YaRpT0P0WWT/9MKz0kQzT9cCa09uzoSyN7OZCS+3GZwBAyUWSMS1Z6AJCNKt/9XUvhOusnz5KDmaAo=";
+    private String loginKey ="+3do8fAWK3Tv3vsx/iNPefkUhXOaZOWlrRv8rWUt1muMwnRX/NVlymCa7pvf2fh2qC/XwPQ6fkhNmI+Ke/85gonr7bUw6Tti+4PDbDt8znZtVuhApw2gerNIiAKbeXbF89PBAS/4xAHxPcd1vnZJwfL0YQ9teT74JT+7GT4qsi83hgeS4K8C9MXoqzrhqTWVLdSk7aUAgx/gXrXKQ8PoMDZsGpjuJ02eRyRdaoiGX8fZIWQYq3RlEavsu++RnbULX4OguGRxDn8YDTNvmmdIDA==";
     private Gson gson=new Gson();
 
     @Override
@@ -192,11 +192,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     }
 
     @Override
-    public void renderOneClickLogin(OneClickInfo oneClickInfo) {
-
-    }
-
-    @Override
     public void setPresenter(LoginContract.LoginPresenter presenter) {
 
     }
@@ -224,7 +219,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                     @Override
                     public void run() {
                         mAlicomAuthHelper.hideLoginLoading();
-                        showMessage(ret);
                     }
                 });
             }
@@ -233,7 +227,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         mAlicomAuthHelper.setAuthSDKInfo(loginKey);
         checkRet = mAlicomAuthHelper.checkEnvAvailable();
         mAlicomAuthHelper.setAuthListener(mTokenListener);
-Log.d("111","s数据"+checkRet);
         if (checkRet) {
             configLoginTokenPort();
             mAlicomAuthHelper.getLoginToken(LoginActivity.this, 5000);
@@ -271,7 +264,7 @@ Log.d("111","s数据"+checkRet);
                 .setLogoOffsetY(92)
                 .setLogoScaleType(ImageView.ScaleType.FIT_XY)
                 .setSloganTextColor(getResources().getColor(R.color.backGround8))
-                .setNumberColor(getResources().getColor(R.color.appText2))
+                .setNumberColor(getResources().getColor(R.color.appText3))
                 .setNumberSize(20)
                 .setNumFieldOffsetY(231)
                 .setNumberLayoutGravity(Gravity.CENTER_HORIZONTAL)
@@ -283,7 +276,7 @@ Log.d("111","s数据"+checkRet);
                 .setLogBtnMarginLeftAndRight(15)
                 .setLogBtnOffsetY(291)
                 .setSwitchAccText(getString(R.string.other_login))
-                .setSwitchAccTextColor(getResources().getColor(R.color.appText3))
+                .setSwitchAccTextColor(getResources().getColor(R.color.appText4))
                 .setSwitchAccTextSize(14)
                 .setSwitchOffsetY(360)
                 .setCheckboxHidden(false)

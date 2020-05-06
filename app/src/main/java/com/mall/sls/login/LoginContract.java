@@ -4,7 +4,6 @@ package com.mall.sls.login;
 import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
 import com.mall.sls.data.entity.AppUrlInfo;
-import com.mall.sls.data.entity.OneClickInfo;
 import com.mall.sls.data.entity.TokenInfo;
 
 public interface LoginContract {
@@ -20,7 +19,6 @@ public interface LoginContract {
         void renderLoginIn(TokenInfo tokenInfo);
         void renderVCode(String vCode);
         void renderAppUrlInfo(AppUrlInfo appUrlInfo);
-        void renderOneClickLogin(OneClickInfo oneClickInfo);
     }
 
 

@@ -72,12 +72,12 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
         OneClickLoginRequest request=new OneClickLoginRequest(accessCode,deviceId,deviceOsVersion,devicePlatform);
         String sign= SignUnit.signPost(RequestUrl.ONE_CLICK_LOGIN_URL,gson.toJson(request));
         Disposable disposable = restApiService.oneClickLogin(sign,request)
-                .flatMap(new RxRemoteDataParse<OneClickInfo>())
-                .compose(new RxSchedulerTransformer<OneClickInfo>())
-                .subscribe(new Consumer<OneClickInfo>() {
+                .flatMap(new RxRemoteDataParse<TokenInfo>())
+                .compose(new RxSchedulerTransformer<TokenInfo>())
+                .subscribe(new Consumer<TokenInfo>() {
                     @Override
-                    public void accept(OneClickInfo oneClickInfo) throws Exception {
-                        loginView.renderOneClickLogin(oneClickInfo);
+                    public void accept(TokenInfo tokenInfo) throws Exception {
+                        loginView.renderLoginIn(tokenInfo);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

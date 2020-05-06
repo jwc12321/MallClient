@@ -82,7 +82,6 @@ public class MainApplication extends MultiDexApplication {
         UMShareAPI.get(this);//初始化sdk
         String channelId = WalleChannelReader.getChannel(this.getApplicationContext());
         UMConfigure.init(this, "5e96ee00167eddbda8000228", channelId, UMConfigure.DEVICE_TYPE_PHONE, "");
-        PlatformConfig.setWeixin("wx86164a577058619c","3794af9839d914230da42c15cec4db9b");
         disableAPIDialog();
         PushManager.getInstance().initialize(this);
         PushManager.getInstance().setDebugLogger(this, new IUserLoggerInterface() {
