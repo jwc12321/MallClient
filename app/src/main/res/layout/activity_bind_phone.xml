@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appText1"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_white_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_black_back_style" />
+    </RelativeLayout>
+
+    <com.mall.sls.common.widget.scrollview.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadingEdge="none"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                style="@style/size18_color_app3_text_style"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_marginTop="@dimen/dp_20"
+                android:text="@string/bind_phone" />
+
+            <LinearLayout
+                style="@style/login_input_rl_style"
+                android:layout_marginTop="@dimen/dp_33"
+                android:orientation="horizontal">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/size16_color_app3_text_style"
+                    android:text="+86" />
+
+                <View
+                    android:layout_width="@dimen/dp_1"
+                    android:layout_height="@dimen/dp_19"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_12"
+                    android:layout_marginRight="@dimen/dp_21"
+                    android:background="@color/backGround4" />
+
+                <com.mall.sls.common.widget.textview.ConventionalEditTextView
+                    android:id="@+id/phone_et"
+                    style="@style/login_input_phone_style"
+                    android:hint="@string/input_phone_number"
+                    android:inputType="number"
+                    android:maxLength="11" />
+            </LinearLayout>
+
+            <View
+                style="@style/common_dividing_line_style"
+                android:layout_marginTop="@dimen/dp_6" />
+
+            <RelativeLayout
+                style="@style/login_input_rl_style"
+                android:layout_marginTop="@dimen/dp_13_5">
+
+                <com.mall.sls.common.widget.textview.ConventionalEditTextView
+                    android:id="@+id/vcode_et"
+                    style="@style/login_input_phone_style"
+                    android:layout_toLeftOf="@id/send_vcode"
+                    android:hint="@string/input_vcode"
+                    android:inputType="numberPassword" />
+
+                <com.mall.sls.common.widget.textview.ColdDownButton
+                    android:id="@+id/send_vcode"
+                    style="@style/cold_down_bt_style"
+                    android:text="@string/send_verification_code" />
+            </RelativeLayout>
+
+            <View
+                style="@style/common_dividing_line_style"
+                android:layout_marginTop="@dimen/dp_13_5" />
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                android:id="@+id/confirm_bt"
+                style="@style/common_next_bt_style"
+                android:layout_marginTop="@dimen/dp_51"
+                android:enabled="false"
+                android:text="@string/bind_now" />
+        </LinearLayout>
+    </com.mall.sls.common.widget.scrollview.ReboundScrollView>
+</LinearLayout>

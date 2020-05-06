@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appText1"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_red_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/Verified" />
+    </RelativeLayout>
+
+    <com.mall.sls.common.widget.scrollview.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadingEdge="none"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/size16_color_app3_text_style"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_30"
+                android:text="@string/face_to_camera" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/size16_color_app5_text_style"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_11"
+                tools:text="1111" />
+
+            <ImageView
+                android:layout_width="@dimen/dp_194"
+                android:layout_height="@dimen/dp_194"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_32"
+                android:src="@mipmap/icon_face_recognition" />
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                android:id="@+id/confirm_bt"
+                style="@style/common_next_bt_style"
+                android:layout_marginTop="@dimen/dp_79"
+                android:text="@string/collect_face" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/size12_color_app4_text_style"
+                    android:text="@string/read_and_agreed" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/face_protocol"
+                    style="@style/size12_color_app6_text_style"
+                    android:text="@string/face_protocol" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.mall.sls.common.widget.scrollview.ReboundScrollView>
+</LinearLayout>

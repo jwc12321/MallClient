@@ -6,8 +6,7 @@
     android:background="@color/appText1">
     <RelativeLayout
         android:id="@+id/title_rel"
-        style="@style/title_red_rl_style"
-        android:background="@color/backGround1">
+        style="@style/title_red_rl_style">
 
         <ImageView
             android:id="@+id/back"
@@ -43,6 +42,6 @@
         android:id="@+id/confirm_bt"
        style="@style/common_next_bt_style"
         android:text="@string/auth_now"
-        android:layout_below="@id/cerify_tip"
-        android:layout_marginTop="@dimen/dp_168"/>
+        android:layout_below="@id/title_rel"
+        android:layout_marginTop="@dimen/dp_385"/>
 </RelativeLayout>

@@ -16,14 +16,14 @@ public class LoginRequest {
     @SerializedName("mobile")
     private String mobile;
     //短信验证码
-    @SerializedName("smsCode")
-    private String smsCode;
+    @SerializedName("code")
+    private String code;
 
-    public LoginRequest(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String smsCode) {
+    public LoginRequest(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code) {
         this.deviceId = deviceId;
         this.deviceOsVersion = deviceOsVersion;
         this.devicePlatform = devicePlatform;
         this.mobile = mobile;
-        this.smsCode = smsCode;
+        this.code = code;
     }
 }

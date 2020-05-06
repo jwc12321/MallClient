@@ -9,12 +9,16 @@
     <color name="appText2">#999999</color>
     <color name="appText3">#333333</color>
     <color name="appText4">#666666</color>
+    <color name="appText5">#9B9797</color>
+    <color name="appText6">#FF3B4C</color>
 
     <color name="backGround1">#EF3342</color>
     <color name="backGround2">#13000000</color>
     <color name="backGround3">#11999999</color>
     <color name="backGround4">#979797</color>
     <color name="backGround5">#F3F3F3</color>
+    <color name="backGround6">#F5F5F5</color>
+    <color name="backGround7">#C9C9C9</color>
     <color name="backGround8">#00000000</color>
     <color name="backGround13">#616468</color>
     <color name="backGround34">#000000</color>

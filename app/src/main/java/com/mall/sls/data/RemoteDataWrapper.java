@@ -1,6 +1,8 @@
 package com.mall.sls.data;
 
 
+import android.text.TextUtils;
+
 import androidx.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
@@ -10,11 +12,12 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class RemoteDataWrapper<T> {
+    public static final String CODE_SUCCESS = "0";
     @Nullable
     @SerializedName("code")
     public String errorCode;
     @Nullable
-    @SerializedName("errMsg")
+    @SerializedName("msg")
     public String errorStr;
     @Nullable
     @SerializedName("success")
@@ -35,6 +38,6 @@ public class RemoteDataWrapper<T> {
      * 判断请求数据是否成功
      */
     public boolean isSuccess() {
-        return success;
+        return errorCode.equals(CODE_SUCCESS);
     }
 }

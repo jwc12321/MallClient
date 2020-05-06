@@ -9,6 +9,7 @@ import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
 import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.OneClickInfo;
+import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.data.request.LoginRequest;
@@ -88,18 +89,18 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
     }
 
     @Override
-    public void loginIn(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String smsCode) {
+    public void loginIn(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code) {
         loginView.showLoading(StaticData.PROCESSING);
-        LoginRequest request=new LoginRequest(deviceId,deviceOsVersion,devicePlatform,mobile,smsCode);
+        LoginRequest request=new LoginRequest(deviceId,deviceOsVersion,devicePlatform,mobile,code);
         String sign= SignUnit.signPost(RequestUrl.LOGIN_IN_URL,gson.toJson(request));
         Disposable disposable = restApiService.loginIn(sign,request)
-                .flatMap(new RxRemoteDataParse<String>())
-                .compose(new RxSchedulerTransformer<String>())
-                .subscribe(new Consumer<String>() {
+                .flatMap(new RxRemoteDataParse<TokenInfo>())
+                .compose(new RxSchedulerTransformer<TokenInfo>())
+                .subscribe(new Consumer<TokenInfo>() {
                     @Override
-                    public void accept(String token) throws Exception {
+                    public void accept(TokenInfo tokenInfo) throws Exception {
                         loginView.dismissLoading();
-                        loginView.renderLoginIn(token);
+                        loginView.renderLoginIn(tokenInfo);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

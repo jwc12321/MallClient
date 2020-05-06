@@ -4,6 +4,7 @@ package com.mall.sls.data.remote;
 import com.mall.sls.data.RemoteDataWrapper;
 import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.OneClickInfo;
+import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.request.LoginRequest;
 import com.mall.sls.data.request.MobileRequest;
 import com.mall.sls.data.request.OneClickLoginRequest;
@@ -25,15 +26,15 @@ public interface RestApiService {
     Flowable<RemoteDataWrapper<AppUrlInfo>> getAppUrlInfo(@Header("X-Hc-Sign") String sign, @Query("version") String version);
 
     //登录
-    @POST("api/public/f/login")
-    Flowable<RemoteDataWrapper<String>> loginIn(@Header("X-Hc-Sign") String sign, @Body LoginRequest loginRequest);
+    @POST("wx/auth/login/code")
+    Flowable<RemoteDataWrapper<TokenInfo>> loginIn(@Header("X-Hc-Sign") String sign, @Body LoginRequest loginRequest);
 
     //一键登录
     @POST("api/public/f/login/code")
     Flowable<RemoteDataWrapper<OneClickInfo>> oneClickLogin(@Header("X-Hc-Sign") String sign, @Body OneClickLoginRequest request);
 
     //发送验证码
-    @POST("api/public/f/code/sms")
+    @POST("wx/auth/regCaptcha")
     Flowable<RemoteDataWrapper<String>> sendCodeV(@Header("X-Hc-Sign") String sign, @Body MobileRequest request);
 
     //获取用户认证状态

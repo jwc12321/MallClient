@@ -13,6 +13,29 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup"
         android:usesCleartextTraffic="true">
+
+        <!--联通电信授权页-->
+        <activity
+            android:name="com.mobile.auth.gatewayauth.LoginAuthActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="behind"
+            android:theme="@style/authsdk_activity_dialog" />
+        <!--协议页面webview-->
+        <activity
+            android:name="com.mobile.auth.gatewayauth.activity.AuthWebVeiwActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:screenOrientation="behind" />
+        <!--移动授权页-->
+        <activity
+            android:name="com.cmic.sso.sdk.activity.LoginAuthActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="behind"
+            android:theme="@style/authsdk_activity_dialog" />
         <activity
             android:name=".splash.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -32,6 +55,16 @@
         <activity android:name=".certify.ui.CerifyTipActivity"
             android:screenOrientation="nosensor"/>
         <activity android:name=".certify.ui.CerifyPayActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".certify.ui.UploadIdActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".certify.ui.StartVerifyActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".webview.ui.WebViewActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".certify.ui.CerifyResultActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".login.ui.BindPhoneActivity"
             android:screenOrientation="nosensor"/>
     </application>
 

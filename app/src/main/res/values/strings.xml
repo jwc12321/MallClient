@@ -27,4 +27,25 @@
     <string name="cerify_tip">为确保用户的真实性实名认证\n需要先缴纳费用。\n认证成功后会以等额购物券的\n形式发放到您的账户。</string>
     <string name="cerify_tip_tv"> 1:身份证信息仅供平台提供诚信保证使用。\n 2:我方承诺不向其他第三方透露您的个人信息</string>
     <string name="auth_now">立即认证</string>
+    <string name="goods_amount">商品金额</string>
+    <string name="weixin_pay">微信支付</string>
+    <string name="ali_pay">支付宝支付</string>
+    <string name="to_pay">去支付</string>
+    <string name="Verified">实名认证</string>
+    <string name="upload_id_photo">上传身份证照片</string>
+    <string name="upload_id_tip">温馨提示：请保证照片身份证号码清晰可见，遮挡、模糊或传不相关图片的都将导致审核不通过。</string>
+    <string name="id_photo_requirements">身份证照片要求：</string>
+    <string name="submit_review">提交审核</string>
+    <string name="face_to_camera">拍摄您本人人脸，请确保正对相机，光线充足</string>
+    <string name="collect_face">采集本人人脸</string>
+    <string name="read_and_agreed">点击按钮表示您已阅读并同意</string>
+    <string name="face_protocol">《人脸识别认证协议》</string>
+    <string name="verify_result_success">认证成功，3秒后自动返回首页</string>
+    <string name="verify_result_fail">很遗憾，认证失败</string>
+    <string name="recertify">重新认证</string>
+    <string name="bind_phone">为了您的账号安全\n请绑定手机</string>
+    <string name="bind_now">立即绑定</string>
+    <string name="choice_login">请阅读并同意《隐私政策》和《服务协议》</string>\
+    <string name="login_regist">登录/注册</string>
+    <string name="login_regist_bt">一键登录/注册</string>
 </resources>
