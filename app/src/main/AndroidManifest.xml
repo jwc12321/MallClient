@@ -63,6 +63,12 @@
         tools:replace="android:allowBackup"
         android:usesCleartextTraffic="true">
 
+        <!--高德地图-->
+        <service android:name="com.amap.api.location.APSService"></service>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="59bf99a8a9cd821eeee125b2b4bec71e" />
+
         <!--联通电信授权页-->
         <activity
             android:name="com.mobile.auth.gatewayauth.LoginAuthActivity"
@@ -97,6 +103,10 @@
             </intent-filter>
         </activity>
 
+
+        <activity android:name=".mainframe.ui.MainFrameActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTask"/>
         <activity android:name=".login.ui.LoginActivity"
             android:screenOrientation="nosensor"
             android:windowSoftInputMode="adjustPan"
@@ -114,6 +124,10 @@
         <activity android:name=".certify.ui.CerifyResultActivity"
             android:screenOrientation="nosensor"/>
         <activity android:name=".login.ui.BindPhoneActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".assemble.ui.AssembleHomeActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".address.ui.SelectAddressActivity"
             android:screenOrientation="nosensor"/>
     </application>
 

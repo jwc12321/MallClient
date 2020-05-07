@@ -130,16 +130,22 @@
         <item name="android:textColor">@color/appText2</item>
     </style>
 
-    <style name="size16_color_app3_text_style">
+    <style name="size14_color_app3_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:textColor">@color/appText3</item>
     </style>
     <style name="size15_color_app3_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/sp_15</item>
+        <item name="android:textColor">@color/appText3</item>
+    </style>
+    <style name="size16_color_app3_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_16</item>
         <item name="android:textColor">@color/appText3</item>
     </style>
     <style name="size18_color_app3_text_style">
@@ -245,6 +251,35 @@
         <item name="android:adjustViewBounds">true</item>
         <item name="android:layout_marginLeft">@dimen/dp_10</item>
         <item name="android:layout_marginRight">@dimen/dp_10</item>
+    </style>
+
+    <!--首页底部RelativeLayout-->
+    <style name="bottom_RelativeLayout_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_49</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:background">@color/appText1</item>
+    </style>
+    <!--首页底部图片-->
+    <style name="bottom_imageView_style">
+        <item name="android:layout_height">@dimen/dp_22</item>
+        <item name="android:layout_width">@dimen/dp_22</item>
+        <item name="android:layout_marginTop">@dimen/dp_6</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+    <!--首页底部文字-->
+    <style name="bottom_textView_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@drawable/bottom_text_select</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
 </resources>

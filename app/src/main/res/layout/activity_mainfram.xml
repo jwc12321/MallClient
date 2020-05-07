@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dp_48" />
+        <LinearLayout
+            android:id="@+id/bottom_ll"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_49"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true">
+            <RelativeLayout
+                android:id="@+id/home_rl"
+                style="@style/bottom_RelativeLayout_style">
+
+                <ImageView
+                    android:id="@+id/home_iv"
+                    style="@style/bottom_imageView_style"
+                    android:src="@drawable/home_select" />
+
+                <TextView
+                    android:id="@+id/home_tt"
+                    style="@style/bottom_textView_style"
+                    android:text="@string/home" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/share_rl"
+                style="@style/bottom_RelativeLayout_style">
+
+                <ImageView
+                    android:id="@+id/share_iv"
+                    style="@style/bottom_imageView_style"
+                    android:src="@drawable/home_select" />
+
+                <TextView
+                    android:id="@+id/share_tt"
+                    style="@style/bottom_textView_style"
+                    android:text="@string/home" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/mine_rl"
+                style="@style/bottom_RelativeLayout_style">
+
+                <ImageView
+                    android:id="@+id/mine_iv"
+                    style="@style/bottom_imageView_style"
+                    android:src="@drawable/mine_select" />
+
+                <TextView
+                    android:id="@+id/mine_tt"
+                    style="@style/bottom_textView_style"
+                    android:text="@string/mine" />
+            </RelativeLayout>
+        </LinearLayout>
+    <View
+        android:layout_above="@id/bottom_ll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="#11999999"/>
+</RelativeLayout>

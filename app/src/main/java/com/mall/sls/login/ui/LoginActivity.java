@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.address.ui.SelectAddressActivity;
 import com.mall.sls.certify.ui.CerifyTipActivity;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SystemUtil;
@@ -25,7 +26,6 @@ import com.mall.sls.common.widget.textview.ConventionalEditTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.AppUrlInfo;
-import com.mall.sls.data.entity.OneClickInfo;
 import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.login.DaggerLoginComponent;
 import com.mall.sls.login.LoginContract;
@@ -128,7 +128,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         switch (view.getId()) {
             case R.id.confirm_bt://登录
 //                confirmBt();
-                CerifyTipActivity.start(this);
+//                CerifyTipActivity.start(this);
+                SelectAddressActivity.start(this);
                 break;
             case R.id.send_vcode:
                 sendVcode();

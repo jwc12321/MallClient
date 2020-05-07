@@ -48,4 +48,8 @@
     <string name="choice_login">请阅读并同意《隐私政策》和《服务协议》</string>\
     <string name="login_regist">登录/注册</string>
     <string name="login_regist_bt">一键登录/注册</string>
+    <string name="home">首页</string>
+    <string name="mine">我的</string>
+    <string name="search_address">地址搜索</string>
+    <string name="input_shipping_address">请输入您的收货地址</string>
 </resources>

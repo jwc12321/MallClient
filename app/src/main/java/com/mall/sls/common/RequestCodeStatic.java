@@ -6,4 +6,5 @@ public class RequestCodeStatic {
     public static final int SWITCH_ACCOUNT = 3;//切换账号
     public static final int SHARE_SUCCESS = 4;//分享成功
     public static final int BACK_VERIFY=5;//实人认证返回
+    public static final int REQUEST_PERMISSION_LOCATION=6;//地址权限
 }

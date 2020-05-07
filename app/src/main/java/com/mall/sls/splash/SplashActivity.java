@@ -12,6 +12,7 @@ import com.mall.sls.R;
 import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.login.ui.LoginActivity;
+import com.mall.sls.mainframe.ui.MainFrameActivity;
 
 import butterknife.ButterKnife;
 
@@ -47,7 +48,7 @@ public class SplashActivity extends BaseActivity {
 
     //跳转到主页
     private void goMain() {
-//        MainFrameActivity.start(this);
+        MainFrameActivity.start(this);
         finish();
     }
 
