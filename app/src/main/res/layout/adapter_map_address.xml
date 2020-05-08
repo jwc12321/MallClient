@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_50"
+    android:id="@+id/item_ll">
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="@dimen/dp_13"
+        android:layout_height="@dimen/dp_16"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:src="@mipmap/ic_launcher" />
+
+    <com.mall.sls.common.widget.textview.ConventionalTextView
+        android:id="@+id/name"
+        style="@style/size15_color_app3_text_style"
+        android:layout_marginLeft="@dimen/dp_9"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_toRightOf="@id/iv"
+        tools:text="红尘"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginRight="@dimen/dp_15"/>
+
+    <com.mall.sls.common.widget.textview.ConventionalTextView
+        android:id="@+id/address"
+        style="@style/size13_color_app4_text_style"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp_9"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_toRightOf="@id/iv"
+        tools:text="红尘"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginRight="@dimen/dp_15"/>
+
+    <View
+        style="@style/fifteen_back_nine_line_style"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

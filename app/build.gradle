@@ -148,4 +148,6 @@ dependencies {
     implementation 'com.amap.api:location:latest.integration'
     //搜索功能
     implementation 'com.amap.api:search:latest.integration'
+    //地址
+    implementation 'com.smartTop:jd-address:1.0.3'
 }

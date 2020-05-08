@@ -60,12 +60,14 @@ public class AssembleHomeActivity extends BaseActivity {
         AssembleItem assembleItem3 = new AssembleItem("http://www.baidu.com/img/bdlogo.png", "3");
         AssembleItem assembleItem4 = new AssembleItem("http://www.baidu.com/img/bdlogo.png", "4");
         AssembleItem assembleItem5 = new AssembleItem("http://www.baidu.com/img/bdlogo.png", "5");
+        AssembleItem assembleItem6 = new AssembleItem("http://www.baidu.com/img/bdlogo.png", "6");
         List<AssembleItem> assembleItems = new ArrayList<>();
         assembleItems.add(assembleItem1);
         assembleItems.add(assembleItem2);
         assembleItems.add(assembleItem3);
         assembleItems.add(assembleItem4);
         assembleItems.add(assembleItem5);
+        assembleItems.add(assembleItem6);
         AssembleInfo assembleInfo = new AssembleInfo();
         assembleInfo.setAssembleItems(assembleItems);
         assembleInfos.add(assembleInfo);
@@ -73,15 +75,26 @@ public class AssembleHomeActivity extends BaseActivity {
         assembleInfos.add(assembleInfo);
         assembleInfos.add(assembleInfo);
         assembleInfos.add(assembleInfo);
-        for(int i=0;i<assembleItems.size();i++){
-            View view = View.inflate(this,R.layout.item_assemble_tip,null);
-            TextView text=view.findViewById(R.id.tv);
-            ImageView imageView=view.findViewById(R.id.img);
-            GlideHelper.load(this, assembleItems.get(i).getImageUrl(), R.mipmap.ic_launcher, imageView);
-            text.setText(assembleItems.get(i).getName());
-            view.setTag(i);
-            viewFlipper.addView(view);
-            view.setOnClickListener(new View.OnClickListener() {
+        for(int i=0;i<assembleItems.size()/2;i++){
+            View view1 = View.inflate(this,R.layout.item_assemble_tip,null);
+            TextView text1=view1.findViewById(R.id.tv1);
+            ImageView image1View1=view1.findViewById(R.id.img1);
+            TextView text2=view1.findViewById(R.id.tv2);
+            ImageView image1View2=view1.findViewById(R.id.img2);
+            GlideHelper.load(this, assembleItems.get(2*i).getImageUrl(), R.mipmap.ic_launcher, image1View1);
+            text1.setText(assembleItems.get(2*i).getName());
+            text1.setTag(2*i);
+            GlideHelper.load(this, assembleItems.get(2*i+1).getImageUrl(), R.mipmap.ic_launcher, image1View2);
+            text2.setText(assembleItems.get(2*i+1).getName());
+            text2.setTag(2*i+1);
+            viewFlipper.addView(view1);
+            text1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("Guanggao", "点击了" + v.getTag());
+                }
+            });
+            text2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Log.d("Guanggao", "点击了" + v.getTag());

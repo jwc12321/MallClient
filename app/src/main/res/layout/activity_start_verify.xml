@@ -17,7 +17,7 @@
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/title"
             style="@style/title_text_style"
-            android:text="@string/Verified" />
+            android:text="@string/verified" />
     </RelativeLayout>
 
     <com.mall.sls.common.widget.scrollview.ReboundScrollView

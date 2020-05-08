@@ -29,6 +29,7 @@ import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.address.adapter.MapAddressAdapter;
 import com.mall.sls.common.widget.textview.ConventionalEditTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -78,6 +79,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
     private PoiSearch.Query query;// Poi查询条件类
     private PoiSearch poiSearch;//搜索
     private LocationBean currentLoc;
+    private MapAddressAdapter mapAddressAdapter;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, SelectAddressActivity.class);
@@ -91,7 +93,13 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         ButterKnife.bind(this);
         setHeight(back, title, null);
         mapView.onCreate(savedInstanceState);
+        initView();
         initMap();
+    }
+
+    private void initView(){
+        mapAddressAdapter=new MapAddressAdapter();
+        addressRv.setAdapter(mapAddressAdapter);
     }
 
     private void initMap() {
@@ -188,7 +196,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (mListener != null && aMapLocation != null) {
             if (aMapLocation != null && aMapLocation.getErrorCode() == 0) {
-                Log.d("jjj0", "精度和纬度" + aMapLocation.getLatitude() + "=====" + aMapLocation.getLongitude());
+                Log.d("jjj0", "精度和纬度" + aMapLocation.getLatitude() + "=====" + aMapLocation.getLongitude()+"=="+aMapLocation.getCity());
                 city = aMapLocation.getCity();
                 latitude = aMapLocation.getLatitude();
                 longitude = aMapLocation.getLongitude();
@@ -221,6 +229,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
             if (poiResult != null && poiResult.getQuery() != null) {// 搜索poi的结果
                 if (poiResult.getQuery().equals(query)) {// 是否是同一条
                     List<PoiItem> poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
+                    mapAddressAdapter.setData(poiItems);
                 }
             }
         }

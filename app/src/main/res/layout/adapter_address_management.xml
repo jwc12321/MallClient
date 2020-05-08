@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/item_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appText1"
+        android:layout_marginTop="@dimen/dp_15">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/edit"
+            style="@style/size14_color_app2_text_style"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_15"
+            android:paddingRight="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_15"
+            android:text="@string/edit" />
+
+        <View
+            android:id="@+id/iv"
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="@dimen/dp_26"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/edit"
+            android:background="@color/backGround9" />
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/name"
+           style="@style/size14_color_app3_text_style"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_5"
+            tools:text="小将"/>
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/phone"
+            style="@style/size13_color_app2_text_style"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_6"
+            android:layout_toRightOf="@id/name"
+            tools:text="747483748"/>
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/address"
+            style="@style/size14_color_app3_text_style"
+            tools:text="fjkdjfdkjfd"
+            android:layout_below="@id/name"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_7"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_toLeftOf="@id/iv"
+            android:layout_width="match_parent"
+            android:lines="2"
+            android:layout_marginBottom="@dimen/dp_4"/>
+    </RelativeLayout>
+</LinearLayout>

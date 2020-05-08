@@ -31,7 +31,7 @@
     <string name="weixin_pay">微信支付</string>
     <string name="ali_pay">支付宝支付</string>
     <string name="to_pay">去支付</string>
-    <string name="Verified">实名认证</string>
+    <string name="verified">实名认证</string>
     <string name="upload_id_photo">上传身份证照片</string>
     <string name="upload_id_tip">温馨提示：请保证照片身份证号码清晰可见，遮挡、模糊或传不相关图片的都将导致审核不通过。</string>
     <string name="id_photo_requirements">身份证照片要求：</string>
@@ -52,4 +52,26 @@
     <string name="mine">我的</string>
     <string name="search_address">地址搜索</string>
     <string name="input_shipping_address">请输入您的收货地址</string>
+    <string name="add_new_address">新增收货地址</string>
+    <string name="receiver">收货人</string>
+    <string name="input_receiver">请填写收货人的姓名</string>
+    <string name="phone_number">手机号</string>
+    <string name="ms">女士</string>
+    <string name="men">男士</string>
+    <string name="receipt_address">收货地址</string>
+    <string name="click_select_address">点击选择收货地址</string>
+    <string name="detail_address">详细地址</string>
+    <string name="house_number_tip">详细地址，例如：3号楼2单元105</string>
+    <string name="label">标签</string>
+    <string name="house">家</string>
+    <string name="company">公司</string>
+    <string name="school">学校</string>
+    <string name="other">其他</string>
+    <string name="set_default_address">设为默认地址</string>
+    <string name="save_receipt_information">保存收货信息</string>
+    <string name="select_address">选择收获地址</string>
+    <string name="add_address">新增地址</string>
+    <string name="edit">编辑</string>
+    <string name="no_address_added_yet">暂无收货地址哦！</string>
+    <string name="add_receive_address">添加收货地址</string>
 </resources>

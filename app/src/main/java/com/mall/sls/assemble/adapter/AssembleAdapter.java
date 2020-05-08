@@ -71,8 +71,8 @@ public class AssembleAdapter extends RecyclerView.Adapter<AssembleAdapter.Assemb
         public void bindData(AssembleInfo assembleInfo) {
             for(int i=0;i<assembleInfo.getAssembleItems().size();i++){
                 View view = View.inflate(context,R.layout.item_assemble_tip,null);
-                TextView text=view.findViewById(R.id.tv);
-                ImageView imageView=view.findViewById(R.id.img);
+                TextView text=view.findViewById(R.id.tv1);
+                ImageView imageView=view.findViewById(R.id.img1);
                 GlideHelper.load((Activity) context, assembleInfo.getAssembleItems().get(i).getImageUrl(), R.mipmap.ic_launcher, imageView);
                 text.setText(assembleInfo.getAssembleItems().get(i).getName());
                 viewFlipper.addView(view);

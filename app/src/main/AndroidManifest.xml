@@ -129,6 +129,10 @@
             android:screenOrientation="nosensor"/>
         <activity android:name=".address.ui.SelectAddressActivity"
             android:screenOrientation="nosensor"/>
+        <activity android:name=".address.ui.AddAddressActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".address.ui.AddressManageActivity"
+            android:screenOrientation="nosensor"/>
     </application>
 
 </manifest>

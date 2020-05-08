@@ -16,7 +16,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.address.ui.AddAddressActivity;
+import com.mall.sls.address.ui.AddressManageActivity;
 import com.mall.sls.address.ui.SelectAddressActivity;
+import com.mall.sls.assemble.ui.AssembleHomeActivity;
 import com.mall.sls.certify.ui.CerifyTipActivity;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SystemUtil;
@@ -87,7 +90,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         initView();
-        loginPresenter.getAppUrlInfo();
+//        loginPresenter.getAppUrlInfo();
     }
 
     private void initView(){
@@ -128,8 +131,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         switch (view.getId()) {
             case R.id.confirm_bt://登录
 //                confirmBt();
-//                CerifyTipActivity.start(this);
-                SelectAddressActivity.start(this);
+                AddressManageActivity.start(this);
                 break;
             case R.id.send_vcode:
                 sendVcode();
