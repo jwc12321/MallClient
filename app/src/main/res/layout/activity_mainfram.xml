@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_49"
             android:orientation="horizontal"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:weightSum="4">
             <RelativeLayout
                 android:id="@+id/home_rl"
                 style="@style/bottom_RelativeLayout_style">
@@ -31,18 +32,32 @@
                     android:text="@string/home" />
             </RelativeLayout>
             <RelativeLayout
-                android:id="@+id/share_rl"
+                android:id="@+id/team_rl"
                 style="@style/bottom_RelativeLayout_style">
 
                 <ImageView
-                    android:id="@+id/share_iv"
+                    android:id="@+id/team_iv"
                     style="@style/bottom_imageView_style"
-                    android:src="@drawable/home_select" />
+                    android:src="@drawable/local_team_select" />
 
                 <TextView
-                    android:id="@+id/share_tt"
+                    android:id="@+id/team_tt"
                     style="@style/bottom_textView_style"
-                    android:text="@string/home" />
+                    android:text="@string/local_team" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/discount_rl"
+                style="@style/bottom_RelativeLayout_style">
+
+                <ImageView
+                    android:id="@+id/discount_iv"
+                    style="@style/bottom_imageView_style"
+                    android:src="@drawable/discount_select" />
+
+                <TextView
+                    android:id="@+id/discount_tt"
+                    style="@style/bottom_textView_style"
+                    android:text="@string/whole_network_discount" />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/mine_rl"

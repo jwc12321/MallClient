@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/dp_49"
+        app:srlEnablePreviewInEditMode="false">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/black"
+            app:srlEnableLastTime="true"
+            app:srlPrimaryColor="@color/backGround8" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/backGround6"
+                android:orientation="vertical">
+
+                <com.stx.xhb.androidx.XBanner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_313"
+                    android:background="@color/appText2"
+                    app:AutoPlayTime="3000"
+                    app:isHandLoop="true"
+                    app:isShowIndicatorOnlyOne="true"
+                    app:isShowNumberIndicator="true"
+                    app:numberIndicatorBacgroud="@drawable/banner_point_bg"
+                    app:pageChangeDuration="800"
+                    app:pointsPosition="RIGHT"
+                    app:tipTextColor="@color/appText1"
+                    app:tipTextSize="@dimen/sp_10" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_54"
+                    android:background="@color/backGround1">
+
+                    <com.mall.sls.common.widget.textview.MediumThickTextView
+                        android:id="@+id/current_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:textColor="@color/appText1"
+                        android:textSize="@dimen/sp_25"
+                        tools:text="¥25" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/unit"
+                        style="@style/size12_color_app1_text_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_3"
+                        android:layout_toRightOf="@id/current_price"
+                        tools:text="/ 箱" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/original_price"
+                        style="@style/size10_color_app1_text_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_7"
+                        android:layout_toRightOf="@id/unit"
+                        tools:text="22" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/sales"
+                        style="@style/size12_color_app1_text_style"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp_15"
+                        tools:text="累计销售" />
+                </RelativeLayout>
+
+                <LinearLayout style="@style/goods_detail_rl_style">
+
+                    <com.mall.sls.common.widget.textview.MediumThickTextView
+                        android:id="@+id/goods_name"
+                        style="@style/goods_detail_left_tv_style"
+                        android:textSize="@dimen/sp_15"
+                        tools:text="香蕉" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    style="@style/goods_detail_rl_style"
+                    android:layout_marginTop="@dimen/dp_6">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/selected_goods"
+                        style="@style/goods_detail_left_tv_style"
+                        android:layout_width="match_parent"
+                        android:layout_marginRight="@dimen/dp_15"
+                        android:layout_toLeftOf="@id/right_arrow_iv"
+                        tools:text="香蕉" />
+
+                    <ImageView
+                        android:id="@+id/right_arrow_iv"
+                        style="@style/black_right_arrow_style" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    style="@style/goods_detail_rl_style"
+                    android:layout_marginTop="@dimen/dp_6">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/delivery_time"
+                        style="@style/goods_detail_left_tv_style"
+                        tools:text="香蕉" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:background="@color/appText1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        style="@style/goods_detail_rl_style"
+                        android:layout_height="@dimen/dp_40">
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/group_number"
+                            style="@style/goods_detail_left_tv_style"
+                            tools:text="平团人数" />
+                    </LinearLayout>
+
+                    <View style="@style/fifteen_back_nine_line_style" />
+
+                    <RelativeLayout style="@style/goods_detail_rl_style">
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/up_phone_number"
+                            style="@style/goods_detail_left_tv_style"
+                            tools:text="7787878" />
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/up_spell_bt"
+                            style="@style/goods_detail_go_spell_bt_style"
+                            android:text="@string/go_spell" />
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/up_poor_tv"
+                            style="@style/size12_color_app3_text_style"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dp_10"
+                            android:layout_toLeftOf="@id/up_spell_bt"
+                            tools:text="还差几人" />
+                    </RelativeLayout>
+
+                    <View style="@style/fifteen_back_nine_line_style" />
+
+                    <RelativeLayout style="@style/goods_detail_rl_style">
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/down_phone_number"
+                            style="@style/goods_detail_left_tv_style"
+                            tools:text="7787878" />
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/down_spell_bt"
+                            style="@style/goods_detail_go_spell_bt_style"
+                            android:text="@string/go_spell" />
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/down_poor_tv"
+                            style="@style/size12_color_app3_text_style"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dp_10"
+                            android:layout_toLeftOf="@id/down_spell_bt"
+                            tools:text="还差几人" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_image_match_style"
+            android:src="@mipmap/icon_detail_back" />
+
+        <ImageView
+            android:id="@+id/share"
+            style="@style/title_right_image_match_style"
+            android:src="@mipmap/icon_detail_share" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_49"
+        android:layout_alignParentBottom="true"
+        android:background="@color/appText1">
+
+        <ImageView
+            android:id="@+id/service_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_25"
+            android:paddingRight="@dimen/dp_10"
+            android:src="@mipmap/icon_detail_service"
+            android:layout_centerVertical="true"/>
+        <ImageView
+            android:id="@+id/home_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/dp_25"
+            android:paddingLeft="@dimen/dp_10"
+            android:src="@mipmap/icon_detail_home"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/individual_shopping_tv"/>
+        <LinearLayout
+            android:id="@+id/initiate_bill_bt"
+            style="@style/goods_buy_ll_style"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_15"
+            android:background="@drawable/red_buy_bg">
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                style="@style/goods_buy_up_tv_style"
+                tools:text="¥100" />
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                style="@style/goods_buy_down_tv_style"
+                android:text="@string/initiate_bill" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/individual_shopping_tv"
+            style="@style/goods_buy_ll_style"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/initiate_bill_bt"
+            android:background="@drawable/black_buy_bg">
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                style="@style/goods_buy_up_tv_style"
+                tools:text="¥100" />
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                style="@style/goods_buy_down_tv_style"
+                android:text="@string/individual_shopping" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

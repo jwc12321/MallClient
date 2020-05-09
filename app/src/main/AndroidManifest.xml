@@ -133,6 +133,12 @@
             android:screenOrientation="nosensor"/>
         <activity android:name=".address.ui.AddressManageActivity"
             android:screenOrientation="nosensor"/>
+        <activity android:name=".homepage.ui.OrdinaryGoodsDetailActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".homepage.ui.SelectSpecActivity"
+            android:theme="@style/TranslucentFullScreenTheme"
+            android:windowSoftInputMode="adjustPan"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

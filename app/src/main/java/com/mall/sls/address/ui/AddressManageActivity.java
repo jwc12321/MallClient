@@ -67,7 +67,7 @@ public class AddressManageActivity extends BaseActivity {
         addressRv.setAdapter(addressManageAdapter);
         AddressInfo addressInfo1=new AddressInfo("小蒋","198898989","犯得上发生纠纷附近的肌肤的科技发达开始JFK事件发生的","1","家");
         AddressInfo addressInfo2=new AddressInfo("小回复","889898989","肌肤的说服力的事件发生的","2","学校");
-        AddressInfo addressInfo3=new AddressInfo("小减肥的","9090090909","u夫欸蕊蕊房间数量JFK地方","2","公司");
+        AddressInfo addressInfo3=new AddressInfo("小减肥的","9090090909","u夫欸蕊蕊房间数量JFK地方","2","");
         List<AddressInfo> addressInfos=new ArrayList<>();
         addressInfos.add(addressInfo1);
         addressInfos.add(addressInfo2);

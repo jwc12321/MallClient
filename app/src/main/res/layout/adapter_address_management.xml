@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/item_rl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_74"
         android:background="@color/appText1"
         android:layout_marginTop="@dimen/dp_15">
 
@@ -43,7 +43,7 @@
             android:layout_marginTop="@dimen/dp_6"
             android:layout_toRightOf="@id/name"
             tools:text="747483748"/>
-        <com.mall.sls.common.widget.textview.ConventionalTextView
+        <com.mall.sls.common.widget.textview.TagTextView
             android:id="@+id/address"
             style="@style/size14_color_app3_text_style"
             tools:text="fjkdjfdkjfd"
@@ -55,7 +55,6 @@
             android:ellipsize="end"
             android:layout_toLeftOf="@id/iv"
             android:layout_width="match_parent"
-            android:lines="2"
             android:layout_marginBottom="@dimen/dp_4"/>
     </RelativeLayout>
 </LinearLayout>

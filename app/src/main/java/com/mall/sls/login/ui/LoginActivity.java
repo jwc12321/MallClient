@@ -34,6 +34,7 @@ import com.mall.sls.login.DaggerLoginComponent;
 import com.mall.sls.login.LoginContract;
 import com.mall.sls.login.LoginModule;
 import com.mall.sls.login.presenter.LoginPresenter;
+import com.mall.sls.mainframe.ui.MainFrameActivity;
 import com.mobile.auth.gatewayauth.AuthUIConfig;
 import com.mobile.auth.gatewayauth.AuthUIControlClickListener;
 import com.mobile.auth.gatewayauth.PhoneNumberAuthHelper;
@@ -131,7 +132,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         switch (view.getId()) {
             case R.id.confirm_bt://登录
 //                confirmBt();
-                AddressManageActivity.start(this);
+                MainFrameActivity.start(this);
                 break;
             case R.id.send_vcode:
                 sendVcode();

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mall.sls.R;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.RoundedBackgroundSpan;
+import com.mall.sls.common.widget.textview.TagTextView;
 import com.mall.sls.data.entity.AddressInfo;
 
 import java.util.List;
@@ -76,7 +77,7 @@ public class AddressManageAdapter extends RecyclerView.Adapter<AddressManageAdap
         @BindView(R.id.phone)
         ConventionalTextView phone;
         @BindView(R.id.address)
-        ConventionalTextView address;
+        TagTextView address;
         @BindView(R.id.item_rl)
         RelativeLayout itemRl;
 
@@ -89,23 +90,13 @@ public class AddressManageAdapter extends RecyclerView.Adapter<AddressManageAdap
             name.setText(addressInfo.getName());
             address.setText(addressInfo.getAddress());
             phone.setText(addressInfo.getPhone());
-            SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
-            if (TextUtils.equals("1", addressInfo.getStatus())) {
-                String thisTag = " 默认 ";
-                stringBuilder.append(thisTag);
-                RoundedBackgroundSpan span = new RoundedBackgroundSpan(Color.parseColor("#FFD7DA"), Color.parseColor("#EF3342"));
-                stringBuilder.setSpan(span, stringBuilder.length() - thisTag.length(), stringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                stringBuilder.append(" ");
+            if(TextUtils.equals("1", addressInfo.getStatus())&&!TextUtils.isEmpty(addressInfo.getLabel())){
+                address.addressTag("默认",addressInfo.getLabel(),addressInfo.getAddress());
+            }else if(!TextUtils.equals("1", addressInfo.getStatus())&&!TextUtils.isEmpty(addressInfo.getLabel())){
+                address.setSingleTagAndContent(addressInfo.getLabel(),addressInfo.getAddress());
+            }else {
+                address.setText(addressInfo.getAddress());
             }
-            stringBuilder.append(addressInfo.getAddress());
-//            stringBuilder.append("      ");
-//            String thissTag = " 家 ";
-//            stringBuilder.append(thissTag);
-//            RoundedBackgroundSpan span = new RoundedBackgroundSpan(Color.parseColor("#FFD7DA"), Color.parseColor("#EF3342"));
-//            stringBuilder.setSpan(span, stringBuilder.length() - thissTag.length(), stringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//            ImageSpan imageSpan = new ImageSpan(context, R.mipmap.icon_house);
-//            stringBuilder.setSpan(imageSpan, stringBuilder.length() - 1, stringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            address.setText(stringBuilder);
         }
     }
 

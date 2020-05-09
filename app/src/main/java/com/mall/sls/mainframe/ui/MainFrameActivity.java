@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,7 +15,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
+import com.mall.sls.discount.ui.WholeDiscountFragment;
 import com.mall.sls.homepage.ui.HomepageFragment;
+import com.mall.sls.local.ui.LocalTeamFragment;
 import com.mall.sls.mainframe.adapter.MainPagerAdapter;
 import com.mall.sls.mine.ui.MineFragment;
 
@@ -23,7 +26,9 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainFrameActivity extends BaseActivity{
+public class MainFrameActivity extends BaseActivity {
+
+
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     @BindView(R.id.home_iv)
@@ -32,18 +37,26 @@ public class MainFrameActivity extends BaseActivity{
     TextView homeTt;
     @BindView(R.id.home_rl)
     RelativeLayout homeRl;
-    @BindView(R.id.share_iv)
-    ImageView shareIv;
-    @BindView(R.id.share_tt)
-    TextView shareTt;
-    @BindView(R.id.share_rl)
-    RelativeLayout shareRl;
+    @BindView(R.id.team_iv)
+    ImageView teamIv;
+    @BindView(R.id.team_tt)
+    TextView teamTt;
+    @BindView(R.id.team_rl)
+    RelativeLayout teamRl;
+    @BindView(R.id.discount_iv)
+    ImageView discountIv;
+    @BindView(R.id.discount_tt)
+    TextView discountTt;
+    @BindView(R.id.discount_rl)
+    RelativeLayout discountRl;
     @BindView(R.id.mine_iv)
     ImageView mineIv;
     @BindView(R.id.mine_tt)
     TextView mineTt;
     @BindView(R.id.mine_rl)
     RelativeLayout mineRl;
+    @BindView(R.id.bottom_ll)
+    LinearLayout bottomLl;
     @BindView(R.id.main_rl)
     RelativeLayout mainRl;
 
@@ -68,26 +81,30 @@ public class MainFrameActivity extends BaseActivity{
 
     private void initView() {
         sActivityRef = new WeakReference<>(this);
-        fragments = new BaseFragment[3];
+        fragments = new BaseFragment[4];
         fragments[0] = HomepageFragment.newInstance();
-        fragments[1] = MineFragment.newInstance();
-        fragments[2] = MineFragment.newInstance();
-        relativeLayouts = new RelativeLayout[3];
+        fragments[1] = LocalTeamFragment.newInstance();
+        fragments[2] = WholeDiscountFragment.newInstance();
+        fragments[3] = MineFragment.newInstance();
+        relativeLayouts = new RelativeLayout[4];
         relativeLayouts[0] = homeRl;
-        relativeLayouts[1] = shareRl;
-        relativeLayouts[2] = mineRl;
-        imageViews = new ImageView[3];
+        relativeLayouts[1] = teamRl;
+        relativeLayouts[2] = discountRl;
+        relativeLayouts[3] = mineRl;
+        imageViews = new ImageView[4];
         imageViews[0] = homeIv;
-        imageViews[1] = shareIv;
-        imageViews[2] = mineIv;
-        textViews = new TextView[3];
+        imageViews[1] = teamIv;
+        imageViews[2] = discountIv;
+        imageViews[3] = mineIv;
+        textViews = new TextView[4];
         textViews[0] = homeTt;
-        textViews[1] = shareTt;
-        textViews[2] = mineTt;
+        textViews[1] = teamTt;
+        textViews[2] = discountTt;
+        textViews[3] = mineTt;
         for (RelativeLayout relativeLayout : relativeLayouts) {
             relativeLayout.setOnClickListener(onClickListener);
         }
-        viewPager.setOffscreenPageLimit(2);
+        viewPager.setOffscreenPageLimit(3);
         adapter = new MainPagerAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(onPageChangeListener);

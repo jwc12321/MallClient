@@ -74,4 +74,13 @@
     <string name="edit">编辑</string>
     <string name="no_address_added_yet">暂无收货地址哦！</string>
     <string name="add_receive_address">添加收货地址</string>
+    <string name="local_team">本地拼团</string>
+    <string name="whole_network_discount">全网优惠</string>
+    <string name="selected_group">拼团精选</string>
+    <string name="more">更多</string>
+    <string name="activity_group">活动团</string>
+    <string name="go_spell">去拼团</string>
+    <string name="initiate_bill">发起拼单</string>
+    <string name="individual_shopping">单独购买</string>
+    <string name="buy_number">购买数量</string>
 </resources>
