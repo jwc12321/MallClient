@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_black_rl_style">
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/mine" />
+
+        <ImageView
+            android:id="@+id/right_iv"
+            style="@style/title_right_image_match_style"
+            android:src="@mipmap/icon_setting" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        android:layout_marginTop="@dimen/dp_m_5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/icon_mine_bg" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_150"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_17"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:background="@drawable/mine_info_bg">
+
+                    <com.mall.sls.common.widget.textview.MediumThickTextView
+                        android:id="@+id/phone"
+                        style="@style/size15_color_app1_text_style"
+                        android:layout_marginLeft="@dimen/dp_85"
+                        android:layout_marginTop="@dimen/dp_15"
+                        tools:text="43434343" />
+
+                    <ImageView
+                        android:id="@+id/member_type_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/dp_21"
+                        tools:src="@mipmap/icon_super_member" />
+
+                    <LinearLayout
+                        android:id="@+id/number_ll"
+                        style="@style/mine_info_ll_style"
+                        android:layout_marginTop="@dimen/dp_82">
+
+                        <com.mall.sls.common.widget.textview.MediumThickTextView
+                            style="@style/mine_info_up_tv_style"
+                            tools:text="0" />
+
+                        <View style="@style/mine_info_up_view_style" />
+
+                        <com.mall.sls.common.widget.textview.MediumThickTextView
+                            style="@style/mine_info_up_tv_style"
+                            tools:text="0" />
+
+                        <View style="@style/mine_info_up_view_style" />
+
+                        <com.mall.sls.common.widget.textview.MediumThickTextView
+                            style="@style/mine_info_up_tv_style"
+                            tools:text="0" />
+
+                        <View style="@style/mine_info_up_view_style" />
+
+                        <com.mall.sls.common.widget.textview.MediumThickTextView
+                            style="@style/mine_info_up_tv_style"
+                            tools:text="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/mine_info_ll_style"
+                        android:layout_below="@id/number_ll"
+                        android:layout_marginTop="@dimen/dp_6">
+
+                        <com.mall.sls.common.widget.textview.MediumThickTextView
+                            style="@style/mine_info_down_tv_style"
+                            android:text="@string/cash_back" />
+
+                        <com.mall.sls.common.widget.textview.MediumThickTextView
+                            style="@style/mine_info_down_tv_style"
+                            android:text="@string/coupon" />
+
+                        <com.mall.sls.common.widget.textview.MediumThickTextView
+                            style="@style/mine_info_down_tv_style"
+                            android:text="@string/dividend" />
+
+                        <com.mall.sls.common.widget.textview.MediumThickTextView
+                            style="@style/mine_info_down_tv_style"
+                            android:text="@string/rice_grain" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/head_photo"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
+                    android:layout_marginLeft="@dimen/dp_30"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_launcher"
+                    app:riv_border_color="@color/appText1"
+                    app:riv_border_width="0dp"
+                    app:riv_corner_radius="0dp"
+                    app:riv_oval="true"
+                    tools:background="@null" />
+            </RelativeLayout>
+
+            <LinearLayout
+                style="@style/four_ll_style"
+                android:layout_marginTop="@dimen/dp_m_60">
+
+                <RelativeLayout
+                    android:id="@+id/all_order_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_49">
+
+                    <com.mall.sls.common.widget.textview.MediumThickTextView
+                        style="@style/size16_color_app3_text_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:text="@string/my_order" />
+
+                    <ImageView
+                        android:id="@+id/right_arrow_iv"
+                        style="@style/big_black_arrow_back_style" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/size14_color_app4_text_style"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/right_arrow_iv"
+                        android:text="@string/view_all_orders" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_13"
+                    android:layout_marginBottom="@dimen/dp_15">
+
+                    <ImageView
+                        android:id="@+id/pending_payment_iv"
+                        style="@style/mine_order_left_iv_style"
+                        android:src="@mipmap/icon_pending_payment" />
+
+                    <ImageView
+                        android:id="@+id/pending_delivery_iv"
+                        style="@style/mine_order_center_iv_style"
+                        android:src="@mipmap/icon_pending_delivery" />
+
+                    <ImageView
+                        android:id="@+id/shipping_iv"
+                        style="@style/mine_order_right_iv_style"
+                        android:src="@mipmap/icon_shipping" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:layout_margin="@dimen/dp_15"
+                android:background="@drawable/common_four_app_one_bg">
+
+                <ImageView
+                    android:id="@+id/vip_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:src="@mipmap/icon_vip" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/open_now_bt_style"
+                    android:text="@string/open_now" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/size14_color_app4_text_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_4"
+                    android:layout_toRightOf="@id/vip_iv"
+                    tools:text="开通超级会员，平均可省1080元/年" />
+            </RelativeLayout>
+            <LinearLayout
+                style="@style/four_ll_style">
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    style="@style/size16_color_app3_text_style"
+                    android:text="@string/my_service"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_14"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_21">
+
+                    <ImageView
+                        android:id="@+id/my_team"
+                        style="@style/mine_service_left_iv_style"
+                        android:src="@mipmap/icon_my_team" />
+
+                    <ImageView
+                        android:id="@+id/address_manage"
+                        style="@style/mine_order_center_iv_style"
+                        android:src="@mipmap/icon_address_manage" />
+
+                    <ImageView
+                        android:id="@+id/invite_friends"
+                        style="@style/mine_service_right_iv_style"
+                        android:src="@mipmap/icon_invite_friends" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_19"
+                    android:layout_marginBottom="@dimen/dp_19">
+
+                    <ImageView
+                        android:id="@+id/verified_iv"
+                        style="@style/mine_service_left_iv_style"
+                        android:src="@drawable/verified_select" />
+
+                    <ImageView
+                        android:id="@+id/my_invitation_iv"
+                        style="@style/mine_order_center_iv_style"
+                        android:src="@mipmap/icon_my_invitation" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

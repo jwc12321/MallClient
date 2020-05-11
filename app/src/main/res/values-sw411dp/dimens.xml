@@ -47,6 +47,7 @@
 	<dimen name="dp_17">19.4286dp</dimen>
 	<dimen name="dp_18">20.5714dp</dimen>
 	<dimen name="dp_19">21.7143dp</dimen>
+	<dimen name="dp_19_5">22.2857dp</dimen>
 	<dimen name="dp_20">22.8571dp</dimen>
 	<dimen name="dp_21">24.0000dp</dimen>
 	<dimen name="dp_22">25.1429dp</dimen>

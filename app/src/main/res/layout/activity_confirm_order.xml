@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_red_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/submit_order" />
+    </RelativeLayout>
+
+    <com.mall.sls.common.widget.scrollview.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_rel"
+        android:layout_marginBottom="@dimen/dp_49"
+        android:fadingEdge="none"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_90"
+                android:background="@color/appText1">
+
+                <ImageView
+                    android:id="@+id/right_arrow_iv"
+                    style="@style/big_black_arrow_back_style" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/no_address_tv"
+                    style="@style/size14_color_app3_text_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:text="@string/no_address_set" />
+
+                <LinearLayout
+                    android:id="@+id/address_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@id/right_arrow_iv"
+                    android:orientation="vertical"
+                    android:layout_marginRight="@dimen/dp_9"
+                    android:visibility="gone">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/dp_15"
+                        android:layout_marginLeft="@dimen/dp_15">
+                        <com.mall.sls.common.widget.textview.MediumThickTextView
+                            android:id="@+id/name"
+                           style="@style/size15_color_app3_text_style"
+                            tools:text="小将" />
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/phone"
+                            style="@style/size14_color_app3_text_style"
+                            tools:text="438483478374"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/dp_24"/>
+                    </LinearLayout>
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/address"
+                        style="@style/size14_color_app3_text_style"
+                        tools:text="FJDKJFDKJFD"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:layout_marginTop="@dimen/dp_6"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/icon_address_line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_108"
+                android:background="@color/appText1">
+
+                <ImageView
+                    android:id="@+id/goods_iv"
+                    style="@style/comfirm_order_goods_iv_style"
+                    tools:src="@mipmap/ic_launcher" />
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    style="@style/comfirm_order_goods_name_style"
+                    android:layout_toLeftOf="@id/goods_number"
+                    android:layout_toRightOf="@id/goods_iv"
+                    tools:text="苹果" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/goods_number"
+                    style="@style/comfirm_order_goods_number_style"
+                    tools:text="x1" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/dp_12"
+                    android:layout_marginBottom="@dimen/dp_12"
+                    android:layout_toRightOf="@id/goods_iv">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/current_price"
+                        style="@style/size14_color_back1_text_style"
+                        tools:text="111" />
+
+                    <com.mall.sls.common.widget.textview.BlackDrawTextView
+                        android:id="@+id/original_price"
+                        style="@style/size10_color_app3_text_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toRightOf="@id/current_price"
+                        tools:text="111" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <View style="@style/back_nine_line_style" />
+
+            <RelativeLayout style="@style/confirm_order_rl_style">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/confirm_order_left_tv_style"
+                    android:text="@string/buyer_message" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:background="@color/appText1"
+                android:orientation="vertical">
+
+                <RelativeLayout style="@style/confirm_order_rl_style">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/confirm_order_left_tv_style"
+                        android:text="@string/goods_price" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/goods_price"
+                        style="@style/confirm_order_right_tv_style"
+                        tools:text="@string/goods_price" />
+                </RelativeLayout>
+
+                <View style="@style/fifteen_back_nine_line_style" />
+
+                <RelativeLayout style="@style/confirm_order_rl_style">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/confirm_order_left_tv_style"
+                        android:text="@string/coupon" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/coupon"
+                        style="@style/confirm_order_right_tv_style"
+                        tools:text="@string/coupon" />
+                </RelativeLayout>
+
+                <View style="@style/fifteen_back_nine_line_style" />
+
+                <RelativeLayout style="@style/confirm_order_rl_style">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/confirm_order_left_tv_style"
+                        android:text="@string/goods_total_amount" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/goods_total_amount"
+                        style="@style/confirm_order_right_tv_style"
+                        android:textColor="@color/backGround1"
+                        tools:text="@string/goods_total_amount" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.mall.sls.common.widget.scrollview.ReboundScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_49"
+        android:layout_alignParentBottom="true"
+        android:background="@color/appText1">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/confirm_bt"
+            style="@style/bottom_sumbit_bt_style"
+            android:text="@string/to_pay" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/total_amount_tv"
+            style="@style/size14_color_back1_text_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:text="@string/total_amount" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/total_amount"
+            style="@style/size17_color_back1_text_style"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/total_amount_tv"
+            tools:text="1111" />
+    </RelativeLayout>
+</RelativeLayout>

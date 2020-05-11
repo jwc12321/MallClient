@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_red_rl_style">
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/local_team" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_57"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:id="@+id/looting_ll"
+            style="@style/team_status_ll_style">
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                android:id="@+id/looting_tv"
+                style="@style/team_status_tv_style"
+                android:text="@string/looting" />
+
+            <View
+                android:id="@+id/looting_iv"
+                style="@style/team_status_iv_style" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/soon_ll"
+            style="@style/team_status_ll_style">
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                android:id="@+id/soon_tv"
+                style="@style/team_status_tv_style"
+                android:text="@string/looting_soon" />
+
+            <View
+                android:id="@+id/soon_iv"
+                style="@style/team_status_iv_style" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

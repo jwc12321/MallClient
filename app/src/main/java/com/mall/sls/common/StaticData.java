@@ -22,5 +22,7 @@ public class StaticData {
     public static final String USER_AGREEMENT="http://www.hhcc176.com/userAgreement.html";
     //实人认证协议
     public static final String OCR_AGREEMENT="http://www.hhcc176.com/ocrAgreement.html";
+    //选择的type
+    public static final String CHOICE_TYPE="choiceType";
 
 }

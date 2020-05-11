@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_red_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/setting" />
+    </RelativeLayout>
+
+    <com.mall.sls.common.widget.scrollview.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_rel"
+        android:layout_marginBottom="@dimen/dp_49"
+        android:fadingEdge="none"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout style="@style/confirm_order_rl_style">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/setting_left_tv_style"
+                    android:text="@string/opinions_feedback" />
+
+                <ImageView style="@style/big_black_arrow_back_style" />
+            </RelativeLayout>
+
+            <View style="@style/fifteen_back_nine_line_style" />
+
+            <RelativeLayout style="@style/confirm_order_rl_style">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/setting_left_tv_style"
+                    android:text="@string/version_detection" />
+
+                <ImageView style="@style/big_black_arrow_back_style" />
+            </RelativeLayout>
+
+            <View style="@style/fifteen_back_nine_line_style" />
+
+            <RelativeLayout style="@style/confirm_order_rl_style">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/setting_left_tv_style"
+                    android:text="@string/clear_cache" />
+
+                <ImageView style="@style/big_black_arrow_back_style" />
+            </RelativeLayout>
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                android:id="@+id/confirm_bt"
+                style="@style/common_next_bt_style"
+                android:layout_marginTop="@dimen/dp_270"
+                android:text="@string/login_out" />
+        </LinearLayout>
+    </com.mall.sls.common.widget.scrollview.ReboundScrollView>
+</LinearLayout>

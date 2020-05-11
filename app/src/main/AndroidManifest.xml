@@ -139,6 +139,18 @@
             android:theme="@style/TranslucentFullScreenTheme"
             android:windowSoftInputMode="adjustPan"
             android:launchMode="singleTop"/>
+        <activity android:name=".homepage.ui.ConfirmOrderActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".homepage.ui.SelectPayTypeActivity"
+            android:theme="@style/TranslucentFullScreenTheme"
+            android:launchMode="singleTop"/>
+        <activity android:name=".mine.ui.SettingActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".order.ui.GoodsOrderActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".mine.ui.MyTeamActivity"
+            android:screenOrientation="nosensor"/>
+
     </application>
 
 </manifest>

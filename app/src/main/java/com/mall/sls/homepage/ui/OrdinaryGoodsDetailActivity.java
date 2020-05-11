@@ -132,7 +132,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.back, R.id.individual_shopping_tv})
+    @OnClick({R.id.back, R.id.individual_shopping_tv,R.id.initiate_bill_bt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -140,6 +140,9 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity {
                 break;
             case R.id.individual_shopping_tv://单独购买
                 SelectSpecActivity.start(this);
+                break;
+            case R.id.initiate_bill_bt://发起拼单
+                ConfirmOrderActivity.start(this);
                 break;
             default:
         }

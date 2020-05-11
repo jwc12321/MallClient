@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_red_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/my_order" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/appText1"
+        android:orientation="horizontal"
+        android:weightSum="4" >
+        <LinearLayout
+            android:id="@+id/all_orders_ll"
+            style="@style/order_status_ll_style">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/all_orders_tv"
+                style="@style/order_status_tv_style"
+                android:text="@string/all_orders" />
+
+            <View
+                android:id="@+id/all_orders_iv"
+                style="@style/order_status_iv_style" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/pending_payment_ll"
+            style="@style/order_status_ll_style">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/pending_payment_tv"
+                style="@style/order_status_tv_style"
+                android:text="@string/pending_payment" />
+
+            <View
+                android:id="@+id/pending_payment_iv"
+                style="@style/order_status_iv_style" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/pending_delivery_ll"
+            style="@style/order_status_ll_style">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/pending_delivery_tv"
+                style="@style/order_status_tv_style"
+                android:text="@string/pending_delivery" />
+
+            <View
+                android:id="@+id/pending_delivery_iv"
+                style="@style/order_status_iv_style" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/shipping_ll"
+            style="@style/order_status_ll_style">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/shipping_tv"
+                style="@style/order_status_tv_style"
+                android:text="@string/shipping" />
+
+            <View
+                android:id="@+id/shipping_iv"
+                style="@style/order_status_iv_style" />
+        </LinearLayout>
+    </LinearLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

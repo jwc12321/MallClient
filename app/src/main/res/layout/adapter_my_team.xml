@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/item_ll"
+        style="@style/four_ll_style"
+        android:layout_marginTop="@dimen/dp_15">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_37">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/time"
+                style="@style/size12_color_app4_text_style"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_15"
+                tools:text="2090-89-88" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/team_status"
+                style="@style/size12_color_back1_text_style"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_15"
+                tools:text="待配送" />
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="@dimen/dp_1"
+                android:layout_height="@dimen/dp_16"
+                android:layout_marginLeft="@dimen/dp_3"
+                android:layout_marginRight="@dimen/dp_3"
+                android:layout_toLeftOf="@id/team_status"
+                android:background="@color/backGround9"
+                android:layout_centerVertical="true"/>
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/team_type"
+                style="@style/size12_color_app4_text_style"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/line"
+                tools:text="日常团" />
+        </RelativeLayout>
+
+        <View
+            style="@style/fifteen_back_nine_line_style"
+            android:layout_marginTop="@dimen/dp_5" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_87"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_15">
+
+            <ImageView
+                android:id="@+id/goods_iv"
+                android:layout_width="@dimen/dp_87"
+                android:layout_height="@dimen/dp_87"
+                android:scaleType="fitXY"
+                tools:src="@mipmap/ic_launcher" />
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                android:id="@+id/goods_name"
+                style="@style/size14_color_app3_text_style"
+                android:layout_marginLeft="@dimen/dp_6"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_toRightOf="@id/goods_iv"
+                tools:text="香蕉" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_6"
+                android:layout_marginTop="@dimen/dp_38"
+                android:layout_toRightOf="@id/goods_iv">
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    android:id="@+id/current_price"
+                    style="@style/size14_color_back1_text_style"
+                    android:layout_centerVertical="true"
+                    tools:text="59" />
+
+                <com.mall.sls.common.widget.textview.BlackDrawTextView
+                    android:id="@+id/original_price"
+                    style="@style/size10_color_app2_text_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_12"
+                    android:layout_toRightOf="@id/current_price"
+                    tools:text="79" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/goods_number"
+                    style="@style/size12_color_app4_text_style"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    tools:text="x1" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/total_number"
+                    style="@style/size14_color_app3_text_style"
+                    tools:text="共1件" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/is_pay"
+                    style="@style/size14_color_app3_text_style"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:text="@string/actually_apaid" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/total_amount"
+                    style="@style/size14_color_back1_text_style"
+                    tools:text="1111" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View style="@style/fifteen_back_nine_line_style" />
+
+        <RelativeLayout
+            android:id="@+id/bt_ll"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_42">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/countdown"
+                style="@style/size12_color_back1_text_style"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_15"
+                tools:text="距离倒计时还剩" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_15"
+                android:orientation="horizontal">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/left_bt"
+                    style="@style/order_left_bt_style"
+                    android:text="@string/group_details" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/right_bt"
+                    style="@style/order_right_bt_style"
+                    android:text="@string/invite_friends" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

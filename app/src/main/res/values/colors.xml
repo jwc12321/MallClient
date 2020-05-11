@@ -22,7 +22,7 @@
     <color name="backGround6">#F5F5F5</color>
     <color name="backGround7">#C9C9C9</color>
     <color name="backGround8">#00000000</color>
-    <color name="backGround9">#E0E0E0</color>
+    <color name="backGround9">#EEEEEE</color>
     <color name="backGround10">#6AB3D1</color>
     <color name="backGround11">#EEFCFF</color>
     <color name="backGround12">#E7E7E7</color>
@@ -36,6 +36,10 @@
     <color name="backGround20">#D8D8D8</color>
     <color name="backGround21">#E8E8E8</color>
     <color name="backGround22">#EAEAEA</color>
+    <color name="backGround23">#FFBE3B</color>
+    <color name="backGround24">#FF2E46</color>
+    <color name="backGround25">#FF3F4E</color>
     <color name="backGround34">#000000</color>
+    <color name="backGround35">#1F1F1F</color>
     <color name="backGround39">#59000000</color>
 </resources>
