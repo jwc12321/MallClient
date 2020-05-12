@@ -25,9 +25,9 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_m_5"
         android:fadingEdge="none"
-        android:overScrollMode="never"
-        android:layout_marginTop="@dimen/dp_m_5">
+        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,53 +69,59 @@
                         tools:src="@mipmap/icon_super_member" />
 
                     <LinearLayout
-                        android:id="@+id/number_ll"
-                        style="@style/mine_info_ll_style"
-                        android:layout_marginTop="@dimen/dp_82">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_82"
+                        android:orientation="horizontal"
+                        android:weightSum="4">
 
-                        <com.mall.sls.common.widget.textview.MediumThickTextView
-                            style="@style/mine_info_up_tv_style"
-                            tools:text="0" />
+                        <LinearLayout
+                            style="@style/mine_info_ll_style">
 
+                            <com.mall.sls.common.widget.textview.MediumThickTextView
+                                style="@style/mine_info_up_tv_style"
+                                tools:text="0" />
+
+                            <com.mall.sls.common.widget.textview.MediumThickTextView
+                                style="@style/mine_info_down_tv_style"
+                                android:text="@string/cash_back" />
+                        </LinearLayout>
                         <View style="@style/mine_info_up_view_style" />
+                        <LinearLayout
+                            style="@style/mine_info_ll_style">
 
-                        <com.mall.sls.common.widget.textview.MediumThickTextView
-                            style="@style/mine_info_up_tv_style"
-                            tools:text="0" />
+                            <com.mall.sls.common.widget.textview.MediumThickTextView
+                                style="@style/mine_info_up_tv_style"
+                                tools:text="0" />
 
+                            <com.mall.sls.common.widget.textview.MediumThickTextView
+                                style="@style/mine_info_down_tv_style"
+                                android:text="@string/coupon" />
+                        </LinearLayout>
                         <View style="@style/mine_info_up_view_style" />
+                        <LinearLayout
+                            style="@style/mine_info_ll_style">
 
-                        <com.mall.sls.common.widget.textview.MediumThickTextView
-                            style="@style/mine_info_up_tv_style"
-                            tools:text="0" />
+                            <com.mall.sls.common.widget.textview.MediumThickTextView
+                                style="@style/mine_info_up_tv_style"
+                                tools:text="0" />
 
+                            <com.mall.sls.common.widget.textview.MediumThickTextView
+                                style="@style/mine_info_down_tv_style"
+                                android:text="@string/dividend" />
+                        </LinearLayout>
                         <View style="@style/mine_info_up_view_style" />
+                        <LinearLayout
+                            style="@style/mine_info_ll_style">
 
-                        <com.mall.sls.common.widget.textview.MediumThickTextView
-                            style="@style/mine_info_up_tv_style"
-                            tools:text="0" />
-                    </LinearLayout>
+                            <com.mall.sls.common.widget.textview.MediumThickTextView
+                                style="@style/mine_info_up_tv_style"
+                                tools:text="0" />
 
-                    <LinearLayout
-                        style="@style/mine_info_ll_style"
-                        android:layout_below="@id/number_ll"
-                        android:layout_marginTop="@dimen/dp_6">
-
-                        <com.mall.sls.common.widget.textview.MediumThickTextView
-                            style="@style/mine_info_down_tv_style"
-                            android:text="@string/cash_back" />
-
-                        <com.mall.sls.common.widget.textview.MediumThickTextView
-                            style="@style/mine_info_down_tv_style"
-                            android:text="@string/coupon" />
-
-                        <com.mall.sls.common.widget.textview.MediumThickTextView
-                            style="@style/mine_info_down_tv_style"
-                            android:text="@string/dividend" />
-
-                        <com.mall.sls.common.widget.textview.MediumThickTextView
-                            style="@style/mine_info_down_tv_style"
-                            android:text="@string/rice_grain" />
+                            <com.mall.sls.common.widget.textview.MediumThickTextView
+                                style="@style/mine_info_down_tv_style"
+                                android:text="@string/rice_grain" />
+                        </LinearLayout>
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -183,6 +189,7 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/super_member_rl"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_44"
                 android:layout_margin="@dimen/dp_15"
@@ -207,13 +214,14 @@
                     android:layout_toRightOf="@id/vip_iv"
                     tools:text="开通超级会员，平均可省1080元/年" />
             </RelativeLayout>
-            <LinearLayout
-                style="@style/four_ll_style">
+
+            <LinearLayout style="@style/four_ll_style">
+
                 <com.mall.sls.common.widget.textview.MediumThickTextView
                     style="@style/size16_color_app3_text_style"
-                    android:text="@string/my_service"
                     android:layout_marginLeft="@dimen/dp_15"
-                    android:layout_marginTop="@dimen/dp_14"/>
+                    android:layout_marginTop="@dimen/dp_14"
+                    android:text="@string/my_service" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -235,6 +243,7 @@
                         style="@style/mine_service_right_iv_style"
                         android:src="@mipmap/icon_invite_friends" />
                 </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

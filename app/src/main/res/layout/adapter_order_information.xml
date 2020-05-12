@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_32">
+
+    <com.mall.sls.common.widget.textview.ConventionalTextView
+        android:id="@+id/time_type"
+        style="@style/size12_color_app2_text_style"
+        android:layout_centerVertical="true"
+        tools:text="@string/order_time"
+        android:layout_marginLeft="@dimen/dp_15"/>
+
+    <com.mall.sls.common.widget.textview.ConventionalTextView
+        android:id="@+id/time"
+        style="@style/size12_color_app2_text_style"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_4"
+        android:layout_toRightOf="@id/time_type"
+        tools:text="2019-09-09" />
+
+    <com.mall.sls.common.widget.textview.ConventionalTextView
+        android:id="@+id/copy_bt"
+        style="@style/copy_bt_style"
+        android:text="@string/copy"
+        android:visibility="gone"/>
+</RelativeLayout>

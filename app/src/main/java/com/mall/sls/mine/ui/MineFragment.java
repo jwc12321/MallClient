@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -23,6 +22,7 @@ import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.unit.VerifyManager;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.login.ui.LoginActivity;
+import com.mall.sls.member.ui.SuperMemberActivity;
 import com.mall.sls.order.ui.GoodsOrderActivity;
 
 import butterknife.BindView;
@@ -42,8 +42,6 @@ public class MineFragment extends BaseFragment {
     RelativeLayout titleRel;
     @BindView(R.id.phone)
     MediumThickTextView phone;
-    @BindView(R.id.number_ll)
-    LinearLayout numberLl;
     @BindView(R.id.head_photo)
     RoundedImageView headPhoto;
     @BindView(R.id.member_type_iv)
@@ -70,6 +68,8 @@ public class MineFragment extends BaseFragment {
     ImageView verifiedIv;
     @BindView(R.id.my_invitation_iv)
     ImageView myInvitationIv;
+    @BindView(R.id.super_member_rl)
+    RelativeLayout superMemberRl;
 
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
@@ -98,10 +98,10 @@ public class MineFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        verifiedIv.setSelected(TextUtils.equals("1",VerifyManager.getVerify()));
+        verifiedIv.setSelected(TextUtils.equals("1", VerifyManager.getVerify()));
     }
 
-    @OnClick({R.id.right_iv, R.id.all_order_rl, R.id.pending_payment_iv, R.id.pending_delivery_iv, R.id.shipping_iv, R.id.my_team, R.id.address_manage, R.id.invite_friends, R.id.verified_iv, R.id.my_invitation_iv})
+    @OnClick({R.id.right_iv, R.id.all_order_rl, R.id.pending_payment_iv, R.id.pending_delivery_iv, R.id.shipping_iv, R.id.my_team, R.id.address_manage, R.id.invite_friends, R.id.verified_iv, R.id.my_invitation_iv,R.id.super_member_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.right_iv://设置
@@ -134,6 +134,9 @@ public class MineFragment extends BaseFragment {
                 }
                 break;
             case R.id.my_invitation_iv://我的邀请
+                break;
+            case R.id.super_member_rl://超级会员
+                SuperMemberActivity.start(getActivity());
                 break;
             default:
         }

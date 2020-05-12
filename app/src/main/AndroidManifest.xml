@@ -150,6 +150,16 @@
             android:screenOrientation="nosensor"/>
         <activity android:name=".mine.ui.MyTeamActivity"
             android:screenOrientation="nosensor"/>
+        <activity android:name=".order.ui.GoodsOrderDetailsActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
+        <activity android:name=".order.ui.DeliveryinfoActivity"
+            android:theme="@style/TranslucentFullScreenTheme"
+            android:launchMode="singleTop"/>
+        <activity android:name=".coupon.ui.CouponActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".member.ui.SuperMemberActivity"
+            android:screenOrientation="nosensor"/>
 
     </application>
 

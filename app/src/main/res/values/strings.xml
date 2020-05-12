@@ -123,4 +123,34 @@
     <string name="in_group">拼团中</string>
     <string name="successful_team">拼团成功</string>
     <string name="daily_group">日常团</string>
+    <string name="order_detail">订单详情</string>
+    <string name="delivery_time">配送时间</string>
+    <string name="commodity_price">商品总价</string>
+    <string name="delivery_fee">基础配送费</string>
+    <string name="real_payment">实付款：</string>
+    <string name="copy">复制</string>
+    <string name="order_number">订单编号：</string>
+    <string name="order_time">下单时间：</string>
+    <string name="payment_method">支付方式：</string>
+    <string name="payment_time">付款时间：</string>
+    <string name="order_notes">订单备注：</string>
+    <string name="remaining_payment_time">剩余支付时间为：</string>
+    <string name="cancel_time_tip">15分钟内未支付，订单将自动取消</string>
+    <string name="copy_successfully">复制成功</string>
+    <string name="order_submission_successful">订单提交成功</string>
+    <string name="order_paid">订单已支付</string>
+    <string name="merchant_packaging">商家打包中</string>
+    <string name="delivery_shipping">正在配送中</string>
+    <string name="order_delivered">订单已送达</string>
+    <string name="unused">未使用</string>
+    <string name="used">已使用</string>
+    <string name="expired">已过期</string>
+    <string name="use">使用</string>
+    <string name="expiring">即将到期</string>
+    <string name="super_member">超级会员</string>
+    <string name="nonactivated">未开通</string>
+    <string name="super_member_description">超级会员说明</string>
+    <string name="member_buy">会员专享价｜省钱省心</string>
+
+
 </resources>

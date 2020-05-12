@@ -4,6 +4,7 @@
 	<dimen name="dp_m_90">-100.0000dp</dimen>
 	<dimen name="dp_m_89">-98.8889dp</dimen>
 	<dimen name="dp_m_88">-97.7778dp</dimen>
+	<dimen name="dp_m_85">-94.4444dp</dimen>
 	<dimen name="dp_m_84">-93.3333dp</dimen>
 	<dimen name="dp_m_81">-90.0000dp</dimen>
 	<dimen name="dp_m_75">-83.3333dp</dimen>
@@ -11,6 +12,7 @@
 	<dimen name="dp_m_66">-73.3333dp</dimen>
 	<dimen name="dp_m_60">-66.6667dp</dimen>
 	<dimen name="dp_m_52">-57.7778dp</dimen>
+	<dimen name="dp_m_48">-53.3333dp</dimen>
 	<dimen name="dp_m_30">-33.3333dp</dimen>
 	<dimen name="dp_m_25">-27.7778dp</dimen>
 	<dimen name="dp_m_20">-22.2222dp</dimen>
@@ -35,8 +37,10 @@
 	<dimen name="dp_6">6.6667dp</dimen>
 	<dimen name="dp_7">7.7778dp</dimen>
 	<dimen name="dp_8">8.8889dp</dimen>
+	<dimen name="dp_8_5">9.4444dp</dimen>
 	<dimen name="dp_9">10.0000dp</dimen>
 	<dimen name="dp_10">11.1111dp</dimen>
+	<dimen name="dp_10_5">11.6667dp</dimen>
 	<dimen name="dp_11">12.2222dp</dimen>
 	<dimen name="dp_12">13.3333dp</dimen>
 	<dimen name="dp_13">14.4444dp</dimen>
@@ -44,6 +48,7 @@
 	<dimen name="dp_14">15.5556dp</dimen>
 	<dimen name="dp_15">16.6667dp</dimen>
 	<dimen name="dp_16">17.7778dp</dimen>
+	<dimen name="dp_16_5">18.3333dp</dimen>
 	<dimen name="dp_17">18.8889dp</dimen>
 	<dimen name="dp_18">20.0000dp</dimen>
 	<dimen name="dp_19">21.1111dp</dimen>

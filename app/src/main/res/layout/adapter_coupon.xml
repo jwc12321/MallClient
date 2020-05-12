@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_9">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_94"
+            android:background="@mipmap/icon_coupon_red_bg"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_15"
+                android:orientation="horizontal">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/size15_color_app1_text_style"
+                    android:text="¥" />
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    android:id="@+id/amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/appText1"
+                    android:textSize="@dimen/sp_30"
+                    tools:text="1000" />
+            </LinearLayout>
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/condition"
+                style="@style/size11_color_app1_text_style"
+                android:layout_gravity="center_horizontal"
+                tools:text="满10000元可使用" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/limit"
+                style="@style/size11_color_app1_text_style"
+                android:layout_gravity="center_horizontal"
+                tools:text="仅限水果使用" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_94"
+            android:background="@mipmap/icon_coupon_white_bg">
+
+            <RelativeLayout
+                android:id="@+id/right_rl"
+                android:layout_width="@dimen/dp_66"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true">
+
+                <ImageView
+                    android:id="@+id/status_iv"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/coupon_type_select"
+                    android:visibility="gone" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/use_bt"
+                    style="@style/coupon_used_bt_style"
+                    android:text="@string/use" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/expiring"
+                    style="@style/coupon_expiring_bt_style"
+                    android:layout_alignRight="@id/use_bt"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="@string/expiring" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@id/right_rl">
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/size11_color_app2_text_style"/>
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

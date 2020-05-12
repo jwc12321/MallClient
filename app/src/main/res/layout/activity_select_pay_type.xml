@@ -84,7 +84,7 @@
 
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/confirm_bt"
-            style="@style/bottom_bt_style"
+            style="@style/pay_bottom_bt_style"
             android:layout_marginTop="@dimen/dp_6"
             android:text="@string/pay_now" />
     </LinearLayout>

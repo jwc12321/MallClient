@@ -135,6 +135,6 @@ public class AllOrdersFragment extends BaseFragment implements GoodsOrderAdapter
 
     @Override
     public void goOrderDetail(String id) {
-
+        GoodsOrderDetailsActivity.start(getActivity(),id);
     }
 }

@@ -148,6 +148,12 @@
         <item name="android:textSize">@dimen/sp_10</item>
         <item name="android:textColor">@color/appText1</item>
     </style>
+    <style name="size11_color_app1_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_11</item>
+        <item name="android:textColor">@color/appText1</item>
+    </style>
     <style name="size12_color_app1_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -158,6 +164,12 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/sp_15</item>
+        <item name="android:textColor">@color/appText1</item>
+    </style>
+    <style name="size16_color_app1_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_16</item>
         <item name="android:textColor">@color/appText1</item>
     </style>
     <style name="size14_color_app2_text_style">
@@ -277,6 +289,12 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/backGround1</item>
+    </style>
+    <style name="size15_color_back1_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_15</item>
         <item name="android:textColor">@color/backGround1</item>
     </style>
     <style name="size16_color_back1_text_style">
@@ -704,34 +722,35 @@
     </style>
     
     <style name="mine_info_ll_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:weightSum">4</item>
-    </style>
-
-    <style name="mine_info_up_tv_style">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
         <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+
+    <style name="mine_info_up_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/appText1</item>
         <item name="android:textSize">@dimen/sp_16</item>
         <item name="android:gravity">center</item>
     </style>
     <style name="mine_info_up_view_style">
         <item name="android:layout_width">@dimen/dp_1</item>
-        <item name="android:layout_height">@dimen/dp_17</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/appText1</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 
     <style name="mine_info_down_tv_style">
-        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/appText1</item>
         <item name="android:textSize">@dimen/sp_12</item>
         <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">@dimen/dp_7</item>
     </style>
 
     <style name="mine_order_left_iv_style">
@@ -836,4 +855,143 @@
         <item name="android:layout_marginLeft">@dimen/dp_5</item>
     </style>
 
+
+    <style name="order_detail_bt_ll_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_marginBottom">@dimen/dp_6</item>
+        <item name="android:layout_marginRight">@dimen/dp_15</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="order_detail_right_bt_style">
+        <item name="android:layout_width">@dimen/dp_88</item>
+        <item name="android:layout_height">@dimen/dp_33</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/appText1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/common_one_six_five_back_one_bg</item>
+        <item name="android:layout_marginLeft">@dimen/dp_11</item>
+    </style>
+
+    <style name="order_detail_left_bt_style">
+        <item name="android:layout_width">@dimen/dp_88</item>
+        <item name="android:layout_height">@dimen/dp_33</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/appText3</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/common_one_six_five_app_three_bg</item>
+    </style>
+
+    <style name="order_detail_tv_rl_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_34</item>
+    </style>
+    <style name="order_detail_left_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/appText3</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/dp_15</item>
+    </style>
+    <style name="order_detail_right_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/appText3</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginRight">@dimen/dp_15</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="copy_bt_style">
+        <item name="android:layout_width">@dimen/dp_42</item>
+        <item name="android:layout_height">@dimen/dp_21</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:textColor">@color/appText2</item>
+        <item name="android:background">@drawable/common_ten_five_back_nine_bg</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginRight">@dimen/dp_15</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="delivery_up_line_style">
+        <item name="android:layout_width">@dimen/dp_1</item>
+        <item name="android:layout_height">@dimen/dp_21</item>
+        <item name="android:background">@drawable/ver_line_select</item>
+        <item name="android:layout_marginLeft">@dimen/dp_24</item>
+    </style>
+
+    <style name="delivery_circle_style">
+        <item name="android:layout_width">@dimen/dp_12</item>
+        <item name="android:layout_height">@dimen/dp_12</item>
+        <item name="android:src">@drawable/delivery_circle_select</item>
+        <item name="android:layout_marginLeft">@dimen/dp_18</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="delivery_rl_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_53</item>
+    </style>
+
+    <style name="delivery_left_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_15</item>
+        <item name="android:textColor">@color/appText3</item>
+        <item name="android:layout_marginLeft">@dimen/dp_44</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="delivery_right_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:textColor">@color/appText2</item>
+        <item name="android:layout_marginRight">@dimen/dp_19</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="coupon_used_bt_style">
+        <item name="android:layout_width">@dimen/dp_52</item>
+        <item name="android:layout_height">@dimen/dp_20</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/appText1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@drawable/coupon_used_bg</item>
+    </style>
+
+    <style name="coupon_expiring_bt_style">
+        <item name="android:layout_width">@dimen/dp_48</item>
+        <item name="android:layout_height">@dimen/dp_14</item>
+        <item name="android:textSize">@dimen/sp_10</item>
+        <item name="android:textColor">@color/appText1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/common_two_back_one_bg</item>
+    </style>
+
+    <style name="open_member_bt_style">
+        <item name="android:layout_width">@dimen/dp_57</item>
+        <item name="android:layout_height">@dimen/dp_17</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:textColor">@color/backGround26</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/common_eight_five_back_two_seven_bg</item>
+    </style>
+
+    <style name="pay_bottom_bt_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_49</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textColor">@color/appText1</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:background">@drawable/pay_type_select</item>
+    </style>
 </resources>

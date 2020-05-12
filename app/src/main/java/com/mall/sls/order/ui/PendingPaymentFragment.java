@@ -131,6 +131,6 @@ public class PendingPaymentFragment extends BaseFragment implements GoodsOrderAd
 
     @Override
     public void goOrderDetail(String id) {
-
+        GoodsOrderDetailsActivity.start(getActivity(),id);
     }
 }

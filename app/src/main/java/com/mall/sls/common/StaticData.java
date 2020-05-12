@@ -24,5 +24,7 @@ public class StaticData {
     public static final String OCR_AGREEMENT="http://www.hhcc176.com/ocrAgreement.html";
     //选择的type
     public static final String CHOICE_TYPE="choiceType";
+    //订单id
+    public static final String GOODS_ORDER_ID="goodsOrderId";
 
 }
