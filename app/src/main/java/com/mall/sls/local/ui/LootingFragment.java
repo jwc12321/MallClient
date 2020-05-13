@@ -12,15 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
-import com.mall.sls.data.entity.GoodsItemInfo;
 import com.mall.sls.homepage.adapter.GoodsItemAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -68,14 +63,6 @@ public class LootingFragment extends BaseFragment implements GoodsItemAdapter.On
         goodsItemAdapter=new GoodsItemAdapter(getActivity());
         goodsItemAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(goodsItemAdapter);
-        List<GoodsItemInfo> goodsItemInfos=new ArrayList<>();
-        GoodsItemInfo goodsItemInfo=new GoodsItemInfo("苹果","哈想吃","12","14");
-        GoodsItemInfo goodsItemInfo1=new GoodsItemInfo("香蕉","房价肯定就发的","15","22");
-        GoodsItemInfo goodsItemInfo2=new GoodsItemInfo("橘子","开发了都JFK的肌肤","18","66");
-        goodsItemInfos.add(goodsItemInfo);
-        goodsItemInfos.add(goodsItemInfo1);
-        goodsItemInfos.add(goodsItemInfo2);
-        goodsItemAdapter.setData(goodsItemInfos);
     }
 
     SimpleMultiPurposeListener simpleMultiPurposeListener = new SimpleMultiPurposeListener() {
@@ -99,11 +86,11 @@ public class LootingFragment extends BaseFragment implements GoodsItemAdapter.On
         }
     }
 
-
     @Override
-    public void goOrdinaryGoods() {
+    public void goOrdinaryGoodsDetails(String goodsId) {
 
     }
+
 
     public interface LootingListener {
         void lootingChoice(String type);

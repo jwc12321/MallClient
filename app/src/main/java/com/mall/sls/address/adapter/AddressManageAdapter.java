@@ -88,14 +88,14 @@ public class AddressManageAdapter extends RecyclerView.Adapter<AddressManageAdap
 
         public void bindData(AddressInfo addressInfo) {
             name.setText(addressInfo.getName());
-            address.setText(addressInfo.getAddress());
-            phone.setText(addressInfo.getPhone());
-            if(TextUtils.equals("1", addressInfo.getStatus())&&!TextUtils.isEmpty(addressInfo.getLabel())){
-                address.addressTag("默认",addressInfo.getLabel(),addressInfo.getAddress());
-            }else if(!TextUtils.equals("1", addressInfo.getStatus())&&!TextUtils.isEmpty(addressInfo.getLabel())){
-                address.setSingleTagAndContent(addressInfo.getLabel(),addressInfo.getAddress());
+            String addressStr=addressInfo.getProvince()+addressInfo.getCity()+addressInfo.getCounty()+addressInfo.getAddressDetail();
+            phone.setText(addressInfo.getTel());
+            if(addressInfo.getDefault()&&!TextUtils.isEmpty(addressInfo.getType())){
+                address.addressTag("默认",addressInfo.getType(),addressStr);
+            }else if(!addressInfo.getDefault()&&!TextUtils.isEmpty(addressInfo.getType())){
+                address.setSingleTagAndContent(addressInfo.getType(),addressStr);
             }else {
-                address.setText(addressInfo.getAddress());
+                address.setText(addressStr);
             }
         }
     }

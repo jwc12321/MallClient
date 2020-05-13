@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.mall.sls.BuildConfig;
+import com.mall.sls.common.unit.AreaCodeManager;
 import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.data.EntitySerializer;
@@ -116,8 +117,9 @@ public class RestApiModule {
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
                 Request request = original.newBuilder()
-                        .header("Authorization", TokenManager.getToken() + "")
+                        .header("token", TokenManager.getToken() + "")
                         .header("X-Hc-Timestamp", FormatUtil.timeSecond())
+                        .header("areaCode", AreaCodeManager.getAreaCode()+"")
                         .build();
                 return chain.proceed(request);
             }

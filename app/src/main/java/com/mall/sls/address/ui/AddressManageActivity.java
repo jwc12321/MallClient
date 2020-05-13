@@ -13,13 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.address.AddressContract;
+import com.mall.sls.address.AddressModule;
+import com.mall.sls.address.DaggerAddressComponent;
 import com.mall.sls.address.adapter.AddressManageAdapter;
+import com.mall.sls.address.presenter.AddressManagePresenter;
 import com.mall.sls.certify.ui.CerifyPayActivity;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.AddressInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +35,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/8.
  * 描述：地址管理
  */
-public class AddressManageActivity extends BaseActivity {
+public class AddressManageActivity extends BaseActivity implements AddressContract.AddressManageView {
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.title)
@@ -46,6 +52,8 @@ public class AddressManageActivity extends BaseActivity {
     LinearLayout noAddressLl;
 
     private AddressManageAdapter addressManageAdapter;
+    @Inject
+    AddressManagePresenter addressManagePresenter;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, AddressManageActivity.class);
@@ -62,17 +70,24 @@ public class AddressManageActivity extends BaseActivity {
         initView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        addressManagePresenter.getAddressInfo();
+    }
+
     private void initView(){
         addressManageAdapter=new AddressManageAdapter(this);
         addressRv.setAdapter(addressManageAdapter);
-        AddressInfo addressInfo1=new AddressInfo("小蒋","198898989","犯得上发生纠纷附近的肌肤的科技发达开始JFK事件发生的","1","家");
-        AddressInfo addressInfo2=new AddressInfo("小回复","889898989","肌肤的说服力的事件发生的","2","学校");
-        AddressInfo addressInfo3=new AddressInfo("小减肥的","9090090909","u夫欸蕊蕊房间数量JFK地方","2","");
-        List<AddressInfo> addressInfos=new ArrayList<>();
-        addressInfos.add(addressInfo1);
-        addressInfos.add(addressInfo2);
-        addressInfos.add(addressInfo3);
-        addressManageAdapter.setData(addressInfos);
+    }
+
+    @Override
+    protected void initializeInjector() {
+        DaggerAddressComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .addressModule(new AddressModule(this))
+                .build()
+                .inject(this);
     }
 
     @OnClick({R.id.confirm_bt, R.id.back,R.id.right_tv})
@@ -80,7 +95,7 @@ public class AddressManageActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.confirm_bt:
             case R.id.right_tv:
-                AddAddressActivity.start(this);
+                AddAddressActivity.start(this,null);
                 break;
             case R.id.back:
                 finish();
@@ -94,5 +109,23 @@ public class AddressManageActivity extends BaseActivity {
     @Override
     public View getSnackBarHolderView() {
         return null;
+    }
+
+
+    @Override
+    public void setPresenter(AddressContract.AddressManagePresenter presenter) {
+
+    }
+
+    @Override
+    public void renderAddressInfo(List<AddressInfo> addressInfos) {
+        if(addressInfos!=null&&addressInfos.size()>0){
+            addressRv.setVisibility(View.VISIBLE);
+            noAddressLl.setVisibility(View.GONE);
+        }else {
+            addressRv.setVisibility(View.GONE);
+            noAddressLl.setVisibility(View.VISIBLE);
+        }
+        addressManageAdapter.setData(addressInfos);
     }
 }

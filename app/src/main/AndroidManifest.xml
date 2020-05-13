@@ -160,7 +160,11 @@
             android:screenOrientation="nosensor"/>
         <activity android:name=".member.ui.SuperMemberActivity"
             android:screenOrientation="nosensor"/>
-
+        <activity android:name=".coupon.ui.SelectCouponActivity"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".mine.ui.CustomerServiceActivity"
+            android:theme="@style/TranslucentFullScreenTheme"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

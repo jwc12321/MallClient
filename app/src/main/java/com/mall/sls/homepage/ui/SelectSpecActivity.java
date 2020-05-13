@@ -19,8 +19,6 @@ import com.mall.sls.common.widget.shoppingselect.OnSelectedListener;
 import com.mall.sls.common.widget.shoppingselect.ShoppingSelectView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.GoodsSpec;
-import com.mall.sls.data.entity.ProductSku;
-import com.mall.sls.data.entity.ProductSkuInfo;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -90,36 +88,6 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
     }
 
     private void initSpec() {
-        List<String> specs = new ArrayList<>();
-        specs.add("黄色");
-        specs.add("白色");
-        specs.add("黑色");
-        specs.add("橘色");
-        specs.add("紫色");
-        specs.add("蓝色");
-        specs.add("绿色");
-        specs.add("橙色");
-        List<String> specs1 = new ArrayList<>();
-        specs1.add("L");
-        specs1.add("XL");
-        specs1.add("M");
-        specs1.add("XXL");
-        List<String> specs2 = new ArrayList<>();
-        specs2.add("17");
-        specs2.add("30");
-        specs2.add("42");
-        GoodsSpec goodsSpec = new GoodsSpec();
-        goodsSpec.setName("颜色");
-        goodsSpec.setSpecs(specs);
-        GoodsSpec goodsSpec1 = new GoodsSpec();
-        goodsSpec1.setName("尺码");
-        goodsSpec1.setSpecs(specs1);
-        GoodsSpec goodsSpec2 = new GoodsSpec();
-        goodsSpec2.setName("大小");
-        goodsSpec2.setSpecs(specs2);
-        goodsSpecs.add(goodsSpec);
-        goodsSpecs.add(goodsSpec1);
-        goodsSpecs.add(goodsSpec2);
         shopselectView.setData(goodsSpecs);
     }
 

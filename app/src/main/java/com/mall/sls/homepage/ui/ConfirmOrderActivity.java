@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import com.mall.sls.R;
 import com.mall.sls.common.widget.textview.BlackDrawTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.coupon.ui.SelectCouponActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +52,20 @@ public class ConfirmOrderActivity extends BaseActivity {
     ConventionalTextView totalAmount;
     @BindView(R.id.confirm_bt)
     ConventionalTextView confirmBt;
+    @BindView(R.id.right_arrow_iv)
+    ImageView rightArrowIv;
+    @BindView(R.id.no_address_tv)
+    ConventionalTextView noAddressTv;
+    @BindView(R.id.name)
+    MediumThickTextView name;
+    @BindView(R.id.phone)
+    ConventionalTextView phone;
+    @BindView(R.id.address)
+    ConventionalTextView address;
+    @BindView(R.id.address_rl)
+    LinearLayout addressRl;
+    @BindView(R.id.coupon_rl)
+    RelativeLayout couponRl;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, ConfirmOrderActivity.class);
@@ -64,7 +80,7 @@ public class ConfirmOrderActivity extends BaseActivity {
         setHeight(back, title, null);
     }
 
-    @OnClick({R.id.back, R.id.confirm_bt})
+    @OnClick({R.id.back, R.id.confirm_bt, R.id.coupon_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -72,6 +88,9 @@ public class ConfirmOrderActivity extends BaseActivity {
                 break;
             case R.id.confirm_bt://去支付
                 SelectPayTypeActivity.start(this);
+                break;
+            case R.id.coupon_rl:
+                SelectCouponActivity.start(this);
                 break;
             default:
         }

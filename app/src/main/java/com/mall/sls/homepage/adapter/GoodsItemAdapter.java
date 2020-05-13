@@ -2,7 +2,9 @@ package com.mall.sls.homepage.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.opengl.Visibility;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
+import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.VerifyManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DrawTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -61,7 +65,7 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.goOrdinaryGoods();
+                    onItemClickListener.goOrdinaryGoodsDetails(goodsItemInfo.getGoodsId());
                 }
             }
         });
@@ -88,22 +92,26 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
         MediumThickTextView currentPrice;
         @BindView(R.id.original_price)
         DrawTextView originalPrice;
+        @BindView(R.id.groupType)
+        ConventionalTextView groupType;
+
         public GoodsItemView(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
         public void bindData(GoodsItemInfo goodsItemInfo) {
-            GlideHelper.load((Activity) context, "", R.mipmap.ic_launcher, goodsIv);
+            GlideHelper.load((Activity) context, goodsItemInfo.getPicUrl(), R.mipmap.ic_launcher, goodsIv);
             goodsName.setText(goodsItemInfo.getName());
-            goodsIntroduction.setText(goodsItemInfo.getGoodsDetail());
-            currentPrice.setText("¥" + goodsItemInfo.getCurrentPirce());
-            originalPrice.setText("¥" + goodsItemInfo.getOrPirce());
+            goodsIntroduction.setText(goodsItemInfo.getBrief());
+            currentPrice.setText("¥" + goodsItemInfo.getRetailPrice());
+            originalPrice.setText("¥" + goodsItemInfo.getCounterPrice());
+            groupType.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,goodsItemInfo.getGroupType())?View.VISIBLE:View.GONE );
         }
     }
 
     public interface OnItemClickListener {
-        void goOrdinaryGoods();
+        void goOrdinaryGoodsDetails(String goodsId);
     }
 
     private OnItemClickListener onItemClickListener;

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/dp_44"
+        android:layout_marginRight="@dimen/dp_44"
+        android:background="@drawable/common_four_app_one_bg"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/close_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:paddingLeft="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_15"
+            android:paddingRight="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_8"
+            android:src="@mipmap/icon_close" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/icon_service" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/size15_color_app3_text_style"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_14"
+            android:text="@string/service_wechat" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/size16_color_app3_text_style"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_14"
+            tools:text="123456" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/confirm_bt"
+            android:layout_width="@dimen/dp_80"
+            android:layout_height="@dimen/dp_24"
+            android:background="@drawable/common_twelve_back_one_bg"
+            android:text="@string/copy_wechat"
+            android:textColor="@color/backGround1"
+            android:textSize="@dimen/sp_15"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_13"/>
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/size16_color_app3_text_style"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_16"
+            android:text="@string/add_wechat"
+            android:layout_marginBottom="@dimen/dp_39"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

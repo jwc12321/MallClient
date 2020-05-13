@@ -1,0 +1,83 @@
+package com.mall.sls.address.presenter;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.mall.sls.address.AddressContract;
+import com.mall.sls.common.RequestUrl;
+import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.SignUnit;
+import com.mall.sls.data.RxSchedulerTransformer;
+import com.mall.sls.data.remote.RestApiService;
+import com.mall.sls.data.remote.RxRemoteDataParse;
+import com.mall.sls.data.request.AddAddressRequest;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+
+/**
+ * @author jwc on 2020/5/13.
+ * 描述：
+ */
+public class AddAddressPresenter implements AddressContract.AddAddressPresenter {
+    private RestApiService restApiService;
+    private List<Disposable> mDisposableList = new ArrayList<>();
+    private AddressContract.AddAddressView addAddressView;
+    private Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+
+    @Inject
+    public AddAddressPresenter(RestApiService restApiService, AddressContract.AddAddressView addAddressView) {
+        this.restApiService = restApiService;
+        this.addAddressView = addAddressView;
+    }
+
+    @Inject
+    public void setupListener() {
+        addAddressView.setPresenter(this);
+    }
+
+    @Override
+    public void addAddress(AddAddressRequest addAddressRequest) {
+        addAddressView.showLoading(StaticData.PROCESSING);
+        String sign= SignUnit.signPost(RequestUrl.LOGIN_IN_URL,gson.toJson(addAddressRequest));
+        Disposable disposable = restApiService.addAddress(sign,addAddressRequest)
+                .flatMap(new RxRemoteDataParse<String>())
+                .compose(new RxSchedulerTransformer<String>())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String str) throws Exception {
+                        addAddressView.dismissLoading();
+                        addAddressView.renderAddAddress();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        addAddressView.dismissLoading();
+                        addAddressView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void destroy() {
+        for (Disposable disposable : mDisposableList) {
+            if (!disposable.isDisposed()) {
+                disposable.dispose();
+            }
+        }
+    }
+}

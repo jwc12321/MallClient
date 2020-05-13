@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_9"
+        android:background="@drawable/common_four_app_one_bg"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_73">
+
+            <LinearLayout
+                android:id="@+id/amount_ll"
+                android:layout_width="@dimen/dp_107"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_12"
+                    android:orientation="horizontal">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/size15_color_back1_text_style"
+                        android:text="¥" />
+
+                    <com.mall.sls.common.widget.textview.MediumThickTextView
+                        android:id="@+id/amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/backGround1"
+                        android:textSize="@dimen/sp_30"
+                        tools:text="1000" />
+                </LinearLayout>
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/condition"
+                    style="@style/size11_color_app3_text_style"
+                    android:layout_gravity="center_horizontal"
+                    tools:text="满60元可使用" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/dp_1"
+                android:layout_height="@dimen/dp_50"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/amount_ll"
+                android:background="@color/backGround9" />
+
+
+            <ImageView
+                android:id="@+id/select_weixin_iv"
+                style="@style/cerify_pay_right_iv_style"
+                android:layout_marginRight="@dimen/dp_27"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_1"
+                android:layout_marginRight="@dimen/dp_26"
+                android:layout_toLeftOf="@id/select_weixin_iv"
+                android:layout_toRightOf="@id/amount_ll"
+                android:orientation="vertical">
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    style="@style/size15_color_app3_text_style"
+                    android:layout_marginLeft="@dimen/dp_14"
+                    android:layout_marginTop="@dimen/dp_19"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    tools:text="七月一日新人优惠附近的开发的卷" />
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    style="@style/size11_color_app2_text_style"
+                    android:layout_marginLeft="@dimen/dp_14"
+                    android:layout_marginTop="@dimen/dp_3"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    tools:text="2019-09-09" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            style="@style/dotted_line_style"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_3"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_22">
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/use_tip"
+                   style="@style/size11_color_app3_text_style"
+                    tools:text="仅用于指定商品"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_15"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/icon_down_arrow"
+                    android:layout_toRightOf="@id/use_tip"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/icon_up_arrow"
+                    android:layout_centerHorizontal="true"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"/>
+            </RelativeLayout>
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/size11_color_app2_text_style"
+                tools:text="限2020-05-12至2020-05-13 \n限水果类产品使用"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginBottom="@dimen/dp_3"/>
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="@dimen/dp_10"
+        android:layout_height="@dimen/dp_10"
+        android:background="@drawable/common_five_back_six_bg"
+        android:layout_marginTop="@dimen/dp_68"
+        android:layout_marginLeft="@dimen/dp_10"/>
+    <View
+        android:layout_width="@dimen/dp_10"
+        android:layout_height="@dimen/dp_10"
+        android:background="@drawable/common_five_back_six_bg"
+        android:layout_marginTop="@dimen/dp_68"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_alignParentRight="true"/>
+</RelativeLayout>

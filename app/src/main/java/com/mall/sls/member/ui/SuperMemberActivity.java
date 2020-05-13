@@ -65,13 +65,6 @@ public class SuperMemberActivity extends BaseActivity {
         memberGoodsItemAdapter=new MemberGoodsItemAdapter(this);
         recordRv.setAdapter(memberGoodsItemAdapter);
         List<GoodsItemInfo> goodsItemInfos=new ArrayList<>();
-        GoodsItemInfo goodsItemInfo=new GoodsItemInfo("苹果","哈想吃","12","14");
-        GoodsItemInfo goodsItemInfo1=new GoodsItemInfo("香蕉","房价肯定就发的","15","22");
-        GoodsItemInfo goodsItemInfo2=new GoodsItemInfo("橘子","开发了都JFK的肌肤","18","66");
-        goodsItemInfos.add(goodsItemInfo);
-        goodsItemInfos.add(goodsItemInfo1);
-        goodsItemInfos.add(goodsItemInfo2);
-        memberGoodsItemAdapter.setData(goodsItemInfos);
     }
 
     @OnClick({R.id.confirm_bt, R.id.back})

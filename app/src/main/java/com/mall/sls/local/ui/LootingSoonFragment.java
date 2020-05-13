@@ -69,14 +69,6 @@ public class LootingSoonFragment extends BaseFragment implements LootingSoonAdap
         lootingSoonAdapter=new LootingSoonAdapter(getActivity());
         lootingSoonAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(lootingSoonAdapter);
-        List<GoodsItemInfo> goodsItemInfos=new ArrayList<>();
-        GoodsItemInfo goodsItemInfo=new GoodsItemInfo("苹果","哈想吃","12","14");
-        GoodsItemInfo goodsItemInfo1=new GoodsItemInfo("香蕉","房价肯定就发的","15","22");
-        GoodsItemInfo goodsItemInfo2=new GoodsItemInfo("橘子","开发了都JFK的肌肤","18","66");
-        goodsItemInfos.add(goodsItemInfo);
-        goodsItemInfos.add(goodsItemInfo1);
-        goodsItemInfos.add(goodsItemInfo2);
-        lootingSoonAdapter.setData(goodsItemInfos);
     }
 
     SimpleMultiPurposeListener simpleMultiPurposeListener = new SimpleMultiPurposeListener() {

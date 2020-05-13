@@ -1,20 +1,59 @@
 package com.mall.sls.data.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * @author jwc on 2020/5/9.
  * 描述：
  */
 public class GoodsItemInfo {
+    //产品秒速
+    @SerializedName("brief")
+    private String brief;
+    //商品id
+    @SerializedName("goodsId")
+    private String goodsId;
+    //团购规则id
+    @SerializedName("grouponRulesId")
+    private String grouponRulesId;
+    //名字
+    @SerializedName("name")
     private String name;
-    private String goodsDetail;
-    private String currentPirce;
-    private String orPirce;
+    //图片
+    @SerializedName("picUrl")
+    private String picUrl;
+    //原价
+    @SerializedName("counterPrice")
+    private String counterPrice;
+    //团购价
+    @SerializedName("retailPrice")
+    private String retailPrice;
+    //团类型0日常团 1活动团
+    @SerializedName("groupType")
+    private String groupType;
 
-    public GoodsItemInfo(String name, String goodsDetail, String currentPirce, String orPirce) {
-        this.name = name;
-        this.goodsDetail = goodsDetail;
-        this.currentPirce = currentPirce;
-        this.orPirce = orPirce;
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public String getGrouponRulesId() {
+        return grouponRulesId;
+    }
+
+    public void setGrouponRulesId(String grouponRulesId) {
+        this.grouponRulesId = grouponRulesId;
     }
 
     public String getName() {
@@ -25,27 +64,35 @@ public class GoodsItemInfo {
         this.name = name;
     }
 
-    public String getGoodsDetail() {
-        return goodsDetail;
+    public String getPicUrl() {
+        return picUrl;
     }
 
-    public void setGoodsDetail(String goodsDetail) {
-        this.goodsDetail = goodsDetail;
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
-    public String getCurrentPirce() {
-        return currentPirce;
+    public String getCounterPrice() {
+        return counterPrice;
     }
 
-    public void setCurrentPirce(String currentPirce) {
-        this.currentPirce = currentPirce;
+    public void setCounterPrice(String counterPrice) {
+        this.counterPrice = counterPrice;
     }
 
-    public String getOrPirce() {
-        return orPirce;
+    public String getRetailPrice() {
+        return retailPrice;
     }
 
-    public void setOrPirce(String orPirce) {
-        this.orPirce = orPirce;
+    public void setRetailPrice(String retailPrice) {
+        this.retailPrice = retailPrice;
+    }
+
+    public String getGroupType() {
+        return groupType;
+    }
+
+    public void setGroupType(String groupType) {
+        this.groupType = groupType;
     }
 }

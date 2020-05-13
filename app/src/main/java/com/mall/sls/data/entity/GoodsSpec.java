@@ -12,8 +12,8 @@ import java.util.List;
 public class GoodsSpec implements Serializable {
     @SerializedName("name")
     private String name;
-    @SerializedName("spec")
-    private List<String> specs;
+    @SerializedName("valueList")
+    private List<ProductSkuInfo> specs;
 
     public String getName() {
         return name;
@@ -23,11 +23,11 @@ public class GoodsSpec implements Serializable {
         this.name = name;
     }
 
-    public List<String> getSpecs() {
+    public List<ProductSkuInfo> getSpecs() {
         return specs;
     }
 
-    public void setSpecs(List<String> specs) {
+    public void setSpecs(List<ProductSkuInfo> specs) {
         this.specs = specs;
     }
 }

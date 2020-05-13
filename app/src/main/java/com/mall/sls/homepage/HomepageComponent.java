@@ -3,6 +3,7 @@ package com.mall.sls.homepage;
 import com.mall.sls.ActivityScope;
 import com.mall.sls.ApplicationComponent;
 import com.mall.sls.homepage.ui.HomepageFragment;
+import com.mall.sls.homepage.ui.OrdinaryGoodsDetailActivity;
 
 import dagger.Component;
 
@@ -10,4 +11,5 @@ import dagger.Component;
 @Component(dependencies = ApplicationComponent.class, modules = {HomepageModule.class})
 public interface HomepageComponent {
     void inject(HomepageFragment homepageFragment);
+    void inject(OrdinaryGoodsDetailActivity ordinaryGoodsDetailActivity);
 }

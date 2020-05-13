@@ -23,12 +23,20 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
 import com.mall.sls.common.RequestCodeStatic;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.location.LocationHelper;
+import com.mall.sls.common.unit.AreaCodeManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.BannerInfo;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.GoodsItemInfo;
+import com.mall.sls.data.entity.HomePageInfo;
+import com.mall.sls.homepage.DaggerHomepageComponent;
+import com.mall.sls.homepage.HomepageContract;
+import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.adapter.GoodsItemAdapter;
+import com.mall.sls.homepage.presenter.HomePagePresenter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -37,6 +45,8 @@ import com.stx.xhb.androidx.XBanner;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -44,7 +54,7 @@ import butterknife.ButterKnife;
  * @author jwc on 2020/5/7.
  * 描述：
  */
-public class HomepageFragment extends BaseFragment implements GoodsItemAdapter.OnItemClickListener{
+public class HomepageFragment extends BaseFragment implements HomepageContract.HomePageView,GoodsItemAdapter.OnItemClickListener{
 
     @BindView(R.id.small_)
     MediumThickTextView small;
@@ -75,6 +85,10 @@ public class HomepageFragment extends BaseFragment implements GoodsItemAdapter.O
 
     private List<CustomViewsInfo> data;
     private GoodsItemAdapter goodsItemAdapter;
+    private List<BannerInfo> bannerInfos;
+    private String areaCode;
+    @Inject
+    HomePagePresenter homePagePresenter;
 
     public static HomepageFragment newInstance() {
         HomepageFragment fragment = new HomepageFragment();
@@ -107,31 +121,12 @@ public class HomepageFragment extends BaseFragment implements GoodsItemAdapter.O
         mapLocal();
         xBannerInit();
         initAdapter();
-        if (data == null) {
-            data = new ArrayList<>();
-        } else {
-            data.clear();
-        }
-        data.add(new CustomViewsInfo("http://www.baidu.com/img/bdlogo.png"));
-        data.add(new CustomViewsInfo("http://www.baidu.com/img/bdlogo.png"));
-        data.add(new CustomViewsInfo("http://www.baidu.com/img/bdlogo.png"));
-        banner.setPointsIsVisible(data.size() > 1);
-        banner.setAutoPlayAble(data.size() > 1);
-        banner.setBannerData(R.layout.xbanner_item, data);
     }
 
     private void initAdapter(){
         goodsItemAdapter=new GoodsItemAdapter(getActivity());
         goodsItemAdapter.setOnItemClickListener(this);
         goodsRv.setAdapter(goodsItemAdapter);
-        List<GoodsItemInfo> goodsItemInfos=new ArrayList<>();
-        GoodsItemInfo goodsItemInfo=new GoodsItemInfo("苹果","哈想吃","12","14");
-        GoodsItemInfo goodsItemInfo1=new GoodsItemInfo("香蕉","房价肯定就发的","15","22");
-        GoodsItemInfo goodsItemInfo2=new GoodsItemInfo("橘子","开发了都JFK的肌肤","18","66");
-        goodsItemInfos.add(goodsItemInfo);
-        goodsItemInfos.add(goodsItemInfo1);
-        goodsItemInfos.add(goodsItemInfo2);
-        goodsItemAdapter.setData(goodsItemInfos);
     }
 
     private void xBannerInit() {
@@ -165,12 +160,16 @@ public class HomepageFragment extends BaseFragment implements GoodsItemAdapter.O
                     city = "";
                     longitude = "";
                     latitude = "";
+                    areaCode="";
                 } else {
                     city = aMapLocation.getDistrict();
                     longitude = aMapLocation.getLongitude() + "";
                     latitude = aMapLocation.getLatitude() + "";
+                    areaCode=aMapLocation.getAdCode()+"";
                 }
+                AreaCodeManager.saveAreaCode(areaCode);
                 localCity.setText(city);
+                homePagePresenter.getHomePageInfo(StaticData.REFLASH_ONE);
             }
         });
 
@@ -183,6 +182,7 @@ public class HomepageFragment extends BaseFragment implements GoodsItemAdapter.O
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
+            homePagePresenter.getHomePageInfo(StaticData.REFLASH_ZERO);
         }
 
         @Override
@@ -207,7 +207,48 @@ public class HomepageFragment extends BaseFragment implements GoodsItemAdapter.O
     }
 
     @Override
-    public void goOrdinaryGoods() {
-        OrdinaryGoodsDetailActivity.start(getActivity());
+    protected void initializeInjector() {
+        DaggerHomepageComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .homepageModule(new HomepageModule(this))
+                .build()
+                .inject(this);
+    }
+
+    @Override
+    public void goOrdinaryGoodsDetails(String goodsId) {
+        OrdinaryGoodsDetailActivity.start(getActivity(),goodsId);
+    }
+
+    @Override
+    public void renderHomePageInfo(HomePageInfo homePageInfo) {
+        refreshLayout.finishRefresh();
+        if(homePageInfo!=null){
+            if(TextUtils.equals(StaticData.REFLASH_ONE,homePageInfo.getStatus())){
+                //开通
+                goodsItemAdapter.setData(homePageInfo.getGoodsItemInfos());
+            }else {
+
+            }
+            bannerInfos=homePageInfo.getBannerInfos();
+            if (data == null) {
+                data = new ArrayList<>();
+            } else {
+                data.clear();
+            }
+            if (bannerInfos != null) {
+                for (BannerInfo bannerInfo : bannerInfos) {
+                    data.add(new CustomViewsInfo(bannerInfo.getUrl()));
+                }
+            }
+            banner.setPointsIsVisible(data.size() > 1);
+            banner.setAutoPlayAble(data.size() > 1);
+            banner.setBannerData(R.layout.xbanner_item, data);
+        }
+    }
+
+    @Override
+    public void setPresenter(HomepageContract.HomePagePresenter presenter) {
+
     }
 }

@@ -2,6 +2,7 @@ package com.mall.sls.common.widget.shoppingselect;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.mall.sls.R;
 import com.mall.sls.common.unit.TextViewttf;
+import com.mall.sls.data.entity.GoodsItemInfo;
 import com.mall.sls.data.entity.GoodsSpec;
 
 import java.util.List;
@@ -59,6 +61,8 @@ public class ShoppingSelectView extends LinearLayout {
      * 选择后的回调监听
      */
     private OnSelectedListener listener;
+    private List<String> checkSkus;
+
 
 
     public ShoppingSelectView(Context context) {
@@ -126,8 +130,11 @@ public class ShoppingSelectView extends LinearLayout {
                 button.setBackgroundResource(R.drawable.tv_sel);
                 button.setButtonDrawable(android.R.color.transparent);
                 button.setTextSize(14);
-                button.setText(attr.getSpecs().get(i));
+                button.setText(attr.getSpecs().get(i).getValue());
                 button.setTextColor(getResources().getColorStateList(R.color.spec_text_select));
+                if(checkSkus.size()==list.size()) {
+                    button.setChecked(TextUtils.equals(attr.getSpecs().get(i).getValue(),checkSkus.get(z)));
+                }
                 layout.addView(button);
             }
             addView(layout);
@@ -143,6 +150,9 @@ public class ShoppingSelectView extends LinearLayout {
         return (int) (dpValue * scale + 0.5f);
     }
 
+    public void setCheckSkus(List<String> checkSkus) {
+        this.checkSkus = checkSkus;
+    }
     public void setData(List<GoodsSpec> data) {
         list = data;
         getView();

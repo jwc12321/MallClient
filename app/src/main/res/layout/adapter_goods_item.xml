@@ -33,6 +33,7 @@
             android:orientation="horizontal">
 
             <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/groupType"
                 android:layout_width="@dimen/dp_36"
                 android:layout_height="@dimen/dp_18"
                 android:layout_marginRight="@dimen/dp_4"

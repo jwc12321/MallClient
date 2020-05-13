@@ -15,14 +15,23 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.CustomViewsInfo;
+import com.mall.sls.data.entity.GoodsDetailsInfo;
+import com.mall.sls.homepage.DaggerHomepageComponent;
+import com.mall.sls.homepage.HomepageContract;
+import com.mall.sls.homepage.HomepageModule;
+import com.mall.sls.homepage.presenter.GoodsDetailsPresenter;
+import com.mall.sls.mine.ui.CustomerServiceActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.stx.xhb.androidx.XBanner;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +41,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/9.
  * 描述：普通商品详情
  */
-public class OrdinaryGoodsDetailActivity extends BaseActivity {
+public class OrdinaryGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView {
     @BindView(R.id.banner)
     XBanner banner;
     @BindView(R.id.back)
@@ -83,9 +92,13 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity {
     LinearLayout individualShoppingTv;
 
     private List<CustomViewsInfo> data;
+    private String goodsId;
+    @Inject
+    GoodsDetailsPresenter goodsDetailsPresenter;
 
-    public static void start(Context context) {
+    public static void start(Context context,String goodsId) {
         Intent intent = new Intent(context, OrdinaryGoodsDetailActivity.class);
+        intent.putExtra(StaticData.GOODS_ID,goodsId);
         context.startActivity(intent);
     }
 
@@ -99,18 +112,10 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity {
     }
 
     private void initView() {
+        goodsId=getIntent().getStringExtra(StaticData.GOODS_ID);
         xBannerInit();
-        if (data == null) {
-            data = new ArrayList<>();
-        } else {
-            data.clear();
-        }
-        data.add(new CustomViewsInfo("http://www.baidu.com/img/bdlogo.png"));
-        data.add(new CustomViewsInfo("http://www.baidu.com/img/bdlogo.png"));
-        data.add(new CustomViewsInfo("http://www.baidu.com/img/bdlogo.png"));
-        banner.setPointsIsVisible(data.size() > 1);
-        banner.setAutoPlayAble(data.size() > 1);
-        banner.setBannerData(R.layout.xbanner_zero_item, data);
+        goodsDetailsPresenter.getGoodsDetails(goodsId);
+
     }
 
     private void xBannerInit() {
@@ -132,7 +137,16 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.back, R.id.individual_shopping_tv,R.id.initiate_bill_bt})
+    @Override
+    protected void initializeInjector() {
+        DaggerHomepageComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .homepageModule(new HomepageModule(this))
+                .build()
+                .inject(this);
+    }
+
+    @OnClick({R.id.back, R.id.individual_shopping_tv,R.id.initiate_bill_bt,R.id.service_iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -144,6 +158,9 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity {
             case R.id.initiate_bill_bt://发起拼单
                 ConfirmOrderActivity.start(this);
                 break;
+            case R.id.service_iv:
+                CustomerServiceActivity.start(this);
+                break;
             default:
         }
     }
@@ -151,5 +168,17 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity {
     @Override
     public View getSnackBarHolderView() {
         return null;
+    }
+
+    @Override
+    public void renderGoodsDetails(GoodsDetailsInfo goodsDetailsInfo) {
+        if(goodsDetailsInfo!=null){
+
+        }
+    }
+
+    @Override
+    public void setPresenter(HomepageContract.GoodsDetailsPresenter presenter) {
+
     }
 }

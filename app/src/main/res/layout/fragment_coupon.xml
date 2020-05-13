@@ -35,7 +35,7 @@
                     android:clickable="true"
                     android:nestedScrollingEnabled="false"
                     app:layoutManager="@string/layoutManager_LinearLayout"
-                    tools:listitem="@layout/adapter_goods_order"
+                    tools:listitem="@layout/adapter_coupon"
                     android:layout_marginBottom="@dimen/dp_14"
                     android:visibility="visible"/>
                 <LinearLayout

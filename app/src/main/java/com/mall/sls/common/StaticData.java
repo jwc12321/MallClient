@@ -9,8 +9,8 @@ public class StaticData {
     public static final String PROCESSING ="3";
     //list每一页取10个
     public static final String TEN_LIST_SIZE = "10";
-    public static final String REFLASH_ONE = "1";
     public static final String REFLASH_ZERO = "0";
+    public static final String REFLASH_ONE = "1";
 
     //通用文本title
     public static final String COMMON_TITLE = "commonTitle";
@@ -26,5 +26,9 @@ public class StaticData {
     public static final String CHOICE_TYPE="choiceType";
     //订单id
     public static final String GOODS_ORDER_ID="goodsOrderId";
+    //商品id
+    public static final String GOODS_ID="goodsId";
+    //地址
+    public static final String ADDRESS_INFO="addressInfo";
 
 }

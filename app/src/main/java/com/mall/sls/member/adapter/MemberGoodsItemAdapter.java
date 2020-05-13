@@ -82,8 +82,8 @@ public class MemberGoodsItemAdapter extends RecyclerView.Adapter<MemberGoodsItem
         public void bindData(GoodsItemInfo goodsItemInfo) {
             GlideHelper.load((Activity) context, "", R.mipmap.ic_launcher, goodsIv);
             goodsName.setText(goodsItemInfo.getName());
-            currentPrice.setText("¥" + goodsItemInfo.getCurrentPirce());
-            originalPrice.setText("¥" + goodsItemInfo.getOrPirce());
+            currentPrice.setText("¥" + goodsItemInfo.getRetailPrice());
+            originalPrice.setText("¥" + goodsItemInfo.getRetailPrice());
         }
     }
 

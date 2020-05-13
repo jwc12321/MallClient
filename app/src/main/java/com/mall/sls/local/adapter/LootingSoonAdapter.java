@@ -97,9 +97,9 @@ public class LootingSoonAdapter extends RecyclerView.Adapter<LootingSoonAdapter.
         public void bindData(GoodsItemInfo goodsItemInfo) {
             GlideHelper.load((Activity) context, "", R.mipmap.ic_launcher, goodsIv);
             goodsName.setText(goodsItemInfo.getName());
-            goodsIntroduction.setText(goodsItemInfo.getGoodsDetail());
-            currentPrice.setText("¥" + goodsItemInfo.getCurrentPirce());
-            originalPrice.setText("¥" + goodsItemInfo.getOrPirce());
+            goodsIntroduction.setText(goodsItemInfo.getBrief());
+            currentPrice.setText("¥" + goodsItemInfo.getRetailPrice());
+            originalPrice.setText("¥" + goodsItemInfo.getCounterPrice());
         }
     }
 

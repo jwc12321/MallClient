@@ -1,23 +1,44 @@
 package com.mall.sls.data.entity;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
 /**
  * @author jwc on 2020/5/8.
  * 描述：
  */
-public class AddressInfo {
+public class AddressInfo implements Serializable {
+    //姓名
+    @SerializedName("name")
     private String name;
-    private String phone;
-    private String address;
-    private String status;
-    private String label;
-
-    public AddressInfo(String name, String phone, String address, String status, String label) {
-        this.name = name;
-        this.phone = phone;
-        this.address = address;
-        this.status = status;
-        this.label = label;
-    }
+    //电话
+    @SerializedName("tel")
+    private String tel;
+    //性别 0：女 1：男
+    @SerializedName("gender")
+    private String gender;
+    //省
+    @SerializedName("province")
+    private String province;
+    //市
+    @SerializedName("city")
+    private String city;
+    //区
+    @SerializedName("county")
+    private String county;
+    //详细地址
+    @SerializedName("addressDetail")
+    private String addressDetail;
+    //区code
+    @SerializedName("areaCode")
+    private String areaCode;
+    //是否默认
+    @SerializedName("isDefault")
+    private Boolean isDefault;
+    //学校 家  公司 其他
+    @SerializedName("type")
+    private String type;
 
     public String getName() {
         return name;
@@ -27,35 +48,76 @@ public class AddressInfo {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTel() {
+        return tel;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
-    public String getAddress() {
-        return address;
+    public String getGender() {
+        return gender;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public String getStatus() {
-        return status;
+    public String getProvince() {
+        return province;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setProvince(String province) {
+        this.province = province;
     }
 
-    public String getLabel() {
-        return label;
+    public String getCity() {
+        return city;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public String getAddressDetail() {
+        return addressDetail;
+    }
+
+    public void setAddressDetail(String addressDetail) {
+        this.addressDetail = addressDetail;
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    public Boolean getDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(Boolean aDefault) {
+        isDefault = aDefault;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
+

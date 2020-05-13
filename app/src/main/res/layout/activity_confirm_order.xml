@@ -162,7 +162,9 @@
 
                 <View style="@style/fifteen_back_nine_line_style" />
 
-                <RelativeLayout style="@style/confirm_order_rl_style">
+                <RelativeLayout
+                    android:id="@+id/coupon_rl"
+                    style="@style/confirm_order_rl_style">
 
                     <com.mall.sls.common.widget.textview.ConventionalTextView
                         style="@style/confirm_order_left_tv_style"

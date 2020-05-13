@@ -54,8 +54,8 @@ android {
             zipAlignEnabled true
         }
         debug {
-//            buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.117:8080/\""
             buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.117:8082/\""
+//            buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.176:8082/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
@@ -148,8 +148,8 @@ dependencies {
     implementation 'com.amap.api:location:latest.integration'
     //搜索功能
     implementation 'com.amap.api:search:latest.integration'
-    //地址
-    implementation 'com.smartTop:jd-address:1.0.3'
+//    //地址
+//    implementation 'com.smartTop:jd-address:1.0.3'
 
     implementation 'com.github.xiaohaibin:XBanner:androidx_v1.0.8'
 }

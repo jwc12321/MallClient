@@ -22,6 +22,7 @@ import com.mall.sls.address.ui.SelectAddressActivity;
 import com.mall.sls.assemble.ui.AssembleHomeActivity;
 import com.mall.sls.certify.ui.CerifyTipActivity;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.AreaCodeManager;
 import com.mall.sls.common.unit.SystemUtil;
 import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.common.widget.textview.ColdDownButton;
@@ -131,8 +132,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.confirm_bt://登录
-//                confirmBt();
-                MainFrameActivity.start(this);
+                confirmBt();
                 break;
             case R.id.send_vcode:
                 sendVcode();
@@ -178,7 +178,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     public void renderLoginIn(TokenInfo tokenInfo) {
         if(tokenInfo!=null){
             TokenManager.saveToken(tokenInfo.getToken());
-            CerifyTipActivity.start(this);
+            MainFrameActivity.start(this);
         }
     }
 
