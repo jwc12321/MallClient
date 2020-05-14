@@ -10,14 +10,26 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.annotations.SerializedName;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.address.AddressContract;
+import com.mall.sls.address.AddressModule;
+import com.mall.sls.address.DaggerAddressComponent;
+import com.mall.sls.address.presenter.AddAddressPresenter;
 import com.mall.sls.certify.ui.CerifyPayActivity;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.address.AreaPickerView;
 import com.mall.sls.common.widget.textview.ConventionalEditTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.AddressInfo;
+import com.mall.sls.data.entity.ProvinceBean;
+import com.mall.sls.data.request.AddAddressRequest;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +40,7 @@ import butterknife.OnTextChanged;
  * @author jwc on 2020/5/8.
  * 描述：添加地址
  */
-public class AddAddressActivity extends BaseActivity  {
+public class AddAddressActivity extends BaseActivity  implements AddressContract.AddAddressView {
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.title)
@@ -71,15 +83,19 @@ public class AddAddressActivity extends BaseActivity  {
     private String phoneNumebr;
     private String houseNumber;
 
-    private String provinceCode;
-    private String cityCode;
-    private String countyCode;
-    private String streetCode;
-    private int provincePosition;
-    private int cityPosition;
-    private int countyPosition;
-    private int streetPosition;
     private  AddressInfo addressInfo;
+    private AreaPickerView areaPickerView;
+    private int[] i;
+    private String[] codeValue;
+    //省
+    private String province;
+    //市
+    private String city;
+    //区
+    private String county;
+
+    @Inject
+    AddAddressPresenter addAddressPresenter;
 
 
     public static void start(Context context, AddressInfo addressInfo) {
@@ -108,14 +124,20 @@ public class AddAddressActivity extends BaseActivity  {
         }else {
             genderType=StaticData.REFLASH_ZERO;
         }
-        genderType="1";
         labelSelect();
         genderSelect();
-        initAddressDialog();
+        addAddressPresenter.getAreas();
     }
 
-    private void initAddressDialog(){
+    @Override
+    protected void initializeInjector() {
+        DaggerAddressComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .addressModule(new AddressModule(this))
+                .build()
+                .inject(this);
     }
+
 
     @OnTextChanged({R.id.name_et})
     public void checNameEnable() {
@@ -140,19 +162,19 @@ public class AddAddressActivity extends BaseActivity  {
                 finish();
                 break;
             case R.id.house://标签 家
-                labelType = "1";
+                labelType = getString(R.string.house);
                 labelSelect();
                 break;
             case R.id.company://标签 公司
-                labelType = "2";
+                labelType = getString(R.string.company);
                 labelSelect();
                 break;
             case R.id.school://标签 学校
-                labelType = "3";
+                labelType = getString(R.string.school);
                 labelSelect();
                 break;
             case R.id.other://标签 其他
-                labelType = "4";
+                labelType = getString(R.string.other);
                 labelSelect();
                 break;
             case R.id.ms_iv://性别 女
@@ -164,27 +186,60 @@ public class AddAddressActivity extends BaseActivity  {
                 genderSelect();
                 break;
             case R.id.address:
-                showDialog();
+                areaPickerView.setSelect(i);
+                areaPickerView.show();
                 break;
             case R.id.default_iv:
                 defaultType=!defaultType;
                 defaultIv.setSelected(defaultType);
                 break;
             case R.id.confirm_bt:
-                CerifyPayActivity.start(this);
+                confirm();
                 break;
             default:
         }
     }
 
-    private void showDialog(){
+    private void confirm(){
+        if(TextUtils.isEmpty(name)){
+            showMessage(getString(R.string.input_receiver));
+            return;
+        }
+        if(TextUtils.isEmpty(phoneNumebr)){
+            showMessage(getString(R.string.input_phone_number));
+            return;
+        }
+        if (TextUtils.isEmpty(province)||TextUtils.isEmpty(city)||TextUtils.isEmpty(county)){
+            showMessage(getString(R.string.click_select_address));
+            return;
+        }
+        if(TextUtils.isEmpty(houseNumber)){
+            showMessage(getString(R.string.input_detail_address));
+            return;
+        }
+        AddAddressRequest addAddressRequest=new AddAddressRequest();
+        addAddressRequest.setName(name);
+        addAddressRequest.setGender(genderType);
+        addAddressRequest.setTel(phoneNumebr);
+        addAddressRequest.setProvince(province);
+        addAddressRequest.setCity(city);
+        addAddressRequest.setCounty(county);
+        if(codeValue!=null&&codeValue.length==3){
+            addAddressRequest.setAreaCode(codeValue[2]);
+        }
+        addAddressRequest.setAddressDetail(houseNumber);
+        addAddressRequest.setType(labelType);
+        addAddressRequest.setDefault(defaultType);
+        addAddressRequest.setPostalCode("");
+        addAddressPresenter.addAddress(addAddressRequest);
+
     }
 
     private void labelSelect() {
-        house.setSelected(TextUtils.equals("1", labelType) ? true : false);
-        company.setSelected(TextUtils.equals("2", labelType) ? true : false);
-        school.setSelected(TextUtils.equals("3", labelType) ? true : false);
-        other.setSelected(TextUtils.equals("4", labelType) ? true : false);
+        house.setSelected(TextUtils.equals(getString(R.string.house), labelType) ? true : false);
+        company.setSelected(TextUtils.equals(getString(R.string.company), labelType) ? true : false);
+        school.setSelected(TextUtils.equals(getString(R.string.school), labelType) ? true : false);
+        other.setSelected(TextUtils.equals(getString(R.string.other), labelType) ? true : false);
     }
 
     private void genderSelect(){
@@ -199,6 +254,40 @@ public class AddAddressActivity extends BaseActivity  {
     }
 
 
+    @Override
+    public void renderAddAddress() {
 
+    }
 
+    @Override
+    public void renderAresa(List<ProvinceBean> provinceBeans) {
+        areaPickerView = new AreaPickerView(this, R.style.Dialog, provinceBeans);
+        areaPickerView.setAreaPickerViewCallback(new AreaPickerView.AreaPickerViewCallback() {
+            @Override
+            public void callback(int... value) {
+                i = value;
+                if (value.length == 3) {
+                    province = provinceBeans.get(value[0]).getName();
+                    city=provinceBeans.get(value[0]).getCityBeans().get(value[1]).getName();
+                    county=provinceBeans.get(value[0]).getCityBeans().get(value[1]).getAreaBeans().get(value[2]).getName();
+                } else {
+                    province = provinceBeans.get(value[0]).getName();
+                    city=provinceBeans.get(value[0]).getCityBeans().get(value[1]).getName();
+                    county="";
+                }
+                address.setText(province+city+county);
+            }
+
+            @Override
+            public void callCode(String... value) {
+                codeValue=value;
+            }
+        });
+        areaPickerView.dismiss();
+    }
+
+    @Override
+    public void setPresenter(AddressContract.AddAddressPresenter presenter) {
+
+    }
 }

@@ -3,12 +3,14 @@ package com.mall.sls.data.remote;
 
 import android.os.RemoteException;
 
+import com.mall.sls.data.RemoteDataException;
 import com.mall.sls.data.RemoteDataWrapper;
 import com.mall.sls.data.entity.AddressInfo;
 import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.OneClickInfo;
+import com.mall.sls.data.entity.ProvinceBean;
 import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.request.AddAddressRequest;
 import com.mall.sls.data.request.LoginRequest;
@@ -69,6 +71,10 @@ public interface RestApiService {
     //获取客服信息
     @GET("app/common/customer")
     Flowable<RemoteDataWrapper<String>> getConsumerPhone(@Header("X-Hc-Sign") String sign);
+
+    //获取地址
+    @GET("app/common/area")
+    Flowable<RemoteDataWrapper<List<ProvinceBean>>> getAreas(@Header("X-Hc-Sign") String sign);
 
 
 

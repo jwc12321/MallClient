@@ -69,7 +69,7 @@ public class GoodsDetailsPresenter implements HomepageContract.GoodsDetailsPrese
     @Override
     public void getConsumerPhone() {
         String queryString = "null";
-        String sign = SignUnit.signGet(RequestUrl.CUSTOMER_PHONE, queryString);
+        String sign = SignUnit.signGet(RequestUrl.CUSTOMER_PHONE_RUL, queryString);
         Disposable disposable = restApiService.getConsumerPhone(sign)
                 .flatMap(new RxRemoteDataParse<String>())
                 .compose(new RxSchedulerTransformer<String>())

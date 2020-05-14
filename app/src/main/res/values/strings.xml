@@ -165,6 +165,7 @@
     <string name="remaining_spike">距离秒杀结束还剩：</string>
     <string name="join_pinyin_now">立即参与拼单</string>
     <string name="surplus">剩余</string>
+    <string name="input_detail_address">请填写详细地址</string>
 
 
 </resources>

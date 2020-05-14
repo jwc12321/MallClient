@@ -9,7 +9,9 @@ public class RequestUrl {
     public static String HOME_INDEX_URL="/app/home/index";//首页信息
     public static String GOODS_DETAILS_RUL="/app/goods/detail";
     public static String ADDRESS_MANAGE_URL="/app/address/list";
-    public static String CUSTOMER_PHONE="/app/common/customer";//客服电话
+    public static String CUSTOMER_PHONE_RUL="/app/common/customer";//客服电话
+    public static String COMMON_AREA_RUL="/app/common/area";
+    public static String ADDRESS_SAVE_RUL="/app/address/save";
 
 
 }

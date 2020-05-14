@@ -2,7 +2,9 @@ package com.mall.sls.address;
 
 import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
+import com.mall.sls.common.unit.VerifyManager;
 import com.mall.sls.data.entity.AddressInfo;
+import com.mall.sls.data.entity.ProvinceBean;
 import com.mall.sls.data.request.AddAddressRequest;
 
 import java.util.List;
@@ -22,9 +24,11 @@ public interface AddressContract {
 
     interface AddAddressPresenter extends BasePresenter{
         void addAddress(AddAddressRequest addAddressRequest);
+        void getAreas();
     }
 
     interface AddAddressView extends BaseView<AddAddressPresenter>{
         void renderAddAddress();
+        void renderAresa(List<ProvinceBean> provinceBeans);
     }
 }
