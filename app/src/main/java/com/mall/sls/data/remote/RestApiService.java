@@ -66,5 +66,10 @@ public interface RestApiService {
     @POST("app/address/save")
     Flowable<RemoteDataWrapper<String>> addAddress(@Header("X-Hc-Sign") String sign,@Body AddAddressRequest request);
 
+    //获取客服信息
+    @GET("app/common/customer")
+    Flowable<RemoteDataWrapper<String>> getConsumerPhone(@Header("X-Hc-Sign") String sign);
+
+
 
 }

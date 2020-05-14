@@ -2,6 +2,7 @@ package com.mall.sls.homepage;
 
 import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
+import com.mall.sls.common.unit.VerifyManager;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.HomePageInfo;
 
@@ -16,10 +17,12 @@ public interface HomepageContract {
 
     interface GoodsDetailsPresenter extends BasePresenter{
         void getGoodsDetails(String goodsId);
+        void getConsumerPhone();
     }
 
     interface GoodsDetailsView extends BaseView<GoodsDetailsPresenter>{
         void renderGoodsDetails(GoodsDetailsInfo goodsDetailsInfo);
+        void renderConsumerPhone(String consumerPhone);
 
     }
 

@@ -44,7 +44,9 @@
     <color name="backGround28">#E2E2E2</color>
     <color name="backGround29">#F8D897</color>
     <color name="backGround30">#FEBC4A</color>
+    <color name="backGround31">#AB474F</color>
     <color name="backGround34">#000000</color>
     <color name="backGround35">#1F1F1F</color>
+    <color name="backGround36">#F8F8F8</color>
     <color name="backGround39">#59000000</color>
 </resources>

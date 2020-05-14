@@ -13,13 +13,21 @@ import androidx.annotation.Nullable;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.common.GlideHelper;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.edittextview.SoftKeyBoardListener;
 import com.mall.sls.common.widget.scrollview.GradationScrollView;
 import com.mall.sls.common.widget.shoppingselect.OnSelectedListener;
 import com.mall.sls.common.widget.shoppingselect.ShoppingSelectView;
+import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.GoodsSpec;
+import com.mall.sls.data.entity.ProductListCallableInfo;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -36,14 +44,16 @@ import butterknife.OnClick;
  * 描述：选择规格
  */
 public class SelectSpecActivity extends BaseActivity implements OnSelectedListener {
+
+
     @BindView(R.id.goods_iv)
     ImageView goodsIv;
-    @BindView(R.id.goods_name)
-    MediumThickTextView goodsName;
+    @BindView(R.id.close_iv)
+    ImageView closeIv;
     @BindView(R.id.goods_price)
     MediumThickTextView goodsPrice;
     @BindView(R.id.model)
-    MediumThickTextView model;
+    ConventionalTextView model;
     @BindView(R.id.goods_rl)
     RelativeLayout goodsRl;
     @BindView(R.id.line)
@@ -60,11 +70,19 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
     GradationScrollView scrollview;
     @BindView(R.id.confirm_bt)
     MediumThickTextView confirmBt;
-
-    private int currentCount = 1;
+    @BindView(R.id.item_rl)
+    RelativeLayout itemRl;
+    @BindView(R.id.all_rl)
+    RelativeLayout allRl;
+    private int currentCount;
     private List<GoodsSpec> goodsSpecs;
     Map<String, String> map = new HashMap<String, String>();
-    private String goodsSpecStr;
+    private GoodsDetailsInfo goodsDetailsInfo;
+    private List<ProductListCallableInfo> productListCallableInfos;
+    private List<String> checkSkus;
+    private String goodsSpecStr = "";
+    private ProductListCallableInfo productListCallableInfo;
+    private String choiceType;//0：单独购买 1：拼单
 
     public static void start(Context context) {
         Intent intent = new Intent(context, SelectSpecActivity.class);
@@ -80,9 +98,51 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
     }
 
     private void initView() {
+        goodsDetailsInfo = (GoodsDetailsInfo) getIntent().getSerializableExtra(StaticData.GOODS_DETAILS_INFO);
+        checkSkus = (List<String>) getIntent().getSerializableExtra(StaticData.SKU_CHECK);
+        choiceType=getIntent().getStringExtra(StaticData.CHOICE_TYPE);
+        currentCount=getIntent().getIntExtra(StaticData.GOODS_COUNT,1);
+        goodsCount.setText(String.valueOf(currentCount));
+        if (goodsDetailsInfo != null) {
+            goodsSpecs = goodsDetailsInfo.getGoodsSpecs();
+            productListCallableInfos = goodsDetailsInfo.getProductListCallableInfos();
+            if (checkSkus != null && checkSkus.size() > 0) {
+                shopselectView.setCheckSkus(checkSkus);
+                for (String goodsSku : checkSkus) {
+                    goodsSpecStr = goodsSpecStr + goodsSku + ",";
+                }
+                goodsSpecStr = goodsSpecStr.substring(0, goodsSpecStr.length() - 1);
+                for (ProductListCallableInfo productListCallableInfo : productListCallableInfos) {
+                    if (TextUtils.equals(productListCallableInfo.getSpecifications(), goodsSpecStr)) {
+                        this.productListCallableInfo = productListCallableInfo;
+                        break;
+                    }
+                }
+                if (productListCallableInfo != null) {
+                    GlideHelper.load(this, productListCallableInfo.getUrl(), R.mipmap.icon_default_goods, goodsIv);
+                    if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
+                        goodsPrice.setText("¥" + productListCallableInfo.getPrice());
+                    }else {
+                        goodsPrice.setText("¥" + productListCallableInfo.getPreferentialPrice());
+                    }
+                    if (TextUtils.equals("0", productListCallableInfo.getNumber())) {
+                        model.setText(getString(R.string.out_stock));
+                    } else {
+                        model.setText(getString(R.string.is_selected) + " " + productListCallableInfo.getSpecifications());
+                    }
+                }
+            } else {
+                GlideHelper.load(this, goodsDetailsInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
+                if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
+                    goodsPrice.setText("¥" + goodsDetailsInfo.getCounterPrice());
+                }else {
+                    goodsPrice.setText("¥" + goodsDetailsInfo.getRetailPrice());
+                }
+                model.setText(getString(R.string.is_selected));
+            }
+        }
         SoftKeyBoardListener.setListener(this, onSoftKeyBoardChangeListener);
         shopselectView.setOnSelectedListener(this);
-        goodsSpecs = new ArrayList<>();
         initSpec();
 
     }
@@ -90,6 +150,7 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
     private void initSpec() {
         shopselectView.setData(goodsSpecs);
     }
+
 
     /**
      * 软键盘弹出收起监听
@@ -112,20 +173,49 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
                     goodsCount.setText("1");
                 }
             }
+            calculatingPrice(productListCallableInfo);
         }
     };
 
-    @OnClick({R.id.all_rl, R.id.item_rl, R.id.confirm_bt})
+    @OnClick({ R.id.confirm_bt,R.id.close_iv,R.id.decrease_count,R.id.increase_count})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.all_rl:
+            case R.id.close_iv:
                 finish();
                 break;
-            case R.id.item_rl:
-                break;
             case R.id.confirm_bt:
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(StaticData.SKU_INFO, productListCallableInfo);
+                bundle.putSerializable(StaticData.SKU_CHECK, (Serializable) checkSkus);
+                bundle.putInt(StaticData.GOODS_COUNT, currentCount);
+                intent.putExtras(bundle);
+                setResult(RESULT_OK, intent);
+                finish();
+                break;
+            case R.id.decrease_count://数量减少
+                if (currentCount == 1||currentCount==0) {
+                    return;
+                }
+                currentCount--;
+                goodsCount.setText(String.valueOf(currentCount));
+                break;
+            case R.id.increase_count://数量增加
+                currentCount++;
+                goodsCount.setText(String.valueOf(currentCount));
+                calculatingPrice(productListCallableInfo);
                 break;
             default:
+        }
+    }
+
+    private void calculatingPrice(ProductListCallableInfo productListCallableInfo) {
+        if (productListCallableInfo != null) {
+            if(!TextUtils.isEmpty(productListCallableInfo.getNumber())&&(currentCount>Integer.parseInt(productListCallableInfo.getNumber()))){
+                currentCount=Integer.parseInt(productListCallableInfo.getNumber());
+                goodsCount.setText(String.valueOf(currentCount));
+                showMessage("库存只有"+currentCount+"件");
+            }
         }
     }
 
@@ -165,14 +255,45 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
 
     @Override
     public void onSelected(String position, String title, String smallTitle) {
-        goodsSpecStr="";
+        goodsSpecStr = "";
         map.put(position, smallTitle);
         if (goodsSpecs != null && map.size() == goodsSpecs.size()) {
+            if (checkSkus == null) {
+                checkSkus = new ArrayList<>();
+            } else {
+                checkSkus.clear();
+            }
             Map<String, String> resultMap = sortMapByKey(map);    //按Key进行排序
             for (Map.Entry<String, String> entry : resultMap.entrySet()) {
-                goodsSpecStr = goodsSpecStr + entry.getValue();
+                goodsSpecStr = goodsSpecStr + entry.getValue() + ",";
+                checkSkus.add(entry.getValue());
+
             }
-            showMessage(goodsSpecStr);
+            goodsSpecStr = goodsSpecStr.substring(0, goodsSpecStr.length() - 1);
+            productListCallableInfo = null;
+            for (ProductListCallableInfo productListCallableInfo : productListCallableInfos) {
+                if (TextUtils.equals(productListCallableInfo.getSpecifications(), goodsSpecStr)) {
+                    this.productListCallableInfo = productListCallableInfo;
+                    break;
+                }
+            }
+            if (productListCallableInfo != null) {
+                GlideHelper.load(this, productListCallableInfo.getUrl(), R.mipmap.icon_default_goods, goodsIv);
+                if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
+                    goodsPrice.setText("¥" + productListCallableInfo.getPrice());
+                }else {
+                    goodsPrice.setText("¥" + productListCallableInfo.getPreferentialPrice());
+                }
+                model.setText(getString(R.string.is_selected) + " " + productListCallableInfo.getSpecifications());
+                if (TextUtils.equals("0", productListCallableInfo.getNumber())) {
+                    model.setText(getString(R.string.out_stock));
+                    confirmBt.setEnabled(false);
+                } else {
+                    model.setText(getString(R.string.is_selected) + " " + productListCallableInfo.getSpecifications());
+                    calculatingPrice(productListCallableInfo);
+                    confirmBt.setEnabled(true);
+                }
+            }
         } else {
             confirmBt.setEnabled(false);
         }

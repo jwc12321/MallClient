@@ -91,6 +91,11 @@ public class LootingFragment extends BaseFragment implements GoodsItemAdapter.On
 
     }
 
+    @Override
+    public void goActivityGroupGoods(String goodsId) {
+
+    }
+
 
     public interface LootingListener {
         void lootingChoice(String type);

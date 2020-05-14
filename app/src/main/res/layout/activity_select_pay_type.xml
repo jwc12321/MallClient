@@ -22,8 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:paddingLeft="@dimen/dp_5"
-            android:paddingTop="@dimen/dp_12"
-            android:paddingRight="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
             android:src="@mipmap/icon_close" />
 
         <com.mall.sls.common.widget.textview.MediumThickTextView

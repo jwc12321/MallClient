@@ -30,5 +30,15 @@ public class StaticData {
     public static final String GOODS_ID="goodsId";
     //地址
     public static final String ADDRESS_INFO="addressInfo";
+    //商品详情
+    public static final String GOODS_DETAILS_INFO="goodsDetailsInfo";
+    //选择的规格
+    public static final String SKU_CHECK="skuCheck";
+    //商品数量
+    public static final String GOODS_COUNT="goodsCount";
+    //商品规格
+    public static final String SKU_INFO="skuInfo";
+    //客服电话
+    public static final String CONSUMER_PHONE="consumerPhone";
 
 }

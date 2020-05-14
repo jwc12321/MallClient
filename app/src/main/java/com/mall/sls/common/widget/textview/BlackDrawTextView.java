@@ -48,7 +48,7 @@ public class BlackDrawTextView extends TextView {
         paint.setColor(Color.parseColor("#333333"));
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setStrokeWidth(4);
+        paint.setStrokeWidth(2);
     }
     private Paint paint;
     @Override

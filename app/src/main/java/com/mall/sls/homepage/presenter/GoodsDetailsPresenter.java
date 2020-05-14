@@ -46,7 +46,7 @@ public class GoodsDetailsPresenter implements HomepageContract.GoodsDetailsPrese
     public void getGoodsDetails(String goodsId) {
         goodsDetailsView.showLoading(StaticData.LOADING);
         String queryString = "goodsId=" +goodsId;
-        String sign = SignUnit.signGet(RequestUrl.HOME_INDEX_URL, queryString);
+        String sign = SignUnit.signGet(RequestUrl.GOODS_DETAILS_RUL, queryString);
         Disposable disposable = restApiService.getGoodsDetailsInfo(sign,goodsId)
                 .flatMap(new RxRemoteDataParse<GoodsDetailsInfo>())
                 .compose(new RxSchedulerTransformer<GoodsDetailsInfo>())
@@ -60,6 +60,27 @@ public class GoodsDetailsPresenter implements HomepageContract.GoodsDetailsPrese
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         goodsDetailsView.dismissLoading();
+                        goodsDetailsView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getConsumerPhone() {
+        String queryString = "null";
+        String sign = SignUnit.signGet(RequestUrl.CUSTOMER_PHONE, queryString);
+        Disposable disposable = restApiService.getConsumerPhone(sign)
+                .flatMap(new RxRemoteDataParse<String>())
+                .compose(new RxSchedulerTransformer<String>())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String consumerPhone) throws Exception {
+                        goodsDetailsView.renderConsumerPhone(consumerPhone);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
                         goodsDetailsView.showError(throwable);
                     }
                 });

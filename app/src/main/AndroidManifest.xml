@@ -165,6 +165,12 @@
         <activity android:name=".mine.ui.CustomerServiceActivity"
             android:theme="@style/TranslucentFullScreenTheme"
             android:launchMode="singleTop"/>
+        <activity android:name=".homepage.ui.ActivityGroupGoodsActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
+        <activity android:name=".homepage.ui.ActivityGoodsDetailActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

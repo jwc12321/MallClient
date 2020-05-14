@@ -132,7 +132,7 @@ public class ShoppingSelectView extends LinearLayout {
                 button.setTextSize(14);
                 button.setText(attr.getSpecs().get(i).getValue());
                 button.setTextColor(getResources().getColorStateList(R.color.spec_text_select));
-                if(checkSkus.size()==list.size()) {
+                if(checkSkus!=null&&checkSkus.size()==list.size()) {
                     button.setChecked(TextUtils.equals(attr.getSpecs().get(i).getValue(),checkSkus.get(z)));
                 }
                 layout.addView(button);

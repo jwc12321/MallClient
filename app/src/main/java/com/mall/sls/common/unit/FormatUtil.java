@@ -640,4 +640,21 @@ public class FormatUtil {
             return "";
         }
     }
+
+    /*将字符串转为时间戳*/
+    public static long dateToStamp(String time) {
+        if(TextUtils.isEmpty(time)){
+            return -1;
+        }else {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date();
+            try {
+                date = sdf.parse(time);
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return date.getTime();
+        }
+    }
 }

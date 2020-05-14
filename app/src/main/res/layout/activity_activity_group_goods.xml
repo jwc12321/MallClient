@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appText1"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_300"
+        android:background="@color/backGround1" />
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_red_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/activity_group" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_rel"
+        android:fadingEdge="none"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/backGround6"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_324"
+                android:background="@color/backGround1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/activity_rule_iv"
+                    android:layout_width="@dimen/dp_69"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/dp_3"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/icon_activity_rule" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/activity_name"
+                    style="@style/size16_color_app1_text_style"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_8"
+                    tools:text="香蕉" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_28"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:background="@drawable/common_fourteen_back_three_one_bg"
+                    android:orientation="horizontal">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/size12_color_app1_text_style"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/dp_9"
+                        android:text="@string/from_end" />
+
+                    <com.mall.sls.common.widget.textview.TearDownView
+                        android:id="@+id/count_down"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/dp_6"
+                        android:layout_marginRight="@dimen/dp_9" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_m_218"
+                android:layout_marginRight="@dimen/dp_15"
+                android:background="@drawable/common_four_app_one_bg"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/goods_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_103"
+                    android:layout_marginTop="@dimen/dp_15">
+
+                    <ImageView
+                        android:id="@+id/goods_iv"
+                        android:layout_width="@dimen/dp_103"
+                        android:layout_height="@dimen/dp_103"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/icon_default_goods" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/discountMember"
+                        android:layout_width="@dimen/dp_103"
+                        android:layout_height="@dimen/dp_17"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:background="@color/backGround1"
+                        android:gravity="center"
+                        android:textColor="@color/appText1"
+                        android:textSize="@dimen/sp_12"
+                        tools:text="100件成团" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/goods_name"
+                        style="@style/size16_color_app3_text_style"
+                        android:layout_marginLeft="@dimen/dp_12"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_toRightOf="@id/goods_iv"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        tools:text="香蕉" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/goods_introduction"
+                        style="@style/size12_color_app2_text_style"
+                        android:layout_below="@id/goods_name"
+                        android:layout_marginLeft="@dimen/dp_12"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_toRightOf="@id/goods_iv"
+                        tools:text="香蕉" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/dp_12"
+                        android:layout_toRightOf="@id/goods_iv"
+                        android:orientation="horizontal">
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            style="@style/size12_color_app2_text_style"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/group_purchase_price" />
+
+                        <com.mall.sls.common.widget.textview.MediumThickTextView
+                            android:id="@+id/current_price"
+                            style="@style/size17_color_back1_text_style"
+                            tools:text="59" />
+
+                        <com.mall.sls.common.widget.textview.DrawTextView
+                            android:id="@+id/original_price"
+                            style="@style/size10_color_app2_text_style"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/dp_8"
+                            tools:text="79" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    android:id="@+id/confirm_bt"
+                    style="@style/four_back_one_bt_style"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:text="@string/pinyin_now" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_79"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_35"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:layout_marginBottom="@dimen/dp_19"
+                    android:background="@drawable/common_four_back_three_six_bg"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_45"
+                        android:gravity="center_vertical">
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/people_number"
+                            style="@style/size15_color_app3_text_style"
+                            tools:text="520人已抢"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp_22"/>
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/goods_number"
+                            style="@style/size17_color_back1_text_style"
+                            tools:text="580"
+                            android:layout_toRightOf="@id/people_number"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_centerVertical="true"/>
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            style="@style/size15_color_app3_text_style"
+                            android:text=","
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/goods_number"
+                            android:layout_marginLeft="@dimen/dp_10"/>
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            style="@style/size15_color_app3_text_style"
+                            android:text="后结束"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/dp_22"/>
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/over_tv"
+                            style="@style/size15_color_app3_text_style"
+                            android:text="后结束"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/dp_22"/>
+                        <com.mall.sls.common.widget.textview.FourTearDownView
+                            android:id="@+id/count_down_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@id/over_tv"/>
+                    </RelativeLayout>
+                    <ViewFlipper
+                        android:id="@+id/view_flipper"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inAnimation="@anim/anim_in"
+                        android:outAnimation="@anim/anim_out"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="@dimen/dp_9"
+                        android:layout_centerHorizontal="true"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

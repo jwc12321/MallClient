@@ -21,6 +21,7 @@ import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DrawTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.GoodsItemInfo;
+import com.mall.sls.data.entity.GoodsOrderInfo;
 
 import java.util.List;
 
@@ -65,7 +66,11 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.goOrdinaryGoodsDetails(goodsItemInfo.getGoodsId());
+                    if(TextUtils.equals(StaticData.REFLASH_ZERO, goodsItemInfo.getGroupType())){
+                        onItemClickListener.goOrdinaryGoodsDetails(goodsItemInfo.getGoodsId());
+                    }else {
+                        onItemClickListener.goActivityGroupGoods(goodsItemInfo.getGoodsId());
+                    }
                 }
             }
         });
@@ -112,6 +117,7 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
 
     public interface OnItemClickListener {
         void goOrdinaryGoodsDetails(String goodsId);
+        void goActivityGroupGoods(String goodsId);
     }
 
     private OnItemClickListener onItemClickListener;

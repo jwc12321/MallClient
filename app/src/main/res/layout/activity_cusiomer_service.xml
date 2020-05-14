@@ -38,6 +38,7 @@
             android:text="@string/service_wechat" />
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/phone"
             style="@style/size16_color_app3_text_style"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dp_14"

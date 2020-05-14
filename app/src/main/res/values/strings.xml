@@ -157,6 +157,14 @@
     <string name="service_wechat">售后客服微信</string>
     <string name="copy_wechat">复制微信</string>
     <string name="add_wechat">任何售后问题请添加客服微信哦！</string>
+    <string name="is_selected">已选：</string>
+    <string name="out_stock">暂无库存</string>
+    <string name="from_end">距结束</string>
+    <string name="group_purchase_price">团购价：</string>
+    <string name="pinyin_now">立即拼单</string>
+    <string name="remaining_spike">距离秒杀结束还剩：</string>
+    <string name="join_pinyin_now">立即参与拼单</string>
+    <string name="surplus">剩余</string>
 
 
 </resources>
