@@ -127,8 +127,10 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
                     }
                     if (TextUtils.equals("0", productListCallableInfo.getNumber())) {
                         model.setText(getString(R.string.out_stock));
+                        confirmBt.setEnabled(false);
                     } else {
                         model.setText(getString(R.string.is_selected) + " " + productListCallableInfo.getSpecifications());
+                        confirmBt.setEnabled(true);
                     }
                 }
             } else {
@@ -139,6 +141,7 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
                     goodsPrice.setText("¥" + goodsDetailsInfo.getRetailPrice());
                 }
                 model.setText(getString(R.string.is_selected));
+                confirmBt.setEnabled(false);
             }
         }
         SoftKeyBoardListener.setListener(this, onSoftKeyBoardChangeListener);

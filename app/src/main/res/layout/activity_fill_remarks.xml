@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_red_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/fill_remarks" />
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/right_tv"
+            style="@style/title_right_text_style"
+            android:text="@string/complete" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_145"
+        android:layout_margin="@dimen/dp_15"
+        android:background="@drawable/common_four_app_one_bg">
+
+        <EditText
+            android:id="@+id/remark_et"
+            style="@style/input_address_edittext_style"
+            android:inputType="textMultiLine"
+            android:maxLength="50" />
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/word_count"
+          style="@style/size12_color_app3_text_style"
+            tools:text="15/50"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/dp_10"/>
+    </RelativeLayout>
+</LinearLayout>

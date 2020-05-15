@@ -27,7 +27,7 @@
         android:layout_height="@dimen/dp_40"
         android:background="@color/appText1">
         <ImageView
-            android:id="@+id/select_weixin_iv"
+            android:id="@+id/select_iv"
             style="@style/cerify_pay_right_iv_style"
             android:layout_marginRight="@dimen/dp_42"/>
         <com.mall.sls.common.widget.textview.MediumThickTextView

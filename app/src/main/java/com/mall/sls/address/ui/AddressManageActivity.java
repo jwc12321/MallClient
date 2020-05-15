@@ -3,6 +3,7 @@ package com.mall.sls.address.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +20,7 @@ import com.mall.sls.address.DaggerAddressComponent;
 import com.mall.sls.address.adapter.AddressManageAdapter;
 import com.mall.sls.address.presenter.AddressManagePresenter;
 import com.mall.sls.certify.ui.CerifyPayActivity;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.AddressInfo;
 
@@ -35,7 +37,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/8.
  * 描述：地址管理
  */
-public class AddressManageActivity extends BaseActivity implements AddressContract.AddressManageView {
+public class AddressManageActivity extends BaseActivity implements AddressContract.AddressManageView ,AddressManageAdapter.OnItemClickListener{
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.title)
@@ -55,8 +57,11 @@ public class AddressManageActivity extends BaseActivity implements AddressContra
     @Inject
     AddressManagePresenter addressManagePresenter;
 
-    public static void start(Context context) {
+    private String choiceType;//0:下单界面过来 1：我的界面过来
+
+    public static void start(Context context,String choiceType) {
         Intent intent = new Intent(context, AddressManageActivity.class);
+        intent.putExtra(StaticData.CHOICE_TYPE,choiceType);
         context.startActivity(intent);
     }
 
@@ -77,7 +82,14 @@ public class AddressManageActivity extends BaseActivity implements AddressContra
     }
 
     private void initView(){
+        choiceType=getIntent().getStringExtra(StaticData.CHOICE_TYPE);
+        if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
+            title.setText(getString(R.string.select_address));
+        }else {
+            title.setText(getString(R.string.my_address));
+        }
         addressManageAdapter=new AddressManageAdapter(this);
+        addressManageAdapter.setOnItemClickListener(this);
         addressRv.setAdapter(addressManageAdapter);
     }
 
@@ -127,5 +139,22 @@ public class AddressManageActivity extends BaseActivity implements AddressContra
             noAddressLl.setVisibility(View.VISIBLE);
         }
         addressManageAdapter.setData(addressInfos);
+    }
+
+    @Override
+    public void select(AddressInfo addressInfo) {
+        if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(StaticData.ADDRESS_INFO, addressInfo);
+            intent.putExtras(bundle);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+    }
+
+    @Override
+    public void updateAddress(AddressInfo addressInfo) {
+        AddAddressActivity.start(this,addressInfo);
     }
 }

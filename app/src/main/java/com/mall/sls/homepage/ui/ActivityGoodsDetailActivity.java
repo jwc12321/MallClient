@@ -20,11 +20,13 @@ import com.mall.sls.R;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.FormatUtil;
+import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DetailTearDownView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.common.widget.textview.TwelveTearDownView;
 import com.mall.sls.common.widget.textview.WhiteDrawTextView;
+import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.GroupPurchase;
@@ -220,10 +222,10 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             banner.setPointsIsVisible(data.size() > 1);
             banner.setAutoPlayAble(data.size() > 1);
             banner.setBannerData(R.layout.xbanner_item, data);
-            currentPrice.setText("¥" + goodsDetailsInfo.getRetailPrice());
+            currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getRetailPrice()));
             unit = goodsDetailsInfo.getUnit();
             goodsUnit.setText("/" + unit);
-            originalPrice.setText("¥" + goodsDetailsInfo.getCounterPrice());
+            originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
             sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity() + "件");
             goodsName.setText(goodsDetailsInfo.getName());
             selectedGoods.setText(getString(R.string.is_selected));
@@ -245,7 +247,19 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     }
 
     @Override
+    public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
+
+    }
+
+    @Override
     public void setPresenter(HomepageContract.GoodsDetailsPresenter presenter) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        countDown.cancel();
+        bottomCountDown.cancel();
     }
 }

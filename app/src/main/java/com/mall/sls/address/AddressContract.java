@@ -25,10 +25,12 @@ public interface AddressContract {
     interface AddAddressPresenter extends BasePresenter{
         void addAddress(AddAddressRequest addAddressRequest);
         void getAreas();
+        void deleteAddress(String id);
     }
 
     interface AddAddressView extends BaseView<AddAddressPresenter>{
         void renderAddAddress();
         void renderAresa(List<ProvinceBean> provinceBeans);
+        void renderDeleteAddress();
     }
 }

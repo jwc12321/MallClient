@@ -20,6 +20,7 @@ import com.mall.sls.R;
 import com.mall.sls.address.ui.AddressManageActivity;
 import com.mall.sls.certify.ui.CerifyTipActivity;
 import com.mall.sls.common.RequestCodeStatic;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.VerifyManager;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.coupon.ui.CouponActivity;
@@ -128,7 +129,7 @@ public class MineFragment extends BaseFragment {
                 MyTeamActivity.start(getActivity());
                 break;
             case R.id.address_manage://地址管理
-                AddressManageActivity.start(getActivity());
+                AddressManageActivity.start(getActivity(), StaticData.REFLASH_ONE);
                 break;
             case R.id.invite_friends://邀请好友
                 break;

@@ -171,6 +171,8 @@
         <activity android:name=".homepage.ui.ActivityGoodsDetailActivity"
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"/>
+        <activity android:name=".homepage.ui.FillRemarksActivity"
+            android:screenOrientation="nosensor"/>
     </application>
 
 </manifest>

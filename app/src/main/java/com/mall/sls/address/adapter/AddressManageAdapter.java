@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.mall.sls.R;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
@@ -57,7 +58,15 @@ public class AddressManageAdapter extends RecyclerView.Adapter<AddressManageAdap
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.select(holder.getAdapterPosition());
+                    onItemClickListener.select(addressInfo);
+                }
+            }
+        });
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onItemClickListener!=null){
+                    onItemClickListener.updateAddress(addressInfo);
                 }
             }
         });
@@ -92,7 +101,7 @@ public class AddressManageAdapter extends RecyclerView.Adapter<AddressManageAdap
             phone.setText(addressInfo.getTel());
             if(addressInfo.getDefault()&&!TextUtils.isEmpty(addressInfo.getType())){
                 address.addressTag("默认",addressInfo.getType(),addressStr);
-            }else if(!addressInfo.getDefault()&&!TextUtils.isEmpty(addressInfo.getType())){
+            }else if(!addressInfo.getDefault()&&!TextUtils.isEmpty(addressInfo.getType())&&!TextUtils.equals(context.getString(R.string.other),addressInfo.getType())){
                 address.setSingleTagAndContent(addressInfo.getType(),addressStr);
             }else {
                 address.setText(addressStr);
@@ -101,7 +110,8 @@ public class AddressManageAdapter extends RecyclerView.Adapter<AddressManageAdap
     }
 
     public interface OnItemClickListener {
-        void select(int position);
+        void select(AddressInfo addressInfo);
+        void updateAddress(AddressInfo addressInfo);
     }
 
     private OnItemClickListener onItemClickListener;

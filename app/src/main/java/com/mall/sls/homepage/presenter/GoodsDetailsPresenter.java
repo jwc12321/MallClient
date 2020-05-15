@@ -1,19 +1,18 @@
 package com.mall.sls.homepage.presenter;
 
-import android.text.TextUtils;
 
-import com.mall.sls.BuildConfig;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
+import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
-import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
+import com.mall.sls.data.request.CartFastaddRequest;
 import com.mall.sls.homepage.HomepageContract;
-import com.stx.xhb.androidx.XBanner;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +29,7 @@ public class GoodsDetailsPresenter implements HomepageContract.GoodsDetailsPrese
     private RestApiService restApiService;
     private List<Disposable> mDisposableList = new ArrayList<>();
     private HomepageContract.GoodsDetailsView goodsDetailsView;
+    private Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 
     @Inject
     public GoodsDetailsPresenter(RestApiService restApiService, HomepageContract.GoodsDetailsView goodsDetailsView) {
@@ -46,7 +46,7 @@ public class GoodsDetailsPresenter implements HomepageContract.GoodsDetailsPrese
     public void getGoodsDetails(String goodsId) {
         goodsDetailsView.showLoading(StaticData.LOADING);
         String queryString = "goodsId=" +goodsId;
-        String sign = SignUnit.signGet(RequestUrl.GOODS_DETAILS_RUL, queryString);
+        String sign = SignUnit.signGet(RequestUrl.GOODS_DETAILS_URL, queryString);
         Disposable disposable = restApiService.getGoodsDetailsInfo(sign,goodsId)
                 .flatMap(new RxRemoteDataParse<GoodsDetailsInfo>())
                 .compose(new RxSchedulerTransformer<GoodsDetailsInfo>())
@@ -69,7 +69,7 @@ public class GoodsDetailsPresenter implements HomepageContract.GoodsDetailsPrese
     @Override
     public void getConsumerPhone() {
         String queryString = "null";
-        String sign = SignUnit.signGet(RequestUrl.CUSTOMER_PHONE_RUL, queryString);
+        String sign = SignUnit.signGet(RequestUrl.CUSTOMER_PHONE_URL, queryString);
         Disposable disposable = restApiService.getConsumerPhone(sign)
                 .flatMap(new RxRemoteDataParse<String>())
                 .compose(new RxSchedulerTransformer<String>())
@@ -81,6 +81,30 @@ public class GoodsDetailsPresenter implements HomepageContract.GoodsDetailsPrese
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        goodsDetailsView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void cartFastAdd(String goodsId, String productId, boolean isGroup, String number, String groupId, String groupRulesId) {
+        goodsDetailsView.showLoading(StaticData.PROCESSING);
+        CartFastaddRequest request=new CartFastaddRequest(goodsId,productId,isGroup,number,groupId,groupRulesId);
+        String sign= SignUnit.signPost(RequestUrl.CART_FAST_ADD_URL,gson.toJson(request));
+        Disposable disposable = restApiService.cartFastAdd(sign,request)
+                .flatMap(new RxRemoteDataParse<ConfirmOrderDetail>())
+                .compose(new RxSchedulerTransformer<ConfirmOrderDetail>())
+                .subscribe(new Consumer<ConfirmOrderDetail>() {
+                    @Override
+                    public void accept(ConfirmOrderDetail confirmOrderDetail) throws Exception {
+                        goodsDetailsView.dismissLoading();
+                        goodsDetailsView.renderCartFastAdd(confirmOrderDetail);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        goodsDetailsView.dismissLoading();
                         goodsDetailsView.showError(throwable);
                     }
                 });

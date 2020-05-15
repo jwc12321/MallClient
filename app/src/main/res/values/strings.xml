@@ -53,6 +53,7 @@
     <string name="search_address">地址搜索</string>
     <string name="input_shipping_address">请输入您的收货地址</string>
     <string name="add_new_address">新增收货地址</string>
+    <string name="update_address">编辑收货地址</string>
     <string name="receiver">收货人</string>
     <string name="input_receiver">请填写收货人的姓名</string>
     <string name="phone_number">手机号</string>
@@ -70,6 +71,7 @@
     <string name="set_default_address">设为默认地址</string>
     <string name="save_receipt_information">保存收货信息</string>
     <string name="select_address">选择收获地址</string>
+    <string name="my_address">我的收获地址</string>
     <string name="add_address">新增地址</string>
     <string name="edit">编辑</string>
     <string name="no_address_added_yet">暂无收货地址哦！</string>
@@ -166,6 +168,10 @@
     <string name="join_pinyin_now">立即参与拼单</string>
     <string name="surplus">剩余</string>
     <string name="input_detail_address">请填写详细地址</string>
-
+    <string name="fill_remarks">请填写备注</string>
+    <string name="complete">完成</string>
+    <string name="delete">删除</string>
+    <string name="add_success">添加成功</string>
+    <string name="delete_success">删除成功</string>
 
 </resources>

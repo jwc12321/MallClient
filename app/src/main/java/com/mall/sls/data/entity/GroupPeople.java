@@ -2,11 +2,13 @@ package com.mall.sls.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * @author jwc on 2020/5/14.
  * 描述：
  */
-public class GroupPeople {
+public class GroupPeople implements Serializable {
     //时间
     @SerializedName("addTime")
     private String addTime;

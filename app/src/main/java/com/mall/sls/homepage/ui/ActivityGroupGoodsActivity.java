@@ -20,12 +20,14 @@ import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.FormatUtil;
+import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.TimeUtil;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DrawTextView;
 import com.mall.sls.common.widget.textview.FourTearDownView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.common.widget.textview.TearDownView;
+import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.GroupPeople;
 import com.mall.sls.data.entity.ProductListCallableInfo;
@@ -147,8 +149,8 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
             countDown.setTimeOutListener(this);
             countDownTime.setTimeOutListener(this);
             goodsIntroduction.setText(goodsDetailsInfo.getBrief());
-            currentPrice.setText("¥" + goodsDetailsInfo.getRetailPrice());
-            originalPrice.setText("¥" + goodsDetailsInfo.getCounterPrice());
+            currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getRetailPrice()));
+            originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
             if (!TextUtils.isEmpty(goodsDetailsInfo.getNow()) && !TextUtils.isEmpty(goodsDetailsInfo.getGroupExpireTime())) {
                 long now = FormatUtil.dateToStamp(goodsDetailsInfo.getNow());
                 long groupExpireTime = FormatUtil.dateToStamp(goodsDetailsInfo.getGroupExpireTime());
@@ -177,6 +179,11 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
 
     @Override
     public void renderConsumerPhone(String consumerPhone) {
+
+    }
+
+    @Override
+    public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
 
     }
 

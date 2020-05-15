@@ -3,27 +3,38 @@ package com.mall.sls.data.remote;
 
 import android.os.RemoteException;
 
+import com.google.gson.annotations.SerializedName;
 import com.mall.sls.data.RemoteDataException;
 import com.mall.sls.data.RemoteDataWrapper;
 import com.mall.sls.data.entity.AddressInfo;
 import com.mall.sls.data.entity.AppUrlInfo;
+import com.mall.sls.data.entity.ConfirmOrderDetail;
+import com.mall.sls.data.entity.CouponInfo;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.HomePageInfo;
+import com.mall.sls.data.entity.Ignore;
+import com.mall.sls.data.entity.MyCouponInfo;
 import com.mall.sls.data.entity.OneClickInfo;
+import com.mall.sls.data.entity.OrderSubmitInfo;
 import com.mall.sls.data.entity.ProvinceBean;
 import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.request.AddAddressRequest;
+import com.mall.sls.data.request.CartCheckoutRequest;
+import com.mall.sls.data.request.CartFastaddRequest;
 import com.mall.sls.data.request.LoginRequest;
 import com.mall.sls.data.request.MobileRequest;
 import com.mall.sls.data.request.OneClickLoginRequest;
+import com.mall.sls.data.request.OrderSubmitRequest;
 
 import java.util.List;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -76,6 +87,28 @@ public interface RestApiService {
     @GET("app/common/area")
     Flowable<RemoteDataWrapper<List<ProvinceBean>>> getAreas(@Header("X-Hc-Sign") String sign);
 
+    //删除地址
+    @DELETE("app/address/{id}")
+    Flowable<RemoteDataWrapper<Ignore>> deleteAddress(@Header("X-Hc-Sign") String sign, @Path("id") String id);
 
+    //商品购买接口
+    @POST("app/cart/fastadd")
+    Flowable<RemoteDataWrapper<ConfirmOrderDetail>> cartFastAdd(@Header("X-Hc-Sign") String sign,@Body CartFastaddRequest request);
+
+    //订单预提交
+    @GET("app/cart/checkout")
+    Flowable<RemoteDataWrapper<ConfirmOrderDetail>> cartCheckout(@Header("X-Hc-Sign") String sign,@Query("addressId") String addressId,@Query("cartId") String cartId,@Query("couponId") String couponId,@Query("userCouponId") String userCouponId);
+
+    //查询当前预提交订单可用优惠券
+    @GET("app/coupon/selectlist")
+    Flowable<RemoteDataWrapper<List<CouponInfo>>> getCouponSelect(@Header("X-Hc-Sign") String sign, @Query("cartIds") String cartIds);
+
+    //提交订单
+    @POST("app/order/submit")
+    Flowable<RemoteDataWrapper<OrderSubmitInfo>> orderSubmit(@Header("X-Hc-Sign") String sign,@Body OrderSubmitRequest request);
+
+    //获取优惠卷列表
+    @GET("app/coupon/mylist")
+    Flowable<RemoteDataWrapper<MyCouponInfo>> getCouponInfos(@Header("X-Hc-Sign") String sign, @Query("status") String status, @Query("page") String page, @Query("limit") String limit);
 
 }

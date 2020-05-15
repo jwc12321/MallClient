@@ -77,6 +77,7 @@
                 android:orientation="vertical">
 
                 <com.mall.sls.common.widget.textview.MediumThickTextView
+                    android:id="@+id/name"
                     style="@style/size15_color_app3_text_style"
                     android:layout_marginLeft="@dimen/dp_14"
                     android:layout_marginTop="@dimen/dp_19"
@@ -85,6 +86,7 @@
                     tools:text="七月一日新人优惠附近的开发的卷" />
 
                 <com.mall.sls.common.widget.textview.MediumThickTextView
+                    android:id="@+id/endTime"
                     style="@style/size11_color_app2_text_style"
                     android:layout_marginLeft="@dimen/dp_14"
                     android:layout_marginTop="@dimen/dp_3"
@@ -104,10 +106,12 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/up_down_rl"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_22">
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/used_bt"
                     style="@style/coupon_uesd_bt_style"
                     android:text="@string/to_use" />
                 <com.mall.sls.common.widget.textview.ConventionalTextView
@@ -117,6 +121,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_15"/>
                 <ImageView
+                    android:id="@+id/down_iv"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@mipmap/icon_down_arrow"
@@ -124,18 +129,22 @@
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingRight="@dimen/dp_10"/>
                 <ImageView
+                    android:id="@+id/up_iv"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@mipmap/icon_up_arrow"
                     android:layout_centerHorizontal="true"
                     android:paddingLeft="@dimen/dp_10"
-                    android:paddingRight="@dimen/dp_10"/>
+                    android:paddingRight="@dimen/dp_10"
+                    android:visibility="gone"/>
             </RelativeLayout>
             <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/limit"
                 style="@style/size11_color_app2_text_style"
                 tools:text="限2020-05-12至2020-05-13 \n限水果类产品使用"
                 android:layout_marginLeft="@dimen/dp_15"
-                android:layout_marginBottom="@dimen/dp_3"/>
+                android:layout_marginBottom="@dimen/dp_3"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
     <View

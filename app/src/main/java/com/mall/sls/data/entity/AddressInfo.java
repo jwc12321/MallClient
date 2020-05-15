@@ -9,6 +9,9 @@ import java.io.Serializable;
  * 描述：
  */
 public class AddressInfo implements Serializable {
+    //地址id
+    @SerializedName("id")
+    private String id;
     //姓名
     @SerializedName("name")
     private String name;
@@ -118,6 +121,14 @@ public class AddressInfo implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
 

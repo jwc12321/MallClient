@@ -10,14 +10,12 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 
-import com.google.gson.annotations.SerializedName;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.address.AddressContract;
 import com.mall.sls.address.AddressModule;
 import com.mall.sls.address.DaggerAddressComponent;
 import com.mall.sls.address.presenter.AddAddressPresenter;
-import com.mall.sls.certify.ui.CerifyPayActivity;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.address.AreaPickerView;
 import com.mall.sls.common.widget.textview.ConventionalEditTextView;
@@ -40,7 +38,7 @@ import butterknife.OnTextChanged;
  * @author jwc on 2020/5/8.
  * 描述：添加地址
  */
-public class AddAddressActivity extends BaseActivity  implements AddressContract.AddAddressView {
+public class AddAddressActivity extends BaseActivity implements AddressContract.AddAddressView {
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.title)
@@ -75,15 +73,17 @@ public class AddAddressActivity extends BaseActivity  implements AddressContract
     ImageView defaultIv;
     @BindView(R.id.confirm_bt)
     MediumThickTextView confirmBt;
+    @BindView(R.id.right_tv)
+    MediumThickTextView rightTv;
 
     private String labelType;
     private String genderType;
-    private Boolean defaultType=false;
+    private Boolean defaultType = false;
     private String name;
     private String phoneNumebr;
     private String houseNumber;
 
-    private  AddressInfo addressInfo;
+    private AddressInfo addressInfo;
     private AreaPickerView areaPickerView;
     private int[] i;
     private String[] codeValue;
@@ -93,6 +93,8 @@ public class AddAddressActivity extends BaseActivity  implements AddressContract
     private String city;
     //区
     private String county;
+    private String areaCode;
+    private String addressId;
 
     @Inject
     AddAddressPresenter addAddressPresenter;
@@ -100,7 +102,7 @@ public class AddAddressActivity extends BaseActivity  implements AddressContract
 
     public static void start(Context context, AddressInfo addressInfo) {
         Intent intent = new Intent(context, AddAddressActivity.class);
-        intent.putExtra(StaticData.ADDRESS_INFO,addressInfo);
+        intent.putExtra(StaticData.ADDRESS_INFO, addressInfo);
         context.startActivity(intent);
     }
 
@@ -109,20 +111,34 @@ public class AddAddressActivity extends BaseActivity  implements AddressContract
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
         ButterKnife.bind(this);
-        setHeight(back,title,null);
+        setHeight(back, title, rightTv);
         initView();
     }
 
     private void initView() {
-        addressInfo= (AddressInfo) getIntent().getSerializableExtra(StaticData.ADDRESS_INFO);
-        if(addressInfo!=null){
+        addressInfo = (AddressInfo) getIntent().getSerializableExtra(StaticData.ADDRESS_INFO);
+        if (addressInfo != null) {
+            addressId=addressInfo.getId();
+            rightTv.setVisibility(View.VISIBLE);
             nameEt.setText(addressInfo.getName());
-            genderType=addressInfo.getGender();
+            genderType = addressInfo.getGender();
             phoneNumberEt.setText(addressInfo.getTel());
-
-
-        }else {
-            genderType=StaticData.REFLASH_ZERO;
+            province=addressInfo.getProvince();
+            city=addressInfo.getCity();
+            county=addressInfo.getCounty();
+            areaCode=addressInfo.getAreaCode();
+            houseNumber=addressInfo.getAddressDetail();
+            address.setText(province+city+county);
+            houseNumberEt.setText(houseNumber);
+            labelType=addressInfo.getType();
+            genderType=addressInfo.getGender();
+            defaultType=addressInfo.getDefault();
+            defaultIv.setSelected(defaultType);
+            title.setText(getString(R.string.update_address));
+        } else {
+            genderType = StaticData.REFLASH_ZERO;
+            rightTv.setVisibility(View.INVISIBLE);
+            title.setText(getString(R.string.add_new_address));
         }
         labelSelect();
         genderSelect();
@@ -155,7 +171,7 @@ public class AddAddressActivity extends BaseActivity  implements AddressContract
     }
 
 
-    @OnClick({R.id.confirm_bt, R.id.back, R.id.house, R.id.company, R.id.school, R.id.other,R.id.ms_iv,R.id.men_iv,R.id.address,R.id.default_iv})
+    @OnClick({R.id.confirm_bt, R.id.back, R.id.house, R.id.company, R.id.school, R.id.other, R.id.ms_iv, R.id.men_iv, R.id.address, R.id.default_iv,R.id.right_tv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -178,11 +194,11 @@ public class AddAddressActivity extends BaseActivity  implements AddressContract
                 labelSelect();
                 break;
             case R.id.ms_iv://性别 女
-                genderType=StaticData.REFLASH_ZERO;
+                genderType = StaticData.REFLASH_ZERO;
                 genderSelect();
                 break;
             case R.id.men_iv://性别 男
-                genderType=StaticData.REFLASH_ONE;
+                genderType = StaticData.REFLASH_ONE;
                 genderSelect();
                 break;
             case R.id.address:
@@ -190,47 +206,51 @@ public class AddAddressActivity extends BaseActivity  implements AddressContract
                 areaPickerView.show();
                 break;
             case R.id.default_iv:
-                defaultType=!defaultType;
+                defaultType = !defaultType;
                 defaultIv.setSelected(defaultType);
                 break;
             case R.id.confirm_bt:
                 confirm();
                 break;
+            case R.id.right_tv:
+                addAddressPresenter.deleteAddress(addressId);
+                break;
             default:
         }
     }
 
-    private void confirm(){
-        if(TextUtils.isEmpty(name)){
+    private void confirm() {
+        if (TextUtils.isEmpty(name)) {
             showMessage(getString(R.string.input_receiver));
             return;
         }
-        if(TextUtils.isEmpty(phoneNumebr)){
+        if (TextUtils.isEmpty(phoneNumebr)) {
             showMessage(getString(R.string.input_phone_number));
             return;
         }
-        if (TextUtils.isEmpty(province)||TextUtils.isEmpty(city)||TextUtils.isEmpty(county)){
+        if (TextUtils.isEmpty(province) || TextUtils.isEmpty(city) || TextUtils.isEmpty(county)) {
             showMessage(getString(R.string.click_select_address));
             return;
         }
-        if(TextUtils.isEmpty(houseNumber)){
+        if (TextUtils.isEmpty(houseNumber)) {
             showMessage(getString(R.string.input_detail_address));
             return;
         }
-        AddAddressRequest addAddressRequest=new AddAddressRequest();
+        AddAddressRequest addAddressRequest = new AddAddressRequest();
+        addAddressRequest.setId(addressId);
         addAddressRequest.setName(name);
         addAddressRequest.setGender(genderType);
         addAddressRequest.setTel(phoneNumebr);
         addAddressRequest.setProvince(province);
         addAddressRequest.setCity(city);
         addAddressRequest.setCounty(county);
-        if(codeValue!=null&&codeValue.length==3){
-            addAddressRequest.setAreaCode(codeValue[2]);
+        if (codeValue != null && codeValue.length == 3) {
+            areaCode=codeValue[2];
+            addAddressRequest.setAreaCode(areaCode);
         }
         addAddressRequest.setAddressDetail(houseNumber);
         addAddressRequest.setType(labelType);
         addAddressRequest.setDefault(defaultType);
-        addAddressRequest.setPostalCode("");
         addAddressPresenter.addAddress(addAddressRequest);
 
     }
@@ -242,9 +262,9 @@ public class AddAddressActivity extends BaseActivity  implements AddressContract
         other.setSelected(TextUtils.equals(getString(R.string.other), labelType) ? true : false);
     }
 
-    private void genderSelect(){
-        msIv.setSelected(TextUtils.equals(StaticData.REFLASH_ZERO,genderType)?true:false);
-        menIv.setSelected(TextUtils.equals(StaticData.REFLASH_ONE,genderType)?true:false);
+    private void genderSelect() {
+        msIv.setSelected(TextUtils.equals(StaticData.REFLASH_ZERO, genderType) ? true : false);
+        menIv.setSelected(TextUtils.equals(StaticData.REFLASH_ONE, genderType) ? true : false);
     }
 
 
@@ -256,7 +276,8 @@ public class AddAddressActivity extends BaseActivity  implements AddressContract
 
     @Override
     public void renderAddAddress() {
-
+        showMessage(getString(R.string.add_success));
+        finish();
     }
 
     @Override
@@ -268,22 +289,28 @@ public class AddAddressActivity extends BaseActivity  implements AddressContract
                 i = value;
                 if (value.length == 3) {
                     province = provinceBeans.get(value[0]).getName();
-                    city=provinceBeans.get(value[0]).getCityBeans().get(value[1]).getName();
-                    county=provinceBeans.get(value[0]).getCityBeans().get(value[1]).getAreaBeans().get(value[2]).getName();
+                    city = provinceBeans.get(value[0]).getCityBeans().get(value[1]).getName();
+                    county = provinceBeans.get(value[0]).getCityBeans().get(value[1]).getAreaBeans().get(value[2]).getName();
                 } else {
                     province = provinceBeans.get(value[0]).getName();
-                    city=provinceBeans.get(value[0]).getCityBeans().get(value[1]).getName();
-                    county="";
+                    city = provinceBeans.get(value[0]).getCityBeans().get(value[1]).getName();
+                    county = "";
                 }
-                address.setText(province+city+county);
+                address.setText(province + city + county);
             }
 
             @Override
             public void callCode(String... value) {
-                codeValue=value;
+                codeValue = value;
             }
         });
         areaPickerView.dismiss();
+    }
+
+    @Override
+    public void renderDeleteAddress() {
+        showMessage(getString(R.string.delete_success));
+        finish();
     }
 
     @Override

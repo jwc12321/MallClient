@@ -19,9 +19,11 @@ import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.common.widget.textview.WhiteDrawTextView;
+import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.GroupPurchase;
@@ -113,6 +115,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     private List<String> checkSkus;
     private int goodsCount=1;
     private String unit;
+    private  String groupId;
+    private String groupRulesId;
     @Inject
     GoodsDetailsPresenter goodsDetailsPresenter;
     private String consumerPhone;
@@ -176,16 +180,34 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 finish();
                 break;
             case R.id.initiate_bill_bt://发起拼单
-                goSelectSpec(StaticData.REFLASH_ONE);
+                initiateBill();
                 break;
             case R.id.service_iv:
                 CustomerServiceActivity.start(this,consumerPhone);
                 break;
             case R.id.sku_rl:
-            case R.id.individual_shopping_tv://单独购买
                 goSelectSpec(StaticData.REFLASH_ZERO);
                 break;
+            case R.id.individual_shopping_tv://单独购买
+                individualShopping();
+                break;
             default:
+        }
+    }
+
+    private void initiateBill(){
+        if(productListCallableInfo==null){
+            goSelectSpec(StaticData.REFLASH_ONE);
+        }else {
+            goodsDetailsPresenter.cartFastAdd(goodsId,productListCallableInfo.getId(),true,String.valueOf(goodsCount),groupId,groupRulesId);
+        }
+    }
+
+    private void individualShopping(){
+        if(productListCallableInfo==null){
+            goSelectSpec(StaticData.REFLASH_ZERO);
+        }else {
+            goodsDetailsPresenter.cartFastAdd(goodsId,productListCallableInfo.getId(),false,String.valueOf(goodsCount),groupId,groupRulesId);
         }
     }
 
@@ -210,8 +232,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                         productListCallableInfo= (ProductListCallableInfo) bundle.getSerializable(StaticData.SKU_INFO);
                         goodsCount=bundle.getInt(StaticData.GOODS_COUNT);
                         selectedGoods.setText(getString(R.string.is_selected)+" "+productListCallableInfo.getSpecifications()+"/"+unit);
-                        individualShoppingPrice.setText("¥" + productListCallableInfo.getPrice());
-                        initiateBillPrice.setText("¥" + productListCallableInfo.getPreferentialPrice());
+                        individualShoppingPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(productListCallableInfo.getPrice()));
+                        initiateBillPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(productListCallableInfo.getPreferentialPrice()));
                     }
                     break;
                 default:
@@ -242,10 +264,10 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             banner.setPointsIsVisible(data.size() > 1);
             banner.setAutoPlayAble(data.size() > 1);
             banner.setBannerData(R.layout.xbanner_item, data);
-            currentPrice.setText("¥" + goodsDetailsInfo.getRetailPrice());
+            currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getRetailPrice()));
             unit=goodsDetailsInfo.getUnit();
             goodsUnit.setText("/" + unit);
-            originalPrice.setText("¥" + goodsDetailsInfo.getCounterPrice());
+            originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
             sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity() + "件");
             goodsName.setText(goodsDetailsInfo.getName());
             selectedGoods.setText(getString(R.string.is_selected));
@@ -275,6 +297,11 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     @Override
     public void renderConsumerPhone(String consumerPhone) {
         this.consumerPhone=consumerPhone;
+    }
+
+    @Override
+    public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
+        ConfirmOrderActivity.start(this,confirmOrderDetail);
     }
 
     @Override

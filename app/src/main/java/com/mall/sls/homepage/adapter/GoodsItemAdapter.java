@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.FormatUtil;
+import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.VerifyManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DrawTextView;
@@ -109,8 +111,8 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
             GlideHelper.load((Activity) context, goodsItemInfo.getPicUrl(), R.mipmap.ic_launcher, goodsIv);
             goodsName.setText(goodsItemInfo.getName());
             goodsIntroduction.setText(goodsItemInfo.getBrief());
-            currentPrice.setText("¥" + goodsItemInfo.getRetailPrice());
-            originalPrice.setText("¥" + goodsItemInfo.getCounterPrice());
+            currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getRetailPrice()));
+            originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getCounterPrice()));
             groupType.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,goodsItemInfo.getGroupType())?View.VISIBLE:View.GONE );
         }
     }

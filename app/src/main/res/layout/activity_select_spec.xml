@@ -136,6 +136,7 @@
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/confirm_bt"
             style="@style/bottom_bt_style"
-            android:text="@string/confirm" />
+            android:text="@string/confirm"
+            android:enabled="false"/>
     </RelativeLayout>
 </RelativeLayout>

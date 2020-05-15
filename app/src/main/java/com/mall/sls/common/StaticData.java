@@ -11,6 +11,7 @@ public class StaticData {
     public static final String TEN_LIST_SIZE = "10";
     public static final String REFLASH_ZERO = "0";
     public static final String REFLASH_ONE = "1";
+    public static final String REFLASH_TWO = "2";
 
     //通用文本title
     public static final String COMMON_TITLE = "commonTitle";
@@ -40,5 +41,15 @@ public class StaticData {
     public static final String SKU_INFO="skuInfo";
     //客服电话
     public static final String CONSUMER_PHONE="consumerPhone";
+    //备注
+    public static final String REMARK="remark";
+    //下单商品详情
+    public static final String CONFIRM_ORDER_DETAIL="confirmOrderDetail";
+    //购物车id
+    public static final String CART_IDS="cartIds";
+    //用户优惠券ID
+    public static final String USER_COUPON_ID="userCouponId";
+    //优惠券ID
+    public static final String COUPON_ID="couponId";
 
 }

@@ -7,6 +7,7 @@ import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
+import com.mall.sls.data.entity.Ignore;
 import com.mall.sls.data.entity.ProvinceBean;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
@@ -43,7 +44,7 @@ public class AddAddressPresenter implements AddressContract.AddAddressPresenter 
     @Override
     public void addAddress(AddAddressRequest addAddressRequest) {
         addAddressView.showLoading(StaticData.PROCESSING);
-        String sign= SignUnit.signPost(RequestUrl.ADDRESS_SAVE_RUL,gson.toJson(addAddressRequest));
+        String sign= SignUnit.signPost(RequestUrl.ADDRESS_SAVE_URL,gson.toJson(addAddressRequest));
         Disposable disposable = restApiService.addAddress(sign,addAddressRequest)
                 .flatMap(new RxRemoteDataParse<String>())
                 .compose(new RxSchedulerTransformer<String>())
@@ -67,7 +68,7 @@ public class AddAddressPresenter implements AddressContract.AddAddressPresenter 
     public void getAreas() {
         addAddressView.showLoading(StaticData.LOADING);
         String queryString = "null";
-        String sign = SignUnit.signGet(RequestUrl.COMMON_AREA_RUL, queryString);
+        String sign = SignUnit.signGet(RequestUrl.COMMON_AREA_URL, queryString);
         Disposable disposable = restApiService.getAreas(sign)
                 .flatMap(new RxRemoteDataParse<List<ProvinceBean>>())
                 .compose(new RxSchedulerTransformer<List<ProvinceBean>>())
@@ -82,6 +83,29 @@ public class AddAddressPresenter implements AddressContract.AddAddressPresenter 
                     public void accept(Throwable throwable) throws Exception {
                         addAddressView.showError(throwable);
                         addAddressView.dismissLoading();
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void deleteAddress(String id) {
+        addAddressView.showLoading(StaticData.PROCESSING);
+        String sign= SignUnit.signGet(RequestUrl.DELETE_ADDRESS_URL+id,"null");
+        Disposable disposable = restApiService.deleteAddress(sign,id)
+                .flatMap(new RxRemoteDataParse<Ignore>())
+                .compose(new RxSchedulerTransformer<Ignore>())
+                .subscribe(new Consumer<Ignore>() {
+                    @Override
+                    public void accept(Ignore ignore) throws Exception {
+                        addAddressView.dismissLoading();
+                        addAddressView.renderDeleteAddress();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        addAddressView.dismissLoading();
+                        addAddressView.showError(throwable);
                     }
                 });
         mDisposableList.add(disposable);

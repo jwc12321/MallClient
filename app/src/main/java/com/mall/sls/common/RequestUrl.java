@@ -7,11 +7,18 @@ public class RequestUrl {
     public static String SEND_CODE_V_URL="/app/auth/regCaptcha";//发送验证码
     public static String USER_RP_STATUS_URL="/api/f/uses/rp/status";//获取用户认证状态
     public static String HOME_INDEX_URL="/app/home/index";//首页信息
-    public static String GOODS_DETAILS_RUL="/app/goods/detail";
-    public static String ADDRESS_MANAGE_URL="/app/address/list";
-    public static String CUSTOMER_PHONE_RUL="/app/common/customer";//客服电话
-    public static String COMMON_AREA_RUL="/app/common/area";
-    public static String ADDRESS_SAVE_RUL="/app/address/save";
+    public static String GOODS_DETAILS_URL="/app/goods/detail";//商品详情
+    public static String ADDRESS_MANAGE_URL="/app/address/list";//地址列表
+    public static String CUSTOMER_PHONE_URL="/app/common/customer";//客服电话
+    public static String COMMON_AREA_URL="/app/common/area";//获取所有三级地址
+    public static String ADDRESS_SAVE_URL="/app/address/save";//添加地址
+    public static String DELETE_ADDRESS_URL="/app/address/";//删除地址
+    public static String CART_FAST_ADD_URL="/app/cart/fastadd";//商品购买接口
+    public static String CART_CHECKOUT_URL="/app/cart/checkout";//订单预提交
+    public static String COUPON_SELECT_LIST_URL="/app/coupon/selectlist";//查询当前预提交订单可用优惠券
+    public static String ORDER_UBMIT_URL="/app/order/submit";//提交订单
+    public static String COUPON_MY_LIST_URL="/app/coupon/mylist";//优惠卷列表
+
 
 
 }

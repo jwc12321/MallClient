@@ -117,7 +117,7 @@ public class RestApiModule {
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
                 Request request = original.newBuilder()
-                        .header("token", TokenManager.getToken() + "")
+                        .header("Authorization", TokenManager.getToken() + "")
                         .header("X-Hc-Timestamp", FormatUtil.timeSecond())
                         .header("areaCode", AreaCodeManager.getAreaCode()+"")
                         .build();

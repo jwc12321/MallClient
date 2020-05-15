@@ -19,7 +19,12 @@
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/title"
             style="@style/title_text_style"
-            android:text="@string/add_new_address" />
+            tools:text="@string/add_new_address" />
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/right_tv"
+            style="@style/title_right_text_style"
+            android:text="@string/delete"
+            android:visibility="invisible"/>
     </RelativeLayout>
 
     <com.mall.sls.common.widget.scrollview.ReboundScrollView
