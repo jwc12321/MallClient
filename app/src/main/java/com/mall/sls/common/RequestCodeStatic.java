@@ -11,4 +11,7 @@ public class RequestCodeStatic {
     public static final int REQUEST_ADDRESS=8;//选择地址
     public static final int REQUEST_REMARK=9;//填写备注
     public static final int SELECT_COUPON=10;//选择优惠卷
+    public static final int GO_COUPON=11;//优惠卷列表
+    public static final int REQUEST_SPEC_RETURN=12;//选择规格后展示
+    public static final int SDK_PAY_FLAG=13;//支付宝
 }

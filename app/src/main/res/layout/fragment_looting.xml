@@ -39,17 +39,18 @@
                     android:layout_marginBottom="@dimen/dp_14"
                     android:visibility="visible"/>
                 <LinearLayout
-                    android:id="@+id/no_address_ll"
+                    android:id="@+id/no_record_ll"
                     style="@style/common_no_record_ll_style"
                     android:visibility="gone">
 
                     <ImageView
                         style="@style/common_no_record_iv_style"
-                        android:src="@mipmap/icon_no_address" />
+                        android:src="@mipmap/icon_no_goods" />
 
                     <TextView
+                        android:id="@+id/no_record_tv"
                         style="@style/common_no_record_tv_style"
-                        android:text="@string/no_address_added_yet" />
+                        tools:text="@string/no_address_added_yet" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

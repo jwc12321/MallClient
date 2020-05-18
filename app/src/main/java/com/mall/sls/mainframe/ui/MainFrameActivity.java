@@ -26,7 +26,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainFrameActivity extends BaseActivity {
+public class MainFrameActivity extends BaseActivity implements HomepageFragment.HomepageListener,MineFragment.MineListener{
 
 
     @BindView(R.id.viewPager)
@@ -66,6 +66,9 @@ public class MainFrameActivity extends BaseActivity {
     private TextView[] textViews;
     private MainPagerAdapter adapter;
 
+    private HomepageFragment homepageFragment;
+    private MineFragment mineFragment;
+
     public static void start(Context context) {
         Intent intent = new Intent(context, MainFrameActivity.class);
         context.startActivity(intent);
@@ -81,11 +84,15 @@ public class MainFrameActivity extends BaseActivity {
 
     private void initView() {
         sActivityRef = new WeakReference<>(this);
+        homepageFragment=new HomepageFragment();
+        mineFragment=new MineFragment();
+        homepageFragment.setHomepageListener(this);
+        mineFragment.setMineListener(this);
         fragments = new BaseFragment[4];
-        fragments[0] = HomepageFragment.newInstance();
+        fragments[0] = homepageFragment;
         fragments[1] = LocalTeamFragment.newInstance();
         fragments[2] = WholeDiscountFragment.newInstance();
-        fragments[3] = MineFragment.newInstance();
+        fragments[3] = mineFragment;
         relativeLayouts = new RelativeLayout[4];
         relativeLayouts[0] = homeRl;
         relativeLayouts[1] = teamRl;
@@ -147,5 +154,10 @@ public class MainFrameActivity extends BaseActivity {
     @Override
     public View getSnackBarHolderView() {
         return mainRl;
+    }
+
+    @Override
+    public void goLocalTeam() {
+        viewPager.setCurrentItem(1);
     }
 }

@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
+import com.mall.sls.certify.ui.CerifyPayActivity;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
+import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.coupon.CouponContract;
 import com.mall.sls.coupon.CouponModule;
 import com.mall.sls.coupon.DaggerCouponComponent;
@@ -22,6 +24,7 @@ import com.mall.sls.coupon.adapter.CouponAdapter;
 import com.mall.sls.coupon.presenter.CouponListPresenter;
 import com.mall.sls.data.entity.CouponInfo;
 import com.mall.sls.data.entity.MyCouponInfo;
+import com.mall.sls.homepage.ui.HomepageFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -32,12 +35,13 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author jwc on 2020/5/12.
  * 描述：已过期的优惠卷
  */
-public class CouponExpiredFragment extends BaseFragment implements CouponContract.CouponListView, CouponAdapter.OnItemClickListener{
+public class CouponExpiredFragment extends BaseFragment implements CouponContract.CouponListView, CouponAdapter.OnItemClickListener {
 
     @BindView(R.id.record_rv)
     RecyclerView recordRv;
@@ -45,6 +49,8 @@ public class CouponExpiredFragment extends BaseFragment implements CouponContrac
     LinearLayout noRecordLl;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.no_record_bt)
+    MediumThickTextView noRecordBt;
     private CouponAdapter couponAdapter;
     @Inject
     CouponListPresenter couponListPresenter;
@@ -93,6 +99,7 @@ public class CouponExpiredFragment extends BaseFragment implements CouponContrac
     SimpleMultiPurposeListener simpleMultiPurposeListener = new SimpleMultiPurposeListener() {
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+            refreshLayout.finishRefresh(6000);
             couponListPresenter.getCouponInfos(StaticData.REFLASH_ZERO, StaticData.REFLASH_TWO);
         }
 
@@ -105,8 +112,8 @@ public class CouponExpiredFragment extends BaseFragment implements CouponContrac
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (getUserVisibleHint()&&couponListPresenter!=null) {
-            couponListPresenter.getCouponInfos(StaticData.REFLASH_ONE,StaticData.REFLASH_TWO);
+        if (getUserVisibleHint() && couponListPresenter != null) {
+            couponListPresenter.getCouponInfos(StaticData.REFLASH_ONE, StaticData.REFLASH_TWO);
         }
     }
 
@@ -114,7 +121,7 @@ public class CouponExpiredFragment extends BaseFragment implements CouponContrac
     public void renderCouponInfos(MyCouponInfo myCouponInfo) {
         refreshLayout.finishRefresh();
         if (myCouponInfo != null) {
-            this.couponInfos=myCouponInfo.getCouponInfos();
+            this.couponInfos = myCouponInfo.getCouponInfos();
             if (couponInfos != null && couponInfos.size() > 0) {
                 recordRv.setVisibility(View.VISIBLE);
                 noRecordLl.setVisibility(View.GONE);
@@ -128,6 +135,9 @@ public class CouponExpiredFragment extends BaseFragment implements CouponContrac
                 recordRv.setVisibility(View.GONE);
                 noRecordLl.setVisibility(View.VISIBLE);
                 refreshLayout.finishLoadMoreWithNoMoreData();
+            }
+            if(listener!=null){
+                listener.returnExpiredNumebr(myCouponInfo.getTotal());
             }
         }
     }
@@ -150,18 +160,44 @@ public class CouponExpiredFragment extends BaseFragment implements CouponContrac
 
     @Override
     public void goUsed() {
+        if(listener!=null){
+            listener.goLocalTeam();
+        }
+    }
 
+    @OnClick({R.id.no_record_bt})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.no_record_bt:
+                if(listener!=null){
+                    listener.goLocalTeam();
+                }
+                break;
+            default:
+        }
+    }
+
+
+    public interface CouponExpiredListener {
+        void goLocalTeam();
+        void returnExpiredNumebr(String number);
+    }
+
+    private CouponExpiredListener listener;
+
+    public void setCouponExpiredListener(CouponExpiredListener listener) {
+        this.listener = listener;
     }
 
     @Override
     public void upDownView(ImageView upIv, ImageView downIv, ConventionalTextView limitTv, int position) {
-        CouponInfo couponInfo=couponInfos.get(position);
-        if(couponInfo.isUp()){
+        CouponInfo couponInfo = couponInfos.get(position);
+        if (couponInfo.isUp()) {
             couponInfo.setUp(false);
             upIv.setVisibility(View.GONE);
             downIv.setVisibility(View.VISIBLE);
             limitTv.setVisibility(View.GONE);
-        }else {
+        } else {
             couponInfo.setUp(true);
             upIv.setVisibility(View.VISIBLE);
             downIv.setVisibility(View.GONE);

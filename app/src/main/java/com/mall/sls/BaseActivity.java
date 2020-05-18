@@ -36,6 +36,7 @@ import com.mall.sls.common.unit.HandleBackUtil;
 import com.mall.sls.common.widget.dialog.LoadingDialog;
 import com.mall.sls.data.RemoteDataException;
 import com.mall.sls.login.ui.LoginActivity;
+import com.mall.sls.mainframe.ui.MainFrameActivity;
 
 import java.lang.reflect.Field;
 
@@ -221,7 +222,7 @@ public abstract class BaseActivity extends AppCompatActivity implements LoadData
                     HttpException exception = (HttpException) e;
                     if (TextUtils.equals("401", exception.response().code() + "")) {
                         LoginActivity.start(this);
-//                        MainFrameActivity.finishActivity();
+                        MainFrameActivity.finishActivity();
                     } else {
                         showMessage(getString(R.string.fail_to_access_servers));
                     }

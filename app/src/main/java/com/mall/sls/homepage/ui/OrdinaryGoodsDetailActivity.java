@@ -117,6 +117,10 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     private String unit;
     private  String groupId;
     private String groupRulesId;
+    private  String upGroupId;
+    private String upGroupRulesId;
+    private  String downGroupId;
+    private String downGroupRulesId;
     @Inject
     GoodsDetailsPresenter goodsDetailsPresenter;
     private String consumerPhone;
@@ -173,7 +177,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 .inject(this);
     }
 
-    @OnClick({R.id.back, R.id.individual_shopping_tv, R.id.initiate_bill_bt, R.id.service_iv, R.id.sku_rl})
+    @OnClick({R.id.back, R.id.individual_shopping_tv, R.id.initiate_bill_bt, R.id.service_iv, R.id.sku_rl,R.id.up_spell_bt,R.id.down_spell_bt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -186,10 +190,20 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 CustomerServiceActivity.start(this,consumerPhone);
                 break;
             case R.id.sku_rl:
-                goSelectSpec(StaticData.REFLASH_ZERO);
+                goSelectSpecReturn(StaticData.REFLASH_ZERO);
                 break;
             case R.id.individual_shopping_tv://单独购买
                 individualShopping();
+                break;
+            case R.id.up_spell_bt:
+                groupId=upGroupId;
+                groupRulesId=upGroupRulesId;
+                initiateBill();
+                break;
+            case R.id.down_spell_bt:
+                groupId=downGroupId;
+                groupRulesId=downGroupRulesId;
+                initiateBill();
                 break;
             default:
         }
@@ -211,6 +225,15 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         }
     }
 
+    private void goSelectSpecReturn(String type){
+        Intent intent = new Intent(this, SelectSpecActivity.class);
+        intent.putExtra(StaticData.GOODS_DETAILS_INFO, goodsDetailsInfo);
+        intent.putExtra(StaticData.SKU_CHECK, (Serializable) checkSkus);
+        intent.putExtra(StaticData.CHOICE_TYPE,type);
+        intent.putExtra(StaticData.GOODS_COUNT,goodsCount);
+        startActivityForResult(intent, RequestCodeStatic.REQUEST_SPEC_RETURN);
+    }
+
     private void goSelectSpec(String type){
         Intent intent = new Intent(this, SelectSpecActivity.class);
         intent.putExtra(StaticData.GOODS_DETAILS_INFO, goodsDetailsInfo);
@@ -225,7 +248,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
-                case RequestCodeStatic.REQUEST_SPEC:
+                case RequestCodeStatic.REQUEST_SPEC_RETURN:
                     if (data != null) {
                         Bundle bundle = data.getExtras();
                         checkSkus= (List<String>) bundle.getSerializable(StaticData.SKU_CHECK);
@@ -234,6 +257,18 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                         selectedGoods.setText(getString(R.string.is_selected)+" "+productListCallableInfo.getSpecifications()+"/"+unit);
                         individualShoppingPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(productListCallableInfo.getPrice()));
                         initiateBillPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(productListCallableInfo.getPreferentialPrice()));
+                    }
+                    break;
+                case RequestCodeStatic.REQUEST_SPEC:
+                    if (data != null) {
+                        Bundle bundle = data.getExtras();
+                        checkSkus= (List<String>) bundle.getSerializable(StaticData.SKU_CHECK);
+                        productListCallableInfo = (ProductListCallableInfo) bundle.getSerializable(StaticData.SKU_INFO);
+                        goodsCount = bundle.getInt(StaticData.GOODS_COUNT);
+                        selectedGoods.setText(getString(R.string.is_selected)+" "+productListCallableInfo.getSpecifications()+"/"+unit);
+                        individualShoppingPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(productListCallableInfo.getPrice()));
+                        initiateBillPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(productListCallableInfo.getPreferentialPrice()));
+                        goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
                     }
                     break;
                 default:
@@ -281,6 +316,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 downGroup.setVisibility(View.GONE);
                 upPhoneNumber.setText(groupPurchases.get(0).getMobile());
                 upPoorTv.setText("还差" + groupPurchases.get(0).getSurplus() + "人拼成");
+                upGroupId=groupPurchases.get(0).getGrouponId();
+                upGroupRulesId=groupPurchases.get(0).getRulesId();
             } else if (groupPurchases != null && groupPurchases.size() == 2) {
                 upGroup.setVisibility(View.VISIBLE);
                 downGroup.setVisibility(View.VISIBLE);
@@ -288,6 +325,10 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 upPoorTv.setText("还差" + groupPurchases.get(0).getSurplus() + "人拼成");
                 downPhoneNumber.setText(groupPurchases.get(1).getMobile());
                 downPoorTv.setText("还差" + groupPurchases.get(1).getSurplus() + "人拼成");
+                upGroupId=groupPurchases.get(0).getGrouponId();
+                upGroupRulesId=groupPurchases.get(0).getRulesId();
+                downGroupId=groupPurchases.get(1).getGrouponId();
+                downGroupRulesId=groupPurchases.get(1).getRulesId();
             }
             individualShoppingPrice.setText("¥" + goodsDetailsInfo.getCounterPrice());
             initiateBillPrice.setText("¥" + goodsDetailsInfo.getRetailPrice());

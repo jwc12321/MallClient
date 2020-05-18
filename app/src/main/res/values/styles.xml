@@ -1107,5 +1107,44 @@
     </style>
 
 
+    <style name="verify_step_iv_style">
+        <item name="android:layout_width">@dimen/dp_24</item>
+        <item name="android:layout_height">@dimen/dp_24</item>
+        <item name="android:textSize">@dimen/sp_13</item>
+        <item name="android:textColor">@color/appText1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/verfiy_select</item>
+    </style>
+
+    <style name="verify_line_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_2</item>
+        <item name="android:background">@drawable/auth_view_select</item>
+    </style>
+
+    <style name="verify_step_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_13</item>
+        <item name="android:textColor">@drawable/verify_step_text_select</item>
+    </style>
+
+    <style name="verify_success_left_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/appText3</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:layout_marginLeft">@dimen/dp_26</item>
+    </style>
+    <style name="verify_success_right_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/appText2</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:layout_marginRight">@dimen/dp_16</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+
 
 </resources>

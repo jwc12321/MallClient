@@ -173,5 +173,26 @@
     <string name="delete">删除</string>
     <string name="add_success">添加成功</string>
     <string name="delete_success">删除成功</string>
+    <string name="no_data">暂无数据</string>
+    <string name="not_in_opening_area">不在开通区域</string>
+    <string name="no_coupon">暂无优惠券</string>
+    <string name="go_shopping">去逛逛</string>
+    <string name="identity_information">身份信息</string>
+    <string name="face_recognition">人脸识别</string>
+    <string name="complete_verify">完成认证</string>
+    <string name="input_idcard_name">请填写身份证上的姓名</string>
+    <string name="input_idcard_number">请填写身份证号码</string>
+    <string name="confirm_id">请如实填写，一旦认证不可更改。</string>
+    <string name="verfiy_success">恭喜！您的实人认证已经通过审核</string>
+    <string name="verfiy_failed">很遗憾，认证失败</string>
+    <string name="next">下一步</string>
+    <string name="auth_again">重新认证</string>
+    <string name="real_name">真实姓名</string>
+    <string name="id_card_number">身份证号</string>
+    <string name="verfiy_success_content">1:身份证信息仅供平台提供诚信保证使用。\n2:我方承诺不向其他第三方透露您的个人信息</string>
+    <string name="regular_name">请输入正确的名字</string>
+    <string name="regular_id_card">请输入正确的身份证号</string>
+    <string name="first_back_verify">您是否要返回身份信息验证界面</string>
+    <string name="no_order">暂无订单</string>
 
 </resources>

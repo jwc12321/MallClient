@@ -22,6 +22,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
+import com.mall.sls.certify.ui.CerifyPayActivity;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.location.LocationHelper;
@@ -37,6 +38,7 @@ import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.adapter.GoodsItemAdapter;
 import com.mall.sls.homepage.presenter.HomePagePresenter;
+import com.mall.sls.local.ui.LootingFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -49,6 +51,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author jwc on 2020/5/7.
@@ -255,5 +258,27 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     @Override
     public void setPresenter(HomepageContract.HomePagePresenter presenter) {
 
+    }
+
+    public interface HomepageListener {
+        void goLocalTeam();
+    }
+
+    private HomepageListener homepageListener;
+
+    public void setHomepageListener(HomepageListener homepageListener) {
+        this.homepageListener = homepageListener;
+    }
+
+    @OnClick({R.id.other_more_tv})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.other_more_tv:
+                if(homepageListener!=null){
+                    homepageListener.goLocalTeam();
+                }
+                break;
+            default:
+        }
     }
 }

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true" android:drawable="@drawable/common_twelve_back_one_all_bg"/>
+    <item android:state_selected="false" android:drawable="@drawable/common_twelve_back_three_seven_bg"/>
+</selector>

@@ -1,5 +1,6 @@
 package com.mall.sls.coupon.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.mainframe.adapter.MainPagerAdapter;
@@ -28,7 +30,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/12.
  * 描述：优惠卷
  */
-public class CouponActivity extends BaseActivity {
+public class CouponActivity extends BaseActivity implements CouponUnusedFragment.CouponUnusedListener,CouponUsedFragment.CouponUsedListener,CouponExpiredFragment.CouponExpiredListener{
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.title)
@@ -56,6 +58,10 @@ public class CouponActivity extends BaseActivity {
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
+    private CouponUnusedFragment couponUnusedFragment;
+    private CouponUsedFragment couponUsedFragment;
+    private CouponExpiredFragment couponExpiredFragment;
+
     public static void start(Context context) {
         Intent intent = new Intent(context, CouponActivity.class);
         context.startActivity(intent);
@@ -77,10 +83,16 @@ public class CouponActivity extends BaseActivity {
     }
 
     private void initView() {
+        couponUnusedFragment=new CouponUnusedFragment();
+        couponUsedFragment=new CouponUsedFragment();
+        couponExpiredFragment=new CouponExpiredFragment();
+        couponUnusedFragment.setCouponUnusedListener(this);
+        couponUsedFragment.setCouponUsedListener(this);
+        couponExpiredFragment.setCouponExpiredListener(this);
         fragments = new BaseFragment[3];
-        fragments[0] = CouponUnusedFragment.newInstance();
-        fragments[1] = CouponUsedFragment.newInstance();
-        fragments[2] = CouponExpiredFragment.newInstance();
+        fragments[0] =couponUnusedFragment;
+        fragments[1] = couponUsedFragment;
+        fragments[2] = couponExpiredFragment;
         linearLayouts = new LinearLayout[3];
         linearLayouts[0] = unusedLl;
         linearLayouts[1] = usedLl;
@@ -140,5 +152,27 @@ public class CouponActivity extends BaseActivity {
                 break;
             default:
         }
+    }
+
+    @Override
+    public void goLocalTeam() {
+        Intent backIntent = new Intent();
+        setResult(Activity.RESULT_OK, backIntent);
+        finish();
+    }
+
+    @Override
+    public void returnUsedNumebr(String number) {
+        usedTv.setText(getString(R.string.used)+"("+number+")");
+    }
+
+    @Override
+    public void returnUnusedNumebr(String number) {
+        unusedTv.setText(getString(R.string.unused)+"("+number+")");
+    }
+
+    @Override
+    public void returnExpiredNumebr(String number) {
+        expiredTv.setText(getString(R.string.expired)+"("+number+")");
     }
 }

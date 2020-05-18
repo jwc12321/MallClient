@@ -32,6 +32,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author jwc on 2020/5/12.
@@ -92,6 +93,7 @@ public class CouponUsedFragment extends BaseFragment  implements CouponContract.
     SimpleMultiPurposeListener simpleMultiPurposeListener = new SimpleMultiPurposeListener() {
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+            refreshLayout.finishRefresh(6000);
             couponListPresenter.getCouponInfos(StaticData.REFLASH_ZERO, StaticData.REFLASH_ONE);
         }
 
@@ -128,6 +130,9 @@ public class CouponUsedFragment extends BaseFragment  implements CouponContract.
                 noRecordLl.setVisibility(View.VISIBLE);
                 refreshLayout.finishLoadMoreWithNoMoreData();
             }
+            if(listener!=null){
+                listener.returnUsedNumebr(myCouponInfo.getTotal());
+            }
         }
     }
 
@@ -149,7 +154,33 @@ public class CouponUsedFragment extends BaseFragment  implements CouponContract.
 
     @Override
     public void goUsed() {
+        if(listener!=null){
+            listener.goLocalTeam();
+        }
+    }
 
+    @OnClick({R.id.no_record_bt})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.no_record_bt:
+                if(listener!=null){
+                    listener.goLocalTeam();
+                }
+                break;
+            default:
+        }
+    }
+
+
+    public interface CouponUsedListener {
+        void goLocalTeam();
+        void returnUsedNumebr(String number);
+    }
+
+    private CouponUsedListener listener;
+
+    public void setCouponUsedListener(CouponUsedListener listener) {
+        this.listener = listener;
     }
 
     @Override

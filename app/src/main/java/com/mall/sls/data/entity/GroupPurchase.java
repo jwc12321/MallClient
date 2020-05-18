@@ -18,6 +18,9 @@ public class GroupPurchase implements Serializable {
     //剩余人数
     @SerializedName("surplus")
     private String surplus;
+    //规则id
+    @SerializedName("rulesId")
+    private String rulesId;
 
     public String getGrouponId() {
         return grouponId;
@@ -41,5 +44,13 @@ public class GroupPurchase implements Serializable {
 
     public void setSurplus(String surplus) {
         this.surplus = surplus;
+    }
+
+    public String getRulesId() {
+        return rulesId;
+    }
+
+    public void setRulesId(String rulesId) {
+        this.rulesId = rulesId;
     }
 }

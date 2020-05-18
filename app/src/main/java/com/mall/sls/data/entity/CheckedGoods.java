@@ -21,6 +21,9 @@ public class CheckedGoods implements Serializable {
     //价格
     @SerializedName("price")
     private String price;
+    //是否团购
+    @SerializedName("isGroup")
+    private boolean isGroup;
 
     public String getNumber() {
         return number;
@@ -52,5 +55,13 @@ public class CheckedGoods implements Serializable {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public boolean isGroup() {
+        return isGroup;
+    }
+
+    public void setGroup(boolean group) {
+        isGroup = group;
     }
 }

@@ -103,7 +103,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_3"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/dp_3">
 
             <RelativeLayout
                 android:id="@+id/up_down_rl"
@@ -143,7 +144,6 @@
                 style="@style/size11_color_app2_text_style"
                 tools:text="限2020-05-12至2020-05-13 \n限水果类产品使用"
                 android:layout_marginLeft="@dimen/dp_15"
-                android:layout_marginBottom="@dimen/dp_3"
                 android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>

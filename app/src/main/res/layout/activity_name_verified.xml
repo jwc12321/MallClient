@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_red_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/alipay_verify" />
+    </RelativeLayout>
+
+    <com.mall.sls.common.widget.scrollview.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadingEdge="none"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_33">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/verify_iv_first"
+                    style="@style/verify_step_iv_style"
+                    android:layout_marginLeft="@dimen/dp_44"
+                    android:text="1" />
+
+                <View
+                    android:id="@+id/verify_line_first"
+                    style="@style/verify_line_style"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/verify_iv_second"
+                    android:layout_toRightOf="@id/verify_iv_first" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/verify_iv_second"
+                    style="@style/verify_step_iv_style"
+                    android:layout_centerInParent="true"
+                    android:text="2" />
+
+                <View
+                    android:id="@+id/verify_line_second"
+                    style="@style/verify_line_style"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/verify_iv_third"
+                    android:layout_toRightOf="@id/verify_iv_second" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/verify_iv_third"
+                    style="@style/verify_step_iv_style"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp_44"
+                    android:text="3" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_11">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/verify_tv_first"
+                    style="@style/verify_step_tv_style"
+                    android:layout_marginLeft="@dimen/dp_30"
+                    android:text="@string/identity_information" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/verify_tv_second"
+                    style="@style/verify_step_tv_style"
+                    android:layout_centerInParent="true"
+                    android:text="@string/face_recognition" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/verify_tv_third"
+                    style="@style/verify_step_tv_style"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp_30"
+                    android:text="@string/complete_verify" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/first_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_12"
+                    android:layout_marginTop="@dimen/dp_33"
+                    android:layout_marginRight="@dimen/dp_12"
+                    android:background="@drawable/six_shadow_white_bg"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        style="@style/login_input_rl_style"
+                        android:layout_marginTop="@dimen/dp_13">
+
+                        <ImageView
+                            android:id="@+id/name_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/icon_name" />
+
+                        <com.mall.sls.common.widget.textview.ConventionalEditTextView
+                            android:id="@+id/certName_et"
+                            style="@style/login_input_phone_style"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_toRightOf="@id/name_iv"
+                            android:hint="@string/input_idcard_name"
+                            android:inputType="text"
+                            android:maxLength="15" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:background="#11999999"
+                        android:layout_marginTop="@dimen/dp_13"/>
+
+                    <RelativeLayout
+                        style="@style/login_input_rl_style"
+                        android:layout_marginTop="@dimen/dp_13"
+                        android:layout_marginBottom="@dimen/dp_13">
+
+                        <ImageView
+                            android:id="@+id/id_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/icon_idcard" />
+
+                        <com.mall.sls.common.widget.textview.ConventionalEditTextView
+                            android:id="@+id/certNo_et"
+                            style="@style/login_input_phone_style"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_toRightOf="@id/id_iv"
+                            android:hint="@string/input_idcard_number"
+                            android:inputType="textVisiblePassword" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_6"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:src="@mipmap/icon_red_warn"
+                        android:layout_gravity="center_vertical"/>
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_6"
+                        android:text="@string/confirm_id"
+                        android:textColor="@color/appText6"
+                        android:textSize="@dimen/sp_13" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/next_bt"
+                    style="@style/common_next_bt_style"
+                    android:layout_marginTop="@dimen/dp_180"
+                    android:text="@string/next"
+                    android:enabled="false"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_15">
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/appText3"
+                        android:textSize="@dimen/sp_12"
+                        android:text="点击按钮表示您已阅读并同意"/>
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/protocol_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/backGround1"
+                        android:textSize="@dimen/sp_12"
+                        android:text="@string/face_protocol"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/second_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/face_to_camera"
+                    android:textColor="@color/appText2"
+                    android:textSize="@dimen/sp_16"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_31"/>
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="1111"
+                    android:textColor="@color/appText5"
+                    android:textSize="@dimen/sp_16"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_11"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_face_recognition"
+                    android:layout_marginTop="@dimen/dp_32"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/face_bt"
+                    style="@style/common_next_bt_style"
+                    android:layout_marginTop="@dimen/dp_48"
+                    android:text="@string/collect_face" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/result_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/status_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_35"
+                    android:src="@drawable/verify_result_select" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/status_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_21"
+                    android:textColor="@color/backGround1"
+                    android:textSize="@dimen/sp_16"
+                    tools:text="@string/verfiy_success" />
+
+                <TextView
+                    android:id="@+id/auth_again_bt"
+                    style="@style/common_next_bt_style"
+                    android:layout_marginTop="@dimen/dp_180"
+                    android:text="@string/auth_again"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/result_success_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_66">
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            style="@style/verify_success_left_tv_style"
+                            android:text="@string/real_name" />
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/real_name"
+                            style="@style/verify_success_right_tv_style"
+                            tools:text="@string/real_name" />
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="#11979797" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_11">
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            style="@style/verify_success_left_tv_style"
+                            android:text="@string/id_card_number" />
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/real_id"
+                            style="@style/verify_success_right_tv_style"
+                            tools:text="@string/id_card_number" />
+                    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/confirm_bt"
+                        style="@style/common_next_bt_style"
+                        android:layout_marginTop="@dimen/dp_48"
+                        android:text="@string/confirm" />
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/common_two_back_five_bg"
+                        android:textColor="@color/appText2"
+                        android:textSize="@dimen/sp_13"
+                        android:text="@string/verfiy_success_content"
+                        android:layout_marginTop="@dimen/dp_22"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:layout_marginRight="@dimen/dp_15"
+                        android:paddingTop="@dimen/dp_26"
+                        android:paddingLeft="@dimen/dp_17"
+                        android:paddingRight="@dimen/dp_17"
+                        android:paddingBottom="@dimen/dp_26"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.mall.sls.common.widget.scrollview.ReboundScrollView>
+</LinearLayout>

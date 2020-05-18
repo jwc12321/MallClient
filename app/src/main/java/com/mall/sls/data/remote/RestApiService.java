@@ -1,26 +1,26 @@
 package com.mall.sls.data.remote;
 
 
-import android.os.RemoteException;
-
-import com.google.gson.annotations.SerializedName;
-import com.mall.sls.data.RemoteDataException;
 import com.mall.sls.data.RemoteDataWrapper;
 import com.mall.sls.data.entity.AddressInfo;
 import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CouponInfo;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
+import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.Ignore;
+import com.mall.sls.data.entity.LocalTeam;
+import com.mall.sls.data.entity.MineInfo;
 import com.mall.sls.data.entity.MyCouponInfo;
-import com.mall.sls.data.entity.OneClickInfo;
+import com.mall.sls.data.entity.OrderInfo;
+import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.OrderSubmitInfo;
 import com.mall.sls.data.entity.ProvinceBean;
 import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.request.AddAddressRequest;
-import com.mall.sls.data.request.CartCheckoutRequest;
 import com.mall.sls.data.request.CartFastaddRequest;
+import com.mall.sls.data.request.CertifyIdRequest;
 import com.mall.sls.data.request.LoginRequest;
 import com.mall.sls.data.request.MobileRequest;
 import com.mall.sls.data.request.OneClickLoginRequest;
@@ -60,7 +60,7 @@ public interface RestApiService {
     Flowable<RemoteDataWrapper<String>> sendCodeV(@Header("X-Hc-Sign") String sign, @Body MobileRequest request);
 
     //获取用户认证状态
-    @GET("api/f/uses/rp/status")
+    @GET("app/certify")
     Flowable<RemoteDataWrapper<Boolean>> getUsersRpStatus(@Header("X-Hc-Sign") String sign);
 
     //获取首页信息
@@ -111,4 +111,23 @@ public interface RestApiService {
     @GET("app/coupon/mylist")
     Flowable<RemoteDataWrapper<MyCouponInfo>> getCouponInfos(@Header("X-Hc-Sign") String sign, @Query("status") String status, @Query("page") String page, @Query("limit") String limit);
 
+    //本地拼团
+    @GET("app/goods")
+    Flowable<RemoteDataWrapper<LocalTeam>> getLocalTeam(@Header("X-Hc-Sign") String sign, @Query("type") String type, @Query("page") String page, @Query("limit") String limit);
+
+    //获取我的信息
+    @GET("app/auth/info")
+    Flowable<RemoteDataWrapper<MineInfo>> getMineInfo(@Header("X-Hc-Sign") String sign);
+
+    //开始认证流程
+    @POST("app/certify")
+    Flowable<RemoteDataWrapper<String>> getCertifyId(@Header("X-Hc-Sign") String sign,@Body CertifyIdRequest request);
+
+    //获取订单列表
+    @GET("app/order/list")
+    Flowable<RemoteDataWrapper<OrderList>> getOrderList(@Header("X-Hc-Sign") String sign, @Query("showType") String showType, @Query("page") String page, @Query("limit") String limit);
+
+    //获取订单详情
+    @GET("app/order/detail")
+    Flowable<RemoteDataWrapper<OrderInfo>> getGoodsOrderDetails(@Header("X-Hc-Sign") String sign, @Query("orderId") String orderId);
 }

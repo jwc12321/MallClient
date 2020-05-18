@@ -62,8 +62,6 @@
                         style="@style/size16_color_app1_text_style"
                         android:layout_marginLeft="@dimen/dp_15"
                         android:layout_marginTop="@dimen/dp_18"
-                        android:drawableRight="@mipmap/icon_white_right_arrow"
-                        android:drawablePadding="@dimen/dp_11"
                         tools:text="已签收" />
                 </LinearLayout>
 
@@ -76,6 +74,7 @@
                     android:orientation="vertical">
 
                     <RelativeLayout
+                        android:id="@+id/pay_rl"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_124"
                         android:layout_marginBottom="@dimen/dp_15"
@@ -235,7 +234,8 @@
 
                         <RelativeLayout
                             style="@style/order_detail_tv_rl_style"
-                            android:layout_marginTop="@dimen/dp_7">
+                            android:layout_marginTop="@dimen/dp_7"
+                            android:visibility="gone">
 
                             <com.mall.sls.common.widget.textview.ConventionalTextView
                                 style="@style/order_detail_left_tv_style"

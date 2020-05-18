@@ -79,6 +79,7 @@
                             style="@style/mine_info_ll_style">
 
                             <com.mall.sls.common.widget.textview.MediumThickTextView
+                                android:id="@+id/cash_back"
                                 style="@style/mine_info_up_tv_style"
                                 tools:text="0" />
 
@@ -92,6 +93,7 @@
                             style="@style/mine_info_ll_style">
 
                             <com.mall.sls.common.widget.textview.MediumThickTextView
+                                android:id="@+id/coupon"
                                 style="@style/mine_info_up_tv_style"
                                 tools:text="0" />
 
@@ -104,6 +106,7 @@
                             style="@style/mine_info_ll_style">
 
                             <com.mall.sls.common.widget.textview.MediumThickTextView
+                                android:id="@+id/dividend"
                                 style="@style/mine_info_up_tv_style"
                                 tools:text="0" />
 
@@ -116,6 +119,7 @@
                             style="@style/mine_info_ll_style">
 
                             <com.mall.sls.common.widget.textview.MediumThickTextView
+                                android:id="@+id/rice_grain"
                                 style="@style/mine_info_up_tv_style"
                                 tools:text="0" />
 

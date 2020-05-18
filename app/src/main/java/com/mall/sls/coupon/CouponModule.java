@@ -1,8 +1,5 @@
 package com.mall.sls.coupon;
 
-
-import javax.inject.Inject;
-
 import dagger.Module;
 import dagger.Provides;
 

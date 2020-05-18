@@ -101,6 +101,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     @Inject
     GoodsDetailsPresenter goodsDetailsPresenter;
     private String consumerPhone;
+    private String groupId;
+    private String groupRulesId;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, ActivityGoodsDetailActivity.class);
@@ -164,12 +166,32 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 CustomerServiceActivity.start(this, consumerPhone);
                 break;
             case R.id.sku_rl:
+                goSelectSpecReturn(StaticData.REFLASH_ONE);
+                break;
             case R.id.pinyin_ll://发起拼单
-                goSelectSpec(StaticData.REFLASH_ONE);
+                initiateBill();
                 break;
             default:
         }
     }
+
+    private void initiateBill(){
+        if(productListCallableInfo==null){
+            goSelectSpec(StaticData.REFLASH_ONE);
+        }else {
+            goodsDetailsPresenter.cartFastAdd(goodsId,productListCallableInfo.getId(),true,String.valueOf(goodsCount),groupId,groupRulesId);
+        }
+    }
+
+    private void goSelectSpecReturn(String type){
+        Intent intent = new Intent(this, SelectSpecActivity.class);
+        intent.putExtra(StaticData.GOODS_DETAILS_INFO, goodsDetailsInfo);
+        intent.putExtra(StaticData.SKU_CHECK, (Serializable) checkSkus);
+        intent.putExtra(StaticData.CHOICE_TYPE,type);
+        intent.putExtra(StaticData.GOODS_COUNT,goodsCount);
+        startActivityForResult(intent, RequestCodeStatic.REQUEST_SPEC_RETURN);
+    }
+
 
     private void goSelectSpec(String type) {
         Intent intent = new Intent(this, SelectSpecActivity.class);
@@ -185,13 +207,23 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
-                case RequestCodeStatic.REQUEST_SPEC:
+                case RequestCodeStatic.REQUEST_SPEC_RETURN:
                     if (data != null) {
                         Bundle bundle = data.getExtras();
                         checkSkus = (List<String>) bundle.getSerializable(StaticData.SKU_CHECK);
                         productListCallableInfo = (ProductListCallableInfo) bundle.getSerializable(StaticData.SKU_INFO);
                         goodsCount = bundle.getInt(StaticData.GOODS_COUNT);
                         selectedGoods.setText(getString(R.string.is_selected) + " " + productListCallableInfo.getSpecifications() + "/" + unit);
+                    }
+                    break;
+                case RequestCodeStatic.REQUEST_SPEC:
+                    if (data != null) {
+                        Bundle bundle = data.getExtras();
+                        checkSkus= (List<String>) bundle.getSerializable(StaticData.SKU_CHECK);
+                        productListCallableInfo = (ProductListCallableInfo) bundle.getSerializable(StaticData.SKU_INFO);
+                        goodsCount = bundle.getInt(StaticData.GOODS_COUNT);
+                        selectedGoods.setText(getString(R.string.is_selected)+" "+productListCallableInfo.getSpecifications()+"/"+unit);
+                        goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
                     }
                     break;
                 default:
@@ -229,7 +261,6 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity() + "件");
             goodsName.setText(goodsDetailsInfo.getName());
             selectedGoods.setText(getString(R.string.is_selected));
-            groupPurchases = goodsDetailsInfo.getGroupPurchases();
             if (!TextUtils.isEmpty(goodsDetailsInfo.getNow()) && !TextUtils.isEmpty(goodsDetailsInfo.getGroupExpireTime())) {
                 long now = FormatUtil.dateToStamp(goodsDetailsInfo.getNow());
                 long groupExpireTime = FormatUtil.dateToStamp(goodsDetailsInfo.getGroupExpireTime());
@@ -237,6 +268,11 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                     countDown.startTearDown(groupExpireTime, now);
                     bottomCountDown.startTearDown(groupExpireTime, now);
                 }
+            }
+            groupPurchases = goodsDetailsInfo.getGroupPurchases();
+            if (groupPurchases != null && groupPurchases.size() == 1) {
+                groupId = groupPurchases.get(0).getGrouponId();
+                groupRulesId = groupPurchases.get(0).getRulesId();
             }
         }
     }
@@ -248,7 +284,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
 
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
-
+        ConfirmOrderActivity.start(this,confirmOrderDetail);
     }
 
     @Override

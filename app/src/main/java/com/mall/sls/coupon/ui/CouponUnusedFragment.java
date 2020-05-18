@@ -31,6 +31,7 @@ import java.util.List;
 import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author jwc on 2020/5/12.
@@ -95,6 +96,7 @@ public class CouponUnusedFragment extends BaseFragment implements CouponContract
     SimpleMultiPurposeListener simpleMultiPurposeListener = new SimpleMultiPurposeListener() {
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+            refreshLayout.finishRefresh(6000);
             couponListPresenter.getCouponInfos(StaticData.REFLASH_ZERO, StaticData.REFLASH_ZERO);
         }
 
@@ -131,6 +133,9 @@ public class CouponUnusedFragment extends BaseFragment implements CouponContract
                 noRecordLl.setVisibility(View.VISIBLE);
                 refreshLayout.finishLoadMoreWithNoMoreData();
             }
+            if(listener!=null){
+                listener.returnUnusedNumebr(myCouponInfo.getTotal());
+            }
         }
     }
 
@@ -152,7 +157,33 @@ public class CouponUnusedFragment extends BaseFragment implements CouponContract
 
     @Override
     public void goUsed() {
+        if(listener!=null){
+            listener.goLocalTeam();
+        }
+    }
 
+    @OnClick({R.id.no_record_bt})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.no_record_bt:
+                if(listener!=null){
+                    listener.goLocalTeam();
+                }
+                break;
+            default:
+        }
+    }
+
+
+    public interface CouponUnusedListener {
+        void goLocalTeam();
+        void returnUnusedNumebr(String number);
+    }
+
+    private CouponUnusedListener listener;
+
+    public void setCouponUnusedListener(CouponUnusedListener listener) {
+        this.listener = listener;
     }
 
     @Override

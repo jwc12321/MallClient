@@ -30,6 +30,7 @@ import com.mall.sls.common.widget.textview.TearDownView;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.GroupPeople;
+import com.mall.sls.data.entity.GroupPurchase;
 import com.mall.sls.data.entity.ProductListCallableInfo;
 import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
@@ -61,9 +62,6 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     ConventionalTextView goodsName;
     @BindView(R.id.count_down)
     TearDownView countDown;
-
-    @Inject
-    GoodsDetailsPresenter goodsDetailsPresenter;
     @BindView(R.id.activity_name)
     ConventionalTextView activityName;
     @BindView(R.id.goods_iv)
@@ -91,12 +89,19 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     @BindView(R.id.view_flipper)
     ViewFlipper viewFlipper;
 
+
+    @Inject
+    GoodsDetailsPresenter goodsDetailsPresenter;
+
     private String goodsId;
     private GoodsDetailsInfo goodsDetailsInfo;
+    private String groupId;
+    private String groupRulesId;
 
     private ProductListCallableInfo productListCallableInfo;
     private int goodsCount = 1;
     private List<GroupPeople> groupPeoples;
+    private List<GroupPurchase> groupPurchases;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, ActivityGroupGoodsActivity.class);
@@ -159,19 +164,24 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
                     countDownTime.startTearDown(groupExpireTime, now);
                 }
             }
-            groupPeoples=goodsDetailsInfo.getGroupPeoples();
-            if(groupPeoples!=null&&groupPeoples.size()>0){
-                for(int i=0;i<groupPeoples.size();i++){
-                    View view1 = View.inflate(this,R.layout.item_group_people,null);
-                    TextView people=view1.findViewById(R.id.people);
+            groupPeoples = goodsDetailsInfo.getGroupPeoples();
+            if (groupPeoples != null && groupPeoples.size() > 0) {
+                for (int i = 0; i < groupPeoples.size(); i++) {
+                    View view1 = View.inflate(this, R.layout.item_group_people, null);
+                    TextView people = view1.findViewById(R.id.people);
                     long now = FormatUtil.dateToStamp(goodsDetailsInfo.getNow());
-                    long createTime=FormatUtil.dateToStamp(groupPeoples.get(i).getAddTime());
-                    String timeLast= TimeUtil.getTimeFormatText(String.valueOf(now),String.valueOf(createTime));
-                    people.setText(groupPeoples.get(i).getNickname()+timeLast+"参与拼单");
+                    long createTime = FormatUtil.dateToStamp(groupPeoples.get(i).getAddTime());
+                    String timeLast = TimeUtil.getTimeFormatText(String.valueOf(now), String.valueOf(createTime));
+                    people.setText(groupPeoples.get(i).getNickname() + timeLast + "参与拼单");
                     viewFlipper.addView(view1);
                 }
                 viewFlipper.setFlipInterval(2000);
                 viewFlipper.startFlipping();
+            }
+            groupPurchases = goodsDetailsInfo.getGroupPurchases();
+            if (groupPurchases != null && groupPurchases.size() == 1) {
+                groupId = groupPurchases.get(0).getGrouponId();
+                groupRulesId = groupPurchases.get(0).getRulesId();
             }
         }
 
@@ -184,7 +194,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
 
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
-
+        ConfirmOrderActivity.start(this,confirmOrderDetail);
     }
 
     @Override
@@ -238,7 +248,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
                         Bundle bundle = data.getExtras();
                         productListCallableInfo = (ProductListCallableInfo) bundle.getSerializable(StaticData.SKU_INFO);
                         goodsCount = bundle.getInt(StaticData.GOODS_COUNT);
-
+                        goodsDetailsPresenter.cartFastAdd(goodsId,productListCallableInfo.getId(),true,String.valueOf(goodsCount),groupId,groupRulesId);
                     }
                     break;
                 default:

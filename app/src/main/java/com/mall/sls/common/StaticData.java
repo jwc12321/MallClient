@@ -12,6 +12,7 @@ public class StaticData {
     public static final String REFLASH_ZERO = "0";
     public static final String REFLASH_ONE = "1";
     public static final String REFLASH_TWO = "2";
+    public static final String REFLASH_THREE = "3";
 
     //通用文本title
     public static final String COMMON_TITLE = "commonTitle";
@@ -51,5 +52,16 @@ public class StaticData {
     public static final String USER_COUPON_ID="userCouponId";
     //优惠券ID
     public static final String COUPON_ID="couponId";
+
+    //待支付
+    public static final String TO_PAY="101";
+    //已取消
+    public static final String CANCELLED="102";
+    //代发货
+    public static final String TO_BE_DELIVERED="201";
+    //待收货
+    public static final String TO_BE_RECEIVED="301";
+    //已收货
+    public static final String RECEIVED="401";
 
 }

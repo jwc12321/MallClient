@@ -1,5 +1,6 @@
 package com.mall.sls.order.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,11 +12,14 @@ import android.widget.LinearLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.R;
+import com.mall.sls.common.GlideHelper;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.BlackDrawTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.GoodsOrderInfo;
+import com.mall.sls.data.entity.OrderGoodsVo;
 
 import java.util.List;
 
@@ -59,9 +63,9 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    if (TextUtils.equals("10", goodsOrderInfo.getStatus())) {
-                        onItemClickListener.payOrder(goodsOrderInfo.getId(), goodsOrderInfo.getAmount());
-                    } else if (TextUtils.equals("60", goodsOrderInfo.getStatus())) {
+                    if (TextUtils.equals("10", goodsOrderInfo.getOrderStatus())) {
+                        onItemClickListener.payOrder(goodsOrderInfo.getId(), goodsOrderInfo.getActualPrice());
+                    } else if (TextUtils.equals("60", goodsOrderInfo.getOrderStatus())) {
                         onItemClickListener.confirmOrder(goodsOrderInfo.getId());
                     }
                 }
@@ -91,10 +95,8 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
         ImageView goodsIv;
         @BindView(R.id.goods_name)
         MediumThickTextView goodsName;
-        @BindView(R.id.current_price)
-        MediumThickTextView currentPrice;
-        @BindView(R.id.original_price)
-        BlackDrawTextView originalPrice;
+        @BindView(R.id.goods_price)
+        MediumThickTextView goodsPrice;
         @BindView(R.id.goods_number)
         ConventionalTextView goodsNumber;
         @BindView(R.id.total_number)
@@ -112,6 +114,7 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
         @BindView(R.id.item_ll)
         LinearLayout itemLl;
 
+        private List<OrderGoodsVo> orderGoodsVos;
 
         public GoodsOrderView(View itemView) {
             super(itemView);
@@ -119,22 +122,27 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
         }
 
         public void bindData(GoodsOrderInfo goodsOrderInfo) {
-            totalNumber.setText("共" + goodsOrderInfo.getQuantity() + "件");
-            totalAmount.setText(NumberFormatUnit.twoDecimalFormat(goodsOrderInfo.getAmount()));
-            goodsName.setText(goodsOrderInfo.getName());
-            goodsNumber.setText("x" + goodsOrderInfo.getQuantity());
-            setOrderStatus(goodsOrderInfo.getStatus());
-            if (TextUtils.equals("10", goodsOrderInfo.getStatus())) {
+            time.setText(goodsOrderInfo.getAddTime());
+            orderGoodsVos = goodsOrderInfo.getOrderGoodsVos();
+            if (orderGoodsVos != null&&orderGoodsVos.size()>0) {
+                GlideHelper.load((Activity) context, orderGoodsVos.get(0).getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
+                goodsName.setText(orderGoodsVos.get(0).getGoodsName());
+                goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(orderGoodsVos.get(0).getPrice()));
+                goodsNumber.setText("x"+orderGoodsVos.get(0).getNumber());
+            }
+            totalAmount.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderInfo.getActualPrice()));
+            setOrderStatus(goodsOrderInfo.getOrderStatus());
+            if (TextUtils.equals(StaticData.TO_PAY, goodsOrderInfo.getOrderStatus())) {
                 isPay.setText(context.getString(R.string.to_be_paid));
             } else {
                 isPay.setText(context.getString(R.string.actually_apaid));
             }
         }
 
-        //10:待付款 40:待发货 60:待收货 70:确认收货 80:关闭
+        //101:待付款 201:待发货 301:待收货 401:确认收货 102:已取消
         private void setOrderStatus(String status) {
             switch (status) {
-                case "10":
+                case StaticData.TO_PAY:
                     orderStatus.setText(context.getString(R.string.pending_payment));
                     orderStatus.setSelected(true);
                     btLl.setVisibility(View.VISIBLE);
@@ -142,12 +150,12 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
                     rightBt.setVisibility(View.VISIBLE);
                     rightBt.setText(context.getString(R.string.pay_now));
                     break;
-                case "40":
+                case StaticData.TO_BE_DELIVERED:
                     orderStatus.setText(context.getString(R.string.pending_delivery));
                     orderStatus.setSelected(true);
                     btLl.setVisibility(View.GONE);
                     break;
-                case "60":
+                case StaticData.TO_BE_RECEIVED:
                     orderStatus.setText(context.getString(R.string.shipping));
                     orderStatus.setSelected(true);
                     btLl.setVisibility(View.VISIBLE);
@@ -156,12 +164,12 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
                     leftBt.setText(context.getString(R.string.one_more_order));
                     rightBt.setText(context.getString(R.string.confirm_receipt));
                     break;
-                case "70":
+                case StaticData.RECEIVED:
                     orderStatus.setText(context.getString(R.string.received));
                     orderStatus.setSelected(true);
                     btLl.setVisibility(View.GONE);
                     break;
-                case "80":
+                case StaticData.CANCELLED:
                     orderStatus.setText(context.getString(R.string.closed));
                     orderStatus.setSelected(false);
                     btLl.setVisibility(View.GONE);

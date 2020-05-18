@@ -63,6 +63,7 @@
         tools:replace="android:allowBackup"
         android:usesCleartextTraffic="true">
 
+
         <!--高德地图-->
         <service android:name="com.amap.api.location.APSService"></service>
         <meta-data
@@ -112,44 +113,59 @@
             android:windowSoftInputMode="adjustPan"
             android:launchMode="singleTop"/>
         <activity android:name=".certify.ui.CerifyTipActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".certify.ui.CerifyPayActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".certify.ui.UploadIdActivity"
             android:screenOrientation="nosensor"/>
         <activity android:name=".certify.ui.StartVerifyActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".webview.ui.WebViewActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".certify.ui.CerifyResultActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".login.ui.BindPhoneActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".assemble.ui.AssembleHomeActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".address.ui.SelectAddressActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".address.ui.AddAddressActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".address.ui.AddressManageActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".homepage.ui.OrdinaryGoodsDetailActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".homepage.ui.SelectSpecActivity"
             android:theme="@style/TranslucentFullScreenTheme"
             android:windowSoftInputMode="adjustPan"
             android:launchMode="singleTop"/>
         <activity android:name=".homepage.ui.ConfirmOrderActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".homepage.ui.SelectPayTypeActivity"
             android:theme="@style/TranslucentFullScreenTheme"
             android:launchMode="singleTop"/>
         <activity android:name=".mine.ui.SettingActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".order.ui.GoodsOrderActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".mine.ui.MyTeamActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".order.ui.GoodsOrderDetailsActivity"
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"/>
@@ -157,11 +173,14 @@
             android:theme="@style/TranslucentFullScreenTheme"
             android:launchMode="singleTop"/>
         <activity android:name=".coupon.ui.CouponActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".member.ui.SuperMemberActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".coupon.ui.SelectCouponActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".mine.ui.CustomerServiceActivity"
             android:theme="@style/TranslucentFullScreenTheme"
             android:launchMode="singleTop"/>
@@ -172,7 +191,14 @@
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"/>
         <activity android:name=".homepage.ui.FillRemarksActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
+        <activity android:name=".homepage.ui.BackTipActivity"
+            android:theme="@style/TranslucentFullScreenTheme"
+            android:launchMode="singleTop"/>
+        <activity android:name=".certify.ui.NameVerifiedActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

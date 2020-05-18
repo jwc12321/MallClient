@@ -11,6 +11,8 @@ import java.util.List;
 public class MyCouponInfo {
     @SerializedName("list")
     private List<CouponInfo> couponInfos;
+    @SerializedName("total")
+    private String total;
 
     public List<CouponInfo> getCouponInfos() {
         return couponInfos;
@@ -18,5 +20,13 @@ public class MyCouponInfo {
 
     public void setCouponInfos(List<CouponInfo> couponInfos) {
         this.couponInfos = couponInfos;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
     }
 }
