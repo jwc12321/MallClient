@@ -15,4 +15,5 @@ public class RequestCodeStatic {
     public static final int REQUEST_SPEC_RETURN=12;//选择规格后展示
     public static final int SDK_PAY_FLAG=13;//支付宝
     public static final int MESSAGE=14;//消息
+    public static final int SPELLING_REMINDER=15;//提示拼单
 }

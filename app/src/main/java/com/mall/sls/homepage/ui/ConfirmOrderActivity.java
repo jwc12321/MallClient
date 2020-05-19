@@ -109,13 +109,16 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private String userCouponId;
     private String cartId;
     private String message="";
+    //1:单独购买 2：发起拼单 3：拼团 4：百人团
+    private String purchaseType;
 
     @Inject
     ConfirmOrderPresenter confirmOrderPresenter;
 
-    public static void start(Context context, ConfirmOrderDetail confirmOrderDetail) {
+    public static void start(Context context, ConfirmOrderDetail confirmOrderDetail,String purchaseType) {
         Intent intent = new Intent(context, ConfirmOrderActivity.class);
         intent.putExtra(StaticData.CONFIRM_ORDER_DETAIL, (Serializable) confirmOrderDetail);
+        intent.putExtra(StaticData.PURCHASE_TYPE,purchaseType);
         context.startActivity(intent);
     }
 
@@ -130,6 +133,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
 
     private void initView() {
         confirmOrderDetail = (ConfirmOrderDetail) getIntent().getSerializableExtra(StaticData.CONFIRM_ORDER_DETAIL);
+        purchaseType=getIntent().getStringExtra(StaticData.PURCHASE_TYPE);
         confirmDetail();
     }
 

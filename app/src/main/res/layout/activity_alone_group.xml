@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround8">
+
+    <LinearLayout style="@style/tip_rl_style">
+
+        <ImageView
+            android:id="@+id/close_iv"
+            style="@style/tip_close_iv_style" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/tip_title_style"
+            android:text="@string/is_pay" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/size16_color_app3_text_style"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_48"
+            android:ellipsize="end"
+            android:singleLine="true"
+            tools:text="还差1人，赶快邀请好友来拼单吧" />
+
+        <ImageView
+            android:id="@+id/weixin_iv"
+            style="@style/big_weixin_iv_style"
+            android:layout_marginTop="@dimen/dp_53" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            style="@style/size16_color_app3_text_style"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_30"
+            android:text="@string/wechat_friends" />
+    </LinearLayout>
+</RelativeLayout>

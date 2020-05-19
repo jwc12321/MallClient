@@ -1172,6 +1172,66 @@
         <item name="android:layout_centerVertical">true</item>
     </style>
 
+    <style name="tip_rl_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/dp_43</item>
+        <item name="android:layout_marginRight">@dimen/dp_43</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@drawable/common_four_app_one_bg</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+    
+    <style name="tip_close_iv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/dp_15</item>
+        <item name="android:paddingRight">@dimen/dp_15</item>
+        <item name="android:paddingTop">@dimen/dp_15</item>
+        <item name="android:src">@mipmap/icon_close</item>
+        <item name="android:layout_gravity">end</item>
+    </style>
+
+    <style name="tip_title_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/appText10</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:drawablePadding">@dimen/dp_9</item>
+        <item name="android:drawableLeft">@mipmap/icon_select_gou</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/dp_m_2</item>
+    </style>
+
+    <style name="tip_up_bt_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_45</item>
+        <item name="android:layout_marginLeft">@dimen/dp_15</item>
+        <item name="android:layout_marginRight">@dimen/dp_15</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:background">@drawable/common_two_two_five_back_one_bg</item>
+        <item name="android:textColor">@color/appText1</item>
+    </style>
+    <style name="tip_down_bt_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_45</item>
+        <item name="android:layout_marginLeft">@dimen/dp_15</item>
+        <item name="android:layout_marginRight">@dimen/dp_15</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:background">@drawable/common_two_two_five_back_one_white_bg</item>
+        <item name="android:textColor">@color/backGround1</item>
+    </style>
+
+    <style name="big_weixin_iv_style">
+        <item name="android:layout_width">@dimen/dp_50</item>
+        <item name="android:layout_height">@dimen/dp_50</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:src">@mipmap/icon_big_weixin</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
 
 
 </resources>

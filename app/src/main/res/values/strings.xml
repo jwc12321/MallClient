@@ -204,4 +204,11 @@
     <string name="mark_all_read">全部标记已读</string>
     <string name="empty">清空</string>
     <string name="reminder_message">提醒消息</string>
+    <string name="join_pinyin">参与拼单</string>
+    <string name="successful_order">拼单成功</string>
+    <string name="more_discounts">更多优惠拼团</string>
+    <string name="look_order_details">查看订单详情</string>
+    <string name="is_pay">已支付</string>
+    <string name="wechat_friends">微信好友</string>
+    <string name="city_not_open">该城市尚未开通！\n敬请期待！</string>
 </resources>

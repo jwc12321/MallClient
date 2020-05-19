@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround8">
+
+    <LinearLayout style="@style/tip_rl_style">
+
+        <ImageView
+            android:id="@+id/close_iv"
+            style="@style/tip_close_iv_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/size16_color_app3_text_style"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_25"
+            android:ellipsize="end"
+            android:singleLine="true"
+            tools:text="参与159****9168的拼单" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/content"
+            style="@style/size15_color_app3_text_style"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_24"
+            android:ellipsize="end"
+            android:singleLine="true"
+            tools:text="仅剩1个名额" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/confirm_bt"
+            style="@style/tip_up_bt_style"
+            android:text="@string/join_pinyin"
+            android:layout_marginTop="@dimen/dp_46"
+            android:layout_marginBottom="@dimen/dp_38"/>
+    </LinearLayout>
+</RelativeLayout>

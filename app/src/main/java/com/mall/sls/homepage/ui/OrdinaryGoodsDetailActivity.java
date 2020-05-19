@@ -121,9 +121,14 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     private String upGroupRulesId;
     private  String downGroupId;
     private String downGroupRulesId;
+    private String upMobile;
+    private String downMobile;
+    private String upSurplus;
+    private String downSurplus;
     @Inject
     GoodsDetailsPresenter goodsDetailsPresenter;
     private String consumerPhone;
+    private String purchaseType;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, OrdinaryGoodsDetailActivity.class);
@@ -184,6 +189,9 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 finish();
                 break;
             case R.id.initiate_bill_bt://发起拼单
+                groupId="";
+                groupRulesId="";
+                purchaseType=StaticData.REFLASH_TWO;
                 initiateBill();
                 break;
             case R.id.service_iv:
@@ -193,20 +201,32 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 goSelectSpecReturn(StaticData.REFLASH_ZERO);
                 break;
             case R.id.individual_shopping_tv://单独购买
+                groupId="";
+                groupRulesId="";
+                purchaseType=StaticData.REFLASH_ONE;
                 individualShopping();
                 break;
             case R.id.up_spell_bt:
                 groupId=upGroupId;
                 groupRulesId=upGroupRulesId;
-                initiateBill();
+                purchaseType=StaticData.REFLASH_THREE;
+                goSpellingReminder(upMobile,upSurplus);
                 break;
             case R.id.down_spell_bt:
                 groupId=downGroupId;
                 groupRulesId=downGroupRulesId;
-                initiateBill();
+                purchaseType=StaticData.REFLASH_THREE;
+                goSpellingReminder(downMobile,downSurplus);
                 break;
             default:
         }
+    }
+
+    private void goSpellingReminder(String mobile,String surplus){
+        Intent intent = new Intent(this, SpellingReminderActivity.class);
+        intent.putExtra(StaticData.MOBILE, mobile);
+        intent.putExtra(StaticData.SURPLUS,surplus);
+        startActivityForResult(intent, RequestCodeStatic.SPELLING_REMINDER);
     }
 
     private void initiateBill(){
@@ -271,6 +291,9 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                         goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
                     }
                     break;
+                case RequestCodeStatic.SPELLING_REMINDER:
+                    initiateBill();
+                    break;
                 default:
             }
         }
@@ -318,6 +341,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 upPoorTv.setText("还差" + groupPurchases.get(0).getSurplus() + "人拼成");
                 upGroupId=groupPurchases.get(0).getGrouponId();
                 upGroupRulesId=groupPurchases.get(0).getRulesId();
+                upMobile=groupPurchases.get(0).getMobile();
+                upSurplus=groupPurchases.get(0).getSurplus();
             } else if (groupPurchases != null && groupPurchases.size() == 2) {
                 upGroup.setVisibility(View.VISIBLE);
                 downGroup.setVisibility(View.VISIBLE);
@@ -329,6 +354,10 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 upGroupRulesId=groupPurchases.get(0).getRulesId();
                 downGroupId=groupPurchases.get(1).getGrouponId();
                 downGroupRulesId=groupPurchases.get(1).getRulesId();
+                upMobile=groupPurchases.get(0).getMobile();
+                upSurplus=groupPurchases.get(0).getSurplus();
+                downMobile=groupPurchases.get(1).getMobile();
+                downSurplus=groupPurchases.get(1).getSurplus();
             }
             individualShoppingPrice.setText("¥" + goodsDetailsInfo.getCounterPrice());
             initiateBillPrice.setText("¥" + goodsDetailsInfo.getRetailPrice());
@@ -342,7 +371,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
 
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
-        ConfirmOrderActivity.start(this,confirmOrderDetail);
+        ConfirmOrderActivity.start(this,confirmOrderDetail,purchaseType);
     }
 
     @Override

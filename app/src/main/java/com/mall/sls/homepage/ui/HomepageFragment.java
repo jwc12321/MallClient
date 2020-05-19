@@ -239,7 +239,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                 //开通
                 goodsItemAdapter.setData(homePageInfo.getGoodsItemInfos());
             } else {
-
+                CityNotOpenActivity.start(getActivity());
             }
             bannerInfos = homePageInfo.getBannerInfos();
             if (data == null) {

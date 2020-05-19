@@ -13,6 +13,7 @@ public class StaticData {
     public static final String REFLASH_ONE = "1";
     public static final String REFLASH_TWO = "2";
     public static final String REFLASH_THREE = "3";
+    public static final String REFLASH_FOUR = "4";
 
     //通用文本title
     public static final String COMMON_TITLE = "commonTitle";
@@ -65,5 +66,11 @@ public class StaticData {
     public static final String RECEIVED="401";
     //typeId
     public static final String TYPE_ID="typeId";
+    //电话
+    public static final String MOBILE="mobile";
+    //剩余人数
+    public static final String SURPLUS="surplus";
+    //购买方式
+    public static final String PURCHASE_TYPE="purchaseType";
 
 }
