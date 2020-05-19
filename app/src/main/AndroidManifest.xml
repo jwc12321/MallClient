@@ -199,6 +199,21 @@
         <activity android:name=".certify.ui.NameVerifiedActivity"
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"/>
+        <activity android:name=".member.ui.MemberDescriptionActivity"
+            android:theme="@style/TranslucentFullScreenTheme"
+            android:launchMode="singleTop"/>
+        <activity android:name=".mine.ui.MyInvitationActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
+        <activity android:name=".message.ui.MessageTypeActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
+        <activity android:name=".message.ui.OrderMessageActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
+        <activity android:name=".message.ui.ReminderMessageActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

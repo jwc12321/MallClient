@@ -17,6 +17,7 @@
 	<dimen name="dp_m_30">-32.7273dp</dimen>
 	<dimen name="dp_m_25">-27.2727dp</dimen>
 	<dimen name="dp_m_20">-21.8182dp</dimen>
+	<dimen name="dp_m_14">-15.2727dp</dimen>
 	<dimen name="dp_m_12">-13.0909dp</dimen>
 	<dimen name="dp_m_10">-10.9091dp</dimen>
 	<dimen name="dp_m_8">-8.7273dp</dimen>

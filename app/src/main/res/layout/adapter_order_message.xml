@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.mall.sls.common.widget.swipe.SwipeRevealLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:dragEdge="right"
+    app:mode="same_level"
+    android:layout_marginBottom="@dimen/dp_15">
+
+    <FrameLayout
+        android:id="@+id/delete_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_116"
+        android:background="@color/backGround1">
+
+        <TextView
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/delete"
+            android:textColor="@color/appText1"
+            android:textSize="@dimen/sp_24"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/goods_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_116"
+        android:background="@drawable/common_four_app_one_bg"
+        android:orientation="vertical">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/title"
+            style="@style/size14_color_app3_text_style"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_10"
+            tools:text="您的订单已签收" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_58"
+            android:layout_marginTop="@dimen/dp_8">
+
+            <ImageView
+                android:id="@+id/goods_iv"
+                android:layout_width="@dimen/dp_58"
+                android:layout_height="@dimen/dp_58"
+                android:layout_marginLeft="@dimen/dp_15"
+                tools:src="@mipmap/icon_default_goods" />
+
+            <ImageView style="@style/big_black_arrow_back_style" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/content"
+                style="@style/size12_color_app4_text_style"
+                android:layout_width="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_14"
+                android:layout_marginRight="@dimen/dp_38"
+                android:layout_toRightOf="@id/goods_iv"
+                android:ellipsize="end"
+                android:maxLines="2"
+                tools:text="您的商品正在打包中，即将配送。请耐心等待哦！附近的科技发达反对就付款的肌肤的JFK大家" />
+        </RelativeLayout>
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/time"
+            style="@style/size12_color_app4_text_style"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_2"
+            tools:text="2019" />
+
+    </LinearLayout>
+</com.mall.sls.common.widget.swipe.SwipeRevealLayout>

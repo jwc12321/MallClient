@@ -177,6 +177,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
 //                }
                 break;
             case R.id.my_invitation_iv://我的邀请
+                MyInvitationActivity.start(getActivity());
                 break;
             case R.id.super_member_rl://超级会员
                 goVerify=StaticData.REFLASH_ONE;

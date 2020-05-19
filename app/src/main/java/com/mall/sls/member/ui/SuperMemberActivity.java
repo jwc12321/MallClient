@@ -13,15 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
-import com.mall.sls.address.ui.AddAddressActivity;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
-import com.mall.sls.data.entity.GoodsItemInfo;
 import com.mall.sls.homepage.ui.SelectPayTypeActivity;
 import com.mall.sls.member.adapter.MemberGoodsItemAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,6 +39,12 @@ public class SuperMemberActivity extends BaseActivity {
     ConventionalTextView phone;
     @BindView(R.id.record_rv)
     RecyclerView recordRv;
+    @BindView(R.id.description)
+    ConventionalTextView description;
+    @BindView(R.id.confirm_bt)
+    ImageView confirmBt;
+    @BindView(R.id.selected_group_tv)
+    MediumThickTextView selectedGroupTv;
 
     private MemberGoodsItemAdapter memberGoodsItemAdapter;
 
@@ -61,13 +62,12 @@ public class SuperMemberActivity extends BaseActivity {
         initView();
     }
 
-    private void initView(){
-        memberGoodsItemAdapter=new MemberGoodsItemAdapter(this);
+    private void initView() {
+        memberGoodsItemAdapter = new MemberGoodsItemAdapter(this);
         recordRv.setAdapter(memberGoodsItemAdapter);
-        List<GoodsItemInfo> goodsItemInfos=new ArrayList<>();
     }
 
-    @OnClick({R.id.confirm_bt, R.id.back})
+    @OnClick({R.id.confirm_bt, R.id.back,R.id.description})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.confirm_bt:
@@ -75,6 +75,9 @@ public class SuperMemberActivity extends BaseActivity {
                 break;
             case R.id.back:
                 finish();
+                break;
+            case R.id.description:
+                MemberDescriptionActivity.start(this,"附近的科技发达");
                 break;
             default:
         }

@@ -45,6 +45,11 @@
         <item name="android:background">@color/backGround35</item>
     </style>
 
+    <style name="small_title_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/dp_0_1</item>
+    </style>
+
     <!--title最左边的返回-->
     <style name="title_left_back_style">
         <item name="android:layout_width">wrap_content</item>
@@ -160,6 +165,12 @@
         <item name="android:textSize">@dimen/sp_12</item>
         <item name="android:textColor">@color/appText1</item>
     </style>
+    <style name="size13_color_app1_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_13</item>
+        <item name="android:textColor">@color/appText1</item>
+    </style>
     <style name="size15_color_app1_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -201,6 +212,12 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:textColor">@color/appText2</item>
+    </style>
+    <style name="size15_color_app2_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_15</item>
         <item name="android:textColor">@color/appText2</item>
     </style>
 
@@ -1143,6 +1160,16 @@
         <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:layout_marginRight">@dimen/dp_16</item>
         <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="member_price_tv_style">
+        <item name="android:layout_width">@dimen/dp_49</item>
+        <item name="android:layout_height">@dimen/dp_18</item>
+        <item name="android:background">@drawable/common_nine_back_thirty_eight_bg</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:textColor">@color/appText3</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_centerVertical">true</item>
     </style>
 
 

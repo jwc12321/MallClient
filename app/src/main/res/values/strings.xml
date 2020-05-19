@@ -194,5 +194,14 @@
     <string name="regular_id_card">请输入正确的身份证号</string>
     <string name="first_back_verify">您是否要返回身份信息验证界面</string>
     <string name="no_order">暂无订单</string>
-
+    <string name="exclusive_members">超级会员专享</string>
+    <string name="member_price">会员价</string>
+    <string name="my_invitation">我的邀请</string>
+    <string name="not_certified">未认证</string>
+    <string name="is_verified">已认证</string>
+    <string name="message">消息</string>
+    <string name="order_message">订单消息</string>
+    <string name="mark_all_read">全部标记已读</string>
+    <string name="empty">清空</string>
+    <string name="reminder_message">提醒消息</string>
 </resources>

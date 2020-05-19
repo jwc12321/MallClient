@@ -8,6 +8,7 @@ package com.mall.sls.mine;
 import com.mall.sls.ActivityScope;
 import com.mall.sls.ApplicationComponent;
 import com.mall.sls.mine.ui.MineFragment;
+import com.mall.sls.mine.ui.MyInvitationActivity;
 
 import dagger.Component;
 
@@ -15,4 +16,5 @@ import dagger.Component;
 @Component(dependencies = ApplicationComponent.class, modules = {MineModule.class})
 public interface MineComponent {
     void inject(MineFragment mineFragment);
+    void inject(MyInvitationActivity myInvitationActivity);
 }

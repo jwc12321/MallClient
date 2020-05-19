@@ -18,6 +18,10 @@ public class HomePageInfo {
     //首页商品列表
     @SerializedName("hotGoodsList")
     private List<GoodsItemInfo> goodsItemInfos;
+    //未读消息
+    @SerializedName("unreadMsgCount")
+    private String unreadMsgCount;
+
 
     public String getStatus() {
         return status;
@@ -41,5 +45,13 @@ public class HomePageInfo {
 
     public void setGoodsItemInfos(List<GoodsItemInfo> goodsItemInfos) {
         this.goodsItemInfos = goodsItemInfos;
+    }
+
+    public String getUnreadMsgCount() {
+        return unreadMsgCount;
+    }
+
+    public void setUnreadMsgCount(String unreadMsgCount) {
+        this.unreadMsgCount = unreadMsgCount;
     }
 }

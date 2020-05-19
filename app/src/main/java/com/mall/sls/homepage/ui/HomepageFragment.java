@@ -1,10 +1,11 @@
 package com.mall.sls.homepage.ui;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
-import com.mall.sls.certify.ui.CerifyPayActivity;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.location.LocationHelper;
@@ -31,14 +31,13 @@ import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.BannerInfo;
 import com.mall.sls.data.entity.CustomViewsInfo;
-import com.mall.sls.data.entity.GoodsItemInfo;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.adapter.GoodsItemAdapter;
 import com.mall.sls.homepage.presenter.HomePagePresenter;
-import com.mall.sls.local.ui.LootingFragment;
+import com.mall.sls.message.ui.MessageTypeActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -57,7 +56,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/7.
  * 描述：
  */
-public class HomepageFragment extends BaseFragment implements HomepageContract.HomePageView,GoodsItemAdapter.OnItemClickListener{
+public class HomepageFragment extends BaseFragment implements HomepageContract.HomePageView, GoodsItemAdapter.OnItemClickListener {
 
     @BindView(R.id.small_)
     MediumThickTextView small;
@@ -81,6 +80,10 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     ConventionalTextView otherMoreTv;
     @BindView(R.id.goods_rv)
     RecyclerView goodsRv;
+    @BindView(R.id.message_rl)
+    RelativeLayout messageRl;
+    @BindView(R.id.message_count)
+    ConventionalTextView messageCount;
     private LocationHelper mLocationHelper;
     private String city;
     private String longitude;
@@ -126,8 +129,8 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         initAdapter();
     }
 
-    private void initAdapter(){
-        goodsItemAdapter=new GoodsItemAdapter(getActivity());
+    private void initAdapter() {
+        goodsItemAdapter = new GoodsItemAdapter(getActivity());
         goodsItemAdapter.setOnItemClickListener(this);
         goodsRv.setAdapter(goodsItemAdapter);
     }
@@ -163,12 +166,12 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                     city = "";
                     longitude = "";
                     latitude = "";
-                    areaCode="";
+                    areaCode = "";
                 } else {
                     city = aMapLocation.getDistrict();
                     longitude = aMapLocation.getLongitude() + "";
                     latitude = aMapLocation.getLatitude() + "";
-                    areaCode=aMapLocation.getAdCode()+"";
+                    areaCode = aMapLocation.getAdCode() + "";
                 }
                 AreaCodeManager.saveAreaCode(areaCode);
                 localCity.setText(city);
@@ -220,25 +223,25 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
 
     @Override
     public void goOrdinaryGoodsDetails(String goodsId) {
-        OrdinaryGoodsDetailActivity.start(getActivity(),goodsId);
+        OrdinaryGoodsDetailActivity.start(getActivity(), goodsId);
     }
 
     @Override
     public void goActivityGroupGoods(String goodsId) {
-        ActivityGroupGoodsActivity.start(getActivity(),goodsId);
+        ActivityGroupGoodsActivity.start(getActivity(), goodsId);
     }
 
     @Override
     public void renderHomePageInfo(HomePageInfo homePageInfo) {
         refreshLayout.finishRefresh();
-        if(homePageInfo!=null){
-            if(TextUtils.equals(StaticData.REFLASH_ONE,homePageInfo.getStatus())){
+        if (homePageInfo != null) {
+            if (TextUtils.equals(StaticData.REFLASH_ONE, homePageInfo.getStatus())) {
                 //开通
                 goodsItemAdapter.setData(homePageInfo.getGoodsItemInfos());
-            }else {
+            } else {
 
             }
-            bannerInfos=homePageInfo.getBannerInfos();
+            bannerInfos = homePageInfo.getBannerInfos();
             if (data == null) {
                 data = new ArrayList<>();
             } else {
@@ -252,6 +255,8 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             banner.setPointsIsVisible(data.size() > 1);
             banner.setAutoPlayAble(data.size() > 1);
             banner.setBannerData(R.layout.xbanner_item, data);
+            messageCount.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO,homePageInfo.getUnreadMsgCount())?View.GONE:View.VISIBLE);
+            messageCount.setText(homePageInfo.getUnreadMsgCount());
         }
     }
 
@@ -270,15 +275,32 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         this.homepageListener = homepageListener;
     }
 
-    @OnClick({R.id.other_more_tv})
+    @OnClick({R.id.other_more_tv, R.id.message_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.other_more_tv:
-                if(homepageListener!=null){
+                if (homepageListener != null) {
                     homepageListener.goLocalTeam();
                 }
                 break;
+            case R.id.message_rl:
+                Intent intent = new Intent(getActivity(), MessageTypeActivity.class);
+                startActivityForResult(intent, RequestCodeStatic.MESSAGE);
+                break;
             default:
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RequestCodeStatic.MESSAGE:
+                    homePagePresenter.getHomePageInfo(StaticData.REFLASH_ZERO);
+                    break;
+                default:
+            }
         }
     }
 }

@@ -80,6 +80,7 @@
                         android:text="@string/nonactivated" />
 
                     <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableRight="@mipmap/icon_member_explain"
@@ -122,32 +123,60 @@
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"
                     android:src="@mipmap/icon_open_member"
-                    android:layout_marginTop="@dimen/dp_23"
+                    android:layout_marginTop="@dimen/dp_18"
                     android:layout_marginLeft="@dimen/dp_11"
                     android:layout_marginRight="@dimen/dp_11"
                     android:layout_marginBottom="@dimen/dp_9"/>
             </LinearLayout>
-            <LinearLayout
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_15"
-                android:orientation="vertical"
-                android:background="@drawable/common_four_app_one_bg">
-                <com.mall.sls.common.widget.textview.ConventionalTextView
-                    style="@style/size16_color_app3_text_style"
-                    android:text="@string/member_buy"
-                    android:layout_marginTop="@dimen/dp_15"
-                    android:layout_marginLeft="@dimen/dp_15"/>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/record_rv"
-                    android:layout_width="match_parent"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="false"
+                android:src="@mipmap/icon_member_invite"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_10"
+                android:visibility="gone"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:layout_marginTop="@dimen/dp_9"
+                android:layout_marginBottom="@dimen/dp_5">
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    android:id="@+id/selected_group_tv"
+                    style="@style/size16_color_back1_text_style"
+                    android:layout_centerInParent="true"
+                    android:text="@string/exclusive_members" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layoutManager="@string/layoutManager_LinearLayout"
-                    tools:listitem="@layout/adapter_member_goods"
-                    android:layout_marginBottom="@dimen/dp_15"
-                    android:layout_marginTop="@dimen/dp_12"
-                    android:orientation="horizontal"/>
-            </LinearLayout>
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_toLeftOf="@id/selected_group_tv"
+                    android:src="@mipmap/icon_left_red_line" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_toRightOf="@id/selected_group_tv"
+                    android:src="@mipmap/icon_right_red_line" />
+            </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/record_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="@string/layoutManager_LinearLayout"
+                tools:listitem="@layout/adapter_member_goods"
+                android:layout_marginBottom="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_9"
+                android:orientation="vertical"
+                android:nestedScrollingEnabled="false"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

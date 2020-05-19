@@ -10,7 +10,10 @@ import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.Ignore;
+import com.mall.sls.data.entity.InviteInfo;
 import com.mall.sls.data.entity.LocalTeam;
+import com.mall.sls.data.entity.MessageInfo;
+import com.mall.sls.data.entity.MessageTypeInfo;
 import com.mall.sls.data.entity.MineInfo;
 import com.mall.sls.data.entity.MyCouponInfo;
 import com.mall.sls.data.entity.OrderInfo;
@@ -23,6 +26,8 @@ import com.mall.sls.data.request.CartFastaddRequest;
 import com.mall.sls.data.request.CertifyIdRequest;
 import com.mall.sls.data.request.LoginRequest;
 import com.mall.sls.data.request.MobileRequest;
+import com.mall.sls.data.request.MsgIdRequest;
+import com.mall.sls.data.request.MsgReadRequest;
 import com.mall.sls.data.request.OneClickLoginRequest;
 import com.mall.sls.data.request.OrderSubmitRequest;
 
@@ -130,4 +135,22 @@ public interface RestApiService {
     //获取订单详情
     @GET("app/order/detail")
     Flowable<RemoteDataWrapper<OrderInfo>> getGoodsOrderDetails(@Header("X-Hc-Sign") String sign, @Query("orderId") String orderId);
+
+    //获取我的邀请
+    @GET("app/auth/inviter")
+    Flowable<RemoteDataWrapper<List<InviteInfo>>> getInviteInfos(@Header("X-Hc-Sign") String sign);
+
+    //获取消息类型
+    @GET("app/msg/type")
+    Flowable<RemoteDataWrapper<List<MessageTypeInfo>>> getMessageTypeInfos(@Header("X-Hc-Sign") String sign);
+
+    //获取用户消息列表
+    @GET("app/msg/list")
+    Flowable<RemoteDataWrapper<MessageInfo>> getMessageInfo(@Header("X-Hc-Sign") String sign, @Query("typeId") String typeId, @Query("page") String page, @Query("limit") String limit);
+
+    @POST("app/msg/empty")
+    Flowable<RemoteDataWrapper<Ignore>> msgEmpty(@Header("X-Hc-Sign") String sign,@Body MsgIdRequest request);
+
+    @POST("app/msg/changeStatus")
+    Flowable<RemoteDataWrapper<Ignore>> msgChangeStatus(@Header("X-Hc-Sign") String sign,@Body MsgReadRequest request);
 }

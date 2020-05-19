@@ -63,5 +63,7 @@ public class StaticData {
     public static final String TO_BE_RECEIVED="301";
     //已收货
     public static final String RECEIVED="401";
+    //typeId
+    public static final String TYPE_ID="typeId";
 
 }

@@ -23,6 +23,11 @@ public class RequestUrl {
     public static String GET_CERTIFY_ID_URL="/app/certify";//实人认证
     public static String ORDER_LIST="/app/order/list";//订单列表
     public static String ORDER_DETAILS="/app/order/detail";//订单详情
+    public static String AUTH_INVITER="/app/auth/inviter";//我的邀请
+    public static String MES_TYPE_URL="/app/msg/type";//获取消息类型
+    public static String MSG_LIST_URL="/app/msg/list";//获取用户消息列表
+    public static String MSG_EMPTY_URL="/app/msg/empty";//清空消息
+    public static String MSG_CHANGE_STATUS="/app/msg/changeStatus";//设置消息为已读
 
 
 }

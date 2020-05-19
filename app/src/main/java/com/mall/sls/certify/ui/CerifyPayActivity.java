@@ -23,6 +23,8 @@ import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.mainframe.ui.MainFrameActivity;
 import com.mall.sls.splash.SplashActivity;
 
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -106,8 +108,7 @@ public class CerifyPayActivity extends BaseActivity {
             public void run() {
 
                 PayTask payTask = new PayTask(CerifyPayActivity.this);
-                String result = payTask.pay(sign, true);
-
+                Map<String,String> result = payTask.payV2(sign,true);
                 Message message = Message.obtain();
                 message.what = RequestCodeStatic.SDK_PAY_FLAG;
                 message.obj = result;
@@ -135,9 +136,9 @@ public class CerifyPayActivity extends BaseActivity {
 
     //跳转到主页
     private void alpay(Message msg) {
-        PayResult payResult = new PayResult((String) msg.obj);
+        PayResult payResult = new PayResult((Map<String, String>) msg.obj);
         String resultStatus = payResult.getResultStatus();
-        Log.d("111","数据"+payResult.getResult());
+        Log.d("111","数据"+payResult.getResult()+"=="+payResult.getResultStatus());
         if (TextUtils.equals(resultStatus, "9000")) {
             showMessage("成功");
         } else {
