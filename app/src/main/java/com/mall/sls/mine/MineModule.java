@@ -11,6 +11,7 @@ import dagger.Provides;
 public class MineModule {
     private MineContract.MineInfoView mineInfoView;
     private MineContract.MyInviteView myInviteView;
+    private MineContract.MyTeamInfoView myTeamInfoView;
 
     public MineModule(MineContract.MineInfoView mineInfoView) {
         this.mineInfoView = mineInfoView;
@@ -18,6 +19,10 @@ public class MineModule {
 
     public MineModule(MineContract.MyInviteView myInviteView) {
         this.myInviteView = myInviteView;
+    }
+
+    public MineModule(MineContract.MyTeamInfoView myTeamInfoView) {
+        this.myTeamInfoView = myTeamInfoView;
     }
 
     @Provides
@@ -28,5 +33,10 @@ public class MineModule {
     @Provides
     MineContract.MyInviteView provideMyInviteView(){
         return myInviteView;
+    }
+
+    @Provides
+    MineContract.MyTeamInfoView provideMyTeamInfoView(){
+        return myTeamInfoView;
     }
 }

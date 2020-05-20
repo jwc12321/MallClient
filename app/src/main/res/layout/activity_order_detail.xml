@@ -87,14 +87,16 @@
                             android:layout_marginTop="@dimen/dp_22"
                             android:text="@string/remaining_payment_time" />
 
-                        <com.mall.sls.common.widget.textview.ConventionalTextView
-                            android:id="@+id/remaining_payment_time"
-                            style="@style/size15_color_back1_text_style"
+                        <com.mall.sls.common.widget.textview.MSTearDownView
+                            android:id="@+id/count_down"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_22"
-                            android:layout_toRightOf="@id/remaining_payment_time_tv"
-                            tools:text="11:13" />
+                            android:layout_toRightOf="@id/remaining_payment_time_tv"/>
+
 
                         <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/payTimeoutMinute"
                             style="@style/size12_color_app3_text_style"
                             android:layout_below="@id/remaining_payment_time_tv"
                             android:layout_marginLeft="@dimen/dp_15"

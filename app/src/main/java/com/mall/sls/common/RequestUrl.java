@@ -28,6 +28,9 @@ public class RequestUrl {
     public static String MSG_LIST_URL="/app/msg/list";//获取用户消息列表
     public static String MSG_EMPTY_URL="/app/msg/empty";//清空消息
     public static String MSG_CHANGE_STATUS="/app/msg/changeStatus";//设置消息为已读
+    public static String GROUPON_URL="/app/groupon";//我的拼团
+    public static String VIP_GROUPONS_URL="/app/goods/vipGroupons";//超级会员专享团购
+    public static String ALIPAY_URL="/app/user/pay/appPay";//支付超级会员和实人认证
 
 
 }

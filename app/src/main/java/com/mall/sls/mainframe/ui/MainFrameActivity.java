@@ -125,7 +125,7 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
         public void onClick(View v) {
             for (int i = 0; i < relativeLayouts.length; i++) {
                 if (v == relativeLayouts[i]) {
-                    viewPager.setCurrentItem(i);
+                    viewPager.setCurrentItem(i,false);
                     break;
                 }
             }
@@ -158,6 +158,6 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
 
     @Override
     public void goLocalTeam() {
-        viewPager.setCurrentItem(1);
+        viewPager.setCurrentItem(1,false);
     }
 }

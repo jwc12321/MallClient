@@ -63,6 +63,17 @@
         tools:replace="android:allowBackup"
         android:usesCleartextTraffic="true">
 
+        <service
+            android:name=".service.GeTuiService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
+
+        <service
+            android:name=".service.GeTuiPushService"
+            android:exported="true"
+            android:label="PushService"
+            android:process=":pushservice"/>
+
+
 
         <!--高德地图-->
         <service android:name="com.amap.api.location.APSService"></service>

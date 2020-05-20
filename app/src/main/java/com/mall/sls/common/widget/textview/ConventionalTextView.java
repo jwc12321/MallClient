@@ -13,6 +13,7 @@ import com.mall.sls.MainApplication;
 //苹方-简 常规体
 @SuppressLint("AppCompatCustomView")
 public class ConventionalTextView extends TextView{
+
     public ConventionalTextView(Context context) {
         super(context);
         Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/conventional.ttf");

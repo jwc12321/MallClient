@@ -1,5 +1,6 @@
 package com.mall.sls.homepage.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 
 import butterknife.BindView;
@@ -43,7 +45,8 @@ public class SelectPayTypeActivity extends BaseActivity {
     @BindView(R.id.close_iv)
     ImageView closeIv;
 
-    private String selectType="1";
+    private String choiceType;
+    private String selectType="0";
 
     public static void start(Context context) {
         Intent intent = new Intent(context, SelectPayTypeActivity.class);
@@ -60,6 +63,8 @@ public class SelectPayTypeActivity extends BaseActivity {
     }
 
     private void initView(){
+        choiceType=getIntent().getStringExtra(StaticData.CHOICE_TYPE);
+        confirmBt.setSelected(TextUtils.equals(StaticData.REFLASH_ONE,choiceType)?true:false);
         selectPayType();
     }
 
@@ -78,13 +83,17 @@ public class SelectPayTypeActivity extends BaseActivity {
             case R.id.item_rl:
                 break;
             case R.id.confirm_bt:
+                Intent backIntent = new Intent();
+                backIntent.putExtra(StaticData.SELECT_TYPE, selectType);
+                setResult(Activity.RESULT_OK, backIntent);
+                finish();
                 break;
             case R.id.select_weixin_iv:
-                selectType="1";
+                selectType="0";
                 selectPayType();
                 break;
             case R.id.select_ali_iv:
-                selectType="2";
+                selectType="1";
                 selectPayType();
                 break;
             default:
@@ -92,7 +101,7 @@ public class SelectPayTypeActivity extends BaseActivity {
     }
 
     private void selectPayType(){
-        selectWeixinIv.setSelected(TextUtils.equals("1",selectType));
-        selectAliIv.setSelected(TextUtils.equals("2",selectType));
+        selectWeixinIv.setSelected(TextUtils.equals(StaticData.REFLASH_ZERO,selectType));
+        selectAliIv.setSelected(TextUtils.equals(StaticData.REFLASH_ONE,selectType));
     }
 }

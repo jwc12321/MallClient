@@ -1,5 +1,6 @@
 package com.mall.sls.mine.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.widget.RelativeLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.R;
+import com.mall.sls.common.GlideHelper;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.BlackDrawTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
@@ -92,10 +95,8 @@ public class MyTeamAdapter extends RecyclerView.Adapter<MyTeamAdapter.MyTeamView
         ImageView goodsIv;
         @BindView(R.id.goods_name)
         MediumThickTextView goodsName;
-        @BindView(R.id.current_price)
-        MediumThickTextView currentPrice;
-        @BindView(R.id.original_price)
-        BlackDrawTextView originalPrice;
+        @BindView(R.id.goods_price)
+        ConventionalTextView goodsPrice;
         @BindView(R.id.goods_number)
         ConventionalTextView goodsNumber;
         @BindView(R.id.total_number)
@@ -122,27 +123,30 @@ public class MyTeamAdapter extends RecyclerView.Adapter<MyTeamAdapter.MyTeamView
         }
 
         public void bindData(MyTeamInfo myTeamInfo) {
-            totalNumber.setText("共" + myTeamInfo.getQuantity() + "件");
-            totalAmount.setText(NumberFormatUnit.twoDecimalFormat(myTeamInfo.getAmount()));
-            goodsName.setText(myTeamInfo.getName());
-            goodsNumber.setText("x" + myTeamInfo.getQuantity());
-            setOrderStatus(myTeamInfo.getStatus());
-            if(TextUtils.equals("10",myTeamInfo.getTeamType())){
+            time.setText(myTeamInfo.getAddTime());
+            if(TextUtils.equals(StaticData.REFLASH_ZERO,myTeamInfo.getIsActivity())){
                 teamType.setText(context.getString(R.string.daily_group));
             }else {
                 teamType.setText(context.getString(R.string.activity_group));
             }
+            setOrderStatus(myTeamInfo.getStatus());
+            GlideHelper.load((Activity) context, myTeamInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
+            goodsName.setText(myTeamInfo.getName());
+            goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(myTeamInfo.getGoodsPrice()));
+            goodsNumber.setText("x" + myTeamInfo.getNumber());
+            totalNumber.setText("共" + myTeamInfo.getNumber() + "件");
+            totalAmount.setText(NumberFormatUnit.twoDecimalFormat(myTeamInfo.getActualPrice()));
         }
 
         //10:拼团中 20：拼团成
         private void setOrderStatus(String status) {
             switch (status) {
-                case "10":
+                case StaticData.REFLASH_ONE:
                     teamStatus.setText(context.getString(R.string.in_group));
                     leftBt.setVisibility(View.GONE);
                     rightBt.setVisibility(View.VISIBLE);
                     break;
-                case "20":
+                case StaticData.REFLASH_THREE:
                     teamStatus.setText(context.getString(R.string.successful_team));
                     leftBt.setVisibility(View.VISIBLE);
                     rightBt.setVisibility(View.GONE);

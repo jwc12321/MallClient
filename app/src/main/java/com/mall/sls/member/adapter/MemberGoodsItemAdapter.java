@@ -3,15 +3,19 @@ package com.mall.sls.member.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
+import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DrawTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -56,6 +60,14 @@ public class MemberGoodsItemAdapter extends RecyclerView.Adapter<MemberGoodsItem
     public void onBindViewHolder(MemberGoodsItemView holder, int position) {
         GoodsItemInfo goodsItemInfo = goodsItemInfos.get(holder.getAdapterPosition());
         holder.bindData(goodsItemInfo);
+        holder.confirmBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.goActivityGroupGoods(goodsItemInfo.getGoodsId());
+                }
+            }
+        });
 
     }
 
@@ -69,10 +81,16 @@ public class MemberGoodsItemAdapter extends RecyclerView.Adapter<MemberGoodsItem
         ImageView goodsIv;
         @BindView(R.id.goods_name)
         ConventionalTextView goodsName;
-        @BindView(R.id.current_price)
-        MediumThickTextView currentPrice;
+        @BindView(R.id.goods_introduction)
+        ConventionalTextView goodsIntroduction;
         @BindView(R.id.original_price)
         DrawTextView originalPrice;
+        @BindView(R.id.confirm_bt)
+        ConventionalTextView confirmBt;
+        @BindView(R.id.current_price)
+        MediumThickTextView currentPrice;
+        @BindView(R.id.current_price_rl)
+        RelativeLayout currentPriceRl;
 
         public MemberGoodsItemView(View itemView) {
             super(itemView);
@@ -80,15 +98,16 @@ public class MemberGoodsItemAdapter extends RecyclerView.Adapter<MemberGoodsItem
         }
 
         public void bindData(GoodsItemInfo goodsItemInfo) {
-            GlideHelper.load((Activity) context, "", R.mipmap.ic_launcher, goodsIv);
+            GlideHelper.load((Activity) context, goodsItemInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(goodsItemInfo.getName());
-            currentPrice.setText("¥" + goodsItemInfo.getRetailPrice());
-            originalPrice.setText("¥" + goodsItemInfo.getRetailPrice());
+            goodsIntroduction.setText(goodsItemInfo.getBrief());
+            currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getRetailPrice()));
+            originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getCounterPrice()));
         }
     }
 
     public interface OnItemClickListener {
-        void goOrdinaryGoods();
+        void goActivityGroupGoods(String goodsId);
     }
 
     private OnItemClickListener onItemClickListener;

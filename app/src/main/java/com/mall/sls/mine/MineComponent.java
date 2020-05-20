@@ -9,6 +9,7 @@ import com.mall.sls.ActivityScope;
 import com.mall.sls.ApplicationComponent;
 import com.mall.sls.mine.ui.MineFragment;
 import com.mall.sls.mine.ui.MyInvitationActivity;
+import com.mall.sls.mine.ui.MyTeamActivity;
 
 import dagger.Component;
 
@@ -17,4 +18,5 @@ import dagger.Component;
 public interface MineComponent {
     void inject(MineFragment mineFragment);
     void inject(MyInvitationActivity myInvitationActivity);
+    void inject(MyTeamActivity myTeamActivity);
 }

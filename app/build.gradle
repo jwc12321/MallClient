@@ -21,14 +21,14 @@ android {
 
         ndk {
             //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
-            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a","arm64-v8a","x86_64"
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a","arm64-v8a","x86_64","x86"
         }
 
         manifestPlaceholders = [
                 //个推应用参数，请填写您申请的 GETUI_APP_ID，GETUI_APP_KEY，GETUI_APP_SECRET 值
-                GETUI_APP_ID : "i1pyOvtDeY9mDK2b3OYf5",
-                GETUI_APP_KEY : "tHdhfRBbDaAu3XQzJfVSa3",
-                GETUI_APP_SECRET : "QLhgVwVJyCAoEfLijkok85",
+                GETUI_APP_ID : "Hh1LN7lnKh8IBtw7gR5839",
+                GETUI_APP_KEY : "LqXxtu6Rye9juQ96fLnv14",
+                GETUI_APP_SECRET : "hPgGmO7gBU6odUP8prsld2",
         ]
     }
     signingConfigs {
@@ -55,8 +55,8 @@ android {
         }
         debug {
 //            buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.22:8082/\""
-//            buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.117:8082/\""
-            buildConfigField "String", "API_BASE_URL", "\"http://47.114.109.50:8080/\""
+            buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.176:8082/\""
+//            buildConfigField "String", "API_BASE_URL", "\"http://47.114.109.50:8080/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
@@ -115,7 +115,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.0.5'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'com.google.code.gson:gson:2.8.0'
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-11'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-11'
     implementation 'com.google.android.material:material:1.0.0'
@@ -139,10 +140,10 @@ dependencies {
     implementation 'com.teprinciple:updateapputilsx:2.3.0'
     implementation 'com.alibaba:fastjson:1.2.60'
     implementation files('libs/mycommons-codec-1.11.jar')
-    implementation 'com.getui:sdk:2.14.0.0'  //请将此处的 ${version} 替换成您当前相应的 SDK 版本号，如 2.14.0.0
+    implementation 'com.getui:sdk:2.14.0.0'
+    //请将此处的 ${version} 替换成您当前相应的 SDK 版本号，如 2.14.0.0
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     implementation 'org.greenrobot:eventbus:3.1.1'
-
     //高德地图
     //3D地图so及jar
     implementation 'com.amap.api:3dmap:latest.integration'
@@ -150,10 +151,10 @@ dependencies {
     implementation 'com.amap.api:location:latest.integration'
     //搜索功能
     implementation 'com.amap.api:search:latest.integration'
-//    //地址
-//    implementation 'com.smartTop:jd-address:1.0.3'
-
+    //    //地址
+    //    implementation 'com.smartTop:jd-address:1.0.3'
     implementation 'com.github.xiaohaibin:XBanner:androidx_v1.0.8'
-
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    implementation 'com.getui:sdk:2.14.0.0'
+    //请将此处的 ${version} 替换成您当前相应的 SDK 版本号，如 2.14.0.0
 }

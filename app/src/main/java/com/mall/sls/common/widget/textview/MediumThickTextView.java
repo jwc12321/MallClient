@@ -13,6 +13,7 @@ import com.mall.sls.MainApplication;
 //苹方-简 中粗体
 @SuppressLint("AppCompatCustomView")
 public class MediumThickTextView extends TextView{
+
     public MediumThickTextView(Context context) {
         super(context);
         Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/medium_black.ttf");

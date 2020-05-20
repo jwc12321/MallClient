@@ -7,41 +7,49 @@ import com.google.gson.annotations.SerializedName;
  * 描述：
  */
 public class MyTeamInfo {
-    //订单总金额
-    @SerializedName("amount")
-    private String amount;
-    //订单状态
+    //时间
+    @SerializedName("addTime")
+    private String addTime;
+    //1活动团0日常团
+    @SerializedName("isActivity")
+    private String isActivity;
+    //团购状态 1拼团中 3拼团成功
     @SerializedName("status")
     private String status;
-    //订单号
-    @SerializedName("orderNo")
-    private String orderNo;
-    //订单编号
-    @SerializedName("id")
-    private String id;
-    //数量
-    @SerializedName("quantity")
-    private String quantity;
-    //名字
-    @SerializedName("name")
-    private String name;
-    //图片url
+    //图片
     @SerializedName("picUrl")
     private String picUrl;
-    //订单状态
-    @SerializedName("teamType")
-    private String teamType;
+    //商品名
+    @SerializedName("name")
+    private String name;
+    //价格
+    @SerializedName("goodsPrice")
+    private String goodsPrice;
+    //数量
+    @SerializedName("number")
+    private String number;
+    //是付款
+    @SerializedName("actualPrice")
+    private String actualPrice;
+    //订单id
+    @SerializedName("orderId")
+    private String orderId;
 
-
-
-    public String getAmount() {
-        return amount;
+    public String getAddTime() {
+        return addTime;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
     }
 
+    public String getIsActivity() {
+        return isActivity;
+    }
+
+    public void setIsActivity(String isActivity) {
+        this.isActivity = isActivity;
+    }
 
     public String getStatus() {
         return status;
@@ -49,38 +57,6 @@ public class MyTeamInfo {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getOrderNo() {
-        return orderNo;
-    }
-
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getPicUrl() {
@@ -91,19 +67,43 @@ public class MyTeamInfo {
         this.picUrl = picUrl;
     }
 
-    public String getTeamType() {
-        return teamType;
+    public String getName() {
+        return name;
     }
 
-    public void setTeamType(String teamType) {
-        this.teamType = teamType;
-    }
-
-    public MyTeamInfo(String amount, String status, String quantity, String name, String teamType) {
-        this.amount = amount;
-        this.status = status;
-        this.quantity = quantity;
+    public void setName(String name) {
         this.name = name;
-        this.teamType=teamType;
+    }
+
+    public String getGoodsPrice() {
+        return goodsPrice;
+    }
+
+    public void setGoodsPrice(String goodsPrice) {
+        this.goodsPrice = goodsPrice;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getActualPrice() {
+        return actualPrice;
+    }
+
+    public void setActualPrice(String actualPrice) {
+        this.actualPrice = actualPrice;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 }

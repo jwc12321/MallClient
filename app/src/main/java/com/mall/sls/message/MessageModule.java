@@ -1,6 +1,5 @@
 package com.mall.sls.message;
 
-import javax.inject.Inject;
 
 import dagger.Module;
 import dagger.Provides;

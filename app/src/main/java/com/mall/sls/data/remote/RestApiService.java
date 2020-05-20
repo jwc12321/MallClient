@@ -20,6 +20,7 @@ import com.mall.sls.data.entity.OrderInfo;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.OrderSubmitInfo;
 import com.mall.sls.data.entity.ProvinceBean;
+import com.mall.sls.data.entity.TeamInfo;
 import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.request.AddAddressRequest;
 import com.mall.sls.data.request.CartFastaddRequest;
@@ -30,6 +31,7 @@ import com.mall.sls.data.request.MsgIdRequest;
 import com.mall.sls.data.request.MsgReadRequest;
 import com.mall.sls.data.request.OneClickLoginRequest;
 import com.mall.sls.data.request.OrderSubmitRequest;
+import com.mall.sls.data.request.UserPayDtoRequest;
 
 import java.util.List;
 
@@ -134,7 +136,7 @@ public interface RestApiService {
 
     //获取订单详情
     @GET("app/order/detail")
-    Flowable<RemoteDataWrapper<OrderInfo>> getGoodsOrderDetails(@Header("X-Hc-Sign") String sign, @Query("orderId") String orderId);
+    Flowable<RemoteDataWrapper<GoodsOrderDetails>> getGoodsOrderDetails(@Header("X-Hc-Sign") String sign, @Query("orderId") String orderId);
 
     //获取我的邀请
     @GET("app/auth/inviter")
@@ -153,4 +155,17 @@ public interface RestApiService {
 
     @POST("app/msg/changeStatus")
     Flowable<RemoteDataWrapper<Ignore>> msgChangeStatus(@Header("X-Hc-Sign") String sign,@Body MsgReadRequest request);
+
+    //我的拼团
+    @GET("app/groupon")
+    Flowable<RemoteDataWrapper<TeamInfo>> getTeamInfo(@Header("X-Hc-Sign") String sign, @Query("page") String page, @Query("limit") String limit);
+
+    //超级会员专享团购
+    @GET("app/goods/vipGroupons")
+    Flowable<RemoteDataWrapper<LocalTeam>> getVipGroupons(@Header("X-Hc-Sign") String sign, @Query("page") String page, @Query("limit") String limit);
+
+    //
+    @POST("app/user/pay/appPay")
+    Flowable<RemoteDataWrapper<String>> alipayMember(@Header("X-Hc-Sign") String sign, @Body UserPayDtoRequest request);
+
 }

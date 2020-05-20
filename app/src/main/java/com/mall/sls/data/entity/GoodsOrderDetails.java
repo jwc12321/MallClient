@@ -51,6 +51,15 @@ public class GoodsOrderDetails {
     //订单备注
     @SerializedName("message")
     private String message;
+    //支付截止时间
+    @SerializedName("payLimitTime")
+    private String payLimitTime;
+    //服务器当前时间
+    @SerializedName("systemTime")
+    private String systemTime;
+    //订单支付超时时间（分钟）
+    @SerializedName("payTimeoutMinute")
+    private String payTimeoutMinute;
 
     public String getCouponPrice() {
         return couponPrice;
@@ -162,5 +171,29 @@ public class GoodsOrderDetails {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getPayLimitTime() {
+        return payLimitTime;
+    }
+
+    public void setPayLimitTime(String payLimitTime) {
+        this.payLimitTime = payLimitTime;
+    }
+
+    public String getSystemTime() {
+        return systemTime;
+    }
+
+    public void setSystemTime(String systemTime) {
+        this.systemTime = systemTime;
+    }
+
+    public String getPayTimeoutMinute() {
+        return payTimeoutMinute;
+    }
+
+    public void setPayTimeoutMinute(String payTimeoutMinute) {
+        this.payTimeoutMinute = payTimeoutMinute;
     }
 }

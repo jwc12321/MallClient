@@ -1,6 +1,5 @@
 package com.mall.sls.order.ui;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -19,12 +18,13 @@ import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
+import com.mall.sls.common.widget.textview.MSTearDownView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.OrderGoodsVo;
-import com.mall.sls.data.entity.OrderInfo;
 import com.mall.sls.data.entity.OrderTimeInfo;
 import com.mall.sls.order.DaggerOrderComponent;
 import com.mall.sls.order.OrderContract;
@@ -48,6 +48,7 @@ import butterknife.OnClick;
  */
 public class GoodsOrderDetailsActivity extends BaseActivity implements OrderContract.OrderDetailsView, OrderInformationAdapter.OnItemClickListener {
 
+
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.title)
@@ -58,8 +59,10 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     MediumThickTextView orderStatus;
     @BindView(R.id.remaining_payment_time_tv)
     ConventionalTextView remainingPaymentTimeTv;
-    @BindView(R.id.remaining_payment_time)
-    ConventionalTextView remainingPaymentTime;
+    @BindView(R.id.count_down)
+    MSTearDownView countDown;
+    @BindView(R.id.payTimeoutMinute)
+    ConventionalTextView payTimeoutMinute;
     @BindView(R.id.pay_rl)
     RelativeLayout payRl;
     @BindView(R.id.delivery_time)
@@ -99,7 +102,6 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private ClipData myClip;
     private List<OrderGoodsVo> orderGoodsVos;
     private List<OrderTimeInfo> orderTimeInfos;
-    private GoodsOrderDetails goodsOrderDetails;
 
     @Inject
     OrderDetailsPresenter orderDetailsPresenter;
@@ -124,7 +126,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private void initView() {
         myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         goodsOrderId = getIntent().getStringExtra(StaticData.GOODS_ORDER_ID);
-        orderTimeInfos=new ArrayList<>();
+        orderTimeInfos = new ArrayList<>();
         addAdapter();
         orderDetailsPresenter.getOrderDetails(goodsOrderId);
     }
@@ -168,37 +170,44 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     }
 
     @Override
-    public void renderOrderDetails(OrderInfo orderInfo) {
-        if (orderInfo != null&&orderInfo.getGoodsOrderDetails()!=null) {
-            goodsOrderDetails=orderInfo.getGoodsOrderDetails();
-//            setOrderStatus(goodsOrderDetails.getOrderStatus());
+    public void renderOrderDetails(GoodsOrderDetails goodsOrderDetails) {
+        if (goodsOrderDetails != null) {
+            setOrderStatus(goodsOrderDetails.getOrderStatus());
+            payTimeoutMinute.setText(goodsOrderDetails.getPayTimeoutMinute()+"分钟内未支付，订单将自动取消");
+            if (TextUtils.equals(StaticData.TO_PAY,goodsOrderDetails.getOrderStatus())&&!TextUtils.isEmpty(goodsOrderDetails.getSystemTime()) && !TextUtils.isEmpty(goodsOrderDetails.getPayLimitTime())) {
+                long now = FormatUtil.dateToStamp(goodsOrderDetails.getSystemTime());
+                long groupExpireTime = FormatUtil.dateToStamp(goodsOrderDetails.getPayLimitTime());
+                if (now < groupExpireTime) {
+                    countDown.startTearDown(groupExpireTime/1000, now/1000);
+                }
+            }
             receiptAddress.setText(goodsOrderDetails.getAddress());
             namePhone.setText(goodsOrderDetails.getConsignee() + " " + goodsOrderDetails.getMobile());
-            orderGoodsVos=goodsOrderDetails.getOrderGoodsVos();
-            if (orderGoodsVos != null&&orderGoodsVos.size()>0) {
+            orderGoodsVos = goodsOrderDetails.getOrderGoodsVos();
+            if (orderGoodsVos != null && orderGoodsVos.size() > 0) {
                 GlideHelper.load(this, orderGoodsVos.get(0).getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
                 goodsName.setText(orderGoodsVos.get(0).getGoodsName());
                 goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(orderGoodsVos.get(0).getPrice()));
-                goodsNumber.setText("x"+orderGoodsVos.get(0).getNumber());
+                goodsNumber.setText("x" + orderGoodsVos.get(0).getNumber());
             }
             goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getGoodsPrice()));
             coupon.setText("-¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getCouponPrice()));
             realPayment.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getActualPrice()));
             orderTimeInfos.clear();
-            if(!TextUtils.isEmpty(goodsOrderDetails.getOrderSn())){
-                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.order_number),goodsOrderDetails.getOrderSn()));
+            if (!TextUtils.isEmpty(goodsOrderDetails.getOrderSn())) {
+                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.order_number), goodsOrderDetails.getOrderSn()));
             }
-            if(!TextUtils.isEmpty(goodsOrderDetails.getAddTime())){
-                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.order_time),goodsOrderDetails.getAddTime()));
+            if (!TextUtils.isEmpty(goodsOrderDetails.getAddTime())) {
+                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.order_time), goodsOrderDetails.getAddTime()));
             }
-            if(!TextUtils.isEmpty(goodsOrderDetails.getPayModeText())){
-                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.payment_method),goodsOrderDetails.getPayModeText()));
+            if (!TextUtils.isEmpty(goodsOrderDetails.getPayModeText())) {
+                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.payment_method), goodsOrderDetails.getPayModeText()));
             }
-            if(!TextUtils.isEmpty(goodsOrderDetails.getPayTime())){
-                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.payment_time),goodsOrderDetails.getPayTime()));
+            if (!TextUtils.isEmpty(goodsOrderDetails.getPayTime())) {
+                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.payment_time), goodsOrderDetails.getPayTime()));
             }
-            if(!TextUtils.isEmpty(goodsOrderDetails.getMessage())){
-                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.order_notes),goodsOrderDetails.getMessage()));
+            if (!TextUtils.isEmpty(goodsOrderDetails.getMessage())) {
+                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.order_notes), goodsOrderDetails.getMessage()));
             }
             orderInformationAdapter.setData(orderTimeInfos);
         }

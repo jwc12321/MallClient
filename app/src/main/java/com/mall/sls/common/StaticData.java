@@ -14,6 +14,7 @@ public class StaticData {
     public static final String REFLASH_TWO = "2";
     public static final String REFLASH_THREE = "3";
     public static final String REFLASH_FOUR = "4";
+    public static final String FIFTY_LIST_SIZE = "50";
 
     //通用文本title
     public static final String COMMON_TITLE = "commonTitle";
@@ -72,5 +73,7 @@ public class StaticData {
     public static final String SURPLUS="surplus";
     //购买方式
     public static final String PURCHASE_TYPE="purchaseType";
+    //
+    public static final String SELECT_TYPE="selectType";
 
 }

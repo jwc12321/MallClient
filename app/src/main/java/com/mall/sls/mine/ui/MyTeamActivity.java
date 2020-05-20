@@ -7,21 +7,26 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
-import com.mall.sls.common.unit.TokenManager;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
-import com.mall.sls.data.entity.MyTeamInfo;
+import com.mall.sls.data.entity.TeamInfo;
+import com.mall.sls.mine.DaggerMineComponent;
+import com.mall.sls.mine.MineContract;
+import com.mall.sls.mine.MineModule;
 import com.mall.sls.mine.adapter.MyTeamAdapter;
+import com.mall.sls.mine.presenter.MyTeamInfoPresenter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +36,9 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/11.
  * 描述：我的拼团
  */
-public class MyTeamActivity extends BaseActivity implements MyTeamAdapter.OnItemClickListener {
+public class MyTeamActivity extends BaseActivity implements MineContract.MyTeamInfoView, MyTeamAdapter.OnItemClickListener {
+
+
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.title)
@@ -40,12 +47,13 @@ public class MyTeamActivity extends BaseActivity implements MyTeamAdapter.OnItem
     RelativeLayout titleRel;
     @BindView(R.id.record_rv)
     RecyclerView recordRv;
-    @BindView(R.id.no_address_ll)
-    LinearLayout noAddressLl;
+    @BindView(R.id.no_record_ll)
+    LinearLayout noRecordLl;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-
     private MyTeamAdapter myTeamAdapter;
+    @Inject
+    MyTeamInfoPresenter myTeamInfoPresenter;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, MyTeamActivity.class);
@@ -64,42 +72,37 @@ public class MyTeamActivity extends BaseActivity implements MyTeamAdapter.OnItem
     private void initView() {
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         addAdapter();
+        myTeamInfoPresenter.getMyTeamInfo(StaticData.REFLASH_ONE);
     }
 
     private void addAdapter() {
         myTeamAdapter = new MyTeamAdapter(this);
         myTeamAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(myTeamAdapter);
-        addData();
-
-    }
-
-
-    private void addData() {
-        List<MyTeamInfo> myTeamInfos = new ArrayList<>();
-        MyTeamInfo goodsOrderInfo = new MyTeamInfo("13", "10", "1", "苹果","10");
-        MyTeamInfo goodsOrderInfo1 = new MyTeamInfo("12", "10", "3", "香蕉","10");
-        MyTeamInfo goodsOrderInfo2 = new MyTeamInfo("11", "20", "4", "橘子","20");
-        MyTeamInfo goodsOrderInfo4 = new MyTeamInfo("12", "20", "3", "香蕉","20");
-        MyTeamInfo goodsOrderInfo5 = new MyTeamInfo("11", "20", "4", "橘子","10");
-        myTeamInfos.add(goodsOrderInfo);
-        myTeamInfos.add(goodsOrderInfo1);
-        myTeamInfos.add(goodsOrderInfo2);
-        myTeamInfos.add(goodsOrderInfo4);
-        myTeamInfos.add(goodsOrderInfo5);
-        myTeamAdapter.setData(myTeamInfos);
     }
 
 
     SimpleMultiPurposeListener simpleMultiPurposeListener = new SimpleMultiPurposeListener() {
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+            refreshLayout.finishRefresh(6000);
+            myTeamInfoPresenter.getMyTeamInfo(StaticData.REFLASH_ZERO);
         }
 
         @Override
         public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+            myTeamInfoPresenter.getMoreMyTeamInfo();
         }
     };
+
+    @Override
+    protected void initializeInjector() {
+        DaggerMineComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .mineModule(new MineModule(this))
+                .build()
+                .inject(this);
+    }
 
     @OnClick({R.id.back})
     public void onClick(View view) {
@@ -115,5 +118,42 @@ public class MyTeamActivity extends BaseActivity implements MyTeamAdapter.OnItem
     @Override
     public View getSnackBarHolderView() {
         return null;
+    }
+
+    @Override
+    public void renderMyTeamInfo(TeamInfo teamInfo) {
+        refreshLayout.finishRefresh();
+        if (teamInfo != null) {
+            if (teamInfo != null && teamInfo.getTeamInfos().size() > 0) {
+                recordRv.setVisibility(View.VISIBLE);
+                noRecordLl.setVisibility(View.GONE);
+                if (teamInfo.getTeamInfos().size() == Integer.parseInt(StaticData.TEN_LIST_SIZE)) {
+                    refreshLayout.resetNoMoreData();
+                } else {
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                }
+                myTeamAdapter.setData(teamInfo.getTeamInfos());
+            } else {
+                recordRv.setVisibility(View.GONE);
+                noRecordLl.setVisibility(View.VISIBLE);
+                refreshLayout.finishLoadMoreWithNoMoreData();
+            }
+        }
+    }
+
+    @Override
+    public void renderMoreMyTeamInfo(TeamInfo teamInfo) {
+        refreshLayout.finishLoadMore();
+        if (teamInfo != null && teamInfo.getTeamInfos() != null) {
+            if (teamInfo.getTeamInfos().size() != Integer.parseInt(StaticData.TEN_LIST_SIZE)) {
+                refreshLayout.finishLoadMoreWithNoMoreData();
+            }
+            myTeamAdapter.addMore(teamInfo.getTeamInfos());
+        }
+    }
+
+    @Override
+    public void setPresenter(MineContract.MyTeamInfoPresenter presenter) {
+
     }
 }

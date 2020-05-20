@@ -25,6 +25,6 @@ public interface OrderContract {
     }
 
     interface OrderDetailsView extends BaseView<OrderDetailsPresenter>{
-        void renderOrderDetails(OrderInfo orderInfo);
+        void renderOrderDetails(GoodsOrderDetails goodsOrderDetails);
     }
 }

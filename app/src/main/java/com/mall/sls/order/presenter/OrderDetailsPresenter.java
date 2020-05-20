@@ -44,13 +44,13 @@ public class OrderDetailsPresenter implements OrderContract.OrderDetailsPresente
         String queryString="orderId="+orderId;
         String sign= SignUnit.signGet(RequestUrl.ORDER_DETAILS,queryString);
         Disposable disposable = restApiService.getGoodsOrderDetails(sign,orderId)
-                .flatMap(new RxRemoteDataParse<OrderInfo>())
-                .compose(new RxSchedulerTransformer<OrderInfo>())
-                .subscribe(new Consumer<OrderInfo>() {
+                .flatMap(new RxRemoteDataParse<GoodsOrderDetails>())
+                .compose(new RxSchedulerTransformer<GoodsOrderDetails>())
+                .subscribe(new Consumer<GoodsOrderDetails>() {
                     @Override
-                    public void accept(OrderInfo orderInfo) throws Exception {
+                    public void accept(GoodsOrderDetails goodsOrderDetails) throws Exception {
                         orderDetailsView.dismissLoading();
-                        orderDetailsView.renderOrderDetails(orderInfo);
+                        orderDetailsView.renderOrderDetails(goodsOrderDetails);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

@@ -80,19 +80,12 @@
                 android:layout_marginTop="@dimen/dp_38"
                 android:layout_toRightOf="@id/goods_iv">
 
-                <com.mall.sls.common.widget.textview.MediumThickTextView
-                    android:id="@+id/current_price"
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/goods_price"
                     style="@style/size14_color_back1_text_style"
                     android:layout_centerVertical="true"
                     tools:text="59" />
 
-                <com.mall.sls.common.widget.textview.BlackDrawTextView
-                    android:id="@+id/original_price"
-                    style="@style/size10_color_app2_text_style"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dp_12"
-                    android:layout_toRightOf="@id/current_price"
-                    tools:text="79" />
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/goods_number"

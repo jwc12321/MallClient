@@ -2,6 +2,7 @@ package com.mall.sls.local.ui;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.mall.sls.mainframe.adapter.MainPagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author jwc on 2020/5/9.
@@ -105,7 +107,7 @@ public class LocalTeamFragment extends BaseFragment implements LootingFragment.L
         adapter = new MainPagerAdapter(getChildFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(onPageChangeListener);
-        viewPager.setCurrentItem(0);
+//        viewPager.setCurrentItem(0);
         textViews[0].setSelected(true);
         lootingIv.setVisibility(View.VISIBLE);
     }
@@ -115,7 +117,7 @@ public class LocalTeamFragment extends BaseFragment implements LootingFragment.L
         public void onClick(View v) {
             for (int i = 0; i < linearLayouts.length; i++) {
                 if (v == linearLayouts[i]) {
-                    viewPager.setCurrentItem(i);
+                    viewPager.setCurrentItem(i,false);
                     break;
                 }
             }
@@ -131,6 +133,7 @@ public class LocalTeamFragment extends BaseFragment implements LootingFragment.L
             }
         }
     };
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

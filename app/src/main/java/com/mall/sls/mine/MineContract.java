@@ -4,6 +4,7 @@ import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
 import com.mall.sls.data.entity.InviteInfo;
 import com.mall.sls.data.entity.MineInfo;
+import com.mall.sls.data.entity.TeamInfo;
 
 import java.util.List;
 
@@ -26,6 +27,16 @@ public interface MineContract {
 
     interface MyInviteView extends BaseView<MyInvitePresenter>{
         void renderMyInvite(List<InviteInfo> inviteInfos);
+    }
+
+    interface MyTeamInfoPresenter extends BasePresenter{
+        void getMyTeamInfo(String refreshType);
+        void getMoreMyTeamInfo();
+    }
+
+    interface MyTeamInfoView extends BaseView<MyTeamInfoPresenter>{
+        void renderMyTeamInfo(TeamInfo teamInfo);
+        void renderMoreMyTeamInfo(TeamInfo teamInfo);
     }
 
 

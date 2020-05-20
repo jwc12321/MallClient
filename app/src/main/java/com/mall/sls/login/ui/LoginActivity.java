@@ -100,7 +100,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         deviceOsVersion = SystemUtil.getSystemVersion();
         devicePlatform = "android";
         TokenManager.saveToken("");
-        init();
+//        init();
     }
 
     @Override
