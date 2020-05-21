@@ -15,11 +15,11 @@ public interface CertifyContract {
         void renderUsesRpStatus(Boolean isBoolean);
     }
 
-    interface VerifyPayPresenter extends BasePresenter{
-        void getVerifyPay();
+    interface CertifyPayPresenter extends BasePresenter{
+        void alipay(String orderType, String payType);
     }
 
-    interface VerifyPayView extends BaseView<VerifyPayPresenter>{
-        void renderVerifyPay(String payStr);
+    interface CertifyPayView extends BaseView<CertifyPayPresenter>{
+        void renderAlipay(String alipayStr);
     }
 }

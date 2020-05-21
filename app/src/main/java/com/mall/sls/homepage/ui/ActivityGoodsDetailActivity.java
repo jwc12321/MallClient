@@ -3,9 +3,14 @@ package com.mall.sls.homepage.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -20,6 +25,7 @@ import com.mall.sls.R;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.FormatUtil;
+import com.mall.sls.common.unit.HtmlUnit;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DetailTearDownView;
@@ -36,6 +42,7 @@ import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.presenter.GoodsDetailsPresenter;
 import com.mall.sls.mine.ui.CustomerServiceActivity;
+import com.mall.sls.webview.unit.JSBridgeWebChromeClient;
 import com.stx.xhb.androidx.XBanner;
 
 import java.io.Serializable;
@@ -52,7 +59,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/9.
  * 描述：活动商品详情
  */
-public class ActivityGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView {
+public class ActivityGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, DetailTearDownView.TimeOutListener, TwelveTearDownView.TimeOutListener {
 
 
     @BindView(R.id.banner)
@@ -65,6 +72,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     WhiteDrawTextView originalPrice;
     @BindView(R.id.sales)
     ConventionalTextView sales;
+    @BindView(R.id.time_type)
+    ConventionalTextView timeType;
     @BindView(R.id.count_down)
     DetailTearDownView countDown;
     @BindView(R.id.goods_name)
@@ -77,6 +86,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     RelativeLayout skuRl;
     @BindView(R.id.delivery_time)
     ConventionalTextView deliveryTime;
+    @BindView(R.id.webView)
+    WebView webView;
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.share)
@@ -89,6 +100,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     TwelveTearDownView bottomCountDown;
     @BindView(R.id.pinyin_ll)
     LinearLayout pinyinLl;
+    @BindView(R.id.tv)
+    ConventionalTextView tv;
     private ProductListCallableInfo productListCallableInfo;
     private List<CustomViewsInfo> data;
     private String goodsId;
@@ -103,6 +116,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     private String consumerPhone;
     private String groupId;
     private String groupRulesId;
+    private String teamType; //1:即将开团 2：已开团
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, ActivityGoodsDetailActivity.class);
@@ -122,9 +136,38 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     private void initView() {
         goodsId = getIntent().getStringExtra(StaticData.GOODS_ID);
         xBannerInit();
+        initWebView();
         goodsDetailsPresenter.getGoodsDetails(goodsId);
         goodsDetailsPresenter.getConsumerPhone();
 
+    }
+
+    private void initWebView() {
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false);
+        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY); //取消滚动条白边效果
+        webView.setWebChromeClient(new JSBridgeWebChromeClient());
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view,
+                                           SslErrorHandler handler, SslError error) {
+                // TODO Auto-generated method stub
+                // handler.cancel();// Android默认的处理方式
+                handler.proceed();// 接受所有网站的证书
+                // handleMessage(Message msg);// 进行其他处理
+            }
+        });
+        webView.getSettings().setDefaultTextEncodingName("UTF-8");
+        webView.getSettings().setBlockNetworkImage(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webView.getSettings().setMixedContentMode(webView.getSettings().MIXED_CONTENT_ALWAYS_ALLOW);  //注意安卓5.0以上的权限
+        }
     }
 
 
@@ -175,20 +218,20 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         }
     }
 
-    private void initiateBill(){
-        if(productListCallableInfo==null){
+    private void initiateBill() {
+        if (productListCallableInfo == null) {
             goSelectSpec(StaticData.REFLASH_ONE);
-        }else {
-            goodsDetailsPresenter.cartFastAdd(goodsId,productListCallableInfo.getId(),true,String.valueOf(goodsCount),groupId,groupRulesId);
+        } else {
+            goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
         }
     }
 
-    private void goSelectSpecReturn(String type){
+    private void goSelectSpecReturn(String type) {
         Intent intent = new Intent(this, SelectSpecActivity.class);
         intent.putExtra(StaticData.GOODS_DETAILS_INFO, goodsDetailsInfo);
         intent.putExtra(StaticData.SKU_CHECK, (Serializable) checkSkus);
-        intent.putExtra(StaticData.CHOICE_TYPE,type);
-        intent.putExtra(StaticData.GOODS_COUNT,goodsCount);
+        intent.putExtra(StaticData.CHOICE_TYPE, type);
+        intent.putExtra(StaticData.GOODS_COUNT, goodsCount);
         startActivityForResult(intent, RequestCodeStatic.REQUEST_SPEC_RETURN);
     }
 
@@ -219,10 +262,10 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 case RequestCodeStatic.REQUEST_SPEC:
                     if (data != null) {
                         Bundle bundle = data.getExtras();
-                        checkSkus= (List<String>) bundle.getSerializable(StaticData.SKU_CHECK);
+                        checkSkus = (List<String>) bundle.getSerializable(StaticData.SKU_CHECK);
                         productListCallableInfo = (ProductListCallableInfo) bundle.getSerializable(StaticData.SKU_INFO);
                         goodsCount = bundle.getInt(StaticData.GOODS_COUNT);
-                        selectedGoods.setText(getString(R.string.is_selected)+" "+productListCallableInfo.getSpecifications()+"/"+unit);
+                        selectedGoods.setText(getString(R.string.is_selected) + " " + productListCallableInfo.getSpecifications() + "/" + unit);
                         goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
                     }
                     break;
@@ -261,18 +304,33 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity() + "件");
             goodsName.setText(goodsDetailsInfo.getName());
             selectedGoods.setText(getString(R.string.is_selected));
-            if (!TextUtils.isEmpty(goodsDetailsInfo.getNow()) && !TextUtils.isEmpty(goodsDetailsInfo.getGroupExpireTime())) {
+            if (!TextUtils.isEmpty(goodsDetailsInfo.getNow()) && !TextUtils.isEmpty(goodsDetailsInfo.getGroupExpireTime()) && !TextUtils.isEmpty(goodsDetailsInfo.getStartTime())) {
                 long now = FormatUtil.dateToStamp(goodsDetailsInfo.getNow());
                 long groupExpireTime = FormatUtil.dateToStamp(goodsDetailsInfo.getGroupExpireTime());
-                if (now < groupExpireTime) {
+                long startTime = FormatUtil.dateToStamp(goodsDetailsInfo.getStartTime());
+                if (now < startTime) {
+                    timeType.setText(getString(R.string.open_time));
+                    countDown.startTearDown(startTime, now);
+                    bottomCountDown.startTearDown(startTime, now);
+                    pinyinLl.setEnabled(false);
+                    tv.setVisibility(View.GONE);
+                    teamType = StaticData.REFLASH_ONE;
+                } else if (now > startTime && now < groupExpireTime) {
                     countDown.startTearDown(groupExpireTime, now);
                     bottomCountDown.startTearDown(groupExpireTime, now);
+                    timeType.setText(getString(R.string.remaining_spike));
+                    pinyinLl.setEnabled(true);
+                    tv.setVisibility(View.VISIBLE);
+                    teamType = StaticData.REFLASH_TWO;
                 }
             }
             groupPurchases = goodsDetailsInfo.getGroupPurchases();
             if (groupPurchases != null && groupPurchases.size() == 1) {
                 groupId = groupPurchases.get(0).getGrouponId();
                 groupRulesId = groupPurchases.get(0).getRulesId();
+            }
+            if (!TextUtils.isEmpty(goodsDetailsInfo.getDetail())) {
+                webView.loadDataWithBaseURL(null, HtmlUnit.getHtmlData(goodsDetailsInfo.getDetail()), "text/html", "utf-8", null);
             }
         }
     }
@@ -284,7 +342,12 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
 
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
-        ConfirmOrderActivity.start(this,confirmOrderDetail,StaticData.REFLASH_FOUR);
+        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_FOUR);
+    }
+
+    @Override
+    public void renderGroupRemind() {
+        showMessage(getString(R.string.remind_to_you));
     }
 
     @Override
@@ -297,5 +360,15 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         super.onDestroy();
         countDown.cancel();
         bottomCountDown.cancel();
+    }
+
+    @Override
+    public void timeOut() {
+        if (TextUtils.equals(StaticData.REFLASH_ONE, teamType)) {
+            goodsDetailsPresenter.getGoodsDetails(goodsId);
+        } else {
+            showMessage(getString(R.string.activity_over));
+            finish();
+        }
     }
 }

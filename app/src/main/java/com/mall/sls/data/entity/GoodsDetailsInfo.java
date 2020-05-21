@@ -71,6 +71,15 @@ public class GoodsDetailsInfo implements Serializable {
     //拼团的人
     @SerializedName("groupPeopleList")
     private List<GroupPeople> groupPeoples;
+    //详情
+    @SerializedName("detail")
+    private String detail;
+    //团购开始时间
+    @SerializedName("startTime")
+    private String startTime;
+    //订阅状态 1,提醒我 2,取消提醒
+    @SerializedName("subscriptionStatus")
+    private String subscriptionStatus;
 
 
 
@@ -233,5 +242,29 @@ public class GoodsDetailsInfo implements Serializable {
 
     public void setGroupPeoples(List<GroupPeople> groupPeoples) {
         this.groupPeoples = groupPeoples;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getSubscriptionStatus() {
+        return subscriptionStatus;
+    }
+
+    public void setSubscriptionStatus(String subscriptionStatus) {
+        this.subscriptionStatus = subscriptionStatus;
     }
 }

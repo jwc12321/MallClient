@@ -2,13 +2,17 @@ package com.mall.sls.local.presenter;
 
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
+import com.mall.sls.data.entity.Ignore;
 import com.mall.sls.data.entity.LocalTeam;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
+import com.mall.sls.data.request.GroupRemindRequest;
 import com.mall.sls.local.LocalContract;
 
 import java.util.ArrayList;
@@ -28,6 +32,7 @@ public class LocalTeamPresenter implements LocalContract.LocalTeamPresenter {
     private List<Disposable> mDisposableList = new ArrayList<>();
     private LocalContract.LocalTeamView localTeamView;
     private int currentIndex = 1;  //当前index
+    private Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 
     @Inject
     public LocalTeamPresenter(RestApiService restApiService, LocalContract.LocalTeamView localTeamView) {
@@ -81,6 +86,30 @@ public class LocalTeamPresenter implements LocalContract.LocalTeamPresenter {
                     public void accept(LocalTeam localTeam) throws Exception {
                         localTeamView.dismissLoading();
                         localTeamView.renderMoreLocalTeam(localTeam);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        localTeamView.dismissLoading();
+                        localTeamView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void groupRemind(String ruleId) {
+        localTeamView.showLoading(StaticData.PROCESSING);
+        GroupRemindRequest request=new GroupRemindRequest(ruleId,StaticData.REFLASH_ONE);
+        String sign= SignUnit.signPost(RequestUrl.GROUP_REMIND_URL,gson.toJson(request));
+        Disposable disposable = restApiService.groupRemind(sign,request)
+                .flatMap(new RxRemoteDataParse<Ignore>())
+                .compose(new RxSchedulerTransformer<Ignore>())
+                .subscribe(new Consumer<Ignore>() {
+                    @Override
+                    public void accept(Ignore ignore) throws Exception {
+                        localTeamView.dismissLoading();
+                        localTeamView.renderGroupRemind();
                     }
                 }, new Consumer<Throwable>() {
                     @Override

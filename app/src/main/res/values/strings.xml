@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MallClient</string>
+    <string name="app_name">特惠购</string>
     <!--权限-->
     <string name="common_request_permission">该操作需要开通权限</string>
     <string name="common_allow_permission">允许</string>
@@ -46,8 +46,8 @@
     <string name="bind_phone">为了您的账号安全\n请绑定手机</string>
     <string name="bind_now">立即绑定</string>
     <string name="choice_login">请阅读并同意《隐私政策》和《服务协议》</string>\
-    <string name="login_regist">登录/注册</string>
-    <string name="login_regist_bt">一键登录/注册</string>
+    <string name="login_register">登录/注册</string>
+    <string name="login_register_bt">一键登录/注册</string>
     <string name="home">首页</string>
     <string name="mine">我的</string>
     <string name="search_address">地址搜索</string>
@@ -165,6 +165,7 @@
     <string name="group_purchase_price">团购价：</string>
     <string name="pinyin_now">立即拼单</string>
     <string name="remaining_spike">距离秒杀结束还剩：</string>
+    <string name="open_time">距离秒杀开始还剩：</string>
     <string name="join_pinyin_now">立即参与拼单</string>
     <string name="surplus">剩余</string>
     <string name="input_detail_address">请填写详细地址</string>
@@ -211,4 +212,19 @@
     <string name="is_pay">已支付</string>
     <string name="wechat_friends">微信好友</string>
     <string name="city_not_open">该城市尚未开通！\n敬请期待！</string>
+    <string name="install_alipay">请先安装支付宝</string>
+    <string name="install_weixin">请先安装微信</string>
+    <string name="weixin_login_register">微信登录/注册</string>
+    <string name="activity_over">活动团已结束</string>
+    <string name="remind_to_you">开抢前五分钟会提醒您</string>
+    <string name="pay_cancel">支付取消</string>
+    <string name="pay_failed">支付失败</string>
+    <string name="open_vip">您已开通超级会员</string>
+    <string name="is_open">已开通</string>
+    <string name="to_open_person_authentication">请先开通实人认证</string>
+    <string name="view_now">立即查看</string>
+    <string name="stay_tuned">敬请期待</string>
+    <string name="sys_message">系统通知</string>
+    <string name="activity_benefits">活动福利</string>
+
 </resources>

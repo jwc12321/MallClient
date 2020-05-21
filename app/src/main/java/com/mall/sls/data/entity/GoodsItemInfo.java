@@ -31,6 +31,9 @@ public class GoodsItemInfo {
     //团类型0日常团 1活动团
     @SerializedName("groupType")
     private String groupType;
+    //订阅状态 0:未提醒 1：已预约
+    @SerializedName("subscriptionStatus")
+    private String subscriptionStatus;
 
     public String getBrief() {
         return brief;
@@ -94,5 +97,13 @@ public class GoodsItemInfo {
 
     public void setGroupType(String groupType) {
         this.groupType = groupType;
+    }
+
+    public String getSubscriptionStatus() {
+        return subscriptionStatus;
+    }
+
+    public void setSubscriptionStatus(String subscriptionStatus) {
+        this.subscriptionStatus = subscriptionStatus;
     }
 }

@@ -3,10 +3,14 @@ package com.mall.sls.homepage.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,6 +24,7 @@ import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.FormatUtil;
+import com.mall.sls.common.unit.HtmlUnit;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.TimeUtil;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
@@ -36,6 +41,7 @@ import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.presenter.GoodsDetailsPresenter;
+import com.mall.sls.webview.unit.JSBridgeWebChromeClient;
 
 import java.util.List;
 
@@ -50,6 +56,10 @@ import butterknife.OnClick;
  * 描述：活动团
  */
 public class ActivityGroupGoodsActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, TearDownView.TimeOutListener, FourTearDownView.TimeOutListener {
+
+
+    @Inject
+    GoodsDetailsPresenter goodsDetailsPresenter;
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.title)
@@ -58,40 +68,36 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     RelativeLayout titleRel;
     @BindView(R.id.activity_rule_iv)
     ImageView activityRuleIv;
-    @BindView(R.id.goods_name)
-    ConventionalTextView goodsName;
-    @BindView(R.id.count_down)
-    TearDownView countDown;
     @BindView(R.id.activity_name)
     ConventionalTextView activityName;
+    @BindView(R.id.count_down)
+    TearDownView countDown;
     @BindView(R.id.goods_iv)
     ImageView goodsIv;
+    @BindView(R.id.discountMember)
+    ConventionalTextView discountMember;
+    @BindView(R.id.goods_name)
+    ConventionalTextView goodsName;
     @BindView(R.id.goods_introduction)
     ConventionalTextView goodsIntroduction;
     @BindView(R.id.current_price)
     MediumThickTextView currentPrice;
     @BindView(R.id.original_price)
     DrawTextView originalPrice;
+    @BindView(R.id.goods_rl)
+    RelativeLayout goodsRl;
     @BindView(R.id.confirm_bt)
     MediumThickTextView confirmBt;
     @BindView(R.id.people_number)
     ConventionalTextView peopleNumber;
     @BindView(R.id.goods_number)
     ConventionalTextView goodsNumber;
-    @BindView(R.id.over_tv)
-    ConventionalTextView overTv;
     @BindView(R.id.count_down_time)
     FourTearDownView countDownTime;
-    @BindView(R.id.goods_rl)
-    RelativeLayout goodsRl;
-    @BindView(R.id.discountMember)
-    ConventionalTextView discountMember;
     @BindView(R.id.view_flipper)
     ViewFlipper viewFlipper;
-
-
-    @Inject
-    GoodsDetailsPresenter goodsDetailsPresenter;
+    @BindView(R.id.webView)
+    WebView webView;
 
     private String goodsId;
     private GoodsDetailsInfo goodsDetailsInfo;
@@ -121,6 +127,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
 
     private void initView() {
         goodsId = getIntent().getStringExtra(StaticData.GOODS_ID);
+        initWebView();
         goodsDetailsPresenter.getGoodsDetails(goodsId);
 
     }
@@ -133,6 +140,34 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
                 .homepageModule(new HomepageModule(this))
                 .build()
                 .inject(this);
+    }
+
+    private void initWebView() {
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(false);
+        webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY); //取消滚动条白边效果
+        webView.setWebChromeClient(new JSBridgeWebChromeClient());
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view,
+                                           SslErrorHandler handler, SslError error) {
+                // TODO Auto-generated method stub
+                // handler.cancel();// Android默认的处理方式
+                handler.proceed();// 接受所有网站的证书
+                // handleMessage(Message msg);// 进行其他处理
+            }
+        });
+        webView.getSettings().setDefaultTextEncodingName("UTF-8");
+        webView.getSettings().setBlockNetworkImage(false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            webView.getSettings().setMixedContentMode(webView.getSettings().MIXED_CONTENT_ALWAYS_ALLOW);  //注意安卓5.0以上的权限
+        }
     }
 
 
@@ -183,6 +218,9 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
                 groupId = groupPurchases.get(0).getGrouponId();
                 groupRulesId = groupPurchases.get(0).getRulesId();
             }
+            if (!TextUtils.isEmpty(goodsDetailsInfo.getDetail())) {
+                webView.loadDataWithBaseURL(null, HtmlUnit.getHtmlData(goodsDetailsInfo.getDetail()), "text/html", "utf-8", null);
+            }
         }
 
     }
@@ -194,7 +232,12 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
 
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
-        ConfirmOrderActivity.start(this,confirmOrderDetail,StaticData.REFLASH_FOUR);
+        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_FOUR);
+    }
+
+    @Override
+    public void renderGroupRemind() {
+
     }
 
     @Override
@@ -248,7 +291,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
                         Bundle bundle = data.getExtras();
                         productListCallableInfo = (ProductListCallableInfo) bundle.getSerializable(StaticData.SKU_INFO);
                         goodsCount = bundle.getInt(StaticData.GOODS_COUNT);
-                        goodsDetailsPresenter.cartFastAdd(goodsId,productListCallableInfo.getId(),true,String.valueOf(goodsCount),groupId,groupRulesId);
+                        goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
                     }
                     break;
                 default:

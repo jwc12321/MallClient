@@ -3,7 +3,6 @@ package com.mall.sls.member.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.text.SpannableString;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
-import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DrawTextView;
@@ -60,7 +58,7 @@ public class MemberGoodsItemAdapter extends RecyclerView.Adapter<MemberGoodsItem
     public void onBindViewHolder(MemberGoodsItemView holder, int position) {
         GoodsItemInfo goodsItemInfo = goodsItemInfos.get(holder.getAdapterPosition());
         holder.bindData(goodsItemInfo);
-        holder.confirmBt.setOnClickListener(new View.OnClickListener() {
+        holder.itemRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
@@ -91,6 +89,8 @@ public class MemberGoodsItemAdapter extends RecyclerView.Adapter<MemberGoodsItem
         MediumThickTextView currentPrice;
         @BindView(R.id.current_price_rl)
         RelativeLayout currentPriceRl;
+        @BindView(R.id.item_rl)
+        RelativeLayout itemRl;
 
         public MemberGoodsItemView(View itemView) {
             super(itemView);

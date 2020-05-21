@@ -31,6 +31,9 @@ public class MessageItemInfo {
     //0未读 1已读
     @SerializedName("status")
     private String status;
+    //1:订单 2：其他
+    @SerializedName("linkUrl")
+    private String linkUrl;
 
     public String getId() {
         return id;
@@ -94,5 +97,13 @@ public class MessageItemInfo {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getLinkUrl() {
+        return linkUrl;
+    }
+
+    public void setLinkUrl(String linkUrl) {
+        this.linkUrl = linkUrl;
     }
 }

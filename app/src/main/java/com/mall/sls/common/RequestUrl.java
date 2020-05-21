@@ -31,6 +31,8 @@ public class RequestUrl {
     public static String GROUPON_URL="/app/groupon";//我的拼团
     public static String VIP_GROUPONS_URL="/app/goods/vipGroupons";//超级会员专享团购
     public static String ALIPAY_URL="/app/user/pay/appPay";//支付超级会员和实人认证
+    public static String GROUP_REMIND_URL="/app/goods/groupRemind";//活动团开团提醒
+    public static String VIP_OPEN_URL="/app/vip/open";//开通超级会员
 
 
 }

@@ -2,7 +2,6 @@ package com.mall.sls.homepage.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.opengl.Visibility;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -10,20 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.StaticData;
-import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.unit.NumberFormatUnit;
-import com.mall.sls.common.unit.VerifyManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DrawTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.GoodsItemInfo;
-import com.mall.sls.data.entity.GoodsOrderInfo;
 
 import java.util.List;
 
@@ -64,13 +61,13 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
     public void onBindViewHolder(GoodsItemView holder, int position) {
         GoodsItemInfo goodsItemInfo = goodsItemInfos.get(holder.getAdapterPosition());
         holder.bindData(goodsItemInfo);
-        holder.confirmBt.setOnClickListener(new View.OnClickListener() {
+        holder.itemRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    if(TextUtils.equals(StaticData.REFLASH_ZERO, goodsItemInfo.getGroupType())){
+                    if (TextUtils.equals(StaticData.REFLASH_ZERO, goodsItemInfo.getGroupType())) {
                         onItemClickListener.goOrdinaryGoodsDetails(goodsItemInfo.getGoodsId());
-                    }else {
+                    } else {
                         onItemClickListener.goActivityGroupGoods(goodsItemInfo.getGoodsId());
                     }
                 }
@@ -101,6 +98,8 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
         DrawTextView originalPrice;
         @BindView(R.id.groupType)
         ConventionalTextView groupType;
+        @BindView(R.id.item_rl)
+        RelativeLayout itemRl;
 
         public GoodsItemView(View itemView) {
             super(itemView);
@@ -113,12 +112,13 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
             goodsIntroduction.setText(goodsItemInfo.getBrief());
             currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getRetailPrice()));
             originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getCounterPrice()));
-            groupType.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,goodsItemInfo.getGroupType())?View.VISIBLE:View.GONE );
+            groupType.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGroupType()) ? View.VISIBLE : View.GONE);
         }
     }
 
     public interface OnItemClickListener {
         void goOrdinaryGoodsDetails(String goodsId);
+
         void goActivityGroupGoods(String goodsId);
     }
 

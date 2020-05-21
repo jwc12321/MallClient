@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:id="@+id/item_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_130"
         android:layout_marginLeft="@dimen/dp_15"
@@ -62,20 +63,20 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_27"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/dp_12"
             android:layout_marginRight="@dimen/dp_15"
             android:layout_marginBottom="@dimen/dp_11"
             android:layout_toRightOf="@id/goods_iv">
 
-            <LinearLayout style="@style/tip_bt_ll_style"
-                android:id="@+id/confirm_bt">
-
-                <com.mall.sls.common.widget.textview.ConventionalTextView
-                    style="@style/tip_bt_tv_style"
-                    android:text="@string/remind_me"/>
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/remind_iv"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_27"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/remind_list_bt_select"
+                android:visibility="gone"/>
 
             <com.mall.sls.common.widget.textview.MediumThickTextView
                 android:id="@+id/current_price"

@@ -2,6 +2,7 @@ package com.mall.sls.message.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.swipe.SwipeRevealLayout;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
-import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.MessageItemInfo;
 
 import java.util.List;
@@ -60,15 +61,15 @@ public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapte
         holder.goodsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onItemClickListener!=null){
-                    onItemClickListener.goOrderDetails(messageItemInfo.getAssociatedId(),messageItemInfo.getId());
+                if (onItemClickListener != null) {
+                    onItemClickListener.goOrderDetails(messageItemInfo.getAssociatedId(), messageItemInfo.getId());
                 }
             }
         });
         holder.deleteLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onItemClickListener!=null){
+                if (onItemClickListener != null) {
                     onItemClickListener.deleteItem(messageItemInfo.getId());
                     messageItemInfos.remove(holder.getAdapterPosition());
                     notifyItemRemoved(holder.getAdapterPosition());
@@ -87,14 +88,18 @@ public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapte
         FrameLayout deleteLayout;
         @BindView(R.id.title)
         ConventionalTextView title;
-        @BindView(R.id.goods_iv)
-        ImageView goodsIv;
         @BindView(R.id.content)
         ConventionalTextView content;
+        @BindView(R.id.goods_iv)
+        ImageView goodsIv;
+        @BindView(R.id.goods_content)
+        ConventionalTextView goodsContent;
+        @BindView(R.id.goods_rl)
+        RelativeLayout goodsRl;
         @BindView(R.id.time)
         ConventionalTextView time;
         @BindView(R.id.goods_layout)
-        LinearLayout goodsLayout;
+        RelativeLayout goodsLayout;
         @BindView(R.id.swipe_layout)
         SwipeRevealLayout swipeLayout;
 
@@ -109,14 +114,19 @@ public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapte
             GlideHelper.load((Activity) context, messageItemInfo.getImageUrl(), R.mipmap.icon_default_goods, goodsIv);
             title.setText(messageItemInfo.getTitle());
             content.setText(messageItemInfo.getContent());
+            goodsContent.setText(messageItemInfo.getContent());
             time.setText(messageItemInfo.getAddTime());
+            goodsRl.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, messageItemInfo.getLinkUrl()) ? View.VISIBLE : View.GONE);
+            content.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, messageItemInfo.getLinkUrl()) ? View.GONE : View.VISIBLE);
+            goodsLayout.setEnabled(TextUtils.equals(StaticData.REFLASH_ONE, messageItemInfo.getLinkUrl()));
         }
 
     }
 
 
     public interface OnItemClickListener {
-        void goOrderDetails(String orderId,String id);
+        void goOrderDetails(String orderId, String id);
+
         void deleteItem(String id);
     }
 

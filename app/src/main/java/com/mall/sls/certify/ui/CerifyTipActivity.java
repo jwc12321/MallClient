@@ -53,6 +53,7 @@ public class CerifyTipActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.confirm_bt:
                 CerifyPayActivity.start(this);
+                finish();
                 break;
             case R.id.back:
                 finish();

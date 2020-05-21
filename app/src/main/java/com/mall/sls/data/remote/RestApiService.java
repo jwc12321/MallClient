@@ -25,6 +25,7 @@ import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.request.AddAddressRequest;
 import com.mall.sls.data.request.CartFastaddRequest;
 import com.mall.sls.data.request.CertifyIdRequest;
+import com.mall.sls.data.request.GroupRemindRequest;
 import com.mall.sls.data.request.LoginRequest;
 import com.mall.sls.data.request.MobileRequest;
 import com.mall.sls.data.request.MsgIdRequest;
@@ -164,8 +165,16 @@ public interface RestApiService {
     @GET("app/goods/vipGroupons")
     Flowable<RemoteDataWrapper<LocalTeam>> getVipGroupons(@Header("X-Hc-Sign") String sign, @Query("page") String page, @Query("limit") String limit);
 
-    //
+    //支付宝支付实人认证和超级会员
     @POST("app/user/pay/appPay")
     Flowable<RemoteDataWrapper<String>> alipayMember(@Header("X-Hc-Sign") String sign, @Body UserPayDtoRequest request);
+
+    //活动团开团提醒
+    @POST("app/goods/groupRemind")
+    Flowable<RemoteDataWrapper<Ignore>> groupRemind(@Header("X-Hc-Sign") String sign, @Body GroupRemindRequest request);
+
+    //开通超级会员
+    @POST("app/vip/open")
+    Flowable<RemoteDataWrapper<Boolean>> vipOpen(@Header("X-Hc-Sign") String sign);
 
 }

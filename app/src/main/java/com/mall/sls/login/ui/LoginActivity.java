@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
+import com.igexin.sdk.PushManager;
+import com.igexin.sdk.Tag;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.address.ui.AddAddressActivity;
@@ -23,6 +25,7 @@ import com.mall.sls.assemble.ui.AssembleHomeActivity;
 import com.mall.sls.certify.ui.CerifyTipActivity;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.AreaCodeManager;
+import com.mall.sls.common.unit.MobileManager;
 import com.mall.sls.common.unit.SystemUtil;
 import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.common.widget.textview.ColdDownButton;
@@ -100,6 +103,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         deviceOsVersion = SystemUtil.getSystemVersion();
         devicePlatform = "android";
         TokenManager.saveToken("");
+        PushManager.getInstance().unBindAlias(this,MobileManager.getMobile(),true);
 //        init();
     }
 
@@ -177,6 +181,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     @Override
     public void renderLoginIn(TokenInfo tokenInfo) {
         if(tokenInfo!=null){
+            //设置个推的别名和标签
+            PushManager.getInstance().bindAlias(this,tokenInfo.getUserInfo().getMobile());
+            Tag[] tags=new Tag[1];
+            tags[0]=new Tag().setName("all");
+            PushManager.getInstance().setTag(this,tags, String.valueOf(System.currentTimeMillis()));
+            MobileManager.saveMobile(tokenInfo.getUserInfo().getMobile());
             TokenManager.saveToken(tokenInfo.getToken());
             MainFrameActivity.start(this);
         }
@@ -258,7 +268,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                 .setLightColor(true)
                 .setStatusBarUIFlag(View.SYSTEM_UI_FLAG_LOW_PROFILE)
                 .setNavColor(getResources().getColor(R.color.backGround1))
-                .setNavText(getString(R.string.login_regist))
+                .setNavText(getString(R.string.login_register))
                 .setNavTextColor(getResources().getColor(R.color.appText1))
                 .setNavTextSize(16)
                 .setNavReturnHidden(true)
@@ -272,7 +282,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                 .setNumberSize(20)
                 .setNumFieldOffsetY(231)
                 .setNumberLayoutGravity(Gravity.CENTER_HORIZONTAL)
-                .setLogBtnText(getString(R.string.login_regist_bt))
+                .setLogBtnText(getString(R.string.login_register_bt))
                 .setLogBtnTextColor(getResources().getColor(R.color.appText1))
                 .setLogBtnTextSize(16)
                 .setLogBtnBackgroundPath("confirm_bt_select")

@@ -121,6 +121,29 @@ public class SuperMemberPresenter implements MemberContract.SuperMemberPresente 
     }
 
     @Override
+    public void vipOpen() {
+        superMemberView.showLoading(StaticData.PROCESSING);
+        String sign= SignUnit.signPost(RequestUrl.VIP_OPEN_URL,"null");
+        Disposable disposable = restApiService.vipOpen(sign)
+                .flatMap(new RxRemoteDataParse<Boolean>())
+                .compose(new RxSchedulerTransformer<Boolean>())
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean isBoolean) throws Exception {
+                        superMemberView.dismissLoading();
+                        superMemberView.renderVipOpen(isBoolean);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        superMemberView.dismissLoading();
+                        superMemberView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
     public void start() {
 
     }

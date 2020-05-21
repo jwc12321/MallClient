@@ -177,6 +177,11 @@ public class LootingFragment extends BaseFragment implements GoodsItemAdapter.On
     }
 
     @Override
+    public void renderGroupRemind() {
+
+    }
+
+    @Override
     public void setPresenter(LocalContract.LocalTeamPresenter presenter) {
 
     }

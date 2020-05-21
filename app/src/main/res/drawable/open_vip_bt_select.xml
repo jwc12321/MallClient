@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@mipmap/icon_open_member" android:state_enabled="true"/>
+    <item android:drawable="@mipmap/icon_is_open_vip" android:state_enabled="false"/>
+
+</selector>

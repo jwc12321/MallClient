@@ -150,8 +150,8 @@ public class RestApiModule {
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
                 .addNetworkInterceptor(addFormData)
-                .addNetworkInterceptor(httpLogging)
-                .addInterceptor(httpLogging)
+//                .addNetworkInterceptor(httpLogging)
+//                .addInterceptor(httpLogging)
                 .sslSocketFactory(createSSLSocketFactory())
                 .hostnameVerifier(new HostnameVerifier() {
                     @Override

@@ -129,7 +129,7 @@ public class GoodsOrderActivity extends BaseActivity {
         public void onClick(View v) {
             for (int i = 0; i < linearLayouts.length; i++) {
                 if (v == linearLayouts[i]) {
-                    viewPager.setCurrentItem(i);
+                    viewPager.setCurrentItem(i,false);
                     break;
                 }
             }

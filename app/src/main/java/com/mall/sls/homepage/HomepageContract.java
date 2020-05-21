@@ -4,6 +4,7 @@ package com.mall.sls.homepage;
 
 import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
+import com.mall.sls.certify.CertifyContract;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.HomePageInfo;
@@ -22,12 +23,14 @@ public interface HomepageContract {
         void getGoodsDetails(String goodsId);
         void getConsumerPhone();
         void cartFastAdd(String goodsId, String productId, boolean isGroup, String number, String groupId, String groupRulesId);
+        void groupRemind(String ruleId);
     }
 
     interface GoodsDetailsView extends BaseView<GoodsDetailsPresenter>{
         void renderGoodsDetails(GoodsDetailsInfo goodsDetailsInfo);
         void renderConsumerPhone(String consumerPhone);
         void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail);
+        void renderGroupRemind();
 
     }
 

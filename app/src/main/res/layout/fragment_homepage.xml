@@ -68,7 +68,8 @@
                 android:gravity="center"
                 android:textColor="@color/appText1"
                 android:textSize="@dimen/sp_10"
-                tools:text="99+" />
+                tools:text="99+"
+                android:visibility="gone"/>
         </RelativeLayout>
 
     </RelativeLayout>

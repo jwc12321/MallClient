@@ -23,13 +23,12 @@ import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.VerifyManager;
+import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.coupon.ui.CouponActivity;
 import com.mall.sls.data.entity.MineInfo;
 import com.mall.sls.data.entity.MineRewardInfo;
 import com.mall.sls.data.entity.UserInfo;
-import com.mall.sls.homepage.ui.FillRemarksActivity;
-import com.mall.sls.homepage.ui.HomepageFragment;
 import com.mall.sls.login.ui.LoginActivity;
 import com.mall.sls.member.ui.SuperMemberActivity;
 import com.mall.sls.mine.DaggerMineComponent;
@@ -37,7 +36,6 @@ import com.mall.sls.mine.MineContract;
 import com.mall.sls.mine.MineModule;
 import com.mall.sls.mine.presenter.MineInfoPresenter;
 import com.mall.sls.order.ui.GoodsOrderActivity;
-import com.stx.xhb.androidx.XBanner;
 
 import java.util.List;
 
@@ -52,6 +50,7 @@ import butterknife.OnClick;
  * 描述：
  */
 public class MineFragment extends BaseFragment implements MineContract.MineInfoView {
+
     @BindView(R.id.title)
     MediumThickTextView title;
     @BindView(R.id.right_iv)
@@ -60,22 +59,36 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     RelativeLayout titleRel;
     @BindView(R.id.phone)
     MediumThickTextView phone;
-    @BindView(R.id.head_photo)
-    RoundedImageView headPhoto;
     @BindView(R.id.member_type_iv)
     ImageView memberTypeIv;
+    @BindView(R.id.cash_back)
+    MediumThickTextView cashBack;
+    @BindView(R.id.coupon)
+    MediumThickTextView coupon;
+    @BindView(R.id.coupon_ll)
+    LinearLayout couponLl;
+    @BindView(R.id.dividend)
+    MediumThickTextView dividend;
+    @BindView(R.id.rice_grain)
+    MediumThickTextView riceGrain;
+    @BindView(R.id.head_photo)
+    RoundedImageView headPhoto;
     @BindView(R.id.right_arrow_iv)
     ImageView rightArrowIv;
     @BindView(R.id.all_order_rl)
     RelativeLayout allOrderRl;
-    @BindView(R.id.vip_iv)
-    ImageView vipIv;
     @BindView(R.id.pending_payment_iv)
     ImageView pendingPaymentIv;
     @BindView(R.id.pending_delivery_iv)
     ImageView pendingDeliveryIv;
     @BindView(R.id.shipping_iv)
     ImageView shippingIv;
+    @BindView(R.id.vip_iv)
+    ImageView vipIv;
+    @BindView(R.id.vip_type)
+    ConventionalTextView vipType;
+    @BindView(R.id.super_member_rl)
+    RelativeLayout superMemberRl;
     @BindView(R.id.my_team)
     ImageView myTeam;
     @BindView(R.id.address_manage)
@@ -86,25 +99,16 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     ImageView verifiedIv;
     @BindView(R.id.my_invitation_iv)
     ImageView myInvitationIv;
-    @BindView(R.id.super_member_rl)
-    RelativeLayout superMemberRl;
-    @BindView(R.id.coupon_ll)
-    LinearLayout couponLl;
-    @BindView(R.id.cash_back)
-    MediumThickTextView cashBack;
-    @BindView(R.id.coupon)
-    MediumThickTextView coupon;
-    @BindView(R.id.dividend)
-    MediumThickTextView dividend;
-    @BindView(R.id.rice_grain)
-    MediumThickTextView riceGrain;
+
 
     @Inject
     MineInfoPresenter mineInfoPresenter;
-    private String goVerify="0";
+    private String goVerify = "0";
 
     private UserInfo userInfo;
     private List<MineRewardInfo> mineRewardInfos;
+    private String avatarUrl;
+    private String mobile;
 
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
@@ -137,9 +141,9 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     @Override
     public void onResume() {
         super.onResume();
-        if(TextUtils.equals(StaticData.REFLASH_ONE,goVerify)){
+        if (TextUtils.equals(StaticData.REFLASH_ONE, goVerify)) {
             mineInfoPresenter.getMineInfo();
-            goVerify=StaticData.REFLASH_ZERO;
+            goVerify = StaticData.REFLASH_ZERO;
         }
     }
 
@@ -171,17 +175,21 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
             case R.id.invite_friends://邀请好友
                 break;
             case R.id.verified_iv://认证
-//                if (TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
+                if (TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
                     CerifyTipActivity.start(getActivity());
-//                    goVerify=StaticData.REFLASH_ONE;
-//                }
+                    goVerify = StaticData.REFLASH_ONE;
+                }
                 break;
             case R.id.my_invitation_iv://我的邀请
                 MyInvitationActivity.start(getActivity());
                 break;
             case R.id.super_member_rl://超级会员
-                goVerify=StaticData.REFLASH_ONE;
-                SuperMemberActivity.start(getActivity());
+                if (TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
+                    showMessage(getString(R.string.to_open_person_authentication));
+                } else {
+                    goVerify = StaticData.REFLASH_ONE;
+                    SuperMemberActivity.start(getActivity(), avatarUrl, mobile);
+                }
                 break;
             case R.id.coupon_ll://优惠卷
                 Intent remarkIntent = new Intent(getActivity(), CouponActivity.class);
@@ -201,7 +209,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                     getActivity().finish();
                     break;
                 case RequestCodeStatic.GO_COUPON:
-                    if(listener!=null){
+                    if (listener != null) {
                         listener.goLocalTeam();
                     }
                     break;
@@ -225,29 +233,34 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
         if (mineInfo != null) {
             userInfo = mineInfo.getUserInfo();
             if (userInfo != null) {
-                GlideHelper.load(getActivity(), userInfo.getAvatarUrl(), R.mipmap.ic_launcher, headPhoto);
-                phone.setText(userInfo.getMobile());
+                avatarUrl = userInfo.getAvatarUrl();
+                mobile = userInfo.getMobile();
+                GlideHelper.load(getActivity(), avatarUrl, R.mipmap.icon_defalut_head, headPhoto);
+                phone.setText(mobile);
                 VerifyManager.saveVerify(userInfo.getUserLevel());
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, userInfo.getUserLevel())) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_ordinary_member);
                     verifiedIv.setSelected(false);
+                    vipType.setText(getString(R.string.open_now));
                 } else if (TextUtils.equals(StaticData.REFLASH_ONE, userInfo.getUserLevel())) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_certified_member);
                     verifiedIv.setSelected(true);
+                    vipType.setText(getString(R.string.open_now));
                 } else if (TextUtils.equals(StaticData.REFLASH_TWO, userInfo.getUserLevel())) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_super_member);
                     verifiedIv.setSelected(true);
+                    vipType.setText(getString(R.string.view_now));
                 }
             }
             mineRewardInfos = mineInfo.getMineRewardInfos();
             for (MineRewardInfo mineRewardInfo : mineRewardInfos) {
                 if (TextUtils.equals(getString(R.string.cash_back), mineRewardInfo.getDes())) {
                     cashBack.setText(mineRewardInfo.getValue());
-                }else if(TextUtils.equals(getString(R.string.coupon), mineRewardInfo.getDes())){
+                } else if (TextUtils.equals(getString(R.string.coupon), mineRewardInfo.getDes())) {
                     coupon.setText(mineRewardInfo.getValue());
-                }else if(TextUtils.equals(getString(R.string.dividend), mineRewardInfo.getDes())){
+                } else if (TextUtils.equals(getString(R.string.dividend), mineRewardInfo.getDes())) {
                     dividend.setText(mineRewardInfo.getValue());
-                }else if(TextUtils.equals(getString(R.string.rice_grain), mineRewardInfo.getDes())){
+                } else if (TextUtils.equals(getString(R.string.rice_grain), mineRewardInfo.getDes())) {
                     riceGrain.setText(mineRewardInfo.getValue());
                 }
 
@@ -263,7 +276,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (getUserVisibleHint()&&mineInfoPresenter!=null) {
+        if (getUserVisibleHint() && mineInfoPresenter != null) {
             mineInfoPresenter.getMineInfo();
         }
     }

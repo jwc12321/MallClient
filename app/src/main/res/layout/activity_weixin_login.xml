@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appText1">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_red_rl_style">
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/login_register" />
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_login_iv"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/title_rel"
+        android:layout_marginTop="@dimen/dp_92"/>
+    <com.mall.sls.common.widget.textview.MediumThickTextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_20"
+        android:textColor="@color/appText3"
+        android:layout_marginTop="@dimen/dp_40"
+        android:text="@string/app_name"
+        android:layout_below="@id/iv"
+        android:layout_centerHorizontal="true"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:background="@drawable/confirm_bt_select"
+        android:layout_below="@id/tv"
+        android:layout_marginTop="@dimen/dp_32"
+        android:gravity="center">
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/confirm_bt"
+            style="@style/size16_color_app1_text_style"
+            android:text="@string/weixin_login_register"
+            android:drawableLeft="@mipmap/icon_white_weixin"
+            android:drawablePadding="@dimen/dp_6"/>
+    </LinearLayout>
+
+</RelativeLayout>

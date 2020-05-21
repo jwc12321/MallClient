@@ -58,7 +58,6 @@ public class MsgTypeAdapter extends RecyclerView.Adapter<MsgTypeAdapter.MsgTypeV
                     if(TextUtils.equals(StaticData.REFLASH_ONE,messageTypeInfo.getId())){
                         onItemClickListener.goOrderMessage(messageTypeInfo.getId());
                     }else if(TextUtils.equals(StaticData.REFLASH_TWO,messageTypeInfo.getId())){
-                        onItemClickListener.goReminderMessage(messageTypeInfo.getId());
                     }
                 }
             }
@@ -98,8 +97,8 @@ public class MsgTypeAdapter extends RecyclerView.Adapter<MsgTypeAdapter.MsgTypeV
 
 
     public interface OnItemClickListener {
-        void goOrderMessage(String id);
-        void goReminderMessage(String id);
+        void goOrderMessage(String id);//系统消息
+        void goReminderMessage(String id);//活动福利
     }
 
     private OnItemClickListener onItemClickListener;

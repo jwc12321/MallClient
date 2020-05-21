@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,7 +18,9 @@ import com.mall.sls.R;
 import com.mall.sls.common.ErrorCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.data.RemoteDataException;
+import com.mall.sls.data.entity.GoodsItemInfo;
 import com.mall.sls.data.entity.LocalTeam;
+import com.mall.sls.homepage.ui.ActivityGoodsDetailActivity;
 import com.mall.sls.local.DaggerLocalComponent;
 import com.mall.sls.local.LocalContract;
 import com.mall.sls.local.LocalModule;
@@ -26,6 +29,8 @@ import com.mall.sls.local.presenter.LocalTeamPresenter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -49,6 +54,9 @@ public class LootingSoonFragment extends BaseFragment implements LootingSoonAdap
     TextView noRecordTv;
 
     private LootingSoonAdapter lootingSoonAdapter;
+    private List<GoodsItemInfo> goodsItemInfos;
+    private GoodsItemInfo goodsItemInfo;
+    private ImageView remindIv;
 
     @Inject
     LocalTeamPresenter localTeamPresenter;
@@ -120,15 +128,11 @@ public class LootingSoonFragment extends BaseFragment implements LootingSoonAdap
 
 
     @Override
-    public void goOrdinaryGoods() {
-
-    }
-
-    @Override
     public void renderLocalTeam(LocalTeam localTeam) {
         refreshLayout.finishRefresh();
         if (localTeam != null) {
             if (localTeam != null && localTeam.getGoodsItemInfos().size() > 0) {
+                this.goodsItemInfos = localTeam.getGoodsItemInfos();
                 recordRv.setVisibility(View.VISIBLE);
                 noRecordLl.setVisibility(View.GONE);
                 if (localTeam.getGoodsItemInfos().size() == Integer.parseInt(StaticData.TEN_LIST_SIZE)) {
@@ -160,7 +164,7 @@ public class LootingSoonFragment extends BaseFragment implements LootingSoonAdap
     @Override
     public void renderError(Throwable throwable) {
         if (throwable instanceof RemoteDataException) {
-            if(TextUtils.equals(ErrorCodeStatic.CODE_ONE_ZERO_ZERO_ONE_ZERO,((RemoteDataException) throwable).getRetCode())){
+            if (TextUtils.equals(ErrorCodeStatic.CODE_ONE_ZERO_ZERO_ONE_ZERO, ((RemoteDataException) throwable).getRetCode())) {
                 recordRv.setVisibility(View.GONE);
                 noRecordLl.setVisibility(View.VISIBLE);
                 refreshLayout.finishLoadMoreWithNoMoreData();
@@ -170,8 +174,26 @@ public class LootingSoonFragment extends BaseFragment implements LootingSoonAdap
     }
 
     @Override
+    public void renderGroupRemind() {
+        showMessage(getString(R.string.remind_to_you));
+        remindIv.setEnabled(false);
+    }
+
+    @Override
     public void setPresenter(LocalContract.LocalTeamPresenter presenter) {
 
+    }
+
+    @Override
+    public void goActivityGoodsDetail(String goodsId) {
+        ActivityGoodsDetailActivity.start(getActivity(), goodsId);
+    }
+
+    @Override
+    public void remind(ImageView remindIv, int position) {
+        this.remindIv = remindIv;
+        goodsItemInfo = goodsItemInfos.get(position);
+        localTeamPresenter.groupRemind(goodsItemInfo.getGrouponRulesId());
     }
 
     public interface LootingSoonListener {

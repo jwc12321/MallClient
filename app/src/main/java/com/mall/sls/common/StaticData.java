@@ -73,7 +73,9 @@ public class StaticData {
     public static final String SURPLUS="surplus";
     //购买方式
     public static final String PURCHASE_TYPE="purchaseType";
-    //
+    //选择支付宝还是微信  0：微信 1：支付宝
     public static final String SELECT_TYPE="selectType";
+    //头像
+    public static final String AVATAR_URL="avatarUrl";
 
 }

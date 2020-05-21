@@ -83,7 +83,7 @@
                                 style="@style/mine_info_up_tv_style"
                                 tools:text="0" />
 
-                            <com.mall.sls.common.widget.textview.MediumThickTextView
+                            <com.mall.sls.common.widget.textview.ConventionalTextView
                                 style="@style/mine_info_down_tv_style"
                                 android:text="@string/cash_back" />
                         </LinearLayout>
@@ -97,7 +97,7 @@
                                 style="@style/mine_info_up_tv_style"
                                 tools:text="0" />
 
-                            <com.mall.sls.common.widget.textview.MediumThickTextView
+                            <com.mall.sls.common.widget.textview.ConventionalTextView
                                 style="@style/mine_info_down_tv_style"
                                 android:text="@string/coupon" />
                         </LinearLayout>
@@ -110,7 +110,7 @@
                                 style="@style/mine_info_up_tv_style"
                                 tools:text="0" />
 
-                            <com.mall.sls.common.widget.textview.MediumThickTextView
+                            <com.mall.sls.common.widget.textview.ConventionalTextView
                                 style="@style/mine_info_down_tv_style"
                                 android:text="@string/dividend" />
                         </LinearLayout>
@@ -123,7 +123,7 @@
                                 style="@style/mine_info_up_tv_style"
                                 tools:text="0" />
 
-                            <com.mall.sls.common.widget.textview.MediumThickTextView
+                            <com.mall.sls.common.widget.textview.ConventionalTextView
                                 style="@style/mine_info_down_tv_style"
                                 android:text="@string/rice_grain" />
                         </LinearLayout>
@@ -209,8 +209,9 @@
                     android:src="@mipmap/icon_vip" />
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/vip_type"
                     style="@style/open_now_bt_style"
-                    android:text="@string/open_now" />
+                    tools:text="@string/open_now" />
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     style="@style/size14_color_app4_text_style"

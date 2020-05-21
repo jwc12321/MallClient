@@ -25,12 +25,11 @@
             android:textSize="@dimen/sp_24"/>
     </FrameLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/goods_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_116"
-        android:background="@drawable/common_four_app_one_bg"
-        android:orientation="vertical">
+        android:background="@drawable/common_four_app_one_bg">
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/title"
@@ -39,10 +38,22 @@
             android:layout_marginTop="@dimen/dp_10"
             tools:text="您的订单已签收" />
 
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/content"
+            style="@style/size12_color_app4_text_style"
+            android:layout_marginLeft="@dimen/dp_15"
+            tools:text="2019"
+            android:layout_below="@id/title"
+            android:layout_marginTop="@dimen/dp_19"
+            android:visibility="gone"/>
+
         <RelativeLayout
+            android:id="@+id/goods_rl"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_58"
-            android:layout_marginTop="@dimen/dp_8">
+            android:layout_marginTop="@dimen/dp_8"
+            android:visibility="gone"
+            android:layout_below="@id/title">
 
             <ImageView
                 android:id="@+id/goods_iv"
@@ -54,7 +65,7 @@
             <ImageView style="@style/big_black_arrow_back_style" />
 
             <com.mall.sls.common.widget.textview.ConventionalTextView
-                android:id="@+id/content"
+                android:id="@+id/goods_content"
                 style="@style/size12_color_app4_text_style"
                 android:layout_width="match_parent"
                 android:layout_centerVertical="true"
@@ -70,8 +81,9 @@
             android:id="@+id/time"
             style="@style/size12_color_app4_text_style"
             android:layout_marginLeft="@dimen/dp_15"
-            android:layout_marginTop="@dimen/dp_2"
-            tools:text="2019" />
+            tools:text="2019"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp_5"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 </com.mall.sls.common.widget.swipe.SwipeRevealLayout>

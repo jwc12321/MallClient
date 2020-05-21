@@ -9,9 +9,11 @@ import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
+import com.mall.sls.data.entity.Ignore;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.data.request.CartFastaddRequest;
+import com.mall.sls.data.request.GroupRemindRequest;
 import com.mall.sls.homepage.HomepageContract;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +102,30 @@ public class GoodsDetailsPresenter implements HomepageContract.GoodsDetailsPrese
                     public void accept(ConfirmOrderDetail confirmOrderDetail) throws Exception {
                         goodsDetailsView.dismissLoading();
                         goodsDetailsView.renderCartFastAdd(confirmOrderDetail);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        goodsDetailsView.dismissLoading();
+                        goodsDetailsView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void groupRemind(String ruleId) {
+        goodsDetailsView.showLoading(StaticData.PROCESSING);
+        GroupRemindRequest request=new GroupRemindRequest(ruleId,StaticData.REFLASH_ONE);
+        String sign= SignUnit.signPost(RequestUrl.GROUP_REMIND_URL,gson.toJson(request));
+        Disposable disposable = restApiService.groupRemind(sign,request)
+                .flatMap(new RxRemoteDataParse<Ignore>())
+                .compose(new RxSchedulerTransformer<Ignore>())
+                .subscribe(new Consumer<Ignore>() {
+                    @Override
+                    public void accept(Ignore ignore) throws Exception {
+                        goodsDetailsView.dismissLoading();
+                        goodsDetailsView.renderGroupRemind();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
