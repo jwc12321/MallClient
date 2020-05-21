@@ -19,6 +19,7 @@ import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
 import com.mall.sls.address.ui.AddressManageActivity;
 import com.mall.sls.certify.ui.CerifyTipActivity;
+import com.mall.sls.certify.ui.NameVerifiedActivity;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
@@ -109,6 +110,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     private List<MineRewardInfo> mineRewardInfos;
     private String avatarUrl;
     private String mobile;
+    private boolean certifyPay;
 
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
@@ -176,8 +178,12 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 break;
             case R.id.verified_iv://认证
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
-                    CerifyTipActivity.start(getActivity());
                     goVerify = StaticData.REFLASH_ONE;
+                    if(certifyPay){
+                        NameVerifiedActivity.start(getActivity());
+                    }else {
+                        CerifyTipActivity.start(getActivity());
+                    }
                 }
                 break;
             case R.id.my_invitation_iv://我的邀请
@@ -235,6 +241,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
             if (userInfo != null) {
                 avatarUrl = userInfo.getAvatarUrl();
                 mobile = userInfo.getMobile();
+                certifyPay=userInfo.getCertifyPay();
                 GlideHelper.load(getActivity(), avatarUrl, R.mipmap.icon_defalut_head, headPhoto);
                 phone.setText(mobile);
                 VerifyManager.saveVerify(userInfo.getUserLevel());

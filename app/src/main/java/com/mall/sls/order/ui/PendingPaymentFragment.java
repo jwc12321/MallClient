@@ -1,7 +1,12 @@
 package com.mall.sls.order.ui;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +16,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alipay.sdk.app.PayTask;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
+import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.PayResult;
+import com.mall.sls.common.unit.PayTypeInstalledUtils;
+import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.data.entity.GoodsOrderInfo;
 import com.mall.sls.data.entity.OrderList;
+import com.mall.sls.homepage.ui.SelectPayTypeActivity;
 import com.mall.sls.order.DaggerOrderComponent;
 import com.mall.sls.order.OrderContract;
 import com.mall.sls.order.OrderModule;
@@ -27,6 +38,7 @@ import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -48,6 +60,8 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     private String choiceType;
 
     private GoodsOrderAdapter goodsOrderAdapter;
+    private String goodsOrderId;
+    private Handler mHandler = new MyHandler(this);
 
     @Inject
     OrderListPresenter orderListPresenter;
@@ -130,7 +144,11 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
 
     @Override
     public void payOrder(String id, String amount) {
-
+        this.goodsOrderId=id;
+        Intent intent = new Intent(getActivity(), SelectPayTypeActivity.class);
+        intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
+        intent.putExtra(StaticData.PAYMENT_AMOUNT,amount);
+        startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
     }
 
     @Override
@@ -176,7 +194,91 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     }
 
     @Override
+    public void renderOrderAliPay(String alipayStr) {
+        if (!TextUtils.isEmpty(alipayStr)) {
+            startAliPay(alipayStr);
+        }
+    }
+
+    @Override
     public void setPresenter(OrderContract.OrderListPresenter presenter) {
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RequestCodeStatic.PAY_TYPE:
+                    if (data != null) {
+                        String selectType = data.getStringExtra(StaticData.SELECT_TYPE);
+                        if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
+                            //微信
+                            if (PayTypeInstalledUtils.isWeixinAvilible(getActivity())) {
+
+                            } else {
+                                showMessage(getString(R.string.install_weixin));
+                            }
+                        } else {
+                            if (PayTypeInstalledUtils.isAliPayInstalled(getActivity())) {
+                                orderListPresenter.orderAliPay(goodsOrderId,StaticData.REFLASH_ONE);
+                            } else {
+                                showMessage(getString(R.string.install_alipay));
+                            }
+                        }
+                    }
+                    break;
+                default:
+            }
+        }
+    }
+
+    private void startAliPay(String sign) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                PayTask payTask = new PayTask(getActivity());
+                Map<String, String> result = payTask.payV2(sign, true);
+                Message message = Message.obtain();
+                message.what = RequestCodeStatic.SDK_PAY_FLAG;
+                message.obj = result;
+                mHandler.sendMessage(message);
+            }
+        };
+
+        new Thread(runnable).start();
+    }
+
+    public static class MyHandler extends StaticHandler<PendingPaymentFragment> {
+
+        public MyHandler(PendingPaymentFragment target) {
+            super(target);
+        }
+
+        @Override
+        public void handle(PendingPaymentFragment target, Message msg) {
+            switch (msg.what) {
+                case RequestCodeStatic.SDK_PAY_FLAG:
+                    target.alpay(msg);
+                    break;
+            }
+        }
+    }
+
+    //跳转到主页
+    private void alpay(Message msg) {
+        PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+        String resultStatus = payResult.getResultStatus();
+        Log.d("111", "数据" + payResult.getResult() + "==" + payResult.getResultStatus());
+        if (TextUtils.equals(resultStatus, "9000")) {
+            orderListPresenter.getOrderList(StaticData.REFLASH_ZERO,StaticData.REFLASH_ONE);
+        } else if (TextUtils.equals(resultStatus, "6001")) {
+            showMessage(getString(R.string.pay_cancel));
+        } else {
+            showMessage(getString(R.string.pay_failed));
+        }
     }
 }

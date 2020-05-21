@@ -2,6 +2,8 @@ package com.mall.sls.order.presenter;
 
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
@@ -9,6 +11,7 @@ import com.mall.sls.data.RxSchedulerTransformer;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
+import com.mall.sls.data.request.OrderPayRequest;
 import com.mall.sls.order.OrderContract;
 
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ public class OrderListPresenter implements OrderContract.OrderListPresenter {
     private List<Disposable> mDisposableList = new ArrayList<>();
     private OrderContract.OrderListView orderListView;
     private int currentIndex = 1;  //当前index
+    private Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 
     @Inject
     public OrderListPresenter(RestApiService restApiService, OrderContract.OrderListView orderListView) {
@@ -81,6 +85,30 @@ public class OrderListPresenter implements OrderContract.OrderListPresenter {
                     public void accept(OrderList orderList) throws Exception {
                         orderListView.dismissLoading();
                         orderListView.renderMoreOrderList(orderList);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        orderListView.dismissLoading();
+                        orderListView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void orderAliPay(String orderId, String type) {
+        orderListView.showLoading(StaticData.PROCESSING);
+        OrderPayRequest request=new OrderPayRequest(orderId,type);
+        String sign= SignUnit.signPost(RequestUrl.ORDER_ALIPAY,gson.toJson(request));
+        Disposable disposable = restApiService.orderAliPay(sign,request)
+                .flatMap(new RxRemoteDataParse<String>())
+                .compose(new RxSchedulerTransformer<String>())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String alipayStr) throws Exception {
+                        orderListView.dismissLoading();
+                        orderListView.renderOrderAliPay(alipayStr);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

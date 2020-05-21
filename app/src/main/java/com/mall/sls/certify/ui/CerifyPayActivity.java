@@ -140,7 +140,9 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
 
     @Override
     public void renderAlipay(String alipayStr) {
-        startAliPay(alipayStr);
+        if(!TextUtils.isEmpty(alipayStr)) {
+            startAliPay(alipayStr);
+        }
     }
 
 

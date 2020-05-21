@@ -107,9 +107,11 @@
 
                             <com.mall.sls.common.widget.textview.ConventionalTextView
                                 style="@style/order_detail_left_bt_style"
-                                android:text="@string/one_more_order" />
+                                android:text="@string/one_more_order"
+                                android:visibility="gone"/>
 
                             <com.mall.sls.common.widget.textview.ConventionalTextView
+                                android:id="@+id/pay_bt"
                                 style="@style/order_detail_right_bt_style"
                                 android:text="@string/to_pay" />
                         </LinearLayout>
@@ -119,14 +121,15 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_124"
+                        android:layout_height="@dimen/dp_74"
                         android:background="@drawable/common_four_app_one_bg">
 
                         <com.mall.sls.common.widget.textview.ConventionalTextView
                             style="@style/size14_color_app4_text_style"
                             android:layout_marginLeft="@dimen/dp_15"
                             android:layout_marginTop="@dimen/dp_15"
-                            android:text="@string/delivery_time" />
+                            android:text="@string/delivery_time"
+                            android:visibility="gone"/>
 
                         <com.mall.sls.common.widget.textview.ConventionalTextView
                             android:id="@+id/delivery_time"
@@ -134,29 +137,29 @@
                             android:layout_alignParentRight="true"
                             android:layout_marginTop="@dimen/dp_15"
                             android:layout_marginRight="@dimen/dp_15"
-                            tools:text="2019-09-09" />
+                            tools:text="2019-09-09"
+                            android:visibility="gone"/>
 
                         <View
                             android:id="@+id/time_line"
                             style="@style/fifteen_back_nine_line_style"
                             android:layout_below="@id/delivery_time"
-                            android:layout_marginTop="@dimen/dp_14" />
+                            android:layout_marginTop="@dimen/dp_14"
+                            android:visibility="gone"/>
 
                         <com.mall.sls.common.widget.textview.ConventionalTextView
                             style="@style/size14_color_app4_text_style"
-                            android:layout_below="@id/time_line"
                             android:layout_marginLeft="@dimen/dp_15"
-                            android:layout_marginTop="@dimen/dp_15"
-                            android:text="@string/receipt_address" />
+                            android:text="@string/receipt_address"
+                            android:layout_marginTop="@dimen/dp_15"/>
 
                         <com.mall.sls.common.widget.textview.ConventionalTextView
                             android:id="@+id/receipt_address"
                             style="@style/size14_color_app3_text_style"
-                            android:layout_below="@id/time_line"
                             android:layout_alignParentRight="true"
-                            android:layout_marginTop="@dimen/dp_15"
                             android:layout_marginRight="@dimen/dp_15"
-                            tools:text="2019-09-09" />
+                            tools:text="2019-09-09"
+                            android:layout_marginTop="@dimen/dp_15"/>
 
                         <com.mall.sls.common.widget.textview.ConventionalTextView
                             android:id="@+id/name_phone"

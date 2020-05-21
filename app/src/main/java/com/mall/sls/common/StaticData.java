@@ -77,5 +77,7 @@ public class StaticData {
     public static final String SELECT_TYPE="selectType";
     //头像
     public static final String AVATAR_URL="avatarUrl";
+    //金额
+    public static final String PAYMENT_AMOUNT="paymentAmount";
 
 }

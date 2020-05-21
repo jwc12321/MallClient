@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 
 import butterknife.BindView;
@@ -47,6 +48,7 @@ public class SelectPayTypeActivity extends BaseActivity {
 
     private String choiceType;
     private String selectType="0";
+    private String amount;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, SelectPayTypeActivity.class);
@@ -65,6 +67,8 @@ public class SelectPayTypeActivity extends BaseActivity {
     private void initView(){
         choiceType=getIntent().getStringExtra(StaticData.CHOICE_TYPE);
         confirmBt.setSelected(TextUtils.equals(StaticData.REFLASH_ONE,choiceType)?true:false);
+        amount=getIntent().getStringExtra(StaticData.PAYMENT_AMOUNT);
+        payAmount.setText(getString(R.string.payment_amount)+"¥"+ NumberFormatUnit.twoDecimalFormat(amount));
         selectPayType();
     }
 

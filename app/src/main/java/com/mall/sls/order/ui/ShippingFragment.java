@@ -177,6 +177,11 @@ public class ShippingFragment extends BaseFragment implements OrderContract.Orde
     }
 
     @Override
+    public void renderOrderAliPay(String alipayStr) {
+
+    }
+
+    @Override
     public void setPresenter(OrderContract.OrderListPresenter presenter) {
 
     }

@@ -226,5 +226,6 @@
     <string name="stay_tuned">敬请期待</string>
     <string name="sys_message">系统通知</string>
     <string name="activity_benefits">活动福利</string>
+    <string name="payment_amount">支付金额：</string>
 
 </resources>

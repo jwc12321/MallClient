@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.alipay.sdk.app.PayTask;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.address.ui.AddressManageActivity;
@@ -20,6 +24,9 @@ import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.NumberFormatUnit;
+import com.mall.sls.common.unit.PayResult;
+import com.mall.sls.common.unit.PayTypeInstalledUtils;
+import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.coupon.ui.SelectCouponActivity;
@@ -31,9 +38,11 @@ import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.presenter.ConfirmOrderPresenter;
+import com.mall.sls.order.ui.GoodsOrderDetailsActivity;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -111,6 +120,9 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private String message="";
     //1:单独购买 2：发起拼单 3：拼团 4：百人团
     private String purchaseType;
+    private Handler mHandler = new MyHandler(this);
+    private String orderId;
+    private String orderTotalPrice;
 
     @Inject
     ConfirmOrderPresenter confirmOrderPresenter;
@@ -151,6 +163,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                 goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(checkedGoods.getPrice()));
                 GlideHelper.load(this, checkedGoods.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             }
+            orderTotalPrice=confirmOrderDetail.getOrderTotalPrice();
             goodsTotalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(confirmOrderDetail.getGoodsTotalPrice()));
             orderPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(confirmOrderDetail.getOrderTotalPrice()));
             totalAmount.setText("¥" + NumberFormatUnit.twoDecimalFormat(confirmOrderDetail.getOrderTotalPrice()));
@@ -249,6 +262,25 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                         confirmOrderPresenter.cartCheckout(addressId, cartId, couponId, userCouponId);
                     }
                     break;
+                case RequestCodeStatic.PAY_TYPE:
+                    if (data != null) {
+                        String selectType = data.getStringExtra(StaticData.SELECT_TYPE);
+                        if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
+                            //微信
+                            if (PayTypeInstalledUtils.isWeixinAvilible(ConfirmOrderActivity.this)) {
+
+                            } else {
+                                showMessage(getString(R.string.install_weixin));
+                            }
+                        } else {
+                            if (PayTypeInstalledUtils.isAliPayInstalled(ConfirmOrderActivity.this)) {
+                                confirmOrderPresenter.orderAliPay(orderId,StaticData.REFLASH_ONE);
+                            } else {
+                                showMessage(getString(R.string.install_alipay));
+                            }
+                        }
+                    }
+                    break;
                 default:
             }
         }
@@ -268,12 +300,84 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     @Override
     public void renderOrderSubmit(OrderSubmitInfo orderSubmitInfo) {
         if(orderSubmitInfo!=null){
-            SelectPayTypeActivity.start(this);
+            orderId=orderSubmitInfo.getOrderId();
+            Intent intent = new Intent(this, SelectPayTypeActivity.class);
+            intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
+            intent.putExtra(StaticData.PAYMENT_AMOUNT,orderTotalPrice);
+            startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
+        }
+    }
+
+    @Override
+    public void renderOrderAliPay(String alipayStr) {
+        if(!TextUtils.isEmpty(alipayStr)){
+            startAliPay(alipayStr);
         }
     }
 
     @Override
     public void setPresenter(HomepageContract.ConfirmOrderPresenter presenter) {
 
+    }
+
+
+    private void startAliPay(String sign) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                PayTask payTask = new PayTask(ConfirmOrderActivity.this);
+                Map<String, String> result = payTask.payV2(sign, true);
+                Message message = Message.obtain();
+                message.what = RequestCodeStatic.SDK_PAY_FLAG;
+                message.obj = result;
+                mHandler.sendMessage(message);
+            }
+        };
+
+        new Thread(runnable).start();
+    }
+
+    public static class MyHandler extends StaticHandler<ConfirmOrderActivity> {
+
+        public MyHandler(ConfirmOrderActivity target) {
+            super(target);
+        }
+
+        @Override
+        public void handle(ConfirmOrderActivity target, Message msg) {
+            switch (msg.what) {
+                case RequestCodeStatic.SDK_PAY_FLAG:
+                    target.alpay(msg);
+                    break;
+            }
+        }
+    }
+
+    //跳转到主页
+    private void alpay(Message msg) {
+        PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+        String resultStatus = payResult.getResultStatus();
+        Log.d("111", "数据" + payResult.getResult() + "==" + payResult.getResultStatus());
+        if (TextUtils.equals(resultStatus, "9000")) {
+            paySuccess();
+        } else if (TextUtils.equals(resultStatus, "6001")) {
+            showMessage(getString(R.string.pay_cancel));
+        } else {
+            showMessage(getString(R.string.pay_failed));
+        }
+    }
+
+    private void paySuccess(){
+        if(TextUtils.equals(StaticData.REFLASH_ONE,purchaseType)){
+            GoodsOrderDetailsActivity.start(this,orderId);
+        }else if (TextUtils.equals(StaticData.REFLASH_TWO,purchaseType)){
+
+        }else if (TextUtils.equals(StaticData.REFLASH_THREE,purchaseType)){
+
+        }else if (TextUtils.equals(StaticData.REFLASH_FOUR,purchaseType)){
+
+        }
     }
 }

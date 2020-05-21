@@ -37,11 +37,13 @@ public interface HomepageContract {
     interface ConfirmOrderPresenter extends BasePresenter{
         void cartCheckout(String addressId, String cartId, String couponId, String userCouponId);
         void orderSubmit(String addressId, String cartId, String couponId, String userCouponId, String message);
+        void orderAliPay(String orderId,String type);
     }
 
     interface ConfirmOrderView extends BaseView<ConfirmOrderPresenter>{
         void renderCartCheckout(ConfirmOrderDetail confirmOrderDetail);
         void renderOrderSubmit(OrderSubmitInfo orderSubmitInfo);
+        void renderOrderAliPay(String alipayStr);
     }
 
 }

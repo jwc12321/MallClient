@@ -117,9 +117,9 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.confirm_bt:
-                Intent remarkIntent = new Intent(this, SelectPayTypeActivity.class);
-                remarkIntent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_ONE);
-                startActivityForResult(remarkIntent, RequestCodeStatic.PAY_TYPE);
+                Intent intent = new Intent(this, SelectPayTypeActivity.class);
+                intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_ONE);
+                startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
                 break;
             case R.id.back:
                 finish();
@@ -188,7 +188,9 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
 
     @Override
     public void renderAlipayMember(String alipayStr) {
-        startAliPay(alipayStr);
+        if(!TextUtils.isEmpty(alipayStr)) {
+            startAliPay(alipayStr);
+        }
 
     }
 

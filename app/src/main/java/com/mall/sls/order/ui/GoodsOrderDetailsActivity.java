@@ -1,11 +1,15 @@
 package com.mall.sls.order.ui;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -14,18 +18,26 @@ import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alipay.sdk.app.PayTask;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
+import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.unit.NumberFormatUnit;
+import com.mall.sls.common.unit.PayResult;
+import com.mall.sls.common.unit.PayTypeInstalledUtils;
+import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MSTearDownView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.AddressInfo;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.OrderGoodsVo;
 import com.mall.sls.data.entity.OrderTimeInfo;
+import com.mall.sls.homepage.ui.ConfirmOrderActivity;
+import com.mall.sls.homepage.ui.SelectPayTypeActivity;
 import com.mall.sls.order.DaggerOrderComponent;
 import com.mall.sls.order.OrderContract;
 import com.mall.sls.order.OrderModule;
@@ -35,6 +47,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -95,6 +108,8 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     NestedScrollView scrollview;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.pay_bt)
+    ConventionalTextView payBt;
     private String goodsOrderId;
     private OrderInformationAdapter orderInformationAdapter;
 
@@ -102,6 +117,8 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private ClipData myClip;
     private List<OrderGoodsVo> orderGoodsVos;
     private List<OrderTimeInfo> orderTimeInfos;
+    private Handler mHandler = new MyHandler(this);
+    private String orderTotalPrice;
 
     @Inject
     OrderDetailsPresenter orderDetailsPresenter;
@@ -150,13 +167,48 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
         showMessage(getString(R.string.copy_successfully));
     }
 
-    @OnClick({R.id.back})
+    @OnClick({R.id.back,R.id.pay_bt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back://
                 finish();
                 break;
+            case R.id.pay_bt:
+                Intent intent = new Intent(this, SelectPayTypeActivity.class);
+                intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
+                intent.putExtra(StaticData.PAYMENT_AMOUNT,orderTotalPrice);
+                startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
+                break;
             default:
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RequestCodeStatic.PAY_TYPE:
+                    if (data != null) {
+                        String selectType = data.getStringExtra(StaticData.SELECT_TYPE);
+                        if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
+                            //微信
+                            if (PayTypeInstalledUtils.isWeixinAvilible(GoodsOrderDetailsActivity.this)) {
+
+                            } else {
+                                showMessage(getString(R.string.install_weixin));
+                            }
+                        } else {
+                            if (PayTypeInstalledUtils.isAliPayInstalled(GoodsOrderDetailsActivity.this)) {
+                                orderDetailsPresenter.orderAliPay(goodsOrderId,StaticData.REFLASH_ONE);
+                            } else {
+                                showMessage(getString(R.string.install_alipay));
+                            }
+                        }
+                    }
+                    break;
+                default:
+            }
         }
     }
 
@@ -173,12 +225,12 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     public void renderOrderDetails(GoodsOrderDetails goodsOrderDetails) {
         if (goodsOrderDetails != null) {
             setOrderStatus(goodsOrderDetails.getOrderStatus());
-            payTimeoutMinute.setText(goodsOrderDetails.getPayTimeoutMinute()+"分钟内未支付，订单将自动取消");
-            if (TextUtils.equals(StaticData.TO_PAY,goodsOrderDetails.getOrderStatus())&&!TextUtils.isEmpty(goodsOrderDetails.getSystemTime()) && !TextUtils.isEmpty(goodsOrderDetails.getPayLimitTime())) {
+            payTimeoutMinute.setText(goodsOrderDetails.getPayTimeoutMinute() + "分钟内未支付，订单将自动取消");
+            if (TextUtils.equals(StaticData.TO_PAY, goodsOrderDetails.getOrderStatus()) && !TextUtils.isEmpty(goodsOrderDetails.getSystemTime()) && !TextUtils.isEmpty(goodsOrderDetails.getPayLimitTime())) {
                 long now = FormatUtil.dateToStamp(goodsOrderDetails.getSystemTime());
                 long groupExpireTime = FormatUtil.dateToStamp(goodsOrderDetails.getPayLimitTime());
                 if (now < groupExpireTime) {
-                    countDown.startTearDown(groupExpireTime/1000, now/1000);
+                    countDown.startTearDown(groupExpireTime / 1000, now / 1000);
                 }
             }
             receiptAddress.setText(goodsOrderDetails.getAddress());
@@ -193,6 +245,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getGoodsPrice()));
             coupon.setText("-¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getCouponPrice()));
             realPayment.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getActualPrice()));
+            orderTotalPrice=goodsOrderDetails.getActualPrice();
             orderTimeInfos.clear();
             if (!TextUtils.isEmpty(goodsOrderDetails.getOrderSn())) {
                 orderTimeInfos.add(new OrderTimeInfo(getString(R.string.order_number), goodsOrderDetails.getOrderSn()));
@@ -210,6 +263,13 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 orderTimeInfos.add(new OrderTimeInfo(getString(R.string.order_notes), goodsOrderDetails.getMessage()));
             }
             orderInformationAdapter.setData(orderTimeInfos);
+        }
+    }
+
+    @Override
+    public void renderOrderAliPay(String alipayStr) {
+        if (!TextUtils.isEmpty(alipayStr)) {
+            startAliPay(alipayStr);
         }
     }
 
@@ -245,4 +305,53 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     public void setPresenter(OrderContract.OrderDetailsPresenter presenter) {
 
     }
+
+    private void startAliPay(String sign) {
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+
+                PayTask payTask = new PayTask(GoodsOrderDetailsActivity.this);
+                Map<String, String> result = payTask.payV2(sign, true);
+                Message message = Message.obtain();
+                message.what = RequestCodeStatic.SDK_PAY_FLAG;
+                message.obj = result;
+                mHandler.sendMessage(message);
+            }
+        };
+
+        new Thread(runnable).start();
+    }
+
+    public static class MyHandler extends StaticHandler<GoodsOrderDetailsActivity> {
+
+        public MyHandler(GoodsOrderDetailsActivity target) {
+            super(target);
+        }
+
+        @Override
+        public void handle(GoodsOrderDetailsActivity target, Message msg) {
+            switch (msg.what) {
+                case RequestCodeStatic.SDK_PAY_FLAG:
+                    target.alpay(msg);
+                    break;
+            }
+        }
+    }
+
+    //跳转到主页
+    private void alpay(Message msg) {
+        PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+        String resultStatus = payResult.getResultStatus();
+        Log.d("111", "数据" + payResult.getResult() + "==" + payResult.getResultStatus());
+        if (TextUtils.equals(resultStatus, "9000")) {
+            orderDetailsPresenter.getOrderDetails(goodsOrderId);
+        } else if (TextUtils.equals(resultStatus, "6001")) {
+            showMessage(getString(R.string.pay_cancel));
+        } else {
+            showMessage(getString(R.string.pay_failed));
+        }
+    }
+
 }

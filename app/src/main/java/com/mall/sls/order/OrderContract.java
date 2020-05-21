@@ -14,17 +14,21 @@ public interface OrderContract {
     interface OrderListPresenter extends BasePresenter{
         void getOrderList(String refreshType,String showType);
         void getMoreOrderList(String showType);
+        void orderAliPay(String orderId,String type);
     }
     interface OrderListView extends BaseView<OrderListPresenter>{
         void renderOrderList(OrderList orderList);
         void renderMoreOrderList(OrderList orderList);
+        void renderOrderAliPay(String alipayStr);
     }
 
     interface OrderDetailsPresenter extends BasePresenter{
         void getOrderDetails(String orderId);
+        void orderAliPay(String orderId,String type);
     }
 
     interface OrderDetailsView extends BaseView<OrderDetailsPresenter>{
         void renderOrderDetails(GoodsOrderDetails goodsOrderDetails);
+        void renderOrderAliPay(String alipayStr);
     }
 }

@@ -63,10 +63,8 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    if (TextUtils.equals("10", goodsOrderInfo.getOrderStatus())) {
+                    if (TextUtils.equals(StaticData.TO_PAY, goodsOrderInfo.getOrderStatus())) {
                         onItemClickListener.payOrder(goodsOrderInfo.getId(), goodsOrderInfo.getActualPrice());
-                    } else if (TextUtils.equals("60", goodsOrderInfo.getOrderStatus())) {
-                        onItemClickListener.confirmOrder(goodsOrderInfo.getId());
                     }
                 }
             }
@@ -158,11 +156,11 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
                 case StaticData.TO_BE_RECEIVED:
                     orderStatus.setText(context.getString(R.string.shipping));
                     orderStatus.setSelected(true);
-                    btLl.setVisibility(View.VISIBLE);
-                    leftBt.setVisibility(View.VISIBLE);
-                    rightBt.setVisibility(View.VISIBLE);
-                    leftBt.setText(context.getString(R.string.one_more_order));
-                    rightBt.setText(context.getString(R.string.confirm_receipt));
+                    btLl.setVisibility(View.GONE);
+//                    leftBt.setVisibility(View.VISIBLE);
+//                    rightBt.setVisibility(View.VISIBLE);
+//                    leftBt.setText(context.getString(R.string.one_more_order));
+//                    rightBt.setText(context.getString(R.string.confirm_receipt));
                     break;
                 case StaticData.RECEIVED:
                     orderStatus.setText(context.getString(R.string.received));

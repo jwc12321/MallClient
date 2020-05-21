@@ -16,6 +16,9 @@ public class UserInfo {
     //用户级别 0-普通 1-认证 2-超级
     @SerializedName("userLevel")
     private String userLevel;
+    //是否支付金额
+    @SerializedName("certifyPay")
+    private Boolean certifyPay;
 
     public String getMobile() {
         return mobile;
@@ -39,5 +42,21 @@ public class UserInfo {
 
     public void setUserLevel(String userLevel) {
         this.userLevel = userLevel;
+    }
+
+    public boolean isCertifyPay() {
+        return certifyPay;
+    }
+
+    public void setCertifyPay(boolean certifyPay) {
+        this.certifyPay = certifyPay;
+    }
+
+    public Boolean getCertifyPay() {
+        return certifyPay;
+    }
+
+    public void setCertifyPay(Boolean certifyPay) {
+        this.certifyPay = certifyPay;
     }
 }

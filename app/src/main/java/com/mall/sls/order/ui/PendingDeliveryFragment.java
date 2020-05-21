@@ -177,6 +177,11 @@ public class PendingDeliveryFragment extends BaseFragment implements OrderContra
     }
 
     @Override
+    public void renderOrderAliPay(String alipayStr) {
+
+    }
+
+    @Override
     public void setPresenter(OrderContract.OrderListPresenter presenter) {
 
     }

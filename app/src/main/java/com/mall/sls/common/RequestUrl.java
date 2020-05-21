@@ -33,6 +33,7 @@ public class RequestUrl {
     public static String ALIPAY_URL="/app/user/pay/appPay";//支付超级会员和实人认证
     public static String GROUP_REMIND_URL="/app/goods/groupRemind";//活动团开团提醒
     public static String VIP_OPEN_URL="/app/vip/open";//开通超级会员
+    public static String ORDER_ALIPAY="/app/order/pay";//支付宝支付订单
 
 
 }

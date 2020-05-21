@@ -31,6 +31,7 @@ import com.mall.sls.data.request.MobileRequest;
 import com.mall.sls.data.request.MsgIdRequest;
 import com.mall.sls.data.request.MsgReadRequest;
 import com.mall.sls.data.request.OneClickLoginRequest;
+import com.mall.sls.data.request.OrderPayRequest;
 import com.mall.sls.data.request.OrderSubmitRequest;
 import com.mall.sls.data.request.UserPayDtoRequest;
 
@@ -176,5 +177,9 @@ public interface RestApiService {
     //开通超级会员
     @POST("app/vip/open")
     Flowable<RemoteDataWrapper<Boolean>> vipOpen(@Header("X-Hc-Sign") String sign);
+
+    //支付宝支付订单
+    @POST("app/order/pay")
+    Flowable<RemoteDataWrapper<String>> orderAliPay(@Header("X-Hc-Sign") String sign, @Body OrderPayRequest request);
 
 }
