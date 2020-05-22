@@ -15,19 +15,19 @@ import com.mall.sls.MainApplication;
 public class ConventionalEditTextView extends EditText {
     public ConventionalEditTextView(Context context) {
         super(context);
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/conventional.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Regular-14.ttf");
         setTypeface(typeFace1);
     }
 
     public ConventionalEditTextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/conventional.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Regular-14.ttf");
         setTypeface(typeFace1);
     }
 
     public ConventionalEditTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/conventional.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Regular-14.ttf");
         setTypeface(typeFace1);
     }
 }

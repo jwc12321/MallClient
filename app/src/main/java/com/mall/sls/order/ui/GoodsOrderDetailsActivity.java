@@ -242,7 +242,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(orderGoodsVos.get(0).getPrice()));
                 goodsNumber.setText("x" + orderGoodsVos.get(0).getNumber());
             }
-            goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getGoodsPrice()));
+            totalAmount.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getGoodsPrice()));
             coupon.setText("-¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getCouponPrice()));
             realPayment.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getActualPrice()));
             orderTotalPrice=goodsOrderDetails.getActualPrice();

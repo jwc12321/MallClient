@@ -1,6 +1,7 @@
 package com.mall.sls.data.remote;
 
 
+import com.google.gson.annotations.SerializedName;
 import com.mall.sls.data.RemoteDataWrapper;
 import com.mall.sls.data.entity.AddressInfo;
 import com.mall.sls.data.entity.AppUrlInfo;
@@ -22,6 +23,7 @@ import com.mall.sls.data.entity.OrderSubmitInfo;
 import com.mall.sls.data.entity.ProvinceBean;
 import com.mall.sls.data.entity.TeamInfo;
 import com.mall.sls.data.entity.TokenInfo;
+import com.mall.sls.data.entity.VipAmountInfo;
 import com.mall.sls.data.request.AddAddressRequest;
 import com.mall.sls.data.request.CartFastaddRequest;
 import com.mall.sls.data.request.CertifyIdRequest;
@@ -30,10 +32,13 @@ import com.mall.sls.data.request.LoginRequest;
 import com.mall.sls.data.request.MobileRequest;
 import com.mall.sls.data.request.MsgIdRequest;
 import com.mall.sls.data.request.MsgReadRequest;
+import com.mall.sls.data.request.OnClickBindRequest;
 import com.mall.sls.data.request.OneClickLoginRequest;
 import com.mall.sls.data.request.OrderPayRequest;
 import com.mall.sls.data.request.OrderSubmitRequest;
+import com.mall.sls.data.request.SmsCodeBindRequest;
 import com.mall.sls.data.request.UserPayDtoRequest;
+import com.mall.sls.data.request.WeiXinLoginRequest;
 
 import java.util.List;
 
@@ -181,5 +186,26 @@ public interface RestApiService {
     //支付宝支付订单
     @POST("app/order/pay")
     Flowable<RemoteDataWrapper<String>> orderAliPay(@Header("X-Hc-Sign") String sign, @Body OrderPayRequest request);
+
+    //app微信code码登陆
+    @POST("app/auth/login/wx/code")
+    Flowable<RemoteDataWrapper<TokenInfo>> weiXinLogin(@Header("X-Hc-Sign") String sign, @Body WeiXinLoginRequest request);
+
+    //获取默认的推荐码
+    @GET("app/common/invitationCode")
+    Flowable<RemoteDataWrapper<String>> getInvitationCode(@Header("X-Hc-Sign") String sign);
+
+    //app微信绑定手机号登陆
+    @POST("app/auth/login/wx/phone")
+    Flowable<RemoteDataWrapper<TokenInfo>> bindSmsCodeLogin(@Header("X-Hc-Sign") String sign, @Body SmsCodeBindRequest request);
+
+    //阿里一键登录接口(绑定微信)
+    @POST("app/auth/login/wx/ali")
+    Flowable<RemoteDataWrapper<TokenInfo>> bindOneClickLogin(@Header("X-Hc-Sign") String sign, @Body OnClickBindRequest request);
+
+    //查询认证或者超级会员支付金额
+    @GET("app/common/payAmount")
+    Flowable<RemoteDataWrapper<VipAmountInfo>> getVipAmountInfo(@Header("X-Hc-Sign") String sign);
+
 
 }

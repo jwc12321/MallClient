@@ -136,6 +136,14 @@
         <item name="android:layout_marginRight">@dimen/dp_30</item>
     </style>
 
+    <style name="common_red_dividing_line_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_1</item>
+        <item name="android:background">@color/backGround1</item>
+        <item name="android:layout_marginLeft">@dimen/dp_30</item>
+        <item name="android:layout_marginRight">@dimen/dp_30</item>
+    </style>
+
     <style name="cold_down_bt_style">
         <item name="android:layout_width">@dimen/dp_82</item>
         <item name="android:layout_height">@dimen/dp_35</item>
@@ -212,6 +220,12 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:textColor">@color/appText2</item>
+    </style>
+    <style name="size18_color_app2_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_18</item>
         <item name="android:textColor">@color/appText2</item>
     </style>
     <style name="size15_color_app2_text_style">

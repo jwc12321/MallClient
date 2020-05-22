@@ -78,7 +78,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_124"
                         android:layout_marginBottom="@dimen/dp_15"
-                        android:background="@drawable/common_four_app_one_bg">
+                        android:background="@drawable/common_four_app_one_bg"
+                        android:visibility="gone">
 
                         <com.mall.sls.common.widget.textview.ConventionalTextView
                             android:id="@+id/remaining_payment_time_tv"

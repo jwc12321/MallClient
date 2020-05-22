@@ -1,6 +1,9 @@
 package com.mall.sls.common;
 
+import retrofit2.http.PUT;
+
 public class StaticData {
+    public static final String  WX_APP_ID = "wxcea8bff4c8e832be";
     //登录中
     public static final String LOGGING="1";
     //加载中
@@ -79,5 +82,10 @@ public class StaticData {
     public static final String AVATAR_URL="avatarUrl";
     //金额
     public static final String PAYMENT_AMOUNT="paymentAmount";
-
+    //unionId
+    public static final String UNION_ID="unionId";
+    public static final String ACCESS_CODE="accessCode";
+    public static final String SMS_CODE="smsCode";
+    public static final String CRETIFY_AMOUNT="certifyAmount";
+    public static final String VIP_AMOUNT="vipAmount";
 }

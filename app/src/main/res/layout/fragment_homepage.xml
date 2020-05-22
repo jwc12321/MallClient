@@ -129,6 +129,7 @@
                     android:visibility="gone"/>
 
                 <RelativeLayout
+                    android:id="@+id/other_rl"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_44"
                     android:layout_marginTop="@dimen/dp_6"

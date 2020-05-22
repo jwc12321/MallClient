@@ -30,7 +30,9 @@ import com.mall.sls.coupon.ui.CouponActivity;
 import com.mall.sls.data.entity.MineInfo;
 import com.mall.sls.data.entity.MineRewardInfo;
 import com.mall.sls.data.entity.UserInfo;
+import com.mall.sls.data.entity.VipAmountInfo;
 import com.mall.sls.login.ui.LoginActivity;
+import com.mall.sls.login.ui.WeixinLoginActivity;
 import com.mall.sls.member.ui.SuperMemberActivity;
 import com.mall.sls.mine.DaggerMineComponent;
 import com.mall.sls.mine.MineContract;
@@ -112,6 +114,9 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     private String mobile;
     private boolean certifyPay;
 
+    private String certifyAmount;
+    private String vipAmount;
+
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
         return fragment;
@@ -182,7 +187,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                     if(certifyPay){
                         NameVerifiedActivity.start(getActivity());
                     }else {
-                        CerifyTipActivity.start(getActivity());
+                        CerifyTipActivity.start(getActivity(),certifyAmount);
                     }
                 }
                 break;
@@ -194,7 +199,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                     showMessage(getString(R.string.to_open_person_authentication));
                 } else {
                     goVerify = StaticData.REFLASH_ONE;
-                    SuperMemberActivity.start(getActivity(), avatarUrl, mobile);
+                    SuperMemberActivity.start(getActivity(), avatarUrl, mobile,vipAmount);
                 }
                 break;
             case R.id.coupon_ll://优惠卷
@@ -211,7 +216,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case RequestCodeStatic.SETTING:
-                    LoginActivity.start(getActivity());
+                    WeixinLoginActivity.start(getActivity());
                     getActivity().finish();
                     break;
                 case RequestCodeStatic.GO_COUPON:
@@ -276,6 +281,14 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     }
 
     @Override
+    public void renderVipAmountInfo(VipAmountInfo vipAmountInfo) {
+        if(vipAmountInfo!=null){
+            certifyAmount=vipAmountInfo.getCertify();
+            vipAmount=vipAmountInfo.getSpvip();
+        }
+    }
+
+    @Override
     public void setPresenter(MineContract.MineInfoPresenter presenter) {
 
     }
@@ -285,6 +298,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint() && mineInfoPresenter != null) {
             mineInfoPresenter.getMineInfo();
+            mineInfoPresenter.getVipAmountInfo();
         }
     }
 }

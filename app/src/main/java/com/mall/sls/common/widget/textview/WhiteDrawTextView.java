@@ -23,7 +23,7 @@ public class WhiteDrawTextView extends TextView {
 
     public WhiteDrawTextView(Context context) {
         super(context);
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/conventional.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Regular-14.ttf");
         setTypeface(typeFace1);
         //初始化Paint
         initPaint();
@@ -31,14 +31,14 @@ public class WhiteDrawTextView extends TextView {
 
     public WhiteDrawTextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/conventional.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Regular-14.ttf");
         setTypeface(typeFace1);
         initPaint();
     }
 
     public WhiteDrawTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/conventional.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Regular-14.ttf");
         setTypeface(typeFace1);
         initPaint();
     }

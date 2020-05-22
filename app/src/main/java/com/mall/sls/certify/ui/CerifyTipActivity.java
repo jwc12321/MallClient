@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import butterknife.BindView;
@@ -29,8 +30,11 @@ public class CerifyTipActivity extends BaseActivity {
     @BindView(R.id.confirm_bt)
     MediumThickTextView confirmBt;
 
-    public static void start(Context context) {
+    private String certifyAmount;
+
+    public static void start(Context context,String certifyAmount) {
         Intent intent = new Intent(context, CerifyTipActivity.class);
+        intent.putExtra(StaticData.CRETIFY_AMOUNT,certifyAmount);
         context.startActivity(intent);
     }
 
@@ -45,6 +49,7 @@ public class CerifyTipActivity extends BaseActivity {
 
     private void initView() {
         String bottomTip = " 1:身份证信息仅供平台提供诚信保证使用。\n 2:我方承诺不向其他第三方透露您的个人信息";
+        certifyAmount=getIntent().getStringExtra(StaticData.CRETIFY_AMOUNT);
         bottomTipTv.setText(bottomTip);
     }
 
@@ -52,7 +57,7 @@ public class CerifyTipActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.confirm_bt:
-                CerifyPayActivity.start(this);
+                CerifyPayActivity.start(this,certifyAmount);
                 finish();
                 break;
             case R.id.back:

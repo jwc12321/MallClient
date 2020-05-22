@@ -142,7 +142,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                 sendVcode();
                 break;
             case R.id.login_weixin_iv://微信登录
-                BindPhoneActivity.start(this);
+//                BindPhoneActivity.start(this);
                 break;
             default:
         }
@@ -189,6 +189,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
             MobileManager.saveMobile(tokenInfo.getUserInfo().getMobile());
             TokenManager.saveToken(tokenInfo.getToken());
             MainFrameActivity.start(this);
+            finish();
         }
     }
 

@@ -48,21 +48,21 @@ public class TagTextView extends TextView {
     public TagTextView(Context context) {
         super(context);
         mContext = context;
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/conventional.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Regular-14.ttf");
         setTypeface(typeFace1);
     }
 
     public TagTextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/conventional.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Regular-14.ttf");
         setTypeface(typeFace1);
     }
 
     public TagTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/conventional.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Regular-14.ttf");
         setTypeface(typeFace1);
     }
 

@@ -12,6 +12,10 @@ public class TokenInfo {
     private String token;
     @SerializedName("userInfo")
     private UserInfo userInfo;
+    @SerializedName("unionId")
+    private String unionId;
+
+
 
     public String getToken() {
         return token;
@@ -27,5 +31,13 @@ public class TokenInfo {
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public String getUnionId() {
+        return unionId;
+    }
+
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
     }
 }

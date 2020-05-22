@@ -138,6 +138,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     GoodsDetailsPresenter goodsDetailsPresenter;
     private String consumerPhone;
     private String purchaseType;
+    private String oldGroupRulesId;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, OrdinaryGoodsDetailActivity.class);
@@ -228,7 +229,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 break;
             case R.id.initiate_bill_bt://发起拼单
                 groupId = "";
-                groupRulesId = "";
+                groupRulesId=oldGroupRulesId;
                 purchaseType = StaticData.REFLASH_TWO;
                 initiateBill();
                 break;
@@ -240,7 +241,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 break;
             case R.id.individual_shopping_tv://单独购买
                 groupId = "";
-                groupRulesId = "";
+                groupRulesId=oldGroupRulesId;
                 purchaseType = StaticData.REFLASH_ONE;
                 individualShopping();
                 break;
@@ -369,6 +370,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             selectedGoods.setText(getString(R.string.is_selected));
             groupNumber.setText(goodsDetailsInfo.getGroupNum() + "人正在拼单，可直接参与");
             groupPurchases = goodsDetailsInfo.getGroupPurchases();
+            oldGroupRulesId=goodsDetailsInfo.getRulesId();
             if (groupPurchases == null || groupPurchases.size() == 0) {
                 upGroup.setVisibility(View.GONE);
                 downGroup.setVisibility(View.GONE);

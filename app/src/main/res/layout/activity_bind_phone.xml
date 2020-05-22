@@ -8,13 +8,19 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
+
     <RelativeLayout
         android:id="@+id/title_rel"
-        style="@style/title_white_rl_style">
+        style="@style/title_red_rl_style">
 
         <ImageView
             android:id="@+id/back"
-            style="@style/title_left_black_back_style" />
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/bind_mobile" />
     </RelativeLayout>
 
     <com.mall.sls.common.widget.scrollview.ReboundScrollView
@@ -31,7 +37,7 @@
             <com.mall.sls.common.widget.textview.MediumThickTextView
                 style="@style/size18_color_app3_text_style"
                 android:layout_marginLeft="@dimen/dp_30"
-                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_32"
                 android:text="@string/bind_phone" />
 
             <LinearLayout
@@ -88,7 +94,6 @@
                 android:id="@+id/confirm_bt"
                 style="@style/common_next_bt_style"
                 android:layout_marginTop="@dimen/dp_51"
-                android:enabled="false"
                 android:text="@string/bind_now" />
         </LinearLayout>
     </com.mall.sls.common.widget.scrollview.ReboundScrollView>

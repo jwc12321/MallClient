@@ -2,10 +2,12 @@ package com.mall.sls.wxapi;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.mall.sls.common.StaticData;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -14,15 +16,16 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import org.greenrobot.eventbus.EventBus;
+
 public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
     private IWXAPI api;
     private BaseResp resp = null;
-    private String WX_APP_ID = "创建应用后得到的APP_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        api = WXAPIFactory.createWXAPI(this, WX_APP_ID, false);
+        api = WXAPIFactory.createWXAPI(this, StaticData.WX_APP_ID, false);
         api.handleIntent(getIntent(), this);
     }
 
@@ -43,6 +46,8 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             case BaseResp.ErrCode.ERR_OK:
                 result = "发送成功";
                 String code = ((SendAuth.Resp) resp).code;
+                Log.d("111","数据"+code);
+                EventBus.getDefault().post(code);
                 if(resp.getType()== ConstantsAPI.COMMAND_PAY_BY_WX){
 
                 }

@@ -22,13 +22,12 @@ import com.mall.sls.certify.DaggerCertifyComponent;
 import com.mall.sls.certify.presenter.CertifyPayPresenter;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayResult;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.StaticHandler;
+import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
-import com.mall.sls.mainframe.ui.MainFrameActivity;
-import com.mall.sls.member.ui.SuperMemberActivity;
-import com.mall.sls.splash.SplashActivity;
 
 import java.util.Map;
 
@@ -55,13 +54,18 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
     ImageView selectAliIv;
     @BindView(R.id.confirm_bt)
     MediumThickTextView confirmBt;
+    @BindView(R.id.amount)
+    ConventionalTextView amount;
     private String selectType = StaticData.REFLASH_ZERO;
     private Handler mHandler = new MyHandler(this);
+    private String certifyAmount;
+
     @Inject
     CertifyPayPresenter certifyPayPresenter;
 
-    public static void start(Context context) {
+    public static void start(Context context, String certifyAmount) {
         Intent intent = new Intent(context, CerifyPayActivity.class);
+        intent.putExtra(StaticData.CRETIFY_AMOUNT, certifyAmount);
         context.startActivity(intent);
     }
 
@@ -75,6 +79,8 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
     }
 
     private void initView() {
+        certifyAmount = getIntent().getStringExtra(StaticData.CRETIFY_AMOUNT);
+        amount.setText("¥" + NumberFormatUnit.twoDecimalFormat(certifyAmount));
         selectPayType();
     }
 
@@ -111,17 +117,17 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
     }
 
     private void confirm() {
-        if(TextUtils.equals(StaticData.REFLASH_ZERO,selectType)){
+        if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
             //微信
-            if(PayTypeInstalledUtils.isWeixinAvilible(CerifyPayActivity.this)){
+            if (PayTypeInstalledUtils.isWeixinAvilible(CerifyPayActivity.this)) {
 
-            }else {
+            } else {
                 showMessage(getString(R.string.install_weixin));
             }
-        }else {
-            if(PayTypeInstalledUtils.isAliPayInstalled(CerifyPayActivity.this)){
+        } else {
+            if (PayTypeInstalledUtils.isAliPayInstalled(CerifyPayActivity.this)) {
                 certifyPayPresenter.alipay(StaticData.REFLASH_ZERO, selectType);
-            }else {
+            } else {
                 showMessage(getString(R.string.install_alipay));
             }
         }
@@ -140,7 +146,7 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
 
     @Override
     public void renderAlipay(String alipayStr) {
-        if(!TextUtils.isEmpty(alipayStr)) {
+        if (!TextUtils.isEmpty(alipayStr)) {
             startAliPay(alipayStr);
         }
     }

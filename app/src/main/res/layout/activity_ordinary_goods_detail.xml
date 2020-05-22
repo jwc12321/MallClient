@@ -135,7 +135,8 @@
 
                 <RelativeLayout
                     android:id="@+id/up_group"
-                    style="@style/goods_detail_rl_style">
+                    style="@style/goods_detail_rl_style"
+                    android:visibility="gone">
 
                     <View style="@style/fifteen_back_nine_line_style" />
 
@@ -161,7 +162,8 @@
 
                 <RelativeLayout
                     android:id="@+id/down_group"
-                    style="@style/goods_detail_rl_style">
+                    style="@style/goods_detail_rl_style"
+                    android:visibility="gone">
 
                     <View style="@style/fifteen_back_nine_line_style" />
 

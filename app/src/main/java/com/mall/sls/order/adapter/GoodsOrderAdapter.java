@@ -94,7 +94,7 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
         @BindView(R.id.goods_name)
         MediumThickTextView goodsName;
         @BindView(R.id.goods_price)
-        MediumThickTextView goodsPrice;
+        ConventionalTextView goodsPrice;
         @BindView(R.id.goods_number)
         ConventionalTextView goodsNumber;
         @BindView(R.id.total_number)

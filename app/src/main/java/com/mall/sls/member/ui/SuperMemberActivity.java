@@ -74,13 +74,15 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     private MemberGoodsItemAdapter memberGoodsItemAdapter;
     private String avatarUrl;
     private String mobile;
+    private String vipAmount;
     @Inject
     SuperMemberPresenter superMemberPresenter;
 
-    public static void start(Context context, String avatarUrl, String mobile) {
+    public static void start(Context context, String avatarUrl, String mobile,String vipAmount) {
         Intent intent = new Intent(context, SuperMemberActivity.class);
         intent.putExtra(StaticData.AVATAR_URL, avatarUrl);
         intent.putExtra(StaticData.MOBILE, mobile);
+        intent.putExtra(StaticData.VIP_AMOUNT,vipAmount);
         context.startActivity(intent);
     }
 
@@ -96,6 +98,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     private void initView() {
         avatarUrl = getIntent().getStringExtra(StaticData.AVATAR_URL);
         mobile = getIntent().getStringExtra(StaticData.MOBILE);
+        vipAmount=getIntent().getStringExtra(StaticData.VIP_AMOUNT);
         GlideHelper.load(this, avatarUrl, R.mipmap.icon_defalut_head, headPhoto);
         phone.setText(mobile);
         memberGoodsItemAdapter = new MemberGoodsItemAdapter(this);
@@ -119,6 +122,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
             case R.id.confirm_bt:
                 Intent intent = new Intent(this, SelectPayTypeActivity.class);
                 intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_ONE);
+                intent.putExtra(StaticData.PAYMENT_AMOUNT,vipAmount);
                 startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
                 break;
             case R.id.back:

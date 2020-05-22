@@ -34,6 +34,10 @@ public class RequestUrl {
     public static String GROUP_REMIND_URL="/app/goods/groupRemind";//活动团开团提醒
     public static String VIP_OPEN_URL="/app/vip/open";//开通超级会员
     public static String ORDER_ALIPAY="/app/order/pay";//支付宝支付订单
-
+    public static String LOGIN_WEIXIN_URL="/app/auth/login/wx/code";//微信登录
+    public static String INVITATION_CODE_URL="/app/common/invitationCode";//获取默认的推荐码
+    public static String BIND_SMS_CODE_LOGIN="/app/auth/login/wx/phone";//app微信绑定手机号登陆
+    public static String BIND_ONE_CLICK="/app/auth/login/wx/ali";//阿里一键登录接口(绑定微信)
+    public static String VIP_PAY_AMOUNT ="/app/common/payAmount";//查询认证或者超级会员支付金额
 
 }

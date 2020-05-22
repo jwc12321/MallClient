@@ -370,8 +370,9 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     }
 
     private void paySuccess(){
+        GoodsOrderDetailsActivity.start(this,orderId);
+        finish();
         if(TextUtils.equals(StaticData.REFLASH_ONE,purchaseType)){
-            GoodsOrderDetailsActivity.start(this,orderId);
         }else if (TextUtils.equals(StaticData.REFLASH_TWO,purchaseType)){
 
         }else if (TextUtils.equals(StaticData.REFLASH_THREE,purchaseType)){

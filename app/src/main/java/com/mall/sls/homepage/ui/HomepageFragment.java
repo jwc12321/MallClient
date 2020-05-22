@@ -27,6 +27,7 @@ import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.location.LocationHelper;
 import com.mall.sls.common.unit.AreaCodeManager;
+import com.mall.sls.common.unit.PermissionUtil;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.BannerInfo;
@@ -84,6 +85,8 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     RelativeLayout messageRl;
     @BindView(R.id.message_count)
     ConventionalTextView messageCount;
+    @BindView(R.id.other_rl)
+    RelativeLayout otherRl;
     private LocationHelper mLocationHelper;
     private String city;
     private String longitude;
@@ -95,6 +98,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     private String areaCode;
     @Inject
     HomePagePresenter homePagePresenter;
+    private List<String> group;
 
     public static HomepageFragment newInstance() {
         HomepageFragment fragment = new HomepageFragment();
@@ -178,8 +182,10 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                 homePagePresenter.getHomePageInfo(StaticData.REFLASH_ONE);
             }
         });
+        group = new ArrayList<>();
+        group.add(Manifest.permission_group.LOCATION);
 
-        if (requestRuntimePermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, RequestCodeStatic.REQUEST_PERMISSION_LOCATION)) {
+        if (requestRuntimePermissions(PermissionUtil.permissionGroup(group, null), RequestCodeStatic.REQUEST_PERMISSION_LOCATION)) {
             mLocationHelper.start();
         }
     }
@@ -255,7 +261,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             banner.setPointsIsVisible(data.size() > 1);
             banner.setAutoPlayAble(data.size() > 1);
             banner.setBannerData(R.layout.xbanner_item, data);
-            messageCount.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO,homePageInfo.getUnreadMsgCount())?View.GONE:View.VISIBLE);
+            messageCount.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO, homePageInfo.getUnreadMsgCount()) ? View.GONE : View.VISIBLE);
             messageCount.setText(homePageInfo.getUnreadMsgCount());
         }
     }
@@ -275,10 +281,10 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         this.homepageListener = homepageListener;
     }
 
-    @OnClick({R.id.other_more_tv, R.id.message_rl})
+    @OnClick({R.id.other_rl, R.id.message_rl})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.other_more_tv:
+            case R.id.other_rl:
                 if (homepageListener != null) {
                     homepageListener.goLocalTeam();
                 }

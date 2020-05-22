@@ -66,7 +66,7 @@
                 android:layout_marginLeft="@dimen/dp_6"
                 android:layout_toRightOf="@id/goods_iv">
 
-                <com.mall.sls.common.widget.textview.MediumThickTextView
+                <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/goods_price"
                     style="@style/size14_color_back1_text_style"
                     android:layout_centerVertical="true"

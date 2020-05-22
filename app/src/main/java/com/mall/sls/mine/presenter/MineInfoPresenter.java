@@ -5,6 +5,7 @@ import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
 import com.mall.sls.data.entity.MineInfo;
+import com.mall.sls.data.entity.VipAmountInfo;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.mine.MineContract;
@@ -56,6 +57,27 @@ public class MineInfoPresenter implements MineContract.MineInfoPresenter {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         mineInfoView.dismissLoading();
+                        mineInfoView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getVipAmountInfo() {
+        String queryString = "null";
+        String sign = SignUnit.signGet(RequestUrl.MINE_INFO_URL, queryString);
+        Disposable disposable = restApiService.getVipAmountInfo(sign)
+                .flatMap(new RxRemoteDataParse<VipAmountInfo>())
+                .compose(new RxSchedulerTransformer<VipAmountInfo>())
+                .subscribe(new Consumer<VipAmountInfo>() {
+                    @Override
+                    public void accept(VipAmountInfo vipAmountInfo) throws Exception {
+                        mineInfoView.renderVipAmountInfo(vipAmountInfo);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
                         mineInfoView.showError(throwable);
                     }
                 });

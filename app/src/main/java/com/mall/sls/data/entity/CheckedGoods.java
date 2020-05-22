@@ -2,6 +2,7 @@ package com.mall.sls.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.PipedReader;
 import java.io.Serializable;
 
 /**
@@ -24,6 +25,8 @@ public class CheckedGoods implements Serializable {
     //是否团购
     @SerializedName("isGroup")
     private boolean isGroup;
+    @SerializedName("preferentialPrice")
+    private String preferentialPrice;
 
     public String getNumber() {
         return number;
@@ -63,5 +66,13 @@ public class CheckedGoods implements Serializable {
 
     public void setGroup(boolean group) {
         isGroup = group;
+    }
+
+    public String getPreferentialPrice() {
+        return preferentialPrice;
+    }
+
+    public void setPreferentialPrice(String preferentialPrice) {
+        this.preferentialPrice = preferentialPrice;
     }
 }

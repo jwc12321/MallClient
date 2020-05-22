@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.PropertyResourceBundle;
 
+import retrofit2.http.GET;
+
 /**
  * @author jwc on 2020/5/13.
  * 描述：
@@ -80,6 +82,9 @@ public class GoodsDetailsInfo implements Serializable {
     //订阅状态 1,提醒我 2,取消提醒
     @SerializedName("subscriptionStatus")
     private String subscriptionStatus;
+    //团购规则id
+    @SerializedName("rulesId")
+    private String rulesId;
 
 
 
@@ -266,5 +271,13 @@ public class GoodsDetailsInfo implements Serializable {
 
     public void setSubscriptionStatus(String subscriptionStatus) {
         this.subscriptionStatus = subscriptionStatus;
+    }
+
+    public String getRulesId() {
+        return rulesId;
+    }
+
+    public void setRulesId(String rulesId) {
+        this.rulesId = rulesId;
     }
 }

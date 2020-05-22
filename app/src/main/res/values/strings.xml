@@ -48,6 +48,7 @@
     <string name="choice_login">请阅读并同意《隐私政策》和《服务协议》</string>\
     <string name="login_register">登录/注册</string>
     <string name="login_register_bt">一键登录/注册</string>
+    <string name="bind_onclick_mobile">本机号码一键绑定</string>
     <string name="home">首页</string>
     <string name="mine">我的</string>
     <string name="search_address">地址搜索</string>
@@ -227,5 +228,10 @@
     <string name="sys_message">系统通知</string>
     <string name="activity_benefits">活动福利</string>
     <string name="payment_amount">支付金额：</string>
+    <string name="bind_mobile">绑定手机号</string>
+    <string name="invitation_code">邀请码</string>
+    <string name="input_invitation_code">请填写邀请码</string>
+    <string name="no_invitation_code">没有邀请码？</string>
+    <string name="code_bind">手机验证码绑定</string>
 
 </resources>
