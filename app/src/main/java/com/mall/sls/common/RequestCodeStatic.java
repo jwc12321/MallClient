@@ -17,4 +17,5 @@ public class RequestCodeStatic {
     public static final int MESSAGE=14;//消息
     public static final int SPELLING_REMINDER=15;//提示拼单
     public static final int PAY_TYPE=16;//选择支付方式
+    public static final int ORDER_DETAIL=17;//订单详情页
 }

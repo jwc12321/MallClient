@@ -415,6 +415,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
         ConfirmOrderActivity.start(this, confirmOrderDetail, purchaseType);
+        finish();
     }
 
     @Override

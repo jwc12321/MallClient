@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -122,6 +123,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
 
     @Inject
     OrderDetailsPresenter orderDetailsPresenter;
+    private String activityResult = StaticData.REFLASH_ZERO;//会列表是否需要刷新  ：不用 1：要
 
 
     public static void start(Context context, String goodsOrderId) {
@@ -171,7 +173,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back://
-                finish();
+                back();
                 break;
             case R.id.pay_bt:
                 Intent intent = new Intent(this, SelectPayTypeActivity.class);
@@ -346,11 +348,32 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
         String resultStatus = payResult.getResultStatus();
         Log.d("111", "数据" + payResult.getResult() + "==" + payResult.getResultStatus());
         if (TextUtils.equals(resultStatus, "9000")) {
+            activityResult=StaticData.REFLASH_ONE;
             orderDetailsPresenter.getOrderDetails(goodsOrderId);
         } else if (TextUtils.equals(resultStatus, "6001")) {
             showMessage(getString(R.string.pay_cancel));
         } else {
             showMessage(getString(R.string.pay_failed));
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            back();
+            return true;
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void back() {
+        if (TextUtils.equals(StaticData.REFLASH_ONE, activityResult)) {
+            Intent backIntent = new Intent();
+            setResult(Activity.RESULT_OK, backIntent);
+            finish();
+        } else {
+            finish();
         }
     }
 

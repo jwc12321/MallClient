@@ -157,7 +157,9 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
 
     @Override
     public void goOrderDetail(String id) {
-        GoodsOrderDetailsActivity.start(getActivity(),id);
+        Intent intent = new Intent(getActivity(), GoodsOrderDetailsActivity.class);
+        intent.putExtra(StaticData.GOODS_ORDER_ID, id);
+        getActivity().startActivityForResult(intent,RequestCodeStatic.ORDER_DETAIL);
     }
 
     @Override
@@ -227,6 +229,9 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
                             }
                         }
                     }
+                    break;
+                case RequestCodeStatic.ORDER_DETAIL:
+                    orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_ZERO);
                     break;
                 default:
             }

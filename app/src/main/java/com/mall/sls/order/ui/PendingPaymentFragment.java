@@ -158,7 +158,9 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
 
     @Override
     public void goOrderDetail(String id) {
-        GoodsOrderDetailsActivity.start(getActivity(),id);
+        Intent intent = new Intent(getActivity(), GoodsOrderDetailsActivity.class);
+        intent.putExtra(StaticData.GOODS_ORDER_ID, id);
+        getActivity().startActivityForResult(intent,RequestCodeStatic.ORDER_DETAIL);
     }
 
     @Override
@@ -228,6 +230,9 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
                             }
                         }
                     }
+                    break;
+                case RequestCodeStatic.ORDER_DETAIL:
+                    orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_ONE);
                     break;
                 default:
             }

@@ -90,7 +90,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
         @BindView(R.id.name)
         MediumThickTextView name;
         @BindView(R.id.endTime)
-        MediumThickTextView endTime;
+        ConventionalTextView endTime;
         @BindView(R.id.used_bt)
         ConventionalTextView usedBt;
         @BindView(R.id.use_tip)

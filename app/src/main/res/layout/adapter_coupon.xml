@@ -85,7 +85,7 @@
                     android:singleLine="true"
                     tools:text="七月一日新人优惠附近的开发的卷" />
 
-                <com.mall.sls.common.widget.textview.MediumThickTextView
+                <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/endTime"
                     style="@style/size11_color_app2_text_style"
                     android:layout_marginLeft="@dimen/dp_14"

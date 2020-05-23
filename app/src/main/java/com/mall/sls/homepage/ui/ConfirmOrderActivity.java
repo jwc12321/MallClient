@@ -364,6 +364,8 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             paySuccess();
         } else if (TextUtils.equals(resultStatus, "6001")) {
             showMessage(getString(R.string.pay_cancel));
+            GoodsOrderDetailsActivity.start(this,orderId);
+            finish();
         } else {
             showMessage(getString(R.string.pay_failed));
         }

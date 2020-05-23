@@ -10,7 +10,7 @@ import android.content.SharedPreferences;
 public class SPManager {
 
     private Context context;
-    private static final String FILE = "NG_MERCHANT_FILE";
+    private static final String FILE = "Mall_FILE";
     //上次弹出更新窗口的时间
     private static final String LAST_POPOUT_TIME ="LAST_POPOUT_TIME" ;
 

@@ -182,6 +182,7 @@ public class BindPhoneActivity extends BaseActivity implements LoginContract.Bin
                 }
                 if (tokenRet != null && !("600001").equals(tokenRet.getCode())) {
                     loginToken = tokenRet.getToken();
+                    Log.d("111","数据"+loginToken);
                     FillCodeActivity.start(BindPhoneActivity.this,unionId,loginToken,phoneNumber,smsCode,StaticData.REFLASH_ONE);
                     BindPhoneActivity.this.finish();
                 }
