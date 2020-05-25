@@ -60,11 +60,6 @@ public class BindPhoneActivity extends BaseActivity implements LoginContract.Bin
 
     private String phoneNumber;
     private String smsCode;
-    private PhoneNumberAuthHelper mAlicomAuthHelper;
-    private TokenResultListener mTokenListener;
-    private String loginToken;
-    private String loginKey ="+3do8fAWK3Tv3vsx/iNPefkUhXOaZOWlrRv8rWUt1muMwnRX/NVlymCa7pvf2fh2qC/XwPQ6fkhNmI+Ke/85gonr7bUw6Tti+4PDbDt8znZtVuhApw2gerNIiAKbeXbF89PBAS/4xAHxPcd1vnZJwfL0YQ9teT74JT+7GT4qsi83hgeS4K8C9MXoqzrhqTWVLdSk7aUAgx/gXrXKQ8PoMDZsGpjuJ02eRyRdaoiGX8fZIWQYq3RlEavsu++RnbULX4OguGRxDn8YDTNvmmdIDA==";
-    private boolean checkRet;
     @Inject
     BindMobilePresenter bindMobilePresenter;
     private String unionId;
@@ -86,7 +81,6 @@ public class BindPhoneActivity extends BaseActivity implements LoginContract.Bin
 
     private void initView() {
         unionId=getIntent().getStringExtra(StaticData.UNION_ID);
-        init();
     }
 
     @Override
@@ -141,7 +135,7 @@ public class BindPhoneActivity extends BaseActivity implements LoginContract.Bin
             showMessage(getString(R.string.input_vcode));
             return;
         }
-        FillCodeActivity.start(BindPhoneActivity.this,unionId,loginToken,phoneNumber,smsCode,StaticData.REFLASH_ZERO);
+        FillCodeActivity.start(BindPhoneActivity.this,unionId,"",phoneNumber,smsCode,StaticData.REFLASH_ZERO);
         finish();
     }
 
@@ -167,106 +161,5 @@ public class BindPhoneActivity extends BaseActivity implements LoginContract.Bin
     @Override
     public void setPresenter(LoginContract.BindMobilePresenter presenter) {
 
-    }
-
-    private void init() {
-        mTokenListener = new TokenResultListener() {
-            @Override
-            public void onTokenSuccess(final String ret) {
-                Log.e("xxxxxx", "onTokenSuccess:" + ret);
-                TokenRet tokenRet = null;
-                try {
-                    tokenRet = JSON.parseObject(ret, TokenRet.class);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                if (tokenRet != null && !("600001").equals(tokenRet.getCode())) {
-                    loginToken = tokenRet.getToken();
-                    Log.d("111","数据"+loginToken);
-                    FillCodeActivity.start(BindPhoneActivity.this,unionId,loginToken,phoneNumber,smsCode,StaticData.REFLASH_ONE);
-                    BindPhoneActivity.this.finish();
-                }
-                mAlicomAuthHelper.quitLoginPage();
-            }
-
-            @Override
-            public void onTokenFailed(final String ret) {
-                BindPhoneActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAlicomAuthHelper.hideLoginLoading();
-                    }
-                });
-            }
-        };
-        mAlicomAuthHelper = PhoneNumberAuthHelper.getInstance(this, mTokenListener);
-        mAlicomAuthHelper.setAuthSDKInfo(loginKey);
-        checkRet = mAlicomAuthHelper.checkEnvAvailable();
-        mAlicomAuthHelper.setAuthListener(mTokenListener);
-        if (checkRet) {
-            configLoginTokenPort();
-            mAlicomAuthHelper.getLoginToken(BindPhoneActivity.this, 5000);
-        }
-        /**
-         * 控件点击事件回调
-         */
-        mAlicomAuthHelper.setUIClickListener(new AuthUIControlClickListener() {
-            @Override
-            public void onClick(String code, Context context, JSONObject jsonObj) {
-                Log.e("authSDK", "OnUIControlClick:code=" + code + ", jsonObj=" + (jsonObj == null ? "" : jsonObj.toJSONString()));
-                if(TextUtils.equals("700001",code)){
-
-                }
-            }
-        });
-    }
-
-
-    private String registerAgreeTxt="\n《注册协议》";
-    private String privacyPolicyTxt="《隐私协议》";
-    private void configLoginTokenPort() {
-        mAlicomAuthHelper.setAuthUIConfig(new AuthUIConfig.Builder()
-                .setStatusBarColor(getResources().getColor(R.color.backGround1))
-                .setLightColor(true)
-                .setStatusBarUIFlag(View.SYSTEM_UI_FLAG_LOW_PROFILE)
-                .setNavColor(getResources().getColor(R.color.backGround1))
-                .setNavText(getString(R.string.bind_mobile))
-                .setNavTextColor(getResources().getColor(R.color.appText1))
-                .setNavTextSize(16)
-                .setNavReturnHidden(true)
-                .setLogoImgPath("icon_login_iv")
-                .setLogoWidth(200)
-                .setLogoHeight(99)
-                .setLogoOffsetY(92)
-                .setLogoScaleType(ImageView.ScaleType.FIT_XY)
-                .setSloganTextColor(getResources().getColor(R.color.backGround8))
-                .setNumberColor(getResources().getColor(R.color.appText3))
-                .setNumberSize(20)
-                .setNumFieldOffsetY(231)
-                .setNumberLayoutGravity(Gravity.CENTER_HORIZONTAL)
-                .setLogBtnText(getString(R.string.bind_onclick_mobile))
-                .setLogBtnTextColor(getResources().getColor(R.color.appText1))
-                .setLogBtnTextSize(16)
-                .setLogBtnBackgroundPath("confirm_bt_select")
-                .setLogBtnHeight(54)
-                .setLogBtnMarginLeftAndRight(15)
-                .setLogBtnOffsetY(291)
-                .setSwitchAccText(getString(R.string.code_bind))
-                .setSwitchAccTextColor(getResources().getColor(R.color.appText4))
-                .setSwitchAccTextSize(14)
-                .setSwitchOffsetY(360)
-                .setCheckboxHidden(false)
-                .setCheckBoxWidth(16)
-                .setCheckBoxHeight(16)
-                .setCheckedImgPath("icon_login_true")
-                .setUncheckedImgPath("icon_login_false")
-                .setAppPrivacyColor(getResources().getColor(R.color.appText3), getResources().getColor(R.color.backGround1))
-                .setPrivacyOffsetY_B(35)
-                .setPrivacyTextSize(12)
-                .setVendorPrivacyPrefix("《")
-                .setVendorPrivacySuffix("》")
-                .setAppPrivacyOne(registerAgreeTxt, StaticData.USER_AGREEMENT)
-                .setAppPrivacyTwo(privacyPolicyTxt,StaticData.USER_AGREEMENT)
-                .create());
     }
 }

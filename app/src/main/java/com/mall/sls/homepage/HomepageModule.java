@@ -1,5 +1,6 @@
 package com.mall.sls.homepage;
 
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -8,6 +9,7 @@ public class HomepageModule {
     private HomepageContract.HomePageView homePageView;
     private HomepageContract.GoodsDetailsView goodsDetailsView;
     private HomepageContract.ConfirmOrderView confirmOrderView;
+    private HomepageContract.WXGoodsDetailsView wxGoodsDetailsView;
 
     public HomepageModule(HomepageContract.HomePageView homePageView) {
         this.homePageView = homePageView;
@@ -19,6 +21,10 @@ public class HomepageModule {
 
     public HomepageModule(HomepageContract.ConfirmOrderView confirmOrderView) {
         this.confirmOrderView = confirmOrderView;
+    }
+
+    public HomepageModule(HomepageContract.WXGoodsDetailsView wxGoodsDetailsView) {
+        this.wxGoodsDetailsView = wxGoodsDetailsView;
     }
 
     @Provides
@@ -34,5 +40,10 @@ public class HomepageModule {
     @Provides
     HomepageContract.ConfirmOrderView provideConfirmOrderView(){
         return confirmOrderView;
+    }
+
+    @Provides
+    HomepageContract.WXGoodsDetailsView provideWXGoodsDetailsView(){
+        return wxGoodsDetailsView;
     }
 }

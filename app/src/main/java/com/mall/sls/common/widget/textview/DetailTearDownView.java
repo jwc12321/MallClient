@@ -26,7 +26,7 @@ public class DetailTearDownView extends LinearLayout {
 
     private TearDownHandler mHandler = new TearDownHandler(this);
 
-    private ConventionalTextView  hourTextView, minutsTextView, secondTextView,milliSecondTime;
+    private ConventionalTextView  hourTextView, minutsTextView, secondTextView;
     public DetailTearDownView(Context context) {
         super(context);
         init(context, null);
@@ -63,7 +63,6 @@ public class DetailTearDownView extends LinearLayout {
         hourTextView = (ConventionalTextView) findViewById(R.id.hour_time);
         minutsTextView = (ConventionalTextView) findViewById(R.id.min_time);
         secondTextView = (ConventionalTextView) findViewById(R.id.second_time);
-        milliSecondTime=(ConventionalTextView)findViewById(R.id.milli_second_time);
     }
 
 
@@ -71,7 +70,7 @@ public class DetailTearDownView extends LinearLayout {
     protected void onAttachedToWindow() {
         // TODO Auto-generated method stub
         mHandler.removeMessages(MESSAGE_WHAT);
-        mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT, 100);
+        mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT, 1000);
         mIsAttachedToWindow = true;
         super.onAttachedToWindow();
     }
@@ -91,11 +90,9 @@ public class DetailTearDownView extends LinearLayout {
                 long hour = 0;
                 long min = 0;
                 long sec = 0;
-                long minsec=0;
-                hour = (remainTime / (60 * 60))/1000;
-                min = (remainTime / 60 /1000 - hour * 60);
-                sec = (remainTime/1000 -  hour * 60 * 60 - min * 60);
-                minsec=(remainTime -  hour * 60 * 60*1000 - min * 60*1000-sec*1000)/100;
+                hour = remainTime / (60 * 60);
+                min = (remainTime / 60  - hour * 60);
+                sec = (remainTime -  hour * 60 * 60 - min * 60);
                 if(String.valueOf(hour).length()==1){
                     hourTextView.setText("0"+hour);
                 }else {
@@ -111,8 +108,7 @@ public class DetailTearDownView extends LinearLayout {
                 }else {
                     secondTextView.setText(String.valueOf(sec));
                 }
-                milliSecondTime.setText(String.valueOf(minsec));
-                mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT, 100);
+                mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT, 1000);
             } else {
                 if(timeOutListener!=null) {
                     timeOutListener.timeOut();
@@ -141,7 +137,7 @@ public class DetailTearDownView extends LinearLayout {
     }
 
     private void cutDown(){
-        cutdownTime=cutdownTime-100;
+        cutdownTime=cutdownTime-1;
     }
 
     public void cancel() {

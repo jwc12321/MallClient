@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DrawTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -68,15 +69,6 @@ public class LootingSoonAdapter extends RecyclerView.Adapter<LootingSoonAdapter.
                 }
             }
         });
-        //一期这个功能去掉
-        holder.remindIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(onItemClickListener!=null){
-                    onItemClickListener.remind(holder.remindIv,holder.getAdapterPosition());
-                }
-            }
-        });
 
     }
 
@@ -94,12 +86,14 @@ public class LootingSoonAdapter extends RecyclerView.Adapter<LootingSoonAdapter.
         LinearLayout goodsNameRl;
         @BindView(R.id.goods_introduction)
         ConventionalTextView goodsIntroduction;
-        @BindView(R.id.remind_iv)
-        ImageView remindIv;
+        @BindView(R.id.confirm_bt)
+        ConventionalTextView confirmBt;
         @BindView(R.id.current_price)
         MediumThickTextView currentPrice;
         @BindView(R.id.original_price)
         DrawTextView originalPrice;
+        @BindView(R.id.price_ll)
+        LinearLayout priceLl;
         @BindView(R.id.item_rl)
         RelativeLayout itemRl;
 
@@ -114,13 +108,14 @@ public class LootingSoonAdapter extends RecyclerView.Adapter<LootingSoonAdapter.
             goodsIntroduction.setText(goodsItemInfo.getBrief());
             currentPrice.setText("¥" + goodsItemInfo.getRetailPrice());
             originalPrice.setText("¥" + goodsItemInfo.getCounterPrice());
-            remindIv.setEnabled(TextUtils.equals(StaticData.REFLASH_ONE,goodsItemInfo.getSubscriptionStatus())?false:true);
+            confirmBt.setText("开抢");
         }
     }
 
     public interface OnItemClickListener {
         void goActivityGoodsDetail(String goodsId);
-        void remind(ImageView remindIv,int position);
+
+        void remind(ImageView remindIv, int position);
     }
 
     private OnItemClickListener onItemClickListener;

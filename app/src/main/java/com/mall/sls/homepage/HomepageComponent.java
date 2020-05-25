@@ -7,6 +7,7 @@ import com.mall.sls.homepage.ui.ActivityGroupGoodsActivity;
 import com.mall.sls.homepage.ui.ConfirmOrderActivity;
 import com.mall.sls.homepage.ui.HomepageFragment;
 import com.mall.sls.homepage.ui.OrdinaryGoodsDetailActivity;
+import com.mall.sls.homepage.ui.WXGoodsDetailsActivity;
 
 import dagger.Component;
 
@@ -18,4 +19,5 @@ public interface HomepageComponent {
     void inject(ActivityGroupGoodsActivity activityGroupGoodsActivity);
     void inject(ActivityGoodsDetailActivity activityGoodsDetailActivity);
     void inject(ConfirmOrderActivity confirmOrderActivity);
+    void inject(WXGoodsDetailsActivity wxGoodsDetailsActivity);
 }

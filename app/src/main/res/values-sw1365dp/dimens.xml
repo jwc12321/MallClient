@@ -38,6 +38,7 @@
 	<dimen name="dp_5">18.9583dp</dimen>
 	<dimen name="dp_6">22.7500dp</dimen>
 	<dimen name="dp_7">26.5417dp</dimen>
+	<dimen name="dp_7_5">28.4375dp</dimen>
 	<dimen name="dp_8">30.3333dp</dimen>
 	<dimen name="dp_8_5">32.2292dp</dimen>
 	<dimen name="dp_9">34.1250dp</dimen>

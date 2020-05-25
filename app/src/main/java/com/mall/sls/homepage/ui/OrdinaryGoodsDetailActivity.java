@@ -67,6 +67,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     ConventionalTextView goodsUnit;
     @BindView(R.id.original_price)
     WhiteDrawTextView originalPrice;
+    @BindView(R.id.goods_original_unit)
+    ConventionalTextView goodsOriginalUnit;
     @BindView(R.id.sales)
     ConventionalTextView sales;
     @BindView(R.id.goods_name)
@@ -97,6 +99,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     ConventionalTextView downPoorTv;
     @BindView(R.id.down_group)
     RelativeLayout downGroup;
+    @BindView(R.id.webView)
+    WebView webView;
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.share)
@@ -113,8 +117,10 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     MediumThickTextView individualShoppingPrice;
     @BindView(R.id.individual_shopping_tv)
     LinearLayout individualShoppingTv;
-    @BindView(R.id.webView)
-    WebView webView;
+    @BindView(R.id.goods_brief)
+    ConventionalTextView goodsBrief;
+    @BindView(R.id.group_ll)
+    LinearLayout groupLl;
     private ProductListCallableInfo productListCallableInfo;
     private List<CustomViewsInfo> data;
     private String goodsId;
@@ -229,7 +235,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 break;
             case R.id.initiate_bill_bt://发起拼单
                 groupId = "";
-                groupRulesId=oldGroupRulesId;
+                groupRulesId = oldGroupRulesId;
                 purchaseType = StaticData.REFLASH_TWO;
                 initiateBill();
                 break;
@@ -241,7 +247,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 break;
             case R.id.individual_shopping_tv://单独购买
                 groupId = "";
-                groupRulesId=oldGroupRulesId;
+                groupRulesId = oldGroupRulesId;
                 purchaseType = StaticData.REFLASH_ONE;
                 individualShopping();
                 break;
@@ -364,17 +370,22 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getRetailPrice()));
             unit = goodsDetailsInfo.getUnit();
             goodsUnit.setText("/" + unit);
+            goodsOriginalUnit.setText("/" + unit);
             originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
             sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity() + "件");
             goodsName.setText(goodsDetailsInfo.getName());
+            goodsBrief.setText(goodsDetailsInfo.getBrief());
+            goodsBrief.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getBrief())?View.GONE:View.VISIBLE);
             selectedGoods.setText(getString(R.string.is_selected));
             groupNumber.setText(goodsDetailsInfo.getGroupNum() + "人正在拼单，可直接参与");
             groupPurchases = goodsDetailsInfo.getGroupPurchases();
-            oldGroupRulesId=goodsDetailsInfo.getRulesId();
+            oldGroupRulesId = goodsDetailsInfo.getRulesId();
             if (groupPurchases == null || groupPurchases.size() == 0) {
+                groupLl.setVisibility(View.GONE);
                 upGroup.setVisibility(View.GONE);
                 downGroup.setVisibility(View.GONE);
             } else if (groupPurchases != null && groupPurchases.size() == 1) {
+                groupLl.setVisibility(View.VISIBLE);
                 upGroup.setVisibility(View.VISIBLE);
                 downGroup.setVisibility(View.GONE);
                 upPhoneNumber.setText(groupPurchases.get(0).getMobile());
@@ -384,6 +395,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 upMobile = groupPurchases.get(0).getMobile();
                 upSurplus = groupPurchases.get(0).getSurplus();
             } else if (groupPurchases != null && groupPurchases.size() == 2) {
+                groupLl.setVisibility(View.VISIBLE);
                 upGroup.setVisibility(View.VISIBLE);
                 downGroup.setVisibility(View.VISIBLE);
                 upPhoneNumber.setText(groupPurchases.get(0).getMobile());

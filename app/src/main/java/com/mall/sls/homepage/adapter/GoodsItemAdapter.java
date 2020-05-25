@@ -100,6 +100,8 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
         ConventionalTextView groupType;
         @BindView(R.id.item_rl)
         RelativeLayout itemRl;
+        @BindView(R.id.price_type)
+        ConventionalTextView priceType;
 
         public GoodsItemView(View itemView) {
             super(itemView);
@@ -113,6 +115,15 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
             currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getRetailPrice()));
             originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getCounterPrice()));
             groupType.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGroupType()) ? View.VISIBLE : View.GONE);
+            if (TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGroupType())) {
+                groupType.setVisibility(View.VISIBLE);
+                priceType.setText(context.getString(R.string.activity_price));
+                confirmBt.setText(context.getString(R.string.go_buy));
+            } else {
+                groupType.setVisibility(View.GONE);
+                priceType.setText(context.getString(R.string.group_purchase_price_tv));
+                confirmBt.setText(context.getString(R.string.go_to_spell));
+            }
         }
     }
 

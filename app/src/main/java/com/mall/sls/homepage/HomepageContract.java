@@ -9,6 +9,7 @@ import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.OrderSubmitInfo;
+import com.mall.sls.data.entity.WXGoodsDetailsInfo;
 
 public interface HomepageContract {
     interface HomePagePresenter extends BasePresenter{
@@ -44,6 +45,14 @@ public interface HomepageContract {
         void renderCartCheckout(ConfirmOrderDetail confirmOrderDetail);
         void renderOrderSubmit(OrderSubmitInfo orderSubmitInfo);
         void renderOrderAliPay(String alipayStr);
+    }
+
+    interface WXGoodsDetailsPresenter extends BasePresenter{
+        void getWXGoodsDetailsInfo(String goodsProductId,String grouponId);
+    }
+
+    interface WXGoodsDetailsView extends BaseView<WXGoodsDetailsPresenter>{
+        void renderWXGoodsDetailsInfo(WXGoodsDetailsInfo wxGoodsDetailsInfo);
     }
 
 }

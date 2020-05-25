@@ -60,35 +60,58 @@
             android:layout_marginTop="@dimen/dp_4"
             android:layout_marginRight="@dimen/dp_15"
             android:layout_toRightOf="@id/goods_iv"
-            tools:text="脆甜小果子桃醉你付款的肌肤的JFK的肌肤肌肤的空间就付款的肌肤的JFK的肌肤的就付款的肌肤的的心"
+            android:ellipsize="end"
             android:maxLines="2"
-            android:ellipsize="end"/>
+            tools:text="脆甜小果子桃醉你付款的肌肤的JFK的肌肤肌肤的空间就付款的肌肤的JFK的肌肤的就付款的肌肤的的心" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/dp_11"
-            android:layout_marginLeft="@dimen/dp_12"
-            android:layout_marginRight="@dimen/dp_15"
-            android:layout_toRightOf="@id/goods_iv">
 
             <com.mall.sls.common.widget.textview.ConventionalTextView
                 android:id="@+id/confirm_bt"
                 style="@style/go_spell_bt_style"
-                android:text="@string/go_spell" />
-            <com.mall.sls.common.widget.textview.MediumThickTextView
-                android:id="@+id/current_price"
-                style="@style/size15_color_back1_text_style"
-                tools:text="59"
-                android:layout_centerVertical="true"/>
-            <com.mall.sls.common.widget.textview.DrawTextView
-                android:id="@+id/original_price"
-                style="@style/size10_color_app2_text_style"
-                tools:text="79"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/current_price"
-                android:layout_marginLeft="@dimen/dp_8" />
-        </RelativeLayout>
+                android:text="@string/go_spell"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="@dimen/dp_15"
+                android:layout_marginBottom="@dimen/dp_17"/>
+
+            <LinearLayout
+                android:id="@+id/price_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toRightOf="@id/goods_iv"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp_12">
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    android:id="@+id/current_price"
+                    style="@style/size17_color_back1_text_style"
+                    tools:text="59" />
+
+                <com.mall.sls.common.widget.textview.DrawTextView
+                    android:id="@+id/original_price"
+                    style="@style/size10_color_app2_text_style"
+                    tools:text="79" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toRightOf="@id/price_ll"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp_12">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/price_type"
+                    style="@style/group_purchase_price_iv_style"
+                    tools:text="@string/group_purchase_price_tv" />
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/size10_color_app2_text_style"
+                    android:text="@string/market_price"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

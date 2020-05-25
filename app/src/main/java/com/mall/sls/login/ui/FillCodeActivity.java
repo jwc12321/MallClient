@@ -162,8 +162,8 @@ public class FillCodeActivity extends BaseActivity implements LoginContract.Regi
             PushManager.getInstance().setTag(this,tags, String.valueOf(System.currentTimeMillis()));
             MobileManager.saveMobile(tokenInfo.getUserInfo().getMobile());
             TokenManager.saveToken(tokenInfo.getToken());
-            MainFrameActivity.start(this);
             WeixinLoginActivity.finishActivity();
+            MainFrameActivity.start(this);
             finish();
         }
     }

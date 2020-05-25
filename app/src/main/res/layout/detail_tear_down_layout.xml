@@ -21,10 +21,4 @@
         android:id="@+id/second_time"
         style="@style/detail_countdown_time_style"
         tools:text="12" />
-    <com.mall.sls.common.widget.textview.ConventionalTextView
-        style="@style/countdown_time_colon_style"/>
-    <com.mall.sls.common.widget.textview.ConventionalTextView
-        android:id="@+id/milli_second_time"
-        style="@style/detail_countdown_time_style"
-        tools:text="12" />
 </LinearLayout>

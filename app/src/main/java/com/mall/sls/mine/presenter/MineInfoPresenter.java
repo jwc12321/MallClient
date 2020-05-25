@@ -66,7 +66,7 @@ public class MineInfoPresenter implements MineContract.MineInfoPresenter {
     @Override
     public void getVipAmountInfo() {
         String queryString = "null";
-        String sign = SignUnit.signGet(RequestUrl.MINE_INFO_URL, queryString);
+        String sign = SignUnit.signGet(RequestUrl.VIP_PAY_AMOUNT, queryString);
         Disposable disposable = restApiService.getVipAmountInfo(sign)
                 .flatMap(new RxRemoteDataParse<VipAmountInfo>())
                 .compose(new RxSchedulerTransformer<VipAmountInfo>())

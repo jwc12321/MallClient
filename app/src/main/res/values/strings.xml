@@ -165,8 +165,8 @@
     <string name="from_end">距结束</string>
     <string name="group_purchase_price">团购价：</string>
     <string name="pinyin_now">立即拼单</string>
-    <string name="remaining_spike">距离秒杀结束还剩：</string>
-    <string name="open_time">距离秒杀开始还剩：</string>
+    <string name="remaining_spike">距结束还剩</string>
+    <string name="open_time">距开抢还剩</string>
     <string name="join_pinyin_now">立即参与拼单</string>
     <string name="surplus">剩余</string>
     <string name="input_detail_address">请填写详细地址</string>
@@ -233,5 +233,12 @@
     <string name="input_invitation_code">请填写邀请码</string>
     <string name="no_invitation_code">没有邀请码？</string>
     <string name="code_bind">手机验证码绑定</string>
+    <string name="group_purchase_price_tv">团购价</string>
+    <string name="market_price">市场价</string>
+    <string name="activity_price">活动价</string>
+    <string name="go_to_spell">去拼单</string>
+    <string name="go_buy">去抢购</string>
+    <string name="fighter">拼主</string>
+    <string name="team_rules">拼单规则</string>
 
 </resources>

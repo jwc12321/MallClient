@@ -61,36 +61,54 @@
             android:layout_toRightOf="@id/goods_iv"
             tools:text="脆甜小果子桃醉你的心" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_27"
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/confirm_bt"
+            style="@style/go_spell_bt_style"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_17"
+            tools:text="@string/go_spell" />
+
+        <LinearLayout
+            android:id="@+id/price_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/dp_12"
-            android:layout_marginRight="@dimen/dp_15"
-            android:layout_marginBottom="@dimen/dp_11"
-            android:layout_toRightOf="@id/goods_iv">
-
-            <ImageView
-                android:id="@+id/remind_iv"
-                android:layout_width="@dimen/dp_80"
-                android:layout_height="@dimen/dp_27"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/remind_list_bt_select"
-                android:visibility="gone"/>
+            android:layout_marginBottom="@dimen/dp_12"
+            android:layout_toRightOf="@id/goods_iv"
+            android:orientation="vertical">
 
             <com.mall.sls.common.widget.textview.MediumThickTextView
                 android:id="@+id/current_price"
                 style="@style/size17_color_back1_text_style"
-                android:layout_centerVertical="true"
                 tools:text="59" />
 
             <com.mall.sls.common.widget.textview.DrawTextView
                 android:id="@+id/original_price"
                 style="@style/size10_color_app2_text_style"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_8"
-                android:layout_toRightOf="@id/current_price"
                 tools:text="79" />
-        </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginBottom="@dimen/dp_12"
+            android:layout_toRightOf="@id/price_ll"
+            android:orientation="vertical">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/group_purchase_price_iv_style"
+                android:text="@string/activity_price" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/size10_color_app2_text_style"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_4"
+                android:text="@string/market_price" />
+        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

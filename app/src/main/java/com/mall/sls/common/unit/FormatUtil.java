@@ -657,4 +657,11 @@ public class FormatUtil {
             return date.getTime();
         }
     }
+
+    public static String formatMSDateTime(String timestamp) {
+        long time = dateToStamp(timestamp);
+        String pattern = "HH:mm";
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        return format.format(new Date(time * 1000));
+    }
 }

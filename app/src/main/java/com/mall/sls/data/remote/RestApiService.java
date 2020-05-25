@@ -24,6 +24,7 @@ import com.mall.sls.data.entity.ProvinceBean;
 import com.mall.sls.data.entity.TeamInfo;
 import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.entity.VipAmountInfo;
+import com.mall.sls.data.entity.WXGoodsDetailsInfo;
 import com.mall.sls.data.request.AddAddressRequest;
 import com.mall.sls.data.request.CartFastaddRequest;
 import com.mall.sls.data.request.CertifyIdRequest;
@@ -206,6 +207,10 @@ public interface RestApiService {
     //查询认证或者超级会员支付金额
     @GET("app/common/payAmount")
     Flowable<RemoteDataWrapper<VipAmountInfo>> getVipAmountInfo(@Header("X-Hc-Sign") String sign);
+
+    //H5团购详情
+    @GET("app/goods/grouponDetail")
+    Flowable<RemoteDataWrapper<WXGoodsDetailsInfo>> getWXGoodsDetailsInfo(@Header("X-Hc-Sign") String sign, @Query("goodsProductId") String goodsProductId, @Query("grouponId") String grouponId);
 
 
 }

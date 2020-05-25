@@ -42,13 +42,16 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         if (resp != null) {
             resp = resp;
         }
+        Log.d("1111","数据"+resp.errCode+"=="+resp.getType());
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
                 result = "发送成功";
-                String code = ((SendAuth.Resp) resp).code;
-                Log.d("111","数据"+code+"=="+ resp.getType());
-                EventBus.getDefault().post(code);
-                if(resp.getType()== ConstantsAPI.COMMAND_PAY_BY_WX){
+                if(resp.getType()== ConstantsAPI.COMMAND_SENDAUTH){  //登录
+                    String code = ((SendAuth.Resp) resp).code;
+                    EventBus.getDefault().post(code);
+                }else if(resp.getType()== ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX){    //分享成功
+
+                }else if(resp.getType()== ConstantsAPI.COMMAND_PAY_BY_WX){  //支付
 
                 }
                 finish();

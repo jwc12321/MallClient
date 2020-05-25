@@ -37,7 +37,6 @@ public class SignUnit {
 
     public static String signPost(String method,String body)  {
         String postSignature;
-        Log.d("111","数据"+body);
         if(!TextUtils.equals("null",body)){
            postSignature= "POST"+ "\n" +method+ "\n" + "null"+"\n" + DigestUtils.md5Hex(body)+ "\n" + FormatUtil.timeSecond();
         }else {
@@ -45,12 +44,6 @@ public class SignUnit {
         }
         Log.e("111","okhttp"+postSignature);
         return new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmacHex(postSignature);
-//        try {
-//            return Hmacsha256(key,postSignature);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return "";
     }
 
     public static String signGet(String method,String queryString )  {

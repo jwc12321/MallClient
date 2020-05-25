@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_red_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/app_name" />
+
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadingEdge="none"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/appText1"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_107">
+
+                    <ImageView
+                        android:id="@+id/goods_iv"
+                        android:layout_width="@dimen/dp_87"
+                        android:layout_height="@dimen/dp_87"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:scaleType="fitXY"
+                        tools:src="@mipmap/icon_default_goods" />
+
+                    <com.mall.sls.common.widget.textview.MediumThickTextView
+                        android:id="@+id/goods_name"
+                        style="@style/size14_color_app3_text_style"
+                        android:layout_marginLeft="@dimen/dp_8"
+                        android:layout_marginTop="@dimen/dp_14"
+                        android:layout_marginRight="@dimen/dp_15"
+                        android:layout_toRightOf="@id/goods_iv"
+                        tools:text="香蕉" />
+                    <LinearLayout
+                        android:id="@+id/price_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_toRightOf="@id/goods_iv"
+                        android:layout_marginLeft="@dimen/dp_8"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="@dimen/dp_16">
+
+                        <com.mall.sls.common.widget.textview.MediumThickTextView
+                            android:id="@+id/current_price"
+                            style="@style/size17_color_back1_text_style"
+                            tools:text="59" />
+
+                        <com.mall.sls.common.widget.textview.DrawTextView
+                            android:id="@+id/original_price"
+                            style="@style/size10_color_app2_text_style"
+                            tools:text="79" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_toRightOf="@id/price_ll"
+                        android:layout_marginLeft="@dimen/dp_8"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="@dimen/dp_16">
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/price_type"
+                            style="@style/group_purchase_price_iv_style"
+                            android:text="@string/group_purchase_price_tv" />
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            style="@style/size10_color_app2_text_style"
+                            android:text="@string/market_price"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:layout_gravity="center_horizontal"/>
+                    </LinearLayout>
+                </RelativeLayout>
+                <View
+                   style="@style/back_nine_line_style"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_41">
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                       style="@style/size15_color_app3_text_style"
+                        android:id="@+id/fighter_mobile"
+                        tools:text="11111"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"/>
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:layout_width="@dimen/dp_35"
+                        android:layout_height="@dimen/dp_15"
+                        android:background="@drawable/common_all_seven_five_back_one_bg"
+                        android:textSize="@dimen/sp_10"
+                        android:textColor="@color/appText1"
+                        android:gravity="center"
+                        android:text="@string/fighter"
+                        android:layout_marginTop="@dimen/dp_11"
+                        android:layout_toRightOf="@id/fighter_mobile"
+                        android:layout_marginLeft="@dimen/dp_m_8"/>
+                </RelativeLayout>
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/size15_color_app3_text_style"
+                    android:id="@+id/team_mobile"
+                    tools:text="11111"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_14"/>
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                   style="@style/size14_color_app2_text_style"
+                    tools:text="拼主所选规格：250kg 1盒"
+                    android:layout_marginTop="@dimen/dp_19"
+                    android:id="@+id/specification"
+                    android:layout_gravity="center_horizontal"/>
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                  style="@style/size16_color_app3_text_style"
+                    android:id="@+id/team_result"
+                    tools:text="拼单已满"
+                    android:layout_marginTop="@dimen/dp_23"
+                    android:layout_gravity="center_horizontal"/>
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    android:id="@+id/confirm_bt"
+                    style="@style/common_next_bt_style"
+                    android:layout_marginTop="@dimen/dp_13"
+                    tools:text="发起拼单" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_15">
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                      style="@style/size14_color_app3_text_style"
+                        android:text="@string/team_rules"/>
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/size14_color_app2_text_style"
+                        tools:text="@string/team_rules"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+            </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/other_rl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_44"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_marginBottom="@dimen/dp_5">
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    android:id="@+id/selected_group_tv"
+                    style="@style/size16_color_back1_text_style"
+                    android:layout_centerInParent="true"
+                    android:text="@string/selected_group" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_toLeftOf="@id/selected_group_tv"
+                    android:src="@mipmap/icon_left_red_line" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_toRightOf="@id/selected_group_tv"
+                    android:src="@mipmap/icon_right_red_line" />
+            </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/goods_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:orientation="vertical"
+                app:layoutManager="@string/layoutManager_LinearLayout"
+                tools:listitem="@layout/adapter_goods_item" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

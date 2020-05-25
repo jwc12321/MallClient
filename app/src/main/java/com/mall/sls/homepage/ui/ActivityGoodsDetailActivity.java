@@ -12,7 +12,6 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
@@ -59,7 +58,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/9.
  * 描述：活动商品详情
  */
-public class ActivityGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, DetailTearDownView.TimeOutListener, TwelveTearDownView.TimeOutListener {
+public class ActivityGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, DetailTearDownView.TimeOutListener {
 
 
     @BindView(R.id.banner)
@@ -70,6 +69,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     ConventionalTextView goodsUnit;
     @BindView(R.id.original_price)
     WhiteDrawTextView originalPrice;
+    @BindView(R.id.goods_original_unit)
+    ConventionalTextView goodsOriginalUnit;
     @BindView(R.id.sales)
     ConventionalTextView sales;
     @BindView(R.id.time_type)
@@ -78,6 +79,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     DetailTearDownView countDown;
     @BindView(R.id.goods_name)
     MediumThickTextView goodsName;
+    @BindView(R.id.goods_brief)
+    ConventionalTextView goodsBrief;
     @BindView(R.id.selected_goods)
     ConventionalTextView selectedGoods;
     @BindView(R.id.right_arrow_iv)
@@ -96,12 +99,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     ImageView serviceIv;
     @BindView(R.id.home_iv)
     ImageView homeIv;
-    @BindView(R.id.bottom_count_down)
-    TwelveTearDownView bottomCountDown;
-    @BindView(R.id.pinyin_ll)
-    LinearLayout pinyinLl;
-    @BindView(R.id.tv)
-    ConventionalTextView tv;
+    @BindView(R.id.confirm_bt)
+    MediumThickTextView confirmBt;
     private ProductListCallableInfo productListCallableInfo;
     private List<CustomViewsInfo> data;
     private String goodsId;
@@ -199,7 +198,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 .inject(this);
     }
 
-    @OnClick({R.id.back, R.id.pinyin_ll, R.id.service_iv, R.id.sku_rl})
+    @OnClick({R.id.back, R.id.confirm_bt, R.id.service_iv, R.id.sku_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -211,7 +210,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             case R.id.sku_rl:
                 goSelectSpecReturn(StaticData.REFLASH_ONE);
                 break;
-            case R.id.pinyin_ll://发起拼单
+            case R.id.confirm_bt://发起拼单
                 initiateBill();
                 break;
             default:
@@ -300,9 +299,12 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getRetailPrice()));
             unit = goodsDetailsInfo.getUnit();
             goodsUnit.setText("/" + unit);
+            goodsOriginalUnit.setText("/" + unit);
             originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
             sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity() + "件");
             goodsName.setText(goodsDetailsInfo.getName());
+            goodsBrief.setText(goodsDetailsInfo.getBrief());
+            goodsBrief.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getBrief())?View.GONE:View.VISIBLE);
             selectedGoods.setText(getString(R.string.is_selected));
             if (!TextUtils.isEmpty(goodsDetailsInfo.getNow()) && !TextUtils.isEmpty(goodsDetailsInfo.getGroupExpireTime()) && !TextUtils.isEmpty(goodsDetailsInfo.getStartTime())) {
                 long now = FormatUtil.dateToStamp(goodsDetailsInfo.getNow());
@@ -310,18 +312,16 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 long startTime = FormatUtil.dateToStamp(goodsDetailsInfo.getStartTime());
                 if (now < startTime) {
                     timeType.setText(getString(R.string.open_time));
-                    countDown.startTearDown(startTime, now);
-                    bottomCountDown.startTearDown(startTime, now);
-                    pinyinLl.setEnabled(false);
-                    tv.setVisibility(View.GONE);
+                    countDown.startTearDown(startTime/1000, now/1000);
+                    confirmBt.setEnabled(false);
+                    confirmBt.setText(FormatUtil.formatMSDateTime(goodsDetailsInfo.getStartTime())+"开抢");
                     teamType = StaticData.REFLASH_ONE;
                 } else if (now > startTime && now < groupExpireTime) {
-                    countDown.startTearDown(groupExpireTime, now);
-                    bottomCountDown.startTearDown(groupExpireTime, now);
+                    countDown.startTearDown(groupExpireTime/1000, now/1000);
                     timeType.setText(getString(R.string.remaining_spike));
-                    pinyinLl.setEnabled(true);
-                    tv.setVisibility(View.VISIBLE);
+                    confirmBt.setEnabled(true);
                     teamType = StaticData.REFLASH_TWO;
+                    confirmBt.setText(getString(R.string.go_buy));
                 }
             }
             groupPurchases = goodsDetailsInfo.getGroupPurchases();
@@ -360,7 +360,6 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     protected void onDestroy() {
         super.onDestroy();
         countDown.cancel();
-        bottomCountDown.cancel();
     }
 
     @Override
