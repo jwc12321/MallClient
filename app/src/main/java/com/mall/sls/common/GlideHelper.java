@@ -13,7 +13,7 @@ public class GlideHelper {
                 Glide.with(activity)
                         .load(url)
                         .error(placeHolder)
-                        .placeholder(placeHolder)
+//                        .placeholder(placeHolder)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .dontAnimate()
                         .into(target);

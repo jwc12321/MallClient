@@ -180,6 +180,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 AddressManageActivity.start(getActivity(), StaticData.REFLASH_ONE);
                 break;
             case R.id.invite_friends://邀请好友
+                InviteFriendsActivity.start(getActivity());
                 break;
             case R.id.verified_iv://认证
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {

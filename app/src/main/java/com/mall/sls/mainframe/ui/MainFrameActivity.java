@@ -2,7 +2,9 @@ package com.mall.sls.mainframe.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -80,6 +82,21 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
         setContentView(R.layout.activity_mainfram);
         ButterKnife.bind(this);
         initView();
+    }
+
+    private void initData() {
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        Log.d("111","数据");
+        if(Intent.ACTION_VIEW.equals(action)){
+            Uri uri = intent.getData();
+            Log.d("111","数据=="+uri);
+            if(uri != null){
+                String name = uri.getQueryParameter("name");
+                String age= uri.getQueryParameter("age");
+                Log.d("111","数据"+name+age);
+            }
+        }
     }
 
     private void initView() {

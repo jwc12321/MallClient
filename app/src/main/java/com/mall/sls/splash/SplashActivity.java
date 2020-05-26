@@ -1,10 +1,12 @@
 package com.mall.sls.splash;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.mall.sls.BaseActivity;
@@ -18,7 +20,7 @@ import com.mall.sls.mainframe.ui.MainFrameActivity;
 import butterknife.ButterKnife;
 
 
-public class SplashActivity extends BaseActivity {
+public class  SplashActivity extends BaseActivity {
     private static final int GO_MAIN = 1;
     private static final int GO_LOGIN = 2;
 
@@ -40,10 +42,26 @@ public class SplashActivity extends BaseActivity {
         }
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
+//        initData();
         if(!TextUtils.isEmpty(TokenManager.getToken())) {
             mHandler.sendEmptyMessageDelayed(GO_MAIN, 300);
         }else {
             mHandler.sendEmptyMessageDelayed(GO_LOGIN, 300);
+        }
+    }
+
+    private void initData() {
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        Log.d("111","数据");
+        if(Intent.ACTION_VIEW.equals(action)){
+            Uri uri = intent.getData();
+            Log.d("111","数据=="+uri);
+            if(uri != null){
+                String name = uri.getQueryParameter("name");
+                String age= uri.getQueryParameter("age");
+                Log.d("111","数据"+name+age);
+            }
         }
     }
 

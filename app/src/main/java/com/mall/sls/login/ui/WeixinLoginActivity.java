@@ -90,7 +90,6 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
     private String deviceId;
     private String deviceOsVersion;
     private String devicePlatform;
-    private WXShareManager wxShareManager;
 
     private PhoneNumberAuthHelper mAlicomAuthHelper;
     private TokenResultListener mTokenListener;
@@ -113,7 +112,6 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
         ButterKnife.bind(this);
         setHeight(null, title, null);
         initView();
-        wxShareManager = WXShareManager.getInstance(this);
     }
 
     private void initView() {
@@ -132,8 +130,6 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
         switch (view.getId()) {
             case R.id.confirm_bt://登录
                 WXLogin();
-//                Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
-//                wxShareManager.shareUrlToWX(false,"https://www.baidu.com",bitmap,"百度","我是百度");
                 break;
             default:
         }

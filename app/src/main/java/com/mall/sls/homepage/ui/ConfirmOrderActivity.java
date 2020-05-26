@@ -117,20 +117,24 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private String couponId;
     private String userCouponId;
     private String cartId;
-    private String message="";
+    private String message = "";
     //1:单独购买 2：发起拼单 3：拼团 4：百人团
     private String purchaseType;
     private Handler mHandler = new MyHandler(this);
     private String orderId;
     private String orderTotalPrice;
+    private String goodsId;
+    private String grouponId;
+    private String backType;
+    private String activityUrl="http://192.168.31.13:8080/activity";
 
     @Inject
     ConfirmOrderPresenter confirmOrderPresenter;
 
-    public static void start(Context context, ConfirmOrderDetail confirmOrderDetail,String purchaseType) {
+    public static void start(Context context, ConfirmOrderDetail confirmOrderDetail, String purchaseType) {
         Intent intent = new Intent(context, ConfirmOrderActivity.class);
         intent.putExtra(StaticData.CONFIRM_ORDER_DETAIL, (Serializable) confirmOrderDetail);
-        intent.putExtra(StaticData.PURCHASE_TYPE,purchaseType);
+        intent.putExtra(StaticData.PURCHASE_TYPE, purchaseType);
         context.startActivity(intent);
     }
 
@@ -145,7 +149,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
 
     private void initView() {
         confirmOrderDetail = (ConfirmOrderDetail) getIntent().getSerializableExtra(StaticData.CONFIRM_ORDER_DETAIL);
-        purchaseType=getIntent().getStringExtra(StaticData.PURCHASE_TYPE);
+        purchaseType = getIntent().getStringExtra(StaticData.PURCHASE_TYPE);
         confirmDetail();
     }
 
@@ -158,12 +162,13 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             if (checkedGoodsList != null && checkedGoodsList.size() > 0) {
                 //现在没有购物车，所以单独一个
                 checkedGoods = checkedGoodsList.get(0);
+                goodsId = checkedGoods.getGoodsId();
                 goodsNumber.setText("x" + checkedGoods.getNumber());
                 goodsName.setText(checkedGoods.getGoodsName());
                 goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(checkedGoods.getPrice()));
                 GlideHelper.load(this, checkedGoods.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             }
-            orderTotalPrice=confirmOrderDetail.getOrderTotalPrice();
+            orderTotalPrice = confirmOrderDetail.getOrderTotalPrice();
             goodsTotalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(confirmOrderDetail.getGoodsTotalPrice()));
             orderPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(confirmOrderDetail.getOrderTotalPrice()));
             totalAmount.setText("¥" + NumberFormatUnit.twoDecimalFormat(confirmOrderDetail.getOrderTotalPrice()));
@@ -213,12 +218,12 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                 finish();
                 break;
             case R.id.confirm_bt://去支付
-                confirmOrderPresenter.orderSubmit(addressId,cartId,couponId,userCouponId,message);
+                confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
                 break;
             case R.id.coupon_rl:
                 Intent couponIntent = new Intent(this, SelectCouponActivity.class);
-                couponIntent.putExtra(StaticData.CART_IDS,cartId);
-                couponIntent.putExtra(StaticData.USER_COUPON_ID,userCouponId);
+                couponIntent.putExtra(StaticData.CART_IDS, cartId);
+                couponIntent.putExtra(StaticData.USER_COUPON_ID, userCouponId);
                 startActivityForResult(couponIntent, RequestCodeStatic.SELECT_COUPON);
                 break;
             case R.id.address_all://选择地址
@@ -228,7 +233,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                 break;
             case R.id.remark_rl:
                 Intent remarkIntent = new Intent(this, FillRemarksActivity.class);
-                remarkIntent.putExtra(StaticData.REMARK,message);
+                remarkIntent.putExtra(StaticData.REMARK, message);
                 startActivityForResult(remarkIntent, RequestCodeStatic.REQUEST_REMARK);
                 break;
             default:
@@ -258,7 +263,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                     if (data != null) {
                         Bundle bundle = data.getExtras();
                         couponId = bundle.getString(StaticData.COUPON_ID);
-                        userCouponId= bundle.getString(StaticData.USER_COUPON_ID);
+                        userCouponId = bundle.getString(StaticData.USER_COUPON_ID);
                         confirmOrderPresenter.cartCheckout(addressId, cartId, couponId, userCouponId);
                     }
                     break;
@@ -274,10 +279,23 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                             }
                         } else {
                             if (PayTypeInstalledUtils.isAliPayInstalled(ConfirmOrderActivity.this)) {
-                                confirmOrderPresenter.orderAliPay(orderId,StaticData.REFLASH_ONE);
+                                confirmOrderPresenter.orderAliPay(orderId, StaticData.REFLASH_ONE);
                             } else {
                                 showMessage(getString(R.string.install_alipay));
                             }
+                        }
+                    }
+                    break;
+                case RequestCodeStatic.ALONE_GROUP:
+                    break;
+                case RequestCodeStatic.MANY_GROUP:
+                    if (data != null) {
+                        backType = data.getStringExtra(StaticData.BACK_TYPE);
+                        if(TextUtils.equals(StaticData.REFLASH_ONE,backType)){
+                            WXShareBackActivity.start(this,StaticData.REFLASH_ONE,goodsId,activityUrl,"");
+                        }else {
+                            GoodsOrderDetailsActivity.start(this, orderId);
+                            finish();
                         }
                     }
                     break;
@@ -299,18 +317,20 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
 
     @Override
     public void renderOrderSubmit(OrderSubmitInfo orderSubmitInfo) {
-        if(orderSubmitInfo!=null){
-            orderId=orderSubmitInfo.getOrderId();
-            Intent intent = new Intent(this, SelectPayTypeActivity.class);
-            intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
-            intent.putExtra(StaticData.PAYMENT_AMOUNT,orderTotalPrice);
-            startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
+        if (orderSubmitInfo != null) {
+            orderId = orderSubmitInfo.getOrderId();
+            grouponId = orderSubmitInfo.getGrouponLinkId();
+            paySuccess();
+//            Intent intent = new Intent(this, SelectPayTypeActivity.class);
+//            intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
+//            intent.putExtra(StaticData.PAYMENT_AMOUNT,orderTotalPrice);
+//            startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
         }
     }
 
     @Override
     public void renderOrderAliPay(String alipayStr) {
-        if(!TextUtils.isEmpty(alipayStr)){
+        if (!TextUtils.isEmpty(alipayStr)) {
             startAliPay(alipayStr);
         }
     }
@@ -364,23 +384,30 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             paySuccess();
         } else if (TextUtils.equals(resultStatus, "6001")) {
             showMessage(getString(R.string.pay_cancel));
-            GoodsOrderDetailsActivity.start(this,orderId);
+            GoodsOrderDetailsActivity.start(this, orderId);
             finish();
         } else {
             showMessage(getString(R.string.pay_failed));
         }
     }
 
-    private void paySuccess(){
-        GoodsOrderDetailsActivity.start(this,orderId);
-        finish();
-        if(TextUtils.equals(StaticData.REFLASH_ONE,purchaseType)){
-        }else if (TextUtils.equals(StaticData.REFLASH_TWO,purchaseType)){
+    private void paySuccess() {
+        if (TextUtils.equals(StaticData.REFLASH_ONE, purchaseType)) {
+            GoodsOrderDetailsActivity.start(this, orderId);
+            finish();
+        } else if (TextUtils.equals(StaticData.REFLASH_TWO, purchaseType)) {
+            Intent intent = new Intent(this, AloneGroupActivity.class);
+            intent.putExtra(StaticData.GOODS_ID, goodsId);
+            intent.putExtra(StaticData.GROUPON_ID, grouponId);
+            startActivityForResult(intent, RequestCodeStatic.ALONE_GROUP);
 
-        }else if (TextUtils.equals(StaticData.REFLASH_THREE,purchaseType)){
+        } else if (TextUtils.equals(StaticData.REFLASH_THREE, purchaseType)) {
 
-        }else if (TextUtils.equals(StaticData.REFLASH_FOUR,purchaseType)){
-
+        } else if (TextUtils.equals(StaticData.REFLASH_FOUR, purchaseType)) {
+            Intent intent = new Intent(this, ManyGroupActivity.class);
+            intent.putExtra(StaticData.GOODS_ID, goodsId);
+            intent.putExtra(StaticData.ACTIVITY_URL, activityUrl);
+            startActivityForResult(intent, RequestCodeStatic.MANY_GROUP);
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.mall.sls.homepage.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,16 +14,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DrawTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.WXGoodsDetailsInfo;
+import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
+import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.adapter.GoodsItemAdapter;
+import com.mall.sls.homepage.presenter.WXGoodsDetailsPresenter;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author jwc on 2020/5/25.
@@ -64,17 +73,34 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
     RecyclerView goodsRv;
 
     private GoodsItemAdapter goodsItemAdapter;
+    private String goodsId;
+    private String grouponId;
+
+    @Inject
+    WXGoodsDetailsPresenter wxGoodsDetailsPresenter;
+
+    public static void start(Context context,String goodsId,String grouponId) {
+        Intent intent = new Intent(context, WXGoodsDetailsActivity.class);
+        intent.putExtra(StaticData.GOODS_ID,goodsId);
+        intent.putExtra(StaticData.GROUPON_ID,grouponId);
+        context.startActivity(intent);
+    }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wx_goods_details);
         ButterKnife.bind(this);
+        setHeight(back,title,null);
         initView();
     }
 
     private void initView(){
+        goodsId=getIntent().getStringExtra(StaticData.GOODS_ID);
+        grouponId=getIntent().getStringExtra(StaticData.GROUPON_ID);
         initAdapter();
+        wxGoodsDetailsPresenter.getWXGoodsDetailsInfo(goodsId,grouponId);
     }
 
     private void initAdapter() {
@@ -108,6 +134,16 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
 
 
     @Override
+    protected void initializeInjector() {
+        DaggerHomepageComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .homepageModule(new HomepageModule(this))
+                .build()
+                .inject(this);
+    }
+
+
+    @Override
     public void goOrdinaryGoodsDetails(String goodsId) {
         OrdinaryGoodsDetailActivity.start(this, goodsId);
     }
@@ -115,5 +151,15 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
     @Override
     public void goActivityGroupGoods(String goodsId) {
         ActivityGroupGoodsActivity.start(this, goodsId);
+    }
+
+    @OnClick({R.id.back})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back:
+                finish();
+                break;
+            default:
+        }
     }
 }

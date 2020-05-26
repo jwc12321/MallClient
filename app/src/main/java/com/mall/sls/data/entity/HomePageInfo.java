@@ -21,6 +21,8 @@ public class HomePageInfo {
     //未读消息
     @SerializedName("unreadMsgCount")
     private String unreadMsgCount;
+    @SerializedName("jingang")
+    private List<JinGangInfo> jinGangInfos;
 
 
     public String getStatus() {
@@ -53,5 +55,13 @@ public class HomePageInfo {
 
     public void setUnreadMsgCount(String unreadMsgCount) {
         this.unreadMsgCount = unreadMsgCount;
+    }
+
+    public List<JinGangInfo> getJinGangInfos() {
+        return jinGangInfos;
+    }
+
+    public void setJinGangInfos(List<JinGangInfo> jinGangInfos) {
+        this.jinGangInfos = jinGangInfos;
     }
 }

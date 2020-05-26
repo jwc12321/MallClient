@@ -4,6 +4,7 @@ import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
 import com.mall.sls.data.entity.InviteInfo;
 import com.mall.sls.data.entity.MineInfo;
+import com.mall.sls.data.entity.ShareInfo;
 import com.mall.sls.data.entity.TeamInfo;
 import com.mall.sls.data.entity.VipAmountInfo;
 
@@ -40,6 +41,14 @@ public interface MineContract {
     interface MyTeamInfoView extends BaseView<MyTeamInfoPresenter>{
         void renderMyTeamInfo(TeamInfo teamInfo);
         void renderMoreMyTeamInfo(TeamInfo teamInfo);
+    }
+
+    interface ShareInfoPresenter extends BasePresenter{
+        void getShareInfo();
+    }
+
+    interface ShareInfoView extends BaseView<ShareInfoPresenter>{
+        void renderShareInfo(ShareInfo shareInfo);
     }
 
 

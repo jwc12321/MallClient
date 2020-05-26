@@ -29,7 +29,6 @@ import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DetailTearDownView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
-import com.mall.sls.common.widget.textview.TwelveTearDownView;
 import com.mall.sls.common.widget.textview.WhiteDrawTextView;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CustomViewsInfo;
@@ -198,10 +197,11 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 .inject(this);
     }
 
-    @OnClick({R.id.back, R.id.confirm_bt, R.id.service_iv, R.id.sku_rl})
+    @OnClick({R.id.back, R.id.confirm_bt, R.id.service_iv, R.id.sku_rl,R.id.home_iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
+            case R.id.home_iv:
                 finish();
                 break;
             case R.id.service_iv:

@@ -18,4 +18,7 @@ public class RequestCodeStatic {
     public static final int SPELLING_REMINDER=15;//提示拼单
     public static final int PAY_TYPE=16;//选择支付方式
     public static final int ORDER_DETAIL=17;//订单详情页
+    public static final int ALONE_GROUP=18;//分享拼单
+    public static final int MANY_GROUP=19;//百人团分享
+    public static final int SELECT_SHARE_TYPE=20;//选择分享地方
 }

@@ -240,11 +240,11 @@
             android:id="@+id/home_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_260"
-            android:src="@mipmap/icon_detail_home" />
+            android:paddingRight="@dimen/dp_25"
+            android:src="@mipmap/icon_detail_home"
+            android:layout_toLeftOf="@id/confirm_bt"/>
 
         <com.mall.sls.common.widget.textview.MediumThickTextView
            style="@style/goods_detail_bottom_bt_style"

@@ -1,7 +1,5 @@
 package com.mall.sls.common;
 
-import retrofit2.http.PUT;
-
 public class StaticData {
     public static final String  WX_APP_ID = "wxcea8bff4c8e832be";
     //登录中
@@ -83,9 +81,13 @@ public class StaticData {
     //金额
     public static final String PAYMENT_AMOUNT="paymentAmount";
     //unionId
-    public static final String UNION_ID="unionId";
-    public static final String ACCESS_CODE="accessCode";
-    public static final String SMS_CODE="smsCode";
-    public static final String CRETIFY_AMOUNT="certifyAmount";
-    public static final String VIP_AMOUNT="vipAmount";
+    public static final String UNION_ID="unionId";//微信登录的unionid
+    public static final String ACCESS_CODE="accessCode";//一键登录的code
+    public static final String SMS_CODE="smsCode";//短信验证码
+    public static final String CRETIFY_AMOUNT="certifyAmount";//实人认证费用
+    public static final String VIP_AMOUNT="vipAmount";//开通超级会员费用
+    public static final String GROUPON_ID="grouponId";//团购ID
+    public static final String ACTIVITY_URL="activityUrl";//活动团分享url
+    public static final String END_TIME="endTime";//结束时间
+    public static final String BACK_TYPE="backType";
 }

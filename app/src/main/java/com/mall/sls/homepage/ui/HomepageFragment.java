@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.location.AMapLocation;
@@ -33,10 +34,12 @@ import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.BannerInfo;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.HomePageInfo;
+import com.mall.sls.data.entity.JinGangInfo;
 import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.adapter.GoodsItemAdapter;
+import com.mall.sls.homepage.adapter.JinGangAdapter;
 import com.mall.sls.homepage.presenter.HomePagePresenter;
 import com.mall.sls.message.ui.MessageTypeActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -57,7 +60,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/7.
  * 描述：
  */
-public class HomepageFragment extends BaseFragment implements HomepageContract.HomePageView, GoodsItemAdapter.OnItemClickListener {
+public class HomepageFragment extends BaseFragment implements HomepageContract.HomePageView, GoodsItemAdapter.OnItemClickListener,JinGangAdapter.OnItemClickListener {
 
     @BindView(R.id.small_)
     MediumThickTextView small;
@@ -87,6 +90,8 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     ConventionalTextView messageCount;
     @BindView(R.id.other_rl)
     RelativeLayout otherRl;
+    @BindView(R.id.jingang_rv)
+    RecyclerView jingangRv;
     private LocationHelper mLocationHelper;
     private String city;
     private String longitude;
@@ -96,9 +101,12 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     private GoodsItemAdapter goodsItemAdapter;
     private List<BannerInfo> bannerInfos;
     private String areaCode;
+    private JinGangAdapter jinGangAdapter;
+    private List<JinGangInfo> jinGangInfos;
     @Inject
     HomePagePresenter homePagePresenter;
     private List<String> group;
+    private boolean isFirst=true;
 
     public static HomepageFragment newInstance() {
         HomepageFragment fragment = new HomepageFragment();
@@ -137,6 +145,9 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         goodsItemAdapter = new GoodsItemAdapter(getActivity());
         goodsItemAdapter.setOnItemClickListener(this);
         goodsRv.setAdapter(goodsItemAdapter);
+        jinGangAdapter = new JinGangAdapter(getActivity());
+        jinGangAdapter.setOnItemClickListener(this);
+        jingangRv.setAdapter(jinGangAdapter);
     }
 
     private void xBannerInit() {
@@ -241,12 +252,6 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     public void renderHomePageInfo(HomePageInfo homePageInfo) {
         refreshLayout.finishRefresh();
         if (homePageInfo != null) {
-            if (TextUtils.equals(StaticData.REFLASH_ONE, homePageInfo.getStatus())) {
-                //开通
-                goodsItemAdapter.setData(homePageInfo.getGoodsItemInfos());
-            } else {
-                CityNotOpenActivity.start(getActivity());
-            }
             bannerInfos = homePageInfo.getBannerInfos();
             if (data == null) {
                 data = new ArrayList<>();
@@ -263,6 +268,20 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             banner.setBannerData(R.layout.xbanner_item, data);
             messageCount.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO, homePageInfo.getUnreadMsgCount()) ? View.GONE : View.VISIBLE);
             messageCount.setText(homePageInfo.getUnreadMsgCount());
+            if (TextUtils.equals(StaticData.REFLASH_ONE, homePageInfo.getStatus())) {
+                //开通
+                goodsItemAdapter.setData(homePageInfo.getGoodsItemInfos());
+            } else {
+                CityNotOpenActivity.start(getActivity());
+            }
+            jinGangInfos=homePageInfo.getJinGangInfos();
+            if(jinGangInfos!=null){
+                if(isFirst) {
+                    jingangRv.setLayoutManager(new GridLayoutManager(getActivity(), jinGangInfos.size()));
+                    isFirst=false;
+                }
+                jinGangAdapter.setData(jinGangInfos);
+            }
         }
     }
 

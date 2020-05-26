@@ -27,6 +27,8 @@ public class CheckedGoods implements Serializable {
     private boolean isGroup;
     @SerializedName("preferentialPrice")
     private String preferentialPrice;
+    @SerializedName("goodsId")
+    private String goodsId;
 
     public String getNumber() {
         return number;
@@ -74,5 +76,13 @@ public class CheckedGoods implements Serializable {
 
     public void setPreferentialPrice(String preferentialPrice) {
         this.preferentialPrice = preferentialPrice;
+    }
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
     }
 }

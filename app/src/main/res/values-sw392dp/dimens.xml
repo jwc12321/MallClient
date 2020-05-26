@@ -407,6 +407,7 @@
 	<dimen name="dp_422">460.3636dp</dimen>
 	<dimen name="dp_472">514.9090dp</dimen>
 	<dimen name="dp_500">545.4544dp</dimen>
+	<dimen name="dp_504">549.8181dp</dimen>
 	<dimen name="dp_600">654.5453dp</dimen>
 	<dimen name="dp_640">698.1817dp</dimen>
 	<dimen name="dp_720">785.4544dp</dimen>

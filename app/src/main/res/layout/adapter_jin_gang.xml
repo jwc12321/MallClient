@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/item_ll">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/dp_49"
+        android:layout_height="@dimen/dp_49"
+        tools:src="@mipmap/icon_default_goods"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_10"/>
+
+    <com.mall.sls.common.widget.textview.ConventionalTextView
+        android:id="@+id/name"
+        style="@style/size14_color_app3_text_style"
+        android:layout_marginTop="@dimen/dp_9"
+        tools:text="猜你喜欢"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dp_8"/>
+</LinearLayout>

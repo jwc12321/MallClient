@@ -227,10 +227,11 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 .inject(this);
     }
 
-    @OnClick({R.id.back, R.id.individual_shopping_tv, R.id.initiate_bill_bt, R.id.service_iv, R.id.sku_rl, R.id.up_spell_bt, R.id.down_spell_bt})
+    @OnClick({R.id.back, R.id.individual_shopping_tv, R.id.initiate_bill_bt, R.id.service_iv, R.id.sku_rl, R.id.up_spell_bt, R.id.down_spell_bt,R.id.home_iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
+            case R.id.home_iv:
                 finish();
                 break;
             case R.id.initiate_bill_bt://发起拼单

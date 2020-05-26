@@ -32,7 +32,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout style="@style/confirm_order_rl_style">
+            <RelativeLayout
+                android:id="@+id/feedback_rl"
+                style="@style/confirm_order_rl_style">
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     style="@style/setting_left_tv_style"

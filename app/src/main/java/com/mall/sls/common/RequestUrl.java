@@ -40,5 +40,6 @@ public class RequestUrl {
     public static String BIND_ONE_CLICK="/app/auth/login/wx/ali";//阿里一键登录接口(绑定微信)
     public static String VIP_PAY_AMOUNT ="/app/common/payAmount";//查询认证或者超级会员支付金额
     public static String WX_GOODS_DETAILS="/app/goods/grouponDetail";//H5团购详情
+    public static String AUTH_SHARE_URL="/app/auth/share";//分享信息
 
 }

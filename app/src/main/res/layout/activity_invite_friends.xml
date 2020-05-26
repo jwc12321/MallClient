@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/icon_invite_friends_bg"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"/>
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_black_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/invite_friend_vip" />
+
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_rel"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        android:layout_marginBottom="@dimen/dp_86">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_57"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginRight="@dimen/dp_15"
+                android:background="@drawable/common_four_app_one_bg">
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    android:id="@+id/code_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:text="@string/my_invitation_code"
+                    android:textColor="@color/appText11"
+                    android:textSize="@dimen/sp_15" />
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    android:id="@+id/code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_32"
+                    android:layout_toRightOf="@id/code_tv"
+                    android:textColor="@color/appText11"
+                    android:textSize="@dimen/sp_15"
+                    tools:text="123456" />
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    android:id="@+id/copy_bt"
+                    android:layout_width="@dimen/dp_84"
+                    android:layout_height="@dimen/dp_27"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:background="@drawable/common_thirteen_five_back_one_bg"
+                    android:gravity="center"
+                    android:text="@string/copy"
+                    android:textColor="@color/appText1"
+                    android:textSize="@dimen/sp_15" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/share_rl"
+                android:layout_width="@dimen/dp_288"
+                android:layout_height="@dimen/dp_504"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_28"
+                android:layout_marginBottom="@dimen/dp_28">
+                <ImageView
+                    android:id="@+id/iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"/>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/dp_99"
+                    android:layout_height="@dimen/dp_99"
+                    android:layout_centerHorizontal="true"
+                    android:layout_above="@id/tv"
+                    android:layout_marginBottom="@dimen/dp_6"
+                    android:background="@drawable/common_four_app_three_bg">
+                    <ImageView
+                        android:id="@+id/qrcode_iv"
+                        android:layout_width="@dimen/dp_97"
+                        android:layout_height="@dimen/dp_97"
+                        android:background="@color/appText1"
+                        android:scaleType="fitXY"
+                        android:layout_centerInParent="true"/>
+                </RelativeLayout>
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/tv"
+                   style="@style/size11_color_app3_text_style"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/dp_9"
+                    android:text="@string/scan_reward"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_86"
+        android:background="@color/backGround35"
+        android:layout_alignParentBottom="true">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true">
+            <ImageView
+                android:id="@+id/link_bt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_link"/>
+            <ImageView
+                android:id="@+id/poster_bt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_share_poster"
+                android:layout_marginLeft="@dimen/dp_121"/>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

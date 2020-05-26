@@ -30,20 +30,25 @@ public class SettingActivity extends BaseActivity {
     RelativeLayout titleRel;
     @BindView(R.id.confirm_bt)
     MediumThickTextView confirmBt;
+    @BindView(R.id.feedback_rl)
+    RelativeLayout feedbackRl;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
-        setHeight(back,title,null);
+        setHeight(back, title, null);
     }
 
-    @OnClick({R.id.back, R.id.confirm_bt})
+    @OnClick({R.id.back, R.id.confirm_bt,R.id.feedback_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
                 finish();
+                break;
+            case R.id.feedback_rl:
+                FeedBackActivity.start(this);
                 break;
             case R.id.confirm_bt://确认退出登录
                 TokenManager.saveToken("");
@@ -54,7 +59,6 @@ public class SettingActivity extends BaseActivity {
             default:
         }
     }
-
 
 
     @Override

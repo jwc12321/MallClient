@@ -58,11 +58,15 @@ public class MSTearDownView extends LinearLayout {
     }
 
     private void init(Context context, AttributeSet attributeSet) {
-
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.layout_ms_tear_down, this);
         minutsTextView = (ConventionalTextView) findViewById(R.id.min_time);
         secondTextView = (ConventionalTextView) findViewById(R.id.second_time);
+    }
+
+    public void setTextSize(float size){
+        minutsTextView.setTextSize(size);
+        secondTextView.setTextSize(size);
     }
 
 

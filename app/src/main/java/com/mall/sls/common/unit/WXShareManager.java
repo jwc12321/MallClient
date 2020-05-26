@@ -15,6 +15,8 @@ import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.io.ByteArrayOutputStream;
+
 /**
  * @author jwc on 2020/5/23.
  * 描述：
@@ -119,11 +121,11 @@ public class WXShareManager {
             return;
         }
         if (thumbBmp != null) {
-            msg.thumbData = ImageUtils.bmpToByteArray(thumbBmp, true);  // 设置缩略图
+            msg.thumbData = bitmapBytes(thumbBmp, 32);  // 设置缩略图
         }
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();
-        req.transaction = buildTransaction("imgshareappdata");
+        req.transaction = buildTransaction("img");
         req.message = msg;
         req.scene = isTimeline ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
         api.sendReq(req);
@@ -151,6 +153,25 @@ public class WXShareManager {
         req.message = msg;
         req.scene = isTimeline ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
         api.sendReq(req);
+    }
+
+    /**
+     * Bitmap转换成byte[]并且进行压缩,压缩到不大于maxkb
+     *
+     * @param bitmap
+     * @param
+     * @return
+     */
+    public static byte[] bitmapBytes(Bitmap bitmap, int maxkb) {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+        int options = 100;
+        while (output.toByteArray().length > maxkb && options != 10) {
+            output.reset(); //清空output
+            bitmap.compress(Bitmap.CompressFormat.JPEG, options, output);//这里压缩options%，把压缩后的数据存放到output中
+            options -= 10;
+        }
+        return output.toByteArray();
     }
 
 }

@@ -21,6 +21,7 @@ import com.mall.sls.data.entity.OrderInfo;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.OrderSubmitInfo;
 import com.mall.sls.data.entity.ProvinceBean;
+import com.mall.sls.data.entity.ShareInfo;
 import com.mall.sls.data.entity.TeamInfo;
 import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.entity.VipAmountInfo;
@@ -212,5 +213,8 @@ public interface RestApiService {
     @GET("app/goods/grouponDetail")
     Flowable<RemoteDataWrapper<WXGoodsDetailsInfo>> getWXGoodsDetailsInfo(@Header("X-Hc-Sign") String sign, @Query("goodsProductId") String goodsProductId, @Query("grouponId") String grouponId);
 
+    //分享信息
+    @GET("app/auth/share")
+    Flowable<RemoteDataWrapper<ShareInfo>> getShareInfo(@Header("X-Hc-Sign") String sign);
 
 }

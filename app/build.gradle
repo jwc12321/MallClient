@@ -155,4 +155,5 @@ dependencies {
     //    implementation 'com.smartTop:jd-address:1.0.3'
     implementation 'com.github.xiaohaibin:XBanner:androidx_v1.0.8'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    implementation 'com.google.zxing:core:3.3.0'
 }

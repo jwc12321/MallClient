@@ -33,7 +33,7 @@
 
         <EditText
             android:id="@+id/remark_et"
-            style="@style/input_address_edittext_style"
+            style="@style/input_remark_edittext_style"
             android:inputType="textMultiLine"
             android:maxLength="50" />
         <com.mall.sls.common.widget.textview.ConventionalTextView

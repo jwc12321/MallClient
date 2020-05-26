@@ -50,7 +50,7 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                     String code = ((SendAuth.Resp) resp).code;
                     EventBus.getDefault().post(code);
                 }else if(resp.getType()== ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX){    //分享成功
-
+                    EventBus.getDefault().post("分享成功");
                 }else if(resp.getType()== ConstantsAPI.COMMAND_PAY_BY_WX){  //支付
 
                 }
