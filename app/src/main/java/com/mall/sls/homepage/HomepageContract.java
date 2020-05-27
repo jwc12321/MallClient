@@ -49,10 +49,12 @@ public interface HomepageContract {
 
     interface WXGoodsDetailsPresenter extends BasePresenter{
         void getWXGoodsDetailsInfo(String goodsProductId,String grouponId);
+        void cartFastAdd(String goodsId, String productId, boolean isGroup, String number, String groupId, String groupRulesId);
     }
 
     interface WXGoodsDetailsView extends BaseView<WXGoodsDetailsPresenter>{
-        void renderWXGoodsDetailsInfo(WXGoodsDetailsInfo wxGoodsDetailsInfo);
+        void renderWXGoodsDetailsInfo(GoodsDetailsInfo goodsDetailsInfo);
+        void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail);
     }
 
 }

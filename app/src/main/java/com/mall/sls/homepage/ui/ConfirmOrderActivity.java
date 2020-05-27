@@ -123,10 +123,11 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private Handler mHandler = new MyHandler(this);
     private String orderId;
     private String orderTotalPrice;
-    private String goodsId;
+    private String goodsProductId;
     private String grouponId;
     private String backType;
     private String activityUrl="http://192.168.31.13:8080/activity";
+    private String goodsId;
 
     @Inject
     ConfirmOrderPresenter confirmOrderPresenter;
@@ -162,7 +163,8 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             if (checkedGoodsList != null && checkedGoodsList.size() > 0) {
                 //现在没有购物车，所以单独一个
                 checkedGoods = checkedGoodsList.get(0);
-                goodsId = checkedGoods.getGoodsId();
+                goodsId=checkedGoods.getGoodsId();
+                goodsProductId = checkedGoods.getProductId();
                 goodsNumber.setText("x" + checkedGoods.getNumber());
                 goodsName.setText(checkedGoods.getGoodsName());
                 goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(checkedGoods.getPrice()));
@@ -397,7 +399,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             finish();
         } else if (TextUtils.equals(StaticData.REFLASH_TWO, purchaseType)) {
             Intent intent = new Intent(this, AloneGroupActivity.class);
-            intent.putExtra(StaticData.GOODS_ID, goodsId);
+            intent.putExtra(StaticData.GOODS_PRODUCT_ID, goodsProductId);
             intent.putExtra(StaticData.GROUPON_ID, grouponId);
             startActivityForResult(intent, RequestCodeStatic.ALONE_GROUP);
 

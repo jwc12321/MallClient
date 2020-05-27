@@ -16,6 +16,15 @@ public class BannerInfo {
     //图片url
     @SerializedName("url")
     private String url;
+    //是否跳转链接
+    @SerializedName("linkOpen")
+    private boolean linkOpen;
+    //链接类型 0-外部链接 1-内部链接
+    @SerializedName("linkType")
+    private String   linkType;
+    //本地跳转类型
+    @SerializedName("nativeType")
+    private String nativeType;
 
     public String getBannerId() {
         return bannerId;
@@ -39,5 +48,29 @@ public class BannerInfo {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public boolean isLinkOpen() {
+        return linkOpen;
+    }
+
+    public void setLinkOpen(boolean linkOpen) {
+        this.linkOpen = linkOpen;
+    }
+
+    public String getLinkType() {
+        return linkType;
+    }
+
+    public void setLinkType(String linkType) {
+        this.linkType = linkType;
+    }
+
+    public String getNativeType() {
+        return nativeType;
+    }
+
+    public void setNativeType(String nativeType) {
+        this.nativeType = nativeType;
     }
 }

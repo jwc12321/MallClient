@@ -90,4 +90,7 @@ public class StaticData {
     public static final String ACTIVITY_URL="activityUrl";//活动团分享url
     public static final String END_TIME="endTime";//结束时间
     public static final String BACK_TYPE="backType";
+    public static final String GOODS_PRODUCT_ID="goodsProductId";//skuId
+
+    public static final String GOODS_INFO ="GOODSINFO";//banner挑商品详情
 }

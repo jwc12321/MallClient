@@ -156,7 +156,7 @@
                         android:text="@string/team_rules"/>
                     <com.mall.sls.common.widget.textview.ConventionalTextView
                         style="@style/size14_color_app2_text_style"
-                        tools:text="@string/team_rules"
+                        android:text="@string/team_rules_content"
                         android:layout_alignParentRight="true"/>
                 </RelativeLayout>
             </LinearLayout>

@@ -1,8 +1,10 @@
 package com.mall.sls.homepage.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,17 +16,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
+import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DrawTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.ConfirmOrderDetail;
+import com.mall.sls.data.entity.GoodsDetailsInfo;
+import com.mall.sls.data.entity.ProductListCallableInfo;
 import com.mall.sls.data.entity.WXGoodsDetailsInfo;
 import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.adapter.GoodsItemAdapter;
 import com.mall.sls.homepage.presenter.WXGoodsDetailsPresenter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -75,6 +83,15 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
     private GoodsItemAdapter goodsItemAdapter;
     private String goodsId;
     private String grouponId;
+    private List<String> memberPhoneList;
+    private List<String> specifications;
+    private String specificationStr="";
+    private GoodsDetailsInfo goodsDetailsInfo;
+
+    private ProductListCallableInfo productListCallableInfo;
+    private int goodsCount = 1;
+    private String groupId;
+    private String groupRulesId;
 
     @Inject
     WXGoodsDetailsPresenter wxGoodsDetailsPresenter;
@@ -117,14 +134,45 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
     }
 
     @Override
-    public void renderWXGoodsDetailsInfo(WXGoodsDetailsInfo wxGoodsDetailsInfo) {
-        if(wxGoodsDetailsInfo!=null){
-            GlideHelper.load(this, wxGoodsDetailsInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
-            goodsName.setText(wxGoodsDetailsInfo.getName());
-            currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(wxGoodsDetailsInfo.getRetailPrice()));
-            originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(wxGoodsDetailsInfo.getCounterPrice()));
-            goodsItemAdapter.setData(wxGoodsDetailsInfo.getGoodsItemInfos());
+    public void renderWXGoodsDetailsInfo(GoodsDetailsInfo goodsDetailsInfo) {
+        this.goodsDetailsInfo=goodsDetailsInfo;
+        if(goodsDetailsInfo!=null){
+            GlideHelper.load(this, goodsDetailsInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
+            goodsName.setText(goodsDetailsInfo.getName());
+            currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getRetailPrice()));
+            originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
+            goodsItemAdapter.setData(goodsDetailsInfo.getGoodsItemInfos());
+            memberPhoneList=goodsDetailsInfo.getMemberPhoneList();
+            if(memberPhoneList!=null){
+                if(memberPhoneList.size()==1){
+                    fighterMobile.setText(memberPhoneList.get(0));
+                    teamMobile.setText("");
+                }else if(memberPhoneList.size()>1){
+                    fighterMobile.setText(memberPhoneList.get(0));
+                    teamMobile.setText(memberPhoneList.get(1));
+                }
+            }
+            specifications=goodsDetailsInfo.getSpecifications();
+            if(specifications!=null){
+                for (String s:specifications){
+                    specificationStr=specificationStr+s+" ";
+                }
+            }
+            specification.setText("拼主所选规格："+specificationStr);
+            if(TextUtils.equals(StaticData.REFLASH_ZERO,goodsDetailsInfo.getSurplus())){
+                teamResult.setText(getString(R.string.bill_full));
+                confirmBt.setText(getString(R.string.initiate_bill));
+            }else {
+                teamResult.setText("");
+                confirmBt.setText(getString(R.string.join_pinyin));
+            }
         }
+    }
+
+    @Override
+    public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
+        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_FOUR);
+        finish();
     }
 
     @Override
@@ -153,13 +201,41 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
         ActivityGroupGoodsActivity.start(this, goodsId);
     }
 
-    @OnClick({R.id.back})
+    @OnClick({R.id.back,R.id.confirm_bt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
                 finish();
                 break;
+            case R.id.confirm_bt:
+                goSelectSpec(StaticData.REFLASH_ONE);
+                break;
             default:
         }
     }
+
+    private void goSelectSpec(String type) {
+        Intent intent = new Intent(this, SelectSpecActivity.class);
+        intent.putExtra(StaticData.GOODS_DETAILS_INFO, goodsDetailsInfo);
+        intent.putExtra(StaticData.CHOICE_TYPE, type);
+        startActivityForResult(intent, RequestCodeStatic.REQUEST_SPEC);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RequestCodeStatic.REQUEST_SPEC:
+                    if (data != null) {
+                        Bundle bundle = data.getExtras();
+                        productListCallableInfo = (ProductListCallableInfo) bundle.getSerializable(StaticData.SKU_INFO);
+                        goodsCount = bundle.getInt(StaticData.GOODS_COUNT);
+                        wxGoodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
+                    }
+                    break;
+                default:
+            }
+        }
+    }
+
 }

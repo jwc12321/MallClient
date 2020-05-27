@@ -211,7 +211,7 @@ public interface RestApiService {
 
     //H5团购详情
     @GET("app/goods/grouponDetail")
-    Flowable<RemoteDataWrapper<WXGoodsDetailsInfo>> getWXGoodsDetailsInfo(@Header("X-Hc-Sign") String sign, @Query("goodsProductId") String goodsProductId, @Query("grouponId") String grouponId);
+    Flowable<RemoteDataWrapper<GoodsDetailsInfo>> getWXGoodsDetailsInfo(@Header("X-Hc-Sign") String sign, @Query("goodsProductId") String goodsProductId, @Query("grouponId") String grouponId);
 
     //分享信息
     @GET("app/auth/share")

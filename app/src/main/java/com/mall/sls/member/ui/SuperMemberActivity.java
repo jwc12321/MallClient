@@ -29,6 +29,7 @@ import com.mall.sls.common.unit.VerifyManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.LocalTeam;
+import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.homepage.ui.ActivityGroupGoodsActivity;
 import com.mall.sls.homepage.ui.SelectPayTypeActivity;
 import com.mall.sls.member.DaggerMemberComponent;
@@ -36,6 +37,9 @@ import com.mall.sls.member.MemberContract;
 import com.mall.sls.member.MemberModule;
 import com.mall.sls.member.adapter.MemberGoodsItemAdapter;
 import com.mall.sls.member.presenter.SuperMemberPresenter;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.Map;
 
@@ -264,5 +268,20 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
         } else {
             showMessage(getString(R.string.pay_failed));
         }
+    }
+
+
+    public  void wechatPay(WXPaySignResponse wxPaySignResponse) {
+        // 将该app注册到微信
+        IWXAPI wxapi = WXAPIFactory.createWXAPI(this, StaticData.WX_APP_ID);
+        PayReq request = new PayReq();
+        request.appId = wxPaySignResponse.getAppid();
+        request.partnerId = wxPaySignResponse.getPartnerid();
+        request.prepayId = wxPaySignResponse.getPrepayid();
+        request.packageValue = wxPaySignResponse.getPackageValue();
+        request.nonceStr = wxPaySignResponse.getNoncestr();
+        request.timeStamp = wxPaySignResponse.getTimestamp();
+        request.sign = wxPaySignResponse.getSign();
+        wxapi.sendReq(request);
     }
 }

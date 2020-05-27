@@ -100,6 +100,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     ImageView homeIv;
     @BindView(R.id.confirm_bt)
     MediumThickTextView confirmBt;
+    @BindView(R.id.day_tv)
+    MediumThickTextView dayTv;
     private ProductListCallableInfo productListCallableInfo;
     private List<CustomViewsInfo> data;
     private String goodsId;
@@ -197,7 +199,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 .inject(this);
     }
 
-    @OnClick({R.id.back, R.id.confirm_bt, R.id.service_iv, R.id.sku_rl,R.id.home_iv})
+    @OnClick({R.id.back, R.id.confirm_bt, R.id.service_iv, R.id.sku_rl, R.id.home_iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -304,24 +306,43 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity() + "件");
             goodsName.setText(goodsDetailsInfo.getName());
             goodsBrief.setText(goodsDetailsInfo.getBrief());
-            goodsBrief.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getBrief())?View.GONE:View.VISIBLE);
+            goodsBrief.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getBrief()) ? View.GONE : View.VISIBLE);
             selectedGoods.setText(getString(R.string.is_selected));
             if (!TextUtils.isEmpty(goodsDetailsInfo.getNow()) && !TextUtils.isEmpty(goodsDetailsInfo.getGroupExpireTime()) && !TextUtils.isEmpty(goodsDetailsInfo.getStartTime())) {
                 long now = FormatUtil.dateToStamp(goodsDetailsInfo.getNow());
                 long groupExpireTime = FormatUtil.dateToStamp(goodsDetailsInfo.getGroupExpireTime());
                 long startTime = FormatUtil.dateToStamp(goodsDetailsInfo.getStartTime());
                 if (now < startTime) {
+                    long day=FormatUtil.day(now,startTime);
                     timeType.setText(getString(R.string.open_time));
-                    countDown.startTearDown(startTime/1000, now/1000);
                     confirmBt.setEnabled(false);
-                    confirmBt.setText(FormatUtil.formatMSDateTime(goodsDetailsInfo.getStartTime())+"开抢");
+                    confirmBt.setText(FormatUtil.formatMSDateTime(String.valueOf(startTime)) + "开抢");
                     teamType = StaticData.REFLASH_ONE;
+                    if(day>0){
+                        dayTv.setText(day+"天");
+                        dayTv.setVisibility(View.VISIBLE);
+                        countDown.setVisibility(View.GONE);
+                    }else {
+                        dayTv.setVisibility(View.GONE);
+                        countDown.setVisibility(View.VISIBLE);
+                        countDown.startTearDown(startTime / 1000, now / 1000);
+                    }
                 } else if (now > startTime && now < groupExpireTime) {
-                    countDown.startTearDown(groupExpireTime/1000, now/1000);
+                    long day=FormatUtil.day(now,groupExpireTime);
                     timeType.setText(getString(R.string.remaining_spike));
                     confirmBt.setEnabled(true);
                     teamType = StaticData.REFLASH_TWO;
                     confirmBt.setText(getString(R.string.go_buy));
+                    if(day>0){
+                        dayTv.setText(day+"天");
+                        dayTv.setVisibility(View.VISIBLE);
+                        countDown.setVisibility(View.GONE);
+                    }else {
+                        dayTv.setVisibility(View.GONE);
+                        countDown.setVisibility(View.VISIBLE);
+                        countDown.startTearDown(groupExpireTime / 1000, now / 1000);
+                    }
+
                 }
             }
             groupPurchases = goodsDetailsInfo.getGroupPurchases();

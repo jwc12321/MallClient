@@ -57,7 +57,7 @@ public class FormatUtil {
     }
 
     public static String GTMToLocalNoAdd(String GTMDate) {
-        if(!TextUtils.isEmpty(GTMDate)) {
+        if (!TextUtils.isEmpty(GTMDate)) {
             int tIndex = GTMDate.indexOf("T");
             String dateTemp = GTMDate.substring(0, tIndex);
             String timeTemp = GTMDate.substring(tIndex + 1, GTMDate.length());
@@ -108,7 +108,7 @@ public class FormatUtil {
 
 
     public static String time(String dateString) {
-        if(!TextUtils.isEmpty(dateString)) {
+        if (!TextUtils.isEmpty(dateString)) {
             SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.ENGLISH);//输入的被转化的时间格式
             SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//需要转化成的时间格式
             Date date1 = new Date();
@@ -219,10 +219,10 @@ public class FormatUtil {
         return calendar.get(Calendar.YEAR);
     }
 
-    public static String timeSecond(){
-        long millisecond=System.currentTimeMillis();
-        long second=millisecond/10000;
-        return second+"";
+    public static String timeSecond() {
+        long millisecond = System.currentTimeMillis();
+        long second = millisecond / 10000;
+        return second + "";
     }
 
     /**
@@ -374,6 +374,7 @@ public class FormatUtil {
             return "";
         }
     }
+
 
     public static String formatYearMonthByLine(String timestamp) {
         if (!TextUtils.isEmpty(timestamp)) {
@@ -629,6 +630,7 @@ public class FormatUtil {
             return "";
         }
     }
+
     //android格林威治时间转成本地时间
     public static String formatDateBymdHm(String GTMDate) {
         if (!TextUtils.isEmpty(GTMDate)) {
@@ -643,9 +645,9 @@ public class FormatUtil {
 
     /*将字符串转为时间戳*/
     public static long dateToStamp(String time) {
-        if(TextUtils.isEmpty(time)){
+        if (TextUtils.isEmpty(time)) {
             return -1;
-        }else {
+        } else {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date();
             try {
@@ -659,9 +661,18 @@ public class FormatUtil {
     }
 
     public static String formatMSDateTime(String timestamp) {
-        long time = dateToStamp(timestamp);
-        String pattern = "HH:mm";
-        SimpleDateFormat format = new SimpleDateFormat(pattern);
-        return format.format(new Date(time * 1000));
+        if(TextUtils.isEmpty(timestamp)){
+            return "";
+        }else {
+            long time = Long.parseLong(timestamp);
+            String pattern = "HH:mm";
+            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            return format.format(new Date(time));
+        }
+    }
+
+    public static long day(long now, long endTime) {
+        long surplus = (endTime - now) / (24 * 60 * 60) / 1000;
+        return surplus;
     }
 }

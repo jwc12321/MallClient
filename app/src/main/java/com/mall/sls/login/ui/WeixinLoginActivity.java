@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -123,6 +124,12 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
         TokenManager.saveToken("");
         PushManager.getInstance().unBindAlias(this, MobileManager.getMobile(), true);
         init();
+
+//        String s="?goodsId=10&type=2";
+//        Uri uri=Uri.parse(s);
+//        String name = uri.getQueryParameter("goodsId");
+//        String age= uri.getQueryParameter("type");
+//        Log.d("111","数据"+name+"=="+age);
     }
 
     @OnClick({R.id.confirm_bt})
@@ -228,7 +235,6 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
         mTokenListener = new TokenResultListener() {
             @Override
             public void onTokenSuccess(final String ret) {
-                Log.e("xxxxxx", "onTokenSuccess:" + ret);
                 TokenRet tokenRet = null;
                 try {
                     tokenRet = JSON.parseObject(ret, TokenRet.class);
@@ -247,6 +253,15 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                 WeixinLoginActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        TokenRet tokenRet = null;
+                        try {
+                            tokenRet = JSON.parseObject(ret, TokenRet.class);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        if (tokenRet == null ||("600011").equals(tokenRet.getCode())) {
+                            BindPhoneActivity.start(WeixinLoginActivity.this, unionId);
+                        }
                         mAlicomAuthHelper.hideLoginLoading();
                     }
                 });

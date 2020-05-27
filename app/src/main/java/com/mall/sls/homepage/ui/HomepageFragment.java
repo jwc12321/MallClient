@@ -4,12 +4,15 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -28,6 +31,7 @@ import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.location.LocationHelper;
 import com.mall.sls.common.unit.AreaCodeManager;
+import com.mall.sls.common.unit.ConvertDpAndPx;
 import com.mall.sls.common.unit.PermissionUtil;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -35,6 +39,7 @@ import com.mall.sls.data.entity.BannerInfo;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.JinGangInfo;
+import com.mall.sls.data.entity.WebViewDetailInfo;
 import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
@@ -42,11 +47,13 @@ import com.mall.sls.homepage.adapter.GoodsItemAdapter;
 import com.mall.sls.homepage.adapter.JinGangAdapter;
 import com.mall.sls.homepage.presenter.HomePagePresenter;
 import com.mall.sls.message.ui.MessageTypeActivity;
+import com.mall.sls.webview.ui.WebViewActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.stx.xhb.androidx.XBanner;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,6 +115,13 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     private List<String> group;
     private boolean isFirst=true;
 
+    private int screenWidth;
+    private int screenHeight;
+    private BigDecimal screenWidthBg;
+    private BigDecimal screenHeightBg;
+    private BannerInfo bannerInfo;
+    private String nativeType;
+
     public static HomepageFragment newInstance() {
         HomepageFragment fragment = new HomepageFragment();
         return fragment;
@@ -137,6 +151,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     private void initView() {
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         mapLocal();
+        settingHeight();
         xBannerInit();
         initAdapter();
     }
@@ -155,6 +170,10 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         banner.setOnItemClickListener(new XBanner.OnItemClickListener() {
             @Override
             public void onItemClick(XBanner banner, Object model, View view, int position) {
+                if(bannerInfos!=null&&position<bannerInfos.size()){
+                    bannerInfo=bannerInfos.get(position);
+                    bannerClick();
+                }
             }
         });
         //加载广告图片
@@ -167,6 +186,44 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                 Glide.with(getActivity()).load(customViewsInfo.getXBannerUrl()).error(R.mipmap.ic_launcher).diskCacheStrategy(DiskCacheStrategy.ALL).into(roundedImageView);
             }
         });
+    }
+
+    //点击banner
+    private void bannerClick(){
+        if(bannerInfo!=null){
+            if(TextUtils.equals(StaticData.REFLASH_ZERO,bannerInfo.getLinkType())&&bannerInfo.isLinkOpen()){//h5界面
+                WebViewDetailInfo webViewDetailInfo=new WebViewDetailInfo();
+                webViewDetailInfo.setUrl(bannerInfo.getLink());
+                WebViewActivity.start(getActivity(),webViewDetailInfo);
+            }else if(TextUtils.equals(StaticData.REFLASH_ONE,bannerInfo.getLinkType())&&bannerInfo.isLinkOpen()){
+                nativeType=bannerInfo.getNativeType();
+                if(TextUtils.equals(StaticData.GOODS_INFO,nativeType)){//商品详情
+                    if(!TextUtils.isEmpty(bannerInfo.getLink())&&bannerInfo.isLinkOpen()) {
+                        Uri uri = Uri.parse("?"+bannerInfo.getLink());
+                        String goodsId = uri.getQueryParameter("goodsId");
+                        String groupType = uri.getQueryParameter("groupType");
+                        if(TextUtils.equals(StaticData.REFLASH_ZERO,groupType)){
+                            OrdinaryGoodsDetailActivity.start(getActivity(), goodsId);
+                        }else {
+                            ActivityGroupGoodsActivity.start(getActivity(),goodsId);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void settingHeight() {
+        DisplayMetrics dm = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        screenWidth = dm.widthPixels - ConvertDpAndPx.Dp2Px(getActivity(), 30);
+        screenWidthBg = new BigDecimal(screenWidth);
+        screenHeightBg = screenWidthBg.multiply(new BigDecimal("1")).divide(new BigDecimal("2"), 0, BigDecimal.ROUND_DOWN);
+        screenHeight = Integer.parseInt(screenHeightBg.toString());
+        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) banner.getLayoutParams(); //取控件textView当前的布局参数
+        linearParams.height = screenHeight;// 控件的高强制
+        linearParams.width = screenWidth;// 控件的高强制
+        banner.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
     }
 
 

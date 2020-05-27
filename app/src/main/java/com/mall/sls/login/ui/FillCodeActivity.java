@@ -114,6 +114,7 @@ public class FillCodeActivity extends BaseActivity implements LoginContract.Regi
     public void checkVCOdeEnable() {
         invitationCode = vcodeEt.getText().toString().trim();
         confirmBt.setEnabled(!TextUtils.isEmpty(invitationCode));
+        noCodeBt.setEnabled(TextUtils.isEmpty(invitationCode));
     }
 
     @OnClick({R.id.back, R.id.confirm_bt,R.id.no_code_bt})
@@ -148,7 +149,6 @@ public class FillCodeActivity extends BaseActivity implements LoginContract.Regi
 
     @Override
     public void renderInvitationCode(String invitationCode) {
-        noCodeBt.setEnabled(false);
         vcodeEt.setText(invitationCode);
     }
 

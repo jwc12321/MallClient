@@ -80,7 +80,7 @@ public class WXShareBackActivity extends BaseActivity {
         EventBus.getDefault().register(this);
         wxShareManager = WXShareManager.getInstance(this);
         choiceType=getIntent().getStringExtra(StaticData.CHOICE_TYPE);
-        goodsId=getIntent().getStringExtra(StaticData.GROUPON_ID);
+        goodsId=getIntent().getStringExtra(StaticData.GOODS_ID);
         activityUrl=getIntent().getStringExtra(StaticData.ACTIVITY_URL);
         endTime=getIntent().getStringExtra(StaticData.END_TIME);
     }

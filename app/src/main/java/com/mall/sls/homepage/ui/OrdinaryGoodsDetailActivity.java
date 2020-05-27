@@ -145,6 +145,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     private String consumerPhone;
     private String purchaseType;
     private String oldGroupRulesId;
+    private boolean isGroup;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, OrdinaryGoodsDetailActivity.class);
@@ -238,6 +239,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 groupId = "";
                 groupRulesId = oldGroupRulesId;
                 purchaseType = StaticData.REFLASH_TWO;
+                isGroup=true;
                 initiateBill();
                 break;
             case R.id.service_iv:
@@ -248,8 +250,9 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 break;
             case R.id.individual_shopping_tv://单独购买
                 groupId = "";
-                groupRulesId = oldGroupRulesId;
+                groupRulesId = "";
                 purchaseType = StaticData.REFLASH_ONE;
+                isGroup=false;
                 individualShopping();
                 break;
             case R.id.up_spell_bt:
@@ -334,7 +337,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                         selectedGoods.setText(getString(R.string.is_selected) + " " + productListCallableInfo.getSpecifications() + "/" + unit);
                         individualShoppingPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(productListCallableInfo.getPrice()));
                         initiateBillPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(productListCallableInfo.getPreferentialPrice()));
-                        goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
+                        goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), isGroup, String.valueOf(goodsCount), groupId, groupRulesId);
                     }
                     break;
                 case RequestCodeStatic.SPELLING_REMINDER:
@@ -377,7 +380,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             goodsName.setText(goodsDetailsInfo.getName());
             goodsBrief.setText(goodsDetailsInfo.getBrief());
             goodsBrief.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getBrief())?View.GONE:View.VISIBLE);
-            selectedGoods.setText(getString(R.string.is_selected));
+            selectedGoods.setText(getString(R.string.select_spec));
             groupNumber.setText(goodsDetailsInfo.getGroupNum() + "人正在拼单，可直接参与");
             groupPurchases = goodsDetailsInfo.getGroupPurchases();
             oldGroupRulesId = goodsDetailsInfo.getRulesId();

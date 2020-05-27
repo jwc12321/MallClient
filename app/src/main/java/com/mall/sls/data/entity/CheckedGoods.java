@@ -29,6 +29,9 @@ public class CheckedGoods implements Serializable {
     private String preferentialPrice;
     @SerializedName("goodsId")
     private String goodsId;
+    //skuID
+    @SerializedName("productId")
+    private String productId;
 
     public String getNumber() {
         return number;
@@ -84,5 +87,13 @@ public class CheckedGoods implements Serializable {
 
     public void setGoodsId(String goodsId) {
         this.goodsId = goodsId;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 }

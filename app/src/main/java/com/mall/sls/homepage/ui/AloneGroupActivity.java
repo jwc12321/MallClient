@@ -28,7 +28,7 @@ public class AloneGroupActivity extends BaseActivity {
     @BindView(R.id.weixin_iv)
     ImageView weixinIv;
 
-    private String goodsId;
+    private String goodsProductId;
     private String grouponId;
 
     @Override
@@ -40,7 +40,7 @@ public class AloneGroupActivity extends BaseActivity {
     }
 
     private void initView(){
-        goodsId=getIntent().getStringExtra(StaticData.GOODS_ID);
+        goodsProductId=getIntent().getStringExtra(StaticData.GOODS_PRODUCT_ID);
         grouponId=getIntent().getStringExtra(StaticData.GROUPON_ID);
     }
 
@@ -53,7 +53,7 @@ public class AloneGroupActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.weixin_iv:
-                WXGoodsDetailsActivity.start(this,goodsId,grouponId);
+                WXGoodsDetailsActivity.start(this,goodsProductId,grouponId);
                 break;
             default:
         }

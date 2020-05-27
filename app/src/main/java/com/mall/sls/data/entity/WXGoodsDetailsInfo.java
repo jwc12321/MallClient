@@ -84,6 +84,16 @@ public class WXGoodsDetailsInfo implements Serializable {
     private String rulesId;
     @SerializedName("hotGoodsList")
     private List<GoodsItemInfo> goodsItemInfos;
+    //剩余人数
+    @SerializedName("surplus")
+    private String surplus;
+    //规格
+    @SerializedName("specifications")
+    private List<String> specifications;
+    //拼主
+    @SerializedName("memberPhoneList")
+    private List<String> memberPhoneList;
+
 
 
 
@@ -286,5 +296,29 @@ public class WXGoodsDetailsInfo implements Serializable {
 
     public void setGoodsItemInfos(List<GoodsItemInfo> goodsItemInfos) {
         this.goodsItemInfos = goodsItemInfos;
+    }
+
+    public String getSurplus() {
+        return surplus;
+    }
+
+    public void setSurplus(String surplus) {
+        this.surplus = surplus;
+    }
+
+    public List<String> getSpecifications() {
+        return specifications;
+    }
+
+    public void setSpecifications(List<String> specifications) {
+        this.specifications = specifications;
+    }
+
+    public List<String> getMemberPhoneList() {
+        return memberPhoneList;
+    }
+
+    public void setMemberPhoneList(List<String> memberPhoneList) {
+        this.memberPhoneList = memberPhoneList;
     }
 }

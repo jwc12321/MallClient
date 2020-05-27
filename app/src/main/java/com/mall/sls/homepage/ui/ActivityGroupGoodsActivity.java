@@ -98,6 +98,10 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     ViewFlipper viewFlipper;
     @BindView(R.id.webView)
     WebView webView;
+    @BindView(R.id.count_down_tv)
+    ConventionalTextView countDownTv;
+    @BindView(R.id.day_tv)
+    MediumThickTextView dayTv;
 
     private String goodsId;
     private GoodsDetailsInfo goodsDetailsInfo;
@@ -194,8 +198,19 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
             if (!TextUtils.isEmpty(goodsDetailsInfo.getNow()) && !TextUtils.isEmpty(goodsDetailsInfo.getGroupExpireTime())) {
                 long now = FormatUtil.dateToStamp(goodsDetailsInfo.getNow());
                 long groupExpireTime = FormatUtil.dateToStamp(goodsDetailsInfo.getGroupExpireTime());
+                long day=FormatUtil.day(now,groupExpireTime);
                 if (now < groupExpireTime) {
-                    countDown.startTearDown(groupExpireTime, now);
+                    if(day>0){
+                        dayTv.setText(day+"天");
+                        dayTv.setVisibility(View.VISIBLE);
+                        countDown.setVisibility(View.GONE);
+                        countDownTv.setText(getString(R.string.remaining_spike));
+                    }else {
+                        dayTv.setVisibility(View.GONE);
+                        countDown.setVisibility(View.VISIBLE);
+                        countDown.startTearDown(groupExpireTime, now);
+                        countDownTv.setText(getString(R.string.from_end));
+                    }
                     countDownTime.startTearDown(groupExpireTime, now);
                 }
             }
