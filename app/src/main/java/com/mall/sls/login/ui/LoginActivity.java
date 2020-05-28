@@ -25,6 +25,7 @@ import com.mall.sls.assemble.ui.AssembleHomeActivity;
 import com.mall.sls.certify.ui.CerifyTipActivity;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.AreaCodeManager;
+import com.mall.sls.common.unit.AvatarUrlManager;
 import com.mall.sls.common.unit.MobileManager;
 import com.mall.sls.common.unit.SystemUtil;
 import com.mall.sls.common.unit.TokenManager;
@@ -188,6 +189,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
             PushManager.getInstance().setTag(this,tags, String.valueOf(System.currentTimeMillis()));
             MobileManager.saveMobile(tokenInfo.getUserInfo().getMobile());
             TokenManager.saveToken(tokenInfo.getToken());
+            if(tokenInfo.getUserInfo()!=null) {
+                AvatarUrlManager.saveAvatarUrl(tokenInfo.getUserInfo().getAvatarUrl());
+            }
             MainFrameActivity.start(this);
             finish();
         }

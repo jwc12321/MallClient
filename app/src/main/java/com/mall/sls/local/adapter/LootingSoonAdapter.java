@@ -108,7 +108,8 @@ public class LootingSoonAdapter extends RecyclerView.Adapter<LootingSoonAdapter.
             goodsIntroduction.setText(goodsItemInfo.getBrief());
             currentPrice.setText("¥" + goodsItemInfo.getRetailPrice());
             originalPrice.setText("¥" + goodsItemInfo.getCounterPrice());
-            confirmBt.setText("开抢");
+            long startTime = FormatUtil.dateToStamp(goodsItemInfo.getStartTime());
+            confirmBt.setText(FormatUtil.formatDate(String.valueOf(startTime)) + "开抢");
         }
     }
 

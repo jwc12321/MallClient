@@ -30,6 +30,8 @@ import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.LocalTeam;
 import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.event.PayAbortEvent;
+import com.mall.sls.data.event.WXSuccessPayEvent;
 import com.mall.sls.homepage.ui.ActivityGroupGoodsActivity;
 import com.mall.sls.homepage.ui.SelectPayTypeActivity;
 import com.mall.sls.member.DaggerMemberComponent;
@@ -40,6 +42,10 @@ import com.mall.sls.member.presenter.SuperMemberPresenter;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Map;
 
@@ -100,6 +106,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     }
 
     private void initView() {
+        EventBus.getDefault().register(this);
         avatarUrl = getIntent().getStringExtra(StaticData.AVATAR_URL);
         mobile = getIntent().getStringExtra(StaticData.MOBILE);
         vipAmount=getIntent().getStringExtra(StaticData.VIP_AMOUNT);
@@ -283,5 +290,29 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
         request.timeStamp = wxPaySignResponse.getTimestamp();
         request.sign = wxPaySignResponse.getSign();
         wxapi.sendReq(request);
+    }
+
+    //支付成功
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPaySuccess(WXSuccessPayEvent event) {
+        superMemberPresenter.vipOpen();
+    }
+
+    //支付失败
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPayCancel(PayAbortEvent event) {
+        if(event!=null){
+            if(event.code==-1){
+                showMessage(getString(R.string.pay_failed));
+            }else if(event.code==-2){
+                showMessage(getString(R.string.pay_cancel));
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

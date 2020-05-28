@@ -2,11 +2,13 @@ package com.mall.sls.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * @author jwc on 2020/5/9.
  * 描述：
  */
-public class GoodsItemInfo {
+public class GoodsItemInfo implements Serializable {
     //产品秒速
     @SerializedName("brief")
     private String brief;
@@ -34,7 +36,9 @@ public class GoodsItemInfo {
     //订阅状态 0:未提醒 1：已预约
     @SerializedName("subscriptionStatus")
     private String subscriptionStatus;
-
+    //团购开始时间
+    @SerializedName("groupStartTime")
+    private String startTime;
     public String getBrief() {
         return brief;
     }
@@ -105,5 +109,13 @@ public class GoodsItemInfo {
 
     public void setSubscriptionStatus(String subscriptionStatus) {
         this.subscriptionStatus = subscriptionStatus;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 }

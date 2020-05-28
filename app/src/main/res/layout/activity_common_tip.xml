@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/common_four_app_one_bg"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/dp_44"
+        android:layout_marginRight="@dimen/dp_44"
+        android:layout_centerInParent="true">
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/size16_color_app3_text_style"
+            android:layout_gravity="center_horizontal"
+            tools:text="JFKDAJFK "
+            android:layout_margin="@dimen/dp_25" />
+        <View
+           style="@style/back_nine_line_style"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_48"
+            android:weightSum="2"
+            android:orientation="horizontal">
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/appText2"
+                android:textSize="@dimen/sp_15"
+                android:id="@+id/cancel_bt"
+                tools:text="取消"
+                android:layout_weight="1"
+                android:gravity="center"/>
+            <View
+                android:layout_width="@dimen/dp_1"
+                android:layout_height="match_parent"
+                android:background="@color/backGround9"/>
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textColor="@color/backGround1"
+                android:textSize="@dimen/sp_15"
+                android:id="@+id/confirm_bt"
+                tools:text="确定"
+                android:layout_weight="1"
+                android:gravity="center"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

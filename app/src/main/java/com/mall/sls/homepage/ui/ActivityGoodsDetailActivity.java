@@ -3,6 +3,8 @@ package com.mall.sls.homepage.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.unit.HtmlUnit;
 import com.mall.sls.common.unit.NumberFormatUnit;
+import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DetailTearDownView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -40,8 +43,13 @@ import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.presenter.GoodsDetailsPresenter;
 import com.mall.sls.mine.ui.CustomerServiceActivity;
+import com.mall.sls.mine.ui.SelectShareTypeActivity;
 import com.mall.sls.webview.unit.JSBridgeWebChromeClient;
 import com.stx.xhb.androidx.XBanner;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -117,6 +125,10 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     private String groupId;
     private String groupRulesId;
     private String teamType; //1:即将开团 2：已开团
+    private String backType;
+    private String nameText;
+    private String briefText;
+    private WXShareManager wxShareManager;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, ActivityGoodsDetailActivity.class);
@@ -135,6 +147,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
 
     private void initView() {
         goodsId = getIntent().getStringExtra(StaticData.GOODS_ID);
+        EventBus.getDefault().register(this);
+        wxShareManager = WXShareManager.getInstance(this);
         xBannerInit();
         initWebView();
         goodsDetailsPresenter.getGoodsDetails(goodsId);
@@ -199,7 +213,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 .inject(this);
     }
 
-    @OnClick({R.id.back, R.id.confirm_bt, R.id.service_iv, R.id.sku_rl, R.id.home_iv})
+    @OnClick({R.id.back, R.id.confirm_bt, R.id.service_iv, R.id.sku_rl, R.id.home_iv,R.id.share})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -214,6 +228,10 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 break;
             case R.id.confirm_bt://发起拼单
                 initiateBill();
+                break;
+            case R.id.share://分享
+                Intent intent = new Intent(this, SelectShareTypeActivity.class);
+                startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
                 break;
             default:
         }
@@ -270,9 +288,21 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                         goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
                     }
                     break;
+                case RequestCodeStatic.SELECT_SHARE_TYPE:
+                    if (data != null) {
+                        backType = data.getStringExtra(StaticData.BACK_TYPE);
+                        shareWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                    }
+                    break;
                 default:
             }
         }
+    }
+
+    private void shareWx(boolean isFriend) {
+        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
+        String url = "http://192.168.31.13:8080/goods/activity/" + goodsId + "?inviteCode=" + 11111;
+        wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
     }
 
     @Override
@@ -304,6 +334,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             goodsOriginalUnit.setText("/" + unit);
             originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
             sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity() + "件");
+            nameText=goodsDetailsInfo.getName();
+            briefText=goodsDetailsInfo.getBrief();
             goodsName.setText(goodsDetailsInfo.getName());
             goodsBrief.setText(goodsDetailsInfo.getBrief());
             goodsBrief.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getBrief()) ? View.GONE : View.VISIBLE);
@@ -316,7 +348,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                     long day=FormatUtil.day(now,startTime);
                     timeType.setText(getString(R.string.open_time));
                     confirmBt.setEnabled(false);
-                    confirmBt.setText(FormatUtil.formatMSDateTime(String.valueOf(startTime)) + "开抢");
+                    confirmBt.setText(FormatUtil.formatDate(String.valueOf(startTime)) + "开抢");
                     teamType = StaticData.REFLASH_ONE;
                     if(day>0){
                         dayTv.setText(day+"天");
@@ -381,6 +413,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     protected void onDestroy() {
         super.onDestroy();
         countDown.cancel();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -392,4 +425,11 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             finish();
         }
     }
+
+    //分享成功
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onShareSuccess(String code) {
+        showMessage(getString(R.string.share_success));
+    }
+
 }

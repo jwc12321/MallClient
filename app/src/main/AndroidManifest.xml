@@ -323,6 +323,9 @@
             android:theme="@style/TranslucentFullScreenTheme"/>
         <activity android:name=".mine.ui.FeedBackActivity"
             android:screenOrientation="nosensor"/>
+        <activity android:name=".homepage.ui.CommonTipActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/TranslucentFullScreenTheme"/>
     </application>
 
 </manifest>

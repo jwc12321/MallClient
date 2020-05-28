@@ -22,7 +22,7 @@
             android:layout_marginTop="@dimen/dp_48"
             android:ellipsize="end"
             android:singleLine="true"
-            tools:text="还差1人，赶快邀请好友来拼单吧" />
+            android:text="@string/invite_one_people" />
 
         <ImageView
             android:id="@+id/weixin_iv"

@@ -21,4 +21,6 @@ public class RequestCodeStatic {
     public static final int ALONE_GROUP=18;//分享拼单
     public static final int MANY_GROUP=19;//百人团分享
     public static final int SELECT_SHARE_TYPE=20;//选择分享地方
+    public static final int TIP_PAGE=21;//提醒界面
+    public static final int PINYIN_SUCCESS=23;//拼单成功
 }

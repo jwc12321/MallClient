@@ -124,12 +124,6 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
         TokenManager.saveToken("");
         PushManager.getInstance().unBindAlias(this, MobileManager.getMobile(), true);
         init();
-
-//        String s="?goodsId=10&type=2";
-//        Uri uri=Uri.parse(s);
-//        String name = uri.getQueryParameter("goodsId");
-//        String age= uri.getQueryParameter("type");
-//        Log.d("111","数据"+name+"=="+age);
     }
 
     @OnClick({R.id.confirm_bt})

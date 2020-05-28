@@ -35,7 +35,7 @@ public class GoodsDetailsInfo implements Serializable {
     @SerializedName("specificationList")
     private List<GoodsSpec> goodsSpecs;
     //规格价格列表
-    @SerializedName("productListCallableList")
+    @SerializedName("productList")
     private List<ProductListCallableInfo> productListCallableInfos;
     //总销量
     @SerializedName("salesQuantity")
@@ -97,6 +97,13 @@ public class GoodsDetailsInfo implements Serializable {
     //拼主
     @SerializedName("memberPhoneList")
     private List<String> memberPhoneList;
+
+    //H5详情数据 团购Id
+    @SerializedName("groupId")
+    private String groupId;
+    //团购规则Id
+    @SerializedName("grouponRulesId")
+    private String grouponRulesId;
 
 
 
@@ -324,5 +331,21 @@ public class GoodsDetailsInfo implements Serializable {
 
     public void setMemberPhoneList(List<String> memberPhoneList) {
         this.memberPhoneList = memberPhoneList;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getGrouponRulesId() {
+        return grouponRulesId;
+    }
+
+    public void setGrouponRulesId(String grouponRulesId) {
+        this.grouponRulesId = grouponRulesId;
     }
 }

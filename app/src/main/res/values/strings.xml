@@ -251,5 +251,10 @@
     <string name="input_feedback">请写下您的意见或建议</string>
     <string name="select_spec">请选择规格</string>
     <string name="bill_full">拼单已满</string>
-
+    <string name="cancel_pay_tip">确定要放弃付款吗？</string>
+    <string name="cancel_pay_cancel_text">暂时放弃</string>
+    <string name="cancel_pay_confirm_text">继续支付</string>
+    <string name="invite_friend_for_reward">快邀请好友拼单吧获得更多的福利哦！</string>
+    <string name="invite_one_people">还剩1人，快邀请好友拼单吧！</string>
+    <string name="invite_more_people">邀请更多好友去拼单</string>
 </resources>

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
@@ -35,7 +36,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/13.
  * 描述：选择优惠卷
  */
-public class SelectCouponActivity extends BaseActivity implements CouponContract.CouponSelectView,SelectCouponAdapter.OnItemClickListener {
+public class SelectCouponActivity extends BaseActivity implements CouponContract.CouponSelectView, SelectCouponAdapter.OnItemClickListener {
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.title)
@@ -50,6 +51,8 @@ public class SelectCouponActivity extends BaseActivity implements CouponContract
     RecyclerView recordRv;
     @BindView(R.id.confirm_bt)
     MediumThickTextView confirmBt;
+    @BindView(R.id.no_record_ll)
+    LinearLayout noRecordLl;
     private SelectCouponAdapter selectCouponAdapter;
 
     @Inject
@@ -70,14 +73,14 @@ public class SelectCouponActivity extends BaseActivity implements CouponContract
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_coupon);
         ButterKnife.bind(this);
-        setHeight(back,title,null);
+        setHeight(back, title, null);
         initView();
     }
 
-    private void initView(){
-        cartIds=getIntent().getStringExtra(StaticData.CART_IDS);
-        userCouponId=getIntent().getStringExtra(StaticData.USER_COUPON_ID);
-        selectCouponAdapter=new SelectCouponAdapter(userCouponId);
+    private void initView() {
+        cartIds = getIntent().getStringExtra(StaticData.CART_IDS);
+        userCouponId = getIntent().getStringExtra(StaticData.USER_COUPON_ID);
+        selectCouponAdapter = new SelectCouponAdapter(userCouponId);
         selectCouponAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(selectCouponAdapter);
         couponSelectPresenter.getCouponSelect(cartIds);
@@ -97,7 +100,7 @@ public class SelectCouponActivity extends BaseActivity implements CouponContract
         return null;
     }
 
-    @OnClick({R.id.back,R.id.confirm_bt,R.id.select_iv})
+    @OnClick({R.id.back, R.id.confirm_bt, R.id.select_iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back://
@@ -107,8 +110,8 @@ public class SelectCouponActivity extends BaseActivity implements CouponContract
                 confirm();
                 break;
             case R.id.select_iv:
-                couponId="-1";
-                userCouponId="";
+                couponId = "-1";
+                userCouponId = "";
                 selectIv.setSelected(true);
                 selectCouponAdapter.setData(userCouponId);
                 break;
@@ -116,17 +119,24 @@ public class SelectCouponActivity extends BaseActivity implements CouponContract
         }
     }
 
-    private void confirm(){
+    private void confirm() {
         Intent backIntent = new Intent();
         backIntent.putExtra(StaticData.COUPON_ID, couponId);
-        backIntent.putExtra(StaticData.USER_COUPON_ID,userCouponId);
+        backIntent.putExtra(StaticData.USER_COUPON_ID, userCouponId);
         setResult(Activity.RESULT_OK, backIntent);
         finish();
     }
 
     @Override
     public void renderCouponSelect(List<CouponInfo> couponInfos) {
-        this.couponInfos=couponInfos;
+        this.couponInfos = couponInfos;
+        if (couponInfos != null && couponInfos.size() > 0) {
+            recordRv.setVisibility(View.VISIBLE);
+            noRecordLl.setVisibility(View.GONE);
+        } else {
+            recordRv.setVisibility(View.GONE);
+            noRecordLl.setVisibility(View.VISIBLE);
+        }
         selectCouponAdapter.setData(couponInfos);
     }
 
@@ -137,21 +147,21 @@ public class SelectCouponActivity extends BaseActivity implements CouponContract
 
     @Override
     public void selectWhat(String couponId, String userCouponId) {
-        this.couponId=couponId;
-        this.userCouponId=userCouponId;
+        this.couponId = couponId;
+        this.userCouponId = userCouponId;
         selectIv.setSelected(false);
         selectCouponAdapter.setData(userCouponId);
     }
 
     @Override
     public void upDownView(ImageView upIv, ImageView downIv, ConventionalTextView limitTv, int position) {
-        CouponInfo couponInfo=couponInfos.get(position);
-        if(couponInfo.isUp()){
+        CouponInfo couponInfo = couponInfos.get(position);
+        if (couponInfo.isUp()) {
             couponInfo.setUp(false);
             upIv.setVisibility(View.GONE);
             downIv.setVisibility(View.VISIBLE);
             limitTv.setVisibility(View.GONE);
-        }else {
+        } else {
             couponInfo.setUp(true);
             upIv.setVisibility(View.VISIBLE);
             downIv.setVisibility(View.GONE);

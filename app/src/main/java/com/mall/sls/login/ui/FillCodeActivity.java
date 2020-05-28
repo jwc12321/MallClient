@@ -15,6 +15,7 @@ import com.igexin.sdk.Tag;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.AvatarUrlManager;
 import com.mall.sls.common.unit.MobileManager;
 import com.mall.sls.common.unit.SystemUtil;
 import com.mall.sls.common.unit.TokenManager;
@@ -162,6 +163,9 @@ public class FillCodeActivity extends BaseActivity implements LoginContract.Regi
             PushManager.getInstance().setTag(this,tags, String.valueOf(System.currentTimeMillis()));
             MobileManager.saveMobile(tokenInfo.getUserInfo().getMobile());
             TokenManager.saveToken(tokenInfo.getToken());
+            if(tokenInfo.getUserInfo()!=null) {
+                AvatarUrlManager.saveAvatarUrl(tokenInfo.getUserInfo().getAvatarUrl());
+            }
             WeixinLoginActivity.finishActivity();
             MainFrameActivity.start(this);
             finish();

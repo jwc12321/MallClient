@@ -3,10 +3,13 @@ package com.mall.sls.homepage.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
@@ -26,6 +29,7 @@ import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.HtmlUnit;
 import com.mall.sls.common.unit.NumberFormatUnit;
+import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.common.widget.textview.WhiteDrawTextView;
@@ -39,8 +43,13 @@ import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.presenter.GoodsDetailsPresenter;
 import com.mall.sls.mine.ui.CustomerServiceActivity;
+import com.mall.sls.mine.ui.SelectShareTypeActivity;
 import com.mall.sls.webview.unit.JSBridgeWebChromeClient;
 import com.stx.xhb.androidx.XBanner;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -140,12 +149,18 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     private String downMobile;
     private String upSurplus;
     private String downSurplus;
-    @Inject
-    GoodsDetailsPresenter goodsDetailsPresenter;
     private String consumerPhone;
     private String purchaseType;
     private String oldGroupRulesId;
     private boolean isGroup;
+    private List<ProductListCallableInfo> productListCallableInfos;
+    private WXShareManager wxShareManager;
+    private String backType;
+    private String nameText;
+    private String briefText;
+
+    @Inject
+    GoodsDetailsPresenter goodsDetailsPresenter;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, OrdinaryGoodsDetailActivity.class);
@@ -163,7 +178,9 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     }
 
     private void initView() {
+        EventBus.getDefault().register(this);
         goodsId = getIntent().getStringExtra(StaticData.GOODS_ID);
+        wxShareManager = WXShareManager.getInstance(this);
         xBannerInit();
         initWebView();
         goodsDetailsPresenter.getGoodsDetails(goodsId);
@@ -228,7 +245,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 .inject(this);
     }
 
-    @OnClick({R.id.back, R.id.individual_shopping_tv, R.id.initiate_bill_bt, R.id.service_iv, R.id.sku_rl, R.id.up_spell_bt, R.id.down_spell_bt,R.id.home_iv})
+    @OnClick({R.id.back, R.id.individual_shopping_tv, R.id.initiate_bill_bt, R.id.service_iv, R.id.sku_rl, R.id.up_spell_bt, R.id.down_spell_bt, R.id.home_iv, R.id.share})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -239,7 +256,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 groupId = "";
                 groupRulesId = oldGroupRulesId;
                 purchaseType = StaticData.REFLASH_TWO;
-                isGroup=true;
+                isGroup = true;
                 initiateBill();
                 break;
             case R.id.service_iv:
@@ -252,7 +269,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 groupId = "";
                 groupRulesId = "";
                 purchaseType = StaticData.REFLASH_ONE;
-                isGroup=false;
+                isGroup = false;
                 individualShopping();
                 break;
             case R.id.up_spell_bt:
@@ -266,6 +283,10 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 groupRulesId = downGroupRulesId;
                 purchaseType = StaticData.REFLASH_THREE;
                 goSpellingReminder(downMobile, downSurplus);
+                break;
+            case R.id.share://分享
+                Intent intent = new Intent(this, SelectShareTypeActivity.class);
+                startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
                 break;
             default:
         }
@@ -317,7 +338,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
-                case RequestCodeStatic.REQUEST_SPEC_RETURN:
+                case RequestCodeStatic.REQUEST_SPEC_RETURN://请选择规格
                     if (data != null) {
                         Bundle bundle = data.getExtras();
                         checkSkus = (List<String>) bundle.getSerializable(StaticData.SKU_CHECK);
@@ -328,7 +349,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                         initiateBillPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(productListCallableInfo.getPreferentialPrice()));
                     }
                     break;
-                case RequestCodeStatic.REQUEST_SPEC:
+                case RequestCodeStatic.REQUEST_SPEC://单独购买和发起拼单取选择规格
                     if (data != null) {
                         Bundle bundle = data.getExtras();
                         checkSkus = (List<String>) bundle.getSerializable(StaticData.SKU_CHECK);
@@ -343,9 +364,21 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 case RequestCodeStatic.SPELLING_REMINDER:
                     initiateBill();
                     break;
+                case RequestCodeStatic.SELECT_SHARE_TYPE:
+                    if (data != null) {
+                        backType = data.getStringExtra(StaticData.BACK_TYPE);
+                        shareWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                    }
+                    break;
                 default:
             }
         }
+    }
+
+    private void shareWx(boolean isFriend) {
+        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
+        String url = "http://192.168.31.13:8080/goods/ordinary/" + goodsId + "?inviteCode=" + 11111;
+        wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
     }
 
     @Override
@@ -377,9 +410,11 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             goodsOriginalUnit.setText("/" + unit);
             originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
             sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity() + "件");
+            nameText=goodsDetailsInfo.getName();
+            briefText=goodsDetailsInfo.getBrief();
             goodsName.setText(goodsDetailsInfo.getName());
             goodsBrief.setText(goodsDetailsInfo.getBrief());
-            goodsBrief.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getBrief())?View.GONE:View.VISIBLE);
+            goodsBrief.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getBrief()) ? View.GONE : View.VISIBLE);
             selectedGoods.setText(getString(R.string.select_spec));
             groupNumber.setText(goodsDetailsInfo.getGroupNum() + "人正在拼单，可直接参与");
             groupPurchases = goodsDetailsInfo.getGroupPurchases();
@@ -415,8 +450,11 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 downMobile = groupPurchases.get(1).getMobile();
                 downSurplus = groupPurchases.get(1).getSurplus();
             }
-            individualShoppingPrice.setText("¥" + goodsDetailsInfo.getCounterPrice());
-            initiateBillPrice.setText("¥" + goodsDetailsInfo.getRetailPrice());
+            productListCallableInfos = goodsDetailsInfo.getProductListCallableInfos();
+            if (productListCallableInfos != null && productListCallableInfos.size() > 0) {
+                individualShoppingPrice.setText("¥" + productListCallableInfos.get(0).getPrice());
+                initiateBillPrice.setText("¥" + productListCallableInfos.get(0).getPreferentialPrice());
+            }
             if (!TextUtils.isEmpty(goodsDetailsInfo.getDetail())) {
                 webView.loadDataWithBaseURL(null, HtmlUnit.getHtmlData(goodsDetailsInfo.getDetail()), "text/html", "utf-8", null);
             }
@@ -442,5 +480,17 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     @Override
     public void setPresenter(HomepageContract.GoodsDetailsPresenter presenter) {
 
+    }
+
+    //分享成功
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onShareSuccess(String code) {
+        showMessage(getString(R.string.share_success));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

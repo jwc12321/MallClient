@@ -135,10 +135,12 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
                 }
             } else {
                 GlideHelper.load(this, goodsDetailsInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
-                if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
-                    goodsPrice.setText("¥" + goodsDetailsInfo.getCounterPrice());
-                }else {
-                    goodsPrice.setText("¥" + goodsDetailsInfo.getRetailPrice());
+                if(productListCallableInfos!=null&&productListCallableInfos.size()>0){
+                    if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
+                        goodsPrice.setText("¥" +productListCallableInfos.get(0).getPrice());
+                    }else {
+                        goodsPrice.setText("¥" + productListCallableInfos.get(0).getPreferentialPrice());
+                    }
                 }
                 model.setText(getString(R.string.is_selected));
                 confirmBt.setEnabled(false);

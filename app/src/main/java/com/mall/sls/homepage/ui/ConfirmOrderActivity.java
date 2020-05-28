@@ -34,11 +34,21 @@ import com.mall.sls.data.entity.AddressInfo;
 import com.mall.sls.data.entity.CheckedGoods;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.OrderSubmitInfo;
+import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.event.PayAbortEvent;
+import com.mall.sls.data.event.WXSuccessPayEvent;
 import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.presenter.ConfirmOrderPresenter;
 import com.mall.sls.order.ui.GoodsOrderDetailsActivity;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
 import java.util.List;
@@ -128,6 +138,9 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private String backType;
     private String activityUrl="http://192.168.31.13:8080/activity";
     private String goodsId;
+    private String tipBack;
+    private String nameText;
+    private String briefText;
 
     @Inject
     ConfirmOrderPresenter confirmOrderPresenter;
@@ -149,6 +162,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     }
 
     private void initView() {
+        EventBus.getDefault().register(this);
         confirmOrderDetail = (ConfirmOrderDetail) getIntent().getSerializableExtra(StaticData.CONFIRM_ORDER_DETAIL);
         purchaseType = getIntent().getStringExtra(StaticData.PURCHASE_TYPE);
         confirmDetail();
@@ -166,6 +180,8 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                 goodsId=checkedGoods.getGoodsId();
                 goodsProductId = checkedGoods.getProductId();
                 goodsNumber.setText("x" + checkedGoods.getNumber());
+                nameText=checkedGoods.getGoodsName();
+                briefText=checkedGoods.getBrief();
                 goodsName.setText(checkedGoods.getGoodsName());
                 goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(checkedGoods.getPrice()));
                 GlideHelper.load(this, checkedGoods.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
@@ -217,7 +233,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
-                finish();
+                back();
                 break;
             case R.id.confirm_bt://去支付
                 confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
@@ -289,21 +305,61 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                     }
                     break;
                 case RequestCodeStatic.ALONE_GROUP:
-                    break;
-                case RequestCodeStatic.MANY_GROUP:
                     if (data != null) {
                         backType = data.getStringExtra(StaticData.BACK_TYPE);
                         if(TextUtils.equals(StaticData.REFLASH_ONE,backType)){
-                            WXShareBackActivity.start(this,StaticData.REFLASH_ONE,goodsId,activityUrl,"");
+                            WXShareBackActivity.start(this,StaticData.REFLASH_ZERO,nameText,briefText,goodsId,activityUrl,"",grouponId,goodsProductId);
+                            finish();
                         }else {
                             GoodsOrderDetailsActivity.start(this, orderId);
                             finish();
                         }
                     }
                     break;
+                case RequestCodeStatic.MANY_GROUP:
+                    if (data != null) {
+                        backType = data.getStringExtra(StaticData.BACK_TYPE);
+                        if(TextUtils.equals(StaticData.REFLASH_ONE,backType)){
+                            WXShareBackActivity.start(this,StaticData.REFLASH_ONE,nameText,briefText,goodsId,activityUrl,"2020-05-28 20:00:00",grouponId,goodsProductId);
+                            finish();
+                        }else {
+                            GoodsOrderDetailsActivity.start(this, orderId);
+                            finish();
+                        }
+                    }
+                    break;
+                case RequestCodeStatic.TIP_PAGE:
+                    if (data != null) {
+                        tipBack = data.getStringExtra(StaticData.TIP_BACK);
+                        if(TextUtils.equals(StaticData.REFLASH_ONE,tipBack)){
+                            confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
+                        }else {
+                            finish();
+                        }
+                    }
+                    break;
+                    case RequestCodeStatic.PINYIN_SUCCESS:
+                        if (data != null) {
+                            backType = data.getStringExtra(StaticData.BACK_TYPE);
+                            if(TextUtils.equals(StaticData.REFLASH_ONE,backType)){
+                                finish();
+                            }else {
+                                GoodsOrderDetailsActivity.start(this, orderId);
+                                finish();
+                            }
+                        }
+                        break;
                 default:
             }
         }
+    }
+
+    private void back(){
+        Intent intent = new Intent(this, CommonTipActivity.class);
+        intent.putExtra(StaticData.COMMON_TITLE, getString(R.string.cancel_pay_tip));
+        intent.putExtra(StaticData.CANCEL_TEXT, getString(R.string.cancel_pay_cancel_text));
+        intent.putExtra(StaticData.CONFIRM_TEXT, getString(R.string.cancel_pay_confirm_text));
+        startActivityForResult(intent, RequestCodeStatic.TIP_PAGE);
     }
 
     @Override
@@ -322,11 +378,10 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
         if (orderSubmitInfo != null) {
             orderId = orderSubmitInfo.getOrderId();
             grouponId = orderSubmitInfo.getGrouponLinkId();
-            paySuccess();
-//            Intent intent = new Intent(this, SelectPayTypeActivity.class);
-//            intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
-//            intent.putExtra(StaticData.PAYMENT_AMOUNT,orderTotalPrice);
-//            startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
+            Intent intent = new Intent(this, SelectPayTypeActivity.class);
+            intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
+            intent.putExtra(StaticData.PAYMENT_AMOUNT,orderTotalPrice);
+            startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
         }
     }
 
@@ -390,7 +445,52 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             finish();
         } else {
             showMessage(getString(R.string.pay_failed));
+            GoodsOrderDetailsActivity.start(this, orderId);
+            finish();
         }
+    }
+
+
+    public  void wechatPay(WXPaySignResponse wxPaySignResponse) {
+        // 将该app注册到微信
+        IWXAPI wxapi = WXAPIFactory.createWXAPI(this, StaticData.WX_APP_ID);
+        PayReq request = new PayReq();
+        request.appId = wxPaySignResponse.getAppid();
+        request.partnerId = wxPaySignResponse.getPartnerid();
+        request.prepayId = wxPaySignResponse.getPrepayid();
+        request.packageValue = wxPaySignResponse.getPackageValue();
+        request.nonceStr = wxPaySignResponse.getNoncestr();
+        request.timeStamp = wxPaySignResponse.getTimestamp();
+        request.sign = wxPaySignResponse.getSign();
+        wxapi.sendReq(request);
+    }
+
+    //支付成功
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPaySuccess(WXSuccessPayEvent event) {
+        paySuccess();
+    }
+
+    //支付失败
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPayCancel(PayAbortEvent event) {
+        if(event!=null){
+            if(event.code==-1){
+                showMessage(getString(R.string.pay_failed));
+                GoodsOrderDetailsActivity.start(this, orderId);
+                finish();
+            }else if(event.code==-2){
+                showMessage(getString(R.string.pay_cancel));
+                GoodsOrderDetailsActivity.start(this, orderId);
+                finish();
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void paySuccess() {
@@ -401,14 +501,21 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             Intent intent = new Intent(this, AloneGroupActivity.class);
             intent.putExtra(StaticData.GOODS_PRODUCT_ID, goodsProductId);
             intent.putExtra(StaticData.GROUPON_ID, grouponId);
-            startActivityForResult(intent, RequestCodeStatic.ALONE_GROUP);
+            intent.putExtra(StaticData.ACTIVITY_URL, activityUrl);
+            intent.putExtra(StaticData.GOODS_NAME,nameText);
+            intent.putExtra(StaticData.GOODS_BRIEF,briefText);
 
+            startActivityForResult(intent, RequestCodeStatic.ALONE_GROUP);
         } else if (TextUtils.equals(StaticData.REFLASH_THREE, purchaseType)) {
+            Intent intent = new Intent(this, SuccessfulOrderActivity.class);
+            startActivityForResult(intent, RequestCodeStatic.PINYIN_SUCCESS);
 
         } else if (TextUtils.equals(StaticData.REFLASH_FOUR, purchaseType)) {
             Intent intent = new Intent(this, ManyGroupActivity.class);
             intent.putExtra(StaticData.GOODS_ID, goodsId);
             intent.putExtra(StaticData.ACTIVITY_URL, activityUrl);
+            intent.putExtra(StaticData.GOODS_NAME,nameText);
+            intent.putExtra(StaticData.GOODS_BRIEF,briefText);
             startActivityForResult(intent, RequestCodeStatic.MANY_GROUP);
         }
     }

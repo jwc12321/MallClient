@@ -93,4 +93,9 @@ public class StaticData {
     public static final String GOODS_PRODUCT_ID="goodsProductId";//skuId
 
     public static final String GOODS_INFO ="GOODSINFO";//banner挑商品详情
+    public static final String CANCEL_TEXT="cancelText";
+    public static final String CONFIRM_TEXT="confirmText";
+    public static final String TIP_BACK="tipBack";
+    public static final String GOODS_NAME="goodsName";
+    public static final String GOODS_BRIEF="goodsBrief";
 }

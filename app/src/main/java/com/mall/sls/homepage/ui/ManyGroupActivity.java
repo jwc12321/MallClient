@@ -13,14 +13,20 @@ import androidx.annotation.Nullable;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.ProductListCallableInfo;
+import com.mall.sls.mine.ui.SelectShareTypeActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +48,9 @@ public class ManyGroupActivity extends BaseActivity {
     private WXShareManager wxShareManager;
     private String goodsId;
     private String activityUrl;
+    private String nameText;
+    private String briefText;
+    private String backType;
 
 
     @Override
@@ -57,6 +66,8 @@ public class ManyGroupActivity extends BaseActivity {
         wxShareManager = WXShareManager.getInstance(this);
         goodsId=getIntent().getStringExtra(StaticData.GROUPON_ID);
         activityUrl=getIntent().getStringExtra(StaticData.ACTIVITY_URL);
+        nameText=getIntent().getStringExtra(StaticData.GOODS_NAME);
+        briefText=getIntent().getStringExtra(StaticData.GOODS_BRIEF);
     }
 
 
@@ -80,16 +91,35 @@ public class ManyGroupActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.weixin_iv:
-                shareWx();
+                Intent intent = new Intent(this, SelectShareTypeActivity.class);
+                startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
                 break;
             default:
         }
     }
 
-    private void shareWx(){
+    private void shareWx(boolean isFriend) {
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
-        wxShareManager.shareUrlToWX(false, activityUrl+"?goodsId="+goodsId, bitmap, "百度", "我是百度");
+        String url = activityUrl+"/activity/" + goodsId + "?inviteCode=" + 11111;
+        wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RequestCodeStatic.SELECT_SHARE_TYPE:
+                    if (data != null) {
+                        backType = data.getStringExtra(StaticData.BACK_TYPE);
+                        shareWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                    }
+                    break;
+                default:
+            }
+        }
+    }
+
 
     @Override
     public View getSnackBarHolderView() {

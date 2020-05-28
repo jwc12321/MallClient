@@ -32,6 +32,9 @@ public class CheckedGoods implements Serializable {
     //skuID
     @SerializedName("productId")
     private String productId;
+    //产品秒速
+    @SerializedName("brief")
+    private String brief;
 
     public String getNumber() {
         return number;
@@ -95,5 +98,13 @@ public class CheckedGoods implements Serializable {
 
     public void setProductId(String productId) {
         this.productId = productId;
+    }
+
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
     }
 }

@@ -28,6 +28,16 @@ import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.event.PayAbortEvent;
+import com.mall.sls.data.event.WXSuccessPayEvent;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Map;
 
@@ -79,6 +89,7 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
     }
 
     private void initView() {
+        EventBus.getDefault().register(this);
         certifyAmount = getIntent().getStringExtra(StaticData.CRETIFY_AMOUNT);
         amount.setText("¥" + NumberFormatUnit.twoDecimalFormat(certifyAmount));
         selectPayType();
@@ -204,5 +215,44 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
         } else {
             showMessage(getString(R.string.pay_failed));
         }
+    }
+
+    public  void wechatPay(WXPaySignResponse wxPaySignResponse) {
+        // 将该app注册到微信
+        IWXAPI wxapi = WXAPIFactory.createWXAPI(this, StaticData.WX_APP_ID);
+        PayReq request = new PayReq();
+        request.appId = wxPaySignResponse.getAppid();
+        request.partnerId = wxPaySignResponse.getPartnerid();
+        request.prepayId = wxPaySignResponse.getPrepayid();
+        request.packageValue = wxPaySignResponse.getPackageValue();
+        request.nonceStr = wxPaySignResponse.getNoncestr();
+        request.timeStamp = wxPaySignResponse.getTimestamp();
+        request.sign = wxPaySignResponse.getSign();
+        wxapi.sendReq(request);
+    }
+
+    //支付成功
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPaySuccess(WXSuccessPayEvent event) {
+        NameVerifiedActivity.start(this);
+        finish();
+    }
+
+    //支付失败
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPayCancel(PayAbortEvent event) {
+        if(event!=null){
+            if(event.code==-1){
+                showMessage(getString(R.string.pay_failed));
+            }else if(event.code==-2){
+                showMessage(getString(R.string.pay_cancel));
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -18,6 +18,7 @@ import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.MobileManager;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DrawTextView;
@@ -81,8 +82,9 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
     RecyclerView goodsRv;
 
     private GoodsItemAdapter goodsItemAdapter;
-    private String goodsId;
+    private String goodsProductId;
     private String grouponId;
+    private String goodsId;
     private List<String> memberPhoneList;
     private List<String> specifications;
     private String specificationStr="";
@@ -92,13 +94,15 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
     private int goodsCount = 1;
     private String groupId;
     private String groupRulesId;
+    private boolean isEnd=false;
+    private String mobile;
 
     @Inject
     WXGoodsDetailsPresenter wxGoodsDetailsPresenter;
 
-    public static void start(Context context,String goodsId,String grouponId) {
+    public static void start(Context context,String goodsProductId,String grouponId) {
         Intent intent = new Intent(context, WXGoodsDetailsActivity.class);
-        intent.putExtra(StaticData.GOODS_ID,goodsId);
+        intent.putExtra(StaticData.GOODS_PRODUCT_ID,goodsProductId);
         intent.putExtra(StaticData.GROUPON_ID,grouponId);
         context.startActivity(intent);
     }
@@ -114,10 +118,10 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
     }
 
     private void initView(){
-        goodsId=getIntent().getStringExtra(StaticData.GOODS_ID);
+        goodsProductId=getIntent().getStringExtra(StaticData.GOODS_PRODUCT_ID);
         grouponId=getIntent().getStringExtra(StaticData.GROUPON_ID);
         initAdapter();
-        wxGoodsDetailsPresenter.getWXGoodsDetailsInfo(goodsId,grouponId);
+        wxGoodsDetailsPresenter.getWXGoodsDetailsInfo(goodsProductId,grouponId);
     }
 
     private void initAdapter() {
@@ -143,11 +147,14 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
             originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
             goodsItemAdapter.setData(goodsDetailsInfo.getGoodsItemInfos());
             memberPhoneList=goodsDetailsInfo.getMemberPhoneList();
+            goodsId=goodsDetailsInfo.getGoodsId();
             if(memberPhoneList!=null){
                 if(memberPhoneList.size()==1){
+                    mobile=memberPhoneList.get(0);
                     fighterMobile.setText(memberPhoneList.get(0));
                     teamMobile.setText("");
                 }else if(memberPhoneList.size()>1){
+                    mobile=memberPhoneList.get(0);
                     fighterMobile.setText(memberPhoneList.get(0));
                     teamMobile.setText(memberPhoneList.get(1));
                 }
@@ -159,20 +166,35 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
                 }
             }
             specification.setText("拼主所选规格："+specificationStr);
+            groupRulesId=goodsDetailsInfo.getGrouponRulesId();
             if(TextUtils.equals(StaticData.REFLASH_ZERO,goodsDetailsInfo.getSurplus())){
                 teamResult.setText(getString(R.string.bill_full));
                 confirmBt.setText(getString(R.string.initiate_bill));
+                isEnd=true;
+                groupId="";
             }else {
                 teamResult.setText("");
                 confirmBt.setText(getString(R.string.join_pinyin));
+                isEnd=false;
+                groupId=goodsDetailsInfo.getGroupId();
+                if(!TextUtils.isEmpty(MobileManager.getMobile())&&TextUtils.equals(MobileManager.getMobile(),mobile)){
+                    confirmBt.setEnabled(false);
+                }else {
+                    confirmBt.setEnabled(true);
+                }
             }
         }
     }
 
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
-        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_FOUR);
-        finish();
+        if(isEnd){
+            ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_TWO);
+            finish();
+        }else {
+            ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_THREE);
+            finish();
+        }
     }
 
     @Override

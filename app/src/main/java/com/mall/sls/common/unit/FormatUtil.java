@@ -500,7 +500,10 @@ public class FormatUtil {
      * 根据一个特殊的规则来格式化
      */
     public static String formatDate(String timestamp, String dateTemplate) {
-        long time = Long.parseLong(timestamp) * 1000;
+        if(TextUtils.isEmpty(timestamp)||TextUtils.equals("-1",timestamp)){
+            return "";
+        }
+        long time = Long.parseLong(timestamp);
         Date date = new Date(time);
         String format;
         boolean showDetailTime = true;
@@ -522,11 +525,12 @@ public class FormatUtil {
             showDetailTime = false;
         }
         if (showDetailTime) {
-            if (afterNoon(time)) {
-                format += " 下午hh:mm";
-            } else {
-                format += " 上午hh:mm";
-            }
+            format += "HH:mm";
+//            if (afterNoon(time)) {
+//                format += " 下午hh:mm";
+//            } else {
+//                format += " 上午hh:mm";
+//            }
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.CHINA);
         return simpleDateFormat.format(date);

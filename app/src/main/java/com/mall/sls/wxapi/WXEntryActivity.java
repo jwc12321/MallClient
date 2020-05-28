@@ -8,6 +8,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mall.sls.common.StaticData;
+import com.mall.sls.data.event.PayAbortEvent;
+import com.mall.sls.data.event.WXSuccessPayEvent;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -42,23 +44,32 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         if (resp != null) {
             resp = resp;
         }
-        Log.d("1111","数据"+resp.errCode+"=="+resp.getType());
+        Log.d("1111", "数据" + resp.errCode + "==" + resp.getType());
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
                 result = "发送成功";
-                if(resp.getType()== ConstantsAPI.COMMAND_SENDAUTH){  //登录
+                if (resp.getType() == ConstantsAPI.COMMAND_SENDAUTH) {  //登录
                     String code = ((SendAuth.Resp) resp).code;
                     EventBus.getDefault().post(code);
-                }else if(resp.getType()== ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX){    //分享成功
+                } else if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX) {    //分享成功
                     EventBus.getDefault().post("分享成功");
-                }else if(resp.getType()== ConstantsAPI.COMMAND_PAY_BY_WX){  //支付
-
+                } else if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {  //支付
+                    EventBus.getDefault().post(new WXSuccessPayEvent());
+                }
+                finish();
+                break;
+            case BaseResp.ErrCode.ERR_COMM:
+                result = "失败";
+                if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {  //支付
+                    EventBus.getDefault().post(new PayAbortEvent("支付取消",-1));
                 }
                 finish();
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
                 result = "发送取消";
-                Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+                if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {  //支付
+                    EventBus.getDefault().post(new PayAbortEvent("支付取消",-2));
+                }
                 finish();
                 break;
             case BaseResp.ErrCode.ERR_AUTH_DENIED:
