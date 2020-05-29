@@ -43,5 +43,6 @@ public class RequestUrl {
     public static String AUTH_SHARE_URL="/app/auth/share";//分享信息
     public static String WX_INVITATION_CODE="/app/auth/invitationCode";//获取邀请码和h5链接地址
     public static String ADD_FEED_BACK_URL="/app/auth/addFeedBack";//意见反馈
+    public static String USER_PAY_WX="/app/user/pay/wx";//微信支付实人认证和超级会员
 
 }

@@ -112,6 +112,11 @@
             android:launchMode="singleTop"
             android:screenOrientation="nosensor"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
         <activity
             android:name=".splash.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

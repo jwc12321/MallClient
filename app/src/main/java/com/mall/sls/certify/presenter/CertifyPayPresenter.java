@@ -7,6 +7,7 @@ import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
+import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.data.request.UserPayDtoRequest;
@@ -41,7 +42,7 @@ public class CertifyPayPresenter implements CertifyContract.CertifyPayPresenter 
     }
 
     @Override
-    public void alipay(String orderType, String payType) {
+    public void aliPay(String orderType, String payType) {
         certifyPayView.showLoading(StaticData.PROCESSING);
         UserPayDtoRequest request=new UserPayDtoRequest(orderType,payType);
         String sign= SignUnit.signPost(RequestUrl.ALIPAY_URL,gson.toJson(request));
@@ -52,7 +53,7 @@ public class CertifyPayPresenter implements CertifyContract.CertifyPayPresenter 
                     @Override
                     public void accept(String alipayStr) throws Exception {
                         certifyPayView.dismissLoading();
-                        certifyPayView.renderAlipay(alipayStr);
+                        certifyPayView.renderAliPay(alipayStr);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -63,6 +64,31 @@ public class CertifyPayPresenter implements CertifyContract.CertifyPayPresenter 
                 });
         mDisposableList.add(disposable);
     }
+
+    @Override
+    public void wxPay(String orderType, String payType) {
+        certifyPayView.showLoading(StaticData.PROCESSING);
+        UserPayDtoRequest request=new UserPayDtoRequest(orderType,payType);
+        String sign= SignUnit.signPost(RequestUrl.USER_PAY_WX,gson.toJson(request));
+        Disposable disposable = restApiService.wxPayMember(sign,request)
+                .flatMap(new RxRemoteDataParse<WXPaySignResponse>())
+                .compose(new RxSchedulerTransformer<WXPaySignResponse>())
+                .subscribe(new Consumer<WXPaySignResponse>() {
+                    @Override
+                    public void accept(WXPaySignResponse wxPaySignResponse) throws Exception {
+                        certifyPayView.dismissLoading();
+                        certifyPayView.renderWxPay(wxPaySignResponse);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        certifyPayView.dismissLoading();
+                        certifyPayView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
     @Override
     public void start() {
 

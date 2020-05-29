@@ -4,6 +4,7 @@ import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
 import com.mall.sls.common.unit.VerifyManager;
 import com.mall.sls.data.entity.LocalTeam;
+import com.mall.sls.data.entity.WXPaySignResponse;
 
 /**
  * @author jwc on 2020/5/20.
@@ -14,6 +15,7 @@ public interface MemberContract {
         void getVipGroupons(String refreshType);
         void getMoreVipGroupons();
         void alipayMember(String orderType, String payType);
+        void wxPayMember(String orderType, String payType);
         void vipOpen();
     }
 
@@ -21,6 +23,7 @@ public interface MemberContract {
         void renderVipGroupons(LocalTeam localTeam);
         void renderMoreVipGroupons(LocalTeam localTeam);
         void renderAlipayMember(String alipayStr);
+        void renderWxpayMember(WXPaySignResponse wxPaySignResponse);
         void renderVipOpen(Boolean isBoolean);
     }
 }

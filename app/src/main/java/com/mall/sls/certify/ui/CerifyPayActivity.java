@@ -131,13 +131,14 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
         if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
             //微信
             if (PayTypeInstalledUtils.isWeixinAvilible(CerifyPayActivity.this)) {
+                certifyPayPresenter.wxPay(StaticData.REFLASH_ZERO, selectType);
 
             } else {
                 showMessage(getString(R.string.install_weixin));
             }
         } else {
             if (PayTypeInstalledUtils.isAliPayInstalled(CerifyPayActivity.this)) {
-                certifyPayPresenter.alipay(StaticData.REFLASH_ZERO, selectType);
+                certifyPayPresenter.aliPay(StaticData.REFLASH_ZERO, selectType);
             } else {
                 showMessage(getString(R.string.install_alipay));
             }
@@ -156,9 +157,16 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
 
 
     @Override
-    public void renderAlipay(String alipayStr) {
+    public void renderAliPay(String alipayStr) {
         if (!TextUtils.isEmpty(alipayStr)) {
             startAliPay(alipayStr);
+        }
+    }
+
+    @Override
+    public void renderWxPay(WXPaySignResponse wxPaySignResponse) {
+        if(wxPaySignResponse!=null){
+            wechatPay(wxPaySignResponse);
         }
     }
 
@@ -222,10 +230,10 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
         IWXAPI wxapi = WXAPIFactory.createWXAPI(this, StaticData.WX_APP_ID);
         PayReq request = new PayReq();
         request.appId = wxPaySignResponse.getAppid();
-        request.partnerId = wxPaySignResponse.getPartnerid();
-        request.prepayId = wxPaySignResponse.getPrepayid();
+        request.partnerId = wxPaySignResponse.getPartnerId();
+        request.prepayId = wxPaySignResponse.getPrepayId();
         request.packageValue = wxPaySignResponse.getPackageValue();
-        request.nonceStr = wxPaySignResponse.getNoncestr();
+        request.nonceStr = wxPaySignResponse.getNonceStr();
         request.timeStamp = wxPaySignResponse.getTimestamp();
         request.sign = wxPaySignResponse.getSign();
         wxapi.sendReq(request);

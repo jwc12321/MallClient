@@ -157,15 +157,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
                         if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(SuperMemberActivity.this)) {
-                                WXPaySignResponse wxPaySignResponse=new WXPaySignResponse();
-                                wxPaySignResponse.setAppid("wxcea8bff4c8e832be");
-                                wxPaySignResponse.setNoncestr("1590721586252");
-                                wxPaySignResponse.setPackageValue("Sign=WXPay");
-                                wxPaySignResponse.setPartnerid("1596288381");
-                                wxPaySignResponse.setPrepayid("wx291106262196700c83c454511855238000");
-                                wxPaySignResponse.setSign("C1DD4396A472774C702B052B42AE67D9");
-                                wxPaySignResponse.setTimestamp("1590721586");
-                                wechatPay(wxPaySignResponse);
+                                superMemberPresenter.wxPayMember(StaticData.REFLASH_ONE, selectType);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
@@ -215,6 +207,13 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
             startAliPay(alipayStr);
         }
 
+    }
+
+    @Override
+    public void renderWxpayMember(WXPaySignResponse wxPaySignResponse) {
+        if(wxPaySignResponse!=null) {
+            wechatPay(wxPaySignResponse);
+        }
     }
 
     @Override
@@ -291,10 +290,10 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
         IWXAPI wxapi = WXAPIFactory.createWXAPI(this, StaticData.WX_APP_ID);
         PayReq request = new PayReq();
         request.appId = wxPaySignResponse.getAppid();
-        request.partnerId = wxPaySignResponse.getPartnerid();
-        request.prepayId = wxPaySignResponse.getPrepayid();
+        request.partnerId = wxPaySignResponse.getPartnerId();
+        request.prepayId = wxPaySignResponse.getPrepayId();
         request.packageValue = wxPaySignResponse.getPackageValue();
-        request.nonceStr = wxPaySignResponse.getNoncestr();
+        request.nonceStr = wxPaySignResponse.getNonceStr();
         request.timeStamp = wxPaySignResponse.getTimestamp();
         request.sign = wxPaySignResponse.getSign();
         wxapi.sendReq(request);

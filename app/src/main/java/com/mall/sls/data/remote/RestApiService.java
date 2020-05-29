@@ -1,7 +1,6 @@
 package com.mall.sls.data.remote;
 
 
-import com.google.gson.annotations.SerializedName;
 import com.mall.sls.data.RemoteDataWrapper;
 import com.mall.sls.data.entity.AddressInfo;
 import com.mall.sls.data.entity.AppUrlInfo;
@@ -18,7 +17,6 @@ import com.mall.sls.data.entity.MessageInfo;
 import com.mall.sls.data.entity.MessageTypeInfo;
 import com.mall.sls.data.entity.MineInfo;
 import com.mall.sls.data.entity.MyCouponInfo;
-import com.mall.sls.data.entity.OrderInfo;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.OrderSubmitInfo;
 import com.mall.sls.data.entity.ProvinceBean;
@@ -26,7 +24,7 @@ import com.mall.sls.data.entity.ShareInfo;
 import com.mall.sls.data.entity.TeamInfo;
 import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.entity.VipAmountInfo;
-import com.mall.sls.data.entity.WXGoodsDetailsInfo;
+import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.request.AddAddressRequest;
 import com.mall.sls.data.request.CartFastaddRequest;
 import com.mall.sls.data.request.CertifyIdRequest;
@@ -226,5 +224,9 @@ public interface RestApiService {
     //意见反馈
     @POST("app/auth/addFeedBack")
     Flowable<RemoteDataWrapper<Boolean>> addFeedBack(@Header("X-Hc-Sign") String sign, @Body DescriptionRequest request);
+
+    //微信支付实人认证和超级会员
+    @POST("app/user/pay/wx")
+    Flowable<RemoteDataWrapper<WXPaySignResponse>> wxPayMember(@Header("X-Hc-Sign") String sign, @Body UserPayDtoRequest request);
 
 }

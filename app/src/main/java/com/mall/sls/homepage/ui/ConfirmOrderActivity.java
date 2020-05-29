@@ -463,10 +463,10 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
         IWXAPI wxapi = WXAPIFactory.createWXAPI(this, StaticData.WX_APP_ID);
         PayReq request = new PayReq();
         request.appId = wxPaySignResponse.getAppid();
-        request.partnerId = wxPaySignResponse.getPartnerid();
-        request.prepayId = wxPaySignResponse.getPrepayid();
+        request.partnerId = wxPaySignResponse.getPartnerId();
+        request.prepayId = wxPaySignResponse.getPrepayId();
         request.packageValue = wxPaySignResponse.getPackageValue();
-        request.nonceStr = wxPaySignResponse.getNoncestr();
+        request.nonceStr = wxPaySignResponse.getNonceStr();
         request.timeStamp = wxPaySignResponse.getTimestamp();
         request.sign = wxPaySignResponse.getSign();
         wxapi.sendReq(request);

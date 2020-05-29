@@ -8,8 +8,8 @@ import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
-import com.mall.sls.data.entity.Ignore;
 import com.mall.sls.data.entity.LocalTeam;
+import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.data.request.UserPayDtoRequest;
@@ -109,6 +109,30 @@ public class SuperMemberPresenter implements MemberContract.SuperMemberPresente 
                     public void accept(String alipayStr) throws Exception {
                         superMemberView.dismissLoading();
                         superMemberView.renderAlipayMember(alipayStr);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        superMemberView.dismissLoading();
+                        superMemberView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void wxPayMember(String orderType, String payType) {
+        superMemberView.showLoading(StaticData.PROCESSING);
+        UserPayDtoRequest request=new UserPayDtoRequest(orderType,payType);
+        String sign= SignUnit.signPost(RequestUrl.USER_PAY_WX,gson.toJson(request));
+        Disposable disposable = restApiService.wxPayMember(sign,request)
+                .flatMap(new RxRemoteDataParse<WXPaySignResponse>())
+                .compose(new RxSchedulerTransformer<WXPaySignResponse>())
+                .subscribe(new Consumer<WXPaySignResponse>() {
+                    @Override
+                    public void accept(WXPaySignResponse wxPaySignResponse) throws Exception {
+                        superMemberView.dismissLoading();
+                        superMemberView.renderWxpayMember(wxPaySignResponse);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

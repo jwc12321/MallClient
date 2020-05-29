@@ -10,13 +10,13 @@ public class WXPaySignResponse {
     @SerializedName("appId")
     private String appid;
     @SerializedName("partnerId")
-    private String partnerid;
+    private String partnerId;
     @SerializedName("prepayId")
-    private String prepayid;
+    private String prepayId;
     @SerializedName("packageValue")
     private String packageValue;
     @SerializedName("nonceStr")
-    private String noncestr;
+    private String nonceStr;
     @SerializedName("timeStamp")
     private String timestamp;
     @SerializedName("sign")
@@ -30,20 +30,20 @@ public class WXPaySignResponse {
         this.appid = appid;
     }
 
-    public String getPartnerid() {
-        return partnerid;
+    public String getPartnerId() {
+        return partnerId;
     }
 
-    public void setPartnerid(String partnerid) {
-        this.partnerid = partnerid;
+    public void setPartnerId(String partnerId) {
+        this.partnerId = partnerId;
     }
 
-    public String getPrepayid() {
-        return prepayid;
+    public String getPrepayId() {
+        return prepayId;
     }
 
-    public void setPrepayid(String prepayid) {
-        this.prepayid = prepayid;
+    public void setPrepayId(String prepayId) {
+        this.prepayId = prepayId;
     }
 
     public String getPackageValue() {
@@ -54,12 +54,12 @@ public class WXPaySignResponse {
         this.packageValue = packageValue;
     }
 
-    public String getNoncestr() {
-        return noncestr;
+    public String getNonceStr() {
+        return nonceStr;
     }
 
-    public void setNoncestr(String noncestr) {
-        this.noncestr = noncestr;
+    public void setNonceStr(String nonceStr) {
+        this.nonceStr = nonceStr;
     }
 
     public String getTimestamp() {
@@ -77,5 +77,4 @@ public class WXPaySignResponse {
     public void setSign(String sign) {
         this.sign = sign;
     }
-
 }
