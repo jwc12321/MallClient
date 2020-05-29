@@ -193,8 +193,7 @@
         <activity
             android:name=".homepage.ui.OrdinaryGoodsDetailActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="nosensor"
-            android:hardwareAccelerated="false"/>
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".homepage.ui.SelectSpecActivity"
             android:launchMode="singleTop"
@@ -248,12 +247,11 @@
             android:name=".homepage.ui.ActivityGroupGoodsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="nosensor"
-            android:hardwareAccelerated="false"/>
+          />
         <activity
             android:name=".homepage.ui.ActivityGoodsDetailActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="nosensor"
-            android:hardwareAccelerated="false"/>
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".homepage.ui.FillRemarksActivity"
             android:launchMode="singleTop"

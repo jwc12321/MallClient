@@ -41,5 +41,7 @@ public class RequestUrl {
     public static String VIP_PAY_AMOUNT ="/app/common/payAmount";//查询认证或者超级会员支付金额
     public static String WX_GOODS_DETAILS="/app/goods/grouponDetail";//H5团购详情
     public static String AUTH_SHARE_URL="/app/auth/share";//分享信息
+    public static String WX_INVITATION_CODE="/app/auth/invitationCode";//获取邀请码和h5链接地址
+    public static String ADD_FEED_BACK_URL="/app/auth/addFeedBack";//意见反馈
 
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -37,6 +39,7 @@ import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.GroupPurchase;
+import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.ProductListCallableInfo;
 import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
@@ -65,7 +68,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/9.
  * 描述：活动商品详情
  */
-public class ActivityGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, DetailTearDownView.TimeOutListener {
+public class ActivityGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, DetailTearDownView.TimeOutListener, NestedScrollView.OnScrollChangeListener {
 
 
     @BindView(R.id.banner)
@@ -110,6 +113,10 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     MediumThickTextView confirmBt;
     @BindView(R.id.day_tv)
     MediumThickTextView dayTv;
+    @BindView(R.id.scrollview)
+    NestedScrollView scrollview;
+    @BindView(R.id.title_rel)
+    RelativeLayout titleRel;
     private ProductListCallableInfo productListCallableInfo;
     private List<CustomViewsInfo> data;
     private String goodsId;
@@ -129,6 +136,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     private String nameText;
     private String briefText;
     private WXShareManager wxShareManager;
+    private String wxUrl;
+    private String inviteCode;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, ActivityGoodsDetailActivity.class);
@@ -149,10 +158,12 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         goodsId = getIntent().getStringExtra(StaticData.GOODS_ID);
         EventBus.getDefault().register(this);
         wxShareManager = WXShareManager.getInstance(this);
+        scrollview.setOnScrollChangeListener(this);
         xBannerInit();
         initWebView();
         goodsDetailsPresenter.getGoodsDetails(goodsId);
         goodsDetailsPresenter.getConsumerPhone();
+        goodsDetailsPresenter.getInvitationCodeInfo();
 
     }
 
@@ -213,7 +224,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 .inject(this);
     }
 
-    @OnClick({R.id.back, R.id.confirm_bt, R.id.service_iv, R.id.sku_rl, R.id.home_iv,R.id.share})
+    @OnClick({R.id.back, R.id.confirm_bt, R.id.service_iv, R.id.sku_rl, R.id.home_iv, R.id.share})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -301,7 +312,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
 
     private void shareWx(boolean isFriend) {
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
-        String url = "http://192.168.31.13:8080/goods/activity/" + goodsId + "?inviteCode=" + 11111;
+        String url = wxUrl+"goods/activity/" + goodsId + "?inviteCode=" + inviteCode;
         wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
     }
 
@@ -334,42 +345,42 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             goodsOriginalUnit.setText("/" + unit);
             originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
             sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity() + "件");
-            nameText=goodsDetailsInfo.getName();
-            briefText=goodsDetailsInfo.getBrief();
+            nameText = goodsDetailsInfo.getName();
+            briefText = goodsDetailsInfo.getBrief();
             goodsName.setText(goodsDetailsInfo.getName());
             goodsBrief.setText(goodsDetailsInfo.getBrief());
             goodsBrief.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getBrief()) ? View.GONE : View.VISIBLE);
-            selectedGoods.setText(getString(R.string.is_selected));
+            selectedGoods.setText(getString(R.string.select_spec));
             if (!TextUtils.isEmpty(goodsDetailsInfo.getNow()) && !TextUtils.isEmpty(goodsDetailsInfo.getGroupExpireTime()) && !TextUtils.isEmpty(goodsDetailsInfo.getStartTime())) {
                 long now = FormatUtil.dateToStamp(goodsDetailsInfo.getNow());
                 long groupExpireTime = FormatUtil.dateToStamp(goodsDetailsInfo.getGroupExpireTime());
                 long startTime = FormatUtil.dateToStamp(goodsDetailsInfo.getStartTime());
                 if (now < startTime) {
-                    long day=FormatUtil.day(now,startTime);
+                    long day = FormatUtil.day(now, startTime);
                     timeType.setText(getString(R.string.open_time));
                     confirmBt.setEnabled(false);
                     confirmBt.setText(FormatUtil.formatDate(String.valueOf(startTime)) + "开抢");
                     teamType = StaticData.REFLASH_ONE;
-                    if(day>0){
-                        dayTv.setText(day+"天");
+                    if (day > 0) {
+                        dayTv.setText(day + "天");
                         dayTv.setVisibility(View.VISIBLE);
                         countDown.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         dayTv.setVisibility(View.GONE);
                         countDown.setVisibility(View.VISIBLE);
                         countDown.startTearDown(startTime / 1000, now / 1000);
                     }
                 } else if (now > startTime && now < groupExpireTime) {
-                    long day=FormatUtil.day(now,groupExpireTime);
+                    long day = FormatUtil.day(now, groupExpireTime);
                     timeType.setText(getString(R.string.remaining_spike));
                     confirmBt.setEnabled(true);
                     teamType = StaticData.REFLASH_TWO;
                     confirmBt.setText(getString(R.string.go_buy));
-                    if(day>0){
-                        dayTv.setText(day+"天");
+                    if (day > 0) {
+                        dayTv.setText(day + "天");
                         dayTv.setVisibility(View.VISIBLE);
                         countDown.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         dayTv.setVisibility(View.GONE);
                         countDown.setVisibility(View.VISIBLE);
                         countDown.startTearDown(groupExpireTime / 1000, now / 1000);
@@ -395,13 +406,21 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
 
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
-        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_FOUR);
+        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_FOUR,wxUrl,inviteCode);
         finish();
     }
 
     @Override
     public void renderGroupRemind() {
         showMessage(getString(R.string.remind_to_you));
+    }
+
+    @Override
+    public void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo) {
+        if(invitationCodeInfo!=null){
+            wxUrl=invitationCodeInfo.getBaseUrl();
+            inviteCode=invitationCodeInfo.getInvitationCode();
+        }
     }
 
     @Override
@@ -430,6 +449,19 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onShareSuccess(String code) {
         showMessage(getString(R.string.share_success));
+    }
+
+    @Override
+    public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        if (scrollY <= 0) {   //设置标题的背景颜色
+            titleRel.setBackgroundColor(Color.argb((int) 0, 144, 151, 166));
+        } else if (scrollY > 0 && scrollY <= titleRel.getHeight()) { //滑动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
+            float scale = (float) scrollY / titleRel.getHeight();
+            float alpha = (255 * scale);
+            titleRel.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
+        } else {    //滑动到banner下面设置普通颜色
+            titleRel.setBackgroundColor(Color.argb((int) 255, 255, 255, 255));
+        }
     }
 
 }

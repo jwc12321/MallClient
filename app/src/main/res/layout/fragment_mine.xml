@@ -197,8 +197,11 @@
                 android:id="@+id/super_member_rl"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_44"
-                android:layout_margin="@dimen/dp_15"
-                android:background="@drawable/common_four_app_one_bg">
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_15"
+                android:background="@drawable/common_four_app_one_bg"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/vip_iv"
@@ -218,10 +221,11 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp_4"
                     android:layout_toRightOf="@id/vip_iv"
-                    tools:text="开通超级会员，平均可省1080元/年" />
+                    android:text="@string/vip_content" />
             </RelativeLayout>
 
-            <LinearLayout style="@style/four_ll_style">
+            <LinearLayout style="@style/four_ll_style"
+                android:layout_marginTop="@dimen/dp_15">
 
                 <com.mall.sls.common.widget.textview.MediumThickTextView
                     style="@style/size16_color_app3_text_style"

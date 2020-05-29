@@ -51,5 +51,13 @@ public interface MineContract {
         void renderShareInfo(ShareInfo shareInfo);
     }
 
+    interface FeedBackPresenter extends BasePresenter{
+        void addFeedBack(String description);
+    }
+
+    interface FeedBackView extends BaseView<FeedBackPresenter>{
+        void renderAddFeedBack(Boolean isBoolean);
+    }
+
 
 }

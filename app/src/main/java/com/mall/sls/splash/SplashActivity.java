@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.common.unit.ScreenUtil;
 import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.login.ui.LoginActivity;

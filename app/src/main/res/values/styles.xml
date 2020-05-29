@@ -680,6 +680,7 @@
         <item name="android:layout_height">@dimen/dp_82</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_marginLeft">@dimen/dp_15</item>
+        <item name="android:scaleType">fitXY</item>
     </style>
     <style name="comfirm_order_goods_name_style">
         <item name="android:layout_width">match_parent</item>

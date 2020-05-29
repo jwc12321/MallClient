@@ -14,20 +14,12 @@
         <com.mall.sls.common.widget.textview.ConventionalTextView
             style="@style/tip_title_style"
             android:text="@string/is_pay" />
-        <com.mall.sls.common.widget.textview.ConventionalTextView
-            android:id="@+id/title"
-            style="@style/size15_color_app3_text_style"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dp_34"
-            android:ellipsize="end"
-            android:singleLine="true"
-            tools:text="已有9.7万人参与本次万人团" />
 
         <com.mall.sls.common.widget.textview.MediumThickTextView
-            android:id="@+id/content"
+            android:id="@+id/title"
             style="@style/size16_color_app3_text_style"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dp_31"
+            android:layout_marginTop="@dimen/dp_48"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="@string/invite_more_people" />
@@ -35,7 +27,7 @@
         <ImageView
             android:id="@+id/weixin_iv"
             style="@style/big_weixin_iv_style"
-            android:layout_marginTop="@dimen/dp_19" />
+            android:layout_marginTop="@dimen/dp_53" />
 
         <com.mall.sls.common.widget.textview.MediumThickTextView
             style="@style/size16_color_app3_text_style"

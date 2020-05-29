@@ -84,24 +84,26 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
     public class GoodsItemView extends RecyclerView.ViewHolder {
         @BindView(R.id.goods_iv)
         ImageView goodsIv;
+        @BindView(R.id.groupType)
+        ConventionalTextView groupType;
         @BindView(R.id.goods_name)
         ConventionalTextView goodsName;
         @BindView(R.id.goods_name_rl)
         LinearLayout goodsNameRl;
         @BindView(R.id.goods_introduction)
         ConventionalTextView goodsIntroduction;
-        @BindView(R.id.confirm_bt)
-        ConventionalTextView confirmBt;
-        @BindView(R.id.current_price)
-        MediumThickTextView currentPrice;
-        @BindView(R.id.original_price)
-        DrawTextView originalPrice;
-        @BindView(R.id.groupType)
-        ConventionalTextView groupType;
-        @BindView(R.id.item_rl)
-        RelativeLayout itemRl;
         @BindView(R.id.price_type)
         ConventionalTextView priceType;
+        @BindView(R.id.current_price)
+        MediumThickTextView currentPrice;
+        @BindView(R.id.current_price_rl)
+        LinearLayout currentPriceRl;
+        @BindView(R.id.original_price)
+        MediumThickTextView originalPrice;
+        @BindView(R.id.confirm_bt)
+        ConventionalTextView confirmBt;
+        @BindView(R.id.item_rl)
+        RelativeLayout itemRl;
 
         public GoodsItemView(View itemView) {
             super(itemView);

@@ -25,6 +25,7 @@ import com.mall.sls.common.widget.textview.DrawTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
+import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.ProductListCallableInfo;
 import com.mall.sls.data.entity.WXGoodsDetailsInfo;
 import com.mall.sls.homepage.DaggerHomepageComponent;
@@ -96,6 +97,8 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
     private String groupRulesId;
     private boolean isEnd=false;
     private String mobile;
+    private String wxUrl;
+    private String inviteCode;
 
     @Inject
     WXGoodsDetailsPresenter wxGoodsDetailsPresenter;
@@ -122,6 +125,7 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
         grouponId=getIntent().getStringExtra(StaticData.GROUPON_ID);
         initAdapter();
         wxGoodsDetailsPresenter.getWXGoodsDetailsInfo(goodsProductId,grouponId);
+        wxGoodsDetailsPresenter.getInvitationCodeInfo();
     }
 
     private void initAdapter() {
@@ -189,11 +193,19 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
         if(isEnd){
-            ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_TWO);
+            ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_TWO,wxUrl,inviteCode);
             finish();
         }else {
-            ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_THREE);
+            ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_THREE,wxUrl,inviteCode);
             finish();
+        }
+    }
+
+    @Override
+    public void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo) {
+        if(invitationCodeInfo!=null){
+            wxUrl=invitationCodeInfo.getBaseUrl();
+            inviteCode=invitationCodeInfo.getInvitationCode();
         }
     }
 

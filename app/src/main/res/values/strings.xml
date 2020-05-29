@@ -257,4 +257,6 @@
     <string name="invite_friend_for_reward">快邀请好友拼单吧获得更多的福利哦！</string>
     <string name="invite_one_people">还剩1人，快邀请好友拼单吧！</string>
     <string name="invite_more_people">邀请更多好友去拼单</string>
+    <string name="vip_content">开通会员，开启赚钱之旅</string>
+    <string name="feed_back_success">意见反馈提交成功</string>
 </resources>

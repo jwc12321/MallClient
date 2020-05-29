@@ -154,7 +154,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
         }
     }
 
-    @OnClick({R.id.right_iv, R.id.all_order_rl, R.id.pending_payment_iv, R.id.pending_delivery_iv, R.id.shipping_iv, R.id.my_team, R.id.address_manage, R.id.invite_friends, R.id.verified_iv, R.id.my_invitation_iv, R.id.super_member_rl, R.id.coupon_ll})
+    @OnClick({R.id.right_iv, R.id.all_order_rl, R.id.pending_payment_iv, R.id.pending_delivery_iv, R.id.shipping_iv, R.id.my_team, R.id.address_manage, R.id.invite_friends, R.id.verified_iv, R.id.my_invitation_iv, R.id.super_member_rl, R.id.coupon_ll, R.id.member_type_iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.right_iv://设置
@@ -185,10 +185,10 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
             case R.id.verified_iv://认证
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
                     goVerify = StaticData.REFLASH_ONE;
-                    if(certifyPay){
+                    if (certifyPay) {
                         NameVerifiedActivity.start(getActivity());
-                    }else {
-                        CerifyTipActivity.start(getActivity(),certifyAmount);
+                    } else {
+                        CerifyTipActivity.start(getActivity(), certifyAmount);
                     }
                 }
                 break;
@@ -200,12 +200,18 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                     showMessage(getString(R.string.to_open_person_authentication));
                 } else {
                     goVerify = StaticData.REFLASH_ONE;
-                    SuperMemberActivity.start(getActivity(), avatarUrl, mobile,vipAmount);
+                    SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount);
                 }
                 break;
             case R.id.coupon_ll://优惠卷
                 Intent remarkIntent = new Intent(getActivity(), CouponActivity.class);
                 startActivityForResult(remarkIntent, RequestCodeStatic.GO_COUPON);
+                break;
+            case R.id.member_type_iv:
+                if (!TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
+                    goVerify = StaticData.REFLASH_ONE;
+                    SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount);
+                }
                 break;
             default:
         }
@@ -247,7 +253,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
             if (userInfo != null) {
                 avatarUrl = userInfo.getAvatarUrl();
                 mobile = userInfo.getMobile();
-                certifyPay=userInfo.getCertifyPay();
+                certifyPay = userInfo.getCertifyPay();
                 GlideHelper.load(getActivity(), avatarUrl, R.mipmap.icon_defalut_head, headPhoto);
                 phone.setText(mobile);
                 VerifyManager.saveVerify(userInfo.getUserLevel());
@@ -255,14 +261,17 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_ordinary_member);
                     verifiedIv.setSelected(false);
                     vipType.setText(getString(R.string.open_now));
+                    superMemberRl.setVisibility(View.VISIBLE);
                 } else if (TextUtils.equals(StaticData.REFLASH_ONE, userInfo.getUserLevel())) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_certified_member);
                     verifiedIv.setSelected(true);
                     vipType.setText(getString(R.string.open_now));
+                    superMemberRl.setVisibility(View.VISIBLE);
                 } else if (TextUtils.equals(StaticData.REFLASH_TWO, userInfo.getUserLevel())) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_super_member);
                     verifiedIv.setSelected(true);
                     vipType.setText(getString(R.string.view_now));
+                    superMemberRl.setVisibility(View.GONE);
                 }
             }
             mineRewardInfos = mineInfo.getMineRewardInfos();
@@ -283,9 +292,9 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
 
     @Override
     public void renderVipAmountInfo(VipAmountInfo vipAmountInfo) {
-        if(vipAmountInfo!=null){
-            certifyAmount=vipAmountInfo.getCertify();
-            vipAmount=vipAmountInfo.getSpvip();
+        if (vipAmountInfo != null) {
+            certifyAmount = vipAmountInfo.getCertify();
+            vipAmount = vipAmountInfo.getSpvip();
         }
     }
 

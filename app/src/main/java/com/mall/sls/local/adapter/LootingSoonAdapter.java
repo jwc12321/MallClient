@@ -3,7 +3,6 @@ package com.mall.sls.local.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.text.SpannableString;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
-import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DrawTextView;
@@ -86,14 +84,16 @@ public class LootingSoonAdapter extends RecyclerView.Adapter<LootingSoonAdapter.
         LinearLayout goodsNameRl;
         @BindView(R.id.goods_introduction)
         ConventionalTextView goodsIntroduction;
-        @BindView(R.id.confirm_bt)
-        ConventionalTextView confirmBt;
+        @BindView(R.id.price_type)
+        ConventionalTextView priceType;
         @BindView(R.id.current_price)
         MediumThickTextView currentPrice;
+        @BindView(R.id.current_price_rl)
+        LinearLayout currentPriceRl;
         @BindView(R.id.original_price)
-        DrawTextView originalPrice;
-        @BindView(R.id.price_ll)
-        LinearLayout priceLl;
+        MediumThickTextView originalPrice;
+        @BindView(R.id.confirm_bt)
+        ConventionalTextView confirmBt;
         @BindView(R.id.item_rl)
         RelativeLayout itemRl;
 

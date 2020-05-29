@@ -36,6 +36,7 @@ import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.GroupPeople;
 import com.mall.sls.data.entity.GroupPurchase;
+import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.ProductListCallableInfo;
 import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
@@ -112,6 +113,8 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     private int goodsCount = 1;
     private List<GroupPeople> groupPeoples;
     private List<GroupPurchase> groupPurchases;
+    private String wxUrl;
+    private String inviteCode;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, ActivityGroupGoodsActivity.class);
@@ -133,6 +136,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
         goodsId = getIntent().getStringExtra(StaticData.GOODS_ID);
         initWebView();
         goodsDetailsPresenter.getGoodsDetails(goodsId);
+        goodsDetailsPresenter.getInvitationCodeInfo();
 
     }
 
@@ -247,13 +251,21 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
 
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
-        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_FOUR);
+        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_FOUR,wxUrl,inviteCode);
         finish();
     }
 
     @Override
     public void renderGroupRemind() {
 
+    }
+
+    @Override
+    public void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo) {
+        if(invitationCodeInfo!=null){
+            wxUrl=invitationCodeInfo.getBaseUrl();
+            inviteCode=invitationCodeInfo.getInvitationCode();
+        }
     }
 
     @Override

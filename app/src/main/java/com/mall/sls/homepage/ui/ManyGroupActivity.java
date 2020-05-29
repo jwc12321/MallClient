@@ -15,18 +15,13 @@ import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
-import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.WXShareManager;
-import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
-import com.mall.sls.data.entity.ProductListCallableInfo;
 import com.mall.sls.mine.ui.SelectShareTypeActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,14 +35,13 @@ public class ManyGroupActivity extends BaseActivity {
     @BindView(R.id.close_iv)
     ImageView closeIv;
     @BindView(R.id.title)
-    ConventionalTextView title;
-    @BindView(R.id.content)
-    MediumThickTextView content;
+    MediumThickTextView title;
     @BindView(R.id.weixin_iv)
     ImageView weixinIv;
     private WXShareManager wxShareManager;
     private String goodsId;
-    private String activityUrl;
+    private String wxUrl;
+    private String inviteCode;
     private String nameText;
     private String briefText;
     private String backType;
@@ -64,10 +58,11 @@ public class ManyGroupActivity extends BaseActivity {
     private void initView() {
         EventBus.getDefault().register(this);
         wxShareManager = WXShareManager.getInstance(this);
-        goodsId=getIntent().getStringExtra(StaticData.GROUPON_ID);
-        activityUrl=getIntent().getStringExtra(StaticData.ACTIVITY_URL);
-        nameText=getIntent().getStringExtra(StaticData.GOODS_NAME);
-        briefText=getIntent().getStringExtra(StaticData.GOODS_BRIEF);
+        goodsId = getIntent().getStringExtra(StaticData.GROUPON_ID);
+        wxUrl=getIntent().getStringExtra(StaticData.WX_URL);
+        inviteCode=getIntent().getStringExtra(StaticData.INVITE_CODE);
+        nameText = getIntent().getStringExtra(StaticData.GOODS_NAME);
+        briefText = getIntent().getStringExtra(StaticData.GOODS_BRIEF);
     }
 
 
@@ -100,7 +95,7 @@ public class ManyGroupActivity extends BaseActivity {
 
     private void shareWx(boolean isFriend) {
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
-        String url = activityUrl+"/activity/" + goodsId + "?inviteCode=" + 11111;
+        String url = wxUrl + "activity/" + goodsId + "?inviteCode=" + inviteCode;
         wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
     }
 

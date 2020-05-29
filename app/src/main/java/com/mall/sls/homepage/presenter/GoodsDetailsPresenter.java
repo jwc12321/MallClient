@@ -10,6 +10,8 @@ import com.mall.sls.data.RxSchedulerTransformer;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.Ignore;
+import com.mall.sls.data.entity.InvitationCodeInfo;
+import com.mall.sls.data.entity.ShareInfo;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.data.request.CartFastaddRequest;
@@ -131,6 +133,27 @@ public class GoodsDetailsPresenter implements HomepageContract.GoodsDetailsPrese
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         goodsDetailsView.dismissLoading();
+                        goodsDetailsView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getInvitationCodeInfo() {
+        String queryString = "null";
+        String sign = SignUnit.signGet(RequestUrl.WX_INVITATION_CODE, queryString);
+        Disposable disposable = restApiService.getInvitationCodeInfo(sign)
+                .flatMap(new RxRemoteDataParse<InvitationCodeInfo>())
+                .compose(new RxSchedulerTransformer<InvitationCodeInfo>())
+                .subscribe(new Consumer<InvitationCodeInfo>() {
+                    @Override
+                    public void accept(InvitationCodeInfo invitationCodeInfo) throws Exception {
+                        goodsDetailsView.renderInvitationCodeInfo(invitationCodeInfo);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
                         goodsDetailsView.showError(throwable);
                     }
                 });

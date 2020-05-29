@@ -15,6 +15,12 @@ import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.mine.DaggerMineComponent;
+import com.mall.sls.mine.MineContract;
+import com.mall.sls.mine.MineModule;
+import com.mall.sls.mine.presenter.FeedBackPresenter;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +31,7 @@ import butterknife.OnTextChanged;
  * @author jwc on 2020/5/14.
  * 描述：请填写备注
  */
-public class FeedBackActivity extends BaseActivity {
+public class FeedBackActivity extends BaseActivity implements MineContract.FeedBackView {
 
 
     @BindView(R.id.back)
@@ -42,6 +48,9 @@ public class FeedBackActivity extends BaseActivity {
     MediumThickTextView confirmBt;
 
     private String remark;
+
+    @Inject
+    FeedBackPresenter feedBackPresenter;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, FeedBackActivity.class);
@@ -63,6 +72,15 @@ public class FeedBackActivity extends BaseActivity {
         wordCount.setText(remark.length() + "/200");
         confirmBt.setEnabled(!TextUtils.isEmpty(remark));
     }
+    @Override
+    protected void initializeInjector() {
+        DaggerMineComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .mineModule(new MineModule(this))
+                .build()
+                .inject(this);
+    }
+
 
 
     @OnClick({R.id.back, R.id.confirm_bt})
@@ -83,12 +101,25 @@ public class FeedBackActivity extends BaseActivity {
             showMessage(getString(R.string.input_feedback));
             return;
         }
-
+        feedBackPresenter.addFeedBack(remark);
     }
 
 
     @Override
     public View getSnackBarHolderView() {
         return null;
+    }
+
+    @Override
+    public void renderAddFeedBack(Boolean isBoolean) {
+        if(isBoolean) {
+            showMessage(getString(R.string.feed_back_success));
+            finish();
+        }
+    }
+
+    @Override
+    public void setPresenter(MineContract.FeedBackPresenter presenter) {
+
     }
 }

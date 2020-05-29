@@ -42,7 +42,8 @@ public class AloneGroupActivity extends BaseActivity {
     private String goodsProductId;
     private String grouponId;
     private String backType;
-    private String activityUrl;
+    private String wxUrl;
+    private String inviteCode;
     private String nameText;
     private String briefText;
     private WXShareManager wxShareManager;
@@ -60,7 +61,8 @@ public class AloneGroupActivity extends BaseActivity {
         wxShareManager = WXShareManager.getInstance(this);
         goodsProductId=getIntent().getStringExtra(StaticData.GOODS_PRODUCT_ID);
         grouponId=getIntent().getStringExtra(StaticData.GROUPON_ID);
-        activityUrl=getIntent().getStringExtra(StaticData.ACTIVITY_URL);
+        wxUrl=getIntent().getStringExtra(StaticData.WX_URL);
+        inviteCode=getIntent().getStringExtra(StaticData.INVITE_CODE);
         nameText=getIntent().getStringExtra(StaticData.GOODS_NAME);
         briefText=getIntent().getStringExtra(StaticData.GOODS_BRIEF);
     }
@@ -101,7 +103,7 @@ public class AloneGroupActivity extends BaseActivity {
 
     private void shareGroupWx(boolean isFriend) {
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
-        String url = activityUrl + "/group/" + grouponId +"/"+goodsProductId+ "?inviteCode=" + 11111;
+        String url = wxUrl + "group/" + grouponId +"/"+goodsProductId+ "?inviteCode=" + inviteCode;
         wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
     }
 

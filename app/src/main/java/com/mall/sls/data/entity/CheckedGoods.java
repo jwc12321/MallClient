@@ -32,9 +32,12 @@ public class CheckedGoods implements Serializable {
     //skuID
     @SerializedName("productId")
     private String productId;
-    //产品秒速
+    //产品描述
     @SerializedName("brief")
     private String brief;
+    //活动结束时间
+    @SerializedName("groupExpireTime")
+    private String groupExpireTime;
 
     public String getNumber() {
         return number;
@@ -106,5 +109,13 @@ public class CheckedGoods implements Serializable {
 
     public void setBrief(String brief) {
         this.brief = brief;
+    }
+
+    public String getGroupExpireTime() {
+        return groupExpireTime;
+    }
+
+    public void setGroupExpireTime(String groupExpireTime) {
+        this.groupExpireTime = groupExpireTime;
     }
 }

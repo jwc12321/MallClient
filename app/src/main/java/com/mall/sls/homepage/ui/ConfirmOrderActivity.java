@@ -136,19 +136,23 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private String goodsProductId;
     private String grouponId;
     private String backType;
-    private String activityUrl="http://192.168.31.13:8080/activity";
     private String goodsId;
     private String tipBack;
     private String nameText;
     private String briefText;
+    private String groupExpireTime;
+    private String wxUrl;
+    private String inviteCode;
 
     @Inject
     ConfirmOrderPresenter confirmOrderPresenter;
 
-    public static void start(Context context, ConfirmOrderDetail confirmOrderDetail, String purchaseType) {
+    public static void start(Context context, ConfirmOrderDetail confirmOrderDetail, String purchaseType,String wxUrl,String inviteCode) {
         Intent intent = new Intent(context, ConfirmOrderActivity.class);
         intent.putExtra(StaticData.CONFIRM_ORDER_DETAIL, (Serializable) confirmOrderDetail);
         intent.putExtra(StaticData.PURCHASE_TYPE, purchaseType);
+        intent.putExtra(StaticData.WX_URL,wxUrl);
+        intent.putExtra(StaticData.INVITE_CODE,inviteCode);
         context.startActivity(intent);
     }
 
@@ -165,6 +169,8 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
         EventBus.getDefault().register(this);
         confirmOrderDetail = (ConfirmOrderDetail) getIntent().getSerializableExtra(StaticData.CONFIRM_ORDER_DETAIL);
         purchaseType = getIntent().getStringExtra(StaticData.PURCHASE_TYPE);
+        wxUrl=getIntent().getStringExtra(StaticData.WX_URL);
+        inviteCode=getIntent().getStringExtra(StaticData.INVITE_CODE);
         confirmDetail();
     }
 
@@ -185,6 +191,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                 goodsName.setText(checkedGoods.getGoodsName());
                 goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(checkedGoods.getPrice()));
                 GlideHelper.load(this, checkedGoods.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
+                groupExpireTime=checkedGoods.getGroupExpireTime();
             }
             orderTotalPrice = confirmOrderDetail.getOrderTotalPrice();
             goodsTotalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(confirmOrderDetail.getGoodsTotalPrice()));
@@ -308,7 +315,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                     if (data != null) {
                         backType = data.getStringExtra(StaticData.BACK_TYPE);
                         if(TextUtils.equals(StaticData.REFLASH_ONE,backType)){
-                            WXShareBackActivity.start(this,StaticData.REFLASH_ZERO,nameText,briefText,goodsId,activityUrl,"",grouponId,goodsProductId);
+                            WXShareBackActivity.start(this,StaticData.REFLASH_ZERO,nameText,briefText,goodsId,wxUrl,inviteCode,"",grouponId,goodsProductId);
                             finish();
                         }else {
                             GoodsOrderDetailsActivity.start(this, orderId);
@@ -320,7 +327,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                     if (data != null) {
                         backType = data.getStringExtra(StaticData.BACK_TYPE);
                         if(TextUtils.equals(StaticData.REFLASH_ONE,backType)){
-                            WXShareBackActivity.start(this,StaticData.REFLASH_ONE,nameText,briefText,goodsId,activityUrl,"2020-05-28 20:00:00",grouponId,goodsProductId);
+                            WXShareBackActivity.start(this,StaticData.REFLASH_ONE,nameText,briefText,goodsId,wxUrl,inviteCode,groupExpireTime,grouponId,goodsProductId);
                             finish();
                         }else {
                             GoodsOrderDetailsActivity.start(this, orderId);
@@ -501,7 +508,8 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             Intent intent = new Intent(this, AloneGroupActivity.class);
             intent.putExtra(StaticData.GOODS_PRODUCT_ID, goodsProductId);
             intent.putExtra(StaticData.GROUPON_ID, grouponId);
-            intent.putExtra(StaticData.ACTIVITY_URL, activityUrl);
+            intent.putExtra(StaticData.WX_URL, wxUrl);
+            intent.putExtra(StaticData.INVITE_CODE,inviteCode);
             intent.putExtra(StaticData.GOODS_NAME,nameText);
             intent.putExtra(StaticData.GOODS_BRIEF,briefText);
 
@@ -513,7 +521,8 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
         } else if (TextUtils.equals(StaticData.REFLASH_FOUR, purchaseType)) {
             Intent intent = new Intent(this, ManyGroupActivity.class);
             intent.putExtra(StaticData.GOODS_ID, goodsId);
-            intent.putExtra(StaticData.ACTIVITY_URL, activityUrl);
+            intent.putExtra(StaticData.WX_URL, wxUrl);
+            intent.putExtra(StaticData.INVITE_CODE,inviteCode);
             intent.putExtra(StaticData.GOODS_NAME,nameText);
             intent.putExtra(StaticData.GOODS_BRIEF,briefText);
             startActivityForResult(intent, RequestCodeStatic.MANY_GROUP);

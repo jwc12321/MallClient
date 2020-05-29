@@ -10,6 +10,7 @@
 
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fadingEdge="none"
@@ -201,7 +202,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_10"
                 android:src="@mipmap/icon_goods_details" />
 
             <WebView
@@ -209,7 +210,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_15"
-                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_15" />
 
         </LinearLayout>
@@ -217,8 +218,10 @@
     </androidx.core.widget.NestedScrollView>
 
     <RelativeLayout
+        android:id="@+id/title_rel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/backGround8">
 
         <ImageView
             android:id="@+id/back"

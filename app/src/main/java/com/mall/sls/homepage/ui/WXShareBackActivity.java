@@ -65,7 +65,8 @@ public class WXShareBackActivity extends BaseActivity implements MSTearDownView.
 
     private String choiceType;
     private String goodsId;
-    private String activityUrl;
+    private String wxUrl;
+    private String inviteCode;
     private String endTime;
     private WXShareManager wxShareManager;
     private long groupExpireTime;
@@ -76,13 +77,14 @@ public class WXShareBackActivity extends BaseActivity implements MSTearDownView.
     private String grouponId;
     private String goodsProductId;
 
-    public static void start(Context context, String choiceType, String nameText, String briefText, String goodsId, String activityUrl, String endTime, String grouponId, String goodsProductId) {
+    public static void start(Context context, String choiceType, String nameText, String briefText, String goodsId, String wxUrl,String inviteCode, String endTime, String grouponId, String goodsProductId) {
         Intent intent = new Intent(context, WXShareBackActivity.class);
         intent.putExtra(StaticData.GOODS_ID, goodsId);
         intent.putExtra(StaticData.GOODS_NAME, nameText);
         intent.putExtra(StaticData.GOODS_BRIEF, briefText);
         intent.putExtra(StaticData.CHOICE_TYPE, choiceType);
-        intent.putExtra(StaticData.ACTIVITY_URL, activityUrl);
+        intent.putExtra(StaticData.WX_URL,wxUrl);
+        intent.putExtra(StaticData.INVITE_CODE,inviteCode);
         intent.putExtra(StaticData.END_TIME, endTime);
         intent.putExtra(StaticData.GROUPON_ID, grouponId);
         intent.putExtra(StaticData.GOODS_PRODUCT_ID, goodsProductId);
@@ -105,7 +107,8 @@ public class WXShareBackActivity extends BaseActivity implements MSTearDownView.
         nameText = getIntent().getStringExtra(StaticData.GOODS_NAME);
         briefText = getIntent().getStringExtra(StaticData.GOODS_BRIEF);
         goodsId = getIntent().getStringExtra(StaticData.GOODS_ID);
-        activityUrl = getIntent().getStringExtra(StaticData.ACTIVITY_URL);
+        wxUrl=getIntent().getStringExtra(StaticData.WX_URL);
+        inviteCode=getIntent().getStringExtra(StaticData.INVITE_CODE);
         endTime = getIntent().getStringExtra(StaticData.END_TIME);
         grouponId = getIntent().getStringExtra(StaticData.GROUPON_ID);
         goodsProductId = getIntent().getStringExtra(StaticData.GOODS_PRODUCT_ID);
@@ -142,13 +145,13 @@ public class WXShareBackActivity extends BaseActivity implements MSTearDownView.
 
     private void shareActivityWx(boolean isFriend) {
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
-        String url = activityUrl + "/activity/" + goodsId + "?inviteCode=" + 11111;
+        String url = wxUrl + "activity/" + goodsId + "?inviteCode=" + inviteCode;
         wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
     }
 
     private void shareGroupWx(boolean isFriend) {
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
-        String url = activityUrl + "/group/" + grouponId + "/" + goodsProductId + "?inviteCode=" + 11111;
+        String url = wxUrl + "group/" + grouponId + "/" + goodsProductId + "?inviteCode=" + inviteCode;
         wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
     }
 

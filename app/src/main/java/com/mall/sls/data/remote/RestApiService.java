@@ -11,6 +11,7 @@ import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.Ignore;
+import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.InviteInfo;
 import com.mall.sls.data.entity.LocalTeam;
 import com.mall.sls.data.entity.MessageInfo;
@@ -29,6 +30,7 @@ import com.mall.sls.data.entity.WXGoodsDetailsInfo;
 import com.mall.sls.data.request.AddAddressRequest;
 import com.mall.sls.data.request.CartFastaddRequest;
 import com.mall.sls.data.request.CertifyIdRequest;
+import com.mall.sls.data.request.DescriptionRequest;
 import com.mall.sls.data.request.GroupRemindRequest;
 import com.mall.sls.data.request.LoginRequest;
 import com.mall.sls.data.request.MobileRequest;
@@ -216,5 +218,13 @@ public interface RestApiService {
     //分享信息
     @GET("app/auth/share")
     Flowable<RemoteDataWrapper<ShareInfo>> getShareInfo(@Header("X-Hc-Sign") String sign);
+
+    //获取邀请码和h5链接地址
+    @GET("app/auth/invitationCode")
+    Flowable<RemoteDataWrapper<InvitationCodeInfo>> getInvitationCodeInfo(@Header("X-Hc-Sign") String sign);
+
+    //意见反馈
+    @POST("app/auth/addFeedBack")
+    Flowable<RemoteDataWrapper<Boolean>> addFeedBack(@Header("X-Hc-Sign") String sign, @Body DescriptionRequest request);
 
 }

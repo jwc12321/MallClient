@@ -5,11 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -37,6 +38,7 @@ import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.GroupPurchase;
+import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.ProductListCallableInfo;
 import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
@@ -65,7 +67,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/9.
  * 描述：普通商品详情
  */
-public class OrdinaryGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView {
+public class OrdinaryGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, NestedScrollView.OnScrollChangeListener {
 
 
     @BindView(R.id.banner)
@@ -130,6 +132,10 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     ConventionalTextView goodsBrief;
     @BindView(R.id.group_ll)
     LinearLayout groupLl;
+    @BindView(R.id.scrollview)
+    NestedScrollView scrollview;
+    @BindView(R.id.title_rel)
+    RelativeLayout titleRel;
     private ProductListCallableInfo productListCallableInfo;
     private List<CustomViewsInfo> data;
     private String goodsId;
@@ -158,6 +164,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     private String backType;
     private String nameText;
     private String briefText;
+    private String wxUrl;
+    private String inviteCode;
 
     @Inject
     GoodsDetailsPresenter goodsDetailsPresenter;
@@ -181,10 +189,12 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         EventBus.getDefault().register(this);
         goodsId = getIntent().getStringExtra(StaticData.GOODS_ID);
         wxShareManager = WXShareManager.getInstance(this);
+        scrollview.setOnScrollChangeListener(this);
         xBannerInit();
         initWebView();
         goodsDetailsPresenter.getGoodsDetails(goodsId);
         goodsDetailsPresenter.getConsumerPhone();
+        goodsDetailsPresenter.getInvitationCodeInfo();
 
     }
 
@@ -377,7 +387,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
 
     private void shareWx(boolean isFriend) {
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
-        String url = "http://192.168.31.13:8080/goods/ordinary/" + goodsId + "?inviteCode=" + 11111;
+        String url = wxUrl+"goods/ordinary/" + goodsId + "?inviteCode=" + inviteCode;
         wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
     }
 
@@ -410,8 +420,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             goodsOriginalUnit.setText("/" + unit);
             originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
             sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity() + "件");
-            nameText=goodsDetailsInfo.getName();
-            briefText=goodsDetailsInfo.getBrief();
+            nameText = goodsDetailsInfo.getName();
+            briefText = goodsDetailsInfo.getBrief();
             goodsName.setText(goodsDetailsInfo.getName());
             goodsBrief.setText(goodsDetailsInfo.getBrief());
             goodsBrief.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getBrief()) ? View.GONE : View.VISIBLE);
@@ -468,13 +478,21 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
 
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
-        ConfirmOrderActivity.start(this, confirmOrderDetail, purchaseType);
+        ConfirmOrderActivity.start(this, confirmOrderDetail, purchaseType,wxUrl,inviteCode);
         finish();
     }
 
     @Override
     public void renderGroupRemind() {
 
+    }
+
+    @Override
+    public void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo) {
+        if(invitationCodeInfo!=null){
+            wxUrl=invitationCodeInfo.getBaseUrl();
+            inviteCode=invitationCodeInfo.getInvitationCode();
+        }
     }
 
     @Override
@@ -492,5 +510,19 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+
+    @Override
+    public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        if (scrollY <= 0) {   //设置标题的背景颜色
+            titleRel.setBackgroundColor(Color.argb((int) 0, 144, 151, 166));
+        } else if (scrollY > 0 && scrollY <= titleRel.getHeight()) { //滑动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
+            float scale = (float) scrollY / titleRel.getHeight();
+            float alpha = (255 * scale);
+            titleRel.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
+        } else {    //滑动到banner下面设置普通颜色
+            titleRel.setBackgroundColor(Color.argb((int) 255, 255, 255, 255));
+        }
     }
 }

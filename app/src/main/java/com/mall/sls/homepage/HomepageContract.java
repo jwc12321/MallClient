@@ -8,6 +8,7 @@ import com.mall.sls.certify.CertifyContract;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.HomePageInfo;
+import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderSubmitInfo;
 import com.mall.sls.data.entity.WXGoodsDetailsInfo;
 
@@ -25,6 +26,7 @@ public interface HomepageContract {
         void getConsumerPhone();
         void cartFastAdd(String goodsId, String productId, boolean isGroup, String number, String groupId, String groupRulesId);
         void groupRemind(String ruleId);
+        void getInvitationCodeInfo();
     }
 
     interface GoodsDetailsView extends BaseView<GoodsDetailsPresenter>{
@@ -32,6 +34,7 @@ public interface HomepageContract {
         void renderConsumerPhone(String consumerPhone);
         void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail);
         void renderGroupRemind();
+        void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo);
 
     }
 
@@ -50,11 +53,13 @@ public interface HomepageContract {
     interface WXGoodsDetailsPresenter extends BasePresenter{
         void getWXGoodsDetailsInfo(String goodsProductId,String grouponId);
         void cartFastAdd(String goodsId, String productId, boolean isGroup, String number, String groupId, String groupRulesId);
+        void getInvitationCodeInfo();
     }
 
     interface WXGoodsDetailsView extends BaseView<WXGoodsDetailsPresenter>{
         void renderWXGoodsDetailsInfo(GoodsDetailsInfo goodsDetailsInfo);
         void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail);
+        void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo);
     }
 
 }
