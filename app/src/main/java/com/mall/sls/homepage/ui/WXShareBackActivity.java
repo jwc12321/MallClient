@@ -7,27 +7,26 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
-import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
-import com.mall.sls.common.unit.AvatarUrlManager;
-import com.mall.sls.common.unit.FormatUtil;
+import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MSTearDownView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.mainframe.ui.MainFrameActivity;
 import com.mall.sls.mine.ui.SelectShareTypeActivity;
+import com.mall.sls.order.ui.GoodsOrderDetailsActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -41,53 +40,48 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/26.
  * 描述：
  */
-public class WXShareBackActivity extends BaseActivity implements MSTearDownView.TimeOutListener {
-    @BindView(R.id.title)
-    MediumThickTextView title;
+public class WXShareBackActivity extends BaseActivity {
+
+
+    @BindView(R.id.back)
+    ImageView back;
     @BindView(R.id.title_rel)
     RelativeLayout titleRel;
-    @BindView(R.id.count_down)
-    MSTearDownView countDown;
-    @BindView(R.id.surplus)
-    MediumThickTextView surplus;
+    @BindView(R.id.tip)
+    MediumThickTextView tip;
+    @BindView(R.id.order_iv)
+    ImageView orderIv;
     @BindView(R.id.weixin_iv)
     ImageView weixinIv;
     @BindView(R.id.home_iv)
     ImageView homeIv;
-    @BindView(R.id.head_photo)
-    RoundedImageView headPhoto;
-    @BindView(R.id.three_iv)
-    ImageView threeIv;
-    @BindView(R.id.successful_order)
-    ConventionalTextView successfulOrder;
-    @BindView(R.id.count_down_ll)
-    LinearLayout countDownLl;
-
-    private String choiceType;
+    @BindView(R.id.look_order)
+    ConventionalTextView lookOrder;
     private String goodsId;
     private String wxUrl;
     private String inviteCode;
-    private String endTime;
     private WXShareManager wxShareManager;
-    private long groupExpireTime;
-    private long now;
     private String nameText;
     private String briefText;
     private String backType;
     private String grouponId;
     private String goodsProductId;
+    private String goodsOrderId;
 
-    public static void start(Context context, String choiceType, String nameText, String briefText, String goodsId, String wxUrl,String inviteCode, String endTime, String grouponId, String goodsProductId) {
+    //1:单独购买 2：发起拼单 3：拼团 4：百人团
+    private String purchaseType;
+
+    public static void start(Context context, String purchaseType, String nameText, String briefText, String goodsId, String wxUrl, String inviteCode, String grouponId, String goodsProductId,String goodsOrderId) {
         Intent intent = new Intent(context, WXShareBackActivity.class);
         intent.putExtra(StaticData.GOODS_ID, goodsId);
         intent.putExtra(StaticData.GOODS_NAME, nameText);
         intent.putExtra(StaticData.GOODS_BRIEF, briefText);
-        intent.putExtra(StaticData.CHOICE_TYPE, choiceType);
-        intent.putExtra(StaticData.WX_URL,wxUrl);
-        intent.putExtra(StaticData.INVITE_CODE,inviteCode);
-        intent.putExtra(StaticData.END_TIME, endTime);
+        intent.putExtra(StaticData.PURCHASE_TYPE, purchaseType);
+        intent.putExtra(StaticData.WX_URL, wxUrl);
+        intent.putExtra(StaticData.INVITE_CODE, inviteCode);
         intent.putExtra(StaticData.GROUPON_ID, grouponId);
         intent.putExtra(StaticData.GOODS_PRODUCT_ID, goodsProductId);
+        intent.putExtra(StaticData.GOODS_ORDER_ID, goodsOrderId);
         context.startActivity(intent);
     }
 
@@ -96,48 +90,58 @@ public class WXShareBackActivity extends BaseActivity implements MSTearDownView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wx_share_back);
         ButterKnife.bind(this);
-        setHeight(null, title, null);
+        setHeight(back, null, null);
         initView();
     }
 
     private void initView() {
         EventBus.getDefault().register(this);
         wxShareManager = WXShareManager.getInstance(this);
-        choiceType = getIntent().getStringExtra(StaticData.CHOICE_TYPE);
+        purchaseType = getIntent().getStringExtra(StaticData.PURCHASE_TYPE);
         nameText = getIntent().getStringExtra(StaticData.GOODS_NAME);
         briefText = getIntent().getStringExtra(StaticData.GOODS_BRIEF);
         goodsId = getIntent().getStringExtra(StaticData.GOODS_ID);
-        wxUrl=getIntent().getStringExtra(StaticData.WX_URL);
-        inviteCode=getIntent().getStringExtra(StaticData.INVITE_CODE);
-        endTime = getIntent().getStringExtra(StaticData.END_TIME);
+        wxUrl = getIntent().getStringExtra(StaticData.WX_URL);
+        inviteCode = getIntent().getStringExtra(StaticData.INVITE_CODE);
         grouponId = getIntent().getStringExtra(StaticData.GROUPON_ID);
         goodsProductId = getIntent().getStringExtra(StaticData.GOODS_PRODUCT_ID);
-        GlideHelper.load(this, AvatarUrlManager.getAvatarUrl(), R.mipmap.icon_defalut_head, headPhoto);
-        now = System.currentTimeMillis();
-        if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {//日常团
-            groupExpireTime = now + 15 * 60 * 1000;
-            countDown.startTearDown(groupExpireTime / 1000, now / 1000);
-            surplus.setText(getString(R.string.invite_one_people));
-            countDownLl.setVisibility(View.VISIBLE);
-            successfulOrder.setVisibility(View.GONE);
-        } else {//活动团
-            groupExpireTime = FormatUtil.dateToStamp(endTime);
-            countDown.startTearDown(groupExpireTime / 1000, now / 1000);
-            surplus.setText(getString(R.string.invite_friend_for_reward));
+        goodsOrderId = getIntent().getStringExtra(StaticData.GOODS_ORDER_ID);
+        if (TextUtils.equals(StaticData.REFLASH_ONE, purchaseType) || TextUtils.equals(StaticData.REFLASH_THREE, purchaseType)) {
+            orderIv.setVisibility(View.VISIBLE);
+            weixinIv.setVisibility(View.GONE);
+            tip.setVisibility(View.INVISIBLE);
+            lookOrder.setVisibility(View.INVISIBLE);
+        } else {
+            orderIv.setVisibility(View.GONE);
+            weixinIv.setVisibility(View.VISIBLE);
+            tip.setVisibility(View.VISIBLE);
+            lookOrder.setVisibility(View.VISIBLE);
         }
     }
 
 
-    @OnClick({R.id.home_iv, R.id.weixin_iv})
+    @OnClick({R.id.home_iv, R.id.weixin_iv, R.id.back,R.id.order_iv,R.id.look_order})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.home_iv:
+            case R.id.home_iv://首页
                 MainFrameActivity.start(this);
                 finish();
                 break;
-            case R.id.weixin_iv:
+            case R.id.weixin_iv://微信分享
+                if (!PayTypeInstalledUtils.isWeixinAvilible(WXShareBackActivity.this)) {
+                    showMessage(getString(R.string.install_weixin));
+                    return;
+                }
                 Intent intent = new Intent(this, SelectShareTypeActivity.class);
                 startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
+                break;
+            case R.id.back://返回
+                finish();
+                break;
+            case R.id.order_iv:
+            case R.id.look_order:
+                GoodsOrderDetailsActivity.start(this,goodsOrderId);
+                finish();
                 break;
             default:
         }
@@ -145,13 +149,13 @@ public class WXShareBackActivity extends BaseActivity implements MSTearDownView.
 
     private void shareActivityWx(boolean isFriend) {
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
-        String url = wxUrl + "activity/" + goodsId + "?inviteCode=" + inviteCode;
+        String url = wxUrl + "activity/" + goodsId + StaticData.WX_INVITE_CODE + inviteCode;
         wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
     }
 
     private void shareGroupWx(boolean isFriend) {
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
-        String url = wxUrl + "group/" + grouponId + "/" + goodsProductId + "?inviteCode=" + inviteCode;
+        String url = wxUrl + "group/" + grouponId + "/" + goodsProductId + StaticData.WX_INVITE_CODE + inviteCode;
         wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
     }
 
@@ -163,7 +167,7 @@ public class WXShareBackActivity extends BaseActivity implements MSTearDownView.
                 case RequestCodeStatic.SELECT_SHARE_TYPE:
                     if (data != null) {
                         backType = data.getStringExtra(StaticData.BACK_TYPE);
-                        if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {
+                        if (TextUtils.equals(StaticData.REFLASH_TWO, purchaseType)) {
                             shareGroupWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
                         } else {
                             shareActivityWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
@@ -193,12 +197,4 @@ public class WXShareBackActivity extends BaseActivity implements MSTearDownView.
         EventBus.getDefault().unregister(this);
     }
 
-    @Override
-    public void timeOut() {
-        if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {
-            countDownLl.setVisibility(View.GONE);
-            successfulOrder.setVisibility(View.VISIBLE);
-            surplus.setVisibility(View.INVISIBLE);
-        }
-    }
 }

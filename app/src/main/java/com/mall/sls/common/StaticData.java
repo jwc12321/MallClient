@@ -100,5 +100,6 @@ public class StaticData {
     public static final String GOODS_BRIEF="goodsBrief";
     public static final String WX_URL="wxUrl";//分享h5url
     public static final String INVITE_CODE="inviteCode";//邀请码
+    public static final String WX_INVITE_CODE="?invitationCode=";
 
 }

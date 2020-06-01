@@ -1,10 +1,13 @@
 package com.mall.sls.common;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.transition.Transition;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 public class GlideHelper {
 
@@ -19,4 +22,5 @@ public class GlideHelper {
                         .into(target);
         }
     }
+
 }

@@ -93,7 +93,7 @@ public interface RestApiService {
 
     //新增地址
     @POST("app/address/save")
-    Flowable<RemoteDataWrapper<String>> addAddress(@Header("X-Hc-Sign") String sign,@Body AddAddressRequest request);
+    Flowable<RemoteDataWrapper<String>> addAddress(@Header("X-Hc-Sign") String sign, @Body AddAddressRequest request);
 
     //获取客服信息
     @GET("app/common/customer")
@@ -109,11 +109,11 @@ public interface RestApiService {
 
     //商品购买接口
     @POST("app/cart/fastadd")
-    Flowable<RemoteDataWrapper<ConfirmOrderDetail>> cartFastAdd(@Header("X-Hc-Sign") String sign,@Body CartFastaddRequest request);
+    Flowable<RemoteDataWrapper<ConfirmOrderDetail>> cartFastAdd(@Header("X-Hc-Sign") String sign, @Body CartFastaddRequest request);
 
     //订单预提交
     @GET("app/cart/checkout")
-    Flowable<RemoteDataWrapper<ConfirmOrderDetail>> cartCheckout(@Header("X-Hc-Sign") String sign,@Query("addressId") String addressId,@Query("cartId") String cartId,@Query("couponId") String couponId,@Query("userCouponId") String userCouponId);
+    Flowable<RemoteDataWrapper<ConfirmOrderDetail>> cartCheckout(@Header("X-Hc-Sign") String sign, @Query("addressId") String addressId, @Query("cartId") String cartId, @Query("couponId") String couponId, @Query("userCouponId") String userCouponId);
 
     //查询当前预提交订单可用优惠券
     @GET("app/coupon/selectlist")
@@ -121,7 +121,7 @@ public interface RestApiService {
 
     //提交订单
     @POST("app/order/submit")
-    Flowable<RemoteDataWrapper<OrderSubmitInfo>> orderSubmit(@Header("X-Hc-Sign") String sign,@Body OrderSubmitRequest request);
+    Flowable<RemoteDataWrapper<OrderSubmitInfo>> orderSubmit(@Header("X-Hc-Sign") String sign, @Body OrderSubmitRequest request);
 
     //获取优惠卷列表
     @GET("app/coupon/mylist")
@@ -137,7 +137,7 @@ public interface RestApiService {
 
     //开始认证流程
     @POST("app/certify")
-    Flowable<RemoteDataWrapper<String>> getCertifyId(@Header("X-Hc-Sign") String sign,@Body CertifyIdRequest request);
+    Flowable<RemoteDataWrapper<String>> getCertifyId(@Header("X-Hc-Sign") String sign, @Body CertifyIdRequest request);
 
     //获取订单列表
     @GET("app/order/list")
@@ -160,10 +160,10 @@ public interface RestApiService {
     Flowable<RemoteDataWrapper<MessageInfo>> getMessageInfo(@Header("X-Hc-Sign") String sign, @Query("typeId") String typeId, @Query("page") String page, @Query("limit") String limit);
 
     @POST("app/msg/empty")
-    Flowable<RemoteDataWrapper<Ignore>> msgEmpty(@Header("X-Hc-Sign") String sign,@Body MsgIdRequest request);
+    Flowable<RemoteDataWrapper<Ignore>> msgEmpty(@Header("X-Hc-Sign") String sign, @Body MsgIdRequest request);
 
     @POST("app/msg/changeStatus")
-    Flowable<RemoteDataWrapper<Ignore>> msgChangeStatus(@Header("X-Hc-Sign") String sign,@Body MsgReadRequest request);
+    Flowable<RemoteDataWrapper<Ignore>> msgChangeStatus(@Header("X-Hc-Sign") String sign, @Body MsgReadRequest request);
 
     //我的拼团
     @GET("app/groupon")
@@ -228,5 +228,9 @@ public interface RestApiService {
     //微信支付实人认证和超级会员
     @POST("app/user/pay/wx")
     Flowable<RemoteDataWrapper<WXPaySignResponse>> wxPayMember(@Header("X-Hc-Sign") String sign, @Body UserPayDtoRequest request);
+
+    //微信支付订单
+    @POST("app/order/wxPay")
+    Flowable<RemoteDataWrapper<WXPaySignResponse>> orderWxPay(@Header("X-Hc-Sign") String sign, @Body OrderPayRequest request);
 
 }

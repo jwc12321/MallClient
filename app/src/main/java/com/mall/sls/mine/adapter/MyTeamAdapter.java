@@ -63,7 +63,11 @@ public class MyTeamAdapter extends RecyclerView.Adapter<MyTeamAdapter.MyTeamView
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-
+                    if(TextUtils.equals(StaticData.REFLASH_ONE,myTeamInfo.getStatus())){
+                        onItemClickListener.shareWx(myTeamInfo.getGrouponId(),myTeamInfo.getGoodsProductId(),myTeamInfo.getName(),myTeamInfo.getBrief());
+                    }else {
+                        onItemClickListener.goOrderDetails(myTeamInfo.getOrderId());
+                    }
                 }
             }
         });
@@ -71,7 +75,6 @@ public class MyTeamAdapter extends RecyclerView.Adapter<MyTeamAdapter.MyTeamView
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-
                 }
             }
         });
@@ -159,7 +162,8 @@ public class MyTeamAdapter extends RecyclerView.Adapter<MyTeamAdapter.MyTeamView
 
 
     public interface OnItemClickListener {
-
+        void shareWx(String grouponId, String goodsProductId,String goodsName,String brief);
+        void goOrderDetails(String goodsOrderId);
     }
 
     private OnItemClickListener onItemClickListener;

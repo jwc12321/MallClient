@@ -11,6 +11,7 @@ import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderSubmitInfo;
 import com.mall.sls.data.entity.WXGoodsDetailsInfo;
+import com.mall.sls.data.entity.WXPaySignResponse;
 
 public interface HomepageContract {
     interface HomePagePresenter extends BasePresenter{
@@ -42,12 +43,14 @@ public interface HomepageContract {
         void cartCheckout(String addressId, String cartId, String couponId, String userCouponId);
         void orderSubmit(String addressId, String cartId, String couponId, String userCouponId, String message);
         void orderAliPay(String orderId,String type);
+        void orderWxPay(String orderId,String type);
     }
 
     interface ConfirmOrderView extends BaseView<ConfirmOrderPresenter>{
         void renderCartCheckout(ConfirmOrderDetail confirmOrderDetail);
         void renderOrderSubmit(OrderSubmitInfo orderSubmitInfo);
         void renderOrderAliPay(String alipayStr);
+        void renderOrderWxPay(WXPaySignResponse wxPaySignResponse);
     }
 
     interface WXGoodsDetailsPresenter extends BasePresenter{

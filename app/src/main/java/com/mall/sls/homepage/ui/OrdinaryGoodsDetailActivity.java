@@ -30,6 +30,7 @@ import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.HtmlUnit;
 import com.mall.sls.common.unit.NumberFormatUnit;
+import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -45,6 +46,7 @@ import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.presenter.GoodsDetailsPresenter;
 import com.mall.sls.mine.ui.CustomerServiceActivity;
+import com.mall.sls.mine.ui.MyTeamActivity;
 import com.mall.sls.mine.ui.SelectShareTypeActivity;
 import com.mall.sls.webview.unit.JSBridgeWebChromeClient;
 import com.stx.xhb.androidx.XBanner;
@@ -295,6 +297,10 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 goSpellingReminder(downMobile, downSurplus);
                 break;
             case R.id.share://分享
+                if (!PayTypeInstalledUtils.isWeixinAvilible(OrdinaryGoodsDetailActivity.this)) {
+                    showMessage(getString(R.string.install_weixin));
+                    return;
+                }
                 Intent intent = new Intent(this, SelectShareTypeActivity.class);
                 startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
                 break;
@@ -387,7 +393,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
 
     private void shareWx(boolean isFriend) {
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
-        String url = wxUrl+"goods/ordinary/" + goodsId + "?inviteCode=" + inviteCode;
+        String url = wxUrl+"goods/ordinary/" + goodsId + StaticData.WX_INVITE_CODE + inviteCode;
         wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
     }
 
@@ -479,7 +485,6 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
         ConfirmOrderActivity.start(this, confirmOrderDetail, purchaseType,wxUrl,inviteCode);
-        finish();
     }
 
     @Override

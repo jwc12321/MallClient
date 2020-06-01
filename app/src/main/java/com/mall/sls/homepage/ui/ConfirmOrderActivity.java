@@ -135,24 +135,22 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private String orderTotalPrice;
     private String goodsProductId;
     private String grouponId;
-    private String backType;
     private String goodsId;
     private String tipBack;
     private String nameText;
     private String briefText;
-    private String groupExpireTime;
     private String wxUrl;
     private String inviteCode;
 
     @Inject
     ConfirmOrderPresenter confirmOrderPresenter;
 
-    public static void start(Context context, ConfirmOrderDetail confirmOrderDetail, String purchaseType,String wxUrl,String inviteCode) {
+    public static void start(Context context, ConfirmOrderDetail confirmOrderDetail, String purchaseType, String wxUrl, String inviteCode) {
         Intent intent = new Intent(context, ConfirmOrderActivity.class);
         intent.putExtra(StaticData.CONFIRM_ORDER_DETAIL, (Serializable) confirmOrderDetail);
         intent.putExtra(StaticData.PURCHASE_TYPE, purchaseType);
-        intent.putExtra(StaticData.WX_URL,wxUrl);
-        intent.putExtra(StaticData.INVITE_CODE,inviteCode);
+        intent.putExtra(StaticData.WX_URL, wxUrl);
+        intent.putExtra(StaticData.INVITE_CODE, inviteCode);
         context.startActivity(intent);
     }
 
@@ -169,8 +167,8 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
         EventBus.getDefault().register(this);
         confirmOrderDetail = (ConfirmOrderDetail) getIntent().getSerializableExtra(StaticData.CONFIRM_ORDER_DETAIL);
         purchaseType = getIntent().getStringExtra(StaticData.PURCHASE_TYPE);
-        wxUrl=getIntent().getStringExtra(StaticData.WX_URL);
-        inviteCode=getIntent().getStringExtra(StaticData.INVITE_CODE);
+        wxUrl = getIntent().getStringExtra(StaticData.WX_URL);
+        inviteCode = getIntent().getStringExtra(StaticData.INVITE_CODE);
         confirmDetail();
     }
 
@@ -183,15 +181,14 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             if (checkedGoodsList != null && checkedGoodsList.size() > 0) {
                 //现在没有购物车，所以单独一个
                 checkedGoods = checkedGoodsList.get(0);
-                goodsId=checkedGoods.getGoodsId();
+                goodsId = checkedGoods.getGoodsId();
                 goodsProductId = checkedGoods.getProductId();
                 goodsNumber.setText("x" + checkedGoods.getNumber());
-                nameText=checkedGoods.getGoodsName();
-                briefText=checkedGoods.getBrief();
+                nameText = checkedGoods.getGoodsName();
+                briefText = checkedGoods.getBrief();
                 goodsName.setText(checkedGoods.getGoodsName());
                 goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(checkedGoods.getPrice()));
                 GlideHelper.load(this, checkedGoods.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
-                groupExpireTime=checkedGoods.getGroupExpireTime();
             }
             orderTotalPrice = confirmOrderDetail.getOrderTotalPrice();
             goodsTotalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(confirmOrderDetail.getGoodsTotalPrice()));
@@ -270,7 +267,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
-                case RequestCodeStatic.REQUEST_ADDRESS:
+                case RequestCodeStatic.REQUEST_ADDRESS://地址
                     if (data != null) {
                         Bundle bundle = data.getExtras();
                         addressInfo = (AddressInfo) bundle.getSerializable(StaticData.ADDRESS_INFO);
@@ -278,13 +275,13 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                         confirmOrderPresenter.cartCheckout(addressId, cartId, couponId, userCouponId);
                     }
                     break;
-                case RequestCodeStatic.REQUEST_REMARK:
+                case RequestCodeStatic.REQUEST_REMARK://备注
                     if (data != null) {
                         message = data.getStringExtra(StaticData.REMARK);
                         buyerMessage.setText(message);
                     }
                     break;
-                case RequestCodeStatic.SELECT_COUPON:
+                case RequestCodeStatic.SELECT_COUPON://优惠卷
                     if (data != null) {
                         Bundle bundle = data.getExtras();
                         couponId = bundle.getString(StaticData.COUPON_ID);
@@ -292,13 +289,13 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                         confirmOrderPresenter.cartCheckout(addressId, cartId, couponId, userCouponId);
                     }
                     break;
-                case RequestCodeStatic.PAY_TYPE:
+                case RequestCodeStatic.PAY_TYPE://选择支付方式
                     if (data != null) {
                         String selectType = data.getStringExtra(StaticData.SELECT_TYPE);
                         if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(ConfirmOrderActivity.this)) {
-
+                                confirmOrderPresenter.orderWxPay(orderId,StaticData.REFLASH_ZERO);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
@@ -311,57 +308,22 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                         }
                     }
                     break;
-                case RequestCodeStatic.ALONE_GROUP:
-                    if (data != null) {
-                        backType = data.getStringExtra(StaticData.BACK_TYPE);
-                        if(TextUtils.equals(StaticData.REFLASH_ONE,backType)){
-                            WXShareBackActivity.start(this,StaticData.REFLASH_ZERO,nameText,briefText,goodsId,wxUrl,inviteCode,"",grouponId,goodsProductId);
-                            finish();
-                        }else {
-                            GoodsOrderDetailsActivity.start(this, orderId);
-                            finish();
-                        }
-                    }
-                    break;
-                case RequestCodeStatic.MANY_GROUP:
-                    if (data != null) {
-                        backType = data.getStringExtra(StaticData.BACK_TYPE);
-                        if(TextUtils.equals(StaticData.REFLASH_ONE,backType)){
-                            WXShareBackActivity.start(this,StaticData.REFLASH_ONE,nameText,briefText,goodsId,wxUrl,inviteCode,groupExpireTime,grouponId,goodsProductId);
-                            finish();
-                        }else {
-                            GoodsOrderDetailsActivity.start(this, orderId);
-                            finish();
-                        }
-                    }
-                    break;
-                case RequestCodeStatic.TIP_PAGE:
+                case RequestCodeStatic.TIP_PAGE://点击返回
                     if (data != null) {
                         tipBack = data.getStringExtra(StaticData.TIP_BACK);
-                        if(TextUtils.equals(StaticData.REFLASH_ONE,tipBack)){
+                        if (TextUtils.equals(StaticData.REFLASH_ONE, tipBack)) {
                             confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
-                        }else {
+                        } else {
                             finish();
                         }
                     }
                     break;
-                    case RequestCodeStatic.PINYIN_SUCCESS:
-                        if (data != null) {
-                            backType = data.getStringExtra(StaticData.BACK_TYPE);
-                            if(TextUtils.equals(StaticData.REFLASH_ONE,backType)){
-                                finish();
-                            }else {
-                                GoodsOrderDetailsActivity.start(this, orderId);
-                                finish();
-                            }
-                        }
-                        break;
                 default:
             }
         }
     }
 
-    private void back(){
+    private void back() {
         Intent intent = new Intent(this, CommonTipActivity.class);
         intent.putExtra(StaticData.COMMON_TITLE, getString(R.string.cancel_pay_tip));
         intent.putExtra(StaticData.CANCEL_TEXT, getString(R.string.cancel_pay_cancel_text));
@@ -387,7 +349,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             grouponId = orderSubmitInfo.getGrouponLinkId();
             Intent intent = new Intent(this, SelectPayTypeActivity.class);
             intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
-            intent.putExtra(StaticData.PAYMENT_AMOUNT,orderTotalPrice);
+            intent.putExtra(StaticData.PAYMENT_AMOUNT, orderTotalPrice);
             startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
         }
     }
@@ -396,6 +358,13 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     public void renderOrderAliPay(String alipayStr) {
         if (!TextUtils.isEmpty(alipayStr)) {
             startAliPay(alipayStr);
+        }
+    }
+
+    @Override
+    public void renderOrderWxPay(WXPaySignResponse wxPaySignResponse) {
+        if(wxPaySignResponse!=null) {
+            wechatPay(wxPaySignResponse);
         }
     }
 
@@ -458,7 +427,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     }
 
 
-    public  void wechatPay(WXPaySignResponse wxPaySignResponse) {
+    public void wechatPay(WXPaySignResponse wxPaySignResponse) {
         // 将该app注册到微信
         IWXAPI wxapi = WXAPIFactory.createWXAPI(this, StaticData.WX_APP_ID);
         PayReq request = new PayReq();
@@ -481,12 +450,12 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     //支付失败
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPayCancel(PayAbortEvent event) {
-        if(event!=null){
-            if(event.code==-1){
+        if (event != null) {
+            if (event.code == -1) {
                 showMessage(getString(R.string.pay_failed));
                 GoodsOrderDetailsActivity.start(this, orderId);
                 finish();
-            }else if(event.code==-2){
+            } else if (event.code == -2) {
                 showMessage(getString(R.string.pay_cancel));
                 GoodsOrderDetailsActivity.start(this, orderId);
                 finish();
@@ -501,31 +470,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     }
 
     private void paySuccess() {
-        if (TextUtils.equals(StaticData.REFLASH_ONE, purchaseType)) {
-            GoodsOrderDetailsActivity.start(this, orderId);
-            finish();
-        } else if (TextUtils.equals(StaticData.REFLASH_TWO, purchaseType)) {
-            Intent intent = new Intent(this, AloneGroupActivity.class);
-            intent.putExtra(StaticData.GOODS_PRODUCT_ID, goodsProductId);
-            intent.putExtra(StaticData.GROUPON_ID, grouponId);
-            intent.putExtra(StaticData.WX_URL, wxUrl);
-            intent.putExtra(StaticData.INVITE_CODE,inviteCode);
-            intent.putExtra(StaticData.GOODS_NAME,nameText);
-            intent.putExtra(StaticData.GOODS_BRIEF,briefText);
-
-            startActivityForResult(intent, RequestCodeStatic.ALONE_GROUP);
-        } else if (TextUtils.equals(StaticData.REFLASH_THREE, purchaseType)) {
-            Intent intent = new Intent(this, SuccessfulOrderActivity.class);
-            startActivityForResult(intent, RequestCodeStatic.PINYIN_SUCCESS);
-
-        } else if (TextUtils.equals(StaticData.REFLASH_FOUR, purchaseType)) {
-            Intent intent = new Intent(this, ManyGroupActivity.class);
-            intent.putExtra(StaticData.GOODS_ID, goodsId);
-            intent.putExtra(StaticData.WX_URL, wxUrl);
-            intent.putExtra(StaticData.INVITE_CODE,inviteCode);
-            intent.putExtra(StaticData.GOODS_NAME,nameText);
-            intent.putExtra(StaticData.GOODS_BRIEF,briefText);
-            startActivityForResult(intent, RequestCodeStatic.MANY_GROUP);
-        }
+        WXShareBackActivity.start(this, purchaseType, nameText, briefText, goodsId, wxUrl, inviteCode, grouponId, goodsProductId, orderId);
+        finish();
     }
 }

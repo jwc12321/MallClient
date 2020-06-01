@@ -20,11 +20,13 @@ import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.ShareInfo;
+import com.mall.sls.homepage.ui.ActivityGoodsDetailActivity;
 import com.mall.sls.mine.DaggerMineComponent;
 import com.mall.sls.mine.MineContract;
 import com.mall.sls.mine.MineModule;
@@ -134,6 +136,10 @@ public class InviteFriendsActivity extends BaseActivity implements MineContract.
                 showMessage(getString(R.string.copy_successfully));
                 break;
             case R.id.poster_bt:
+                if (!PayTypeInstalledUtils.isWeixinAvilible(InviteFriendsActivity.this)) {
+                    showMessage(getString(R.string.install_weixin));
+                    return;
+                }
                 posterBitmap = QRCodeFileUtils.createBitmap2(shareRl);
                 Intent intent = new Intent(this, SelectShareTypeActivity.class);
                 startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);

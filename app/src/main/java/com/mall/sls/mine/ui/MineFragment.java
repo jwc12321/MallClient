@@ -27,6 +27,7 @@ import com.mall.sls.common.unit.VerifyManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.coupon.ui.CouponActivity;
+import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.MineInfo;
 import com.mall.sls.data.entity.MineRewardInfo;
 import com.mall.sls.data.entity.UserInfo;
@@ -116,6 +117,8 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
 
     private String certifyAmount;
     private String vipAmount;
+    private String wxUrl;
+    private String inviteCode;
 
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
@@ -174,7 +177,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 GoodsOrderActivity.start(getActivity(), "3");
                 break;
             case R.id.my_team://我的拼团
-                MyTeamActivity.start(getActivity());
+                MyTeamActivity.start(getActivity(),wxUrl,inviteCode);
                 break;
             case R.id.address_manage://地址管理
                 AddressManageActivity.start(getActivity(), StaticData.REFLASH_ONE);
@@ -299,6 +302,14 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     }
 
     @Override
+    public void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo) {
+        if(invitationCodeInfo!=null){
+            wxUrl=invitationCodeInfo.getBaseUrl();
+            inviteCode=invitationCodeInfo.getInvitationCode();
+        }
+    }
+
+    @Override
     public void setPresenter(MineContract.MineInfoPresenter presenter) {
 
     }
@@ -309,6 +320,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
         if (getUserVisibleHint() && mineInfoPresenter != null) {
             mineInfoPresenter.getMineInfo();
             mineInfoPresenter.getVipAmountInfo();
+            mineInfoPresenter.getInvitationCodeInfo();
         }
     }
 }

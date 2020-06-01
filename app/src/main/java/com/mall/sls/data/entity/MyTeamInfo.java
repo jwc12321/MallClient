@@ -34,6 +34,13 @@ public class MyTeamInfo {
     //订单id
     @SerializedName("orderId")
     private String orderId;
+    @SerializedName("grouponId")
+    private String grouponId;
+    @SerializedName("goodsProductId")
+    private String goodsProductId;
+    //产品描述
+    @SerializedName("brief")
+    private String brief;
 
     public String getAddTime() {
         return addTime;
@@ -105,5 +112,29 @@ public class MyTeamInfo {
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
+    }
+
+    public String getGrouponId() {
+        return grouponId;
+    }
+
+    public void setGrouponId(String grouponId) {
+        this.grouponId = grouponId;
+    }
+
+    public String getGoodsProductId() {
+        return goodsProductId;
+    }
+
+    public void setGoodsProductId(String goodsProductId) {
+        this.goodsProductId = goodsProductId;
+    }
+
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
     }
 }

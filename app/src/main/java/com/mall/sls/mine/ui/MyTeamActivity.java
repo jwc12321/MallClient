@@ -1,8 +1,12 @@
 package com.mall.sls.mine.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,17 +18,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.PayTypeInstalledUtils;
+import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.TeamInfo;
+import com.mall.sls.homepage.ui.ConfirmOrderActivity;
 import com.mall.sls.mine.DaggerMineComponent;
 import com.mall.sls.mine.MineContract;
 import com.mall.sls.mine.MineModule;
 import com.mall.sls.mine.adapter.MyTeamAdapter;
 import com.mall.sls.mine.presenter.MyTeamInfoPresenter;
+import com.mall.sls.order.ui.GoodsOrderDetailsActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import javax.inject.Inject;
 
@@ -55,8 +68,19 @@ public class MyTeamActivity extends BaseActivity implements MineContract.MyTeamI
     @Inject
     MyTeamInfoPresenter myTeamInfoPresenter;
 
-    public static void start(Context context) {
+    private String wxUrl;
+    private String inviteCode;
+    private String backType;
+    private String grouponId;
+    private String goodsProductId;
+    private WXShareManager wxShareManager;
+    private String nameText;
+    private String briefText;
+
+    public static void start(Context context,String wxUrl, String inviteCode) {
         Intent intent = new Intent(context, MyTeamActivity.class);
+        intent.putExtra(StaticData.WX_URL, wxUrl);
+        intent.putExtra(StaticData.INVITE_CODE, inviteCode);
         context.startActivity(intent);
     }
 
@@ -70,7 +94,11 @@ public class MyTeamActivity extends BaseActivity implements MineContract.MyTeamI
     }
 
     private void initView() {
+        EventBus.getDefault().register(this);
+        wxShareManager = WXShareManager.getInstance(this);
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
+        wxUrl = getIntent().getStringExtra(StaticData.WX_URL);
+        inviteCode = getIntent().getStringExtra(StaticData.INVITE_CODE);
         addAdapter();
         myTeamInfoPresenter.getMyTeamInfo(StaticData.REFLASH_ONE);
     }
@@ -155,5 +183,59 @@ public class MyTeamActivity extends BaseActivity implements MineContract.MyTeamI
     @Override
     public void setPresenter(MineContract.MyTeamInfoPresenter presenter) {
 
+    }
+
+    @Override
+    public void shareWx(String grouponId, String goodsProductId,String goodsName,String brief) {
+        if (!PayTypeInstalledUtils.isWeixinAvilible(MyTeamActivity.this)) {
+            showMessage(getString(R.string.install_weixin));
+            return;
+        }
+        this.grouponId=grouponId;
+        this.goodsProductId=goodsProductId;
+        nameText=goodsName;
+        briefText=brief;
+        Intent intent = new Intent(this, SelectShareTypeActivity.class);
+        startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RequestCodeStatic.SELECT_SHARE_TYPE:
+                    if (data != null) {
+                        backType = data.getStringExtra(StaticData.BACK_TYPE);
+                        shareGroupWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                    }
+                    break;
+                default:
+            }
+        }
+    }
+
+    private void shareGroupWx(boolean isFriend) {
+        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
+        String url = wxUrl + "group/" + grouponId + "/" + goodsProductId + StaticData.WX_INVITE_CODE + inviteCode;
+        wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
+    }
+
+    @Override
+    public void goOrderDetails(String goodsOrderId) {
+        GoodsOrderDetailsActivity.start(this,goodsOrderId);
+    }
+
+    //分享成功
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onShareSuccess(String code) {
+        showMessage(getString(R.string.share_success));
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

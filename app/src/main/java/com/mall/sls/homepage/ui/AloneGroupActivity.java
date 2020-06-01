@@ -103,7 +103,7 @@ public class AloneGroupActivity extends BaseActivity {
 
     private void shareGroupWx(boolean isFriend) {
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
-        String url = wxUrl + "group/" + grouponId +"/"+goodsProductId+ "?inviteCode=" + inviteCode;
+        String url = wxUrl + "group/" + grouponId +"/"+goodsProductId+ StaticData.WX_INVITE_CODE + inviteCode;
         wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
     }
 

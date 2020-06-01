@@ -4,6 +4,7 @@ import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
+import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.MineInfo;
 import com.mall.sls.data.entity.VipAmountInfo;
 import com.mall.sls.data.remote.RestApiService;
@@ -74,6 +75,27 @@ public class MineInfoPresenter implements MineContract.MineInfoPresenter {
                     @Override
                     public void accept(VipAmountInfo vipAmountInfo) throws Exception {
                         mineInfoView.renderVipAmountInfo(vipAmountInfo);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mineInfoView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getInvitationCodeInfo() {
+        String queryString = "null";
+        String sign = SignUnit.signGet(RequestUrl.WX_INVITATION_CODE, queryString);
+        Disposable disposable = restApiService.getInvitationCodeInfo(sign)
+                .flatMap(new RxRemoteDataParse<InvitationCodeInfo>())
+                .compose(new RxSchedulerTransformer<InvitationCodeInfo>())
+                .subscribe(new Consumer<InvitationCodeInfo>() {
+                    @Override
+                    public void accept(InvitationCodeInfo invitationCodeInfo) throws Exception {
+                        mineInfoView.renderInvitationCodeInfo(invitationCodeInfo);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

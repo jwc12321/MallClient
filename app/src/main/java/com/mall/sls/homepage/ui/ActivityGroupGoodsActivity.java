@@ -252,7 +252,6 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
         ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_FOUR,wxUrl,inviteCode);
-        finish();
     }
 
     @Override

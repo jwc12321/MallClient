@@ -2,6 +2,7 @@ package com.mall.sls.mine;
 
 import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
+import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.InviteInfo;
 import com.mall.sls.data.entity.MineInfo;
 import com.mall.sls.data.entity.ShareInfo;
@@ -18,11 +19,13 @@ public interface MineContract {
     interface MineInfoPresenter extends BasePresenter{
         void getMineInfo();
         void getVipAmountInfo();
+        void getInvitationCodeInfo();
     }
 
     interface MineInfoView extends BaseView<MineInfoPresenter>{
         void renderMineInfo(MineInfo mineInfo);
         void renderVipAmountInfo(VipAmountInfo vipAmountInfo);
+        void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo);
     }
 
     interface MyInvitePresenter extends BasePresenter{

@@ -95,7 +95,7 @@ public class ManyGroupActivity extends BaseActivity {
 
     private void shareWx(boolean isFriend) {
         Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
-        String url = wxUrl + "activity/" + goodsId + "?inviteCode=" + inviteCode;
+        String url = wxUrl + "activity/" + goodsId + StaticData.WX_INVITE_CODE + inviteCode;
         wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
     }
 

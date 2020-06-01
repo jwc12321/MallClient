@@ -146,7 +146,6 @@ public class WXShareManager {
         WXMediaMessage msg = new WXMediaMessage(webpageObject);
         msg.title = title;
         msg.description = descroption;
-
         msg.setThumbImage(thumbBmp);
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = String.valueOf(System.currentTimeMillis());
