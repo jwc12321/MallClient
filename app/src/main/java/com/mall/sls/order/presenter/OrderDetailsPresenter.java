@@ -8,6 +8,7 @@ import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.OrderInfo;
+import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.data.request.OrderPayRequest;
@@ -79,6 +80,31 @@ public class OrderDetailsPresenter implements OrderContract.OrderDetailsPresente
                     public void accept(String alipayStr) throws Exception {
                         orderDetailsView.dismissLoading();
                         orderDetailsView.renderOrderAliPay(alipayStr);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        orderDetailsView.dismissLoading();
+                        orderDetailsView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+
+    @Override
+    public void orderWxPay(String orderId, String type) {
+        orderDetailsView.showLoading(StaticData.PROCESSING);
+        OrderPayRequest request=new OrderPayRequest(orderId,type);
+        String sign= SignUnit.signPost(RequestUrl.ORDER_WX_PAY,gson.toJson(request));
+        Disposable disposable = restApiService.orderWxPay(sign,request)
+                .flatMap(new RxRemoteDataParse<WXPaySignResponse>())
+                .compose(new RxSchedulerTransformer<WXPaySignResponse>())
+                .subscribe(new Consumer<WXPaySignResponse>() {
+                    @Override
+                    public void accept(WXPaySignResponse wxPaySignResponse) throws Exception {
+                        orderDetailsView.dismissLoading();
+                        orderDetailsView.renderOrderWxPay(wxPaySignResponse);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

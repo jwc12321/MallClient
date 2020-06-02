@@ -25,12 +25,15 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.BriefUnit;
 import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.unit.HtmlUnit;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
+import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DetailTearDownView;
@@ -47,7 +50,6 @@ import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.presenter.GoodsDetailsPresenter;
 import com.mall.sls.mine.ui.CustomerServiceActivity;
-import com.mall.sls.mine.ui.MyTeamActivity;
 import com.mall.sls.mine.ui.SelectShareTypeActivity;
 import com.mall.sls.webview.unit.JSBridgeWebChromeClient;
 import com.stx.xhb.androidx.XBanner;
@@ -119,6 +121,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     NestedScrollView scrollview;
     @BindView(R.id.title_rel)
     RelativeLayout titleRel;
+    @BindView(R.id.share_iv)
+    ImageView shareIv;
     private ProductListCallableInfo productListCallableInfo;
     private List<CustomViewsInfo> data;
     private String goodsId;
@@ -140,6 +144,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     private WXShareManager wxShareManager;
     private String wxUrl;
     private String inviteCode;
+    private Bitmap shareBitMap;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, ActivityGoodsDetailActivity.class);
@@ -247,6 +252,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                     showMessage(getString(R.string.install_weixin));
                     return;
                 }
+                shareBitMap = QRCodeFileUtils.createBitmap3(shareIv,150,150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
                 Intent intent = new Intent(this, SelectShareTypeActivity.class);
                 startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
                 break;
@@ -317,9 +323,9 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     }
 
     private void shareWx(boolean isFriend) {
-        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
-        String url = wxUrl+"goods/activity/" + goodsId + StaticData.WX_INVITE_CODE + inviteCode;
-        wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
+//        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
+        String url = wxUrl + "goods/activity/" + goodsId + StaticData.WX_INVITE_CODE + inviteCode;
+        wxShareManager.shareUrlToWX(isFriend, url, shareBitMap, nameText, briefText);
     }
 
     @Override
@@ -351,8 +357,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             goodsOriginalUnit.setText("/" + unit);
             originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
             sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity() + "件");
-            nameText = goodsDetailsInfo.getName();
-            briefText = goodsDetailsInfo.getBrief();
+            nameText = BriefUnit.returnName(goodsDetailsInfo.getRetailPrice(),goodsDetailsInfo.getName());
+            briefText = BriefUnit.returnBrief(goodsDetailsInfo.getBrief());
             goodsName.setText(goodsDetailsInfo.getName());
             goodsBrief.setText(goodsDetailsInfo.getBrief());
             goodsBrief.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getBrief()) ? View.GONE : View.VISIBLE);
@@ -402,6 +408,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             if (!TextUtils.isEmpty(goodsDetailsInfo.getDetail())) {
                 webView.loadDataWithBaseURL(null, HtmlUnit.getHtmlData(goodsDetailsInfo.getDetail()), "text/html", "utf-8", null);
             }
+            GlideHelper.load(this, goodsDetailsInfo.getPicUrl(), R.mipmap.icon_default_goods, shareIv);
         }
     }
 
@@ -412,7 +419,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
 
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
-        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_FOUR,wxUrl,inviteCode);
+        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_FOUR, wxUrl, inviteCode);
     }
 
     @Override
@@ -422,9 +429,9 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
 
     @Override
     public void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo) {
-        if(invitationCodeInfo!=null){
-            wxUrl=invitationCodeInfo.getBaseUrl();
-            inviteCode=invitationCodeInfo.getInvitationCode();
+        if (invitationCodeInfo != null) {
+            wxUrl = invitationCodeInfo.getBaseUrl();
+            inviteCode = invitationCodeInfo.getInvitationCode();
         }
     }
 

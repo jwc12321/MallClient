@@ -18,12 +18,14 @@ import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.MessageInfo;
 import com.mall.sls.message.DaggerMessageComponent;
 import com.mall.sls.message.MessageContract;
 import com.mall.sls.message.MessageModule;
 import com.mall.sls.message.adapter.OrderMessageAdapter;
 import com.mall.sls.message.presenter.MsgInfoPresenter;
+import com.mall.sls.order.ui.GoodsOrderDetailsActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -198,6 +200,7 @@ public class OrderMessageActivity extends BaseActivity implements MessageContrac
     @Override
     public void goOrderDetails(String orderId,String id) {
         msgInfoPresenter.msgChangeStatus(id);
+        GoodsOrderDetailsActivity.start(this,orderId);
     }
 
     @Override

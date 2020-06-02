@@ -23,6 +23,7 @@ import com.mall.sls.address.ui.AddressManageActivity;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.BriefUnit;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayResult;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
@@ -141,6 +142,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private String briefText;
     private String wxUrl;
     private String inviteCode;
+    private String picUrl;
 
     @Inject
     ConfirmOrderPresenter confirmOrderPresenter;
@@ -184,11 +186,12 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                 goodsId = checkedGoods.getGoodsId();
                 goodsProductId = checkedGoods.getProductId();
                 goodsNumber.setText("x" + checkedGoods.getNumber());
-                nameText = checkedGoods.getGoodsName();
-                briefText = checkedGoods.getBrief();
+                nameText = BriefUnit.returnName(checkedGoods.getPrice(),checkedGoods.getGoodsName());
+                briefText = BriefUnit.returnBrief(checkedGoods.getBrief());
                 goodsName.setText(checkedGoods.getGoodsName());
                 goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(checkedGoods.getPrice()));
                 GlideHelper.load(this, checkedGoods.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
+                picUrl=checkedGoods.getPicUrl();
             }
             orderTotalPrice = confirmOrderDetail.getOrderTotalPrice();
             goodsTotalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(confirmOrderDetail.getGoodsTotalPrice()));
@@ -198,7 +201,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             userCouponId = confirmOrderDetail.getUserCouponId();
             if (TextUtils.equals(StaticData.REFLASH_ZERO, confirmOrderDetail.getAvailableCouponLength())) {
                 couponIv.setVisibility(View.GONE);
-                coupon.setText("0张优惠卷可用");
+                coupon.setText("0张优惠券可用");
             } else {
                 couponIv.setVisibility(View.VISIBLE);
                 if (TextUtils.equals("-1", couponId)) {
@@ -470,7 +473,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     }
 
     private void paySuccess() {
-        WXShareBackActivity.start(this, purchaseType, nameText, briefText, goodsId, wxUrl, inviteCode, grouponId, goodsProductId, orderId);
+        WXShareBackActivity.start(this, purchaseType, nameText, briefText, goodsId, wxUrl, inviteCode, grouponId, goodsProductId, orderId,picUrl);
         finish();
     }
 }

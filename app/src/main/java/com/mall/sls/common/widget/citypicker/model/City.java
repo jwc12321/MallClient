@@ -2,6 +2,8 @@ package com.mall.sls.common.widget.citypicker.model;
 
 import android.text.TextUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,15 +12,23 @@ import java.util.regex.Pattern;
  */
 public class City {
     private String name;
-    private String province;
     private String pinyin;
     private String code;
 
-    public City(String name, String province, String pinyin, String code) {
+    private List<City> cityList;
+
+    public City(String name, String pinyin, String code) {
         this.name = name;
-        this.province = province;
         this.pinyin = pinyin;
         this.code = code;
+    }
+
+    public List<City> getCityList() {
+        return cityList;
+    }
+
+    public void setCityList(List<City> cityList) {
+        this.cityList = cityList;
     }
 
     /***
@@ -57,14 +67,6 @@ public class City {
 
     public void setPinyin(String pinyin) {
         this.pinyin = pinyin;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
     }
 
     public String getCode() {

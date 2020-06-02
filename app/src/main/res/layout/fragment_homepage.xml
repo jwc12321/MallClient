@@ -30,19 +30,26 @@
         android:layout_below="@id/title_rel"
         android:background="@color/backGround1">
 
-        <ImageView
+        <LinearLayout
+            android:id="@+id/local_ll"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_17"
-            android:src="@mipmap/icon_home_location" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_17"
+                android:src="@mipmap/icon_home_location"
+                android:layout_gravity="center_vertical"/>
 
-        <com.mall.sls.common.widget.textview.ConventionalTextView
-            android:id="@+id/local_city"
-            style="@style/size15_color_app1_text_style"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_39"
-            tools:text="杭州市" />
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/local_city"
+                style="@style/size15_color_app1_text_style"
+                android:layout_marginLeft="@dimen/dp_5"
+                tools:text="杭州市"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+
 
         <RelativeLayout
             android:id="@+id/message_rl"

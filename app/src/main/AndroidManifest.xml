@@ -325,10 +325,15 @@
             android:launchMode="singleTop"
             android:theme="@style/TranslucentFullScreenTheme"/>
         <activity android:name=".mine.ui.FeedBackActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
         <activity android:name=".homepage.ui.CommonTipActivity"
             android:launchMode="singleTop"
             android:theme="@style/TranslucentFullScreenTheme"/>
+        <activity android:name=".homepage.ui.CityPickerActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"
+            android:theme="@style/DefaultCityPickerTheme"/>
     </application>
 
 </manifest>

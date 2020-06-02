@@ -137,7 +137,7 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
             }
         }
 
-        //101:待付款 201:待发货 301:待收货 401:确认收货 102:已取消
+        //101:待付款 201:待发货 301:待收货 401+402:确认收货 102+103:已取消
         private void setOrderStatus(String status) {
             switch (status) {
                 case StaticData.TO_PAY:
@@ -163,12 +163,14 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
 //                    rightBt.setText(context.getString(R.string.confirm_receipt));
                     break;
                 case StaticData.RECEIVED:
+                case StaticData.SYS_RECEIVED:
                     orderStatus.setText(context.getString(R.string.received));
                     orderStatus.setSelected(true);
                     btLl.setVisibility(View.GONE);
                     break;
                 case StaticData.CANCELLED:
-                    orderStatus.setText(context.getString(R.string.closed));
+                case StaticData.SYS_CANCELLED:
+                    orderStatus.setText(context.getString(R.string.is_cancel));
                     orderStatus.setSelected(false);
                     btLl.setVisibility(View.GONE);
                     break;

@@ -4,9 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:overScrollMode="never"
-    android:paddingLeft="16dp"
-    android:paddingBottom="16dp"
-    android:paddingTop="16dp"
-    android:paddingRight="@dimen/dp_36"
-    android:paddingEnd="@dimen/dp_36"
-    android:paddingStart="16dp" />
+    android:paddingLeft="@dimen/dp_16"
+    android:paddingBottom="@dimen/dp_16"
+    android:paddingTop="@dimen/dp_16"
+    android:paddingStart="@dimen/dp_16" />

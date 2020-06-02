@@ -332,5 +332,11 @@
 
     </RelativeLayout>
 
+    <ImageView
+        android:id="@+id/share_iv"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_150"
+        android:visibility="gone"/>
+
 
 </RelativeLayout>

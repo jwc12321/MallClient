@@ -2,6 +2,7 @@ package com.mall.sls.order.ui;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.data.entity.GoodsOrderInfo;
 import com.mall.sls.data.entity.OrderList;
+import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.order.DaggerOrderComponent;
 import com.mall.sls.order.OrderContract;
 import com.mall.sls.order.OrderModule;
@@ -178,6 +180,11 @@ public class PendingDeliveryFragment extends BaseFragment implements OrderContra
 
     @Override
     public void renderOrderAliPay(String alipayStr) {
+
+    }
+
+    @Override
+    public void renderOrderWxPay(WXPaySignResponse wxPaySignResponse) {
 
     }
 

@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,14 +15,14 @@ import androidx.annotation.Nullable;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
+import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
-import com.mall.sls.common.widget.textview.MSTearDownView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
-import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.mainframe.ui.MainFrameActivity;
 import com.mall.sls.mine.ui.SelectShareTypeActivity;
 import com.mall.sls.order.ui.GoodsOrderDetailsActivity;
@@ -57,6 +56,8 @@ public class WXShareBackActivity extends BaseActivity {
     ImageView homeIv;
     @BindView(R.id.look_order)
     ConventionalTextView lookOrder;
+    @BindView(R.id.share_iv)
+    ImageView shareIv;
     private String goodsId;
     private String wxUrl;
     private String inviteCode;
@@ -67,11 +68,13 @@ public class WXShareBackActivity extends BaseActivity {
     private String grouponId;
     private String goodsProductId;
     private String goodsOrderId;
+    private String picUrl;
+    private Bitmap shareBitMap;
 
     //1:单独购买 2：发起拼单 3：拼团 4：百人团
     private String purchaseType;
 
-    public static void start(Context context, String purchaseType, String nameText, String briefText, String goodsId, String wxUrl, String inviteCode, String grouponId, String goodsProductId,String goodsOrderId) {
+    public static void start(Context context, String purchaseType, String nameText, String briefText, String goodsId, String wxUrl, String inviteCode, String grouponId, String goodsProductId, String goodsOrderId, String picUrl) {
         Intent intent = new Intent(context, WXShareBackActivity.class);
         intent.putExtra(StaticData.GOODS_ID, goodsId);
         intent.putExtra(StaticData.GOODS_NAME, nameText);
@@ -82,6 +85,7 @@ public class WXShareBackActivity extends BaseActivity {
         intent.putExtra(StaticData.GROUPON_ID, grouponId);
         intent.putExtra(StaticData.GOODS_PRODUCT_ID, goodsProductId);
         intent.putExtra(StaticData.GOODS_ORDER_ID, goodsOrderId);
+        intent.putExtra(StaticData.PIC_URL, picUrl);
         context.startActivity(intent);
     }
 
@@ -106,6 +110,7 @@ public class WXShareBackActivity extends BaseActivity {
         grouponId = getIntent().getStringExtra(StaticData.GROUPON_ID);
         goodsProductId = getIntent().getStringExtra(StaticData.GOODS_PRODUCT_ID);
         goodsOrderId = getIntent().getStringExtra(StaticData.GOODS_ORDER_ID);
+        picUrl = getIntent().getStringExtra(StaticData.PIC_URL);
         if (TextUtils.equals(StaticData.REFLASH_ONE, purchaseType) || TextUtils.equals(StaticData.REFLASH_THREE, purchaseType)) {
             orderIv.setVisibility(View.VISIBLE);
             weixinIv.setVisibility(View.GONE);
@@ -117,10 +122,11 @@ public class WXShareBackActivity extends BaseActivity {
             tip.setVisibility(View.VISIBLE);
             lookOrder.setVisibility(View.VISIBLE);
         }
+        GlideHelper.load(this,picUrl, R.mipmap.icon_default_goods, shareIv);
     }
 
 
-    @OnClick({R.id.home_iv, R.id.weixin_iv, R.id.back,R.id.order_iv,R.id.look_order})
+    @OnClick({R.id.home_iv, R.id.weixin_iv, R.id.back, R.id.order_iv, R.id.look_order})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.home_iv://首页
@@ -132,6 +138,7 @@ public class WXShareBackActivity extends BaseActivity {
                     showMessage(getString(R.string.install_weixin));
                     return;
                 }
+                shareBitMap = QRCodeFileUtils.createBitmap3(shareIv,150,150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
                 Intent intent = new Intent(this, SelectShareTypeActivity.class);
                 startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
                 break;
@@ -140,7 +147,7 @@ public class WXShareBackActivity extends BaseActivity {
                 break;
             case R.id.order_iv:
             case R.id.look_order:
-                GoodsOrderDetailsActivity.start(this,goodsOrderId);
+                GoodsOrderDetailsActivity.start(this, goodsOrderId);
                 finish();
                 break;
             default:
@@ -148,15 +155,15 @@ public class WXShareBackActivity extends BaseActivity {
     }
 
     private void shareActivityWx(boolean isFriend) {
-        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
+//        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
         String url = wxUrl + "activity/" + goodsId + StaticData.WX_INVITE_CODE + inviteCode;
-        wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
+        wxShareManager.shareUrlToWX(isFriend, url, shareBitMap, nameText, briefText);
     }
 
     private void shareGroupWx(boolean isFriend) {
-        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
+//        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
         String url = wxUrl + "group/" + grouponId + "/" + goodsProductId + StaticData.WX_INVITE_CODE + inviteCode;
-        wxShareManager.shareUrlToWX(isFriend, url, bitmap, nameText, briefText);
+        wxShareManager.shareUrlToWX(isFriend, url, shareBitMap, nameText, briefText);
     }
 
     @Override

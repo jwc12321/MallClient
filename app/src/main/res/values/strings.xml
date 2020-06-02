@@ -264,5 +264,6 @@
     <string name="cp_no_result">没有找到，换个词试试~</string>
     <string name="cp_locate_failed">定位失败</string>
     <string name="cp_locating">正在定位…</string>
+    <string name="is_cancel">已取消</string>
 
 </resources>

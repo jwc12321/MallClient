@@ -37,6 +37,9 @@ import com.mall.sls.data.entity.AddressInfo;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.OrderGoodsVo;
 import com.mall.sls.data.entity.OrderTimeInfo;
+import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.event.PayAbortEvent;
+import com.mall.sls.data.event.WXSuccessPayEvent;
 import com.mall.sls.homepage.ui.ConfirmOrderActivity;
 import com.mall.sls.homepage.ui.SelectPayTypeActivity;
 import com.mall.sls.order.DaggerOrderComponent;
@@ -45,6 +48,13 @@ import com.mall.sls.order.OrderModule;
 import com.mall.sls.order.adapter.OrderInformationAdapter;
 import com.mall.sls.order.presenter.OrderDetailsPresenter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,6 +153,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     }
 
     private void initView() {
+        EventBus.getDefault().register(this);
         myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         goodsOrderId = getIntent().getStringExtra(StaticData.GOODS_ORDER_ID);
         orderTimeInfos = new ArrayList<>();
@@ -196,7 +207,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                         if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(GoodsOrderDetailsActivity.this)) {
-
+                                orderDetailsPresenter.orderWxPay(goodsOrderId,StaticData.REFLASH_ZERO);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
@@ -275,7 +286,14 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
         }
     }
 
-    //101:待付款 201:待发货 301:待收货 401:确认收货 102:已取消
+    @Override
+    public void renderOrderWxPay(WXPaySignResponse wxPaySignResponse) {
+        if(wxPaySignResponse!=null) {
+            wechatPay(wxPaySignResponse);
+        }
+    }
+
+    //101:待付款 201:待发货 301:待收货 401+402:确认收货 102+103:已取消
     private void setOrderStatus(String status) {
         switch (status) {
             case StaticData.TO_PAY:
@@ -291,11 +309,13 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 payRl.setVisibility(View.GONE);
                 break;
             case StaticData.RECEIVED:
+            case StaticData.SYS_RECEIVED:
                 orderStatus.setText(getString(R.string.received));
                 payRl.setVisibility(View.GONE);
                 break;
             case StaticData.CANCELLED:
-                orderStatus.setText(getString(R.string.closed));
+            case StaticData.SYS_CANCELLED:
+                orderStatus.setText(getString(R.string.is_cancel));
                 payRl.setVisibility(View.GONE);
                 break;
             default:
@@ -355,6 +375,45 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
         } else {
             showMessage(getString(R.string.pay_failed));
         }
+    }
+
+    public void wechatPay(WXPaySignResponse wxPaySignResponse) {
+        // 将该app注册到微信
+        IWXAPI wxapi = WXAPIFactory.createWXAPI(this, StaticData.WX_APP_ID);
+        PayReq request = new PayReq();
+        request.appId = wxPaySignResponse.getAppid();
+        request.partnerId = wxPaySignResponse.getPartnerId();
+        request.prepayId = wxPaySignResponse.getPrepayId();
+        request.packageValue = wxPaySignResponse.getPackageValue();
+        request.nonceStr = wxPaySignResponse.getNonceStr();
+        request.timeStamp = wxPaySignResponse.getTimestamp();
+        request.sign = wxPaySignResponse.getSign();
+        wxapi.sendReq(request);
+    }
+
+    //支付成功
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPaySuccess(WXSuccessPayEvent event) {
+        activityResult=StaticData.REFLASH_ONE;
+        orderDetailsPresenter.getOrderDetails(goodsOrderId);
+    }
+
+    //支付失败
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPayCancel(PayAbortEvent event) {
+        if (event != null) {
+            if (event.code == -1) {
+                showMessage(getString(R.string.pay_failed));
+            } else if (event.code == -2) {
+                showMessage(getString(R.string.pay_cancel));
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

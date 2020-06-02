@@ -67,7 +67,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/7.
  * 描述：
  */
-public class HomepageFragment extends BaseFragment implements HomepageContract.HomePageView, GoodsItemAdapter.OnItemClickListener,JinGangAdapter.OnItemClickListener {
+public class HomepageFragment extends BaseFragment implements HomepageContract.HomePageView, GoodsItemAdapter.OnItemClickListener, JinGangAdapter.OnItemClickListener {
 
     @BindView(R.id.small_)
     MediumThickTextView small;
@@ -99,6 +99,8 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     RelativeLayout otherRl;
     @BindView(R.id.jingang_rv)
     RecyclerView jingangRv;
+    @BindView(R.id.local_ll)
+    LinearLayout localLl;
     private LocationHelper mLocationHelper;
     private String city;
     private String longitude;
@@ -113,7 +115,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     @Inject
     HomePagePresenter homePagePresenter;
     private List<String> group;
-    private boolean isFirst=true;
+    private boolean isFirst = true;
 
     private int screenWidth;
     private int screenHeight;
@@ -170,8 +172,8 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         banner.setOnItemClickListener(new XBanner.OnItemClickListener() {
             @Override
             public void onItemClick(XBanner banner, Object model, View view, int position) {
-                if(bannerInfos!=null&&position<bannerInfos.size()){
-                    bannerInfo=bannerInfos.get(position);
+                if (bannerInfos != null && position < bannerInfos.size()) {
+                    bannerInfo = bannerInfos.get(position);
                     bannerClick();
                 }
             }
@@ -189,23 +191,23 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     }
 
     //点击banner
-    private void bannerClick(){
-        if(bannerInfo!=null){
-            if(TextUtils.equals(StaticData.REFLASH_ZERO,bannerInfo.getLinkType())&&bannerInfo.isLinkOpen()){//h5界面
-                WebViewDetailInfo webViewDetailInfo=new WebViewDetailInfo();
+    private void bannerClick() {
+        if (bannerInfo != null) {
+            if (TextUtils.equals(StaticData.REFLASH_ZERO, bannerInfo.getLinkType()) && bannerInfo.isLinkOpen()) {//h5界面
+                WebViewDetailInfo webViewDetailInfo = new WebViewDetailInfo();
                 webViewDetailInfo.setUrl(bannerInfo.getLink());
-                WebViewActivity.start(getActivity(),webViewDetailInfo);
-            }else if(TextUtils.equals(StaticData.REFLASH_ONE,bannerInfo.getLinkType())&&bannerInfo.isLinkOpen()){
-                nativeType=bannerInfo.getNativeType();
-                if(TextUtils.equals(StaticData.GOODS_INFO,nativeType)){//商品详情
-                    if(!TextUtils.isEmpty(bannerInfo.getLink())&&bannerInfo.isLinkOpen()) {
-                        Uri uri = Uri.parse("?"+bannerInfo.getLink());
+                WebViewActivity.start(getActivity(), webViewDetailInfo);
+            } else if (TextUtils.equals(StaticData.REFLASH_ONE, bannerInfo.getLinkType()) && bannerInfo.isLinkOpen()) {
+                nativeType = bannerInfo.getNativeType();
+                if (TextUtils.equals(StaticData.GOODS_INFO, nativeType)) {//商品详情
+                    if (!TextUtils.isEmpty(bannerInfo.getLink()) && bannerInfo.isLinkOpen()) {
+                        Uri uri = Uri.parse("?" + bannerInfo.getLink());
                         String goodsId = uri.getQueryParameter("goodsId");
                         String groupType = uri.getQueryParameter("groupType");
-                        if(TextUtils.equals(StaticData.REFLASH_ZERO,groupType)){
+                        if (TextUtils.equals(StaticData.REFLASH_ZERO, groupType)) {
                             OrdinaryGoodsDetailActivity.start(getActivity(), goodsId);
-                        }else {
-                            ActivityGroupGoodsActivity.start(getActivity(),goodsId);
+                        } else {
+                            ActivityGroupGoodsActivity.start(getActivity(), goodsId);
                         }
                     }
                 }
@@ -331,11 +333,11 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             } else {
                 CityNotOpenActivity.start(getActivity());
             }
-            jinGangInfos=homePageInfo.getJinGangInfos();
-            if(jinGangInfos!=null){
-                if(isFirst) {
+            jinGangInfos = homePageInfo.getJinGangInfos();
+            if (jinGangInfos != null) {
+                if (isFirst) {
                     jingangRv.setLayoutManager(new GridLayoutManager(getActivity(), jinGangInfos.size()));
-                    isFirst=false;
+                    isFirst = false;
                 }
                 jinGangAdapter.setData(jinGangInfos);
             }
@@ -357,7 +359,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         this.homepageListener = homepageListener;
     }
 
-    @OnClick({R.id.other_rl, R.id.message_rl})
+    @OnClick({R.id.other_rl, R.id.message_rl,R.id.local_ll})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.other_rl:
@@ -368,6 +370,9 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             case R.id.message_rl:
                 Intent intent = new Intent(getActivity(), MessageTypeActivity.class);
                 startActivityForResult(intent, RequestCodeStatic.MESSAGE);
+                break;
+            case R.id.local_ll:
+//                CityPickerActivity.start(getActivity());
                 break;
             default:
         }

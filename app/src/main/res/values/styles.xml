@@ -1299,5 +1299,47 @@
     </style>
 
 
+    <style name="DefaultCityPickerTheme" parent="AppTheme">
+        <item name="cpCancelTextSize">@dimen/sp_15</item>
+        <item name="cpCancelTextColor">@color/appText3</item>
+
+        <item name="cpClearTextIcon">@mipmap/icon_big_close</item>
+        <item name="cpSearchTextSize">@dimen/sp_15</item>
+        <item name="cpSearchTextColor">@color/appText3</item>
+        <item name="cpSearchHintText">@string/cp_search_hint_text</item>
+        <item name="cpSearchHintTextColor">@color/appText2</item>
+        <item name="cpSearchCursorDrawable">@color/appText3</item>
+
+        <item name="cpListItemHeight">@dimen/dp_50</item>
+        <item name="cpListItemTextSize">@dimen/sp_15</item>
+        <item name="cpListItemTextColor">@color/appText3</item>
+
+        <item name="cpEmptyIcon">@mipmap/icon_no_goods</item>
+        <item name="cpEmptyIconWidth">@dimen/dp_56</item>
+        <item name="cpEmptyIconHeight">@dimen/dp_56</item>
+        <item name="cpEmptyText">@string/cp_no_result</item>
+        <item name="cpEmptyTextSize">@dimen/dp_14</item>
+        <item name="cpEmptyTextColor">@color/appText3</item>
+
+        <item name="cpGridItemBackground">@drawable/common_four_app_three_bg</item>
+        <item name="cpGridItemSpace">@dimen/dp_16</item>
+
+        <item name="cpSectionHeight">@dimen/dp_32</item>
+        <item name="cpSectionTextSize">@dimen/sp_15</item>
+        <item name="cpSectionTextColor">@color/appText2</item>
+        <item name="cpSectionBackground">@color/appText1</item>
+
+        <item name="cpIndexBarTextSize">@dimen/sp_13</item>
+        <item name="cpIndexBarNormalTextColor">@color/appText2</item>
+        <item name="cpIndexBarSelectedTextColor">@color/appText3</item>
+
+        <item name="cpOverlayWidth">@dimen/dp_100</item>
+        <item name="cpOverlayHeight">@dimen/dp_100</item>
+        <item name="cpOverlayTextSize">@dimen/dp_28</item>
+        <item name="cpOverlayTextColor">@android:color/white</item>
+        <item name="cpOverlayBackground">@drawable/common_all_four_app_three_bg</item>
+    </style>
+
+
 
 </resources>

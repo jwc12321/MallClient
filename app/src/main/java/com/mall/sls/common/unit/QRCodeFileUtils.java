@@ -110,6 +110,21 @@ public class QRCodeFileUtils {
         return bmp;
     }
 
+    public static Bitmap createBitmap3(View v, int width, int height) {
+        //测量使得view指定大小
+        int measuredWidth = View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY);
+        int measuredHeight = View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY);
+        v.measure(measuredWidth, measuredHeight);
+        //调用layout方法布局后，可以得到view的尺寸大小
+        v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
+        Bitmap bmp = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(bmp);
+        c.drawColor(Color.WHITE);
+        v.draw(c);
+        return bmp;
+    }
+
+
     //压缩图片
     public static Bitmap createBitmapThumbnail(Bitmap bitMap) {
         int width = bitMap.getWidth();

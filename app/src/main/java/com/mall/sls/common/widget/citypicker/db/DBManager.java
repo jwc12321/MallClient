@@ -1,10 +1,10 @@
 package com.mall.sls.common.widget.citypicker.db;
 
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
-
 
 import com.mall.sls.common.widget.citypicker.model.City;
 
@@ -18,7 +18,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-
+import static com.mall.sls.common.widget.citypicker.db.DBConfig.COLUMN_C_CODE;
+import static com.mall.sls.common.widget.citypicker.db.DBConfig.COLUMN_C_NAME;
+import static com.mall.sls.common.widget.citypicker.db.DBConfig.COLUMN_C_PINYIN;
+import static com.mall.sls.common.widget.citypicker.db.DBConfig.COLUMN_C_PROVINCE;
+import static com.mall.sls.common.widget.citypicker.db.DBConfig.DB_NAME_V1;
+import static com.mall.sls.common.widget.citypicker.db.DBConfig.LATEST_DB_NAME;
+import static com.mall.sls.common.widget.citypicker.db.DBConfig.TABLE_NAME;
 
 /**
  * Author Bro0cL on 2016/1/26.
@@ -43,17 +49,17 @@ public class DBManager {
             dir.mkdirs();
         }
         //如果旧版数据库存在，则删除
-        File dbV1 = new File(DB_PATH + DBConfig.DB_NAME_V1);
+        File dbV1 = new File(DB_PATH + DB_NAME_V1);
         if (dbV1.exists()){
             dbV1.delete();
         }
         //创建新版本数据库
-        File dbFile = new File(DB_PATH + DBConfig.LATEST_DB_NAME);
+        File dbFile = new File(DB_PATH + LATEST_DB_NAME);
         if (!dbFile.exists()){
             InputStream is;
             OutputStream os;
             try {
-                is = mContext.getResources().getAssets().open(DBConfig.LATEST_DB_NAME);
+                is = mContext.getResources().getAssets().open(LATEST_DB_NAME);
                 os = new FileOutputStream(dbFile);
                 byte[] buffer = new byte[BUFFER_SIZE];
                 int length;
@@ -70,16 +76,16 @@ public class DBManager {
     }
 
     public List<City> getAllCities(){
-        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DBConfig.LATEST_DB_NAME, null);
-        Cursor cursor = db.rawQuery("select * from " + DBConfig.TABLE_NAME, null);
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + LATEST_DB_NAME, null);
+        Cursor cursor = db.rawQuery("select * from " + TABLE_NAME, null);
         List<City> result = new ArrayList<>();
         City city;
         while (cursor.moveToNext()){
-            String name = cursor.getString(cursor.getColumnIndex(DBConfig.COLUMN_C_NAME));
-            String province = cursor.getString(cursor.getColumnIndex(DBConfig.COLUMN_C_PROVINCE));
-            String pinyin = cursor.getString(cursor.getColumnIndex(DBConfig.COLUMN_C_PINYIN));
-            String code = cursor.getString(cursor.getColumnIndex(DBConfig.COLUMN_C_CODE));
-            city = new City(name, province, pinyin, code);
+            String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
+            String province = cursor.getString(cursor.getColumnIndex(COLUMN_C_PROVINCE));
+            String pinyin = cursor.getString(cursor.getColumnIndex(COLUMN_C_PINYIN));
+            String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
+            city = new City(name, pinyin, code);
             result.add(city);
         }
         cursor.close();
@@ -89,19 +95,19 @@ public class DBManager {
     }
 
     public List<City> searchCity(final String keyword){
-        String sql = "select * from " + DBConfig.TABLE_NAME + " where "
-                + DBConfig.COLUMN_C_NAME + " like ? " + "or "
-                + DBConfig.COLUMN_C_PINYIN + " like ? ";
-        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + DBConfig.LATEST_DB_NAME, null);
+        String sql = "select * from " + TABLE_NAME + " where "
+                + COLUMN_C_NAME + " like ? " + "or "
+                + COLUMN_C_PINYIN + " like ? ";
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_PATH + LATEST_DB_NAME, null);
         Cursor cursor = db.rawQuery(sql, new String[]{"%"+keyword+"%", keyword+"%"});
 
         List<City> result = new ArrayList<>();
         while (cursor.moveToNext()){
-            String name = cursor.getString(cursor.getColumnIndex(DBConfig.COLUMN_C_NAME));
-            String province = cursor.getString(cursor.getColumnIndex(DBConfig.COLUMN_C_PROVINCE));
-            String pinyin = cursor.getString(cursor.getColumnIndex(DBConfig.COLUMN_C_PINYIN));
-            String code = cursor.getString(cursor.getColumnIndex(DBConfig.COLUMN_C_CODE));
-            City city = new City(name, province, pinyin, code);
+            String name = cursor.getString(cursor.getColumnIndex(COLUMN_C_NAME));
+            String province = cursor.getString(cursor.getColumnIndex(COLUMN_C_PROVINCE));
+            String pinyin = cursor.getString(cursor.getColumnIndex(COLUMN_C_PINYIN));
+            String code = cursor.getString(cursor.getColumnIndex(COLUMN_C_CODE));
+            City city = new City(name, pinyin, code);
             result.add(city);
         }
         cursor.close();
