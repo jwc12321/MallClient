@@ -187,12 +187,12 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                 goodsProductId = checkedGoods.getProductId();
                 goodsNumber.setText("x" + checkedGoods.getNumber());
                 nameText = BriefUnit.returnName(checkedGoods.getPrice(),checkedGoods.getGoodsName());
-                briefText = BriefUnit.returnBrief(checkedGoods.getBrief());
                 goodsName.setText(checkedGoods.getGoodsName());
                 goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(checkedGoods.getPrice()));
                 GlideHelper.load(this, checkedGoods.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
                 picUrl=checkedGoods.getPicUrl();
             }
+            briefText = BriefUnit.returnBrief(confirmOrderDetail.getBrief());
             orderTotalPrice = confirmOrderDetail.getOrderTotalPrice();
             goodsTotalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(confirmOrderDetail.getGoodsTotalPrice()));
             orderPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(confirmOrderDetail.getOrderTotalPrice()));
@@ -200,10 +200,8 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             couponId = confirmOrderDetail.getCouponId();
             userCouponId = confirmOrderDetail.getUserCouponId();
             if (TextUtils.equals(StaticData.REFLASH_ZERO, confirmOrderDetail.getAvailableCouponLength())) {
-                couponIv.setVisibility(View.GONE);
-                coupon.setText("0张优惠券可用");
+                coupon.setText(getString(R.string.no_available));
             } else {
-                couponIv.setVisibility(View.VISIBLE);
                 if (TextUtils.equals("-1", couponId)) {
                     coupon.setText(confirmOrderDetail.getAvailableCouponLength() + "张优惠卷可用");
                 } else {
@@ -273,8 +271,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                 case RequestCodeStatic.REQUEST_ADDRESS://地址
                     if (data != null) {
                         Bundle bundle = data.getExtras();
-                        addressInfo = (AddressInfo) bundle.getSerializable(StaticData.ADDRESS_INFO);
-                        addressId = addressInfo.getId();
+                        addressId = data.getStringExtra(StaticData.ADDRESS_ID);
                         confirmOrderPresenter.cartCheckout(addressId, cartId, couponId, userCouponId);
                     }
                     break;
@@ -302,12 +299,15 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
-                        } else {
+                        } else if(TextUtils.equals(StaticData.REFLASH_ONE, selectType)){
                             if (PayTypeInstalledUtils.isAliPayInstalled(ConfirmOrderActivity.this)) {
                                 confirmOrderPresenter.orderAliPay(orderId, StaticData.REFLASH_ONE);
                             } else {
                                 showMessage(getString(R.string.install_alipay));
                             }
+                        }else {
+                            GoodsOrderDetailsActivity.start(this,orderId);
+                            finish();
                         }
                     }
                     break;

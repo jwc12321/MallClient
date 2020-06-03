@@ -3,6 +3,7 @@ package com.mall.sls.data.entity;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.PropertyResourceBundle;
 
 /**
  * @author jwc on 2020/5/11.
@@ -60,6 +61,15 @@ public class GoodsOrderDetails {
     //订单支付超时时间（分钟）
     @SerializedName("payTimeoutMinute")
     private String payTimeoutMinute;
+    //拼团结束时间
+    @SerializedName("endGrouponTime")
+    private String endGrouponTime;
+    //是否是活动团
+    @SerializedName("activity")
+    private Boolean isActivity;
+    //活动id
+    @SerializedName("grouponLinkId")
+    private String grouponLinkId;
 
     public String getCouponPrice() {
         return couponPrice;
@@ -196,4 +206,29 @@ public class GoodsOrderDetails {
     public void setPayTimeoutMinute(String payTimeoutMinute) {
         this.payTimeoutMinute = payTimeoutMinute;
     }
+
+    public String getEndGrouponTime() {
+        return endGrouponTime;
+    }
+
+    public void setEndGrouponTime(String endGrouponTime) {
+        this.endGrouponTime = endGrouponTime;
+    }
+
+    public Boolean getActivity() {
+        return isActivity;
+    }
+
+    public void setActivity(Boolean activity) {
+        isActivity = activity;
+    }
+
+    public String getGrouponLinkId() {
+        return grouponLinkId;
+    }
+
+    public void setGrouponLinkId(String grouponLinkId) {
+        this.grouponLinkId = grouponLinkId;
+    }
+
 }

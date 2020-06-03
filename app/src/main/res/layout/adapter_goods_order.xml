@@ -16,20 +16,20 @@
             <com.mall.sls.common.widget.textview.ConventionalTextView
                 android:id="@+id/time"
                 style="@style/size12_color_app4_text_style"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_15"
-                tools:text="2090-89-88"
-                android:layout_centerVertical="true"/>
+                tools:text="2090-89-88" />
 
-            <com.mall.sls.common.widget.textview.ConventionalTextView
+            <com.mall.sls.common.widget.textview.MediumThickTextView
                 android:id="@+id/order_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@drawable/bottom_text_select"
-                android:textSize="@dimen/sp_12"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dp_15"
-                tools:text="待配送"
-                android:layout_centerVertical="true"/>
+                android:textColor="@color/appText4"
+                android:textSize="@dimen/sp_12"
+                tools:text="待配送" />
         </RelativeLayout>
 
         <View
@@ -55,14 +55,22 @@
                 android:id="@+id/goods_name"
                 style="@style/size14_color_app3_text_style"
                 android:layout_marginLeft="@dimen/dp_6"
-                android:layout_marginTop="@dimen/dp_5"
                 android:layout_toRightOf="@id/goods_iv"
                 tools:text="香蕉" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/sku"
+                style="@style/size13_color_app2_text_style"
+                android:layout_below="@id/goods_name"
+                android:layout_marginLeft="@dimen/dp_6"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_toRightOf="@id/goods_iv"
+                tools:text="黑色" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_38"
+                android:layout_alignParentBottom="true"
                 android:layout_marginLeft="@dimen/dp_6"
                 android:layout_toRightOf="@id/goods_iv">
 
@@ -79,49 +87,55 @@
                     android:layout_centerVertical="true"
                     tools:text="x1" />
             </RelativeLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true">
-                <com.mall.sls.common.widget.textview.ConventionalTextView
-                    android:id="@+id/total_number"
-                   style="@style/size14_color_app3_text_style"
-                    tools:text="共1件"/>
-                <com.mall.sls.common.widget.textview.ConventionalTextView
-                    android:id="@+id/is_pay"
-                    style="@style/size14_color_app3_text_style"
-                    tools:text="@string/to_be_paid"
-                    android:layout_marginLeft="@dimen/dp_8"/>
-                <com.mall.sls.common.widget.textview.ConventionalTextView
-                    android:id="@+id/total_amount"
-                    style="@style/size14_color_back1_text_style"
-                    tools:text="1111" />
-            </LinearLayout>
         </RelativeLayout>
+
+        <View style="@style/fifteen_back_nine_line_style" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:orientation="horizontal">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/total_number"
+                style="@style/size14_color_app3_text_style"
+                android:visibility="gone"
+                tools:text="共1件" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/is_pay"
+                style="@style/size14_color_app3_text_style"
+                android:layout_marginLeft="@dimen/dp_8"
+                tools:text="@string/to_be_paid" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/total_amount"
+                style="@style/size14_color_back1_text_style"
+                tools:text="1111" />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/bt_ll"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_42"
-            android:orientation="vertical">
-            <View
-                style="@style/fifteen_back_nine_line_style"/>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_gravity="end"
-                android:layout_marginRight="@dimen/dp_15">
-                <com.mall.sls.common.widget.textview.ConventionalTextView
-                    style="@style/order_left_bt_style"
-                    android:id="@+id/left_bt"
-                    tools:text="拼团详情"/>
-                <com.mall.sls.common.widget.textview.ConventionalTextView
-                    style="@style/order_right_bt_style"
-                    android:id="@+id/right_bt"
-                    tools:text="邀请好友"/>
-            </LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_41"
+            android:layout_gravity="end"
+            android:layout_marginRight="@dimen/dp_15"
+            android:orientation="horizontal">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/left_bt"
+                style="@style/order_left_bt_style"
+                tools:text="拼团详情" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/right_bt"
+                style="@style/order_right_bt_style"
+                android:visibility="gone"
+                tools:text="邀请好友" />
         </LinearLayout>
     </LinearLayout>
 

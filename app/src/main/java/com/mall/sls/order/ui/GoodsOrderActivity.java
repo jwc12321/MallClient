@@ -64,6 +64,18 @@ public class GoodsOrderActivity extends BaseActivity {
     LinearLayout shippingLl;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+    @BindView(R.id.pending_share_tv)
+    ConventionalTextView pendingShareTv;
+    @BindView(R.id.pending_share_iv)
+    View pendingShareIv;
+    @BindView(R.id.pending_share_ll)
+    LinearLayout pendingShareLl;
+    @BindView(R.id.completed_tv)
+    ConventionalTextView completedTv;
+    @BindView(R.id.completed_iv)
+    View completedIv;
+    @BindView(R.id.completed_ll)
+    LinearLayout completedLl;
     private String choiceType;
     private LinearLayout[] linearLayouts;
     private BaseFragment[] fragments;
@@ -90,30 +102,38 @@ public class GoodsOrderActivity extends BaseActivity {
 
     private void initView() {
         choiceType = getIntent().getStringExtra(StaticData.CHOICE_TYPE);
-        fragments = new BaseFragment[4];
+        fragments = new BaseFragment[6];
         fragments[0] = AllOrdersFragment.newInstance(choiceType);
         fragments[1] = PendingPaymentFragment.newInstance(choiceType);
-        fragments[2] = PendingDeliveryFragment.newInstance(choiceType);
-        fragments[3] = ShippingFragment.newInstance(choiceType);
-        linearLayouts = new LinearLayout[4];
+        fragments[2] = PendingShareFragment.newInstance(choiceType);
+        fragments[3] = PendingDeliveryFragment.newInstance(choiceType);
+        fragments[4] = ShippingFragment.newInstance(choiceType);
+        fragments[5] = CompletedFragment.newInstance(choiceType);
+        linearLayouts = new LinearLayout[6];
         linearLayouts[0] = allOrdersLl;
         linearLayouts[1] = pendingPaymentLl;
-        linearLayouts[2] = pendingDeliveryLl;
-        linearLayouts[3] = shippingLl;
-        views = new View[4];
+        linearLayouts[2] = pendingShareLl;
+        linearLayouts[3] = pendingDeliveryLl;
+        linearLayouts[4] = shippingLl;
+        linearLayouts[5] = completedLl;
+        views = new View[6];
         views[0] = allOrdersIv;
         views[1] = pendingPaymentIv;
-        views[2] = pendingDeliveryIv;
-        views[3] = shippingIv;
-        textViews = new TextView[4];
+        views[2] = pendingShareIv;
+        views[3] = pendingDeliveryIv;
+        views[4] = shippingIv;
+        views[5] = completedIv;
+        textViews = new TextView[6];
         textViews[0] = allOrdersTv;
         textViews[1] = pendingPaymentTv;
-        textViews[2] = pendingDeliveryTv;
-        textViews[3] = shippingTv;
+        textViews[2] = pendingShareTv;
+        textViews[3] = pendingDeliveryTv;
+        textViews[4] = shippingTv;
+        textViews[5] = completedTv;
         for (LinearLayout linearLayout : linearLayouts) {
             linearLayout.setOnClickListener(onClickListener);
         }
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(5);
         adapter = new MainPagerAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(onPageChangeListener);
@@ -129,7 +149,7 @@ public class GoodsOrderActivity extends BaseActivity {
         public void onClick(View v) {
             for (int i = 0; i < linearLayouts.length; i++) {
                 if (v == linearLayouts[i]) {
-                    viewPager.setCurrentItem(i,false);
+                    viewPager.setCurrentItem(i, false);
                     break;
                 }
             }

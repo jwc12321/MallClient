@@ -16,25 +16,25 @@ public class MediumBlackTextView extends TextView{
 
     public MediumBlackTextView(Context context) {
         super(context);
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Bold-3.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Medium-12.ttf");
         setTypeface(typeFace1);
     }
 
     public MediumBlackTextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Bold-3.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Medium-12.ttf");
         setTypeface(typeFace1);
     }
 
     public MediumBlackTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Bold-3.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Medium-12.ttf");
         setTypeface(typeFace1);
     }
 
     public MediumBlackTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Bold-3.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Medium-12.ttf");
         setTypeface(typeFace1);
     }
 }

@@ -45,5 +45,6 @@ public class RequestUrl {
     public static String ADD_FEED_BACK_URL="/app/auth/addFeedBack";//意见反馈
     public static String USER_PAY_WX="/app/user/pay/wx";//微信支付实人认证和超级会员
     public static String ORDER_WX_PAY="/app/order/wxPay";//微信支付订单
+    public static String ORDER_CANCEL="/app/order/cancel";//订单取消
 
 }

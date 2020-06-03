@@ -171,7 +171,8 @@
             <RelativeLayout
                 android:id="@+id/sku_rl"
                 style="@style/goods_detail_rl_style"
-                android:layout_marginTop="@dimen/dp_6">
+                android:layout_marginTop="@dimen/dp_6"
+                android:visibility="gone">
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/selected_goods"

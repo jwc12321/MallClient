@@ -82,6 +82,10 @@ public class SelectPayTypeActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.all_rl:
             case R.id.close_iv:
+                selectType=StaticData.REFLASH_TWO;
+                Intent intent = new Intent();
+                intent.putExtra(StaticData.SELECT_TYPE, selectType);
+                setResult(Activity.RESULT_OK, intent);
                 finish();
                 break;
             case R.id.item_rl:
@@ -93,11 +97,11 @@ public class SelectPayTypeActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.select_weixin_iv:
-                selectType="0";
+                selectType=StaticData.REFLASH_ZERO;
                 selectPayType();
                 break;
             case R.id.select_ali_iv:
-                selectType="1";
+                selectType=StaticData.REFLASH_ONE;
                 selectPayType();
                 break;
             default:

@@ -24,7 +24,7 @@
         android:layout_height="@dimen/dp_40"
         android:background="@color/appText1"
         android:orientation="horizontal"
-        android:weightSum="4" >
+        android:weightSum="6" >
         <LinearLayout
             android:id="@+id/all_orders_ll"
             style="@style/order_status_ll_style">
@@ -32,7 +32,7 @@
             <com.mall.sls.common.widget.textview.ConventionalTextView
                 android:id="@+id/all_orders_tv"
                 style="@style/order_status_tv_style"
-                android:text="@string/all_orders" />
+                android:text="@string/all" />
 
             <View
                 android:id="@+id/all_orders_iv"
@@ -49,6 +49,19 @@
 
             <View
                 android:id="@+id/pending_payment_iv"
+                style="@style/order_status_iv_style" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/pending_share_ll"
+            style="@style/order_status_ll_style">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/pending_share_tv"
+                style="@style/order_status_tv_style"
+                android:text="@string/pending_share" />
+
+            <View
+                android:id="@+id/pending_share_iv"
                 style="@style/order_status_iv_style" />
         </LinearLayout>
         <LinearLayout
@@ -75,6 +88,19 @@
 
             <View
                 android:id="@+id/shipping_iv"
+                style="@style/order_status_iv_style" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/completed_ll"
+            style="@style/order_status_ll_style">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/completed_tv"
+                style="@style/order_status_tv_style"
+                android:text="@string/completed" />
+
+            <View
+                android:id="@+id/completed_iv"
                 style="@style/order_status_iv_style" />
         </LinearLayout>
     </LinearLayout>

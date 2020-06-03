@@ -1,5 +1,6 @@
 package com.mall.sls.address.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,9 +21,13 @@ import com.mall.sls.address.DaggerAddressComponent;
 import com.mall.sls.address.adapter.AddressManageAdapter;
 import com.mall.sls.address.presenter.AddressManagePresenter;
 import com.mall.sls.certify.ui.CerifyPayActivity;
+import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.AddressInfo;
+import com.mall.sls.homepage.ui.ConfirmOrderActivity;
+import com.mall.sls.order.ui.GoodsOrderDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +63,8 @@ public class AddressManageActivity extends BaseActivity implements AddressContra
     AddressManagePresenter addressManagePresenter;
 
     private String choiceType;//0:下单界面过来 1：我的界面过来
+    private AddressInfo addressInfo;
+    private String addressId;
 
     public static void start(Context context,String choiceType) {
         Intent intent = new Intent(context, AddressManageActivity.class);
@@ -107,7 +114,10 @@ public class AddressManageActivity extends BaseActivity implements AddressContra
         switch (view.getId()) {
             case R.id.confirm_bt:
             case R.id.right_tv:
-                AddAddressActivity.start(this,null);
+                Intent intent = new Intent(this, AddAddressActivity.class);
+                intent.putExtra(StaticData.CHOICE_TYPE, choiceType);
+                intent.putExtra(StaticData.ADDRESS_INFO, addressInfo);
+                startActivityForResult(intent, RequestCodeStatic.ADD_ADDRESS);
                 break;
             case R.id.back:
                 finish();
@@ -142,19 +152,41 @@ public class AddressManageActivity extends BaseActivity implements AddressContra
     }
 
     @Override
-    public void select(AddressInfo addressInfo) {
+    public void select(String addressId) {
         if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
-            Intent intent = new Intent();
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(StaticData.ADDRESS_INFO, addressInfo);
-            intent.putExtras(bundle);
-            setResult(RESULT_OK, intent);
-            finish();
+            returnAddress(addressId);
         }
     }
 
     @Override
     public void updateAddress(AddressInfo addressInfo) {
-        AddAddressActivity.start(this,addressInfo);
+        Intent intent = new Intent(this, AddAddressActivity.class);
+        intent.putExtra(StaticData.CHOICE_TYPE, choiceType);
+        intent.putExtra(StaticData.ADDRESS_INFO, addressInfo);
+        startActivityForResult(intent, RequestCodeStatic.ADD_ADDRESS);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RequestCodeStatic.ADD_ADDRESS://
+                    if (data != null) {
+                        addressId =  data.getStringExtra(StaticData.ADDRESS_ID);
+                        returnAddress(addressId);
+                    }
+                    break;
+                default:
+            }
+        }
+    }
+
+    private void returnAddress(String addressId){
+        Intent intent = new Intent();
+        intent.putExtra(StaticData.ADDRESS_ID,addressId);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
 }

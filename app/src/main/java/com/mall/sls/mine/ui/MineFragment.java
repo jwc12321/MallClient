@@ -32,7 +32,6 @@ import com.mall.sls.data.entity.MineInfo;
 import com.mall.sls.data.entity.MineRewardInfo;
 import com.mall.sls.data.entity.UserInfo;
 import com.mall.sls.data.entity.VipAmountInfo;
-import com.mall.sls.login.ui.LoginActivity;
 import com.mall.sls.login.ui.WeixinLoginActivity;
 import com.mall.sls.member.ui.SuperMemberActivity;
 import com.mall.sls.mine.DaggerMineComponent;
@@ -93,8 +92,6 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     ConventionalTextView vipType;
     @BindView(R.id.super_member_rl)
     RelativeLayout superMemberRl;
-    @BindView(R.id.my_team)
-    ImageView myTeam;
     @BindView(R.id.address_manage)
     ImageView addressManage;
     @BindView(R.id.invite_friends)
@@ -103,6 +100,21 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     ImageView verifiedIv;
     @BindView(R.id.my_invitation_iv)
     ImageView myInvitationIv;
+    @BindView(R.id.pending_share_iv)
+    ImageView pendingShareIv;
+    @BindView(R.id.completed_iv)
+    ImageView completedIv;
+    @BindView(R.id.taobao_orde)
+    ImageView taobaoOrde;
+    @BindView(R.id.lottery)
+    ImageView lottery;
+    @BindView(R.id.verified_rl)
+    RelativeLayout verifiedRl;
+    @BindView(R.id.mission_center)
+    ImageView missionCenter;
+    @BindView(R.id.feedback)
+    ImageView feedback;
+
 
 
     @Inject
@@ -157,7 +169,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
         }
     }
 
-    @OnClick({R.id.right_iv, R.id.all_order_rl, R.id.pending_payment_iv, R.id.pending_delivery_iv, R.id.shipping_iv, R.id.my_team, R.id.address_manage, R.id.invite_friends, R.id.verified_iv, R.id.my_invitation_iv, R.id.super_member_rl, R.id.coupon_ll, R.id.member_type_iv})
+    @OnClick({R.id.right_iv, R.id.all_order_rl, R.id.pending_payment_iv, R.id.pending_share_iv, R.id.pending_delivery_iv, R.id.shipping_iv, R.id.completed_iv, R.id.address_manage, R.id.invite_friends, R.id.verified_rl, R.id.my_invitation_iv, R.id.super_member_rl, R.id.coupon_ll, R.id.member_type_iv, R.id.feedback})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.right_iv://设置
@@ -165,19 +177,22 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 startActivityForResult(intent, RequestCodeStatic.SETTING);
                 break;
             case R.id.all_order_rl://全部订单
-                GoodsOrderActivity.start(getActivity(), "0");
+                GoodsOrderActivity.start(getActivity(), StaticData.REFLASH_ZERO);
                 break;
             case R.id.pending_payment_iv://待付款
-                GoodsOrderActivity.start(getActivity(), "1");
+                GoodsOrderActivity.start(getActivity(), StaticData.REFLASH_ONE);
+                break;
+            case R.id.pending_share_iv:
+                GoodsOrderActivity.start(getActivity(), StaticData.REFLASH_TWO);
                 break;
             case R.id.pending_delivery_iv://待配送
-                GoodsOrderActivity.start(getActivity(), "2");
+                GoodsOrderActivity.start(getActivity(), StaticData.REFLASH_THREE);
                 break;
             case R.id.shipping_iv://配送中
-                GoodsOrderActivity.start(getActivity(), "3");
+                GoodsOrderActivity.start(getActivity(), StaticData.REFLASH_FOUR);
                 break;
-            case R.id.my_team://我的拼团
-                MyTeamActivity.start(getActivity(),wxUrl,inviteCode);
+            case R.id.completed_iv://完成
+                GoodsOrderActivity.start(getActivity(), StaticData.REFLASH_FIVE);
                 break;
             case R.id.address_manage://地址管理
                 AddressManageActivity.start(getActivity(), StaticData.REFLASH_ONE);
@@ -185,7 +200,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
             case R.id.invite_friends://邀请好友
                 InviteFriendsActivity.start(getActivity());
                 break;
-            case R.id.verified_iv://认证
+            case R.id.verified_rl://认证
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
                     goVerify = StaticData.REFLASH_ONE;
                     if (certifyPay) {
@@ -215,6 +230,9 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                     goVerify = StaticData.REFLASH_ONE;
                     SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount);
                 }
+                break;
+            case R.id.feedback:
+                FeedBackActivity.start(getActivity());
                 break;
             default:
         }
@@ -264,12 +282,12 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_ordinary_member);
                     verifiedIv.setSelected(false);
                     vipType.setText(getString(R.string.open_now));
-                    superMemberRl.setVisibility(View.VISIBLE);
+                    superMemberRl.setVisibility(View.GONE);
                 } else if (TextUtils.equals(StaticData.REFLASH_ONE, userInfo.getUserLevel())) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_certified_member);
                     verifiedIv.setSelected(true);
                     vipType.setText(getString(R.string.open_now));
-                    superMemberRl.setVisibility(View.VISIBLE);
+                    superMemberRl.setVisibility(View.GONE);
                 } else if (TextUtils.equals(StaticData.REFLASH_TWO, userInfo.getUserLevel())) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_super_member);
                     verifiedIv.setSelected(true);
@@ -303,9 +321,9 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
 
     @Override
     public void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo) {
-        if(invitationCodeInfo!=null){
-            wxUrl=invitationCodeInfo.getBaseUrl();
-            inviteCode=invitationCodeInfo.getInvitationCode();
+        if (invitationCodeInfo != null) {
+            wxUrl = invitationCodeInfo.getBaseUrl();
+            inviteCode = invitationCodeInfo.getInvitationCode();
         }
     }
 

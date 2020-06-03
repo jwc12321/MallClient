@@ -37,6 +37,9 @@ public class ConfirmOrderDetail implements Serializable {
     //用户优惠券ID
     @SerializedName("userCouponId")
     private String userCouponId;
+    //产品描述
+    @SerializedName("brief")
+    private String brief;
 
     public AddressInfo getAddressInfo() {
         return addressInfo;
@@ -108,5 +111,13 @@ public class ConfirmOrderDetail implements Serializable {
 
     public void setUserCouponId(String userCouponId) {
         this.userCouponId = userCouponId;
+    }
+
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
     }
 }

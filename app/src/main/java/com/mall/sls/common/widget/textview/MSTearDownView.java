@@ -26,8 +26,7 @@ public class MSTearDownView extends LinearLayout {
 
     private TearDownHandler mHandler = new TearDownHandler(this);
 
-    private ConventionalTextView minutsTextView, secondTextView;
-
+    private ConventionalTextView  hourTextView, minutsTextView, secondTextView;
     public MSTearDownView(Context context) {
         super(context);
         init(context, null);
@@ -41,7 +40,7 @@ public class MSTearDownView extends LinearLayout {
     }
 
     public MSTearDownView(Context context,
-                        AttributeSet attributeSet, int paramInt) {
+                              AttributeSet attributeSet, int paramInt) {
         super(context, attributeSet, paramInt);
         init(context, attributeSet);
     }
@@ -58,15 +57,12 @@ public class MSTearDownView extends LinearLayout {
     }
 
     private void init(Context context, AttributeSet attributeSet) {
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.layout_ms_tear_down, this);
+        hourTextView = (ConventionalTextView) findViewById(R.id.hour_time);
         minutsTextView = (ConventionalTextView) findViewById(R.id.min_time);
         secondTextView = (ConventionalTextView) findViewById(R.id.second_time);
-    }
-
-    public void setTextSize(float size){
-        minutsTextView.setTextSize(size);
-        secondTextView.setTextSize(size);
     }
 
 
@@ -91,14 +87,17 @@ public class MSTearDownView extends LinearLayout {
         if (mIsAttachedToWindow) {
             long remainTime= cutdownTime;
             if (remainTime >0) {
-                long day = 0;
                 long hour = 0;
                 long min = 0;
                 long sec = 0;
-                day = remainTime / (24 * 60 * 60);
-                hour = (remainTime / (60 * 60) - day * 24);
-                min = (remainTime / 60 - day * 24 * 60 - hour * 60);
-                sec = (remainTime - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+                hour = remainTime / (60 * 60);
+                min = (remainTime / 60  - hour * 60);
+                sec = (remainTime -  hour * 60 * 60 - min * 60);
+                if(String.valueOf(hour).length()==1){
+                    hourTextView.setText("0"+hour);
+                }else {
+                    hourTextView.setText(String.valueOf(hour));
+                }
                 if(String.valueOf(min).length()==1){
                     minutsTextView.setText("0"+min);
                 }else {
@@ -151,9 +150,9 @@ public class MSTearDownView extends LinearLayout {
         void timeOut();//从还没结束到结束
     }
 
-    private TimeOutListener timeOutListener;
+    private DetailTearDownView.TimeOutListener timeOutListener;
 
-    public void setTimeOutListener(TimeOutListener timeOutListener) {
+    public void setTimeOutListener(DetailTearDownView.TimeOutListener timeOutListener) {
         this.timeOutListener = timeOutListener;
     }
 }

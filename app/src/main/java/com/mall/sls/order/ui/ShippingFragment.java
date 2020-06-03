@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.data.entity.GoodsOrderInfo;
+import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.order.DaggerOrderComponent;
@@ -36,7 +38,7 @@ import butterknife.ButterKnife;
 
 /**
  * @author jwc on 2020/5/11.
- * 描述：配送中
+ * 描述：待收货
  */
 public class ShippingFragment extends BaseFragment implements OrderContract.OrderListView,GoodsOrderAdapter.OnItemClickListener {
 
@@ -87,8 +89,8 @@ public class ShippingFragment extends BaseFragment implements OrderContract.Orde
     private void initView() {
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         addAdapter();
-        if(TextUtils.equals(StaticData.REFLASH_THREE,choiceType)) {
-            orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_THREE);
+        if(TextUtils.equals(StaticData.REFLASH_FOUR,choiceType)) {
+            orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_FOUR);
         }
     }
 
@@ -112,7 +114,7 @@ public class ShippingFragment extends BaseFragment implements OrderContract.Orde
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()&&orderListPresenter!=null) {
-            orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_THREE);
+            orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_FOUR);
         }
     }
 
@@ -120,15 +122,20 @@ public class ShippingFragment extends BaseFragment implements OrderContract.Orde
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            orderListPresenter.getOrderList(StaticData.REFLASH_ZERO,StaticData.REFLASH_THREE);
+            orderListPresenter.getOrderList(StaticData.REFLASH_ZERO,StaticData.REFLASH_FOUR);
         }
 
         @Override
         public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-            orderListPresenter.getMoreOrderList(StaticData.REFLASH_THREE);
+            orderListPresenter.getMoreOrderList(StaticData.REFLASH_FOUR);
         }
     };
 
+
+    @Override
+    public void cancelOrder(String id) {
+
+    }
 
     @Override
     public void payOrder(String id, String amount) {
@@ -144,6 +151,12 @@ public class ShippingFragment extends BaseFragment implements OrderContract.Orde
     public void goOrderDetail(String id) {
         GoodsOrderDetailsActivity.start(getActivity(),id);
     }
+
+    @Override
+    public void wxShare(GoodsOrderInfo goodsOrderInfo, ImageView shareIv) {
+
+    }
+
 
     @Override
     public void renderOrderList(OrderList orderList) {
@@ -184,6 +197,16 @@ public class ShippingFragment extends BaseFragment implements OrderContract.Orde
 
     @Override
     public void renderOrderWxPay(WXPaySignResponse wxPaySignResponse) {
+
+    }
+
+    @Override
+    public void renderCancelOrder() {
+
+    }
+
+    @Override
+    public void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo) {
 
     }
 

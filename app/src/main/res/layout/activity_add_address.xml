@@ -54,7 +54,8 @@
 
             <View style="@style/fifteen_back_nine_line_style" />
 
-            <LinearLayout style="@style/add_address_ll_style">
+            <LinearLayout style="@style/add_address_ll_style"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/ms_iv"
@@ -85,7 +86,8 @@
                     android:text="@string/men" />
             </LinearLayout>
 
-            <View style="@style/fifteen_back_nine_line_style" />
+            <View style="@style/fifteen_back_nine_line_style"
+                android:visibility="gone"/>
 
             <LinearLayout style="@style/add_address_ll_style">
 

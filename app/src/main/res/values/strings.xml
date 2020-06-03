@@ -111,9 +111,11 @@
     <string name="clear_cache">清除缓存</string>
     <string name="login_out">退出登录</string>
     <string name="all_orders">全部订单</string>
-    <string name="pending_payment">待付款</string>
-    <string name="pending_delivery">待配送</string>
-    <string name="shipping">配送中</string>
+    <string name="pending_payment">待支付</string>
+    <string name="pending_share">待分享</string>
+    <string name="pending_delivery">待发货</string>
+    <string name="shipping">待收货</string>
+    <string name="completed">已完成</string>
     <string name="to_be_paid">待付：</string>
     <string name="actually_apaid">实付：</string>
     <string name="received">已签收</string>
@@ -129,7 +131,7 @@
     <string name="order_detail">订单详情</string>
     <string name="delivery_time">配送时间</string>
     <string name="commodity_price">商品总价</string>
-    <string name="delivery_fee">基础配送费</string>
+    <string name="delivery_fee">运费（快递）</string>
     <string name="real_payment">实付款：</string>
     <string name="copy">复制</string>
     <string name="order_number">订单编号：</string>
@@ -233,7 +235,7 @@
     <string name="input_invitation_code">请填写邀请码</string>
     <string name="no_invitation_code">没有邀请码？</string>
     <string name="code_bind">手机验证码绑定</string>
-    <string name="group_purchase_price_tv">团购价</string>
+    <string name="group_purchase_price_tv">拼团价</string>
     <string name="market_price">市场价</string>
     <string name="activity_price">活动价</string>
     <string name="go_to_spell">去拼单</string>
@@ -265,5 +267,9 @@
     <string name="cp_locate_failed">定位失败</string>
     <string name="cp_locating">正在定位…</string>
     <string name="is_cancel">已取消</string>
-
+    <string name="no_available">暂无可用</string>
+    <string name="all">全部</string>
+    <string name="cancel_order">取消订单</string>
+    <string name="share_remaining_time">分享剩余时间为：</string>
+    <string name="pay_remaining_time">支付剩余时间为：</string>
 </resources>

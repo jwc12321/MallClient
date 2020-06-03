@@ -37,6 +37,7 @@ import com.mall.sls.data.request.MsgReadRequest;
 import com.mall.sls.data.request.OnClickBindRequest;
 import com.mall.sls.data.request.OneClickLoginRequest;
 import com.mall.sls.data.request.OrderPayRequest;
+import com.mall.sls.data.request.OrderRequest;
 import com.mall.sls.data.request.OrderSubmitRequest;
 import com.mall.sls.data.request.SmsCodeBindRequest;
 import com.mall.sls.data.request.UserPayDtoRequest;
@@ -232,5 +233,9 @@ public interface RestApiService {
     //微信支付订单
     @POST("app/order/wxPay")
     Flowable<RemoteDataWrapper<WXPaySignResponse>> orderWxPay(@Header("X-Hc-Sign") String sign, @Body OrderPayRequest request);
+
+    //取消订单
+    @POST("app/order/cancel")
+    Flowable<RemoteDataWrapper<Ignore>> cancelOrder(@Header("X-Hc-Sign") String sign, @Body OrderRequest request);
 
 }

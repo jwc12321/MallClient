@@ -95,6 +95,7 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
     private String county;
     private String areaCode;
     private String addressId;
+    private String choiceType;
 
     @Inject
     AddAddressPresenter addAddressPresenter;
@@ -117,6 +118,7 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
 
     private void initView() {
         addressInfo = (AddressInfo) getIntent().getSerializableExtra(StaticData.ADDRESS_INFO);
+        choiceType=getIntent().getStringExtra(StaticData.CHOICE_TYPE);
         if (addressInfo != null) {
             addressId=addressInfo.getId();
             rightTv.setVisibility(View.VISIBLE);
@@ -239,7 +241,7 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
         AddAddressRequest addAddressRequest = new AddAddressRequest();
         addAddressRequest.setId(addressId);
         addAddressRequest.setName(name);
-        addAddressRequest.setGender(genderType);
+//        addAddressRequest.setGender(genderType);
         addAddressRequest.setTel(phoneNumebr);
         addAddressRequest.setProvince(province);
         addAddressRequest.setCity(city);
@@ -275,8 +277,12 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
 
 
     @Override
-    public void renderAddAddress() {
-        showMessage(getString(R.string.add_success));
+    public void renderAddAddress(String addressId) {
+        if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
+            Intent intent = new Intent();
+            intent.putExtra(StaticData.ADDRESS_ID,addressId);
+            setResult(RESULT_OK, intent);
+        }
         finish();
     }
 

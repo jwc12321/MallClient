@@ -15,6 +15,7 @@ public class StaticData {
     public static final String REFLASH_TWO = "2";
     public static final String REFLASH_THREE = "3";
     public static final String REFLASH_FOUR = "4";
+    public static final String REFLASH_FIVE = "5";
     public static final String FIFTY_LIST_SIZE = "50";
 
     //通用文本title
@@ -62,8 +63,10 @@ public class StaticData {
     public static final String CANCELLED="102";
     //已取消
     public static final String SYS_CANCELLED="103";
+    //代分享
+    public static final String TO_BE_SHARE="204";
     //代发货
-    public static final String TO_BE_DELIVERED="201";
+    public static final String TO_BE_DELIVERED="206";
     //待收货
     public static final String TO_BE_RECEIVED="301";
     //已收货
@@ -107,5 +110,6 @@ public class StaticData {
     public static final String WX_INVITE_CODE="?invitationCode=";
     public static final String PIC_URL="picUrl";
     public static final String CITY_DATA = "china_city_data.json";
+    public static final String ADDRESS_ID="addressId";
 
 }

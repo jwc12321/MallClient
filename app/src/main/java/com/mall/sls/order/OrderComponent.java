@@ -8,9 +8,11 @@ package com.mall.sls.order;
 import com.mall.sls.ActivityScope;
 import com.mall.sls.ApplicationComponent;
 import com.mall.sls.order.ui.AllOrdersFragment;
+import com.mall.sls.order.ui.CompletedFragment;
 import com.mall.sls.order.ui.GoodsOrderDetailsActivity;
 import com.mall.sls.order.ui.PendingDeliveryFragment;
 import com.mall.sls.order.ui.PendingPaymentFragment;
+import com.mall.sls.order.ui.PendingShareFragment;
 import com.mall.sls.order.ui.ShippingFragment;
 
 import dagger.Component;
@@ -23,4 +25,6 @@ public interface OrderComponent {
     void inject(PendingDeliveryFragment fragment);
     void inject(ShippingFragment fragment);
     void inject(GoodsOrderDetailsActivity goodsOrderDetailsActivity);
+    void inject(PendingShareFragment pendingShareFragment);
+    void inject(CompletedFragment completedFragment);
 }

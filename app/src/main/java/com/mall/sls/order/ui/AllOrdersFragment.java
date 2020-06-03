@@ -2,6 +2,7 @@ package com.mall.sls.order.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -21,15 +23,21 @@ import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.BriefUnit;
 import com.mall.sls.common.unit.PayResult;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
+import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.StaticHandler;
+import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.data.entity.GoodsOrderInfo;
+import com.mall.sls.data.entity.InvitationCodeInfo;
+import com.mall.sls.data.entity.OrderGoodsVo;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.event.PayAbortEvent;
 import com.mall.sls.data.event.WXSuccessPayEvent;
 import com.mall.sls.homepage.ui.SelectPayTypeActivity;
+import com.mall.sls.mine.ui.SelectShareTypeActivity;
 import com.mall.sls.order.DaggerOrderComponent;
 import com.mall.sls.order.OrderContract;
 import com.mall.sls.order.OrderModule;
@@ -59,7 +67,7 @@ import butterknife.ButterKnife;
  * @author jwc on 2020/5/11.
  * 描述：
  */
-public class AllOrdersFragment extends BaseFragment implements OrderContract.OrderListView,GoodsOrderAdapter.OnItemClickListener {
+public class AllOrdersFragment extends BaseFragment implements OrderContract.OrderListView, GoodsOrderAdapter.OnItemClickListener {
 
     @BindView(R.id.record_rv)
     RecyclerView recordRv;
@@ -72,6 +80,19 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
     private GoodsOrderAdapter goodsOrderAdapter;
     private String goodsOrderId;
     private Handler mHandler = new MyHandler(this);
+    private Boolean isActivity;
+    private String goodsId;
+    private String grouponId;
+    private String goodsProductId;
+    private String wxUrl;
+    private String inviteCode;
+    private WXShareManager wxShareManager;
+    private Bitmap shareBitMap;
+    private String nameText;
+    private String briefText;
+    private List<OrderGoodsVo> orderGoodsVos;
+    private String orderTotalPrice;
+    private String backType;
 
     @Inject
     OrderListPresenter orderListPresenter;
@@ -108,10 +129,11 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
 
     private void initView() {
         EventBus.getDefault().register(this);
+        wxShareManager = WXShareManager.getInstance(getActivity());
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         addAdapter();
-        if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)) {
-            orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_ZERO);
+        if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {
+            orderListPresenter.getOrderList(StaticData.REFLASH_ONE, StaticData.REFLASH_ZERO);
         }
     }
 
@@ -134,7 +156,7 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            orderListPresenter.getOrderList(StaticData.REFLASH_ZERO,StaticData.REFLASH_ZERO);
+            orderListPresenter.getOrderList(StaticData.REFLASH_ZERO, StaticData.REFLASH_ZERO);
         }
 
         @Override
@@ -146,18 +168,23 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (getUserVisibleHint()&&orderListPresenter!=null) {
-            orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_ZERO);
+        if (getUserVisibleHint() && orderListPresenter != null) {
+            orderListPresenter.getOrderList(StaticData.REFLASH_ONE, StaticData.REFLASH_ZERO);
         }
     }
 
 
     @Override
+    public void cancelOrder(String id) {
+        orderListPresenter.cancelOrder(id);
+    }
+
+    @Override
     public void payOrder(String id, String amount) {
-        this.goodsOrderId=id;
+        this.goodsOrderId = id;
         Intent intent = new Intent(getActivity(), SelectPayTypeActivity.class);
         intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
-        intent.putExtra(StaticData.PAYMENT_AMOUNT,amount);
+        intent.putExtra(StaticData.PAYMENT_AMOUNT, amount);
         startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
     }
 
@@ -170,7 +197,42 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
     public void goOrderDetail(String id) {
         Intent intent = new Intent(getActivity(), GoodsOrderDetailsActivity.class);
         intent.putExtra(StaticData.GOODS_ORDER_ID, id);
-        getActivity().startActivityForResult(intent,RequestCodeStatic.ORDER_DETAIL);
+        getActivity().startActivityForResult(intent, RequestCodeStatic.ORDER_DETAIL);
+    }
+
+    @Override
+    public void wxShare(GoodsOrderInfo goodsOrderInfo, ImageView shareIv) {
+        if (goodsOrderInfo != null) {
+            this.isActivity = goodsOrderInfo.getActivity();
+            this.goodsId = goodsOrderInfo.getId();
+            this.grouponId = goodsOrderInfo.getGrouponLinkId();
+            orderGoodsVos = goodsOrderInfo.getOrderGoodsVos();
+            if (orderGoodsVos != null && orderGoodsVos.size() > 0) {
+                this.goodsProductId = orderGoodsVos.get(0).getProductId();
+                nameText = BriefUnit.returnName(orderGoodsVos.get(0).getPrice(), orderGoodsVos.get(0).getGoodsName());
+                briefText = BriefUnit.returnBrief(orderGoodsVos.get(0).getBrief());
+            }
+            orderTotalPrice = goodsOrderInfo.getActualPrice();
+            shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, 150, 150);
+            if (!PayTypeInstalledUtils.isWeixinAvilible(getActivity())) {
+                showMessage(getString(R.string.install_weixin));
+                return;
+            }
+            Intent intent = new Intent(getActivity(), SelectShareTypeActivity.class);
+            startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
+        }
+    }
+
+    private void shareActivityWx(boolean isFriend) {
+//        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
+        String url = wxUrl + "activity/" + goodsId + StaticData.WX_INVITE_CODE + inviteCode;
+        wxShareManager.shareUrlToWX(isFriend, url, shareBitMap, nameText, briefText);
+    }
+
+    private void shareGroupWx(boolean isFriend) {
+//        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
+        String url = wxUrl + "group/" + grouponId + "/" + goodsProductId + StaticData.WX_INVITE_CODE + inviteCode;
+        wxShareManager.shareUrlToWX(isFriend, url, shareBitMap, nameText, briefText);
     }
 
     @Override
@@ -214,8 +276,21 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
 
     @Override
     public void renderOrderWxPay(WXPaySignResponse wxPaySignResponse) {
-        if(wxPaySignResponse!=null) {
+        if (wxPaySignResponse != null) {
             wechatPay(wxPaySignResponse);
+        }
+    }
+
+    @Override
+    public void renderCancelOrder() {
+        orderListPresenter.getOrderList(StaticData.REFLASH_ZERO, StaticData.REFLASH_ZERO);
+    }
+
+    @Override
+    public void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo) {
+        if (invitationCodeInfo != null) {
+            wxUrl = invitationCodeInfo.getBaseUrl();
+            inviteCode = invitationCodeInfo.getInvitationCode();
         }
     }
 
@@ -235,13 +310,13 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
                         if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(getActivity())) {
-                                orderListPresenter.orderWxPay(goodsOrderId,StaticData.REFLASH_ZERO);
+                                orderListPresenter.orderWxPay(goodsOrderId, StaticData.REFLASH_ZERO);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
-                        } else {
+                        } else if (TextUtils.equals(StaticData.REFLASH_ONE, selectType)) {
                             if (PayTypeInstalledUtils.isAliPayInstalled(getActivity())) {
-                                orderListPresenter.orderAliPay(goodsOrderId,StaticData.REFLASH_ONE);
+                                orderListPresenter.orderAliPay(goodsOrderId, StaticData.REFLASH_ONE);
                             } else {
                                 showMessage(getString(R.string.install_alipay));
                             }
@@ -249,7 +324,17 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
                     }
                     break;
                 case RequestCodeStatic.ORDER_DETAIL:
-                    orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_ZERO);
+                    orderListPresenter.getOrderList(StaticData.REFLASH_ONE, StaticData.REFLASH_ZERO);
+                    break;
+                case RequestCodeStatic.SELECT_SHARE_TYPE:
+                    if (data != null) {
+                        backType = data.getStringExtra(StaticData.BACK_TYPE);
+                        if (!isActivity) {
+                            shareGroupWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                        } else {
+                            shareActivityWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                        }
+                    }
                     break;
                 default:
             }
@@ -296,7 +381,7 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
         String resultStatus = payResult.getResultStatus();
         Log.d("111", "数据" + payResult.getResult() + "==" + payResult.getResultStatus());
         if (TextUtils.equals(resultStatus, "9000")) {
-            orderListPresenter.getOrderList(StaticData.REFLASH_ZERO,StaticData.REFLASH_ZERO);
+            orderListPresenter.getOrderList(StaticData.REFLASH_ZERO, StaticData.REFLASH_ZERO);
         } else if (TextUtils.equals(resultStatus, "6001")) {
             showMessage(getString(R.string.pay_cancel));
         } else {
@@ -321,7 +406,7 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
     //支付成功
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPaySuccess(WXSuccessPayEvent event) {
-        if (getUserVisibleHint()&&orderListPresenter!=null) {
+        if (getUserVisibleHint() && orderListPresenter != null) {
             orderListPresenter.getOrderList(StaticData.REFLASH_ZERO, StaticData.REFLASH_ZERO);
         }
     }
@@ -335,6 +420,15 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
             } else if (event.code == -2) {
                 showMessage(getString(R.string.pay_cancel));
             }
+        }
+    }
+
+
+    //分享成功
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onShareSuccess(String code) {
+        if (getUserVisibleHint()) {
+            showMessage(getString(R.string.share_success));
         }
     }
 

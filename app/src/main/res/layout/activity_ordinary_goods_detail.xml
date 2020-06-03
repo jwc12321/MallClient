@@ -134,7 +134,8 @@
             <RelativeLayout
                 android:id="@+id/sku_rl"
                 style="@style/goods_detail_rl_style"
-                android:layout_marginTop="@dimen/dp_6">
+                android:layout_marginTop="@dimen/dp_6"
+                android:visibility="gone">
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/selected_goods"
@@ -308,7 +309,7 @@
                 style="@style/goods_buy_up_tv_style"
                 tools:text="¥100" />
 
-            <com.mall.sls.common.widget.textview.MediumThickTextView
+            <com.mall.sls.common.widget.textview.ConventionalTextView
                 style="@style/goods_buy_down_tv_style"
                 android:text="@string/initiate_bill" />
         </LinearLayout>
@@ -325,7 +326,7 @@
                 style="@style/goods_buy_up_tv_style"
                 tools:text="¥100" />
 
-            <com.mall.sls.common.widget.textview.MediumThickTextView
+            <com.mall.sls.common.widget.textview.ConventionalTextView
                 style="@style/goods_buy_down_tv_style"
                 android:text="@string/individual_shopping" />
         </LinearLayout>

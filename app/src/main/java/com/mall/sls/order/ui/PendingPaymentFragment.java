@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import com.mall.sls.common.unit.PayResult;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.data.entity.GoodsOrderInfo;
+import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.event.PayAbortEvent;
@@ -154,6 +156,11 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
 
 
     @Override
+    public void cancelOrder(String id) {
+        orderListPresenter.cancelOrder(id);
+    }
+
+    @Override
     public void payOrder(String id, String amount) {
         this.goodsOrderId=id;
         Intent intent = new Intent(getActivity(), SelectPayTypeActivity.class);
@@ -173,6 +180,12 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
         intent.putExtra(StaticData.GOODS_ORDER_ID, id);
         getActivity().startActivityForResult(intent,RequestCodeStatic.ORDER_DETAIL);
     }
+
+    @Override
+    public void wxShare(GoodsOrderInfo goodsOrderInfo, ImageView shareIv) {
+
+    }
+
 
     @Override
     public void renderOrderList(OrderList orderList) {
@@ -221,6 +234,16 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     }
 
     @Override
+    public void renderCancelOrder() {
+        orderListPresenter.getOrderList(StaticData.REFLASH_ZERO,StaticData.REFLASH_ONE);
+    }
+
+    @Override
+    public void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo) {
+
+    }
+
+    @Override
     public void setPresenter(OrderContract.OrderListPresenter presenter) {
 
     }
@@ -240,7 +263,7 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
-                        } else {
+                        } else if(TextUtils.equals(StaticData.REFLASH_ONE, selectType)){
                             if (PayTypeInstalledUtils.isAliPayInstalled(getActivity())) {
                                 orderListPresenter.orderAliPay(goodsOrderId,StaticData.REFLASH_ONE);
                             } else {

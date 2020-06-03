@@ -15,7 +15,6 @@ import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.NumberFormatUnit;
-import com.mall.sls.common.widget.textview.BlackDrawTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.GoodsOrderInfo;
@@ -65,6 +64,8 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
                 if (onItemClickListener != null) {
                     if (TextUtils.equals(StaticData.TO_PAY, goodsOrderInfo.getOrderStatus())) {
                         onItemClickListener.payOrder(goodsOrderInfo.getId(), goodsOrderInfo.getActualPrice());
+                    }else {
+                        onItemClickListener.wxShare(goodsOrderInfo ,holder.goodsIv);
                     }
                 }
             }
@@ -74,6 +75,14 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
             public void onClick(View view) {
                 if (onItemClickListener != null) {
                     onItemClickListener.goOrderDetail(goodsOrderInfo.getId());
+                }
+            }
+        });
+        holder.leftBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null && TextUtils.equals(StaticData.TO_PAY, goodsOrderInfo.getOrderStatus())) {
+                    onItemClickListener.cancelOrder(goodsOrderInfo.getId());
                 }
             }
         });
@@ -88,11 +97,13 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
         @BindView(R.id.time)
         ConventionalTextView time;
         @BindView(R.id.order_status)
-        ConventionalTextView orderStatus;
+        MediumThickTextView orderStatus;
         @BindView(R.id.goods_iv)
         ImageView goodsIv;
         @BindView(R.id.goods_name)
         MediumThickTextView goodsName;
+        @BindView(R.id.sku)
+        ConventionalTextView sku;
         @BindView(R.id.goods_price)
         ConventionalTextView goodsPrice;
         @BindView(R.id.goods_number)
@@ -122,11 +133,12 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
         public void bindData(GoodsOrderInfo goodsOrderInfo) {
             time.setText(goodsOrderInfo.getAddTime());
             orderGoodsVos = goodsOrderInfo.getOrderGoodsVos();
-            if (orderGoodsVos != null&&orderGoodsVos.size()>0) {
+            if (orderGoodsVos != null && orderGoodsVos.size() > 0) {
                 GlideHelper.load((Activity) context, orderGoodsVos.get(0).getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
                 goodsName.setText(orderGoodsVos.get(0).getGoodsName());
                 goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(orderGoodsVos.get(0).getPrice()));
-                goodsNumber.setText("x"+orderGoodsVos.get(0).getNumber());
+                goodsNumber.setText("x" + orderGoodsVos.get(0).getNumber());
+                sku.setText(orderGoodsVos.get(0).getSpecifications());
             }
             totalAmount.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderInfo.getActualPrice()));
             setOrderStatus(goodsOrderInfo.getOrderStatus());
@@ -137,41 +149,40 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
             }
         }
 
-        //101:待付款 201:待发货 301:待收货 401+402:确认收货 102+103:已取消
+        //状态 101-待支付 102 -取消 103-系统自动取消 204-待分享 206-待发货 301-待收获 401-完成 402-完成(系统)
         private void setOrderStatus(String status) {
             switch (status) {
                 case StaticData.TO_PAY:
                     orderStatus.setText(context.getString(R.string.pending_payment));
-                    orderStatus.setSelected(true);
+                    btLl.setVisibility(View.VISIBLE);
+                    leftBt.setVisibility(View.VISIBLE);
+                    rightBt.setVisibility(View.VISIBLE);
+                    rightBt.setText(context.getString(R.string.to_pay));
+                    leftBt.setText(context.getString(R.string.cancel_order));
+                    break;
+                case StaticData.TO_BE_SHARE:
+                    orderStatus.setText(context.getString(R.string.pending_share));
                     btLl.setVisibility(View.VISIBLE);
                     leftBt.setVisibility(View.GONE);
                     rightBt.setVisibility(View.VISIBLE);
-                    rightBt.setText(context.getString(R.string.pay_now));
+                    rightBt.setText(context.getString(R.string.invite_friends));
                     break;
                 case StaticData.TO_BE_DELIVERED:
                     orderStatus.setText(context.getString(R.string.pending_delivery));
-                    orderStatus.setSelected(true);
                     btLl.setVisibility(View.GONE);
                     break;
                 case StaticData.TO_BE_RECEIVED:
                     orderStatus.setText(context.getString(R.string.shipping));
-                    orderStatus.setSelected(true);
                     btLl.setVisibility(View.GONE);
-//                    leftBt.setVisibility(View.VISIBLE);
-//                    rightBt.setVisibility(View.VISIBLE);
-//                    leftBt.setText(context.getString(R.string.one_more_order));
-//                    rightBt.setText(context.getString(R.string.confirm_receipt));
                     break;
                 case StaticData.RECEIVED:
                 case StaticData.SYS_RECEIVED:
-                    orderStatus.setText(context.getString(R.string.received));
-                    orderStatus.setSelected(true);
+                    orderStatus.setText(context.getString(R.string.completed));
                     btLl.setVisibility(View.GONE);
                     break;
                 case StaticData.CANCELLED:
                 case StaticData.SYS_CANCELLED:
                     orderStatus.setText(context.getString(R.string.is_cancel));
-                    orderStatus.setSelected(false);
                     btLl.setVisibility(View.GONE);
                     break;
                 default:
@@ -182,11 +193,15 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
 
 
     public interface OnItemClickListener {
+        void cancelOrder(String id);//取消订单
+
         void payOrder(String id, String amount);//支付订单
 
         void confirmOrder(String id);//确认收货
 
         void goOrderDetail(String id);//去订单详情
+
+        void wxShare(GoodsOrderInfo goodsOrderInfo,ImageView shareIv);
 
     }
 

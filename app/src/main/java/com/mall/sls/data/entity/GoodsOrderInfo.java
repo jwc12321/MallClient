@@ -24,6 +24,12 @@ public class GoodsOrderInfo {
     //实付款
     @SerializedName("actualPrice")
     private String actualPrice;
+    //是否是活动团
+    @SerializedName("activity")
+    private Boolean isActivity;
+    //活动id
+    @SerializedName("grouponLinkId")
+    private String grouponLinkId;
 
     public String getId() {
         return id;
@@ -63,5 +69,21 @@ public class GoodsOrderInfo {
 
     public void setActualPrice(String actualPrice) {
         this.actualPrice = actualPrice;
+    }
+
+    public Boolean getActivity() {
+        return isActivity;
+    }
+
+    public void setActivity(Boolean activity) {
+        isActivity = activity;
+    }
+
+    public String getGrouponLinkId() {
+        return grouponLinkId;
+    }
+
+    public void setGrouponLinkId(String grouponLinkId) {
+        this.grouponLinkId = grouponLinkId;
     }
 }

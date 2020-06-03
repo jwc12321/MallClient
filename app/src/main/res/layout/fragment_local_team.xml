@@ -25,7 +25,7 @@
             android:id="@+id/looting_ll"
             style="@style/team_status_ll_style">
 
-            <com.mall.sls.common.widget.textview.MediumThickTextView
+            <TextView
                 android:id="@+id/looting_tv"
                 style="@style/team_status_tv_style"
                 android:text="@string/looting" />
@@ -39,7 +39,7 @@
             android:id="@+id/soon_ll"
             style="@style/team_status_ll_style">
 
-            <com.mall.sls.common.widget.textview.MediumThickTextView
+            <TextView
                 android:id="@+id/soon_tv"
                 style="@style/team_status_tv_style"
                 android:text="@string/looting_soon" />

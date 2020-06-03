@@ -29,7 +29,7 @@ public interface AddressContract {
     }
 
     interface AddAddressView extends BaseView<AddAddressPresenter>{
-        void renderAddAddress();
+        void renderAddAddress(String addressId);
         void renderAresa(List<ProvinceBean> provinceBeans);
         void renderDeleteAddress();
     }

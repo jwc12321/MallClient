@@ -161,7 +161,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
-                        } else {
+                        } else if(TextUtils.equals(StaticData.REFLASH_ONE, selectType)){
                             if (PayTypeInstalledUtils.isAliPayInstalled(SuperMemberActivity.this)) {
                                 superMemberPresenter.alipayMember(StaticData.REFLASH_ONE, selectType);
                             } else {

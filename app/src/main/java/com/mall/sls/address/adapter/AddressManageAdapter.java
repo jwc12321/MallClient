@@ -58,7 +58,7 @@ public class AddressManageAdapter extends RecyclerView.Adapter<AddressManageAdap
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.select(addressInfo);
+                    onItemClickListener.select(addressInfo.getId());
                 }
             }
         });
@@ -110,7 +110,7 @@ public class AddressManageAdapter extends RecyclerView.Adapter<AddressManageAdap
     }
 
     public interface OnItemClickListener {
-        void select(AddressInfo addressInfo);
+        void select(String addressId);
         void updateAddress(AddressInfo addressInfo);
     }
 

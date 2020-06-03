@@ -15,19 +15,19 @@ import com.mall.sls.MainApplication;
 public class MediumThickEditTextView extends EditText {
     public MediumThickEditTextView(Context context) {
         super(context);
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Bold-3.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Medium-12.ttf");
         setTypeface(typeFace1);
     }
 
     public MediumThickEditTextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Bold-3.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Medium-12.ttf");
         setTypeface(typeFace1);
     }
 
     public MediumThickEditTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Bold-3.ttf");
+        Typeface typeFace1 = Typeface.createFromAsset(MainApplication.getContext().getAssets(), "fonts/Roboto-Medium-12.ttf");
         setTypeface(typeFace1);
     }
 

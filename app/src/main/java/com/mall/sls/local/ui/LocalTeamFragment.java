@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
+import com.mall.sls.common.unit.TextViewttf;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.mainframe.adapter.MainPagerAdapter;
 
@@ -35,13 +36,13 @@ public class LocalTeamFragment extends BaseFragment implements LootingFragment.L
     @BindView(R.id.title_rel)
     RelativeLayout titleRel;
     @BindView(R.id.looting_tv)
-    MediumThickTextView lootingTv;
+    TextView lootingTv;
     @BindView(R.id.looting_iv)
     View lootingIv;
     @BindView(R.id.looting_ll)
     LinearLayout lootingLl;
     @BindView(R.id.soon_tv)
-    MediumThickTextView soonTv;
+    TextView soonTv;
     @BindView(R.id.soon_iv)
     View soonIv;
     @BindView(R.id.soon_ll)
@@ -130,6 +131,11 @@ public class LocalTeamFragment extends BaseFragment implements LootingFragment.L
             for (int i = 0; i < textViews.length; i++) {
                 textViews[i].setSelected(position == i);
                 views[i].setVisibility(position==i?View.VISIBLE:View.INVISIBLE);
+                if(position==i){
+                    TextViewttf.setTextMediumBlack(textViews[i]);
+                }else {
+                    TextViewttf.setTextConventional(textViews[i]);
+                }
             }
         }
     };

@@ -800,10 +800,10 @@
         <item name="android:layout_marginTop">@dimen/dp_7</item>
     </style>
 
-    <style name="mine_order_left_iv_style">
-        <item name="android:layout_width">wrap_content</item>
+    <style name="mine_order_iv_style">
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">@dimen/dp_35</item>
+        <item name="android:layout_weight">1</item>
     </style>
     <style name="mine_order_center_iv_style">
         <item name="android:layout_width">wrap_content</item>
@@ -889,7 +889,6 @@
         <item name="android:textSize">@dimen/sp_13</item>
         <item name="android:textColor">@color/appText3</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">center_vertical</item>
     </style>
     <style name="order_right_bt_style">
         <item name="android:layout_width">@dimen/dp_69</item>
@@ -898,7 +897,6 @@
         <item name="android:textSize">@dimen/sp_13</item>
         <item name="android:textColor">@color/appText1</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">center_vertical</item>
         <item name="android:layout_marginLeft">@dimen/dp_5</item>
     </style>
 
@@ -914,7 +912,7 @@
     </style>
 
     <style name="order_detail_right_bt_style">
-        <item name="android:layout_width">@dimen/dp_88</item>
+        <item name="android:layout_width">@dimen/dp_105</item>
         <item name="android:layout_height">@dimen/dp_33</item>
         <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:textColor">@color/appText1</item>
@@ -924,12 +922,12 @@
     </style>
 
     <style name="order_detail_left_bt_style">
-        <item name="android:layout_width">@dimen/dp_88</item>
+        <item name="android:layout_width">@dimen/dp_105</item>
         <item name="android:layout_height">@dimen/dp_33</item>
         <item name="android:textSize">@dimen/sp_14</item>
-        <item name="android:textColor">@color/appText3</item>
+        <item name="android:textColor">@color/backGround1</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/common_one_six_five_app_three_bg</item>
+        <item name="android:background">@drawable/common_one_six_five_back_one_white_bg</item>
     </style>
 
     <style name="order_detail_tv_rl_style">
@@ -1092,6 +1090,21 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/backGround1</item>
         <item name="android:textSize">@dimen/sp_15</item>
+        <item name="android:text">:</item>
+    </style>
+
+    <style name="white_fifteen_countdown_time_colon_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/appText1</item>
+        <item name="android:textSize">@dimen/sp_15</item>
+        <item name="android:text">:</item>
+    </style>
+    <style name="white_countdown_time_colon_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/appText1</item>
+        <item name="android:textSize">@dimen/sp_13</item>
         <item name="android:text">:</item>
     </style>
     <style name="twelve_countdown_time_colon_style">

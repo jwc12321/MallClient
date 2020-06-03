@@ -19,6 +19,19 @@ public class OrderGoodsVo {
     //价格
     @SerializedName("price")
     private String price;
+    //sku
+    @SerializedName("specifications")
+    private String specifications;
+    //产品秒速
+    @SerializedName("brief")
+    private String brief;
+    //商品id
+    @SerializedName("goodsId")
+    private String goodsId;
+    //skuId
+    @SerializedName("productId")
+    private String productId;
+
 
     public String getGoodsName() {
         return goodsName;
@@ -50,5 +63,37 @@ public class OrderGoodsVo {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getSpecifications() {
+        return specifications;
+    }
+
+    public void setSpecifications(String specifications) {
+        this.specifications = specifications;
+    }
+
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 }

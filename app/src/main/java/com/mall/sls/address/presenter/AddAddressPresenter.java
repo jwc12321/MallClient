@@ -50,9 +50,9 @@ public class AddAddressPresenter implements AddressContract.AddAddressPresenter 
                 .compose(new RxSchedulerTransformer<String>())
                 .subscribe(new Consumer<String>() {
                     @Override
-                    public void accept(String str) throws Exception {
+                    public void accept(String addressId) throws Exception {
                         addAddressView.dismissLoading();
-                        addAddressView.renderAddAddress();
+                        addAddressView.renderAddAddress(addressId);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
