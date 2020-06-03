@@ -283,7 +283,7 @@
                                 style="@style/size14_color_app3_text_style"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="@dimen/dp_4"
-                                android:text="@string/complete" />
+                                android:text="@string/order_info" />
                         </LinearLayout>
 
                         <androidx.recyclerview.widget.RecyclerView

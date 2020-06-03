@@ -331,6 +331,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 goodsProductId = orderGoodsVos.get(0).getProductId();
             }
             totalAmount.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getGoodsPrice()));
+            deliveryFee.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getFreightPrice()));
             coupon.setText("-¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getCouponPrice()));
             realPayment.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getActualPrice()));
             orderTotalPrice = goodsOrderDetails.getActualPrice();
@@ -339,13 +340,13 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 orderTimeInfos.add(new OrderTimeInfo(getString(R.string.order_number), goodsOrderDetails.getOrderSn()));
             }
             if (!TextUtils.isEmpty(goodsOrderDetails.getAddTime())) {
-                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.order_time), goodsOrderDetails.getAddTime()));
-            }
-            if (!TextUtils.isEmpty(goodsOrderDetails.getPayModeText())) {
-                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.payment_method), goodsOrderDetails.getPayModeText()));
+                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.create_time), goodsOrderDetails.getAddTime()));
             }
             if (!TextUtils.isEmpty(goodsOrderDetails.getPayTime())) {
                 orderTimeInfos.add(new OrderTimeInfo(getString(R.string.payment_time), goodsOrderDetails.getPayTime()));
+            }
+            if (!TextUtils.isEmpty(goodsOrderDetails.getPayModeText())) {
+                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.payment_method), goodsOrderDetails.getPayModeText()));
             }
             if (!TextUtils.isEmpty(goodsOrderDetails.getMessage())) {
                 orderTimeInfos.add(new OrderTimeInfo(getString(R.string.order_notes), goodsOrderDetails.getMessage()));

@@ -229,9 +229,11 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 if (!TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
                     goVerify = StaticData.REFLASH_ONE;
                     SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount);
+                }else {
+                    showMessage(getString(R.string.to_open_person_authentication));
                 }
                 break;
-            case R.id.feedback:
+            case R.id.feedback://意见反馈
                 FeedBackActivity.start(getActivity());
                 break;
             default:

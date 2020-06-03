@@ -956,8 +956,8 @@
         <item name="android:layout_width">@dimen/dp_42</item>
         <item name="android:layout_height">@dimen/dp_21</item>
         <item name="android:textSize">@dimen/sp_12</item>
-        <item name="android:textColor">@color/appText2</item>
-        <item name="android:background">@drawable/common_ten_five_back_nine_bg</item>
+        <item name="android:textColor">@color/backGround1</item>
+        <item name="android:background">@drawable/common_ten_five_back_one_bg</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_marginRight">@dimen/dp_15</item>

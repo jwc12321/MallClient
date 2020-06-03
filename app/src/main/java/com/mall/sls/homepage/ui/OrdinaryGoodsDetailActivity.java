@@ -185,6 +185,9 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
         setContentView(R.layout.activity_ordinary_goods_detail);
         ButterKnife.bind(this);
         setHeight(back, null, share);
@@ -305,7 +308,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                     showMessage(getString(R.string.install_weixin));
                     return;
                 }
-                shareBitMap = QRCodeFileUtils.createBitmap3(shareIv,150,150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
+                shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, 150, 150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
                 Intent intent = new Intent(this, SelectShareTypeActivity.class);
                 startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
                 break;
@@ -430,7 +433,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             goodsOriginalUnit.setText("/" + unit);
             originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
             sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity() + "件");
-            nameText =BriefUnit.returnName(goodsDetailsInfo.getRetailPrice(),goodsDetailsInfo.getName());
+            nameText = BriefUnit.returnName(goodsDetailsInfo.getRetailPrice(), goodsDetailsInfo.getName());
             briefText = BriefUnit.returnBrief(goodsDetailsInfo.getBrief());
             goodsName.setText(goodsDetailsInfo.getName());
             goodsBrief.setText(goodsDetailsInfo.getBrief());

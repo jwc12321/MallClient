@@ -70,6 +70,9 @@ public class GoodsOrderDetails {
     //活动id
     @SerializedName("grouponLinkId")
     private String grouponLinkId;
+    //运费
+    @SerializedName("freightPrice")
+    private String freightPrice;
 
     public String getCouponPrice() {
         return couponPrice;
@@ -231,4 +234,12 @@ public class GoodsOrderDetails {
         this.grouponLinkId = grouponLinkId;
     }
 
+
+    public String getFreightPrice() {
+        return freightPrice;
+    }
+
+    public void setFreightPrice(String freightPrice) {
+        this.freightPrice = freightPrice;
+    }
 }

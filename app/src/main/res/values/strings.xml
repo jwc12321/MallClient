@@ -136,6 +136,7 @@
     <string name="copy">复制</string>
     <string name="order_number">订单编号：</string>
     <string name="order_time">下单时间：</string>
+    <string name="create_time">创建时间：</string>
     <string name="payment_method">支付方式：</string>
     <string name="payment_time">付款时间：</string>
     <string name="order_notes">订单备注：</string>
@@ -272,4 +273,5 @@
     <string name="cancel_order">取消订单</string>
     <string name="share_remaining_time">分享剩余时间为：</string>
     <string name="pay_remaining_time">支付剩余时间为：</string>
+    <string name="order_info">订单信息</string>
 </resources>
