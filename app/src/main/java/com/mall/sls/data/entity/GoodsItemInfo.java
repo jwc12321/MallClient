@@ -39,6 +39,9 @@ public class GoodsItemInfo implements Serializable {
     //团购开始时间
     @SerializedName("groupStartTime")
     private String startTime;
+    //标签
+    @SerializedName("keywords")
+    private String keywords;
     public String getBrief() {
         return brief;
     }
@@ -117,5 +120,13 @@ public class GoodsItemInfo implements Serializable {
 
     public void setStartTime(String startTime) {
         this.startTime = startTime;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 }

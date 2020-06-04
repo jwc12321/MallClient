@@ -16,7 +16,6 @@ import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
-import com.mall.sls.common.widget.textview.DrawTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.GoodsItemInfo;
 
@@ -96,6 +95,8 @@ public class LootingSoonAdapter extends RecyclerView.Adapter<LootingSoonAdapter.
         ConventionalTextView confirmBt;
         @BindView(R.id.item_rl)
         RelativeLayout itemRl;
+        @BindView(R.id.groupType)
+        ConventionalTextView groupType;
 
         public LootingSoonView(View itemView) {
             super(itemView);
@@ -110,6 +111,7 @@ public class LootingSoonAdapter extends RecyclerView.Adapter<LootingSoonAdapter.
             originalPrice.setText("¥" + goodsItemInfo.getCounterPrice());
             long startTime = FormatUtil.dateToStamp(goodsItemInfo.getStartTime());
             confirmBt.setText(FormatUtil.formatDate(String.valueOf(startTime)) + "开抢");
+            groupType.setText(goodsItemInfo.getKeywords());
         }
     }
 

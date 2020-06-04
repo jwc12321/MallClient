@@ -3,7 +3,7 @@ package com.mall.sls.common;
 public class RequestUrl {
     public static String APP_URL_INFO_URL="/api/public/f/version/android";
     public static String LOGIN_IN_URL="/app/auth/login/code";//登录
-    public static String ONE_CLICK_LOGIN_URL="/api/public/f/login/code";//一键登录
+    public static String ONE_CLICK_LOGIN_URL="/app/auth/login/ali";//一键登录
     public static String SEND_CODE_V_URL="/app/auth/regCaptcha";//发送验证码
     public static String USER_RP_STATUS_URL="/app/certify";//获取用户认证状态
     public static String HOME_INDEX_URL="/app/home/index";//首页信息
@@ -46,5 +46,6 @@ public class RequestUrl {
     public static String USER_PAY_WX="/app/user/pay/wx";//微信支付实人认证和超级会员
     public static String ORDER_WX_PAY="/app/order/wxPay";//微信支付订单
     public static String ORDER_CANCEL="/app/order/cancel";//订单取消
+    public static String BIND_WX="/app/auth/bindWx";//绑定微信
 
 }

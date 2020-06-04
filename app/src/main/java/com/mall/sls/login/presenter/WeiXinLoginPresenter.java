@@ -10,6 +10,7 @@ import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.data.request.LoginRequest;
+import com.mall.sls.data.request.OneClickLoginRequest;
 import com.mall.sls.data.request.WeiXinLoginRequest;
 import com.mall.sls.login.LoginContract;
 
@@ -65,6 +66,28 @@ public class WeiXinLoginPresenter implements LoginContract.WeiXinLoginPresenter 
                 });
         mDisposableList.add(disposable);
     }
+
+    @Override
+    public void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode) {
+        OneClickLoginRequest request=new OneClickLoginRequest(accessCode,deviceId,deviceOsVersion,devicePlatform,invitationCode);
+        String sign= SignUnit.signPost(RequestUrl.ONE_CLICK_LOGIN_URL,gson.toJson(request));
+        Disposable disposable = restApiService.oneClickLogin(sign,request)
+                .flatMap(new RxRemoteDataParse<TokenInfo>())
+                .compose(new RxSchedulerTransformer<TokenInfo>())
+                .subscribe(new Consumer<TokenInfo>() {
+                    @Override
+                    public void accept(TokenInfo tokenInfo) throws Exception {
+                        weiXinLoginView.renderLoginIn(tokenInfo);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        weiXinLoginView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
 
     @Override
     public void start() {

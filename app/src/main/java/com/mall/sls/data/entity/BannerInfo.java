@@ -25,6 +25,9 @@ public class BannerInfo {
     //本地跳转类型
     @SerializedName("nativeType")
     private String nativeType;
+    //名字
+    @SerializedName("name")
+    private String name;
 
     public String getBannerId() {
         return bannerId;
@@ -72,5 +75,13 @@ public class BannerInfo {
 
     public void setNativeType(String nativeType) {
         this.nativeType = nativeType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

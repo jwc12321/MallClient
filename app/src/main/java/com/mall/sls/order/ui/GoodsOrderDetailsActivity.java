@@ -348,8 +348,8 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             if (!TextUtils.isEmpty(goodsOrderDetails.getPayModeText())) {
                 orderTimeInfos.add(new OrderTimeInfo(getString(R.string.payment_method), goodsOrderDetails.getPayModeText()));
             }
-            if (!TextUtils.isEmpty(goodsOrderDetails.getMessage())) {
-                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.order_notes), goodsOrderDetails.getMessage()));
+            if (!TextUtils.isEmpty(goodsOrderDetails.getTradeNo())) {
+                orderTimeInfos.add(new OrderTimeInfo(getString(R.string.payment_number), goodsOrderDetails.getTradeNo()));
             }
             orderInformationAdapter.setData(orderTimeInfos);
             if (TextUtils.equals(StaticData.TO_PAY, goodsOrderDetails.getOrderStatus()) && !TextUtils.isEmpty(goodsOrderDetails.getSystemTime()) && !TextUtils.isEmpty(goodsOrderDetails.getPayLimitTime())) {
@@ -504,7 +504,6 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private void alpay(Message msg) {
         PayResult payResult = new PayResult((Map<String, String>) msg.obj);
         String resultStatus = payResult.getResultStatus();
-        Log.d("111", "数据" + payResult.getResult() + "==" + payResult.getResultStatus());
         if (TextUtils.equals(resultStatus, "9000")) {
             activityResult = StaticData.REFLASH_ONE;
             orderDetailsPresenter.getOrderDetails(goodsOrderId);

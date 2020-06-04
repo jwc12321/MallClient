@@ -18,12 +18,16 @@ public class LoginRequest {
     //短信验证码
     @SerializedName("code")
     private String code;
+    //邀请码
+    @SerializedName("invitationCode")
+    private String invitationCode;
 
-    public LoginRequest(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code) {
+    public LoginRequest(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code,String invitationCode) {
         this.deviceId = deviceId;
         this.deviceOsVersion = deviceOsVersion;
         this.devicePlatform = devicePlatform;
         this.mobile = mobile;
         this.code = code;
+        this.invitationCode=invitationCode;
     }
 }

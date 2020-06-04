@@ -117,6 +117,7 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
             currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getRetailPrice()));
             originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getCounterPrice()));
             groupType.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGroupType()) ? View.VISIBLE : View.GONE);
+            groupType.setText(goodsItemInfo.getKeywords());
             if (TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGroupType())) {
                 groupType.setVisibility(View.VISIBLE);
                 priceType.setText(context.getString(R.string.activity_price));

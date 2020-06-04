@@ -16,10 +16,12 @@ import com.mall.sls.data.entity.WXPaySignResponse;
 public interface HomepageContract {
     interface HomePagePresenter extends BasePresenter{
         void getHomePageInfo(String refreshType);
+        void bindWx(String code);
     }
 
     interface HomePageView extends BaseView<HomePagePresenter>{
         void renderHomePageInfo(HomePageInfo homePageInfo);
+        void renderBindWx();
     }
 
     interface GoodsDetailsPresenter extends BasePresenter{

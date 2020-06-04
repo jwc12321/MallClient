@@ -57,9 +57,35 @@
                         android:id="@+id/phone"
                         style="@style/size15_color_app1_text_style"
                         android:layout_marginLeft="@dimen/dp_85"
-                        android:layout_marginTop="@dimen/dp_15"
+                        android:layout_marginTop="@dimen/dp_8"
                         tools:text="43434343" />
 
+                    <LinearLayout
+                        android:id="@+id/invite_code_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/phone"
+                        android:layout_marginLeft="@dimen/dp_85"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/dp_3"
+                        android:visibility="gone">
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/invite_code_tv"
+                            style="@style/size15_color_app1_text_style"
+                            tools:text="1111"
+                            android:layout_gravity="center_vertical"/>
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/copy"
+                            android:layout_width="@dimen/dp_69"
+                            android:layout_height="@dimen/dp_20"
+                            android:background="@drawable/common_ten_back_forty_three_bg"
+                            android:textSize="@dimen/sp_12"
+                            android:textColor="@color/appText1"
+                            android:text="@string/copy_invite_code"
+                            android:gravity="center"
+                            android:layout_marginLeft="@dimen/dp_10"/>
+                    </LinearLayout>
                     <ImageView
                         android:id="@+id/member_type_iv"
                         android:layout_width="wrap_content"
@@ -68,69 +94,14 @@
                         android:layout_marginTop="@dimen/dp_21"
                         tools:src="@mipmap/icon_super_member" />
 
-                    <LinearLayout
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/income_rv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_82"
-                        android:orientation="horizontal"
-                        android:weightSum="4">
-
-                        <LinearLayout style="@style/mine_info_ll_style">
-
-                            <com.mall.sls.common.widget.textview.MediumThickTextView
-                                android:id="@+id/cash_back"
-                                style="@style/mine_info_up_tv_style"
-                                tools:text="0" />
-
-                            <com.mall.sls.common.widget.textview.ConventionalTextView
-                                style="@style/mine_info_down_tv_style"
-                                android:text="@string/cash_back" />
-                        </LinearLayout>
-
-                        <View style="@style/mine_info_up_view_style" />
-
-                        <LinearLayout
-                            android:id="@+id/coupon_ll"
-                            style="@style/mine_info_ll_style">
-
-                            <com.mall.sls.common.widget.textview.MediumThickTextView
-                                android:id="@+id/coupon"
-                                style="@style/mine_info_up_tv_style"
-                                tools:text="0" />
-
-                            <com.mall.sls.common.widget.textview.ConventionalTextView
-                                style="@style/mine_info_down_tv_style"
-                                android:text="@string/coupon" />
-                        </LinearLayout>
-
-                        <View style="@style/mine_info_up_view_style" />
-
-                        <LinearLayout style="@style/mine_info_ll_style">
-
-                            <com.mall.sls.common.widget.textview.MediumThickTextView
-                                android:id="@+id/dividend"
-                                style="@style/mine_info_up_tv_style"
-                                tools:text="0" />
-
-                            <com.mall.sls.common.widget.textview.ConventionalTextView
-                                style="@style/mine_info_down_tv_style"
-                                android:text="@string/dividend" />
-                        </LinearLayout>
-
-                        <View style="@style/mine_info_up_view_style" />
-
-                        <LinearLayout style="@style/mine_info_ll_style">
-
-                            <com.mall.sls.common.widget.textview.MediumThickTextView
-                                android:id="@+id/rice_grain"
-                                style="@style/mine_info_up_tv_style"
-                                tools:text="0" />
-
-                            <com.mall.sls.common.widget.textview.ConventionalTextView
-                                style="@style/mine_info_down_tv_style"
-                                android:text="@string/rice_grain" />
-                        </LinearLayout>
-                    </LinearLayout>
+                        android:nestedScrollingEnabled="false"
+                        app:layoutManager="@string/layoutManager_Gridlayout" />
                 </RelativeLayout>
 
                 <com.makeramen.roundedimageview.RoundedImageView
@@ -139,7 +110,7 @@
                     android:layout_height="@dimen/dp_60"
                     android:layout_marginLeft="@dimen/dp_30"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_launcher"
+                    tools:src="@mipmap/ic_launcher"
                     app:riv_border_color="@color/appText1"
                     app:riv_border_width="0dp"
                     app:riv_corner_radius="0dp"
@@ -300,22 +271,24 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:weightSum="2"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
                             <ImageView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
                                 android:layout_weight="1"
                                 android:src="@drawable/verified_select"
-                                android:layout_centerHorizontal="true"
-                                android:visibility="invisible"/>
+                                android:visibility="invisible" />
+
                             <ImageView
                                 android:id="@+id/verified_iv"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
                                 android:layout_weight="1"
-                                android:src="@drawable/verified_select"
-                                android:layout_centerHorizontal="true"/>
+                                android:src="@drawable/verified_select" />
                         </LinearLayout>
 
                     </RelativeLayout>

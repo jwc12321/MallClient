@@ -22,7 +22,7 @@ public class HomePageInfo {
     @SerializedName("unreadMsgCount")
     private String unreadMsgCount;
     @SerializedName("jingang")
-    private List<JinGangInfo> jinGangInfos;
+    private List<BannerInfo> jinGangInfos;
 
 
     public String getStatus() {
@@ -57,11 +57,11 @@ public class HomePageInfo {
         this.unreadMsgCount = unreadMsgCount;
     }
 
-    public List<JinGangInfo> getJinGangInfos() {
+    public List<BannerInfo> getJinGangInfos() {
         return jinGangInfos;
     }
 
-    public void setJinGangInfos(List<JinGangInfo> jinGangInfos) {
+    public void setJinGangInfos(List<BannerInfo> jinGangInfos) {
         this.jinGangInfos = jinGangInfos;
     }
 }

@@ -22,8 +22,10 @@
     <string name="other_login">其他方式登录</string>
     <string name="i_read_agree">我已阅读同意</string>
     <string name="and">和</string>
-    <string name="registration_agreement">《注册协议》</string>
+    <string name="registration_agreement">《用户协议》</string>
     <string name="privacy_policy">《隐私政策》</string>
+    <string name="registration_agreement_tv">用户协议</string>
+    <string name="privacy_policy_tv">隐私政策</string>
     <string name="cerify_tip">为确保用户的真实性实名认证\n需要先缴纳费用。\n认证成功后会以等额购物券的\n形式发放到您的账户。</string>
     <string name="cerify_tip_tv"> 1:身份证信息仅供平台提供诚信保证使用。\n 2:我方承诺不向其他第三方透露您的个人信息</string>
     <string name="auth_now">立即认证</string>
@@ -274,4 +276,7 @@
     <string name="share_remaining_time">分享剩余时间为：</string>
     <string name="pay_remaining_time">支付剩余时间为：</string>
     <string name="order_info">订单信息</string>
+    <string name="payment_number">支付单号：</string>
+    <string name="copy_invite_code">复制邀请码</string>
+    <string name="phone_login">手机号登录</string>
 </resources>

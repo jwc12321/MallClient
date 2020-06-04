@@ -1,6 +1,8 @@
 package com.mall.sls.mine.ui;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +15,8 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseFragment;
@@ -37,6 +41,7 @@ import com.mall.sls.member.ui.SuperMemberActivity;
 import com.mall.sls.mine.DaggerMineComponent;
 import com.mall.sls.mine.MineContract;
 import com.mall.sls.mine.MineModule;
+import com.mall.sls.mine.adapter.IncomeAdapter;
 import com.mall.sls.mine.presenter.MineInfoPresenter;
 import com.mall.sls.order.ui.GoodsOrderActivity;
 
@@ -48,12 +53,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
+
 /**
  * @author jwc on 2020/5/7.
  * 描述：
  */
-public class MineFragment extends BaseFragment implements MineContract.MineInfoView {
-
+public class MineFragment extends BaseFragment implements MineContract.MineInfoView, IncomeAdapter.OnItemClickListener {
     @BindView(R.id.title)
     MediumThickTextView title;
     @BindView(R.id.right_iv)
@@ -64,16 +70,8 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     MediumThickTextView phone;
     @BindView(R.id.member_type_iv)
     ImageView memberTypeIv;
-    @BindView(R.id.cash_back)
-    MediumThickTextView cashBack;
-    @BindView(R.id.coupon)
-    MediumThickTextView coupon;
-    @BindView(R.id.coupon_ll)
-    LinearLayout couponLl;
-    @BindView(R.id.dividend)
-    MediumThickTextView dividend;
-    @BindView(R.id.rice_grain)
-    MediumThickTextView riceGrain;
+    @BindView(R.id.income_rv)
+    RecyclerView incomeRv;
     @BindView(R.id.head_photo)
     RoundedImageView headPhoto;
     @BindView(R.id.right_arrow_iv)
@@ -82,40 +80,44 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     RelativeLayout allOrderRl;
     @BindView(R.id.pending_payment_iv)
     ImageView pendingPaymentIv;
+    @BindView(R.id.pending_share_iv)
+    ImageView pendingShareIv;
     @BindView(R.id.pending_delivery_iv)
     ImageView pendingDeliveryIv;
     @BindView(R.id.shipping_iv)
     ImageView shippingIv;
+    @BindView(R.id.completed_iv)
+    ImageView completedIv;
     @BindView(R.id.vip_iv)
     ImageView vipIv;
     @BindView(R.id.vip_type)
     ConventionalTextView vipType;
     @BindView(R.id.super_member_rl)
     RelativeLayout superMemberRl;
-    @BindView(R.id.address_manage)
-    ImageView addressManage;
-    @BindView(R.id.invite_friends)
-    ImageView inviteFriends;
-    @BindView(R.id.verified_iv)
-    ImageView verifiedIv;
-    @BindView(R.id.my_invitation_iv)
-    ImageView myInvitationIv;
-    @BindView(R.id.pending_share_iv)
-    ImageView pendingShareIv;
-    @BindView(R.id.completed_iv)
-    ImageView completedIv;
     @BindView(R.id.taobao_orde)
     ImageView taobaoOrde;
+    @BindView(R.id.my_invitation_iv)
+    ImageView myInvitationIv;
+    @BindView(R.id.invite_friends)
+    ImageView inviteFriends;
     @BindView(R.id.lottery)
     ImageView lottery;
+    @BindView(R.id.verified_iv)
+    ImageView verifiedIv;
     @BindView(R.id.verified_rl)
     RelativeLayout verifiedRl;
     @BindView(R.id.mission_center)
     ImageView missionCenter;
+    @BindView(R.id.address_manage)
+    ImageView addressManage;
     @BindView(R.id.feedback)
     ImageView feedback;
-
-
+    @BindView(R.id.invite_code_tv)
+    ConventionalTextView inviteCodeTv;
+    @BindView(R.id.copy)
+    ConventionalTextView copy;
+    @BindView(R.id.invite_code_ll)
+    LinearLayout inviteCodeLl;
 
     @Inject
     MineInfoPresenter mineInfoPresenter;
@@ -131,6 +133,11 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     private String vipAmount;
     private String wxUrl;
     private String inviteCode;
+    private IncomeAdapter incomeAdapter;
+    private boolean isFirst = true;
+    private ClipboardManager myClipboard;
+    private ClipData myClip;
+    private String vipDescription;
 
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
@@ -149,6 +156,14 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHeight(null, title, rightIv);
+        initView();
+    }
+
+    private void initView() {
+        myClipboard = (ClipboardManager) getActivity().getSystemService(CLIPBOARD_SERVICE);
+        incomeAdapter = new IncomeAdapter(getActivity());
+        incomeAdapter.setOnItemClickListener(this);
+        incomeRv.setAdapter(incomeAdapter);
     }
 
     @Override
@@ -169,7 +184,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
         }
     }
 
-    @OnClick({R.id.right_iv, R.id.all_order_rl, R.id.pending_payment_iv, R.id.pending_share_iv, R.id.pending_delivery_iv, R.id.shipping_iv, R.id.completed_iv, R.id.address_manage, R.id.invite_friends, R.id.verified_rl, R.id.my_invitation_iv, R.id.super_member_rl, R.id.coupon_ll, R.id.member_type_iv, R.id.feedback})
+    @OnClick({R.id.right_iv, R.id.all_order_rl, R.id.pending_payment_iv, R.id.pending_share_iv, R.id.pending_delivery_iv, R.id.shipping_iv, R.id.completed_iv, R.id.address_manage, R.id.invite_friends, R.id.verified_rl, R.id.my_invitation_iv, R.id.super_member_rl, R.id.member_type_iv, R.id.feedback, R.id.copy})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.right_iv://设置
@@ -214,27 +229,17 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 MyInvitationActivity.start(getActivity());
                 break;
             case R.id.super_member_rl://超级会员
-                if (TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
-                    showMessage(getString(R.string.to_open_person_authentication));
-                } else {
-                    goVerify = StaticData.REFLASH_ONE;
-                    SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount);
-                }
-                break;
-            case R.id.coupon_ll://优惠卷
-                Intent remarkIntent = new Intent(getActivity(), CouponActivity.class);
-                startActivityForResult(remarkIntent, RequestCodeStatic.GO_COUPON);
-                break;
             case R.id.member_type_iv:
-                if (!TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
-                    goVerify = StaticData.REFLASH_ONE;
-                    SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount);
-                }else {
-                    showMessage(getString(R.string.to_open_person_authentication));
-                }
+                goVerify = StaticData.REFLASH_ONE;
+                SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount, vipDescription);
                 break;
             case R.id.feedback://意见反馈
                 FeedBackActivity.start(getActivity());
+                break;
+            case R.id.copy:
+                myClip = ClipData.newPlainText("text", inviteCode);
+                myClipboard.setPrimaryClip(myClip);
+                showMessage(getString(R.string.copy_successfully));
                 break;
             default:
         }
@@ -257,6 +262,12 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 default:
             }
         }
+    }
+
+    @Override
+    public void goCoupon() {
+        Intent intent = new Intent(getActivity(), CouponActivity.class);
+        startActivityForResult(intent, RequestCodeStatic.GO_COUPON);
     }
 
     public interface MineListener {
@@ -298,18 +309,14 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 }
             }
             mineRewardInfos = mineInfo.getMineRewardInfos();
-            for (MineRewardInfo mineRewardInfo : mineRewardInfos) {
-                if (TextUtils.equals(getString(R.string.cash_back), mineRewardInfo.getDes())) {
-                    cashBack.setText(mineRewardInfo.getValue());
-                } else if (TextUtils.equals(getString(R.string.coupon), mineRewardInfo.getDes())) {
-                    coupon.setText(mineRewardInfo.getValue());
-                } else if (TextUtils.equals(getString(R.string.dividend), mineRewardInfo.getDes())) {
-                    dividend.setText(mineRewardInfo.getValue());
-                } else if (TextUtils.equals(getString(R.string.rice_grain), mineRewardInfo.getDes())) {
-                    riceGrain.setText(mineRewardInfo.getValue());
+            if (mineRewardInfos != null) {
+                if (isFirst) {
+                    incomeRv.setLayoutManager(new GridLayoutManager(getActivity(), mineRewardInfos.size()));
+                    isFirst = false;
                 }
-
+                incomeAdapter.setData(mineRewardInfos);
             }
+            vipDescription = mineInfo.getVipDescription();
         }
     }
 
@@ -326,6 +333,8 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
         if (invitationCodeInfo != null) {
             wxUrl = invitationCodeInfo.getBaseUrl();
             inviteCode = invitationCodeInfo.getInvitationCode();
+            inviteCodeTv.setText(inviteCode);
+            inviteCodeLl.setVisibility(TextUtils.isEmpty(inviteCode) ? View.GONE : View.VISIBLE);
         }
     }
 

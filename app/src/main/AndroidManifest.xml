@@ -334,6 +334,12 @@
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"
             android:theme="@style/DefaultCityPickerTheme"/>
+        <activity android:name=".login.ui.PhoneLoginActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
+        <activity android:name=".login.ui.LoginFillCodeActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

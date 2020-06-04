@@ -162,7 +162,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
             showMessage(getString(R.string.choice_login));
             return;
         }
-        loginPresenter.loginIn(deviceId, deviceOsVersion, devicePlatform, phoneNumber, smsCode);
+        loginPresenter.loginIn(deviceId, deviceOsVersion, devicePlatform, phoneNumber, smsCode,"");
     }
 
     private void sendVcode() {
@@ -211,6 +211,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     }
 
     @Override
+    public void renderInvitationCode(String invitationCode) {
+
+    }
+
+    @Override
     public void setPresenter(LoginContract.LoginPresenter presenter) {
 
     }
@@ -228,7 +233,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                 }
                 if (tokenRet != null && !("600001").equals(tokenRet.getCode())) {
                     loginToken = tokenRet.getToken();
-                    loginPresenter.oneClickLogin(loginToken, deviceId, deviceOsVersion, devicePlatform);
+                    loginPresenter.oneClickLogin(loginToken, deviceId, deviceOsVersion, devicePlatform,"");
                 }
             }
 

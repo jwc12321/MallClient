@@ -2,9 +2,6 @@ package com.mall.sls.login.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -24,20 +21,22 @@ import com.igexin.sdk.Tag;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.AvatarUrlManager;
+import com.mall.sls.common.unit.BindWxManager;
 import com.mall.sls.common.unit.MobileManager;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.SystemUtil;
 import com.mall.sls.common.unit.TokenManager;
-import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.TokenInfo;
-import com.mall.sls.homepage.ui.ConfirmOrderActivity;
+import com.mall.sls.data.entity.WebViewDetailInfo;
 import com.mall.sls.login.DaggerLoginComponent;
 import com.mall.sls.login.LoginContract;
 import com.mall.sls.login.LoginModule;
 import com.mall.sls.login.presenter.WeiXinLoginPresenter;
 import com.mall.sls.mainframe.ui.MainFrameActivity;
+import com.mall.sls.webview.ui.WebViewActivity;
 import com.mobile.auth.gatewayauth.AuthUIConfig;
 import com.mobile.auth.gatewayauth.AuthUIControlClickListener;
 import com.mobile.auth.gatewayauth.PhoneNumberAuthHelper;
@@ -82,11 +81,14 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
     ConventionalTextView registerTv;
     @BindView(R.id.privacy_tv)
     ConventionalTextView privacyTv;
+    @BindView(R.id.phone_login_bt)
+    ConventionalTextView phoneLoginBt;
 
     // 微信登录
     private static IWXAPI WXapi;
     @Inject
     WeiXinLoginPresenter weiXinLoginPresenter;
+
 
     private String deviceId;
     private String deviceOsVersion;
@@ -98,6 +100,8 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
     private String loginKey = "+3do8fAWK3Tv3vsx/iNPefkUhXOaZOWlrRv8rWUt1muMwnRX/NVlymCa7pvf2fh2qC/XwPQ6fkhNmI+Ke/85gonr7bUw6Tti+4PDbDt8znZtVuhApw2gerNIiAKbeXbF89PBAS/4xAHxPcd1vnZJwfL0YQ9teT74JT+7GT4qsi83hgeS4K8C9MXoqzrhqTWVLdSk7aUAgx/gXrXKQ8PoMDZsGpjuJ02eRyRdaoiGX8fZIWQYq3RlEavsu++RnbULX4OguGRxDn8YDTNvmmdIDA==";
     private boolean checkRet;
     private String unionId;
+    private WebViewDetailInfo webViewDetailInfo;
+    private String onClickType=StaticData.REFLASH_ZERO;//0:一键绑定 1：一键登录
 
 
     public static void start(Context context) {
@@ -126,11 +130,32 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
         init();
     }
 
-    @OnClick({R.id.confirm_bt})
+    @OnClick({R.id.confirm_bt, R.id.register_tv, R.id.privacy_tv,R.id.phone_login_bt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.confirm_bt://登录
-                WXLogin();
+                wxLogin();
+                break;
+            case R.id.register_tv://用户协议
+                webViewDetailInfo = new WebViewDetailInfo();
+                webViewDetailInfo.setTitle(getString(R.string.registration_agreement_tv));
+                webViewDetailInfo.setUrl(StaticData.USER_AGREEMENT);
+                WebViewActivity.start(this, webViewDetailInfo);
+                break;
+            case R.id.privacy_tv://隐私政策
+                webViewDetailInfo = new WebViewDetailInfo();
+                webViewDetailInfo.setTitle(getString(R.string.privacy_policy_tv));
+                webViewDetailInfo.setUrl(StaticData.USER_PRIVACY);
+                WebViewActivity.start(this, webViewDetailInfo);
+                break;
+            case R.id.phone_login_bt://手机号登录
+                if (checkRet) {
+                    onClickType=StaticData.REFLASH_ONE;
+                    configLoginTokenPort(getString(R.string.login_register),getString(R.string.login),getString(R.string.other_login));
+                    mAlicomAuthHelper.getLoginToken(WeixinLoginActivity.this, 5000);
+                } else {
+                    PhoneLoginActivity.start(this);
+                }
                 break;
             default:
         }
@@ -139,7 +164,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
     /**
      * 登录微信
      */
-    private void WXLogin() {
+    private void wxLogin() {
         if (!choiceItem.isChecked()) {
             showMessage(getString(R.string.choice_login));
             return;
@@ -166,7 +191,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                 .inject(this);
     }
 
-    //支付成功
+    //获取code
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginSuccess(String code) {
         if (!TextUtils.isEmpty(code)) {
@@ -197,16 +222,44 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                 PushManager.getInstance().setTag(this, tags, String.valueOf(System.currentTimeMillis()));
                 MobileManager.saveMobile(tokenInfo.getUserInfo().getMobile());
                 TokenManager.saveToken(tokenInfo.getToken());
+                if(tokenInfo.getUserInfo()!=null) {
+                    AvatarUrlManager.saveAvatarUrl(tokenInfo.getUserInfo().getAvatarUrl());
+                }
+                BindWxManager.saveBindWx(tokenInfo.getBindWx() ? StaticData.REFLASH_ONE : StaticData.REFLASH_ZERO);
                 MainFrameActivity.start(this);
                 finish();
             } else {
-                unionId=tokenInfo.getUnionId();
+                unionId = tokenInfo.getUnionId();
                 if (checkRet) {
-                    configLoginTokenPort();
+                    onClickType=StaticData.REFLASH_ZERO;
+                    configLoginTokenPort(getString(R.string.bind_mobile),getString(R.string.bind_onclick_mobile),getString(R.string.code_bind));
                     mAlicomAuthHelper.getLoginToken(WeixinLoginActivity.this, 5000);
-                }else {
+                } else {
                     BindPhoneActivity.start(this, unionId);
                 }
+            }
+        }
+    }
+
+    @Override
+    public void renderLoginIn(TokenInfo tokenInfo) {
+        if (tokenInfo != null) {
+            //设置个推的别名和标签
+            if (!TextUtils.isEmpty(tokenInfo.getToken())) {
+                PushManager.getInstance().bindAlias(this, tokenInfo.getUserInfo().getMobile());
+                Tag[] tags = new Tag[1];
+                tags[0] = new Tag().setName("all");
+                PushManager.getInstance().setTag(this, tags, String.valueOf(System.currentTimeMillis()));
+                MobileManager.saveMobile(tokenInfo.getUserInfo().getMobile());
+                TokenManager.saveToken(tokenInfo.getToken());
+                if(tokenInfo.getUserInfo()!=null) {
+                    AvatarUrlManager.saveAvatarUrl(tokenInfo.getUserInfo().getAvatarUrl());
+                }
+                BindWxManager.saveBindWx(tokenInfo.getBindWx() ? StaticData.REFLASH_ONE : StaticData.REFLASH_ZERO);
+                MainFrameActivity.start(this);
+                finish();
+            } else {
+                LoginFillCodeActivity.start(this,loginToken,"","",StaticData.REFLASH_ONE);
             }
         }
     }
@@ -237,7 +290,11 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                 }
                 if (tokenRet != null && !("600001").equals(tokenRet.getCode())) {
                     loginToken = tokenRet.getToken();
-                    FillCodeActivity.start(WeixinLoginActivity.this,unionId,loginToken,"","",StaticData.REFLASH_ONE);
+                    if(TextUtils.equals(StaticData.REFLASH_ZERO,onClickType)) {
+                        FillCodeActivity.start(WeixinLoginActivity.this, unionId, loginToken, "", "", StaticData.REFLASH_ONE);
+                    }else {
+                        weiXinLoginPresenter.oneClickLogin(loginToken,deviceId,deviceOsVersion,devicePlatform,"");
+                    }
                 }
                 mAlicomAuthHelper.quitLoginPage();
             }
@@ -253,8 +310,12 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        if (tokenRet == null ||("600011").equals(tokenRet.getCode())) {
-                            BindPhoneActivity.start(WeixinLoginActivity.this, unionId);
+                        if (tokenRet == null || ("600011").equals(tokenRet.getCode())) {
+                            if(TextUtils.equals(StaticData.REFLASH_ZERO,onClickType)) {
+                                BindPhoneActivity.start(WeixinLoginActivity.this, unionId);
+                            }else {
+                                PhoneLoginActivity.start(WeixinLoginActivity.this);
+                            }
                         }
                         mAlicomAuthHelper.hideLoginLoading();
                     }
@@ -273,23 +334,27 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
             public void onClick(String code, Context context, JSONObject jsonObj) {
                 Log.e("authSDK", "OnUIControlClick:code=" + code + ", jsonObj=" + (jsonObj == null ? "" : jsonObj.toJSONString()));
                 if (TextUtils.equals("700001", code)) {
-                    BindPhoneActivity.start(WeixinLoginActivity.this, unionId);
+                    if(TextUtils.equals(StaticData.REFLASH_ZERO,onClickType)) {
+                        BindPhoneActivity.start(WeixinLoginActivity.this, unionId);
+                    }else {
+                        PhoneLoginActivity.start(WeixinLoginActivity.this);
+                    }
                 }
             }
         });
     }
 
 
-    private String registerAgreeTxt = "\n《注册协议》";
-    private String privacyPolicyTxt = "《隐私协议》";
+    private String registerAgreeTxt = "\n《用户协议》";
+    private String privacyPolicyTxt = "《隐私政策》";
 
-    private void configLoginTokenPort() {
+    private void configLoginTokenPort(String navText,String loginBtText,String switchText) {
         mAlicomAuthHelper.setAuthUIConfig(new AuthUIConfig.Builder()
                 .setStatusBarColor(getResources().getColor(R.color.backGround1))
                 .setLightColor(true)
                 .setStatusBarUIFlag(View.SYSTEM_UI_FLAG_LOW_PROFILE)
                 .setNavColor(getResources().getColor(R.color.backGround1))
-                .setNavText(getString(R.string.bind_mobile))
+                .setNavText(navText)
                 .setNavTextColor(getResources().getColor(R.color.appText1))
                 .setNavTextSize(16)
                 .setNavReturnHidden(true)
@@ -303,14 +368,14 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                 .setNumberSize(20)
                 .setNumFieldOffsetY(231)
                 .setNumberLayoutGravity(Gravity.CENTER_HORIZONTAL)
-                .setLogBtnText(getString(R.string.bind_onclick_mobile))
+                .setLogBtnText(loginBtText)
                 .setLogBtnTextColor(getResources().getColor(R.color.appText1))
                 .setLogBtnTextSize(16)
                 .setLogBtnBackgroundPath("confirm_bt_select")
                 .setLogBtnHeight(54)
                 .setLogBtnMarginLeftAndRight(15)
                 .setLogBtnOffsetY(291)
-                .setSwitchAccText(getString(R.string.code_bind))
+                .setSwitchAccText(switchText)
                 .setSwitchAccTextColor(getResources().getColor(R.color.appText4))
                 .setSwitchAccTextSize(14)
                 .setSwitchOffsetY(360)
@@ -325,7 +390,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                 .setVendorPrivacyPrefix("《")
                 .setVendorPrivacySuffix("》")
                 .setAppPrivacyOne(registerAgreeTxt, StaticData.USER_AGREEMENT)
-                .setAppPrivacyTwo(privacyPolicyTxt, StaticData.USER_AGREEMENT)
+                .setAppPrivacyTwo(privacyPolicyTxt, StaticData.USER_PRIVACY)
                 .create());
     }
 }

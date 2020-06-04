@@ -25,9 +25,11 @@ public class StaticData {
     public static final String COMMON_CONFIRM_BT = "commonComfirmBt";
     public static final String WEBVIEW_DETAILINFO="webviewDetailInfo";
     //用户协议
-    public static final String USER_AGREEMENT="http://www.hhcc176.com/userAgreement.html";
+    public static final String USER_AGREEMENT="http://hhccrj.com/userRegisteredAgreement.html";
+    //隐私政策
+    public static final String USER_PRIVACY ="http://hhccrj.com/userPrivacyAgreement.html";
     //实人认证协议
-    public static final String OCR_AGREEMENT="http://www.hhcc176.com/ocrAgreement.html";
+    public static final String OCR_AGREEMENT="http://hhccrj.com/ocrAgreement.html";
     //选择的type
     public static final String CHOICE_TYPE="choiceType";
     //订单id
@@ -100,6 +102,8 @@ public class StaticData {
     public static final String GOODS_PRODUCT_ID="goodsProductId";//skuId
 
     public static final String GOODS_INFO ="GOODSINFO";//banner挑商品详情
+    public static final String COUPON ="COUPON";//优惠卷
+    public static final String INVITATION ="INVITATION";//邀请好友
     public static final String CANCEL_TEXT="cancelText";
     public static final String CONFIRM_TEXT="confirmText";
     public static final String TIP_BACK="tipBack";
@@ -111,5 +115,6 @@ public class StaticData {
     public static final String PIC_URL="picUrl";
     public static final String CITY_DATA = "china_city_data.json";
     public static final String ADDRESS_ID="addressId";
+    public static final String VIP_DESCRIPTION="vipDescription";//超级会员描述
 
 }

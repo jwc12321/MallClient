@@ -14,6 +14,8 @@ import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.modelmsg.ShowMessageFromWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -34,7 +36,12 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
     // 微信发送请求到第三方应用时，会回调到该方法
     @Override
     public void onReq(BaseReq req) {
-        finish();
+        if(req.getType() == ConstantsAPI.COMMAND_SHOWMESSAGE_FROM_WX && req instanceof ShowMessageFromWX.Req){
+            ShowMessageFromWX.Req showReq = (ShowMessageFromWX.Req) req;
+            WXMediaMessage mediaMsg = showReq.message;
+            String extInfo = mediaMsg.messageExt;
+            Log.d("1111", "数据" +extInfo);
+        }
     }
 
     // 第三方应用发送到微信的请求处理后的响应结果，会回调到该方法
@@ -44,7 +51,6 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
         if (resp != null) {
             resp = resp;
         }
-        Log.d("1111", "数据" + resp.errCode + "==" + resp.getType());
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
                 result = "发送成功";

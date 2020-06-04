@@ -22,6 +22,8 @@ import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
@@ -172,6 +174,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     private String wxUrl;
     private String inviteCode;
     private Bitmap shareBitMap;
+    private List<LocalMedia> selectList = new ArrayList<>();
+    private int themeId;
 
     @Inject
     GoodsDetailsPresenter goodsDetailsPresenter;
@@ -199,6 +203,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         goodsId = getIntent().getStringExtra(StaticData.GOODS_ID);
         wxShareManager = WXShareManager.getInstance(this);
         scrollview.setOnScrollChangeListener(this);
+        themeId = R.style.picture_default_style;
         xBannerInit();
         initWebView();
         goodsDetailsPresenter.getGoodsDetails(goodsId);
@@ -241,6 +246,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         banner.setOnItemClickListener(new XBanner.OnItemClickListener() {
             @Override
             public void onItemClick(XBanner banner, Object model, View view, int position) {
+                zoom(banners,position);
             }
         });
         //加载广告图片
@@ -286,7 +292,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 break;
             case R.id.individual_shopping_tv://单独购买
                 groupId = "";
-                groupRulesId = "";
+                groupRulesId = oldGroupRulesId;
                 purchaseType = StaticData.REFLASH_ONE;
                 isGroup = false;
                 individualShopping();
@@ -432,7 +438,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             goodsUnit.setText("/" + unit);
             goodsOriginalUnit.setText("/" + unit);
             originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
-            sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity() + "件");
+            sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity());
             nameText = BriefUnit.returnName(goodsDetailsInfo.getRetailPrice(), goodsDetailsInfo.getName());
             briefText = BriefUnit.returnBrief(goodsDetailsInfo.getBrief());
             goodsName.setText(goodsDetailsInfo.getName());
@@ -537,5 +543,15 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         } else {    //滑动到banner下面设置普通颜色
             titleRel.setBackgroundColor(Color.argb((int) 255, 255, 255, 255));
         }
+    }
+
+    public void zoom(List<String> photos, int position) {
+        selectList.clear();
+        for (int i = 0; i < photos.size(); i++) {
+            LocalMedia localMedia = new LocalMedia();
+            localMedia.setPath(photos.get(i));
+            selectList.add(localMedia);
+        }
+        PictureSelector.create(this).themeStyle(themeId).openExternalPreview(position, selectList);
     }
 }

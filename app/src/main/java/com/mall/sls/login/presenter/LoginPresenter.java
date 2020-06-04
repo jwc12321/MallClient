@@ -68,8 +68,8 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
     }
 
     @Override
-    public void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform) {
-        OneClickLoginRequest request=new OneClickLoginRequest(accessCode,deviceId,deviceOsVersion,devicePlatform);
+    public void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode) {
+        OneClickLoginRequest request=new OneClickLoginRequest(accessCode,deviceId,deviceOsVersion,devicePlatform,invitationCode);
         String sign= SignUnit.signPost(RequestUrl.ONE_CLICK_LOGIN_URL,gson.toJson(request));
         Disposable disposable = restApiService.oneClickLogin(sign,request)
                 .flatMap(new RxRemoteDataParse<TokenInfo>())
@@ -89,9 +89,9 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
     }
 
     @Override
-    public void loginIn(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code) {
+    public void loginIn(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code,String invitationCode) {
         loginView.showLoading(StaticData.PROCESSING);
-        LoginRequest request=new LoginRequest(deviceId,deviceOsVersion,devicePlatform,mobile,code);
+        LoginRequest request=new LoginRequest(deviceId,deviceOsVersion,devicePlatform,mobile,code,invitationCode);
         String sign= SignUnit.signPost(RequestUrl.LOGIN_IN_URL,gson.toJson(request));
         Disposable disposable = restApiService.loginIn(sign,request)
                 .flatMap(new RxRemoteDataParse<TokenInfo>())
@@ -125,6 +125,30 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
                     public void accept(String vCode) throws Exception {
                         loginView.dismissLoading();
                         loginView.renderVCode(vCode);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        loginView.dismissLoading();
+                        loginView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getInvitationCode() {
+        loginView.showLoading(StaticData.LOADING);
+        String queryString="null";
+        String sign= SignUnit.signGet(RequestUrl.INVITATION_CODE_URL,queryString);
+        Disposable disposable = restApiService.getInvitationCode(sign)
+                .flatMap(new RxRemoteDataParse<String>())
+                .compose(new RxSchedulerTransformer<String>())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String invitationCode) throws Exception {
+                        loginView.dismissLoading();
+                        loginView.renderInvitationCode(invitationCode);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

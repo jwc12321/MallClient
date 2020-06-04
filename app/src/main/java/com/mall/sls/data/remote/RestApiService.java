@@ -28,6 +28,7 @@ import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.request.AddAddressRequest;
 import com.mall.sls.data.request.CartFastaddRequest;
 import com.mall.sls.data.request.CertifyIdRequest;
+import com.mall.sls.data.request.CodeRequest;
 import com.mall.sls.data.request.DescriptionRequest;
 import com.mall.sls.data.request.GroupRemindRequest;
 import com.mall.sls.data.request.LoginRequest;
@@ -69,7 +70,7 @@ public interface RestApiService {
     Flowable<RemoteDataWrapper<TokenInfo>> loginIn(@Header("X-Hc-Sign") String sign, @Body LoginRequest loginRequest);
 
     //一键登录
-    @POST("wx/auth/login/ali")
+    @POST("app/auth/login/ali")
     Flowable<RemoteDataWrapper<TokenInfo>> oneClickLogin(@Header("X-Hc-Sign") String sign, @Body OneClickLoginRequest request);
 
     //发送验证码
@@ -237,5 +238,9 @@ public interface RestApiService {
     //取消订单
     @POST("app/order/cancel")
     Flowable<RemoteDataWrapper<Ignore>> cancelOrder(@Header("X-Hc-Sign") String sign, @Body OrderRequest request);
+
+    //绑定微信
+    @POST("app/auth/bindWx")
+    Flowable<RemoteDataWrapper<Ignore>> bindWx(@Header("X-Hc-Sign") String sign, @Body CodeRequest request);
 
 }

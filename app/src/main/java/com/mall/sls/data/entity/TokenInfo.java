@@ -14,6 +14,9 @@ public class TokenInfo {
     private UserInfo userInfo;
     @SerializedName("unionId")
     private String unionId;
+    //是否已经绑定微信
+    @SerializedName("bindWx")
+    private Boolean bindWx;
 
 
 
@@ -39,5 +42,13 @@ public class TokenInfo {
 
     public void setUnionId(String unionId) {
         this.unionId = unionId;
+    }
+
+    public Boolean getBindWx() {
+        return bindWx;
+    }
+
+    public void setBindWx(Boolean bindWx) {
+        this.bindWx = bindWx;
     }
 }

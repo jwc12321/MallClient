@@ -55,14 +55,11 @@ public class  SplashActivity extends BaseActivity {
     private void initData() {
         Intent intent = getIntent();
         String action = intent.getAction();
-        Log.d("111","数据");
         if(Intent.ACTION_VIEW.equals(action)){
             Uri uri = intent.getData();
-            Log.d("111","数据=="+uri);
             if(uri != null){
                 String name = uri.getQueryParameter("name");
                 String age= uri.getQueryParameter("age");
-                Log.d("111","数据"+name+age);
             }
         }
     }

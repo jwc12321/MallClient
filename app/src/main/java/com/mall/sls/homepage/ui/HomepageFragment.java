@@ -8,10 +8,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -32,10 +32,13 @@ import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.location.LocationHelper;
 import com.mall.sls.common.unit.AreaCodeManager;
+import com.mall.sls.common.unit.BindWxManager;
 import com.mall.sls.common.unit.ConvertDpAndPx;
+import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.PermissionUtil;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.coupon.ui.CouponActivity;
 import com.mall.sls.data.entity.BannerInfo;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.HomePageInfo;
@@ -47,12 +50,21 @@ import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.adapter.GoodsItemAdapter;
 import com.mall.sls.homepage.adapter.JinGangAdapter;
 import com.mall.sls.homepage.presenter.HomePagePresenter;
+import com.mall.sls.login.ui.WeixinLoginActivity;
 import com.mall.sls.message.ui.MessageTypeActivity;
+import com.mall.sls.mine.ui.InviteFriendsActivity;
 import com.mall.sls.webview.ui.WebViewActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.stx.xhb.androidx.XBanner;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -102,6 +114,10 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     RecyclerView jingangRv;
     @BindView(R.id.local_ll)
     LinearLayout localLl;
+    @BindView(R.id.bindWxRl)
+    RelativeLayout bindWxRl;
+    @BindView(R.id.bind_wx_iv)
+    ImageView bindWxIv;
     private LocationHelper mLocationHelper;
     private String city;
     private String longitude;
@@ -112,7 +128,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     private List<BannerInfo> bannerInfos;
     private String areaCode;
     private JinGangAdapter jinGangAdapter;
-    private List<JinGangInfo> jinGangInfos;
+    private List<BannerInfo> jinGangInfos;
     @Inject
     HomePagePresenter homePagePresenter;
     private List<String> group;
@@ -124,6 +140,8 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     private BigDecimal screenHeightBg;
     private BannerInfo bannerInfo;
     private String nativeType;
+    // 微信登录
+    private static IWXAPI WXapi;
 
     public static HomepageFragment newInstance() {
         HomepageFragment fragment = new HomepageFragment();
@@ -157,6 +175,13 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         settingHeight();
         xBannerInit();
         initAdapter();
+        //绑定微信
+        if(TextUtils.equals(StaticData.REFLASH_ZERO, BindWxManager.getBindWx())){
+            bindWxRl.setVisibility(View.VISIBLE);
+            EventBus.getDefault().register(this);
+        }else {
+            bindWxRl.setVisibility(View.GONE);
+        }
     }
 
     private void initAdapter() {
@@ -211,6 +236,11 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                             ActivityGroupGoodsActivity.start(getActivity(), goodsId);
                         }
                     }
+                }else if(TextUtils.equals(StaticData.COUPON, nativeType)){
+                    Intent intent = new Intent(getActivity(), CouponActivity.class);
+                    startActivityForResult(intent, RequestCodeStatic.GO_COUPON);
+                }else if(TextUtils.equals(StaticData.INVITATION, nativeType)){
+                    InviteFriendsActivity.start(getActivity());
                 }
             }
         }
@@ -346,8 +376,21 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     }
 
     @Override
+    public void renderBindWx() {
+        BindWxManager.saveBindWx(StaticData.REFLASH_ONE);
+        bindWxRl.setVisibility(View.GONE);
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void setPresenter(HomepageContract.HomePagePresenter presenter) {
 
+    }
+
+    @Override
+    public void goType(BannerInfo bannerInfo) {
+        this.bannerInfo = bannerInfo;
+        bannerClick();
     }
 
 
@@ -361,7 +404,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         this.homepageListener = homepageListener;
     }
 
-    @OnClick({R.id.other_rl, R.id.message_rl,R.id.local_ll})
+    @OnClick({R.id.other_rl, R.id.message_rl, R.id.local_ll, R.id.bind_wx_iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.other_rl:
@@ -376,9 +419,39 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             case R.id.local_ll:
 //                CityPickerActivity.start(getActivity());
                 break;
+            case R.id.bind_wx_iv:
+                wxBind();
+                break;
             default:
         }
     }
+
+
+    /**
+     * 登录取code
+     */
+    private void wxBind() {
+        if (PayTypeInstalledUtils.isWeixinAvilible(getActivity())) {
+            WXapi = WXAPIFactory.createWXAPI(getActivity(), StaticData.WX_APP_ID, true);
+            WXapi.registerApp(StaticData.WX_APP_ID);
+            SendAuth.Req req = new SendAuth.Req();
+            req.scope = "snsapi_userinfo";
+            req.state = "wechat_sdk_demo";
+            WXapi.sendReq(req);
+        } else {
+            showMessage(getString(R.string.install_weixin));
+        }
+
+    }
+
+    //获取code
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoginSuccess(String code) {
+        if (!TextUtils.isEmpty(code)) {
+            homePagePresenter.bindWx(code);
+        }
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -388,8 +461,19 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                 case RequestCodeStatic.MESSAGE:
                     homePagePresenter.getHomePageInfo(StaticData.REFLASH_ZERO);
                     break;
+                case RequestCodeStatic.GO_COUPON:
+                    if (homepageListener != null) {
+                        homepageListener.goLocalTeam();
+                    }
+                    break;
                 default:
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -10,24 +10,28 @@ import com.mall.sls.data.entity.TokenInfo;
 public interface LoginContract {
 
     interface LoginPresenter extends BasePresenter {
-        void loginIn(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code);
+        void loginIn(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code,String invitationCode);
         void sendVCode(String mobile);
         void getAppUrlInfo();
-        void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform);
+        void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode);
+        void getInvitationCode();
     }
 
     interface LoginView extends BaseView<LoginPresenter> {
         void renderLoginIn(TokenInfo tokenInfo);
         void renderVCode(String vCode);
         void renderAppUrlInfo(AppUrlInfo appUrlInfo);
+        void renderInvitationCode(String invitationCode);
     }
 
     interface WeiXinLoginPresenter extends BasePresenter{
         void weixinLogin(String deviceId, String deviceOsVersion, String devicePlatform,String wxCode);
+        void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode);
     }
 
     interface WeiXinLoginView extends BaseView<WeiXinLoginPresenter>{
         void renderWeixinLogin(TokenInfo tokenInfo);
+        void renderLoginIn(TokenInfo tokenInfo);
     }
 
     interface BindMobilePresenter extends BasePresenter{

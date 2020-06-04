@@ -196,4 +196,18 @@
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <RelativeLayout
+        android:id="@+id/bindWxRl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/backGround39"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/bind_wx_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_no_coupon"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
 </RelativeLayout>

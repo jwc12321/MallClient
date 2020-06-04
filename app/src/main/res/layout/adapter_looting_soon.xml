@@ -11,7 +11,7 @@
         android:layout_marginLeft="@dimen/dp_15"
         android:layout_marginRight="@dimen/dp_15"
         android:layout_marginBottom="@dimen/dp_15"
-        android:background="@color/appText1">
+        android:background="@drawable/common_four_app_one_bg">
 
         <ImageView
             android:id="@+id/goods_iv"
@@ -34,7 +34,8 @@
             android:orientation="horizontal">
 
             <com.mall.sls.common.widget.textview.ConventionalTextView
-                android:layout_width="@dimen/dp_36"
+                android:id="@+id/groupType"
+                android:layout_width="@dimen/dp_54"
                 android:layout_height="@dimen/dp_18"
                 android:layout_marginRight="@dimen/dp_4"
                 android:background="@drawable/activity_team_bg"

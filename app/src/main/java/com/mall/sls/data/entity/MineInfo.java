@@ -13,6 +13,9 @@ public class MineInfo {
     private UserInfo userInfo;
     @SerializedName("list")
     private List<MineRewardInfo> mineRewardInfos;
+    //超级会员描述
+    @SerializedName("vipDescription")
+    private String vipDescription;
 
     public UserInfo getUserInfo() {
         return userInfo;
@@ -28,5 +31,13 @@ public class MineInfo {
 
     public void setMineRewardInfos(List<MineRewardInfo> mineRewardInfos) {
         this.mineRewardInfos = mineRewardInfos;
+    }
+
+    public String getVipDescription() {
+        return vipDescription;
+    }
+
+    public void setVipDescription(String vipDescription) {
+        this.vipDescription = vipDescription;
     }
 }

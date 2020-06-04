@@ -6,6 +6,8 @@ import com.mall.sls.ApplicationComponent;
 import com.mall.sls.login.ui.BindPhoneActivity;
 import com.mall.sls.login.ui.FillCodeActivity;
 import com.mall.sls.login.ui.LoginActivity;
+import com.mall.sls.login.ui.LoginFillCodeActivity;
+import com.mall.sls.login.ui.PhoneLoginActivity;
 import com.mall.sls.login.ui.WeixinLoginActivity;
 
 import dagger.Component;
@@ -17,4 +19,6 @@ public interface LoginComponent {
     void inject(WeixinLoginActivity weixinLoginActivity);
     void inject(BindPhoneActivity bindPhoneActivity);
     void inject(FillCodeActivity fillCodeActivity);
+    void inject(PhoneLoginActivity phoneLoginActivity);
+    void inject(LoginFillCodeActivity loginFillCodeActivity);
 }

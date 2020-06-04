@@ -39,6 +39,8 @@ import com.mall.sls.member.MemberContract;
 import com.mall.sls.member.MemberModule;
 import com.mall.sls.member.adapter.MemberGoodsItemAdapter;
 import com.mall.sls.member.presenter.SuperMemberPresenter;
+import com.mall.sls.mine.ui.InviteFriendsActivity;
+import com.mall.sls.mine.ui.MyInvitationActivity;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -79,20 +81,24 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     ImageView confirmBt;
     @BindView(R.id.record_rv)
     RecyclerView recordRv;
+    @BindView(R.id.invite_friends)
+    ImageView inviteFriends;
     private Handler mHandler = new MyHandler(this);
 
     private MemberGoodsItemAdapter memberGoodsItemAdapter;
     private String avatarUrl;
     private String mobile;
     private String vipAmount;
+    private String vipDescription;
     @Inject
     SuperMemberPresenter superMemberPresenter;
 
-    public static void start(Context context, String avatarUrl, String mobile,String vipAmount) {
+    public static void start(Context context, String avatarUrl, String mobile, String vipAmount, String vipDescription) {
         Intent intent = new Intent(context, SuperMemberActivity.class);
         intent.putExtra(StaticData.AVATAR_URL, avatarUrl);
         intent.putExtra(StaticData.MOBILE, mobile);
-        intent.putExtra(StaticData.VIP_AMOUNT,vipAmount);
+        intent.putExtra(StaticData.VIP_AMOUNT, vipAmount);
+        intent.putExtra(StaticData.VIP_DESCRIPTION, vipDescription);
         context.startActivity(intent);
     }
 
@@ -109,7 +115,8 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
         EventBus.getDefault().register(this);
         avatarUrl = getIntent().getStringExtra(StaticData.AVATAR_URL);
         mobile = getIntent().getStringExtra(StaticData.MOBILE);
-        vipAmount=getIntent().getStringExtra(StaticData.VIP_AMOUNT);
+        vipAmount = getIntent().getStringExtra(StaticData.VIP_AMOUNT);
+        vipDescription = getIntent().getStringExtra(StaticData.VIP_DESCRIPTION);
         GlideHelper.load(this, avatarUrl, R.mipmap.icon_defalut_head, headPhoto);
         phone.setText(mobile);
         memberGoodsItemAdapter = new MemberGoodsItemAdapter(this);
@@ -127,20 +134,27 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
         superMemberPresenter.getVipGroupons(StaticData.REFLASH_ONE);
     }
 
-    @OnClick({R.id.confirm_bt, R.id.back, R.id.description})
+    @OnClick({R.id.confirm_bt, R.id.back, R.id.description,R.id.invite_friends})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.confirm_bt:
-                Intent intent = new Intent(this, SelectPayTypeActivity.class);
-                intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_ONE);
-                intent.putExtra(StaticData.PAYMENT_AMOUNT,vipAmount);
-                startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
+                if (TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
+                    showMessage(getString(R.string.to_open_person_authentication));
+                } else {
+                    Intent intent = new Intent(this, SelectPayTypeActivity.class);
+                    intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_ONE);
+                    intent.putExtra(StaticData.PAYMENT_AMOUNT, vipAmount);
+                    startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
+                }
                 break;
             case R.id.back:
                 finish();
                 break;
             case R.id.description:
-                MemberDescriptionActivity.start(this, "附近的科技发达");
+                MemberDescriptionActivity.start(this, vipDescription);
+                break;
+            case R.id.invite_friends:
+                InviteFriendsActivity.start(this);
                 break;
             default:
         }
@@ -161,7 +175,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
-                        } else if(TextUtils.equals(StaticData.REFLASH_ONE, selectType)){
+                        } else if (TextUtils.equals(StaticData.REFLASH_ONE, selectType)) {
                             if (PayTypeInstalledUtils.isAliPayInstalled(SuperMemberActivity.this)) {
                                 superMemberPresenter.alipayMember(StaticData.REFLASH_ONE, selectType);
                             } else {
@@ -203,7 +217,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
 
     @Override
     public void renderAlipayMember(String alipayStr) {
-        if(!TextUtils.isEmpty(alipayStr)) {
+        if (!TextUtils.isEmpty(alipayStr)) {
             startAliPay(alipayStr);
         }
 
@@ -211,7 +225,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
 
     @Override
     public void renderWxpayMember(WXPaySignResponse wxPaySignResponse) {
-        if(wxPaySignResponse!=null) {
+        if (wxPaySignResponse != null) {
             wechatPay(wxPaySignResponse);
         }
     }
@@ -274,7 +288,6 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     private void alpay(Message msg) {
         PayResult payResult = new PayResult((Map<String, String>) msg.obj);
         String resultStatus = payResult.getResultStatus();
-        Log.d("111", "数据" + payResult.getResult() + "==" + payResult.getResultStatus());
         if (TextUtils.equals(resultStatus, "9000")) {
             superMemberPresenter.vipOpen();
         } else if (TextUtils.equals(resultStatus, "6001")) {
@@ -285,7 +298,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     }
 
 
-    public  void wechatPay(WXPaySignResponse wxPaySignResponse) {
+    public void wechatPay(WXPaySignResponse wxPaySignResponse) {
         // 将该app注册到微信
         IWXAPI wxapi = WXAPIFactory.createWXAPI(this, StaticData.WX_APP_ID);
         PayReq request = new PayReq();
@@ -308,10 +321,10 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     //支付失败
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPayCancel(PayAbortEvent event) {
-        if(event!=null){
-            if(event.code==-1){
+        if (event != null) {
+            if (event.code == -1) {
                 showMessage(getString(R.string.pay_failed));
-            }else if(event.code==-2){
+            } else if (event.code == -2) {
                 showMessage(getString(R.string.pay_cancel));
             }
         }

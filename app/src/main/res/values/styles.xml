@@ -782,13 +782,12 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/appText1</item>
         <item name="android:textSize">@dimen/sp_16</item>
-        <item name="android:gravity">center</item>
+        <item name="android:layout_centerHorizontal">true</item>
     </style>
     <style name="mine_info_up_view_style">
         <item name="android:layout_width">@dimen/dp_1</item>
-        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_39</item>
         <item name="android:background">@color/appText1</item>
-        <item name="android:layout_gravity">center_vertical</item>
     </style>
 
     <style name="mine_info_down_tv_style">
@@ -796,8 +795,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/appText1</item>
         <item name="android:textSize">@dimen/sp_12</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_marginTop">@dimen/dp_7</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginTop">@dimen/dp_6</item>
     </style>
 
     <style name="mine_order_iv_style">

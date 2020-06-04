@@ -73,6 +73,9 @@ public class GoodsOrderDetails {
     //运费
     @SerializedName("freightPrice")
     private String freightPrice;
+    //支付订单编号
+    @SerializedName("tradeNo")
+    private String tradeNo;
 
     public String getCouponPrice() {
         return couponPrice;
@@ -241,5 +244,13 @@ public class GoodsOrderDetails {
 
     public void setFreightPrice(String freightPrice) {
         this.freightPrice = freightPrice;
+    }
+
+    public String getTradeNo() {
+        return tradeNo;
+    }
+
+    public void setTradeNo(String tradeNo) {
+        this.tradeNo = tradeNo;
     }
 }

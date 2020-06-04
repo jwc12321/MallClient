@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/item_ll">
+
+    <View style="@style/mine_info_up_view_style"
+        android:id="@+id/view"
+        android:layout_centerVertical="true"/>
+
+    <com.mall.sls.common.widget.textview.MediumThickTextView
+        android:id="@+id/number"
+        style="@style/mine_info_up_tv_style"
+        tools:text="0" />
+
+    <com.mall.sls.common.widget.textview.ConventionalTextView
+        android:id="@+id/name"
+        style="@style/mine_info_down_tv_style"
+        tools:text="@string/cash_back"
+        android:layout_below="@id/number"/>
+</RelativeLayout>

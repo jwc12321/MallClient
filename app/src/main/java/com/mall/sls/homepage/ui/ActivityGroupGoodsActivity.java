@@ -191,7 +191,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
             GlideHelper.load(this, goodsDetailsInfo.getPicUrl(), R.mipmap.ic_launcher, goodsIv);
             activityName.setText(goodsDetailsInfo.getGroupName());
             goodsName.setText(goodsDetailsInfo.getName());
-            discountMember.setText(goodsDetailsInfo.getDiscountMember() + goodsDetailsInfo.getUnit() + "成团");
+            discountMember.setText(goodsDetailsInfo.getDiscountMember() + "人成团");
             peopleNumber.setText(goodsDetailsInfo.getGroupPeopleNum() + "人已抢");
             goodsNumber.setText(goodsDetailsInfo.getGroupGoodsNum());
             countDown.setTimeOutListener(this);

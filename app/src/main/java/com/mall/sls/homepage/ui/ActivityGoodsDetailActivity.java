@@ -359,7 +359,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             goodsUnit.setText("/" + unit);
             goodsOriginalUnit.setText("/" + unit);
             originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
-            sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity() + "件");
+            sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity());
             nameText = BriefUnit.returnName(goodsDetailsInfo.getRetailPrice(),goodsDetailsInfo.getName());
             briefText = BriefUnit.returnBrief(goodsDetailsInfo.getBrief());
             goodsName.setText(goodsDetailsInfo.getName());

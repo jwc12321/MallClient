@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
+import com.mall.sls.data.entity.BannerInfo;
 import com.mall.sls.data.entity.JinGangInfo;
+import com.mall.sls.data.entity.VipAmountInfo;
 
 import java.util.List;
 
@@ -23,10 +25,10 @@ import butterknife.ButterKnife;
 
 public class JinGangAdapter extends RecyclerView.Adapter<JinGangAdapter.JinGangView> {
     private LayoutInflater layoutInflater;
-    private List<JinGangInfo> jinGangInfos;
+    private List<BannerInfo> jinGangInfos;
     private Context context;
 
-    public void setData(List<JinGangInfo> jinGangInfos) {
+    public void setData(List<BannerInfo> jinGangInfos) {
         this.jinGangInfos = jinGangInfos;
         notifyDataSetChanged();
     }
@@ -47,13 +49,13 @@ public class JinGangAdapter extends RecyclerView.Adapter<JinGangAdapter.JinGangV
 
     @Override
     public void onBindViewHolder(JinGangView holder, int position) {
-        JinGangInfo goodsItemInfo = jinGangInfos.get(holder.getAdapterPosition());
-        holder.bindData(goodsItemInfo);
+        BannerInfo bannerInfo = jinGangInfos.get(holder.getAdapterPosition());
+        holder.bindData(bannerInfo);
         holder.itemLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-
+                    onItemClickListener.goType(bannerInfo);
                 }
             }
         });
@@ -78,13 +80,14 @@ public class JinGangAdapter extends RecyclerView.Adapter<JinGangAdapter.JinGangV
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindData(JinGangInfo jinGangInfo) {
-            GlideHelper.load((Activity) context, jinGangInfo.getUrl(), R.mipmap.icon_default_goods, icon);
-            name.setText(jinGangInfo.getName());
+        public void bindData(BannerInfo bannerInfo) {
+            GlideHelper.load((Activity) context, bannerInfo.getUrl(), R.mipmap.icon_default_goods, icon);
+            name.setText(bannerInfo.getName());
         }
     }
 
     public interface OnItemClickListener {
+        void goType(BannerInfo bannerInfo);
     }
 
     private OnItemClickListener onItemClickListener;

@@ -415,7 +415,6 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private void alpay(Message msg) {
         PayResult payResult = new PayResult((Map<String, String>) msg.obj);
         String resultStatus = payResult.getResultStatus();
-        Log.d("111", "数据" + payResult.getResult() + "==" + payResult.getResultStatus());
         if (TextUtils.equals(resultStatus, "9000")) {
             paySuccess();
         } else if (TextUtils.equals(resultStatus, "6001")) {

@@ -44,7 +44,6 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
         if (resp != null) {
             resp = resp;
         }
-        Log.d("1111", "数据" + resp.errCode + "==" + resp.getType());
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
                 result = "发送成功";
