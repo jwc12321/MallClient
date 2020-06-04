@@ -4,17 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
@@ -145,6 +146,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     private String wxUrl;
     private String inviteCode;
     private Bitmap shareBitMap;
+    private int screenWidth;
+    private int screenHeight;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, ActivityGoodsDetailActivity.class);
@@ -169,12 +172,25 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         EventBus.getDefault().register(this);
         wxShareManager = WXShareManager.getInstance(this);
         scrollview.setOnScrollChangeListener(this);
+        settingHeight();
         xBannerInit();
         initWebView();
         goodsDetailsPresenter.getGoodsDetails(goodsId);
         goodsDetailsPresenter.getConsumerPhone();
         goodsDetailsPresenter.getInvitationCodeInfo();
 
+    }
+
+
+    private void settingHeight() {
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        screenWidth = dm.widthPixels;
+        screenHeight = screenWidth;
+        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) banner.getLayoutParams(); //取控件textView当前的布局参数
+        linearParams.height = screenHeight;// 控件的高强制
+        linearParams.width = screenWidth;// 控件的高强制
+        banner.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
     }
 
     private void initWebView() {

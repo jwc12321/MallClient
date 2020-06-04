@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -241,6 +240,10 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                 back();
                 break;
             case R.id.confirm_bt://去支付
+                if(TextUtils.isEmpty(addressId)){
+                    showMessage(getString(R.string.select_address));
+                    return;
+                }
                 confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
                 break;
             case R.id.coupon_rl:

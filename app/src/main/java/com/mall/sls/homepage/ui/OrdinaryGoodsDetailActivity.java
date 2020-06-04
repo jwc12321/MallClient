@@ -9,6 +9,7 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
@@ -176,6 +177,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     private Bitmap shareBitMap;
     private List<LocalMedia> selectList = new ArrayList<>();
     private int themeId;
+    private int screenWidth;
+    private int screenHeight;
 
     @Inject
     GoodsDetailsPresenter goodsDetailsPresenter;
@@ -204,6 +207,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         wxShareManager = WXShareManager.getInstance(this);
         scrollview.setOnScrollChangeListener(this);
         themeId = R.style.picture_default_style;
+        settingHeight();
         xBannerInit();
         initWebView();
         goodsDetailsPresenter.getGoodsDetails(goodsId);
@@ -211,6 +215,18 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         goodsDetailsPresenter.getInvitationCodeInfo();
 
     }
+
+    private void settingHeight() {
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        screenWidth = dm.widthPixels;
+        screenHeight = screenWidth;
+        LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) banner.getLayoutParams(); //取控件textView当前的布局参数
+        linearParams.height = screenHeight;// 控件的高强制
+        linearParams.width = screenWidth;// 控件的高强制
+        banner.setLayoutParams(linearParams); //使设置好的布局参数应用到控件
+    }
+
 
     private void initWebView() {
         webView.getSettings().setJavaScriptEnabled(true);
@@ -246,7 +262,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         banner.setOnItemClickListener(new XBanner.OnItemClickListener() {
             @Override
             public void onItemClick(XBanner banner, Object model, View view, int position) {
-                zoom(banners,position);
+//                zoom(banners,position);
             }
         });
         //加载广告图片
