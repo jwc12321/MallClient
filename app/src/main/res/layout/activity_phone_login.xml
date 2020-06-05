@@ -34,12 +34,11 @@
             style="@style/size18_color_app3_text_style"
             android:layout_marginLeft="@dimen/dp_30"
             android:layout_marginTop="@dimen/dp_32"
-            android:text="@string/bind_phone"
-            android:visibility="invisible" />
+            android:text="@string/code_login_register" />
 
         <LinearLayout
             style="@style/login_input_rl_style"
-            android:layout_marginTop="@dimen/dp_33"
+            android:layout_marginTop="@dimen/dp_47"
             android:orientation="horizontal">
 
             <com.mall.sls.common.widget.textview.ConventionalTextView

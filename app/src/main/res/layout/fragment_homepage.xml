@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backGround6"
-    android:orientation="vertical"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,19 +35,20 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_17"
-                android:src="@mipmap/icon_home_location"
-                android:layout_gravity="center_vertical"/>
+                android:src="@mipmap/icon_home_location" />
 
             <com.mall.sls.common.widget.textview.ConventionalTextView
                 android:id="@+id/local_city"
                 style="@style/size15_color_app1_text_style"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/dp_5"
-                tools:text="杭州市"
-                android:layout_gravity="center_vertical"/>
+                tools:text="杭州市" />
         </LinearLayout>
 
 
@@ -56,27 +57,28 @@
             android:layout_width="@dimen/dp_60"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dp_32"
-                android:src="@mipmap/icon_home_message"
-                android:layout_alignParentRight="true"/>
+                android:src="@mipmap/icon_home_message" />
 
             <com.mall.sls.common.widget.textview.ConventionalTextView
                 android:id="@+id/message_count"
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_14"
+                android:layout_alignParentRight="true"
                 android:layout_marginTop="@dimen/dp_8"
                 android:layout_marginRight="@dimen/dp_15"
                 android:background="@drawable/home_message_number_bg"
-                android:layout_alignParentRight="true"
                 android:gravity="center"
                 android:textColor="@color/appText1"
                 android:textSize="@dimen/sp_10"
-                tools:text="99+"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                tools:text="99+" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -104,8 +106,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="@color/backGround6">
+                android:background="@color/backGround6"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -118,7 +120,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_167"
                         android:layout_margin="@dimen/dp_15"
-                        android:background="@color/appText2"
+                        android:background="@color/backGround8"
                         app:AutoPlayTime="3000"
                         app:isHandLoop="true"
                         app:isShowIndicatorOnlyOne="true"
@@ -133,9 +135,9 @@
                     android:id="@+id/jingang_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_4"
                     android:nestedScrollingEnabled="false"
-                    app:layoutManager="@string/layoutManager_Gridlayout"
-                    android:layout_marginTop="@dimen/dp_4"/>
+                    app:layoutManager="@string/layoutManager_Gridlayout" />
 
                 <RelativeLayout
                     android:id="@+id/other_rl"
@@ -174,17 +176,19 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dp_14"
                         android:src="@mipmap/icon_more_right_arrow" />
+
                     <com.mall.sls.common.widget.textview.ConventionalTextView
                         android:id="@+id/other_more_tv"
                         style="@style/size12_color_back1_text_style"
-                        android:layout_centerInParent="true"
-                        android:text="@string/more"
-                        android:layout_toLeftOf="@id/more_right_arrow_iv"
                         android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:layout_toLeftOf="@id/more_right_arrow_iv"
                         android:gravity="center_vertical"
+                        android:paddingLeft="@dimen/dp_10"
                         android:paddingRight="@dimen/dp_3"
-                        android:paddingLeft="@dimen/dp_10"/>
+                        android:text="@string/more" />
                 </RelativeLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/goods_rv"
                     android:layout_width="match_parent"
@@ -196,18 +200,28 @@
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
     <RelativeLayout
         android:id="@+id/bindWxRl"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:background="@color/backGround39"
+        android:layout_height="@dimen/dp_49"
         android:layout_alignParentBottom="true"
+        android:background="@color/backGround44"
         android:visibility="gone">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/size14_color_app1_text_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:text="@string/bind_wx_for_reward" />
+
         <ImageView
             android:id="@+id/bind_wx_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_no_coupon"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_15"
+            android:src="@mipmap/icon_bind_wx" />
     </RelativeLayout>
 </RelativeLayout>

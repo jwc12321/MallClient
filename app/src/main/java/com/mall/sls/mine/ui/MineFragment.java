@@ -231,7 +231,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
             case R.id.super_member_rl://超级会员
             case R.id.member_type_iv:
                 goVerify = StaticData.REFLASH_ONE;
-                SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount, vipDescription);
+                SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount, vipDescription,certifyPay,certifyAmount);
                 break;
             case R.id.feedback://意见反馈
                 FeedBackActivity.start(getActivity());

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.unit.FormatUtil;
+import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.GoodsItemInfo;
@@ -107,8 +108,8 @@ public class LootingSoonAdapter extends RecyclerView.Adapter<LootingSoonAdapter.
             GlideHelper.load((Activity) context, goodsItemInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(goodsItemInfo.getName());
             goodsIntroduction.setText(goodsItemInfo.getBrief());
-            currentPrice.setText("¥" + goodsItemInfo.getRetailPrice());
-            originalPrice.setText("¥" + goodsItemInfo.getCounterPrice());
+            currentPrice.setText(NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getRetailPrice()));
+            originalPrice.setText(NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getCounterPrice()));
             long startTime = FormatUtil.dateToStamp(goodsItemInfo.getStartTime());
             confirmBt.setText(FormatUtil.formatDate(String.valueOf(startTime)) + "开抢");
             groupType.setText(goodsItemInfo.getKeywords());

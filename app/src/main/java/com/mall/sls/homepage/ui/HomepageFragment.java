@@ -42,15 +42,14 @@ import com.mall.sls.coupon.ui.CouponActivity;
 import com.mall.sls.data.entity.BannerInfo;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.HomePageInfo;
-import com.mall.sls.data.entity.JinGangInfo;
 import com.mall.sls.data.entity.WebViewDetailInfo;
+import com.mall.sls.data.event.WXLoginEvent;
 import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.adapter.GoodsItemAdapter;
 import com.mall.sls.homepage.adapter.JinGangAdapter;
 import com.mall.sls.homepage.presenter.HomePagePresenter;
-import com.mall.sls.login.ui.WeixinLoginActivity;
 import com.mall.sls.message.ui.MessageTypeActivity;
 import com.mall.sls.mine.ui.InviteFriendsActivity;
 import com.mall.sls.webview.ui.WebViewActivity;
@@ -377,6 +376,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
 
     @Override
     public void renderBindWx() {
+        showMessage(getString(R.string.bind_success_wx));
         BindWxManager.saveBindWx(StaticData.REFLASH_ONE);
         bindWxRl.setVisibility(View.GONE);
         EventBus.getDefault().unregister(this);
@@ -446,9 +446,9 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
 
     //获取code
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onLoginSuccess(String code) {
-        if (!TextUtils.isEmpty(code)) {
-            homePagePresenter.bindWx(code);
+    public void onLoginSuccess(WXLoginEvent wxLoginEvent) {
+        if (wxLoginEvent!=null&&!TextUtils.isEmpty(wxLoginEvent.getCode())) {
+            homePagePresenter.bindWx(wxLoginEvent.getCode());
         }
     }
 

@@ -67,7 +67,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dp_9"
                 android:layout_toLeftOf="@id/status_tv"
-                android:src="@drawable/invite_auth_select" />
+                android:src="@drawable/invite_auth_select"
+                android:visibility="gone"/>
         </RelativeLayout>
         <View
             android:id="@+id/line"

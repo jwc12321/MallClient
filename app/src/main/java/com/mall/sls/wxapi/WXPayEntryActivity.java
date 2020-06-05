@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.mall.sls.common.StaticData;
 import com.mall.sls.data.event.PayAbortEvent;
+import com.mall.sls.data.event.WXLoginEvent;
 import com.mall.sls.data.event.WXSuccessPayEvent;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -49,7 +50,7 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
                 result = "发送成功";
                 if (resp.getType() == ConstantsAPI.COMMAND_SENDAUTH) {  //登录
                     String code = ((SendAuth.Resp) resp).code;
-                    EventBus.getDefault().post(code);
+                    EventBus.getDefault().post(new WXLoginEvent(code));
                 } else if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX) {    //分享成功
                     EventBus.getDefault().post("分享成功");
                 } else if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {  //支付

@@ -284,7 +284,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/dp_25"
+            android:paddingLeft="@dimen/dp_23"
             android:paddingRight="@dimen/dp_10"
             android:src="@mipmap/icon_detail_service" />
 
@@ -295,7 +295,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/individual_shopping_tv"
             android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_25"
+            android:paddingRight="@dimen/dp_23"
             android:src="@mipmap/icon_detail_home" />
 
         <LinearLayout

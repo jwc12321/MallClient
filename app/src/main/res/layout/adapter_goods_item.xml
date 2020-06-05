@@ -40,9 +40,9 @@
                 android:layout_marginRight="@dimen/dp_4"
                 android:background="@drawable/activity_team_bg"
                 android:gravity="center"
-                tools:text="@string/activity_group"
                 android:textColor="@color/appText1"
-                android:textSize="@dimen/sp_10" />
+                android:textSize="@dimen/sp_10"
+                tools:text="@string/activity_group" />
 
             <com.mall.sls.common.widget.textview.ConventionalTextView
                 android:id="@+id/goods_name"
@@ -68,10 +68,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/goods_iv"
-            android:layout_marginLeft="@dimen/dp_12"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/dp_14">
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginBottom="@dimen/dp_14"
+            android:layout_toRightOf="@id/goods_iv">
 
             <LinearLayout
                 android:id="@+id/current_price_rl"
@@ -82,38 +82,46 @@
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/price_type"
                     style="@style/size12_color_back1_text_style"
-                    tools:text="@string/group_purchase_price_tv"
-                    android:layout_gravity="center_vertical"/>
-
+                    android:layout_gravity="center_vertical"
+                    tools:text="@string/group_purchase_price_tv" />
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    style="@style/size12_color_back1_text_style"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:text="¥" />
                 <com.mall.sls.common.widget.textview.MediumThickTextView
                     android:id="@+id/current_price"
                     style="@style/size15_color_back1_text_style"
-                    android:layout_marginLeft="@dimen/dp_8"
                     tools:text="222222" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@id/current_price_rl">
+                android:layout_below="@id/current_price_rl"
+                android:orientation="horizontal">
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     style="@style/size12_color_app2_text_style"
-                    android:text="@string/market_price"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/market_price" />
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    style="@style/size12_color_app2_text_style"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:text="¥" />
 
                 <com.mall.sls.common.widget.textview.MediumThickTextView
                     android:id="@+id/original_price"
                     style="@style/size12_color_app2_text_style"
-                    android:layout_marginLeft="@dimen/dp_8"
                     tools:text="1111111" />
             </LinearLayout>
+
             <com.mall.sls.common.widget.textview.ConventionalTextView
                 android:id="@+id/confirm_bt"
                 style="@style/go_spell_bt_style"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dp_15"
-                android:text="@string/go_spell"
-                android:layout_centerVertical="true"/>
+                android:text="@string/go_spell" />
         </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

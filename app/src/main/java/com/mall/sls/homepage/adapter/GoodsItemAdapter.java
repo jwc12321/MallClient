@@ -114,8 +114,8 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
             GlideHelper.load((Activity) context, goodsItemInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(goodsItemInfo.getName());
             goodsIntroduction.setText(goodsItemInfo.getBrief());
-            currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getRetailPrice()));
-            originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getCounterPrice()));
+            currentPrice.setText(NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getRetailPrice()));
+            originalPrice.setText(NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getCounterPrice()));
             groupType.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGroupType()) ? View.VISIBLE : View.GONE);
             groupType.setText(goodsItemInfo.getKeywords());
             if (TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGroupType())) {

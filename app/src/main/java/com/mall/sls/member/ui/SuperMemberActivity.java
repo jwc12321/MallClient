@@ -19,6 +19,8 @@ import com.alipay.sdk.app.PayTask;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.certify.ui.CerifyTipActivity;
+import com.mall.sls.certify.ui.NameVerifiedActivity;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
@@ -90,15 +92,19 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     private String mobile;
     private String vipAmount;
     private String vipDescription;
+    private boolean certifyPay;
+    private String certifyAmount;
     @Inject
     SuperMemberPresenter superMemberPresenter;
 
-    public static void start(Context context, String avatarUrl, String mobile, String vipAmount, String vipDescription) {
+    public static void start(Context context, String avatarUrl, String mobile, String vipAmount, String vipDescription,boolean certifyPay,String certifyAmount) {
         Intent intent = new Intent(context, SuperMemberActivity.class);
         intent.putExtra(StaticData.AVATAR_URL, avatarUrl);
         intent.putExtra(StaticData.MOBILE, mobile);
         intent.putExtra(StaticData.VIP_AMOUNT, vipAmount);
         intent.putExtra(StaticData.VIP_DESCRIPTION, vipDescription);
+        intent.putExtra(StaticData.CERTIFY_PAY,certifyPay);
+        intent.putExtra(StaticData.CRETIFY_AMOUNT,certifyAmount);
         context.startActivity(intent);
     }
 
@@ -117,6 +123,8 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
         mobile = getIntent().getStringExtra(StaticData.MOBILE);
         vipAmount = getIntent().getStringExtra(StaticData.VIP_AMOUNT);
         vipDescription = getIntent().getStringExtra(StaticData.VIP_DESCRIPTION);
+        certifyPay=getIntent().getBooleanExtra(StaticData.CERTIFY_PAY,false);
+        certifyAmount=getIntent().getStringExtra(StaticData.CRETIFY_AMOUNT);
         GlideHelper.load(this, avatarUrl, R.mipmap.icon_defalut_head, headPhoto);
         phone.setText(mobile);
         memberGoodsItemAdapter = new MemberGoodsItemAdapter(this);
@@ -140,6 +148,11 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
             case R.id.confirm_bt:
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
                     showMessage(getString(R.string.to_open_person_authentication));
+                    if (certifyPay) {
+                        NameVerifiedActivity.start(this);
+                    } else {
+                        CerifyTipActivity.start(this, certifyAmount);
+                    }
                 } else {
                     Intent intent = new Intent(this, SelectPayTypeActivity.class);
                     intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_ONE);

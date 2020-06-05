@@ -279,4 +279,10 @@
     <string name="payment_number">支付单号：</string>
     <string name="copy_invite_code">复制邀请码</string>
     <string name="phone_login">手机号登录</string>
+    <string name="bind_success_wx">微信绑定成功</string>
+    <string name="transaction_cancel">交易已取消</string>
+    <string name="no_pay_cancel">订单未支付，已自动取消</string>
+    <string name="bind_wx_for_reward">绑定微信解锁全部功能</string>
+    <string name="code_login_register">验证码登录/注册</string>
+    <string name="fight_together">拼团</string>
 </resources>

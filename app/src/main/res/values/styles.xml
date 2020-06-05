@@ -281,7 +281,7 @@
     <style name="size18_color_app3_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/sp_15</item>
+        <item name="android:textSize">@dimen/sp_18</item>
         <item name="android:textColor">@color/appText3</item>
     </style>
     <style name="size23_color_app3_text_style">

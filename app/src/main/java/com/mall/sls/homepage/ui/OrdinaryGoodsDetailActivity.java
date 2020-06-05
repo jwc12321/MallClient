@@ -61,6 +61,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -317,12 +318,14 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 groupId = upGroupId;
                 groupRulesId = upGroupRulesId;
                 purchaseType = StaticData.REFLASH_THREE;
+                isGroup = true;
                 goSpellingReminder(upMobile, upSurplus);
                 break;
             case R.id.down_spell_bt:
                 groupId = downGroupId;
                 groupRulesId = downGroupRulesId;
                 purchaseType = StaticData.REFLASH_THREE;
+                isGroup = true;
                 goSpellingReminder(downMobile, downSurplus);
                 break;
             case R.id.share://分享
@@ -346,19 +349,19 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     }
 
     private void initiateBill() {
-        if (productListCallableInfo == null) {
+//        if (productListCallableInfo == null) {
             goSelectSpec(StaticData.REFLASH_ONE);
-        } else {
-            goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
-        }
+//        } else {
+//            goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
+//        }
     }
 
     private void individualShopping() {
-        if (productListCallableInfo == null) {
+//        if (productListCallableInfo == null) {
             goSelectSpec(StaticData.REFLASH_ZERO);
-        } else {
-            goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), false, String.valueOf(goodsCount), groupId, groupRulesId);
-        }
+//        } else {
+//            goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), false, String.valueOf(goodsCount), groupId, groupRulesId);
+//        }
     }
 
     private void goSelectSpecReturn(String type) {
@@ -499,6 +502,13 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             if (productListCallableInfos != null && productListCallableInfos.size() > 0) {
                 individualShoppingPrice.setText("¥" + productListCallableInfos.get(0).getPrice());
                 initiateBillPrice.setText("¥" + productListCallableInfos.get(0).getPreferentialPrice());
+                if(productListCallableInfos.size()==1){
+                    ProductListCallableInfo productListCallableInfo= productListCallableInfos.get(0);
+                    String specifications=productListCallableInfo.getSpecifications();
+                    if(!TextUtils.isEmpty(specifications)){
+                        checkSkus = Arrays.asList(specifications.split(","));
+                    }
+                }
             }
             if (!TextUtils.isEmpty(goodsDetailsInfo.getDetail())) {
                 webView.loadDataWithBaseURL(null, HtmlUnit.getHtmlData(goodsDetailsInfo.getDetail()), "text/html", "utf-8", null);

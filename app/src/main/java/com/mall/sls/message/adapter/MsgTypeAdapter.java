@@ -58,6 +58,7 @@ public class MsgTypeAdapter extends RecyclerView.Adapter<MsgTypeAdapter.MsgTypeV
                     if(TextUtils.equals(StaticData.REFLASH_ONE,messageTypeInfo.getId())){
                         onItemClickListener.goOrderMessage(messageTypeInfo.getId());
                     }else if(TextUtils.equals(StaticData.REFLASH_TWO,messageTypeInfo.getId())){
+
                     }
                 }
             }
@@ -91,6 +92,7 @@ public class MsgTypeAdapter extends RecyclerView.Adapter<MsgTypeAdapter.MsgTypeV
             GlideHelper.load((Activity) context, messageTypeInfo.getIconImg(), R.mipmap.icon_default_goods, icon);
             title.setText(messageTypeInfo.getType());
             content.setText(messageTypeInfo.getFirstMsgContent());
+            content.setVisibility(TextUtils.isEmpty(messageTypeInfo.getFirstMsgContent())?View.GONE:View.VISIBLE);
         }
 
     }

@@ -82,11 +82,13 @@
                     style="@style/size12_color_back1_text_style"
                     android:text="@string/activity_price"
                     android:layout_gravity="center_vertical"/>
-
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    style="@style/size12_color_back1_text_style"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:text="¥" />
                 <com.mall.sls.common.widget.textview.MediumThickTextView
                     android:id="@+id/current_price"
                     style="@style/size15_color_back1_text_style"
-                    android:layout_marginLeft="@dimen/dp_8"
                     tools:text="222222" />
             </LinearLayout>
             <LinearLayout
@@ -99,11 +101,13 @@
                     style="@style/size12_color_app2_text_style"
                     android:text="@string/market_price"
                     android:layout_gravity="center_vertical"/>
-
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    style="@style/size12_color_app2_text_style"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:text="¥" />
                 <com.mall.sls.common.widget.textview.MediumThickTextView
                     android:id="@+id/original_price"
                     style="@style/size12_color_app2_text_style"
-                    android:layout_marginLeft="@dimen/dp_8"
                     tools:text="1111111" />
             </LinearLayout>
             <com.mall.sls.common.widget.textview.ConventionalTextView

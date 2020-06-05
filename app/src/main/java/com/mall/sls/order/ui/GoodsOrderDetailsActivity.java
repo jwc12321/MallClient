@@ -46,6 +46,9 @@ import com.mall.sls.data.entity.OrderTimeInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.event.PayAbortEvent;
 import com.mall.sls.data.event.WXSuccessPayEvent;
+import com.mall.sls.homepage.ui.ActivityGoodsDetailActivity;
+import com.mall.sls.homepage.ui.ActivityGroupGoodsActivity;
+import com.mall.sls.homepage.ui.OrdinaryGoodsDetailActivity;
 import com.mall.sls.homepage.ui.SelectPayTypeActivity;
 import com.mall.sls.mine.ui.SelectShareTypeActivity;
 import com.mall.sls.order.DaggerOrderComponent;
@@ -231,7 +234,15 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 }
                 break;
             case R.id.left_bt:
-                orderDetailsPresenter.cancelOrder(goodsOrderId);
+                if (TextUtils.equals(StaticData.TO_PAY, orderStatusText)) {
+                    orderDetailsPresenter.cancelOrder(goodsOrderId);
+                }else {
+                    if(isActivity){
+                        ActivityGroupGoodsActivity.start(this,goodsId);
+                    }else {
+                        OrdinaryGoodsDetailActivity.start(this,goodsId);
+                    }
+                }
                 break;
             default:
         }
@@ -401,6 +412,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
 
     @Override
     public void renderCancelOrder() {
+        activityResult = StaticData.REFLASH_ONE;
         orderDetailsPresenter.getOrderDetails(goodsOrderId);
     }
 
@@ -442,19 +454,36 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             case StaticData.TO_BE_RECEIVED:
                 orderStatus.setText(getString(R.string.shipping));
                 countDownLl.setVisibility(View.GONE);
-                btRl.setVisibility(View.GONE);
+                btRl.setVisibility(View.VISIBLE);
+                leftBt.setVisibility(View.VISIBLE);
+                rightBt.setVisibility(View.GONE);
+                leftBt.setText(getString(R.string.one_more_order));
                 break;
             case StaticData.RECEIVED:
             case StaticData.SYS_RECEIVED:
                 orderStatus.setText(getString(R.string.completed));
                 countDownLl.setVisibility(View.GONE);
-                btRl.setVisibility(View.GONE);
+                btRl.setVisibility(View.VISIBLE);
+                leftBt.setVisibility(View.VISIBLE);
+                rightBt.setVisibility(View.GONE);
+                leftBt.setText(getString(R.string.one_more_order));
                 break;
             case StaticData.CANCELLED:
-            case StaticData.SYS_CANCELLED:
-                orderStatus.setText(getString(R.string.is_cancel));
+                orderStatus.setText(getString(R.string.transaction_cancel));
                 countDownLl.setVisibility(View.GONE);
-                btRl.setVisibility(View.GONE);
+                btRl.setVisibility(View.VISIBLE);
+                leftBt.setVisibility(View.VISIBLE);
+                rightBt.setVisibility(View.GONE);
+                leftBt.setText(getString(R.string.one_more_order));
+                break;
+            case StaticData.SYS_CANCELLED:
+                orderStatus.setText(getString(R.string.transaction_cancel));
+                countDownLl.setVisibility(View.VISIBLE);
+                remainingPaymentTimeTv.setText(getString(R.string.no_pay_cancel));
+                btRl.setVisibility(View.VISIBLE);
+                leftBt.setVisibility(View.VISIBLE);
+                rightBt.setVisibility(View.GONE);
+                leftBt.setText(getString(R.string.one_more_order));
                 break;
             default:
         }

@@ -31,6 +31,7 @@ import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.entity.WebViewDetailInfo;
+import com.mall.sls.data.event.WXLoginEvent;
 import com.mall.sls.login.DaggerLoginComponent;
 import com.mall.sls.login.LoginContract;
 import com.mall.sls.login.LoginModule;
@@ -193,9 +194,9 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
 
     //获取code
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onLoginSuccess(String code) {
-        if (!TextUtils.isEmpty(code)) {
-            weiXinLoginPresenter.weixinLogin(deviceId, deviceOsVersion, devicePlatform, code);
+    public void onLoginSuccess(WXLoginEvent wxLoginEvent) {
+        if (wxLoginEvent!=null&&!TextUtils.isEmpty(wxLoginEvent.getCode())) {
+            weiXinLoginPresenter.weixinLogin(deviceId, deviceOsVersion, devicePlatform, wxLoginEvent.getCode());
         }
     }
 

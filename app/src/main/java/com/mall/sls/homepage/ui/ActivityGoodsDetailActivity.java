@@ -61,6 +61,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -148,6 +149,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     private Bitmap shareBitMap;
     private int screenWidth;
     private int screenHeight;
+    private List<ProductListCallableInfo> productListCallableInfos;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, ActivityGoodsDetailActivity.class);
@@ -271,7 +273,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                     showMessage(getString(R.string.install_weixin));
                     return;
                 }
-                shareBitMap = QRCodeFileUtils.createBitmap3(shareIv,150,150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
+                shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, 150, 150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
                 Intent intent = new Intent(this, SelectShareTypeActivity.class);
                 startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
                 break;
@@ -280,11 +282,11 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     }
 
     private void initiateBill() {
-        if (productListCallableInfo == null) {
-            goSelectSpec(StaticData.REFLASH_ONE);
-        } else {
-            goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
-        }
+//        if (productListCallableInfo == null) {
+        goSelectSpec(StaticData.REFLASH_ONE);
+//        } else {
+//            goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
+//        }
     }
 
     private void goSelectSpecReturn(String type) {
@@ -376,7 +378,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             goodsOriginalUnit.setText("/" + unit);
             originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
             sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity());
-            nameText = BriefUnit.returnName(goodsDetailsInfo.getRetailPrice(),goodsDetailsInfo.getName());
+            nameText = BriefUnit.returnName(goodsDetailsInfo.getRetailPrice(), goodsDetailsInfo.getName());
             briefText = BriefUnit.returnBrief(goodsDetailsInfo.getBrief());
             goodsName.setText(goodsDetailsInfo.getName());
             goodsBrief.setText(goodsDetailsInfo.getBrief());
@@ -423,6 +425,14 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             if (groupPurchases != null && groupPurchases.size() == 1) {
                 groupId = groupPurchases.get(0).getGrouponId();
                 groupRulesId = groupPurchases.get(0).getRulesId();
+            }
+            productListCallableInfos = goodsDetailsInfo.getProductListCallableInfos();
+            if (productListCallableInfos != null && productListCallableInfos.size() == 1) {
+                ProductListCallableInfo productListCallableInfo = productListCallableInfos.get(0);
+                String specifications = productListCallableInfo.getSpecifications();
+                if (!TextUtils.isEmpty(specifications)) {
+                    checkSkus = Arrays.asList(specifications.split(","));
+                }
             }
             if (!TextUtils.isEmpty(goodsDetailsInfo.getDetail())) {
                 webView.loadDataWithBaseURL(null, HtmlUnit.getHtmlData(goodsDetailsInfo.getDetail()), "text/html", "utf-8", null);

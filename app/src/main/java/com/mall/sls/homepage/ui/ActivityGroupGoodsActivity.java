@@ -44,6 +44,8 @@ import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.presenter.GoodsDetailsPresenter;
 import com.mall.sls.webview.unit.JSBridgeWebChromeClient;
 
+import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -115,6 +117,8 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     private List<GroupPurchase> groupPurchases;
     private String wxUrl;
     private String inviteCode;
+    private List<ProductListCallableInfo> productListCallableInfos;
+    private List<String> checkSkus;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, ActivityGroupGoodsActivity.class);
@@ -237,6 +241,14 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
                 groupId = groupPurchases.get(0).getGrouponId();
                 groupRulesId = groupPurchases.get(0).getRulesId();
             }
+            productListCallableInfos = goodsDetailsInfo.getProductListCallableInfos();
+            if (productListCallableInfos != null && productListCallableInfos.size() == 1) {
+                ProductListCallableInfo productListCallableInfo = productListCallableInfos.get(0);
+                String specifications = productListCallableInfo.getSpecifications();
+                if (!TextUtils.isEmpty(specifications)) {
+                    checkSkus = Arrays.asList(specifications.split(","));
+                }
+            }
             if (!TextUtils.isEmpty(goodsDetailsInfo.getDetail())) {
                 webView.loadDataWithBaseURL(null, HtmlUnit.getHtmlData(goodsDetailsInfo.getDetail()), "text/html", "utf-8", null);
             }
@@ -304,6 +316,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     private void goSelectSpec(String type) {
         Intent intent = new Intent(this, SelectSpecActivity.class);
         intent.putExtra(StaticData.GOODS_DETAILS_INFO, goodsDetailsInfo);
+        intent.putExtra(StaticData.SKU_CHECK, (Serializable) checkSkus);
         intent.putExtra(StaticData.CHOICE_TYPE, type);
         startActivityForResult(intent, RequestCodeStatic.REQUEST_SPEC);
     }
@@ -317,6 +330,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
                     if (data != null) {
                         Bundle bundle = data.getExtras();
                         productListCallableInfo = (ProductListCallableInfo) bundle.getSerializable(StaticData.SKU_INFO);
+                        checkSkus = (List<String>) bundle.getSerializable(StaticData.SKU_CHECK);
                         goodsCount = bundle.getInt(StaticData.GOODS_COUNT);
                         goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
                     }
