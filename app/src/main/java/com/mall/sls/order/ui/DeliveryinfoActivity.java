@@ -7,10 +7,17 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.PluralsRes;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
-import com.mall.sls.common.widget.textview.ConventionalTextView;
+import com.mall.sls.common.StaticData;
+import com.mall.sls.data.entity.ShipOrderInfo;
+import com.mall.sls.order.adapter.LogisticsAdapter;
+
+import java.io.Serializable;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,31 +30,17 @@ import butterknife.OnClick;
 public class DeliveryinfoActivity extends BaseActivity {
 
 
-    @BindView(R.id.submit_time_iv)
-    ImageView submitTimeIv;
-    @BindView(R.id.submit_time)
-    ConventionalTextView submitTime;
-    @BindView(R.id.order_paid_iv)
-    ImageView orderPaidIv;
-    @BindView(R.id.order_paid)
-    ConventionalTextView orderPaid;
-    @BindView(R.id.merchant_packaging_iv)
-    ImageView merchantPackagingIv;
-    @BindView(R.id.merchant_packaging)
-    ConventionalTextView merchantPackaging;
-    @BindView(R.id.delivery_shipping_iv)
-    ImageView deliveryShippingIv;
-    @BindView(R.id.delivery_shipping)
-    ConventionalTextView deliveryShipping;
-    @BindView(R.id.order_delivered_iv)
-    ImageView orderDeliveredIv;
-    @BindView(R.id.order_delivered)
-    ConventionalTextView orderDelivered;
+    @BindView(R.id.record_rv)
+    RecyclerView recordRv;
     @BindView(R.id.close_iv)
     ImageView closeIv;
 
-    public static void start(Context context) {
+    private LogisticsAdapter logisticsAdapter;
+    private List<ShipOrderInfo> shipOrderInfos;
+
+    public static void start(Context context, List<ShipOrderInfo> shipOrderInfos) {
         Intent intent = new Intent(context, DeliveryinfoActivity.class);
+        intent.putExtra(StaticData.SHIP_ORDER_INFOS, (Serializable) shipOrderInfos);
         context.startActivity(intent);
     }
 
@@ -56,6 +49,15 @@ public class DeliveryinfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery_info);
         ButterKnife.bind(this);
+        initView();
+    }
+
+    private void initView(){
+        shipOrderInfos= (List<ShipOrderInfo>) getIntent().getSerializableExtra(StaticData.SHIP_ORDER_INFOS);
+        logisticsAdapter=new LogisticsAdapter();
+        recordRv.setAdapter(logisticsAdapter);
+        logisticsAdapter.setData(shipOrderInfos);
+
     }
 
     @Override

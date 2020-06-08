@@ -113,8 +113,6 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     RecyclerView jingangRv;
     @BindView(R.id.local_ll)
     LinearLayout localLl;
-    @BindView(R.id.bindWxRl)
-    RelativeLayout bindWxRl;
     @BindView(R.id.bind_wx_iv)
     ImageView bindWxIv;
     private LocationHelper mLocationHelper;
@@ -176,11 +174,12 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         initAdapter();
         //绑定微信
         if(TextUtils.equals(StaticData.REFLASH_ZERO, BindWxManager.getBindWx())){
-            bindWxRl.setVisibility(View.VISIBLE);
+            bindWxIv.setVisibility(View.VISIBLE);
             EventBus.getDefault().register(this);
         }else {
-            bindWxRl.setVisibility(View.GONE);
+            bindWxIv.setVisibility(View.GONE);
         }
+        homePagePresenter.getHomePageInfo(StaticData.REFLASH_ONE);
     }
 
     private void initAdapter() {
@@ -279,7 +278,6 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                 }
                 AreaCodeManager.saveAreaCode(areaCode);
                 localCity.setText(city);
-                homePagePresenter.getHomePageInfo(StaticData.REFLASH_ONE);
             }
         });
         group = new ArrayList<>();
@@ -356,7 +354,6 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             banner.setAutoPlayAble(data.size() > 1);
             banner.setBannerData(R.layout.xbanner_item, data);
             messageCount.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO, homePageInfo.getUnreadMsgCount()) ? View.GONE : View.VISIBLE);
-            messageCount.setText(homePageInfo.getUnreadMsgCount());
             if (TextUtils.equals(StaticData.REFLASH_ONE, homePageInfo.getStatus())) {
                 //开通
                 goodsItemAdapter.setData(homePageInfo.getGoodsItemInfos());
@@ -378,7 +375,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     public void renderBindWx() {
         showMessage(getString(R.string.bind_success_wx));
         BindWxManager.saveBindWx(StaticData.REFLASH_ONE);
-        bindWxRl.setVisibility(View.GONE);
+        bindWxIv.setVisibility(View.GONE);
         EventBus.getDefault().unregister(this);
     }
 

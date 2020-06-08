@@ -12,12 +12,15 @@ import android.view.View;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.ScreenUtil;
 import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.login.ui.LoginActivity;
 import com.mall.sls.login.ui.WeixinLoginActivity;
 import com.mall.sls.mainframe.ui.MainFrameActivity;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import butterknife.ButterKnife;
 
@@ -25,6 +28,7 @@ import butterknife.ButterKnife;
 public class  SplashActivity extends BaseActivity {
     private static final int GO_MAIN = 1;
     private static final int GO_LOGIN = 2;
+    private IWXAPI api;
 
     private Handler mHandler = new MyHandler(this);
 
@@ -53,15 +57,20 @@ public class  SplashActivity extends BaseActivity {
     }
 
     private void initData() {
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        if(Intent.ACTION_VIEW.equals(action)){
-            Uri uri = intent.getData();
-            if(uri != null){
-                String name = uri.getQueryParameter("name");
-                String age= uri.getQueryParameter("age");
-            }
-        }
+//        Intent intent = getIntent();
+//        String action = intent.getAction();
+//        if(Intent.ACTION_VIEW.equals(action)){
+//            Uri uri = intent.getData();
+//            if(uri != null){
+//                String name = uri.getQueryParameter("name");
+//                String age= uri.getQueryParameter("age");
+//            }
+//        }
+        // 通过WXAPIFactory工厂，获取IWXAPI的实例
+        api = WXAPIFactory.createWXAPI(this, StaticData.WX_APP_ID, true);
+
+        // 将应用的appId注册到微信
+        api.registerApp( StaticData.WX_APP_ID);
     }
 
     //跳转到主页

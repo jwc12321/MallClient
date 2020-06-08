@@ -49,7 +49,7 @@ public class MapAddressAdapter extends RecyclerView.Adapter<MapAddressAdapter.Ma
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.select(holder.getAdapterPosition());
+                    onItemClickListener.select(poiItem);
                 }
             }
         });
@@ -83,7 +83,7 @@ public class MapAddressAdapter extends RecyclerView.Adapter<MapAddressAdapter.Ma
     }
 
     public interface OnItemClickListener {
-        void select(int position);
+        void select(PoiItem poiItem);
     }
 
     private OnItemClickListener onItemClickListener;

@@ -76,6 +76,13 @@ public class GoodsOrderDetails {
     //支付订单编号
     @SerializedName("tradeNo")
     private String tradeNo;
+    //订单跟踪
+    @SerializedName("shipOrderList")
+    private List<ShipOrderInfo> shipOrderInfos;
+    //顺丰H5页面url
+    @SerializedName("sfH5Url")
+    private String sfH5Url;
+
 
     public String getCouponPrice() {
         return couponPrice;
@@ -252,5 +259,21 @@ public class GoodsOrderDetails {
 
     public void setTradeNo(String tradeNo) {
         this.tradeNo = tradeNo;
+    }
+
+    public List<ShipOrderInfo> getShipOrderInfos() {
+        return shipOrderInfos;
+    }
+
+    public void setShipOrderInfos(List<ShipOrderInfo> shipOrderInfos) {
+        this.shipOrderInfos = shipOrderInfos;
+    }
+
+    public String getSfH5Url() {
+        return sfH5Url;
+    }
+
+    public void setSfH5Url(String sfH5Url) {
+        this.sfH5Url = sfH5Url;
     }
 }

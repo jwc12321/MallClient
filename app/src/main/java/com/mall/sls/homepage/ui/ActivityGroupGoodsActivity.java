@@ -11,6 +11,7 @@ import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import com.mall.sls.common.unit.HtmlUnit;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.TimeUtil;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
+import com.mall.sls.common.widget.textview.DhmsTearDownView;
 import com.mall.sls.common.widget.textview.DrawTextView;
 import com.mall.sls.common.widget.textview.FourTearDownView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -58,7 +60,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/14.
  * 描述：活动团
  */
-public class ActivityGroupGoodsActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, TearDownView.TimeOutListener, FourTearDownView.TimeOutListener {
+public class ActivityGroupGoodsActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, TearDownView.TimeOutListener, DhmsTearDownView.TimeOutListener {
 
 
     @Inject
@@ -73,8 +75,12 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     ImageView activityRuleIv;
     @BindView(R.id.activity_name)
     ConventionalTextView activityName;
+    @BindView(R.id.count_down_tv)
+    ConventionalTextView countDownTv;
     @BindView(R.id.count_down)
     TearDownView countDown;
+    @BindView(R.id.day_tv)
+    MediumThickTextView dayTv;
     @BindView(R.id.goods_iv)
     ImageView goodsIv;
     @BindView(R.id.discountMember)
@@ -91,20 +97,15 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     RelativeLayout goodsRl;
     @BindView(R.id.confirm_bt)
     MediumThickTextView confirmBt;
-    @BindView(R.id.people_number)
-    ConventionalTextView peopleNumber;
-    @BindView(R.id.goods_number)
-    ConventionalTextView goodsNumber;
+    @BindView(R.id.snapped_up_number)
+    ConventionalTextView snappedUpNumber;
     @BindView(R.id.count_down_time)
-    FourTearDownView countDownTime;
+    DhmsTearDownView countDownTime;
     @BindView(R.id.view_flipper)
     ViewFlipper viewFlipper;
     @BindView(R.id.webView)
     WebView webView;
-    @BindView(R.id.count_down_tv)
-    ConventionalTextView countDownTv;
-    @BindView(R.id.day_tv)
-    MediumThickTextView dayTv;
+
 
     private String goodsId;
     private GoodsDetailsInfo goodsDetailsInfo;
@@ -196,8 +197,12 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
             activityName.setText(goodsDetailsInfo.getGroupName());
             goodsName.setText(goodsDetailsInfo.getName());
             discountMember.setText(goodsDetailsInfo.getDiscountMember() + "人成团");
-            peopleNumber.setText(goodsDetailsInfo.getGroupPeopleNum() + "人已抢");
-            goodsNumber.setText(goodsDetailsInfo.getGroupGoodsNum());
+            if(TextUtils.equals(StaticData.REFLASH_ZERO,goodsDetailsInfo.getGroupPeopleNum())){
+                snappedUpNumber.setVisibility(View.GONE);
+            }else {
+                snappedUpNumber.setVisibility(View.VISIBLE);
+                snappedUpNumber.setText(goodsDetailsInfo.getGroupPeopleNum() + "人已抢"+goodsDetailsInfo.getGroupGoodsNum()+",");
+            }
             countDown.setTimeOutListener(this);
             countDownTime.setTimeOutListener(this);
             goodsIntroduction.setText(goodsDetailsInfo.getBrief());
@@ -206,20 +211,20 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
             if (!TextUtils.isEmpty(goodsDetailsInfo.getNow()) && !TextUtils.isEmpty(goodsDetailsInfo.getGroupExpireTime())) {
                 long now = FormatUtil.dateToStamp(goodsDetailsInfo.getNow());
                 long groupExpireTime = FormatUtil.dateToStamp(goodsDetailsInfo.getGroupExpireTime());
-                long day=FormatUtil.day(now,groupExpireTime);
+                long day = FormatUtil.day(now, groupExpireTime);
                 if (now < groupExpireTime) {
-                    if(day>0){
-                        dayTv.setText(day+"天");
+                    if (day > 0) {
+                        dayTv.setText(day + "天");
                         dayTv.setVisibility(View.VISIBLE);
                         countDown.setVisibility(View.GONE);
                         countDownTv.setText(getString(R.string.remaining_spike));
-                    }else {
+                    } else {
                         dayTv.setVisibility(View.GONE);
                         countDown.setVisibility(View.VISIBLE);
                         countDown.startTearDown(groupExpireTime, now);
                         countDownTv.setText(getString(R.string.from_end));
                     }
-                    countDownTime.startTearDown(groupExpireTime, now);
+                    countDownTime.startTearDown(groupExpireTime/1000, now/1000);
                 }
             }
             groupPeoples = goodsDetailsInfo.getGroupPeoples();
@@ -263,7 +268,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
 
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
-        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_FOUR,wxUrl,inviteCode);
+        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_FOUR, wxUrl, inviteCode);
     }
 
     @Override
@@ -273,9 +278,9 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
 
     @Override
     public void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo) {
-        if(invitationCodeInfo!=null){
-            wxUrl=invitationCodeInfo.getBaseUrl();
-            inviteCode=invitationCodeInfo.getInvitationCode();
+        if (invitationCodeInfo != null) {
+            wxUrl = invitationCodeInfo.getBaseUrl();
+            inviteCode = invitationCodeInfo.getInvitationCode();
         }
     }
 

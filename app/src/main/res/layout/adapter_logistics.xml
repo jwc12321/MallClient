@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_46">
+
+    <ImageView
+        android:id="@+id/submit_iv"
+        style="@style/delivery_circle_style"
+        android:layout_marginTop="@dimen/dp_54" />
+
+    <com.mall.sls.common.widget.textview.ConventionalTextView
+        android:id="@+id/statusDesc"
+        style="@style/delivery_left_tv_style"
+        tools:text="@string/order_submission_successful" />
+
+    <com.mall.sls.common.widget.textview.ConventionalTextView
+        android:id="@+id/statusTime"
+        style="@style/delivery_right_tv_style"
+        android:text="2019-09-09" />
+
+    <View
+        android:id="@+id/up_line"
+        style="@style/delivery_up_line_style" />
+
+    <View
+        android:id="@+id/down_line"
+        style="@style/delivery_up_line_style"
+        android:layout_below="@id/submit_iv" />
+</RelativeLayout>

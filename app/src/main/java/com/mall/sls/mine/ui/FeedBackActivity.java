@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.common.widget.edittextview.ForbidEmojiEditText;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.mine.DaggerMineComponent;

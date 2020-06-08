@@ -235,7 +235,13 @@
                         android:layout_toLeftOf="@id/down_spell_bt"
                         tools:text="还差几人" />
                 </RelativeLayout>
-
+                <ViewFlipper
+                    android:id="@+id/group_flipper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inAnimation="@anim/anim_in"
+                    android:outAnimation="@anim/anim_out"
+                    android:visibility="gone"/>
             </LinearLayout>
 
             <ImageView
@@ -286,16 +292,15 @@
             android:layout_centerVertical="true"
             android:paddingLeft="@dimen/dp_23"
             android:paddingRight="@dimen/dp_10"
-            android:src="@mipmap/icon_detail_service" />
+            android:src="@mipmap/icon_detail_service"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/home_iv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/individual_shopping_tv"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_23"
             android:src="@mipmap/icon_detail_home" />
 
         <LinearLayout

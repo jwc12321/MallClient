@@ -5,12 +5,6 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
     <com.mall.sls.common.widget.textview.ConventionalTextView
-        android:id="@+id/hour_time"
-        style="@style/size15_color_app1_text_style"
-        tools:text="12" />
-    <com.mall.sls.common.widget.textview.ConventionalTextView
-        style="@style/white_fifteen_countdown_time_colon_style"/>
-    <com.mall.sls.common.widget.textview.ConventionalTextView
         android:id="@+id/min_time"
         style="@style/size15_color_app1_text_style"
         tools:text="12" />

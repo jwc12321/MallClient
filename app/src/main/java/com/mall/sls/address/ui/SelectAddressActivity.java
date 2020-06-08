@@ -25,6 +25,9 @@ import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.help.Inputtips;
+import com.amap.api.services.help.InputtipsQuery;
+import com.amap.api.services.help.Tip;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.mall.sls.BaseActivity;
@@ -41,6 +44,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
 
 /**
  * Created by JWC on 2018/5/29.
@@ -48,7 +52,7 @@ import butterknife.ButterKnife;
  * 留着以后可能会用
  */
 
-public class SelectAddressActivity extends BaseActivity implements LocationSource, AMapLocationListener, PoiSearch.OnPoiSearchListener, AMap.OnCameraChangeListener {
+public class SelectAddressActivity extends BaseActivity implements LocationSource, AMapLocationListener, PoiSearch.OnPoiSearchListener, AMap.OnCameraChangeListener, MapAddressAdapter.OnItemClickListener, Inputtips.InputtipsListener {
 
     @BindView(R.id.back)
     ImageView back;
@@ -80,6 +84,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
     private PoiSearch poiSearch;//搜索
     private LocationBean currentLoc;
     private MapAddressAdapter mapAddressAdapter;
+    private String keyWord;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, SelectAddressActivity.class);
@@ -97,8 +102,9 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         initMap();
     }
 
-    private void initView(){
-        mapAddressAdapter=new MapAddressAdapter();
+    private void initView() {
+        mapAddressAdapter = new MapAddressAdapter();
+        mapAddressAdapter.setOnItemClickListener(this);
         addressRv.setAdapter(mapAddressAdapter);
     }
 
@@ -107,6 +113,15 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
             aMap = mapView.getMap();
             setUpMap();
         }
+    }
+
+    /**
+     * 监听手机输入框
+     */
+    @OnTextChanged({R.id.address_et})
+    public void checkAddressEnable() {
+        keyWord = addressEt.getText().toString().trim();
+        doSearchKeyWord(keyWord, "");
     }
 
     /**
@@ -196,7 +211,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (mListener != null && aMapLocation != null) {
             if (aMapLocation != null && aMapLocation.getErrorCode() == 0) {
-                Log.d("jjj0", "精度和纬度" + aMapLocation.getLatitude() + "=====" + aMapLocation.getLongitude()+"=="+aMapLocation.getCity());
+                Log.d("jjj0", "精度和纬度" + aMapLocation.getLatitude() + "=====" + aMapLocation.getLongitude() + "==" + aMapLocation.getCity());
                 city = aMapLocation.getCity();
                 latitude = aMapLocation.getLatitude();
                 longitude = aMapLocation.getLongitude();
@@ -213,8 +228,8 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
 
     protected void doSearchQuery(String city, String mType, double latitude, double longitude) {
         query = new PoiSearch.Query("", mType, city);// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
-        query.setPageSize(20);// 设置每页最多返回多少条poiitem
-        query.setPageNum(1);// 设置查第一页
+        query.setPageSize(50);// 设置每页最多返回多少条poiitem
+        query.setPageNum(0);// 设置查第一页
         poiSearch = new PoiSearch(this, query);
         poiSearch.setOnPoiSearchListener(this);
         //以当前定位的经纬度为准搜索周围5000米范围
@@ -223,10 +238,20 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         poiSearch.searchPOIAsyn();// 异步搜索
     }
 
+    protected void doSearchKeyWord(String keyWord, String city) {
+        query = new PoiSearch.Query(keyWord, "", city);// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
+        query.setPageSize(50);// 设置每页最多返回多少条poiitem
+        query.setPageNum(0);// 设置查第一页
+        poiSearch = new PoiSearch(this, query);
+        poiSearch.setOnPoiSearchListener(this);
+        poiSearch.searchPOIAsyn();// 异步搜索
+    }
+
     @Override
     public void onPoiSearched(PoiResult poiResult, int i) {
         if (i == 1000) {
             if (poiResult != null && poiResult.getQuery() != null) {// 搜索poi的结果
+                Log.d("jjj0", "精度和纬度======" + poiResult + "==" + poiResult.getPois().size());
                 if (poiResult.getQuery().equals(query)) {// 是否是同一条
                     List<PoiItem> poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
                     mapAddressAdapter.setData(poiItems);
@@ -252,18 +277,35 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         GeoCoderUtil.getInstance(SelectAddressActivity.this).geoAddress(latLngEntity, new GeoCoderUtil.GeoCoderAddressListener() {
             @Override
             public void onAddressResult(String result) {
-                if (!addressEt.getText().toString().trim().equals("")) {
-                    //输入地址后的点击搜索
-                } else {
-                    //拖动地图
-                    latitude = cameraPosition.target.latitude;
-                    longitude = cameraPosition.target.longitude;
-                    currentLoc = new LocationBean(longitude, latitude, result, "");
-                    Log.d("jjj0", "精度和纬度" + latitude + "=====" + longitude);
-                    doSearchQuery(city, "", latitude, longitude);
-                }
+//                if (!addressEt.getText().toString().trim().equals("")) {
+//                    //输入地址后的点击搜索
+//                } else {
+                //拖动地图
+                latitude = cameraPosition.target.latitude;
+                longitude = cameraPosition.target.longitude;
+                currentLoc = new LocationBean(longitude, latitude, result, "");
+                Log.d("jjj0", "精度和纬度" + latitude + "=====" + longitude);
+                doSearchQuery("", "", latitude, longitude);
+//                }
                 //地图的中心点位置改变后都开始poi的附近搜索
             }
         });
+    }
+
+    @Override
+    public void select(PoiItem poiItem) {
+        String province = poiItem.getProvinceName();
+        String city = poiItem.getCityName();
+        String county = poiItem.getAdName();
+        LatLonPoint latLonPoint=poiItem.getLatLonPoint();
+        String lat=String.valueOf(latLonPoint.getLatitude());
+        String lng=String.valueOf(latLonPoint.getLongitude());
+        String detailAddress=poiItem.getSnippet();
+        Log.d("11","数据"+province+"=="+city+"=="+county+"=="+lat+"=="+lng+"=="+detailAddress);
+    }
+
+    @Override
+    public void onGetInputtips(List<Tip> list, int i) {
+        Tip tip = list.get(0);
     }
 }

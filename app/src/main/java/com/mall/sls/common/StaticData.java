@@ -117,5 +117,6 @@ public class StaticData {
     public static final String ADDRESS_ID="addressId";
     public static final String VIP_DESCRIPTION="vipDescription";//超级会员描述
     public static final String CERTIFY_PAY ="certifyPay";//是否已经支付实人认证钱
+    public static final String SHIP_ORDER_INFOS="shipOrderInfos";//物流信息
 
 }

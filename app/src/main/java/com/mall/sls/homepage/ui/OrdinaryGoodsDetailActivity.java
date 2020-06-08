@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
@@ -17,10 +18,9 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
+import android.widget.ViewFlipper;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.luck.picture.lib.PictureSelector;
@@ -36,6 +36,7 @@ import com.mall.sls.common.unit.HtmlUnit;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
+import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -145,10 +146,13 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     RelativeLayout titleRel;
     @BindView(R.id.share_iv)
     ImageView shareIv;
+    @BindView(R.id.group_flipper)
+    ViewFlipper groupFlipper;
     private ProductListCallableInfo productListCallableInfo;
     private List<CustomViewsInfo> data;
     private String goodsId;
     private List<GroupPurchase> groupPurchases;
+    private List<GroupPurchase> allGroupPurchases;
     private List<String> banners;
     private GoodsDetailsInfo goodsDetailsInfo;
     private List<String> checkSkus;
@@ -208,13 +212,13 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         wxShareManager = WXShareManager.getInstance(this);
         scrollview.setOnScrollChangeListener(this);
         themeId = R.style.picture_default_style;
+        allGroupPurchases=new ArrayList<>();
         settingHeight();
         xBannerInit();
         initWebView();
         goodsDetailsPresenter.getGoodsDetails(goodsId);
         goodsDetailsPresenter.getConsumerPhone();
         goodsDetailsPresenter.getInvitationCodeInfo();
-
     }
 
     private void settingHeight() {
@@ -350,7 +354,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
 
     private void initiateBill() {
 //        if (productListCallableInfo == null) {
-            goSelectSpec(StaticData.REFLASH_ONE);
+        goSelectSpec(StaticData.REFLASH_ONE);
 //        } else {
 //            goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
 //        }
@@ -358,7 +362,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
 
     private void individualShopping() {
 //        if (productListCallableInfo == null) {
-            goSelectSpec(StaticData.REFLASH_ZERO);
+        goSelectSpec(StaticData.REFLASH_ZERO);
 //        } else {
 //            goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), false, String.valueOf(goodsCount), groupId, groupRulesId);
 //        }
@@ -467,11 +471,32 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             groupNumber.setText(goodsDetailsInfo.getGroupNum() + "人正在拼单，可直接参与");
             groupPurchases = goodsDetailsInfo.getGroupPurchases();
             oldGroupRulesId = goodsDetailsInfo.getRulesId();
-            if (groupPurchases == null || groupPurchases.size() == 0) {
-                groupLl.setVisibility(View.GONE);
-                upGroup.setVisibility(View.GONE);
-                downGroup.setVisibility(View.GONE);
-            } else if (groupPurchases != null && groupPurchases.size() == 1) {
+            initGroup();
+            productListCallableInfos = goodsDetailsInfo.getProductListCallableInfos();
+            if (productListCallableInfos != null && productListCallableInfos.size() > 0) {
+                individualShoppingPrice.setText("¥" + productListCallableInfos.get(0).getPrice());
+                initiateBillPrice.setText("¥" + productListCallableInfos.get(0).getPreferentialPrice());
+                if (productListCallableInfos.size() == 1) {
+                    ProductListCallableInfo productListCallableInfo = productListCallableInfos.get(0);
+                    String specifications = productListCallableInfo.getSpecifications();
+                    if (!TextUtils.isEmpty(specifications)) {
+                        checkSkus = Arrays.asList(specifications.split(","));
+                    }
+                }
+            }
+            if (!TextUtils.isEmpty(goodsDetailsInfo.getDetail())) {
+                webView.loadDataWithBaseURL(null, HtmlUnit.getHtmlData(goodsDetailsInfo.getDetail()), "text/html", "utf-8", null);
+            }
+            GlideHelper.load(this, goodsDetailsInfo.getPicUrl(), R.mipmap.icon_default_goods, shareIv);
+        }
+    }
+
+    //可以取拼单的列表
+    private void initGroup() {
+        if (groupPurchases == null || groupPurchases.size() == 0) {
+            groupLl.setVisibility(View.GONE);
+        } else {
+            if (groupPurchases.size() == 1) {
                 groupLl.setVisibility(View.VISIBLE);
                 upGroup.setVisibility(View.VISIBLE);
                 downGroup.setVisibility(View.GONE);
@@ -481,7 +506,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 upGroupRulesId = groupPurchases.get(0).getRulesId();
                 upMobile = groupPurchases.get(0).getMobile();
                 upSurplus = groupPurchases.get(0).getSurplus();
-            } else if (groupPurchases != null && groupPurchases.size() == 2) {
+                groupFlipper.setVisibility(View.GONE);
+            } else if (groupPurchases.size() == 2) {
                 groupLl.setVisibility(View.VISIBLE);
                 upGroup.setVisibility(View.VISIBLE);
                 downGroup.setVisibility(View.VISIBLE);
@@ -497,24 +523,59 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 upSurplus = groupPurchases.get(0).getSurplus();
                 downMobile = groupPurchases.get(1).getMobile();
                 downSurplus = groupPurchases.get(1).getSurplus();
-            }
-            productListCallableInfos = goodsDetailsInfo.getProductListCallableInfos();
-            if (productListCallableInfos != null && productListCallableInfos.size() > 0) {
-                individualShoppingPrice.setText("¥" + productListCallableInfos.get(0).getPrice());
-                initiateBillPrice.setText("¥" + productListCallableInfos.get(0).getPreferentialPrice());
-                if(productListCallableInfos.size()==1){
-                    ProductListCallableInfo productListCallableInfo= productListCallableInfos.get(0);
-                    String specifications=productListCallableInfo.getSpecifications();
-                    if(!TextUtils.isEmpty(specifications)){
-                        checkSkus = Arrays.asList(specifications.split(","));
-                    }
+                groupFlipper.setVisibility(View.GONE);
+            } else {
+                upGroup.setVisibility(View.GONE);
+                downGroup.setVisibility(View.GONE);
+                groupFlipper.setVisibility(View.VISIBLE);
+                allGroupPurchases.clear();
+                allGroupPurchases=groupPurchases;
+                if(groupPurchases.size()%2==1){
+                    allGroupPurchases.addAll(groupPurchases);
                 }
+                for(int i=0;i<allGroupPurchases.size()/2;i++){
+                    View view1 = View.inflate(this,R.layout.item_group_purchase,null);
+                    ConventionalTextView listUpPhoneNumber=view1.findViewById(R.id.list_up_phone_number);
+                    ConventionalTextView listUpSpellBt=view1.findViewById(R.id.list_up_spell_bt);
+                    ConventionalTextView listUpPoorTv=view1.findViewById(R.id.list_up_poor_tv);
+                    ConventionalTextView listDownPhoneNumber=view1.findViewById(R.id.list_down_phone_number);
+                    ConventionalTextView listDownSpellBt=view1.findViewById(R.id.list_down_spell_bt);
+                    ConventionalTextView listDownPoorTv=view1.findViewById(R.id.list_down_poor_tv);
+                    listUpPhoneNumber.setText(allGroupPurchases.get(2*i).getMobile());
+                    listUpPoorTv.setText("还差" + allGroupPurchases.get(2*i).getSurplus()+ "人拼成");
+                    listUpSpellBt.setTag(2*i);
+                    listDownPhoneNumber.setText(allGroupPurchases.get(2*i+1).getMobile());
+                    listDownPoorTv.setText("还差" + allGroupPurchases.get(2*i+1).getSurplus()+ "人拼成");
+                    listDownSpellBt.setTag(2*i+1);
+                    groupFlipper.addView(view1);
+                    listUpSpellBt.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d("Guanggao", "点击了" + v.getTag());
+                            showReminder((Integer) v.getTag());
+                        }
+                    });
+                    listDownSpellBt.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d("Guanggao", "点击了" + v.getTag());
+                            showReminder((Integer) v.getTag());
+                        }
+                    });
+                }
+                groupFlipper.setFlipInterval(2000);
+                groupFlipper.startFlipping();
+
             }
-            if (!TextUtils.isEmpty(goodsDetailsInfo.getDetail())) {
-                webView.loadDataWithBaseURL(null, HtmlUnit.getHtmlData(goodsDetailsInfo.getDetail()), "text/html", "utf-8", null);
-            }
-            GlideHelper.load(this, goodsDetailsInfo.getPicUrl(), R.mipmap.icon_default_goods, shareIv);
         }
+    }
+
+    private void showReminder(int position){
+        groupId = allGroupPurchases.get(position).getGrouponId();
+        groupRulesId = allGroupPurchases.get(position).getRulesId();
+        purchaseType = StaticData.REFLASH_THREE;
+        isGroup = true;
+        goSpellingReminder(allGroupPurchases.get(position).getMobile(), allGroupPurchases.get(position).getSurplus());
     }
 
     @Override

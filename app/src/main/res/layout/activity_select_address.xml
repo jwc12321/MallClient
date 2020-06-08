@@ -35,41 +35,47 @@
             android:layout_marginLeft="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_15"
             android:layout_marginTop="@dimen/dp_15">
-            <com.mall.sls.common.widget.textview.ConventionalTextView
-                android:id="@+id/local_city"
-                style="@style/size14_color_app3_text_style"
-                tools:text="杭州市"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/dp_15"/>
-            <ImageView
-                android:layout_width="@dimen/dp_12"
-                android:layout_height="@dimen/dp_9"
-                android:src="@mipmap/ic_launcher"
-                android:scaleType="fitXY"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/dp_6"
-                android:layout_marginRight="@dimen/dp_8"/>
+            <LinearLayout
+                android:id="@+id/local_ll_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingRight="@dimen/dp_8">
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/local_city"
+                    style="@style/size14_color_app3_text_style"
+                    tools:text="杭州市"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_15" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_down_arrow"
+                    android:scaleType="fitXY"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_6" />
+            </LinearLayout>
             <View
                 android:layout_width="@dimen/dp_1"
                 android:layout_height="@dimen/dp_20"
                 android:background="@color/backGround4"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical" />
             <com.mall.sls.common.widget.textview.ConventionalEditTextView
                 android:id="@+id/address_et"
                 style="@style/login_input_phone_style"
                 android:hint="@string/input_shipping_address"
                 android:inputType="text"
-                android:layout_marginLeft="@dimen/dp_42"/>
+                android:layout_marginLeft="@dimen/dp_15"/>
         </LinearLayout>
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_385">
+        android:layout_height="@dimen/dp_250">
 
         <com.amap.api.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_385" />
+            android:layout_height="@dimen/dp_250" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

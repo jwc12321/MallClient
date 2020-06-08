@@ -43,10 +43,11 @@ import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderGoodsVo;
 import com.mall.sls.data.entity.OrderTimeInfo;
+import com.mall.sls.data.entity.ShipOrderInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.entity.WebViewDetailInfo;
 import com.mall.sls.data.event.PayAbortEvent;
 import com.mall.sls.data.event.WXSuccessPayEvent;
-import com.mall.sls.homepage.ui.ActivityGoodsDetailActivity;
 import com.mall.sls.homepage.ui.ActivityGroupGoodsActivity;
 import com.mall.sls.homepage.ui.OrdinaryGoodsDetailActivity;
 import com.mall.sls.homepage.ui.SelectPayTypeActivity;
@@ -56,6 +57,7 @@ import com.mall.sls.order.OrderContract;
 import com.mall.sls.order.OrderModule;
 import com.mall.sls.order.adapter.OrderInformationAdapter;
 import com.mall.sls.order.presenter.OrderDetailsPresenter;
+import com.mall.sls.webview.ui.WebViewActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -81,7 +83,8 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/12.
  * 描述：订单详情
  */
-public class GoodsOrderDetailsActivity extends BaseActivity implements OrderContract.OrderDetailsView, OrderInformationAdapter.OnItemClickListener {
+public class GoodsOrderDetailsActivity extends BaseActivity implements OrderContract.OrderDetailsView, OrderInformationAdapter.OnItemClickListener, MSTearDownView.TimeOutListener {
+
 
     @BindView(R.id.back)
     ImageView back;
@@ -95,10 +98,20 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     ConventionalTextView remainingPaymentTimeTv;
     @BindView(R.id.count_down)
     MSTearDownView countDown;
-    @BindView(R.id.day_tv)
-    ConventionalTextView dayTv;
     @BindView(R.id.count_down_ll)
     LinearLayout countDownLl;
+    @BindView(R.id.status_iv)
+    ImageView statusIv;
+    @BindView(R.id.delivery_tv)
+    ConventionalTextView deliveryTv;
+    @BindView(R.id.delivery_info)
+    ConventionalTextView deliveryInfo;
+    @BindView(R.id.delivery_time)
+    ConventionalTextView deliveryTime;
+    @BindView(R.id.delivery_rl)
+    RelativeLayout deliveryRl;
+    @BindView(R.id.fen_ge_line)
+    View fenGeLine;
     @BindView(R.id.address_tv)
     ConventionalTextView addressTv;
     @BindView(R.id.name_phone)
@@ -158,6 +171,9 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private String grouponId;
     private String goodsProductId;
     private String goodsId;
+    private List<ShipOrderInfo> shipOrderInfos;
+    private WebViewDetailInfo webViewDetailInfo;
+    private String sfH5Url;
 
     @Inject
     OrderDetailsPresenter orderDetailsPresenter;
@@ -211,7 +227,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
         showMessage(getString(R.string.copy_successfully));
     }
 
-    @OnClick({R.id.back, R.id.left_bt, R.id.right_bt})
+    @OnClick({R.id.back, R.id.left_bt, R.id.right_bt, R.id.delivery_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back://
@@ -223,7 +239,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                     intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
                     intent.putExtra(StaticData.PAYMENT_AMOUNT, orderTotalPrice);
                     startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
-                } else {
+                } else if (TextUtils.equals(StaticData.TO_BE_SHARE, orderStatusText)) {
                     if (!PayTypeInstalledUtils.isWeixinAvilible(GoodsOrderDetailsActivity.this)) {
                         showMessage(getString(R.string.install_weixin));
                         return;
@@ -231,18 +247,26 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                     shareBitMap = QRCodeFileUtils.createBitmap3(goodsIv, 150, 150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
                     Intent intent = new Intent(this, SelectShareTypeActivity.class);
                     startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
+                } else {
+                    webViewDetailInfo = new WebViewDetailInfo();
+                    webViewDetailInfo.setTitle(getString(R.string.logistics_details));
+                    webViewDetailInfo.setUrl(sfH5Url);
+                    WebViewActivity.start(this, webViewDetailInfo);
                 }
                 break;
             case R.id.left_bt:
                 if (TextUtils.equals(StaticData.TO_PAY, orderStatusText)) {
                     orderDetailsPresenter.cancelOrder(goodsOrderId);
-                }else {
-                    if(isActivity){
-                        ActivityGroupGoodsActivity.start(this,goodsId);
-                    }else {
-                        OrdinaryGoodsDetailActivity.start(this,goodsId);
+                } else {
+                    if (isActivity) {
+                        ActivityGroupGoodsActivity.start(this, goodsId);
+                    } else {
+                        OrdinaryGoodsDetailActivity.start(this, goodsId);
                     }
                 }
+                break;
+            case R.id.delivery_rl://查看物流信息
+                DeliveryinfoActivity.start(this, shipOrderInfos);
                 break;
             default:
         }
@@ -367,32 +391,24 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 long now = FormatUtil.dateToStamp(goodsOrderDetails.getSystemTime());
                 long groupExpireTime = FormatUtil.dateToStamp(goodsOrderDetails.getPayLimitTime());
                 if (now < groupExpireTime) {
+                    countDown.setTimeOutListener(this);
                     countDown.startTearDown(groupExpireTime / 1000, now / 1000);
+                    countDown.setVisibility(View.VISIBLE);
+                } else {
+                    countDown.setVisibility(View.GONE);
                 }
                 isPay.setText(getString(R.string.to_be_paid));
-                dayTv.setVisibility(View.GONE);
-                countDown.setVisibility(View.VISIBLE);
-            } else if (TextUtils.equals(StaticData.TO_BE_SHARE, goodsOrderDetails.getOrderStatus()) && !TextUtils.isEmpty(goodsOrderDetails.getSystemTime()) && !TextUtils.isEmpty(goodsOrderDetails.getEndGrouponTime())) {
-                isPay.setText(getString(R.string.actually_apaid));
-                long now = FormatUtil.dateToStamp(goodsOrderDetails.getSystemTime());
-                long groupExpireTime = FormatUtil.dateToStamp(goodsOrderDetails.getEndGrouponTime());
-                if (now < groupExpireTime) {
-                    long day = FormatUtil.day(now, groupExpireTime);
-                    if (day > 0) {
-                        dayTv.setText(day + "天");
-                        dayTv.setVisibility(View.VISIBLE);
-                        countDown.setVisibility(View.GONE);
-                    } else {
-                        dayTv.setVisibility(View.GONE);
-                        countDown.setVisibility(View.VISIBLE);
-                        countDown.startTearDown(groupExpireTime / 1000, now / 1000);
-                    }
-                }
             } else {
                 isPay.setText(getString(R.string.actually_apaid));
             }
             isActivity = goodsOrderDetails.getActivity();
             grouponId = goodsOrderDetails.getGrouponLinkId();
+            shipOrderInfos = goodsOrderDetails.getShipOrderInfos();
+            if (shipOrderInfos != null && shipOrderInfos.size() > 0) {
+                deliveryInfo.setText(shipOrderInfos.get(0).getStatusDesc());
+                deliveryTime.setText(shipOrderInfos.get(0).getStatusTime());
+            }
+            sfH5Url = goodsOrderDetails.getSfH5Url();
         }
     }
 
@@ -436,28 +452,36 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 rightBt.setVisibility(View.VISIBLE);
                 rightBt.setText(getString(R.string.to_pay));
                 leftBt.setText(getString(R.string.cancel_order));
+                deliveryRl.setVisibility(View.GONE);
+                fenGeLine.setVisibility(View.GONE);
                 break;
             case StaticData.TO_BE_SHARE:
                 orderStatus.setText(getString(R.string.pending_share));
-                countDownLl.setVisibility(View.VISIBLE);
-                remainingPaymentTimeTv.setText(getString(R.string.share_remaining_time));
+                countDownLl.setVisibility(View.GONE);
                 btRl.setVisibility(View.VISIBLE);
                 leftBt.setVisibility(View.GONE);
                 rightBt.setVisibility(View.VISIBLE);
                 rightBt.setText(getString(R.string.invite_friends));
+                deliveryRl.setVisibility(View.GONE);
+                fenGeLine.setVisibility(View.GONE);
                 break;
             case StaticData.TO_BE_DELIVERED:
                 orderStatus.setText(getString(R.string.pending_delivery));
                 countDownLl.setVisibility(View.GONE);
                 btRl.setVisibility(View.GONE);
+                deliveryRl.setVisibility(View.GONE);
+                fenGeLine.setVisibility(View.GONE);
                 break;
             case StaticData.TO_BE_RECEIVED:
                 orderStatus.setText(getString(R.string.shipping));
                 countDownLl.setVisibility(View.GONE);
                 btRl.setVisibility(View.VISIBLE);
                 leftBt.setVisibility(View.VISIBLE);
-                rightBt.setVisibility(View.GONE);
+                rightBt.setVisibility(View.VISIBLE);
                 leftBt.setText(getString(R.string.one_more_order));
+                rightBt.setText(getString(R.string.check_map));
+                deliveryRl.setVisibility(View.VISIBLE);
+                fenGeLine.setVisibility(View.VISIBLE);
                 break;
             case StaticData.RECEIVED:
             case StaticData.SYS_RECEIVED:
@@ -467,23 +491,19 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 leftBt.setVisibility(View.VISIBLE);
                 rightBt.setVisibility(View.GONE);
                 leftBt.setText(getString(R.string.one_more_order));
+                deliveryRl.setVisibility(View.VISIBLE);
+                fenGeLine.setVisibility(View.VISIBLE);
                 break;
             case StaticData.CANCELLED:
+            case StaticData.SYS_CANCELLED:
                 orderStatus.setText(getString(R.string.transaction_cancel));
                 countDownLl.setVisibility(View.GONE);
                 btRl.setVisibility(View.VISIBLE);
                 leftBt.setVisibility(View.VISIBLE);
                 rightBt.setVisibility(View.GONE);
                 leftBt.setText(getString(R.string.one_more_order));
-                break;
-            case StaticData.SYS_CANCELLED:
-                orderStatus.setText(getString(R.string.transaction_cancel));
-                countDownLl.setVisibility(View.VISIBLE);
-                remainingPaymentTimeTv.setText(getString(R.string.no_pay_cancel));
-                btRl.setVisibility(View.VISIBLE);
-                leftBt.setVisibility(View.VISIBLE);
-                rightBt.setVisibility(View.GONE);
-                leftBt.setText(getString(R.string.one_more_order));
+                deliveryRl.setVisibility(View.GONE);
+                fenGeLine.setVisibility(View.GONE);
                 break;
             default:
         }
@@ -511,6 +531,11 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
         };
 
         new Thread(runnable).start();
+    }
+
+    @Override
+    public void timeOut() {
+        orderDetailsPresenter.getOrderDetails(goodsOrderId);
     }
 
     public static class MyHandler extends StaticHandler<GoodsOrderDetailsActivity> {

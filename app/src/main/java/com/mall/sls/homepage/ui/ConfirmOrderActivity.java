@@ -202,7 +202,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                 coupon.setText(getString(R.string.no_available));
             } else {
                 if (TextUtils.equals("-1", couponId)) {
-                    coupon.setText(confirmOrderDetail.getAvailableCouponLength() + "张优惠卷可用");
+                    coupon.setText(confirmOrderDetail.getAvailableCouponLength() + "张优惠券可用");
                 } else {
                     coupon.setText("-¥" + confirmOrderDetail.getCouponPrice());
                 }
@@ -318,6 +318,10 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                     if (data != null) {
                         tipBack = data.getStringExtra(StaticData.TIP_BACK);
                         if (TextUtils.equals(StaticData.REFLASH_ONE, tipBack)) {
+                            if(TextUtils.isEmpty(addressId)){
+                                showMessage(getString(R.string.select_address));
+                                return;
+                            }
                             confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
                         } else {
                             finish();

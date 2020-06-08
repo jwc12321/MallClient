@@ -15,7 +15,7 @@ import java.lang.ref.WeakReference;
  * Created by JWC on 2018/6/5.
  */
 
-public class MSTearDownView extends LinearLayout {
+public class DhmsTearDownView extends LinearLayout {
 
     public long endTime = 0L;
     public long sysTime =0L;
@@ -26,21 +26,21 @@ public class MSTearDownView extends LinearLayout {
 
     private TearDownHandler mHandler = new TearDownHandler(this);
 
-    private ConventionalTextView   minutsTextView, secondTextView;
-    public MSTearDownView(Context context) {
+    private ConventionalTextView  dayTextView,hourTextView, minutsTextView, secondTextView,dayTv,hourTv;
+    public DhmsTearDownView(Context context) {
         super(context);
         init(context, null);
 
     }
 
-    public MSTearDownView(Context context, AttributeSet attributeSet) {
+    public DhmsTearDownView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         init(context, attributeSet);
 
     }
 
-    public MSTearDownView(Context context,
-                              AttributeSet attributeSet, int paramInt) {
+    public DhmsTearDownView(Context context,
+                            AttributeSet attributeSet, int paramInt) {
         super(context, attributeSet, paramInt);
         init(context, attributeSet);
     }
@@ -59,9 +59,13 @@ public class MSTearDownView extends LinearLayout {
     private void init(Context context, AttributeSet attributeSet) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.layout_ms_tear_down, this);
+        inflater.inflate(R.layout.layout_dhms_tear_down, this);
+        dayTextView=(ConventionalTextView)findViewById(R.id.day_time);
+        hourTextView = (ConventionalTextView) findViewById(R.id.hour_time);
         minutsTextView = (ConventionalTextView) findViewById(R.id.min_time);
         secondTextView = (ConventionalTextView) findViewById(R.id.second_time);
+        dayTv=(ConventionalTextView) findViewById(R.id.day_tv);
+        hourTv=(ConventionalTextView) findViewById(R.id.hour_tv);
     }
 
 
@@ -86,12 +90,34 @@ public class MSTearDownView extends LinearLayout {
         if (mIsAttachedToWindow) {
             long remainTime= cutdownTime;
             if (remainTime >0) {
+                long day = 0;
                 long hour = 0;
                 long min = 0;
                 long sec = 0;
-                hour = remainTime / (60 * 60);
-                min = (remainTime / 60  - hour * 60);
-                sec = (remainTime -  hour * 60 * 60 - min * 60);
+                day = remainTime / (24 * 60 * 60);
+                hour = (remainTime / (60 * 60) - day * 24);
+                min = (remainTime / 60 - day * 24 * 60 - hour * 60);
+                sec = (remainTime - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+                if(day==0){
+                    dayTextView.setVisibility(GONE);
+                    dayTv.setVisibility(GONE);
+                }else {
+                    if (String.valueOf(day).length() == 1) {
+                        dayTextView.setText("0" + day);
+                    } else {
+                        dayTextView.setText(String.valueOf(day));
+                    }
+                }
+                if(hour==0){
+                    hourTextView.setVisibility(GONE);
+                    hourTv.setVisibility(GONE);
+                }else {
+                    if (String.valueOf(hour).length() == 1) {
+                        hourTextView.setText("0" + hour);
+                    } else {
+                        hourTextView.setText(String.valueOf(hour));
+                    }
+                }
                 if(String.valueOf(min).length()==1){
                     minutsTextView.setText("0"+min);
                 }else {
@@ -113,15 +139,15 @@ public class MSTearDownView extends LinearLayout {
 
 
     public static class TearDownHandler extends Handler {
-        private WeakReference<MSTearDownView> mTextViewRef;
+        private WeakReference<DhmsTearDownView> mTextViewRef;
 
-        public TearDownHandler(MSTearDownView view) {
-            mTextViewRef = new WeakReference<MSTearDownView>(view);
+        public TearDownHandler(DhmsTearDownView view) {
+            mTextViewRef = new WeakReference<DhmsTearDownView>(view);
         }
 
         @Override
         public void handleMessage(Message msg) {
-            MSTearDownView textView = mTextViewRef.get();
+            DhmsTearDownView textView = mTextViewRef.get();
             if (null != textView) {
                 removeMessages(MESSAGE_WHAT);
                 textView.cutDown();

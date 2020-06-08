@@ -63,22 +63,17 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dp_32"
+                android:layout_marginRight="@dimen/dp_16"
                 android:src="@mipmap/icon_home_message" />
 
             <com.mall.sls.common.widget.textview.ConventionalTextView
                 android:id="@+id/message_count"
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_14"
+                android:layout_width="@dimen/dp_8"
+                android:layout_height="@dimen/dp_8"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="@dimen/dp_8"
+                android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_15"
-                android:background="@drawable/home_message_number_bg"
-                android:gravity="center"
-                android:textColor="@color/appText1"
-                android:textSize="@dimen/sp_10"
-                android:visibility="gone"
-                tools:text="99+" />
+                android:background="@drawable/common_four_back_forty_three_bg" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -201,27 +196,14 @@
         </androidx.core.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <RelativeLayout
-        android:id="@+id/bindWxRl"
+
+    <ImageView
+        android:id="@+id/bind_wx_iv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_49"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/icon_bind_wx"
         android:layout_alignParentBottom="true"
-        android:background="@color/backGround44"
-        android:visibility="gone">
-
-        <com.mall.sls.common.widget.textview.ConventionalTextView
-            style="@style/size14_color_app1_text_style"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_15"
-            android:text="@string/bind_wx_for_reward" />
-
-        <ImageView
-            android:id="@+id/bind_wx_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dp_15"
-            android:src="@mipmap/icon_bind_wx" />
-    </RelativeLayout>
+        android:adjustViewBounds="true"
+        android:visibility="gone"/>
 </RelativeLayout>

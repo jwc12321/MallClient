@@ -73,7 +73,7 @@
     <string name="other">其他</string>
     <string name="set_default_address">设为默认地址</string>
     <string name="save_receipt_information">保存收货信息</string>
-    <string name="select_address">选择收获地址</string>
+    <string name="select_address">选择收货地址</string>
     <string name="my_address">我的收获地址</string>
     <string name="add_address">新增地址</string>
     <string name="edit">编辑</string>
@@ -142,7 +142,7 @@
     <string name="payment_method">支付方式：</string>
     <string name="payment_time">付款时间：</string>
     <string name="order_notes">订单备注：</string>
-    <string name="remaining_payment_time">剩余支付时间为：</string>
+    <string name="remaining_payment_time">支付剩余时间为：</string>
     <string name="cancel_time_tip">15分钟内未支付，订单将自动取消</string>
     <string name="copy_successfully">复制成功</string>
     <string name="order_submission_successful">订单提交成功</string>
@@ -285,4 +285,12 @@
     <string name="bind_wx_for_reward">绑定微信解锁全部功能</string>
     <string name="code_login_register">验证码登录/注册</string>
     <string name="fight_together">拼团</string>
+    <string name="day">天</string>
+    <string name="hour">时</string>
+    <string name="min">分</string>
+    <string name="second">秒</string>
+    <string name="delivery_info">配送信息</string>
+    <string name="check_map">查看地图</string>
+    <string name="logistics_details">物流详情</string>
+
 </resources>

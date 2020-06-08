@@ -199,7 +199,7 @@ public class OrderMessageActivity extends BaseActivity implements MessageContrac
 
     @Override
     public void goOrderDetails(String orderId,String id) {
-        msgInfoPresenter.msgChangeStatus(id);
+//        msgInfoPresenter.msgChangeStatus(id);
         GoodsOrderDetailsActivity.start(this,orderId);
     }
 

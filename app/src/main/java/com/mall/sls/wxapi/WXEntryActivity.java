@@ -1,6 +1,7 @@
 package com.mall.sls.wxapi;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import com.mall.sls.common.StaticData;
 import com.mall.sls.data.event.PayAbortEvent;
 import com.mall.sls.data.event.WXLoginEvent;
 import com.mall.sls.data.event.WXSuccessPayEvent;
+import com.mall.sls.splash.SplashActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -42,6 +44,9 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             WXMediaMessage mediaMsg = showReq.message;
             String extInfo = mediaMsg.messageExt;
             Log.d("1111", "数据" +extInfo);
+            Intent intent = new Intent(this, SplashActivity.class);
+            intent.setData(Uri.parse(extInfo));
+            startActivity(intent);
         }
     }
 

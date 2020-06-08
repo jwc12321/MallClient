@@ -59,7 +59,8 @@
                     android:textColor="@drawable/code_text_select"
                     android:textSize="@dimen/sp_16"
                     android:gravity="center"
-                    android:text="@string/no_invitation_code" />
+                    android:text="@string/no_invitation_code"
+                    android:visibility="gone"/>
             </RelativeLayout>
 
             <View

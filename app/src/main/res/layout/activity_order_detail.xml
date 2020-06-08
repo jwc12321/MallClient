@@ -51,50 +51,97 @@
                 android:background="@color/backGround6"
                 android:orientation="vertical">
 
-                <com.mall.sls.common.widget.textview.MediumThickTextView
-                    android:id="@+id/order_status"
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_42"
-                    android:background="@color/backGround1"
-                    android:gravity="center_vertical"
-                    android:paddingStart="@dimen/dp_15"
-                    android:paddingLeft="@dimen/dp_15"
-                    android:textColor="@color/appText1"
-                    android:textSize="@dimen/sp_16"
-                    tools:text="已签收" />
+                    android:layout_height="@dimen/dp_72"
+                    android:background="@color/backGround1">
 
-                <LinearLayout
-                    android:id="@+id/count_down_ll"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_51"
-                    android:background="@color/backGround1"
-                    android:visibility="gone">
-
-                    <com.mall.sls.common.widget.textview.ConventionalTextView
-                        android:id="@+id/remaining_payment_time_tv"
-                        style="@style/size15_color_app1_text_style"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/dp_15"
-                        tools:text="@string/remaining_payment_time" />
-
-                    <com.mall.sls.common.widget.textview.MSTearDownView
-                        android:id="@+id/count_down"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:visibility="gone"/>
-                    <com.mall.sls.common.widget.textview.ConventionalTextView
-                        android:id="@+id/day_tv"
-                        style="@style/size15_color_app1_text_style"
-                        tools:text="天"
-                        android:layout_gravity="center_vertical"
-                        android:visibility="gone"/>
-                </LinearLayout>
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_30"
+                        android:orientation="vertical">
+
+                        <com.mall.sls.common.widget.textview.MediumThickTextView
+                            android:id="@+id/order_status"
+                            style="@style/size16_color_app1_text_style"
+                            tools:text="待发货" />
+
+                        <LinearLayout
+                            android:id="@+id/count_down_ll"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_4"
+                            android:visibility="gone">
+
+                            <com.mall.sls.common.widget.textview.ConventionalTextView
+                                android:id="@+id/remaining_payment_time_tv"
+                                style="@style/size15_color_app1_text_style"
+                                android:layout_gravity="center_vertical"
+                                tools:text="@string/remaining_payment_time" />
+
+                            <com.mall.sls.common.widget.textview.MSTearDownView
+                                android:id="@+id/count_down"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/status_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/delivery_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/common_four_app_one_bg">
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/delivery_tv"
+                            style="@style/size14_color_app3_text_style"
+                            android:layout_marginLeft="@dimen/dp_15"
+                            android:layout_marginTop="@dimen/dp_15"
+                            android:text="@string/delivery_info" />
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/delivery_info"
+                            style="@style/size14_color_app3_text_style"
+                            android:layout_marginLeft="@dimen/dp_20"
+                            android:layout_marginTop="@dimen/dp_15"
+                            android:layout_marginRight="@dimen/dp_15"
+                            android:layout_toRightOf="@id/delivery_tv"
+                            tools:text="2019-09-09" />
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/delivery_time"
+                            style="@style/size14_color_app3_text_style"
+                            android:layout_below="@id/delivery_info"
+                            android:layout_marginLeft="@dimen/dp_20"
+                            android:layout_marginTop="@dimen/dp_3"
+                            android:layout_marginRight="@dimen/dp_15"
+                            android:layout_marginBottom="@dimen/dp_15"
+                            android:layout_toRightOf="@id/delivery_tv"
+                            tools:text="2019-09-09" />
+
+                        <ImageView
+                            style="@style/black_arrow_back_style"
+                            android:layout_marginTop="@dimen/dp_16" />
+                    </RelativeLayout>
+
+                    <View
+                        android:id="@+id/fen_ge_line"
+                        style="@style/fifteen_back_nine_line_style" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -306,15 +353,15 @@
         android:id="@+id/bt_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_54"
-        android:background="@color/appText1"
         android:layout_alignParentBottom="true"
+        android:background="@color/appText1"
         android:visibility="gone">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp_15">
 
             <com.mall.sls.common.widget.textview.ConventionalTextView
