@@ -12,7 +12,7 @@
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/title"
             style="@style/title_text_style"
-            android:text="@string/local_team" />
+            android:text="@string/fight_together" />
     </RelativeLayout>
 
     <LinearLayout

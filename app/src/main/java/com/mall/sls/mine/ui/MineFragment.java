@@ -1,6 +1,7 @@
 package com.mall.sls.mine.ui;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import com.mall.sls.data.entity.MineRewardInfo;
 import com.mall.sls.data.entity.UserInfo;
 import com.mall.sls.data.entity.VipAmountInfo;
 import com.mall.sls.login.ui.WeixinLoginActivity;
+import com.mall.sls.lottery.ui.LotteryListActivity;
 import com.mall.sls.member.ui.SuperMemberActivity;
 import com.mall.sls.mine.DaggerMineComponent;
 import com.mall.sls.mine.MineContract;
@@ -138,6 +140,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     private ClipboardManager myClipboard;
     private ClipData myClip;
     private String vipDescription;
+    private String vipExpireDate;
 
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
@@ -184,7 +187,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
         }
     }
 
-    @OnClick({R.id.right_iv, R.id.all_order_rl, R.id.pending_payment_iv, R.id.pending_share_iv, R.id.pending_delivery_iv, R.id.shipping_iv, R.id.completed_iv, R.id.address_manage, R.id.invite_friends, R.id.verified_rl, R.id.my_invitation_iv, R.id.super_member_rl, R.id.member_type_iv, R.id.feedback, R.id.copy})
+    @OnClick({R.id.right_iv, R.id.all_order_rl, R.id.pending_payment_iv, R.id.pending_share_iv, R.id.pending_delivery_iv, R.id.shipping_iv, R.id.completed_iv, R.id.address_manage, R.id.invite_friends, R.id.verified_rl, R.id.my_invitation_iv, R.id.super_member_rl, R.id.member_type_iv, R.id.feedback, R.id.copy,R.id.lottery})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.right_iv://设置
@@ -231,7 +234,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
             case R.id.super_member_rl://超级会员
             case R.id.member_type_iv:
                 goVerify = StaticData.REFLASH_ONE;
-                SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount, vipDescription,certifyPay,certifyAmount);
+                SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount, vipDescription,certifyPay,certifyAmount,vipExpireDate);
                 break;
             case R.id.feedback://意见反馈
                 FeedBackActivity.start(getActivity());
@@ -240,6 +243,9 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 myClip = ClipData.newPlainText("text", inviteCode);
                 myClipboard.setPrimaryClip(myClip);
                 showMessage(getString(R.string.copy_successfully));
+                break;
+            case R.id.lottery:
+                LotteryListActivity.start(getActivity());
                 break;
             default:
         }
@@ -291,6 +297,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 GlideHelper.load(getActivity(), avatarUrl, R.mipmap.icon_defalut_head, headPhoto);
                 phone.setText(mobile);
                 VerifyManager.saveVerify(userInfo.getUserLevel());
+                vipExpireDate=mineInfo.getVipExpireDate();
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, userInfo.getUserLevel())) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_ordinary_member);
                     verifiedIv.setSelected(false);

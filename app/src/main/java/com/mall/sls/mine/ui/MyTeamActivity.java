@@ -152,7 +152,7 @@ public class MyTeamActivity extends BaseActivity implements MineContract.MyTeamI
     public void renderMyTeamInfo(TeamInfo teamInfo) {
         refreshLayout.finishRefresh();
         if (teamInfo != null) {
-            if (teamInfo != null && teamInfo.getTeamInfos().size() > 0) {
+            if (teamInfo.getTeamInfos() != null && teamInfo.getTeamInfos().size() > 0) {
                 recordRv.setVisibility(View.VISIBLE);
                 noRecordLl.setVisibility(View.GONE);
                 if (teamInfo.getTeamInfos().size() == Integer.parseInt(StaticData.TEN_LIST_SIZE)) {

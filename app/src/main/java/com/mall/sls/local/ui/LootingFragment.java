@@ -135,7 +135,7 @@ public class LootingFragment extends BaseFragment implements GoodsItemAdapter.On
     public void renderLocalTeam(LocalTeam localTeam) {
         refreshLayout.finishRefresh();
         if (localTeam != null) {
-            if (localTeam != null && localTeam.getGoodsItemInfos().size() > 0) {
+            if (localTeam.getGoodsItemInfos()!= null && localTeam.getGoodsItemInfos().size() > 0) {
                 recordRv.setVisibility(View.VISIBLE);
                 noRecordLl.setVisibility(View.GONE);
                 if (localTeam.getGoodsItemInfos().size() == Integer.parseInt(StaticData.TEN_LIST_SIZE)) {

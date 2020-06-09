@@ -16,6 +16,9 @@ public class MineInfo {
     //超级会员描述
     @SerializedName("vipDescription")
     private String vipDescription;
+    //超级过期日期
+    @SerializedName("vipExpireDate")
+    private String vipExpireDate;
 
     public UserInfo getUserInfo() {
         return userInfo;
@@ -39,5 +42,13 @@ public class MineInfo {
 
     public void setVipDescription(String vipDescription) {
         this.vipDescription = vipDescription;
+    }
+
+    public String getVipExpireDate() {
+        return vipExpireDate;
+    }
+
+    public void setVipExpireDate(String vipExpireDate) {
+        this.vipExpireDate = vipExpireDate;
     }
 }

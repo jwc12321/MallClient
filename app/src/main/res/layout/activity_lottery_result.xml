@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appText1"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_red_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/lottery_detail" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_27"
+                android:src="@mipmap/icon_lottery_success" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/size15_color_back1_text_style"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_9"
+                android:text="@string/join_success" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/size15_color_app3_text_style"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_7"
+                android:text="@string/join_tip" />
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                style="@style/size16_color_app3_text_style"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_24"
+                android:text="@string/lottery_number" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_233"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_marginTop="@dimen/dp_12"
+                android:layout_marginRight="@dimen/dp_30"
+                android:background="@color/backGround49">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/result_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="@string/layoutManager_Gridlayout" />
+            </RelativeLayout>
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                android:id="@+id/time"
+                style="@style/size16_color_app3_text_style"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_17"
+                tools:text="开奖时间" />
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                android:id="@+id/confirm_bt"
+                style="@style/common_next_bt_style"
+                android:layout_marginLeft="@dimen/dp_58"
+                android:layout_marginTop="@dimen/dp_13"
+                android:layout_marginRight="@dimen/dp_58"
+                android:text="@string/confirm" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -133,7 +133,7 @@
     <string name="order_detail">订单详情</string>
     <string name="delivery_time">配送时间</string>
     <string name="commodity_price">商品总价</string>
-    <string name="delivery_fee">运费（快递）</string>
+    <string name="delivery_fee">运费</string>
     <string name="real_payment">实付款：</string>
     <string name="copy">复制</string>
     <string name="order_number">订单编号：</string>
@@ -249,7 +249,7 @@
     <string name="share_success">分享成功</string>
     <string name="invite_friend_vip">邀请好友成为VIP</string>
     <string name="my_invitation_code">我的邀请码</string>
-    <string name="scan_reward">扫一扫注册有惊喜</string>
+    <string name="scan_reward">长按识别注册并下载APP</string>
     <string name="share_to">分享到</string>
     <string name="submit">提交</string>
     <string name="feedback">意见反馈</string>
@@ -278,7 +278,7 @@
     <string name="order_info">订单信息</string>
     <string name="payment_number">支付单号：</string>
     <string name="copy_invite_code">复制邀请码</string>
-    <string name="phone_login">手机号登录</string>
+    <string name="phone_login">手机号登录/注册</string>
     <string name="bind_success_wx">微信绑定成功</string>
     <string name="transaction_cancel">交易已取消</string>
     <string name="no_pay_cancel">订单未支付，已自动取消</string>
@@ -289,8 +289,32 @@
     <string name="hour">时</string>
     <string name="min">分</string>
     <string name="second">秒</string>
+    <string name="second_end">秒截止</string>
     <string name="delivery_info">配送信息</string>
     <string name="check_map">查看地图</string>
     <string name="logistics_details">物流详情</string>
+    <string name="input_city_name">输入城市名或拼音查询</string>
+    <string name="lottery">抽奖</string>
+    <string name="lucky_draw">抽奖机会</string>
+    <string name="lottery_record">开奖历史</string>
+    <string name="lucky_koi">幸运锦鲤</string>
+    <string name="waiting_draw">等待开奖</string>
+    <string name="participate_draw">参与抽奖</string>
+    <string name="lottery_count_down">抽奖结束倒计时</string>
+    <string name="delivery_address">配送地址</string>
+    <string name="redemption_times">兑换次数</string>
+    <string name="remaining_times">剩余次数</string>
+    <string name="times">次</string>
+    <string name="lottery_detail">抽奖详情</string>
+    <string name="join_success">参与成功</string>
+    <string name="join_tip">请妥善保管好抽奖编号，以便后续查看抽奖结果</string>
+    <string name="lottery_number">您的抽奖编号为：</string>
+    <string name="no_lottery_time">亲，您的抽奖次数已用完</string>
+    <string name="do_the_task">去做任务得更多抽奖机会吧！</string>
+    <string name="i_know">知道了</string>
+    <string name="go_shop">去购物</string>
+    <string name="is_over">已结束</string>
+
+
 
 </resources>

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -82,11 +83,7 @@ public class SelectPayTypeActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.all_rl:
             case R.id.close_iv:
-                selectType=StaticData.REFLASH_TWO;
-                Intent intent = new Intent();
-                intent.putExtra(StaticData.SELECT_TYPE, selectType);
-                setResult(Activity.RESULT_OK, intent);
-                finish();
+                back();
                 break;
             case R.id.item_rl:
                 break;
@@ -112,4 +109,26 @@ public class SelectPayTypeActivity extends BaseActivity {
         selectWeixinIv.setSelected(TextUtils.equals(StaticData.REFLASH_ZERO,selectType));
         selectAliIv.setSelected(TextUtils.equals(StaticData.REFLASH_ONE,selectType));
     }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            back();
+            return true;
+
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void back() {
+        selectType=StaticData.REFLASH_TWO;
+        Intent intent = new Intent();
+        intent.putExtra(StaticData.SELECT_TYPE, selectType);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
+    }
+
+
+
 }

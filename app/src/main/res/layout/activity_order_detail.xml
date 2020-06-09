@@ -93,7 +93,11 @@
                     <ImageView
                         android:id="@+id/status_iv"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:src="@mipmap/icon_to_pay"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp_28"/>
                 </RelativeLayout>
 
                 <LinearLayout
@@ -153,7 +157,7 @@
                             style="@style/size14_color_app3_text_style"
                             android:layout_marginLeft="@dimen/dp_15"
                             android:layout_marginTop="@dimen/dp_15"
-                            android:text="@string/receipt_address" />
+                            android:text="@string/delivery_address" />
 
                         <com.mall.sls.common.widget.textview.ConventionalTextView
                             android:id="@+id/name_phone"

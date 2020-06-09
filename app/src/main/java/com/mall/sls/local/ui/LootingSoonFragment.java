@@ -131,7 +131,7 @@ public class LootingSoonFragment extends BaseFragment implements LootingSoonAdap
     public void renderLocalTeam(LocalTeam localTeam) {
         refreshLayout.finishRefresh();
         if (localTeam != null) {
-            if (localTeam != null && localTeam.getGoodsItemInfos().size() > 0) {
+            if (localTeam.getGoodsItemInfos()!= null && localTeam.getGoodsItemInfos().size() > 0) {
                 this.goodsItemInfos = localTeam.getGoodsItemInfos();
                 recordRv.setVisibility(View.VISIBLE);
                 noRecordLl.setVisibility(View.GONE);

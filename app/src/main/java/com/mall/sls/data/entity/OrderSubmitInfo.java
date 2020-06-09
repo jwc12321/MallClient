@@ -13,6 +13,8 @@ public class OrderSubmitInfo {
     //订单id
     @SerializedName("orderId")
     private String orderId ;
+    @SerializedName("pay")
+    private Boolean isPay;
 
     public String getGrouponLinkId() {
         return grouponLinkId;
@@ -28,5 +30,13 @@ public class OrderSubmitInfo {
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
+    }
+
+    public Boolean getPay() {
+        return isPay;
+    }
+
+    public void setPay(Boolean pay) {
+        isPay = pay;
     }
 }

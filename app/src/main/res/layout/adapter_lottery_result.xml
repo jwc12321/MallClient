@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_31"
+    android:orientation="vertical"
+    android:id="@+id/item_ll">
+
+
+    <com.mall.sls.common.widget.textview.MediumThickTextView
+        android:id="@+id/number"
+        style="@style/size16_color_back1_text_style"
+        tools:text="猜你喜欢"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>

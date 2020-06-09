@@ -191,7 +191,7 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     public void renderOrderList(OrderList orderList) {
         refreshLayout.finishRefresh();
         if (orderList != null) {
-            if (orderList != null && orderList.getGoodsOrderInfos().size() > 0) {
+            if (orderList.getGoodsOrderInfos() != null && orderList.getGoodsOrderInfos().size() > 0) {
                 recordRv.setVisibility(View.VISIBLE);
                 noRecordLl.setVisibility(View.GONE);
                 if (orderList.getGoodsOrderInfos().size() == Integer.parseInt(StaticData.TEN_LIST_SIZE)) {

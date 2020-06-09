@@ -128,7 +128,7 @@ public class OrderMessageActivity extends BaseActivity implements MessageContrac
     public void renderMsgInfo(MessageInfo messageInfo) {
         refreshLayout.finishRefresh();
         if (messageInfo != null) {
-            if (messageInfo != null && messageInfo.getMessageItemInfos().size() > 0) {
+            if (messageInfo.getMessageItemInfos() != null && messageInfo.getMessageItemInfos().size() > 0) {
                 recordRv.setVisibility(View.VISIBLE);
                 noRecordLl.setVisibility(View.GONE);
                 if (messageInfo.getMessageItemInfos().size() == Integer.parseInt(StaticData.TEN_LIST_SIZE)) {

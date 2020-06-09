@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/backGround42">
+    android:background="@color/backGround48">
 
     <ImageView
         android:layout_width="match_parent"
@@ -42,13 +42,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/look_iv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@mipmap/icon_up_vip"/>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_57"
                 android:layout_marginLeft="@dimen/dp_15"
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_marginRight="@dimen/dp_15"
-                android:background="@drawable/common_four_app_one_bg">
+                android:background="@drawable/common_four_app_one_bg"
+                android:visibility="gone">
 
                 <com.mall.sls.common.widget.textview.MediumThickTextView
                     android:id="@+id/code_tv"
@@ -86,11 +94,11 @@
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/share_rl"
-                android:layout_width="@dimen/dp_288"
-                android:layout_height="@dimen/dp_504"
+                android:layout_width="@dimen/dp_330"
+                android:layout_height="@dimen/dp_519"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp_28"
-                android:layout_marginBottom="@dimen/dp_28">
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginBottom="@dimen/dp_15">
                 <ImageView
                     android:id="@+id/iv"
                     android:layout_width="match_parent"
@@ -98,27 +106,20 @@
                     android:scaleType="fitXY"/>
 
                 <RelativeLayout
-                    android:layout_width="@dimen/dp_99"
-                    android:layout_height="@dimen/dp_99"
+                    android:layout_width="@dimen/dp_71"
+                    android:layout_height="@dimen/dp_71"
                     android:layout_centerHorizontal="true"
-                    android:layout_above="@id/tv"
-                    android:layout_marginBottom="@dimen/dp_6"
-                    android:background="@drawable/common_four_app_three_bg">
+                    android:layout_marginBottom="@dimen/dp_45"
+                    android:background="@drawable/common_four_app_three_bg"
+                    android:layout_alignParentBottom="true">
                     <ImageView
                         android:id="@+id/qrcode_iv"
-                        android:layout_width="@dimen/dp_97"
-                        android:layout_height="@dimen/dp_97"
+                        android:layout_width="@dimen/dp_69"
+                        android:layout_height="@dimen/dp_69"
                         android:background="@color/appText1"
                         android:scaleType="fitXY"
                         android:layout_centerInParent="true"/>
                 </RelativeLayout>
-                <com.mall.sls.common.widget.textview.ConventionalTextView
-                    android:id="@+id/tv"
-                   style="@style/size11_color_app3_text_style"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="@dimen/dp_9"
-                    android:text="@string/scan_reward"
-                    android:layout_centerHorizontal="true"/>
             </RelativeLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

@@ -1,12 +1,15 @@
 package com.mall.sls.address.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
@@ -26,24 +29,28 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.help.Inputtips;
-import com.amap.api.services.help.InputtipsQuery;
 import com.amap.api.services.help.Tip;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.address.adapter.MapAddressAdapter;
-import com.mall.sls.common.widget.textview.ConventionalEditTextView;
-import com.mall.sls.common.widget.textview.ConventionalTextView;
-import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.address.adapter.SearchAddressAdapter;
+import com.mall.sls.common.RequestCodeStatic;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.location.GeoCoderUtil;
 import com.mall.sls.common.location.LatLngEntity;
 import com.mall.sls.common.location.LocationBean;
+import com.mall.sls.common.widget.textview.ConventionalEditTextView;
+import com.mall.sls.common.widget.textview.ConventionalTextView;
+import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.homepage.ui.CityPickerActivity;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
 /**
@@ -52,7 +59,8 @@ import butterknife.OnTextChanged;
  * 留着以后可能会用
  */
 
-public class SelectAddressActivity extends BaseActivity implements LocationSource, AMapLocationListener, PoiSearch.OnPoiSearchListener, AMap.OnCameraChangeListener, MapAddressAdapter.OnItemClickListener, Inputtips.InputtipsListener {
+public class SelectAddressActivity extends BaseActivity implements LocationSource, AMapLocationListener, PoiSearch.OnPoiSearchListener, AMap.OnCameraChangeListener, MapAddressAdapter.OnItemClickListener,SearchAddressAdapter.OnItemClickListener {
+
 
     @BindView(R.id.back)
     ImageView back;
@@ -62,13 +70,24 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
     RelativeLayout titleRel;
     @BindView(R.id.local_city)
     ConventionalTextView localCity;
+    @BindView(R.id.local_city_ll)
+    LinearLayout localCityLl;
     @BindView(R.id.address_et)
     ConventionalEditTextView addressEt;
+    @BindView(R.id.cancel_bt)
+    ConventionalTextView cancelBt;
     @BindView(R.id.mapView)
     MapView mapView;
+    @BindView(R.id.map_rl)
+    RelativeLayout mapRl;
     @BindView(R.id.address_rv)
     RecyclerView addressRv;
-
+    @BindView(R.id.search_rv)
+    RecyclerView searchRv;
+    @BindView(R.id.no_record_ll)
+    LinearLayout noRecordLl;
+    @BindView(R.id.search_rl)
+    RelativeLayout searchRl;
     private AMap aMap;
     private static final int STROKE_COLOR = Color.argb(180, 3, 145, 255);
     private static final int FILL_COLOR = Color.argb(10, 0, 0, 180);
@@ -84,7 +103,9 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
     private PoiSearch poiSearch;//搜索
     private LocationBean currentLoc;
     private MapAddressAdapter mapAddressAdapter;
+    private SearchAddressAdapter searchAddressAdapter;
     private String keyWord;
+    private String type;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, SelectAddressActivity.class);
@@ -106,6 +127,9 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         mapAddressAdapter = new MapAddressAdapter();
         mapAddressAdapter.setOnItemClickListener(this);
         addressRv.setAdapter(mapAddressAdapter);
+        searchAddressAdapter = new SearchAddressAdapter();
+        searchAddressAdapter.setOnItemClickListener(this);
+        searchRv.setAdapter(searchAddressAdapter);
     }
 
     private void initMap() {
@@ -121,7 +145,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
     @OnTextChanged({R.id.address_et})
     public void checkAddressEnable() {
         keyWord = addressEt.getText().toString().trim();
-        doSearchKeyWord(keyWord, "");
+        doSearchKeyWord(keyWord, city);
     }
 
     /**
@@ -218,7 +242,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
                 mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
                 aMap.moveCamera(CameraUpdateFactory.zoomTo(15));
                 localCity.setText(city);
-                doSearchQuery(city, "", latitude, longitude);
+//                doSearchQuery(city, "", latitude, longitude);
             } else {
                 String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
                 Log.e("AmapErr", errText);
@@ -227,6 +251,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
     }
 
     protected void doSearchQuery(String city, String mType, double latitude, double longitude) {
+        type = StaticData.REFLASH_ONE;
         query = new PoiSearch.Query("", mType, city);// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
         query.setPageSize(50);// 设置每页最多返回多少条poiitem
         query.setPageNum(0);// 设置查第一页
@@ -239,6 +264,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
     }
 
     protected void doSearchKeyWord(String keyWord, String city) {
+        type = StaticData.REFLASH_ZERO;
         query = new PoiSearch.Query(keyWord, "", city);// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
         query.setPageSize(50);// 设置每页最多返回多少条poiitem
         query.setPageNum(0);// 设置查第一页
@@ -254,7 +280,19 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
                 Log.d("jjj0", "精度和纬度======" + poiResult + "==" + poiResult.getPois().size());
                 if (poiResult.getQuery().equals(query)) {// 是否是同一条
                     List<PoiItem> poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
-                    mapAddressAdapter.setData(poiItems);
+                    if (TextUtils.equals(StaticData.REFLASH_ONE, type)) {
+                        mapAddressAdapter.setData(poiItems);
+                    } else {
+                        searchRl.setVisibility(View.VISIBLE);
+                        if (poiItems != null && poiItems.size() > 0) {
+                            searchRv.setVisibility(View.VISIBLE);
+                            noRecordLl.setVisibility(View.GONE);
+                        } else {
+                            searchRv.setVisibility(View.GONE);
+                            noRecordLl.setVisibility(View.VISIBLE);
+                        }
+                        searchAddressAdapter.setData(poiItems);
+                    }
                 }
             }
         }
@@ -297,15 +335,65 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         String province = poiItem.getProvinceName();
         String city = poiItem.getCityName();
         String county = poiItem.getAdName();
-        LatLonPoint latLonPoint=poiItem.getLatLonPoint();
-        String lat=String.valueOf(latLonPoint.getLatitude());
-        String lng=String.valueOf(latLonPoint.getLongitude());
-        String detailAddress=poiItem.getSnippet();
-        Log.d("11","数据"+province+"=="+city+"=="+county+"=="+lat+"=="+lng+"=="+detailAddress);
+        LatLonPoint latLonPoint = poiItem.getLatLonPoint();
+        String lat = String.valueOf(latLonPoint.getLatitude());
+        String lng = String.valueOf(latLonPoint.getLongitude());
+        String detailAddress = poiItem.getSnippet();
+        Log.d("11", "数据" + province + "==" + city + "==" + county + "==" + lat + "==" + lng + "==" + detailAddress);
+        Intent intent = new Intent();
+        intent.putExtra(StaticData.PROVINCE, province);
+        intent.putExtra(StaticData.CITY, city);
+        intent.putExtra(StaticData.COUNT, county);
+        intent.putExtra(StaticData.LAT, lat);
+        intent.putExtra(StaticData.LNG, lng);
+        intent.putExtra(StaticData.DETAIL_ADDRESS, detailAddress);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    @OnClick({R.id.local_city_ll, R.id.back, R.id.cancel_bt})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.local_city_ll:
+                Intent intent = new Intent(this, CityPickerActivity.class);
+                intent.putExtra(StaticData.LOCAL_CITY, city);
+                startActivityForResult(intent, RequestCodeStatic.CHOICE_CITY);
+                break;
+            case R.id.back:
+                finish();
+                break;
+            case R.id.cancel_bt:
+                searchRl.setVisibility(View.GONE);
+                break;
+            default:
+        }
     }
 
     @Override
-    public void onGetInputtips(List<Tip> list, int i) {
-        Tip tip = list.get(0);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RequestCodeStatic.CHOICE_CITY://
+                    if (data != null) {
+                        city = data.getStringExtra(StaticData.CHOICE_CITY);
+                        localCity.setText(city);
+                    }
+                    break;
+                default:
+            }
+        }
+    }
+
+    @Override
+    public void selectSearch(PoiItem poiItem) {
+        String province = poiItem.getProvinceName();
+        String city = poiItem.getCityName();
+        String county = poiItem.getAdName();
+        LatLonPoint latLonPoint = poiItem.getLatLonPoint();
+        String lat = String.valueOf(latLonPoint.getLatitude());
+        String lng = String.valueOf(latLonPoint.getLongitude());
+        String detailAddress = poiItem.getSnippet();
+        Log.d("11", "数据" + province + "==" + city + "==" + county + "==" + lat + "==" + lng + "==" + detailAddress);
     }
 }

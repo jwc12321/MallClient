@@ -104,6 +104,8 @@ public class StaticData {
     public static final String GOODS_INFO ="GOODSINFO";//banner挑商品详情
     public static final String COUPON ="COUPON";//优惠卷
     public static final String INVITATION ="INVITATION";//邀请好友
+    public static final String SECKILL ="SECKILL";//秒杀
+    public static final String ADDRESS ="ADDRESS";
     public static final String CANCEL_TEXT="cancelText";
     public static final String CONFIRM_TEXT="confirmText";
     public static final String TIP_BACK="tipBack";
@@ -118,5 +120,19 @@ public class StaticData {
     public static final String VIP_DESCRIPTION="vipDescription";//超级会员描述
     public static final String CERTIFY_PAY ="certifyPay";//是否已经支付实人认证钱
     public static final String SHIP_ORDER_INFOS="shipOrderInfos";//物流信息
+    public static final String LOCAL_CITY="localCity";
+    public static final String CHOICE_CITY="choiceType";
+    public static final String PROVINCE="province";
+    public static final String CITY="city";
+    public static final String COUNT="county";
+    public static final String LAT="lat";
+    public static final String LNG="lng";
+    public static final String DETAIL_ADDRESS="detailAddress";
+    public static final String VIP_EXPIRE_DATE="vipExpireDate";//过期时间
+    public static final String PRIZE_NUMBER="prizeNumber";//抽奖机会
+    public static final String PRIZE_VO="prizeVo";//抽奖信息
+    public static final String PRIZE_ID="prizeId";
+    public static final String PRIZE_TIME="prizeTime";
+
 
 }

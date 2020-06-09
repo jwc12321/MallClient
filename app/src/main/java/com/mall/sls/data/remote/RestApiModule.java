@@ -119,7 +119,7 @@ public class RestApiModule {
                 Request request = original.newBuilder()
                         .header("Authorization", TokenManager.getToken() + "")
                         .header("X-Hc-Timestamp", FormatUtil.timeSecond())
-                        .header("areaCode", AreaCodeManager.getAreaCode()+"")
+//                        .header("areaCode", AreaCodeManager.getAreaCode()+"")
                         .build();
                 return chain.proceed(request);
             }

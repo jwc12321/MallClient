@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_red_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/lottery" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_117">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_58"
+            android:background="@color/backGround1" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_15"
+            android:background="@drawable/common_four_app_one_bg">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_46">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/lucky_draw_tv"
+                    style="@style/size15_color_app3_text_style"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:text="@string/lucky_draw" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp_16"
+                    android:layout_height="@dimen/dp_16"
+                    android:layout_marginLeft="@dimen/dp_6"
+                    android:layout_marginTop="@dimen/dp_18"
+                    android:layout_toRightOf="@id/lucky_draw_tv"
+                    android:src="@mipmap/icon_wenhao" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lucky_draw_tv"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_11"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_24"
+                        android:layout_height="@dimen/dp_24"
+                        android:src="@mipmap/icon_liwu" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/lucky_draw_number"
+                        style="@style/size17_color_app3_text_style"
+                        tools:text="x 2" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_46">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/lottery_record_tv"
+                    style="@style/size15_color_app3_text_style"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:text="@string/lottery_record" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/lottery_record_number"
+                    style="@style/size17_color_app3_text_style"
+                    android:layout_below="@id/lottery_record_tv"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_12"
+                    tools:text="x 2" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_36"
+                android:layout_alignParentBottom="true">
+
+                <View style="@style/forty_six_line_style" />
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    android:id="@+id/lucky_koi"
+                    android:layout_width="@dimen/dp_58"
+                    android:layout_height="@dimen/dp_17"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:background="@drawable/common_eight_five_back_one_bg"
+                    android:gravity="center"
+                    android:text="@string/lucky_koi"
+                    android:textColor="@color/appText3"
+                    android:textSize="@dimen/sp_12"/>
+
+                <ViewFlipper
+                    android:id="@+id/view_flipper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_toRightOf="@id/lucky_koi"
+                    android:inAnimation="@anim/anim_in"
+                    android:outAnimation="@anim/anim_out" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/local_rl"
+        app:srlEnablePreviewInEditMode="false">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/black"
+            app:srlEnableLastTime="true"
+            app:srlPrimaryColor="@color/backGround8" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fadingEdge="none"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/backGround6"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/record_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_14"
+                    android:clickable="true"
+                    android:visibility="visible"
+                    app:layoutManager="@string/layoutManager_LinearLayout"
+                    tools:listitem="@layout/adapter_lottery" />
+                <LinearLayout
+                    android:id="@+id/no_record_ll"
+                    style="@style/common_no_record_ll_style"
+                    android:visibility="gone">
+
+                    <ImageView
+                        style="@style/common_no_record_iv_style"
+                        android:src="@mipmap/icon_no_goods" />
+
+                    <TextView
+                        style="@style/common_no_record_tv_style"
+                        android:text="@string/no_order" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

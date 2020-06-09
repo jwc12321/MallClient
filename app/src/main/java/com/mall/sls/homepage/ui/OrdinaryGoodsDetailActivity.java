@@ -563,7 +563,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                         }
                     });
                 }
-                groupFlipper.setFlipInterval(2000);
+                groupFlipper.setFlipInterval(5000);
                 groupFlipper.startFlipping();
 
             }

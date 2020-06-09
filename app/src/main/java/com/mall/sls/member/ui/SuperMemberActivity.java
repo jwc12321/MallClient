@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -42,7 +41,6 @@ import com.mall.sls.member.MemberModule;
 import com.mall.sls.member.adapter.MemberGoodsItemAdapter;
 import com.mall.sls.member.presenter.SuperMemberPresenter;
 import com.mall.sls.mine.ui.InviteFriendsActivity;
-import com.mall.sls.mine.ui.MyInvitationActivity;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -85,6 +83,10 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     RecyclerView recordRv;
     @BindView(R.id.invite_friends)
     ImageView inviteFriends;
+    @BindView(R.id.member_title_iv)
+    ImageView memberTitleIv;
+    @BindView(R.id.endTime)
+    ConventionalTextView endTime;
     private Handler mHandler = new MyHandler(this);
 
     private MemberGoodsItemAdapter memberGoodsItemAdapter;
@@ -94,17 +96,19 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     private String vipDescription;
     private boolean certifyPay;
     private String certifyAmount;
+    private String vipExpireDate;
     @Inject
     SuperMemberPresenter superMemberPresenter;
 
-    public static void start(Context context, String avatarUrl, String mobile, String vipAmount, String vipDescription,boolean certifyPay,String certifyAmount) {
+    public static void start(Context context, String avatarUrl, String mobile, String vipAmount, String vipDescription, boolean certifyPay, String certifyAmount, String vipExpireDate) {
         Intent intent = new Intent(context, SuperMemberActivity.class);
         intent.putExtra(StaticData.AVATAR_URL, avatarUrl);
         intent.putExtra(StaticData.MOBILE, mobile);
         intent.putExtra(StaticData.VIP_AMOUNT, vipAmount);
         intent.putExtra(StaticData.VIP_DESCRIPTION, vipDescription);
-        intent.putExtra(StaticData.CERTIFY_PAY,certifyPay);
-        intent.putExtra(StaticData.CRETIFY_AMOUNT,certifyAmount);
+        intent.putExtra(StaticData.CERTIFY_PAY, certifyPay);
+        intent.putExtra(StaticData.CRETIFY_AMOUNT, certifyAmount);
+        intent.putExtra(StaticData.VIP_EXPIRE_DATE, vipExpireDate);
         context.startActivity(intent);
     }
 
@@ -123,8 +127,9 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
         mobile = getIntent().getStringExtra(StaticData.MOBILE);
         vipAmount = getIntent().getStringExtra(StaticData.VIP_AMOUNT);
         vipDescription = getIntent().getStringExtra(StaticData.VIP_DESCRIPTION);
-        certifyPay=getIntent().getBooleanExtra(StaticData.CERTIFY_PAY,false);
-        certifyAmount=getIntent().getStringExtra(StaticData.CRETIFY_AMOUNT);
+        certifyPay = getIntent().getBooleanExtra(StaticData.CERTIFY_PAY, false);
+        certifyAmount = getIntent().getStringExtra(StaticData.CRETIFY_AMOUNT);
+        vipExpireDate = getIntent().getStringExtra(StaticData.VIP_EXPIRE_DATE);
         GlideHelper.load(this, avatarUrl, R.mipmap.icon_defalut_head, headPhoto);
         phone.setText(mobile);
         memberGoodsItemAdapter = new MemberGoodsItemAdapter(this);
@@ -135,6 +140,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
         if (TextUtils.equals(StaticData.REFLASH_TWO, VerifyManager.getVerify())) {
             confirmBt.setEnabled(false);
             status.setText(getString(R.string.is_open));
+            endTime.setText(vipExpireDate+"到期");
         } else {
             confirmBt.setEnabled(true);
             status.setText(getString(R.string.nonactivated));
@@ -142,7 +148,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
         superMemberPresenter.getVipGroupons(StaticData.REFLASH_ONE);
     }
 
-    @OnClick({R.id.confirm_bt, R.id.back, R.id.description,R.id.invite_friends})
+    @OnClick({R.id.confirm_bt, R.id.back, R.id.description, R.id.invite_friends})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.confirm_bt:
@@ -220,6 +226,13 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     public void renderVipGroupons(LocalTeam localTeam) {
         if (localTeam != null) {
             memberGoodsItemAdapter.setData(localTeam.getGoodsItemInfos());
+            if (localTeam.getGoodsItemInfos() == null || localTeam.getGoodsItemInfos().size() == 0) {
+                memberTitleIv.setVisibility(View.GONE);
+            } else {
+                memberTitleIv.setVisibility(View.VISIBLE);
+            }
+        } else {
+            memberTitleIv.setVisibility(View.GONE);
         }
     }
 

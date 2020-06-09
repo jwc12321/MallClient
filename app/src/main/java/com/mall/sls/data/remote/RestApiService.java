@@ -12,13 +12,16 @@ import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.Ignore;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.InviteInfo;
+import com.mall.sls.data.entity.JoinPrizeInfo;
 import com.mall.sls.data.entity.LocalTeam;
+import com.mall.sls.data.entity.LotteryItemInfo;
 import com.mall.sls.data.entity.MessageInfo;
 import com.mall.sls.data.entity.MessageTypeInfo;
 import com.mall.sls.data.entity.MineInfo;
 import com.mall.sls.data.entity.MyCouponInfo;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.OrderSubmitInfo;
+import com.mall.sls.data.entity.PrizeVo;
 import com.mall.sls.data.entity.ProvinceBean;
 import com.mall.sls.data.entity.ShareInfo;
 import com.mall.sls.data.entity.TeamInfo;
@@ -31,6 +34,7 @@ import com.mall.sls.data.request.CertifyIdRequest;
 import com.mall.sls.data.request.CodeRequest;
 import com.mall.sls.data.request.DescriptionRequest;
 import com.mall.sls.data.request.GroupRemindRequest;
+import com.mall.sls.data.request.JoinPrizeRequest;
 import com.mall.sls.data.request.LoginRequest;
 import com.mall.sls.data.request.MobileRequest;
 import com.mall.sls.data.request.MsgIdRequest;
@@ -242,5 +246,25 @@ public interface RestApiService {
     //绑定微信
     @POST("app/auth/bindWx")
     Flowable<RemoteDataWrapper<Ignore>> bindWx(@Header("X-Hc-Sign") String sign, @Body CodeRequest request);
+
+    //抽奖列表
+    @GET("app/prize/list")
+    Flowable<RemoteDataWrapper<LotteryItemInfo>> getLotteryItemInfo(@Header("X-Hc-Sign") String sign, @Query("page") String page, @Query("limit") String limit);
+
+    //获取系统时间
+    @GET("app/prize/systemTime")
+    Flowable<RemoteDataWrapper<String>> getSystemTime(@Header("X-Hc-Sign") String sign);
+
+    //抽奖结果
+    @GET("app/prize/prizeResult")
+    Flowable<RemoteDataWrapper<List<String>>> getPrizeResult(@Header("X-Hc-Sign") String sign, @Query("prizeId") String prizeId);
+
+    //参加抽奖
+    @POST("app/prize/joinPrize")
+    Flowable<RemoteDataWrapper<JoinPrizeInfo>> getJoinPrizeInfo(@Header("X-Hc-Sign") String sign, @Body JoinPrizeRequest request);
+
+    //开奖历史
+    @GET("app/prize/history")
+    Flowable<RemoteDataWrapper<List<PrizeVo>>> getLotteryRecord(@Header("X-Hc-Sign") String sign, @Query("page") String page, @Query("limit") String limit);
 
 }

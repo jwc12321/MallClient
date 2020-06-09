@@ -28,6 +28,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
+import com.mall.sls.address.ui.AddressManageActivity;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.location.LocationHelper;
@@ -239,6 +240,12 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                     startActivityForResult(intent, RequestCodeStatic.GO_COUPON);
                 }else if(TextUtils.equals(StaticData.INVITATION, nativeType)){
                     InviteFriendsActivity.start(getActivity());
+                }else if(TextUtils.equals(StaticData.SECKILL, nativeType)){
+                    if (homepageListener != null) {
+                        homepageListener.goLocalTeam();
+                    }
+                }else if(TextUtils.equals(StaticData.ADDRESS, nativeType)){
+                    AddressManageActivity.start(getActivity(),StaticData.REFLASH_ONE);
                 }
             }
         }
@@ -276,7 +283,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                     latitude = aMapLocation.getLatitude() + "";
                     areaCode = aMapLocation.getAdCode() + "";
                 }
-                AreaCodeManager.saveAreaCode(areaCode);
+//                AreaCodeManager.saveAreaCode(areaCode);
                 localCity.setText(city);
             }
         });

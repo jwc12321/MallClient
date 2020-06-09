@@ -6,7 +6,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -23,10 +22,8 @@ import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.WXShareManager;
-import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.ShareInfo;
-import com.mall.sls.homepage.ui.ActivityGoodsDetailActivity;
 import com.mall.sls.mine.DaggerMineComponent;
 import com.mall.sls.mine.MineContract;
 import com.mall.sls.mine.MineModule;
@@ -36,8 +33,6 @@ import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.io.ByteArrayOutputStream;
 
 import javax.inject.Inject;
 
@@ -51,30 +46,31 @@ import butterknife.OnClick;
  */
 public class InviteFriendsActivity extends BaseActivity implements MineContract.ShareInfoView {
 
+
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.title)
     MediumThickTextView title;
     @BindView(R.id.title_rel)
     RelativeLayout titleRel;
+    @BindView(R.id.look_iv)
+    ImageView lookIv;
     @BindView(R.id.code_tv)
     MediumThickTextView codeTv;
     @BindView(R.id.code)
     MediumThickTextView code;
     @BindView(R.id.copy_bt)
     MediumThickTextView copyBt;
+    @BindView(R.id.iv)
+    ImageView iv;
     @BindView(R.id.qrcode_iv)
     ImageView qrcodeIv;
+    @BindView(R.id.share_rl)
+    RelativeLayout shareRl;
     @BindView(R.id.link_bt)
     ImageView linkBt;
     @BindView(R.id.poster_bt)
     ImageView posterBt;
-    @BindView(R.id.tv)
-    ConventionalTextView tv;
-    @BindView(R.id.share_rl)
-    RelativeLayout shareRl;
-    @BindView(R.id.iv)
-    ImageView iv;
     private Bitmap bitmap;
 
 
@@ -119,7 +115,7 @@ public class InviteFriendsActivity extends BaseActivity implements MineContract.
                 .inject(this);
     }
 
-    @OnClick({R.id.back, R.id.copy_bt, R.id.link_bt, R.id.poster_bt})
+    @OnClick({R.id.back, R.id.copy_bt, R.id.link_bt, R.id.poster_bt, R.id.look_iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -144,10 +140,12 @@ public class InviteFriendsActivity extends BaseActivity implements MineContract.
                 Intent intent = new Intent(this, SelectShareTypeActivity.class);
                 startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
                 break;
+            case R.id.look_iv:
+                MyInvitationActivity.start(this);
+                break;
             default:
         }
     }
-
 
 
     @Override

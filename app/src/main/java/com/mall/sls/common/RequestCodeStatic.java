@@ -24,4 +24,6 @@ public class RequestCodeStatic {
     public static final int TIP_PAGE=21;//提醒界面
     public static final int PINYIN_SUCCESS=23;//拼单成功
     public static final int ADD_ADDRESS=24;//添加地址
+    public static final int CHOICE_CITY=25;//选择地址
+    public static final int SELECT_QUANTITY=26;//选择数量
 }

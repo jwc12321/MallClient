@@ -340,6 +340,23 @@
         <activity android:name=".login.ui.LoginFillCodeActivity"
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"/>
+        <activity android:name=".lottery.ui.LotteryListActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
+        <activity android:name=".lottery.ui.LotteryDetailActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
+        <activity android:name=".lottery.ui.SelectQuantityActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/TranslucentFullScreenTheme"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".lottery.ui.LotteryResultActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
+        <activity android:name=".homepage.ui.TitleContentActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/TranslucentFullScreenTheme"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

@@ -47,5 +47,10 @@ public class RequestUrl {
     public static String ORDER_WX_PAY="/app/order/wxPay";//微信支付订单
     public static String ORDER_CANCEL="/app/order/cancel";//订单取消
     public static String BIND_WX="/app/auth/bindWx";//绑定微信
+    public static String PRIZE_LIST="/app/prize/list";//抽奖列表
+    public static String SYSTEM_TIME="/app/prize/systemTime";//获取系统时间
+    public static String PRIZE_RESULT="/app/prize/prizeResult";//抽奖结果
+    public static String JOIN_PRIZE="/app/prize/joinPrize";// 参与抽奖
+    public static String PRIZE_HISTORY="/app/prize/history";//开奖历史
 
 }

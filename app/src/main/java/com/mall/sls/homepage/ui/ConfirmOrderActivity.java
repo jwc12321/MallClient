@@ -357,10 +357,14 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
         if (orderSubmitInfo != null) {
             orderId = orderSubmitInfo.getOrderId();
             grouponId = orderSubmitInfo.getGrouponLinkId();
-            Intent intent = new Intent(this, SelectPayTypeActivity.class);
-            intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
-            intent.putExtra(StaticData.PAYMENT_AMOUNT, orderTotalPrice);
-            startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
+            if(orderSubmitInfo.getPay()) {
+                Intent intent = new Intent(this, SelectPayTypeActivity.class);
+                intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
+                intent.putExtra(StaticData.PAYMENT_AMOUNT, orderTotalPrice);
+                startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
+            }else {
+                paySuccess();
+            }
         }
     }
 

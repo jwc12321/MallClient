@@ -454,6 +454,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 leftBt.setText(getString(R.string.cancel_order));
                 deliveryRl.setVisibility(View.GONE);
                 fenGeLine.setVisibility(View.GONE);
+                statusIv.setBackgroundResource(R.mipmap.icon_to_pay);
                 break;
             case StaticData.TO_BE_SHARE:
                 orderStatus.setText(getString(R.string.pending_share));
@@ -464,6 +465,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 rightBt.setText(getString(R.string.invite_friends));
                 deliveryRl.setVisibility(View.GONE);
                 fenGeLine.setVisibility(View.GONE);
+                statusIv.setBackgroundResource(R.mipmap.icon_to_share);
                 break;
             case StaticData.TO_BE_DELIVERED:
                 orderStatus.setText(getString(R.string.pending_delivery));
@@ -471,6 +473,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 btRl.setVisibility(View.GONE);
                 deliveryRl.setVisibility(View.GONE);
                 fenGeLine.setVisibility(View.GONE);
+                statusIv.setBackgroundResource(R.mipmap.icon_to_delivered);
                 break;
             case StaticData.TO_BE_RECEIVED:
                 orderStatus.setText(getString(R.string.shipping));
@@ -482,6 +485,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 rightBt.setText(getString(R.string.check_map));
                 deliveryRl.setVisibility(View.VISIBLE);
                 fenGeLine.setVisibility(View.VISIBLE);
+                statusIv.setBackgroundResource(R.mipmap.icon_to_received);
                 break;
             case StaticData.RECEIVED:
             case StaticData.SYS_RECEIVED:
@@ -493,6 +497,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 leftBt.setText(getString(R.string.one_more_order));
                 deliveryRl.setVisibility(View.VISIBLE);
                 fenGeLine.setVisibility(View.VISIBLE);
+                statusIv.setBackgroundResource(R.mipmap.icon_order_compled);
                 break;
             case StaticData.CANCELLED:
             case StaticData.SYS_CANCELLED:
@@ -504,6 +509,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 leftBt.setText(getString(R.string.one_more_order));
                 deliveryRl.setVisibility(View.GONE);
                 fenGeLine.setVisibility(View.GONE);
+                statusIv.setBackgroundResource(R.mipmap.icon_order_cancel);
                 break;
             default:
         }

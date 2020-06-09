@@ -204,9 +204,9 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
                 genderSelect();
                 break;
             case R.id.address:
-//                areaPickerView.setSelect(i);
-//                areaPickerView.show();
-                SelectAddressActivity.start(this);
+                areaPickerView.setSelect(i);
+                areaPickerView.show();
+//                SelectAddressActivity.start(this);
                 break;
             case R.id.default_iv:
                 defaultType = !defaultType;
