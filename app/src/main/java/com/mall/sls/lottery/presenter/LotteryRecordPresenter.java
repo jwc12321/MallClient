@@ -7,6 +7,7 @@ import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
 import com.mall.sls.data.entity.LotteryItemInfo;
+import com.mall.sls.data.entity.LotteryRecord;
 import com.mall.sls.data.entity.PrizeVo;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
@@ -51,13 +52,13 @@ public class LotteryRecordPresenter implements LotteryContract.LotteryRecordPres
         String queryString="page="+currentIndex+"&limit="+StaticData.TEN_LIST_SIZE;
         String sign= SignUnit.signGet(RequestUrl.PRIZE_HISTORY,queryString);
         Disposable disposable = restApiService.getLotteryRecord(sign,String.valueOf(currentIndex),StaticData.TEN_LIST_SIZE)
-                .flatMap(new RxRemoteDataParse<List<PrizeVo>>())
-                .compose(new RxSchedulerTransformer<List<PrizeVo>>())
-                .subscribe(new Consumer<List<PrizeVo>>() {
+                .flatMap(new RxRemoteDataParse<LotteryRecord>())
+                .compose(new RxSchedulerTransformer<LotteryRecord>())
+                .subscribe(new Consumer<LotteryRecord>() {
                     @Override
-                    public void accept(List<PrizeVo> prizeVos) throws Exception {
+                    public void accept(LotteryRecord lotteryRecord) throws Exception {
                         lotteryRecordView.dismissLoading();
-                        lotteryRecordView.renderLotteryRecord(prizeVos);
+                        lotteryRecordView.renderLotteryRecord(lotteryRecord);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -75,13 +76,13 @@ public class LotteryRecordPresenter implements LotteryContract.LotteryRecordPres
         String queryString="page="+currentIndex+"&limit="+StaticData.TEN_LIST_SIZE;
         String sign= SignUnit.signGet(RequestUrl.PRIZE_HISTORY,queryString);
         Disposable disposable = restApiService.getLotteryRecord(sign,String.valueOf(currentIndex),StaticData.TEN_LIST_SIZE)
-                .flatMap(new RxRemoteDataParse<List<PrizeVo>>())
-                .compose(new RxSchedulerTransformer<List<PrizeVo>>())
-                .subscribe(new Consumer<List<PrizeVo>>() {
+                .flatMap(new RxRemoteDataParse<LotteryRecord>())
+                .compose(new RxSchedulerTransformer<LotteryRecord>())
+                .subscribe(new Consumer<LotteryRecord>() {
                     @Override
-                    public void accept(List<PrizeVo> prizeVos) throws Exception {
+                    public void accept(LotteryRecord lotteryRecord) throws Exception {
                         lotteryRecordView.dismissLoading();
-                        lotteryRecordView.renderMoreLotteryRecord(prizeVos);
+                        lotteryRecordView.renderMoreLotteryRecord(lotteryRecord);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

@@ -9,6 +9,7 @@ import com.mall.sls.ActivityScope;
 import com.mall.sls.ApplicationComponent;
 import com.mall.sls.lottery.ui.LotteryDetailActivity;
 import com.mall.sls.lottery.ui.LotteryListActivity;
+import com.mall.sls.lottery.ui.LotteryRecordActivity;
 import com.mall.sls.lottery.ui.LotteryResultActivity;
 
 import dagger.Component;
@@ -19,4 +20,5 @@ public interface LotteryComponent {
     void inject(LotteryListActivity lotteryListActivity);
     void inject(LotteryDetailActivity lotteryDetailActivity);
     void inject(LotteryResultActivity lotteryResultActivity);
+    void inject(LotteryRecordActivity lotteryRecordActivity);
 }

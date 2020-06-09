@@ -117,6 +117,7 @@ public class PendingShareFragment extends BaseFragment implements OrderContract.
         wxShareManager = WXShareManager.getInstance(getActivity());
         addAdapter();
         if(TextUtils.equals(StaticData.REFLASH_TWO,choiceType)) {
+            orderListPresenter.getInvitationCodeInfo();
             orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_TWO);
         }
     }
@@ -156,6 +157,7 @@ public class PendingShareFragment extends BaseFragment implements OrderContract.
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()&&orderListPresenter!=null) {
+            orderListPresenter.getInvitationCodeInfo();
             orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_TWO);
         }
     }

@@ -15,6 +15,7 @@ import com.mall.sls.data.entity.InviteInfo;
 import com.mall.sls.data.entity.JoinPrizeInfo;
 import com.mall.sls.data.entity.LocalTeam;
 import com.mall.sls.data.entity.LotteryItemInfo;
+import com.mall.sls.data.entity.LotteryRecord;
 import com.mall.sls.data.entity.MessageInfo;
 import com.mall.sls.data.entity.MessageTypeInfo;
 import com.mall.sls.data.entity.MineInfo;
@@ -265,6 +266,6 @@ public interface RestApiService {
 
     //开奖历史
     @GET("app/prize/history")
-    Flowable<RemoteDataWrapper<List<PrizeVo>>> getLotteryRecord(@Header("X-Hc-Sign") String sign, @Query("page") String page, @Query("limit") String limit);
+    Flowable<RemoteDataWrapper<LotteryRecord>> getLotteryRecord(@Header("X-Hc-Sign") String sign, @Query("page") String page, @Query("limit") String limit);
 
 }

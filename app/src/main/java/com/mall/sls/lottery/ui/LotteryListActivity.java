@@ -9,12 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
-import com.mall.sls.certify.ui.CerifyPayActivity;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
@@ -29,8 +30,11 @@ import com.mall.sls.lottery.presenter.LotteryItemPresenter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
+
 import java.util.List;
+
 import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -67,6 +71,8 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
 
     @Inject
     LotteryItemPresenter lotteryItemPresenter;
+    @BindView(R.id.record_rl)
+    RelativeLayout recordRl;
 
     private LotteryAdapter lotteryAdapter;
     private List<String> brocadeCarps;
@@ -126,7 +132,7 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
     public void renderLotteryItemInfo(LotteryItemInfo lotteryItemInfo) {
         refreshLayout.finishRefresh();
         if (lotteryItemInfo != null) {
-            prizeNumber=lotteryItemInfo.getPrizeNumber();
+            prizeNumber = lotteryItemInfo.getPrizeNumber();
             luckyDrawNumber.setText("x" + lotteryItemInfo.getPrizeNumber());
             lotteryRecordNumber.setText("x" + lotteryItemInfo.getHistoryPrizeCount());
             brocadeCarps = lotteryItemInfo.getBrocadeCarps();
@@ -175,14 +181,17 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
 
     @Override
     public void goLotteryDetails(PrizeVo prizeVo) {
-        LotteryDetailActivity.start(this,prizeNumber,prizeVo);
+        LotteryDetailActivity.start(this, prizeNumber, prizeVo);
     }
 
-    @OnClick({R.id.back})
+    @OnClick({R.id.back,R.id.record_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
                 finish();
+                break;
+            case R.id.record_rl:
+                LotteryRecordActivity.start(this);
                 break;
             default:
         }

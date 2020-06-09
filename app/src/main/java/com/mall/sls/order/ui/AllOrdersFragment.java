@@ -133,6 +133,7 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         addAdapter();
         if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {
+            orderListPresenter.getInvitationCodeInfo();
             orderListPresenter.getOrderList(StaticData.REFLASH_ONE, StaticData.REFLASH_ZERO);
         }
     }
@@ -169,6 +170,7 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint() && orderListPresenter != null) {
+            orderListPresenter.getInvitationCodeInfo();
             orderListPresenter.getOrderList(StaticData.REFLASH_ONE, StaticData.REFLASH_ZERO);
         }
     }

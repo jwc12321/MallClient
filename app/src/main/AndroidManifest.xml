@@ -357,6 +357,9 @@
             android:launchMode="singleTop"
             android:theme="@style/TranslucentFullScreenTheme"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".lottery.ui.LotteryRecordActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

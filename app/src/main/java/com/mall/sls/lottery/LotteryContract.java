@@ -4,6 +4,7 @@ import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
 import com.mall.sls.data.entity.JoinPrizeInfo;
 import com.mall.sls.data.entity.LotteryItemInfo;
+import com.mall.sls.data.entity.LotteryRecord;
 import com.mall.sls.data.entity.PrizeVo;
 
 import java.util.List;
@@ -51,8 +52,8 @@ public interface LotteryContract {
     }
 
     interface LotteryRecordView extends BaseView<LotteryRecordPresenter>{
-        void renderLotteryRecord(List<PrizeVo> prizeVos);
-        void renderMoreLotteryRecord(List<PrizeVo> prizeVos);
+        void renderLotteryRecord(LotteryRecord lotteryRecord);
+        void renderMoreLotteryRecord(LotteryRecord lotteryRecord);
     }
 
 }
