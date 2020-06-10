@@ -2,30 +2,24 @@ package com.mall.sls.splash;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
-
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.PrivacyManager;
-import com.mall.sls.common.unit.ScreenUtil;
+import com.mall.sls.common.unit.SpikeManager;
 import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.unit.TokenManager;
-import com.mall.sls.login.ui.LoginActivity;
 import com.mall.sls.login.ui.WeixinLoginActivity;
 import com.mall.sls.mainframe.ui.MainFrameActivity;
 import com.mall.sls.mine.ui.PrivacyPolicyTipActivity;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import butterknife.ButterKnife;
 
@@ -55,6 +49,7 @@ public class  SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         MainStartManager.saveMainStart(StaticData.REFLASH_ZERO);
+        SpikeManager.saveSpike(StaticData.REFLASH_ZERO);
 //        initData();
         if(TextUtils.isEmpty(PrivacyManager.getPrivacy())){//隐私政策弹框
             Intent intent = new Intent(this, PrivacyPolicyTipActivity.class);

@@ -19,7 +19,7 @@
     <string name="input_vcode">输入验证码</string>
     <string name="send_verification_code">发送验证码</string>
     <string name="login">登录</string>
-    <string name="other_login">其他方式登录</string>
+    <string name="other_login">其他方式登录/注册</string>
     <string name="i_read_agree">我已阅读同意</string>
     <string name="and">和</string>
     <string name="registration_agreement">《用户协议》</string>

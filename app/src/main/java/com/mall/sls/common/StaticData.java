@@ -134,5 +134,7 @@ public class StaticData {
     public static final String PRIZE_ID="prizeId";
     public static final String PRIZE_TIME="prizeTime";
 
+    public static final String TOKEN_OVER_TWO="10002";
+    public static final String TOKEN_OVER_ONE="10001";
 
 }

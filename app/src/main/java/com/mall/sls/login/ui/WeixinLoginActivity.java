@@ -152,7 +152,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
             case R.id.phone_login_bt://手机号登录
                 if (checkRet) {
                     onClickType=StaticData.REFLASH_ONE;
-                    configLoginTokenPort(getString(R.string.login_register),getString(R.string.login),getString(R.string.other_login));
+                    configLoginTokenPort(getString(R.string.login_register),getString(R.string.login_register),getString(R.string.other_login));
                     mAlicomAuthHelper.getLoginToken(WeixinLoginActivity.this, 5000);
                 } else {
                     PhoneLoginActivity.start(this);

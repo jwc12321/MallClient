@@ -32,10 +32,11 @@ import androidx.core.content.PermissionChecker;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.HandleBackUtil;
 import com.mall.sls.common.widget.dialog.LoadingDialog;
 import com.mall.sls.data.RemoteDataException;
-import com.mall.sls.login.ui.LoginActivity;
+import com.mall.sls.login.ui.WeixinLoginActivity;
 import com.mall.sls.mainframe.ui.MainFrameActivity;
 
 import java.lang.reflect.Field;
@@ -217,12 +218,17 @@ public abstract class BaseActivity extends AppCompatActivity implements LoadData
     public void showError(Throwable e) {
         if (e != null) {
             if (e instanceof RemoteDataException) {
-                showMessage(((RemoteDataException) e).getMessage(this));
+                if (TextUtils.equals(StaticData.TOKEN_OVER_ONE,((RemoteDataException) e).getRetCode())||TextUtils.equals(StaticData.TOKEN_OVER_TWO,((RemoteDataException) e).getRetCode())){
+                    WeixinLoginActivity.start(this);
+                    MainFrameActivity.finishActivity();
+                }else{
+                    showMessage(((RemoteDataException) e).getMessage(this));
+                }
             } else {
                 if (e instanceof HttpException) {
                     HttpException exception = (HttpException) e;
                     if (TextUtils.equals("401", exception.response().code() + "")) {
-                        LoginActivity.start(this);
+                        WeixinLoginActivity.start(this);
                         MainFrameActivity.finishActivity();
                     } else {
                         showMessage(getString(R.string.fail_to_access_servers));

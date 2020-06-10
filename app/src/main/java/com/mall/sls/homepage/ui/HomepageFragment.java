@@ -37,6 +37,7 @@ import com.mall.sls.common.unit.BindWxManager;
 import com.mall.sls.common.unit.ConvertDpAndPx;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.PermissionUtil;
+import com.mall.sls.common.unit.SpikeManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.coupon.ui.CouponActivity;
@@ -242,6 +243,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                     InviteFriendsActivity.start(getActivity());
                 }else if(TextUtils.equals(StaticData.SECKILL, nativeType)){
                     if (homepageListener != null) {
+                        SpikeManager.saveSpike(StaticData.REFLASH_ONE);
                         homepageListener.goLocalTeam();
                     }
                 }else if(TextUtils.equals(StaticData.ADDRESS, nativeType)){

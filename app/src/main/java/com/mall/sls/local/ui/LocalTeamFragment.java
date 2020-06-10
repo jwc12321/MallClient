@@ -16,6 +16,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
+import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.SpikeManager;
 import com.mall.sls.common.unit.TextViewttf;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.mainframe.adapter.MainPagerAdapter;
@@ -145,10 +147,15 @@ public class LocalTeamFragment extends BaseFragment implements LootingFragment.L
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
-            if (TextUtils.equals("0", type)) {
-                lootingFragment.lootingRefresh();
-            } else if (TextUtils.equals("1", type)) {
-                lootingSoonFragment.lootingSoonRefresh();
+            if(TextUtils.equals(StaticData.REFLASH_ONE, SpikeManager.getSpike())){
+                viewPager.setCurrentItem(1,false);
+                SpikeManager.saveSpike(StaticData.REFLASH_ZERO);
+            }else {
+                if (TextUtils.equals("0", type)) {
+                    lootingFragment.lootingRefresh();
+                } else if (TextUtils.equals("1", type)) {
+                    lootingSoonFragment.lootingSoonRefresh();
+                }
             }
         }
     }
