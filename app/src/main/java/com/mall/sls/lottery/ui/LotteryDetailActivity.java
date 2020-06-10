@@ -32,6 +32,7 @@ import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.unit.HtmlUnit;
+import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayResult;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
@@ -188,9 +189,9 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
             banner.setBannerData(R.layout.xbanner_item, data);
             name=prizeVo.getPrizeTitle();
             picUrl=prizeVo.getPicUrl();
-            goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(prizeVo.getGoodsPrice()));
+            goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(prizeVo.getCounterPrice()));
             prizeTimeText=prizeVo.getPrizeTime();
-            prizeTime.setText(prizeVo.getPrizeTime() + "开奖");
+            prizeTime.setText(prizeVo.getPrizeTime() + " 开奖");
             participantNumber.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO, prizeVo.getParticipantNumber()) ? View.GONE : View.VISIBLE);
             participantNumber.setText(prizeVo.getParticipantNumber() + "人参与");
             goodsName.setText(prizeVo.getPrizeTitle());
@@ -216,18 +217,26 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
                 } else {
                     countDownLl.setVisibility(View.GONE);
                 }
+            }else {
+                countDownLl.setVisibility(View.GONE);
             }
-            counterPrice=prizeVo.getCounterPrice();
+            counterPrice=prizeVo.getPrice();
             if(TextUtils.equals(StaticData.REFLASH_ONE,prizeVo.getPrizeStatus())){
                 confirmBt.setEnabled(true);
-                if(TextUtils.equals(StaticData.REFLASH_ZERO,prizeVo.getCounterPrice())||TextUtils.equals("0.00",prizeVo.getCounterPrice())){
-                    confirmBt.setText(getString(R.string.participate_draw));
+                confirmBt.setBackgroundResource(R.drawable.common_twenty_back_one_bg);
+                if(TextUtils.equals(StaticData.REFLASH_ZERO,prizeVo.getPrice())||TextUtils.equals("0.00",prizeVo.getPrice())){
+                    confirmBt.setText("0"+getString(R.string.yuan_draw));
                 }else {
-                    confirmBt.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getCounterPrice())+getString(R.string.participate_draw));
+                    confirmBt.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getPrice())+getString(R.string.yuan_draw));
                 }
+            }else if(TextUtils.equals(StaticData.REFLASH_TWO,prizeVo.getPrizeStatus())){
+                confirmBt.setEnabled(false);
+                confirmBt.setBackgroundResource(R.drawable.common_twenty_back_twenty_three_bg);
+                confirmBt.setText(getString(R.string.waiting_draw));
             }else {
                 confirmBt.setEnabled(false);
-                confirmBt.setText(getString(R.string.waiting_draw));
+                confirmBt.setBackgroundResource(R.drawable.common_twenty_back_fifty_bg);
+                confirmBt.setText(getString(R.string.is_over));
             }
         }
     }
@@ -321,6 +330,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
         if(joinPrizeInfo!=null){
             if(TextUtils.equals(StaticData.REFLASH_TWO,selectType)){//免费
                 LotteryResultActivity.start(this,prizeId,prizeTimeText);
+                finish();
             }else if(TextUtils.equals(StaticData.REFLASH_ONE,selectType)&&!TextUtils.isEmpty(joinPrizeInfo.getAliPaySign())){//支付宝
                 startAliPay(joinPrizeInfo.getAliPaySign());
             }else if(TextUtils.equals(StaticData.REFLASH_ZERO,selectType)&&joinPrizeInfo.getWxPaySignResponse()!=null){//微信
@@ -342,6 +352,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
                 finish();
                 break;
             case R.id.home_iv:
+                MainStartManager.saveMainStart(StaticData.REFLASH_ONE);
                 MainFrameActivity.start(this);
                 finish();
                 break;
@@ -465,6 +476,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
         String resultStatus = payResult.getResultStatus();
         if (TextUtils.equals(resultStatus, "9000")) {
             LotteryResultActivity.start(this,prizeId,prizeTimeText);
+            finish();
         } else if (TextUtils.equals(resultStatus, "6001")) {
             showMessage(getString(R.string.pay_cancel));
         } else {
@@ -491,6 +503,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPaySuccess(WXSuccessPayEvent event) {
         LotteryResultActivity.start(this,prizeId,prizeTimeText);
+        finish();
     }
 
     //支付失败

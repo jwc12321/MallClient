@@ -207,7 +207,7 @@ public class PhoneLoginActivity extends BaseActivity implements LoginContract.Lo
 
     @Override
     public void renderVCode(String vCode) {
-        vcodeEt.setText(vCode);
+//        vcodeEt.setText(vCode);
         sendVcode.startCold();
     }
 

@@ -16,7 +16,7 @@ public class PrizeVo implements Serializable {
     //图片Url
     @SerializedName("picUrl")
     private String picUrl;
-    //抽奖价格
+    //商品价格
     @SerializedName("counterPrice")
     private String counterPrice;
     //商品详细介绍，是富文本格式
@@ -40,12 +40,15 @@ public class PrizeVo implements Serializable {
     //抽奖名/标题
     @SerializedName("prizeTitle")
     private String prizeTitle;
-    //商品价格
-    @SerializedName("goodsPrice")
-    private String goodsPrice;
+    //抽奖价格
+    @SerializedName("price")
+    private String price;
     //商品宣传图片列表
     @SerializedName("gallery")
     private List<String> gallerys;
+    //是否展示参与人数 0否1是
+    @SerializedName("isShowPeople")
+    private String isShowPeople;
 
     public String getEndTime() {
         return endTime;
@@ -127,12 +130,12 @@ public class PrizeVo implements Serializable {
         this.prizeTitle = prizeTitle;
     }
 
-    public String getGoodsPrice() {
-        return goodsPrice;
+    public String getPrice() {
+        return price;
     }
 
-    public void setGoodsPrice(String goodsPrice) {
-        this.goodsPrice = goodsPrice;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public List<String> getGallerys() {
@@ -141,5 +144,13 @@ public class PrizeVo implements Serializable {
 
     public void setGallerys(List<String> gallerys) {
         this.gallerys = gallerys;
+    }
+
+    public String getIsShowPeople() {
+        return isShowPeople;
+    }
+
+    public void setIsShowPeople(String isShowPeople) {
+        this.isShowPeople = isShowPeople;
     }
 }

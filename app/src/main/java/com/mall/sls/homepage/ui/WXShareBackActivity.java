@@ -18,6 +18,7 @@ import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.WXShareManager;
@@ -130,6 +131,7 @@ public class WXShareBackActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.home_iv://首页
+                MainStartManager.saveMainStart(StaticData.REFLASH_ONE);
                 MainFrameActivity.start(this);
                 finish();
                 break;

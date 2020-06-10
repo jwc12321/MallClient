@@ -32,6 +32,8 @@ public class SettingActivity extends BaseActivity {
     MediumThickTextView confirmBt;
     @BindView(R.id.feedback_rl)
     RelativeLayout feedbackRl;
+    @BindView(R.id.clear_cache_rl)
+    RelativeLayout clearCacheRl;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,7 +43,7 @@ public class SettingActivity extends BaseActivity {
         setHeight(back, title, null);
     }
 
-    @OnClick({R.id.back, R.id.confirm_bt,R.id.feedback_rl})
+    @OnClick({R.id.back, R.id.confirm_bt, R.id.feedback_rl,R.id.clear_cache_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -55,6 +57,9 @@ public class SettingActivity extends BaseActivity {
                 Intent intent = new Intent();
                 setResult(RESULT_OK, intent);
                 finish();
+                break;
+            case R.id.clear_cache_rl:
+                showMessage(getString(R.string.clear_cache_success));
                 break;
             default:
         }

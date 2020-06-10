@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +18,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
+import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.discount.ui.WholeDiscountFragment;
 import com.mall.sls.homepage.ui.HomepageFragment;
 import com.mall.sls.local.ui.LocalTeamFragment;
@@ -93,6 +96,15 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
                 String name = uri.getQueryParameter("name");
                 String age= uri.getQueryParameter("age");
             }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(TextUtils.equals(StaticData.REFLASH_ONE, MainStartManager.getMainStart())){
+            viewPager.setCurrentItem(0,false);
+            MainStartManager.saveMainStart(StaticData.REFLASH_ZERO);
         }
     }
 

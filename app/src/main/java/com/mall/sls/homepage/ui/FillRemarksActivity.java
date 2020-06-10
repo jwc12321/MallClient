@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.widget.edittextview.ForbidEmojiEditText;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 
@@ -36,7 +37,7 @@ public class FillRemarksActivity extends BaseActivity {
     @BindView(R.id.title_rel)
     RelativeLayout titleRel;
     @BindView(R.id.remark_et)
-    EditText remarkEt;
+    ForbidEmojiEditText remarkEt;
     @BindView(R.id.word_count)
     ConventionalTextView wordCount;
 

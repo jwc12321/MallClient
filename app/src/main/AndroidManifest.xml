@@ -360,6 +360,11 @@
         <activity android:name=".lottery.ui.LotteryRecordActivity"
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"/>
+        <activity android:name=".mine.ui.PrivacyPolicyTipActivity"
+            android:theme="@style/TranslucentFullScreenTheme"/>
+        <activity android:name=".lottery.ui.LotteryTipActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/TranslucentFullScreenTheme" />
     </application>
 
 </manifest>

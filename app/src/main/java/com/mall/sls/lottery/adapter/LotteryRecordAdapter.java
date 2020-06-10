@@ -57,6 +57,14 @@ public class LotteryRecordAdapter extends RecyclerView.Adapter<LotteryRecordAdap
     public void onBindViewHolder(LotteryRecordView holder, int position) {
         PrizeVo prizeVo = prizeVos.get(holder.getAdapterPosition());
         holder.bindData(prizeVo);
+        holder.itemRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.goLotteryDetails(prizeVo);
+                }
+            }
+        });
 
     }
 
@@ -90,13 +98,14 @@ public class LotteryRecordAdapter extends RecyclerView.Adapter<LotteryRecordAdap
             participantNumber.setText(prizeVo.getParticipantNumber());
             GlideHelper.load((Activity) context, prizeVo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(prizeVo.getPrizeTitle());
-            endTime.setText(prizeVo.getEndTime() + "开奖");
-            goodsPrice.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getGoodsPrice()));
+            endTime.setText(prizeVo.getPrizeTime() + " 开奖");
+            goodsPrice.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getCounterPrice()));
 
         }
     }
 
     public interface OnItemClickListener {
+        void goLotteryDetails(PrizeVo prizeVo);
     }
 
     private OnItemClickListener onItemClickListener;

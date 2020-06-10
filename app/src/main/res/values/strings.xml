@@ -26,7 +26,7 @@
     <string name="privacy_policy">《隐私政策》</string>
     <string name="registration_agreement_tv">用户协议</string>
     <string name="privacy_policy_tv">隐私政策</string>
-    <string name="cerify_tip">为确保用户的真实性实名认证\n需要先缴纳费用。\n认证成功后会以等额购物券的\n形式发放到您的账户。</string>
+    <string name="cerify_tip">认证时需要先缴纳第三方认证费用，认证成功后我们会赠送您双倍金额的优惠券。</string>
     <string name="cerify_tip_tv"> 1:身份证信息仅供平台提供诚信保证使用。\n 2:我方承诺不向其他第三方透露您的个人信息</string>
     <string name="auth_now">立即认证</string>
     <string name="goods_amount">商品金额</string>
@@ -47,7 +47,7 @@
     <string name="recertify">重新认证</string>
     <string name="bind_phone">为了您的账号安全\n请绑定手机</string>
     <string name="bind_now">立即绑定</string>
-    <string name="choice_login">请阅读并同意《隐私政策》和《服务协议》</string>
+    <string name="choice_login">请阅读并同意《用户协议》和《隐私政策》</string>
     <string name="login_register">登录/注册</string>
     <string name="login_register_bt">一键登录/注册</string>
     <string name="bind_onclick_mobile">本机号码一键绑定</string>
@@ -111,6 +111,7 @@
     <string name="opinions_feedback">意见与反馈</string>
     <string name="version_detection">版本检测</string>
     <string name="clear_cache">清除缓存</string>
+    <string name="clear_cache_success">清除缓存成功</string>
     <string name="login_out">退出登录</string>
     <string name="all_orders">全部订单</string>
     <string name="pending_payment">待支付</string>
@@ -309,12 +310,18 @@
     <string name="join_success">参与成功</string>
     <string name="join_tip">请妥善保管好抽奖编号，以便后续查看抽奖结果</string>
     <string name="lottery_number">您的抽奖编号为：</string>
-    <string name="no_lottery_time">亲，您的抽奖次数已用完</string>
+    <string name="no_lottery_time">亲，您还没有抽奖次数哦</string>
     <string name="do_the_task">去做任务得更多抽奖机会吧！</string>
     <string name="i_know">知道了</string>
     <string name="go_shop">去购物</string>
     <string name="is_over">已结束</string>
 
-
+    <string name="agree">同意</string>
+    <string name="not_in_use">暂不使用</string>
+    <string name="privacy_content">欢迎使用特惠购APP！\n
+我们依据最新的监管要求制定了《用户协议》和《隐私政策》，我们可能会收集或使用您的地理位置，根据位置信息为您提供更契合您需求的页面展示和推荐。请您仔细阅读相关条款。您同意并接受全部条款后可开始使用我们的服务。</string>
+<string name="get_times">如何获得抽奖机会？</string>
+    <string name="invitation">邀请拼单</string>
+    <string name="yuan_draw">元抽奖</string>
 
 </resources>

@@ -55,7 +55,7 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
     @BindView(R.id.lottery_record_tv)
     ConventionalTextView lotteryRecordTv;
     @BindView(R.id.lucky_koi)
-    MediumThickTextView luckyKoi;
+    ImageView luckyKoi;
     @BindView(R.id.view_flipper)
     ViewFlipper viewFlipper;
     @BindView(R.id.record_rv)
@@ -73,10 +73,15 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
     LotteryItemPresenter lotteryItemPresenter;
     @BindView(R.id.record_rl)
     RelativeLayout recordRl;
+    @BindView(R.id.tip_rl)
+    RelativeLayout tipRl;
 
     private LotteryAdapter lotteryAdapter;
     private List<String> brocadeCarps;
     private String prizeNumber;
+    private List<String> prizeRules;
+    private String rulesTip="";
+    private boolean isFirst=true;
 
 
     public static void start(Context context) {
@@ -98,7 +103,6 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
         lotteryAdapter = new LotteryAdapter(this);
         lotteryAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(lotteryAdapter);
-        lotteryItemPresenter.getLotteryItemInfo(StaticData.REFLASH_ONE);
     }
 
     SimpleMultiPurposeListener simpleMultiPurposeListener = new SimpleMultiPurposeListener() {
@@ -113,6 +117,15 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
             lotteryItemPresenter.getMoreLotteryItemInfo();
         }
     };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isFirst) {
+            lotteryItemPresenter.getLotteryItemInfo(StaticData.REFLASH_ONE);
+            isFirst=false;
+        }
+    }
 
     @Override
     protected void initializeInjector() {
@@ -131,10 +144,11 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
     @Override
     public void renderLotteryItemInfo(LotteryItemInfo lotteryItemInfo) {
         refreshLayout.finishRefresh();
+        rulesTip="";
         if (lotteryItemInfo != null) {
             prizeNumber = lotteryItemInfo.getPrizeNumber();
             luckyDrawNumber.setText("x" + lotteryItemInfo.getPrizeNumber());
-            lotteryRecordNumber.setText("x" + lotteryItemInfo.getHistoryPrizeCount());
+            lotteryRecordNumber.setText(lotteryItemInfo.getHistoryPrizeCount());
             brocadeCarps = lotteryItemInfo.getBrocadeCarps();
             if (brocadeCarps != null && brocadeCarps.size() > 0) {
                 for (int i = 0; i < brocadeCarps.size(); i++) {
@@ -160,6 +174,12 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
                 noRecordLl.setVisibility(View.VISIBLE);
                 refreshLayout.finishLoadMoreWithNoMoreData();
             }
+            prizeRules=lotteryItemInfo.getPrizeRules();
+            if(prizeRules!=null&&prizeRules.size()>0){
+                for (int i=0;i<prizeRules.size();i++){
+                    rulesTip=rulesTip+(i+1)+"、"+prizeRules.get(i)+"\n";
+                }
+            }
         }
     }
 
@@ -181,10 +201,11 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
 
     @Override
     public void goLotteryDetails(PrizeVo prizeVo) {
+        isFirst=true;
         LotteryDetailActivity.start(this, prizeNumber, prizeVo);
     }
 
-    @OnClick({R.id.back,R.id.record_rl})
+    @OnClick({R.id.back, R.id.record_rl, R.id.tip_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -192,6 +213,9 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
                 break;
             case R.id.record_rl:
                 LotteryRecordActivity.start(this);
+                break;
+            case R.id.tip_rl:
+                LotteryTipActivity.start(this,rulesTip);
                 break;
             default:
         }

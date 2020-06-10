@@ -47,16 +47,16 @@ android {
     }
     buildTypes {
         release {
-            buildConfigField "String", "API_BASE_URL", "\"http://open.365neng.com/api/\""
+            buildConfigField "String", "API_BASE_URL", "\"https://api.specialbuy.cn/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             zipAlignEnabled true
         }
         debug {
-//            buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.39:8080/\""
+            buildConfigField "String", "API_BASE_URL", "\"https://api.specialbuy.cn/\""
 //            buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.176:8080/\""
-            buildConfigField "String", "API_BASE_URL", "\"http://47.114.109.50:8080/\""
+//            buildConfigField "String", "API_BASE_URL", "\"http://47.114.109.50:8080/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug

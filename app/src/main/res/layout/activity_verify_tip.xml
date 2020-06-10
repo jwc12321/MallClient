@@ -37,7 +37,9 @@
         android:text="@string/cerify_tip"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/title_rel"
-        android:layout_marginTop="@dimen/dp_129"/>
+        android:layout_marginTop="@dimen/dp_136"
+        android:layout_marginLeft="@dimen/dp_28"
+        android:layout_marginRight="@dimen/dp_28"/>
     <com.mall.sls.common.widget.textview.MediumThickTextView
         android:id="@+id/confirm_bt"
        style="@style/common_next_bt_style"

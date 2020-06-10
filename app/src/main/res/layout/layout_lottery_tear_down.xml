@@ -13,7 +13,7 @@
 
     <com.mall.sls.common.widget.textview.ConventionalTextView
         android:id="@+id/day_tv"
-        style="@style/size14_color_app3_text_style"
+        style="@style/size14_color_back1_text_style"
         android:layout_marginLeft="@dimen/dp_3"
         android:layout_marginRight="@dimen/dp_3"
         android:text="@string/day" />
@@ -25,10 +25,10 @@
 
     <com.mall.sls.common.widget.textview.ConventionalTextView
         android:id="@+id/hour_tv"
-        style="@style/size14_color_app3_text_style"
+        style="@style/size14_color_back1_text_style"
         android:layout_marginLeft="@dimen/dp_3"
         android:layout_marginRight="@dimen/dp_3"
-        android:text="@string/hour" />
+        android:text=":" />
 
     <com.mall.sls.common.widget.textview.ConventionalTextView
         android:id="@+id/min_time"
@@ -36,10 +36,10 @@
         tools:text="12" />
 
     <com.mall.sls.common.widget.textview.ConventionalTextView
-        style="@style/size14_color_app3_text_style"
+        style="@style/size14_color_back1_text_style"
         android:layout_marginLeft="@dimen/dp_3"
         android:layout_marginRight="@dimen/dp_3"
-        android:text="@string/min" />
+        android:text=":" />
 
     <com.mall.sls.common.widget.textview.ConventionalTextView
         android:id="@+id/second_time"
@@ -47,8 +47,8 @@
         tools:text="12" />
 
     <com.mall.sls.common.widget.textview.ConventionalTextView
-        style="@style/size14_color_app3_text_style"
+        style="@style/size14_color_app2_text_style"
         android:layout_marginLeft="@dimen/dp_3"
         android:layout_marginRight="@dimen/dp_3"
-        android:text="@string/second_end" />
+        android:text=" 截止" />
 </LinearLayout>

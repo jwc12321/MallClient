@@ -24,6 +24,9 @@ public class LotteryItemInfo {
     //抽奖列表
     @SerializedName("prizeVos")
     private List<PrizeVo> prizeVos ;
+    //规则
+    @SerializedName("prizeRules")
+    private List<String> prizeRules;
 
     public List<String> getBrocadeCarps() {
         return brocadeCarps;
@@ -63,5 +66,13 @@ public class LotteryItemInfo {
 
     public void setPrizeVos(List<PrizeVo> prizeVos) {
         this.prizeVos = prizeVos;
+    }
+
+    public List<String> getPrizeRules() {
+        return prizeRules;
+    }
+
+    public void setPrizeRules(List<String> prizeRules) {
+        this.prizeRules = prizeRules;
     }
 }

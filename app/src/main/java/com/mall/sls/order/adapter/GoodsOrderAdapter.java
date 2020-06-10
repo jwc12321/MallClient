@@ -165,7 +165,7 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
                     btLl.setVisibility(View.VISIBLE);
                     leftBt.setVisibility(View.GONE);
                     rightBt.setVisibility(View.VISIBLE);
-                    rightBt.setText(context.getString(R.string.invite_friends));
+                    rightBt.setText(context.getString(R.string.invitation));
                     break;
                 case StaticData.TO_BE_DELIVERED:
                     orderStatus.setText(context.getString(R.string.pending_delivery));

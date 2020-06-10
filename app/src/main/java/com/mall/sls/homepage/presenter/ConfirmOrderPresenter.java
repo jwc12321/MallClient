@@ -97,6 +97,7 @@ public class ConfirmOrderPresenter implements HomepageContract.ConfirmOrderPrese
 
     @Override
     public void orderAliPay(String orderId,String type) {
+        confirmOrderView.dismissLoading();
         confirmOrderView.showLoading(StaticData.PROCESSING);
         OrderPayRequest request=new OrderPayRequest(orderId,type);
         String sign= SignUnit.signPost(RequestUrl.ORDER_ALIPAY,gson.toJson(request));
@@ -121,6 +122,7 @@ public class ConfirmOrderPresenter implements HomepageContract.ConfirmOrderPrese
 
     @Override
     public void orderWxPay(String orderId, String type) {
+        confirmOrderView.dismissLoading();
         confirmOrderView.showLoading(StaticData.PROCESSING);
         OrderPayRequest request=new OrderPayRequest(orderId,type);
         String sign= SignUnit.signPost(RequestUrl.ORDER_WX_PAY,gson.toJson(request));

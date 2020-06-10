@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:background="@drawable/common_four_app_one_bg"
+        android:orientation="vertical">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_15"
+            android:text="用户协议和隐私政策"
+            android:textColor="@color/appText2"
+            android:textSize="@dimen/sp_15" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/dp_35"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_35"
+            android:text="服务协议和隐私政策"
+            android:textColor="@color/appText2"
+            android:textSize="@dimen/sp_12" />
+
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0_5"
+            android:layout_marginTop="@dimen/dp_15"
+            android:background="@color/backGround46" />
+
+        <LinearLayout style="@style/hide_tip_bt_ll_style">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/hide_cancel_bt"
+                style="@style/hide_tip_cancel_bt_style"
+                android:text="@string/not_in_use"
+                android:textColor="@color/appText2" />
+
+            <View style="@style/hide_tip_ver_line_style" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/hide_confirm_bt"
+                style="@style/hide_tip_cancel_bt_style"
+                android:text="@string/agree" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

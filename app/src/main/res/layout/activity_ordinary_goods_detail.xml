@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backGround6"
-    android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:background="@color/backGround6">
 
 
     <androidx.core.widget.NestedScrollView
@@ -27,8 +25,8 @@
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_313"
-                android:background="@color/appText2"
-                app:AutoPlayTime="3000"
+                android:background="@color/appText1"
+                app:AutoPlayTime="5000"
                 app:isHandLoop="true"
                 app:isShowIndicatorOnlyOne="true"
                 app:isShowNumberIndicator="true"

@@ -215,7 +215,7 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
                 briefText = BriefUnit.returnBrief(orderGoodsVos.get(0).getBrief());
             }
             orderTotalPrice = goodsOrderInfo.getActualPrice();
-            shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, 150, 150);
+            shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, shareIv.getWidth(), shareIv.getWidth());
             if (!PayTypeInstalledUtils.isWeixinAvilible(getActivity())) {
                 showMessage(getString(R.string.install_weixin));
                 return;

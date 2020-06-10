@@ -228,7 +228,8 @@
                     <ImageView
                         android:id="@+id/taobao_orde"
                         style="@style/mine_order_iv_style"
-                        android:src="@mipmap/icon_taobao_order" />
+                        android:src="@mipmap/icon_taobao_order"
+                        android:visibility="gone"/>
 
                     <ImageView
                         android:id="@+id/my_invitation_iv"
@@ -243,8 +244,20 @@
                     <ImageView
                         android:id="@+id/lottery"
                         style="@style/mine_order_iv_style"
-                        android:src="@mipmap/icon_lottery" />
+                        android:src="@mipmap/icon_lottery"
+                        android:visibility="gone"/>
 
+                    <ImageView
+                        android:id="@+id/address_manage"
+                        style="@style/mine_order_iv_style"
+                        android:layout_marginTop="@dimen/dp_2"
+                        android:src="@mipmap/icon_address_manage" />
+
+                    <ImageView
+                        android:id="@+id/feedback"
+                        style="@style/mine_order_iv_style"
+                        android:layout_marginTop="@dimen/dp_2"
+                        android:src="@mipmap/icon_feedback" />
 
                 </LinearLayout>
 
@@ -297,19 +310,8 @@
                         android:id="@+id/mission_center"
                         style="@style/mine_order_iv_style"
                         android:layout_marginTop="@dimen/dp_2"
-                        android:src="@mipmap/icon_mission_center" />
-
-                    <ImageView
-                        android:id="@+id/address_manage"
-                        style="@style/mine_order_iv_style"
-                        android:layout_marginTop="@dimen/dp_2"
-                        android:src="@mipmap/icon_address_manage" />
-
-                    <ImageView
-                        android:id="@+id/feedback"
-                        style="@style/mine_order_iv_style"
-                        android:layout_marginTop="@dimen/dp_2"
-                        android:src="@mipmap/icon_feedback" />
+                        android:src="@mipmap/icon_mission_center"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 

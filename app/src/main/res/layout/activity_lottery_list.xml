@@ -38,6 +38,7 @@
             android:background="@drawable/common_four_app_one_bg">
 
             <RelativeLayout
+                android:id="@+id/tip_rl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_46">
@@ -105,17 +106,14 @@
 
                 <View style="@style/forty_six_line_style" />
 
-                <com.mall.sls.common.widget.textview.MediumThickTextView
+
+                <ImageView
                     android:id="@+id/lucky_koi"
-                    android:layout_width="@dimen/dp_58"
-                    android:layout_height="@dimen/dp_17"
-                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_lottery_koi"
                     android:layout_marginLeft="@dimen/dp_15"
-                    android:background="@drawable/common_eight_five_back_one_bg"
-                    android:gravity="center"
-                    android:text="@string/lucky_koi"
-                    android:textColor="@color/appText3"
-                    android:textSize="@dimen/sp_12"/>
+                    android:layout_centerVertical="true"/>
 
                 <ViewFlipper
                     android:id="@+id/view_flipper"
@@ -163,6 +161,7 @@
                     android:layout_marginBottom="@dimen/dp_14"
                     android:clickable="true"
                     android:visibility="visible"
+                    android:nestedScrollingEnabled="false"
                     app:layoutManager="@string/layoutManager_LinearLayout"
                     tools:listitem="@layout/adapter_lottery" />
                 <LinearLayout

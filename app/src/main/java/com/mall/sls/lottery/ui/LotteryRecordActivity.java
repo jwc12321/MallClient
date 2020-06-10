@@ -35,7 +35,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/6/9.
  * 描述：
  */
-public class LotteryRecordActivity extends BaseActivity implements LotteryContract.LotteryRecordView {
+public class LotteryRecordActivity extends BaseActivity implements LotteryContract.LotteryRecordView,LotteryRecordAdapter.OnItemClickListener {
 
     @BindView(R.id.back)
     ImageView back;
@@ -72,6 +72,7 @@ public class LotteryRecordActivity extends BaseActivity implements LotteryContra
     private void initView() {
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         lotteryRecordAdapter = new LotteryRecordAdapter(this);
+        lotteryRecordAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(lotteryRecordAdapter);
         lotteryRecordPresenter.getLotteryRecord(StaticData.REFLASH_ONE);
 
@@ -152,5 +153,10 @@ public class LotteryRecordActivity extends BaseActivity implements LotteryContra
                 break;
             default:
         }
+    }
+
+    @Override
+    public void goLotteryDetails(PrizeVo prizeVo) {
+        LotteryDetailActivity.start(this,"0",prizeVo);
     }
 }

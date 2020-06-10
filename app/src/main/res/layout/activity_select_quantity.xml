@@ -46,6 +46,7 @@
                 android:layout_marginLeft="@dimen/dp_12"
                 android:layout_marginTop="@dimen/dp_29"
                 android:layout_toRightOf="@id/goods_iv"
+                android:layout_marginRight="@dimen/dp_48"
                 tools:text="香蕉" />
         </RelativeLayout>
 

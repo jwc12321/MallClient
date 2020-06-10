@@ -65,6 +65,7 @@
                 android:layout_marginTop="@dimen/dp_14"
                 android:layout_toRightOf="@id/goods_iv"
                 android:lines="2"
+                android:layout_marginRight="@dimen/dp_15"
                 tools:text="千禧圣女果1份5房价肯定就发的附件JFK大家" />
 
             <com.mall.sls.common.widget.textview.ConventionalTextView

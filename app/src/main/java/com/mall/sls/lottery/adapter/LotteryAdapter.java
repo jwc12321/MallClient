@@ -7,8 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.StaticData;
@@ -30,14 +33,14 @@ public class LotteryAdapter extends RecyclerView.Adapter<LotteryAdapter.LotteryV
     private Context context;
     private long nowTime;
 
-    public void setData(List<PrizeVo> prizeVos,long nowTime) {
-        this.nowTime=nowTime;
+    public void setData(List<PrizeVo> prizeVos, long nowTime) {
+        this.nowTime = nowTime;
         this.prizeVos = prizeVos;
         notifyDataSetChanged();
     }
 
-    public void addMore(List<PrizeVo> moreList,long nowTime) {
-        this.nowTime=nowTime;
+    public void addMore(List<PrizeVo> moreList, long nowTime) {
+        this.nowTime = nowTime;
         int pos = prizeVos.size();
         prizeVos.addAll(moreList);
         notifyItemRangeInserted(pos, moreList.size());
@@ -94,6 +97,8 @@ public class LotteryAdapter extends RecyclerView.Adapter<LotteryAdapter.LotteryV
         ConventionalTextView confirmBt;
         @BindView(R.id.item_rl)
         RelativeLayout itemRl;
+        @BindView(R.id.number_ll)
+        LinearLayout numberLl;
 
         public LotteryView(View itemView) {
             super(itemView);
@@ -104,25 +109,26 @@ public class LotteryAdapter extends RecyclerView.Adapter<LotteryAdapter.LotteryV
             participantNumber.setText(prizeVo.getParticipantNumber());
             GlideHelper.load((Activity) context, prizeVo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(prizeVo.getPrizeTitle());
-            endTime.setText(prizeVo.getEndTime()+"开奖");
-            goodsPrice.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getGoodsPrice()));
-            if(TextUtils.equals(StaticData.REFLASH_ONE,prizeVo.getPrizeStatus())){
+            endTime.setText(prizeVo.getPrizeTime() + " 开奖");
+            goodsPrice.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getCounterPrice()));
+            numberLl.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO,prizeVo.getParticipantNumber())?View.GONE:View.VISIBLE);
+            if (TextUtils.equals(StaticData.REFLASH_ONE, prizeVo.getPrizeStatus())) {
                 confirmBt.setSelected(true);
-                if(TextUtils.equals(StaticData.REFLASH_ZERO,prizeVo.getCounterPrice())||TextUtils.equals("0.00",prizeVo.getCounterPrice())){
-                    confirmBt.setText(context.getString(R.string.participate_draw));
-                }else {
-                    confirmBt.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getCounterPrice())+context.getString(R.string.participate_draw));
+                if (TextUtils.equals(StaticData.REFLASH_ZERO, prizeVo.getPrice()) || TextUtils.equals("0.00", prizeVo.getPrice())) {
+                    confirmBt.setText("0"+context.getString(R.string.yuan_draw));
+                } else {
+                    confirmBt.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getPrice()) + context.getString(R.string.yuan_draw));
                 }
-            }else {
+            } else {
                 confirmBt.setSelected(false);
                 confirmBt.setText(context.getString(R.string.waiting_draw));
             }
             long groupExpireTime = FormatUtil.dateToStamp(prizeVo.getEndTime());
-            if(groupExpireTime<nowTime){
+            if (groupExpireTime < nowTime) {
                 countDown.setVisibility(View.GONE);
-            }else {
+            } else {
                 countDown.setVisibility(View.VISIBLE);
-                countDown.startTearDown(groupExpireTime/1000, nowTime/1000);
+                countDown.startTearDown(groupExpireTime / 1000, nowTime / 1000);
             }
 
         }

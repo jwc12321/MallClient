@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -42,7 +41,7 @@ public class FeedBackActivity extends BaseActivity implements MineContract.FeedB
     @BindView(R.id.title_rel)
     RelativeLayout titleRel;
     @BindView(R.id.remark_et)
-    EditText remarkEt;
+    ForbidEmojiEditText remarkEt;
     @BindView(R.id.word_count)
     ConventionalTextView wordCount;
     @BindView(R.id.confirm_bt)

@@ -142,6 +142,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private String wxUrl;
     private String inviteCode;
     private String picUrl;
+    private String selectType;
 
     @Inject
     ConfirmOrderPresenter confirmOrderPresenter;
@@ -244,7 +245,14 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                     showMessage(getString(R.string.select_address));
                     return;
                 }
-                confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
+                if(TextUtils.equals(StaticData.REFLASH_ZERO,orderTotalPrice)||TextUtils.equals("0.00",orderTotalPrice)){
+                    confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
+                }else {
+                    Intent intent = new Intent(this, SelectPayTypeActivity.class);
+                    intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
+                    intent.putExtra(StaticData.PAYMENT_AMOUNT, orderTotalPrice);
+                    startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
+                }
                 break;
             case R.id.coupon_rl:
                 Intent couponIntent = new Intent(this, SelectCouponActivity.class);
@@ -273,7 +281,6 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             switch (requestCode) {
                 case RequestCodeStatic.REQUEST_ADDRESS://地址
                     if (data != null) {
-                        Bundle bundle = data.getExtras();
                         addressId = data.getStringExtra(StaticData.ADDRESS_ID);
                         confirmOrderPresenter.cartCheckout(addressId, cartId, couponId, userCouponId);
                     }
@@ -294,23 +301,22 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                     break;
                 case RequestCodeStatic.PAY_TYPE://选择支付方式
                     if (data != null) {
-                        String selectType = data.getStringExtra(StaticData.SELECT_TYPE);
+                        selectType = data.getStringExtra(StaticData.SELECT_TYPE);
                         if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(ConfirmOrderActivity.this)) {
-                                confirmOrderPresenter.orderWxPay(orderId,StaticData.REFLASH_ZERO);
+//                                confirmOrderPresenter.orderWxPay(orderId,StaticData.REFLASH_ZERO);
+                                confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
                         } else if(TextUtils.equals(StaticData.REFLASH_ONE, selectType)){
                             if (PayTypeInstalledUtils.isAliPayInstalled(ConfirmOrderActivity.this)) {
-                                confirmOrderPresenter.orderAliPay(orderId, StaticData.REFLASH_ONE);
+//                                confirmOrderPresenter.orderAliPay(orderId, StaticData.REFLASH_ONE);
+                                confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
                             } else {
                                 showMessage(getString(R.string.install_alipay));
                             }
-                        }else {
-                            GoodsOrderDetailsActivity.start(this,orderId);
-                            finish();
                         }
                     }
                     break;
@@ -322,7 +328,14 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                                 showMessage(getString(R.string.select_address));
                                 return;
                             }
-                            confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
+                            if(TextUtils.equals(StaticData.REFLASH_ZERO,orderTotalPrice)||TextUtils.equals("0.00",orderTotalPrice)){
+                                confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
+                            }else {
+                                Intent intent = new Intent(this, SelectPayTypeActivity.class);
+                                intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
+                                intent.putExtra(StaticData.PAYMENT_AMOUNT, orderTotalPrice);
+                                startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
+                            }
                         } else {
                             finish();
                         }
@@ -358,10 +371,15 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             orderId = orderSubmitInfo.getOrderId();
             grouponId = orderSubmitInfo.getGrouponLinkId();
             if(orderSubmitInfo.getPay()) {
-                Intent intent = new Intent(this, SelectPayTypeActivity.class);
-                intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
-                intent.putExtra(StaticData.PAYMENT_AMOUNT, orderTotalPrice);
-                startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
+//                Intent intent = new Intent(this, SelectPayTypeActivity.class);
+//                intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
+//                intent.putExtra(StaticData.PAYMENT_AMOUNT, orderTotalPrice);
+//                startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
+                if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
+                    confirmOrderPresenter.orderWxPay(orderId,StaticData.REFLASH_ZERO);
+                }else {
+                    confirmOrderPresenter.orderAliPay(orderId, StaticData.REFLASH_ONE);
+                }
             }else {
                 paySuccess();
             }

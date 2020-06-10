@@ -33,6 +33,7 @@ import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.BriefUnit;
 import com.mall.sls.common.unit.HtmlUnit;
+import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
@@ -51,6 +52,7 @@ import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.presenter.GoodsDetailsPresenter;
+import com.mall.sls.mainframe.ui.MainFrameActivity;
 import com.mall.sls.mine.ui.CustomerServiceActivity;
 import com.mall.sls.mine.ui.SelectShareTypeActivity;
 import com.mall.sls.webview.unit.JSBridgeWebChromeClient;
@@ -295,7 +297,11 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
+                finish();
+                break;
             case R.id.home_iv:
+                MainStartManager.saveMainStart(StaticData.REFLASH_ONE);
+                MainFrameActivity.start(this);
                 finish();
                 break;
             case R.id.initiate_bill_bt://发起拼单

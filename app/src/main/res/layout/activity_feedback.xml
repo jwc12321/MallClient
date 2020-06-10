@@ -28,7 +28,7 @@
         android:layout_margin="@dimen/dp_15"
         android:background="@drawable/common_four_app_one_bg">
 
-        <EditText
+        <com.mall.sls.common.widget.edittextview.ForbidEmojiEditText
             android:id="@+id/remark_et"
             style="@style/input_feedback_edittext_style"
             android:inputType="textMultiLine"

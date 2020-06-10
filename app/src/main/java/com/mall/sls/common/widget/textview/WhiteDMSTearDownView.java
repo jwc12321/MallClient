@@ -92,12 +92,14 @@ public class WhiteDMSTearDownView extends LinearLayout {
         if (mIsAttachedToWindow) {
             long remainTime= cutdownTime;
             if (remainTime >0) {
+                long day = 0;
                 long hour = 0;
                 long min = 0;
                 long sec = 0;
-                hour = remainTime / (60 * 60);
-                min = (remainTime / 60  - hour * 60);
-                sec = (remainTime -  hour * 60 * 60 - min * 60);
+                day = remainTime / (24 * 60 * 60);
+                hour = (remainTime / (60 * 60) - day * 24);
+                min = (remainTime / 60 - day * 24 * 60 - hour * 60);
+                sec = (remainTime - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
                 if(String.valueOf(hour).length()==1){
                     hourTextView.setText("0"+hour);
                 }else {
