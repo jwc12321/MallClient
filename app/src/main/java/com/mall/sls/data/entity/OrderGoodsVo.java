@@ -31,6 +31,9 @@ public class OrderGoodsVo {
     //skuId
     @SerializedName("productId")
     private String productId;
+    //是否上架 0-已下架 1-未下架
+    @SerializedName("isOnSale")
+    private String isOnSale;
 
 
     public String getGoodsName() {
@@ -95,5 +98,13 @@ public class OrderGoodsVo {
 
     public void setProductId(String productId) {
         this.productId = productId;
+    }
+
+    public String getIsOnSale() {
+        return isOnSale;
+    }
+
+    public void setIsOnSale(String isOnSale) {
+        this.isOnSale = isOnSale;
     }
 }

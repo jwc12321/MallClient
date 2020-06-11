@@ -220,6 +220,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             phone.setText(addressInfo.getTel());
             address.setText(addressInfo.getProvince() + addressInfo.getCity() + addressInfo.getCounty() + addressInfo.getAddressDetail());
         } else {
+            addressId = "";
             noAddressTv.setVisibility(View.VISIBLE);
             addressRl.setVisibility(View.GONE);
         }
@@ -263,6 +264,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             case R.id.address_all://选择地址
                 Intent intent = new Intent(this, AddressManageActivity.class);
                 intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_ZERO);
+                intent.putExtra(StaticData.SELECT_ID,addressId);
                 startActivityForResult(intent, RequestCodeStatic.REQUEST_ADDRESS);
                 break;
             case R.id.remark_rl:

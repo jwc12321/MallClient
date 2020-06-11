@@ -65,6 +65,7 @@ public class AddressManageActivity extends BaseActivity implements AddressContra
     private String choiceType;//0:下单界面过来 1：我的界面过来
     private AddressInfo addressInfo;
     private String addressId;
+    private String selectId;
 
     public static void start(Context context,String choiceType) {
         Intent intent = new Intent(context, AddressManageActivity.class);
@@ -90,6 +91,7 @@ public class AddressManageActivity extends BaseActivity implements AddressContra
 
     private void initView(){
         choiceType=getIntent().getStringExtra(StaticData.CHOICE_TYPE);
+        selectId=getIntent().getStringExtra(StaticData.SELECT_ID);
         if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
             title.setText(getString(R.string.select_address));
         }else {
@@ -120,10 +122,19 @@ public class AddressManageActivity extends BaseActivity implements AddressContra
                 startActivityForResult(intent, RequestCodeStatic.ADD_ADDRESS);
                 break;
             case R.id.back:
-                finish();
+                back();
                 break;
             default:
         }
+    }
+
+    private void back(){
+        if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)&&!TextUtils.isEmpty(selectId)) {
+            Intent intent = new Intent();
+            intent.putExtra(StaticData.ADDRESS_ID, selectId);
+            setResult(RESULT_OK, intent);
+        }
+        finish();
     }
 
 

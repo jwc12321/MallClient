@@ -136,5 +136,6 @@ public class StaticData {
 
     public static final String TOKEN_OVER_TWO="10002";
     public static final String TOKEN_OVER_ONE="10001";
+    public static final String SELECT_ID="selectId";
 
 }

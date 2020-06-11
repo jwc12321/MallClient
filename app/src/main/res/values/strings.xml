@@ -74,7 +74,7 @@
     <string name="set_default_address">设为默认地址</string>
     <string name="save_receipt_information">保存收货信息</string>
     <string name="select_address">选择收货地址</string>
-    <string name="my_address">我的收获地址</string>
+    <string name="my_address">我的收货地址</string>
     <string name="add_address">新增地址</string>
     <string name="edit">编辑</string>
     <string name="no_address_added_yet">暂无收货地址哦！</string>

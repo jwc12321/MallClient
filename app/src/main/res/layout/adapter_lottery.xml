@@ -9,14 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_15"
-        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_15"
         android:layout_marginRight="@dimen/dp_15"
         android:background="@drawable/common_four_app_one_bg"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_54">
+            android:layout_height="@dimen/dp_30">
 
             <LinearLayout
                 android:id="@+id/number_ll"
@@ -24,7 +24,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     style="@style/size14_color_app2_text_style"
@@ -41,13 +42,13 @@
                     android:text="人参与" />
             </LinearLayout>
 
-            <com.mall.sls.common.widget.textview.LotteryTearDownView
-                android:id="@+id/count_down"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/prizeTime"
+                style="@style/size14_color_back1_text_style"
+                tools:text="2018"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_15"
-                android:visibility="gone"/>
+                android:layout_marginLeft="@dimen/dp_15"/>
+
         </RelativeLayout>
 
         <View style="@style/forty_six_line_style" />
@@ -55,8 +56,10 @@
         <RelativeLayout
             android:id="@+id/item_rl"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_130"
-            android:background="@drawable/common_four_app_one_bg">
+            android:layout_height="@dimen/dp_102"
+            android:background="@drawable/common_four_app_one_bg"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10">
 
             <ImageView
                 android:id="@+id/goods_iv"
@@ -71,20 +74,12 @@
                 android:id="@+id/goods_name"
                 style="@style/size14_color_app3_text_style"
                 android:layout_marginLeft="@dimen/dp_12"
-                android:layout_marginTop="@dimen/dp_14"
-                android:layout_toRightOf="@id/goods_iv"
+                android:layout_marginTop="@dimen/dp_8"
                 android:layout_marginRight="@dimen/dp_15"
+                android:layout_toRightOf="@id/goods_iv"
                 android:lines="2"
                 tools:text="千禧圣女果1份5房价肯定就发的附件JFK大家" />
 
-            <com.mall.sls.common.widget.textview.ConventionalTextView
-                android:id="@+id/endTime"
-                style="@style/size12_color_back1_text_style"
-                android:layout_below="@id/goods_name"
-                android:layout_marginLeft="@dimen/dp_12"
-                android:layout_marginTop="@dimen/dp_8"
-                android:layout_toRightOf="@id/goods_iv"
-                tools:text="2018" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -92,7 +87,8 @@
                 android:layout_alignBottom="@id/goods_iv"
                 android:layout_marginLeft="@dimen/dp_12"
                 android:layout_toRightOf="@id/goods_iv"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/dp_8">
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     style="@style/size12_color_back1_text_style"
@@ -107,7 +103,8 @@
             <com.mall.sls.common.widget.textview.ConventionalTextView
                 android:id="@+id/confirm_bt"
                 style="@style/lottery_list_bt_style"
-                android:layout_alignBottom="@id/goods_iv" />
+                android:layout_alignBottom="@id/goods_iv"
+                android:layout_marginBottom="@dimen/dp_4"/>
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

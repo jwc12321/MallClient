@@ -99,12 +99,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_3"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/dp_3">
 
             <RelativeLayout
                 android:id="@+id/up_down_rl"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_22">
+                android:layout_height="@dimen/dp_25">
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/use_tip"
                    style="@style/size11_color_app3_text_style"

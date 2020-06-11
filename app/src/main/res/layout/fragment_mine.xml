@@ -66,26 +66,28 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/phone"
                         android:layout_marginLeft="@dimen/dp_85"
-                        android:orientation="horizontal"
                         android:layout_marginTop="@dimen/dp_3"
+                        android:orientation="horizontal"
                         android:visibility="gone">
 
                         <com.mall.sls.common.widget.textview.ConventionalTextView
                             android:id="@+id/invite_code_tv"
                             style="@style/size15_color_app1_text_style"
-                            tools:text="1111"
-                            android:layout_gravity="center_vertical"/>
+                            android:layout_gravity="center_vertical"
+                            tools:text="1111" />
+
                         <com.mall.sls.common.widget.textview.ConventionalTextView
                             android:id="@+id/copy"
                             android:layout_width="@dimen/dp_69"
                             android:layout_height="@dimen/dp_20"
+                            android:layout_marginLeft="@dimen/dp_10"
                             android:background="@drawable/common_ten_back_forty_three_bg"
-                            android:textSize="@dimen/sp_12"
-                            android:textColor="@color/appText1"
-                            android:text="@string/copy_invite_code"
                             android:gravity="center"
-                            android:layout_marginLeft="@dimen/dp_10"/>
+                            android:text="@string/copy_invite_code"
+                            android:textColor="@color/appText1"
+                            android:textSize="@dimen/sp_12" />
                     </LinearLayout>
+
                     <ImageView
                         android:id="@+id/member_type_iv"
                         android:layout_width="wrap_content"
@@ -110,12 +112,12 @@
                     android:layout_height="@dimen/dp_60"
                     android:layout_marginLeft="@dimen/dp_30"
                     android:scaleType="centerCrop"
-                    tools:src="@mipmap/ic_launcher"
                     app:riv_border_color="@color/appText1"
                     app:riv_border_width="0dp"
                     app:riv_corner_radius="0dp"
                     app:riv_oval="true"
-                    tools:background="@null" />
+                    tools:background="@null"
+                    tools:src="@mipmap/ic_launcher" />
             </RelativeLayout>
 
             <LinearLayout
@@ -228,8 +230,7 @@
                     <ImageView
                         android:id="@+id/taobao_orde"
                         style="@style/mine_order_iv_style"
-                        android:src="@mipmap/icon_taobao_order"
-                        android:visibility="gone"/>
+                        android:src="@mipmap/icon_taobao_order" />
 
                     <ImageView
                         android:id="@+id/my_invitation_iv"
@@ -244,20 +245,7 @@
                     <ImageView
                         android:id="@+id/lottery"
                         style="@style/mine_order_iv_style"
-                        android:src="@mipmap/icon_lottery"
-                        android:visibility="gone"/>
-
-                    <ImageView
-                        android:id="@+id/address_manage"
-                        style="@style/mine_order_iv_style"
-                        android:layout_marginTop="@dimen/dp_2"
-                        android:src="@mipmap/icon_address_manage" />
-
-                    <ImageView
-                        android:id="@+id/feedback"
-                        style="@style/mine_order_iv_style"
-                        android:layout_marginTop="@dimen/dp_2"
-                        android:src="@mipmap/icon_feedback" />
+                        android:src="@mipmap/icon_lottery" />
 
                 </LinearLayout>
 
@@ -310,8 +298,19 @@
                         android:id="@+id/mission_center"
                         style="@style/mine_order_iv_style"
                         android:layout_marginTop="@dimen/dp_2"
-                        android:src="@mipmap/icon_mission_center"
-                        android:visibility="gone"/>
+                        android:src="@mipmap/icon_mission_center" />
+
+                    <ImageView
+                        android:id="@+id/address_manage"
+                        style="@style/mine_order_iv_style"
+                        android:layout_marginTop="@dimen/dp_2"
+                        android:src="@mipmap/icon_address_manage" />
+
+                    <ImageView
+                        android:id="@+id/feedback"
+                        style="@style/mine_order_iv_style"
+                        android:layout_marginTop="@dimen/dp_2"
+                        android:src="@mipmap/icon_feedback" />
 
                 </LinearLayout>
 

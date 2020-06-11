@@ -174,6 +174,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private List<ShipOrderInfo> shipOrderInfos;
     private WebViewDetailInfo webViewDetailInfo;
     private String sfH5Url;
+    private String isOnSale;
 
     @Inject
     OrderDetailsPresenter orderDetailsPresenter;
@@ -364,6 +365,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 briefText = BriefUnit.returnBrief(orderGoodsVos.get(0).getBrief());
                 goodsId = orderGoodsVos.get(0).getGoodsId();
                 goodsProductId = orderGoodsVos.get(0).getProductId();
+                isOnSale=orderGoodsVos.get(0).getIsOnSale();
             }
             totalAmount.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getGoodsPrice()));
             deliveryFee.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getFreightPrice()));
@@ -479,7 +481,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 orderStatus.setText(getString(R.string.shipping));
                 countDownLl.setVisibility(View.GONE);
                 btRl.setVisibility(View.VISIBLE);
-                leftBt.setVisibility(View.VISIBLE);
+                leftBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,isOnSale)?View.VISIBLE:View.GONE);
                 rightBt.setVisibility(View.VISIBLE);
                 leftBt.setText(getString(R.string.one_more_order));
                 rightBt.setText(getString(R.string.check_map));
@@ -492,7 +494,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 orderStatus.setText(getString(R.string.completed));
                 countDownLl.setVisibility(View.GONE);
                 btRl.setVisibility(View.VISIBLE);
-                leftBt.setVisibility(View.VISIBLE);
+                leftBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,isOnSale)?View.VISIBLE:View.GONE);
                 rightBt.setVisibility(View.GONE);
                 leftBt.setText(getString(R.string.one_more_order));
                 deliveryRl.setVisibility(View.VISIBLE);
@@ -504,7 +506,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 orderStatus.setText(getString(R.string.transaction_cancel));
                 countDownLl.setVisibility(View.GONE);
                 btRl.setVisibility(View.VISIBLE);
-                leftBt.setVisibility(View.VISIBLE);
+                leftBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,isOnSale)?View.VISIBLE:View.GONE);
                 rightBt.setVisibility(View.GONE);
                 leftBt.setText(getString(R.string.one_more_order));
                 deliveryRl.setVisibility(View.GONE);

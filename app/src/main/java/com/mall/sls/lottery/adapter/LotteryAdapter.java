@@ -31,16 +31,13 @@ public class LotteryAdapter extends RecyclerView.Adapter<LotteryAdapter.LotteryV
     private LayoutInflater layoutInflater;
     private List<PrizeVo> prizeVos;
     private Context context;
-    private long nowTime;
 
-    public void setData(List<PrizeVo> prizeVos, long nowTime) {
-        this.nowTime = nowTime;
+    public void setData(List<PrizeVo> prizeVos) {
         this.prizeVos = prizeVos;
         notifyDataSetChanged();
     }
 
-    public void addMore(List<PrizeVo> moreList, long nowTime) {
-        this.nowTime = nowTime;
+    public void addMore(List<PrizeVo> moreList) {
         int pos = prizeVos.size();
         prizeVos.addAll(moreList);
         notifyItemRangeInserted(pos, moreList.size());
@@ -83,22 +80,20 @@ public class LotteryAdapter extends RecyclerView.Adapter<LotteryAdapter.LotteryV
     public class LotteryView extends RecyclerView.ViewHolder {
         @BindView(R.id.participantNumber)
         MediumThickTextView participantNumber;
-        @BindView(R.id.count_down)
-        LotteryTearDownView countDown;
+        @BindView(R.id.number_ll)
+        LinearLayout numberLl;
+        @BindView(R.id.prizeTime)
+        ConventionalTextView prizeTime;
         @BindView(R.id.goods_iv)
         ImageView goodsIv;
         @BindView(R.id.goods_name)
         ConventionalTextView goodsName;
-        @BindView(R.id.endTime)
-        ConventionalTextView endTime;
         @BindView(R.id.goods_price)
         MediumThickTextView goodsPrice;
         @BindView(R.id.confirm_bt)
         ConventionalTextView confirmBt;
         @BindView(R.id.item_rl)
         RelativeLayout itemRl;
-        @BindView(R.id.number_ll)
-        LinearLayout numberLl;
 
         public LotteryView(View itemView) {
             super(itemView);
@@ -109,13 +104,13 @@ public class LotteryAdapter extends RecyclerView.Adapter<LotteryAdapter.LotteryV
             participantNumber.setText(prizeVo.getParticipantNumber());
             GlideHelper.load((Activity) context, prizeVo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(prizeVo.getPrizeTitle());
-            endTime.setText(prizeVo.getPrizeTime() + " 开奖");
+            prizeTime.setText(prizeVo.getPrizeTime() + " 开奖");
             goodsPrice.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getCounterPrice()));
-            numberLl.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO,prizeVo.getParticipantNumber())?View.GONE:View.VISIBLE);
+//            numberLl.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO, prizeVo.getParticipantNumber()) ? View.GONE : View.VISIBLE);
             if (TextUtils.equals(StaticData.REFLASH_ONE, prizeVo.getPrizeStatus())) {
                 confirmBt.setSelected(true);
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, prizeVo.getPrice()) || TextUtils.equals("0.00", prizeVo.getPrice())) {
-                    confirmBt.setText("0"+context.getString(R.string.yuan_draw));
+                    confirmBt.setText("0" + context.getString(R.string.yuan_draw));
                 } else {
                     confirmBt.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getPrice()) + context.getString(R.string.yuan_draw));
                 }
@@ -123,14 +118,6 @@ public class LotteryAdapter extends RecyclerView.Adapter<LotteryAdapter.LotteryV
                 confirmBt.setSelected(false);
                 confirmBt.setText(context.getString(R.string.waiting_draw));
             }
-            long groupExpireTime = FormatUtil.dateToStamp(prizeVo.getEndTime());
-            if (groupExpireTime < nowTime) {
-                countDown.setVisibility(View.GONE);
-            } else {
-                countDown.setVisibility(View.VISIBLE);
-                countDown.startTearDown(groupExpireTime / 1000, nowTime / 1000);
-            }
-
         }
     }
 

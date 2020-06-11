@@ -16,7 +16,7 @@
 
     <com.mall.sls.common.widget.textview.ConventionalTextView
         android:id="@+id/name"
-        style="@style/size14_color_app3_text_style"
+        style="@style/size13_color_app3_text_style"
         android:layout_marginTop="@dimen/dp_9"
         tools:text="猜你喜欢"
         android:layout_gravity="center_horizontal"

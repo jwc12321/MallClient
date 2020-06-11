@@ -109,7 +109,7 @@
             <RelativeLayout
                 android:id="@+id/up_down_rl"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_22">
+                android:layout_height="@dimen/dp_25">
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/used_bt"

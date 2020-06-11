@@ -44,14 +44,20 @@ public class LogisticsAdapter extends RecyclerView.Adapter<LogisticsAdapter.Logi
             holder.upLine.setVisibility(View.GONE);
             holder.downLine.setVisibility(View.VISIBLE);
             holder.submitIv.setSelected(true);
+            holder.statusDesc.setSelected(true);
+            holder.statusTime.setSelected(true);
         }else if(holder.getAdapterPosition()==shipOrderInfos.size()-1){
             holder.upLine.setVisibility(View.VISIBLE);
             holder.downLine.setVisibility(View.GONE);
             holder.submitIv.setSelected(false);
+            holder.statusDesc.setSelected(false);
+            holder.statusTime.setSelected(false);
         }else {
             holder.upLine.setVisibility(View.VISIBLE);
             holder.downLine.setVisibility(View.VISIBLE);
             holder.submitIv.setSelected(false);
+            holder.statusDesc.setSelected(false);
+            holder.statusTime.setSelected(false);
         }
     }
 

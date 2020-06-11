@@ -83,7 +83,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
     @BindView(R.id.privacy_tv)
     ConventionalTextView privacyTv;
     @BindView(R.id.phone_login_bt)
-    ConventionalTextView phoneLoginBt;
+    LinearLayout phoneLoginBt;
 
     // 微信登录
     private static IWXAPI WXapi;

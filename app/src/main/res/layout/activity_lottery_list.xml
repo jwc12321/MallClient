@@ -23,7 +23,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_117">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_15">
 
         <View
             android:layout_width="match_parent"
@@ -32,7 +33,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_15"
             android:background="@drawable/common_four_app_one_bg">
@@ -41,7 +42,8 @@
                 android:id="@+id/tip_rl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_46">
+                android:layout_marginLeft="@dimen/dp_46"
+                android:layout_marginBottom="@dimen/dp_7">
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/lucky_draw_tv"
@@ -61,14 +63,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/lucky_draw_tv"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/dp_11"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="@dimen/dp_24"
                         android:layout_height="@dimen/dp_24"
-                        android:src="@mipmap/icon_liwu" />
+                        android:src="@mipmap/icon_liwu"
+                        android:layout_marginLeft="@dimen/dp_5"/>
 
                     <com.mall.sls.common.widget.textview.ConventionalTextView
                         android:id="@+id/lucky_draw_number"
@@ -100,9 +102,11 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/koi_rl"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_36"
-                android:layout_alignParentBottom="true">
+                android:layout_below="@id/tip_rl"
+                android:visibility="gone">
 
                 <View style="@style/forty_six_line_style" />
 
@@ -158,7 +162,6 @@
                     android:id="@+id/record_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp_14"
                     android:clickable="true"
                     android:visibility="visible"
                     android:nestedScrollingEnabled="false"

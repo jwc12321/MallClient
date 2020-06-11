@@ -66,9 +66,9 @@ public abstract class BaseActivity extends AppCompatActivity implements LoadData
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
         mainApplication = (MainApplication) getApplication();//获取MyApplication的对象
-        if (width == 720) {
-            mainApplication.setData(width, height);
-        }
+//        if (width == 720) {
+//            mainApplication.setData(width, height);
+//        }
         changeStateBar();
         initializeInjector();
     }

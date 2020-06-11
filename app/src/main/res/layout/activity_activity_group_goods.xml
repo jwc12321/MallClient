@@ -137,8 +137,7 @@
                         android:layout_marginLeft="@dimen/dp_12"
                         android:layout_marginTop="@dimen/dp_10"
                         android:layout_toRightOf="@id/goods_iv"
-                        android:ellipsize="end"
-                        android:singleLine="true"
+                        android:layout_marginRight="@dimen/dp_10"
                         tools:text="香蕉" />
 
                     <com.mall.sls.common.widget.textview.ConventionalTextView
@@ -148,7 +147,9 @@
                         android:layout_marginLeft="@dimen/dp_12"
                         android:layout_marginTop="@dimen/dp_5"
                         android:layout_toRightOf="@id/goods_iv"
-                        tools:text="香蕉" />
+                        tools:text="香蕉"
+                        android:ellipsize="end"
+                        android:singleLine="true"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"

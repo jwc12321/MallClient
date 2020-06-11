@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -76,12 +77,14 @@ public class LotteryRecordAdapter extends RecyclerView.Adapter<LotteryRecordAdap
     public class LotteryRecordView extends RecyclerView.ViewHolder {
         @BindView(R.id.participantNumber)
         MediumThickTextView participantNumber;
+        @BindView(R.id.number_ll)
+        LinearLayout numberLl;
+        @BindView(R.id.prizeTime)
+        ConventionalTextView prizeTime;
         @BindView(R.id.goods_iv)
         ImageView goodsIv;
         @BindView(R.id.goods_name)
         ConventionalTextView goodsName;
-        @BindView(R.id.endTime)
-        ConventionalTextView endTime;
         @BindView(R.id.goods_price)
         MediumThickTextView goodsPrice;
         @BindView(R.id.confirm_bt)
@@ -98,7 +101,7 @@ public class LotteryRecordAdapter extends RecyclerView.Adapter<LotteryRecordAdap
             participantNumber.setText(prizeVo.getParticipantNumber());
             GlideHelper.load((Activity) context, prizeVo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(prizeVo.getPrizeTitle());
-            endTime.setText(prizeVo.getPrizeTime() + " 开奖");
+            prizeTime.setText(prizeVo.getPrizeTime() + " 开奖");
             goodsPrice.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getCounterPrice()));
 
         }
