@@ -126,7 +126,7 @@ public class StaticData {
     public static final String CITY="city";
     public static final String COUNT="county";
     public static final String LAT="lat";
-    public static final String LNG="lng";
+    public static final String LON="lon";
     public static final String DETAIL_ADDRESS="detailAddress";
     public static final String VIP_EXPIRE_DATE="vipExpireDate";//过期时间
     public static final String PRIZE_NUMBER="prizeNumber";//抽奖机会
@@ -137,5 +137,6 @@ public class StaticData {
     public static final String TOKEN_OVER_TWO="10002";
     public static final String TOKEN_OVER_ONE="10001";
     public static final String SELECT_ID="selectId";
+    public static final String AREA_CODE="areaCode";
 
 }

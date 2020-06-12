@@ -25,11 +25,10 @@ import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
-import com.amap.api.services.help.Inputtips;
-import com.amap.api.services.help.Tip;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.mall.sls.BaseActivity;
@@ -38,8 +37,6 @@ import com.mall.sls.address.adapter.MapAddressAdapter;
 import com.mall.sls.address.adapter.SearchAddressAdapter;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
-import com.mall.sls.common.location.GeoCoderUtil;
-import com.mall.sls.common.location.LatLngEntity;
 import com.mall.sls.common.location.LocationBean;
 import com.mall.sls.common.widget.textview.ConventionalEditTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
@@ -59,7 +56,7 @@ import butterknife.OnTextChanged;
  * 留着以后可能会用
  */
 
-public class SelectAddressActivity extends BaseActivity implements LocationSource, AMapLocationListener, PoiSearch.OnPoiSearchListener, AMap.OnCameraChangeListener, MapAddressAdapter.OnItemClickListener,SearchAddressAdapter.OnItemClickListener {
+public class SelectAddressActivity extends BaseActivity implements LocationSource, AMapLocationListener, PoiSearch.OnPoiSearchListener, AMap.OnCameraChangeListener, MapAddressAdapter.OnItemClickListener, SearchAddressAdapter.OnItemClickListener {
 
 
     @BindView(R.id.back)
@@ -106,6 +103,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
     private SearchAddressAdapter searchAddressAdapter;
     private String keyWord;
     private String type;
+    private AMapLocation aMapLocation;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, SelectAddressActivity.class);
@@ -216,6 +214,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
             //设置为高精度定位模式
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
             mLocationOption.setInterval(600000);
+            mLocationOption.setOnceLocationLatest(false);
             //设置定位参数
             mlocationClient.setLocationOption(mLocationOption);
             // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
@@ -233,16 +232,14 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
+        this.aMapLocation = aMapLocation;
         if (mListener != null && aMapLocation != null) {
             if (aMapLocation != null && aMapLocation.getErrorCode() == 0) {
-                Log.d("jjj0", "精度和纬度" + aMapLocation.getLatitude() + "=====" + aMapLocation.getLongitude() + "==" + aMapLocation.getCity());
+                Log.d("jjj0", "精度和纬度" + aMapLocation.getLatitude() + "=====" + aMapLocation.getLongitude() + "==" + aMapLocation.getCity() + "==" + aMapLocation.getCityCode() + "==" + aMapLocation.getProvince());
                 city = aMapLocation.getCity();
-                latitude = aMapLocation.getLatitude();
-                longitude = aMapLocation.getLongitude();
                 mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
-                aMap.moveCamera(CameraUpdateFactory.zoomTo(15));
+                aMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 16, 0, 0)));
                 localCity.setText(city);
-//                doSearchQuery(city, "", latitude, longitude);
             } else {
                 String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
                 Log.e("AmapErr", errText);
@@ -310,24 +307,22 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
 
     @Override
     public void onCameraChangeFinish(final CameraPosition cameraPosition) {
-        LatLngEntity latLngEntity = new LatLngEntity(cameraPosition.target.latitude, cameraPosition.target.longitude);
-        //地理反编码工具类，代码在后面
-        GeoCoderUtil.getInstance(SelectAddressActivity.this).geoAddress(latLngEntity, new GeoCoderUtil.GeoCoderAddressListener() {
-            @Override
-            public void onAddressResult(String result) {
-//                if (!addressEt.getText().toString().trim().equals("")) {
-//                    //输入地址后的点击搜索
-//                } else {
-                //拖动地图
-                latitude = cameraPosition.target.latitude;
-                longitude = cameraPosition.target.longitude;
-                currentLoc = new LocationBean(longitude, latitude, result, "");
-                Log.d("jjj0", "精度和纬度" + latitude + "=====" + longitude);
-                doSearchQuery("", "", latitude, longitude);
-//                }
-                //地图的中心点位置改变后都开始poi的附近搜索
-            }
-        });
+        latitude = cameraPosition.target.latitude;
+        longitude = cameraPosition.target.longitude;
+        Log.d("jjj0", "精度和纬度" + latitude + "=====" + longitude);
+        doSearchQuery("", "", latitude, longitude);
+//        LatLngEntity latLngEntity = new LatLngEntity(cameraPosition.target.latitude, cameraPosition.target.longitude);
+//        //地理反编码工具类，代码在后面
+//        GeoCoderUtil.getInstance(SelectAddressActivity.this).geoAddress(latLngEntity, new GeoCoderUtil.GeoCoderAddressListener() {
+//            @Override
+//            public void onAddressResult(String result) {
+//                latitude = cameraPosition.target.latitude;
+//                longitude = cameraPosition.target.longitude;
+//                currentLoc = new LocationBean(longitude, latitude, result, "");
+//                Log.d("jjj0", "精度和纬度" + latitude + "=====" + longitude);
+//                doSearchQuery("", "", latitude, longitude);
+//            }
+//        });
     }
 
     @Override
@@ -337,16 +332,18 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         String county = poiItem.getAdName();
         LatLonPoint latLonPoint = poiItem.getLatLonPoint();
         String lat = String.valueOf(latLonPoint.getLatitude());
-        String lng = String.valueOf(latLonPoint.getLongitude());
+        String lon = String.valueOf(latLonPoint.getLongitude());
         String detailAddress = poiItem.getSnippet();
-        Log.d("11", "数据" + province + "==" + city + "==" + county + "==" + lat + "==" + lng + "==" + detailAddress);
+        String areaCode = poiItem.getAdCode();
+        Log.d("11", "数据" + province + "==" + city + "==" + county + "==" + lat + "==" + lon + "==" + detailAddress + "==" + areaCode);
         Intent intent = new Intent();
         intent.putExtra(StaticData.PROVINCE, province);
         intent.putExtra(StaticData.CITY, city);
         intent.putExtra(StaticData.COUNT, county);
         intent.putExtra(StaticData.LAT, lat);
-        intent.putExtra(StaticData.LNG, lng);
+        intent.putExtra(StaticData.LON, lon);
         intent.putExtra(StaticData.DETAIL_ADDRESS, detailAddress);
+        intent.putExtra(StaticData.AREA_CODE, areaCode);
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -396,4 +393,5 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         String detailAddress = poiItem.getSnippet();
         Log.d("11", "数据" + province + "==" + city + "==" + county + "==" + lat + "==" + lng + "==" + detailAddress);
     }
+
 }

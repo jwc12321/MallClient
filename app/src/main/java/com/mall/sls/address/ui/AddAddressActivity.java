@@ -1,5 +1,6 @@
 package com.mall.sls.address.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.mall.sls.address.AddressContract;
 import com.mall.sls.address.AddressModule;
 import com.mall.sls.address.DaggerAddressComponent;
 import com.mall.sls.address.presenter.AddAddressPresenter;
+import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.address.AreaPickerView;
 import com.mall.sls.common.widget.textview.ConventionalEditTextView;
@@ -24,6 +26,7 @@ import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.AddressInfo;
 import com.mall.sls.data.entity.ProvinceBean;
 import com.mall.sls.data.request.AddAddressRequest;
+import com.mall.sls.homepage.ui.CommonTipActivity;
 
 import java.util.List;
 
@@ -96,6 +99,8 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
     private String areaCode;
     private String addressId;
     private String choiceType;
+    private String lat;
+    private String lon;
 
     @Inject
     AddAddressPresenter addAddressPresenter;
@@ -118,23 +123,23 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
 
     private void initView() {
         addressInfo = (AddressInfo) getIntent().getSerializableExtra(StaticData.ADDRESS_INFO);
-        choiceType=getIntent().getStringExtra(StaticData.CHOICE_TYPE);
+        choiceType = getIntent().getStringExtra(StaticData.CHOICE_TYPE);
         if (addressInfo != null) {
-            addressId=addressInfo.getId();
+            addressId = addressInfo.getId();
             rightTv.setVisibility(View.VISIBLE);
             nameEt.setText(addressInfo.getName());
             genderType = addressInfo.getGender();
             phoneNumberEt.setText(addressInfo.getTel());
-            province=addressInfo.getProvince();
-            city=addressInfo.getCity();
-            county=addressInfo.getCounty();
-            areaCode=addressInfo.getAreaCode();
-            houseNumber=addressInfo.getAddressDetail();
-            address.setText(province+city+county);
+            province = addressInfo.getProvince();
+            city = addressInfo.getCity();
+            county = addressInfo.getCounty();
+            areaCode = addressInfo.getAreaCode();
+            houseNumber = addressInfo.getAddressDetail();
+            address.setText(province + city + county);
             houseNumberEt.setText(houseNumber);
-            labelType=addressInfo.getType();
-            genderType=addressInfo.getGender();
-            defaultType=addressInfo.getDefault();
+            labelType = addressInfo.getType();
+            genderType = addressInfo.getGender();
+            defaultType = addressInfo.getDefault();
             defaultIv.setSelected(defaultType);
             title.setText(getString(R.string.update_address));
         } else {
@@ -144,7 +149,6 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
         }
         labelSelect();
         genderSelect();
-        addAddressPresenter.getAreas();
     }
 
     @Override
@@ -173,7 +177,7 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
     }
 
 
-    @OnClick({R.id.confirm_bt, R.id.back, R.id.house, R.id.company, R.id.school, R.id.other, R.id.ms_iv, R.id.men_iv, R.id.address, R.id.default_iv,R.id.right_tv})
+    @OnClick({R.id.confirm_bt, R.id.back, R.id.house, R.id.company, R.id.school, R.id.other, R.id.ms_iv, R.id.men_iv, R.id.address, R.id.default_iv, R.id.right_tv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -204,9 +208,10 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
                 genderSelect();
                 break;
             case R.id.address:
-                areaPickerView.setSelect(i);
-                areaPickerView.show();
-//                SelectAddressActivity.start(this);
+//                areaPickerView.setSelect(i);
+//                areaPickerView.show();
+                Intent intent = new Intent(this, SelectAddressActivity.class);
+                startActivityForResult(intent, RequestCodeStatic.SELECT_LAT_LON);
                 break;
             case R.id.default_iv:
                 defaultType = !defaultType;
@@ -247,10 +252,7 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
         addAddressRequest.setProvince(province);
         addAddressRequest.setCity(city);
         addAddressRequest.setCounty(county);
-        if (codeValue != null && codeValue.length == 3) {
-            areaCode=codeValue[2];
-            addAddressRequest.setAreaCode(areaCode);
-        }
+        addAddressRequest.setAreaCode(areaCode);
         addAddressRequest.setAddressDetail(houseNumber);
         addAddressRequest.setType(labelType);
         addAddressRequest.setDefault(defaultType);
@@ -279,9 +281,9 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
 
     @Override
     public void renderAddAddress(String addressId) {
-        if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
+        if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {
             Intent intent = new Intent();
-            intent.putExtra(StaticData.ADDRESS_ID,addressId);
+            intent.putExtra(StaticData.ADDRESS_ID, addressId);
             setResult(RESULT_OK, intent);
         }
         finish();
@@ -323,5 +325,28 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
     @Override
     public void setPresenter(AddressContract.AddAddressPresenter presenter) {
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RequestCodeStatic.SELECT_LAT_LON://
+                    if (data != null) {
+                        province = data.getStringExtra(StaticData.PROVINCE);
+                        city = data.getStringExtra(StaticData.CITY);
+                        county =data.getStringExtra(StaticData.COUNT);
+                        lat = data.getStringExtra(StaticData.LAT);
+                        lon = data.getStringExtra(StaticData.LON);
+                        houseNumber = data.getStringExtra(StaticData.DETAIL_ADDRESS);
+                        areaCode = data.getStringExtra(StaticData.AREA_CODE);
+                        address.setText(province + city + county);
+                        houseNumberEt.setText(houseNumber);
+                    }
+                    break;
+                default:
+            }
+        }
     }
 }

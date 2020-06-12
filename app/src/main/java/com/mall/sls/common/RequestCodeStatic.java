@@ -27,4 +27,5 @@ public class RequestCodeStatic {
     public static final int CHOICE_CITY=25;//选择地址
     public static final int SELECT_QUANTITY=26;//选择数量
     public static final int PRIVACY_POLICY=27;//隐私政策弹框
+    public static final int SELECT_LAT_LON=28;//经纬度
 }
