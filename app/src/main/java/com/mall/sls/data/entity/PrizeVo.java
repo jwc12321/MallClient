@@ -49,6 +49,9 @@ public class PrizeVo implements Serializable {
     //是否展示参与人数 0否1是
     @SerializedName("isShowPeople")
     private String isShowPeople;
+    //商品名
+    @SerializedName("goodsName")
+    private String goodsName;
 
     public String getEndTime() {
         return endTime;
@@ -152,5 +155,13 @@ public class PrizeVo implements Serializable {
 
     public void setIsShowPeople(String isShowPeople) {
         this.isShowPeople = isShowPeople;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
     }
 }

@@ -10,8 +10,12 @@ import androidx.annotation.Nullable;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.TokenManager;
+import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.WebViewDetailInfo;
+import com.mall.sls.webview.ui.WebViewActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +38,11 @@ public class SettingActivity extends BaseActivity {
     RelativeLayout feedbackRl;
     @BindView(R.id.clear_cache_rl)
     RelativeLayout clearCacheRl;
+    @BindView(R.id.register_tv)
+    ConventionalTextView registerTv;
+    @BindView(R.id.privacy_tv)
+    ConventionalTextView privacyTv;
+    private WebViewDetailInfo webViewDetailInfo;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,7 +52,7 @@ public class SettingActivity extends BaseActivity {
         setHeight(back, title, null);
     }
 
-    @OnClick({R.id.back, R.id.confirm_bt, R.id.feedback_rl,R.id.clear_cache_rl})
+    @OnClick({R.id.back, R.id.confirm_bt, R.id.feedback_rl, R.id.clear_cache_rl,R.id.register_tv, R.id.privacy_tv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -60,6 +69,18 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.clear_cache_rl:
                 showMessage(getString(R.string.clear_cache_success));
+                break;
+            case R.id.register_tv://用户协议
+                webViewDetailInfo = new WebViewDetailInfo();
+                webViewDetailInfo.setTitle(getString(R.string.registration_agreement_tv));
+                webViewDetailInfo.setUrl(StaticData.USER_AGREEMENT);
+                WebViewActivity.start(this, webViewDetailInfo);
+                break;
+            case R.id.privacy_tv://隐私政策
+                webViewDetailInfo = new WebViewDetailInfo();
+                webViewDetailInfo.setTitle(getString(R.string.privacy_policy_tv));
+                webViewDetailInfo.setUrl(StaticData.USER_PRIVACY);
+                WebViewActivity.start(this, webViewDetailInfo);
                 break;
             default:
         }

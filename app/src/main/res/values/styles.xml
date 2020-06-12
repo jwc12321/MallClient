@@ -602,7 +602,7 @@
     <style name="goods_detail_go_spell_bt_style">
         <item name="android:layout_width">@dimen/dp_80</item>
         <item name="android:layout_height">@dimen/dp_27</item>
-        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textSize">@dimen/sp_12</item>
         <item name="android:textColor">@color/appText1</item>
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/common_two_three_five_back_one_bg</item>
@@ -1397,8 +1397,8 @@
     
     <style name="forty_six_line_style">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/dp_1</item>
-        <item name="android:background">@color/backGround46</item>
+        <item name="android:layout_height">@dimen/dp_0_5</item>
+        <item name="android:background">@color/backGround53</item>
     </style>
 
     <style name="lottery_list_bt_style">

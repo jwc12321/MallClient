@@ -7,7 +7,10 @@
     android:id="@+id/brocade"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textSize="@dimen/sp_14"
+    android:textSize="@dimen/sp_12"
     android:textColor="@color/appText13"
-    tools:text="fjdkfjd"/>
+    tools:text="fjdkfjd"
+    android:maxLines="1"
+    android:ellipsize="end"
+    android:layout_marginRight="@dimen/dp_15"/>
 </LinearLayout>

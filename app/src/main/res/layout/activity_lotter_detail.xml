@@ -107,7 +107,8 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginRight="@dimen/dp_15"
                     android:layout_marginBottom="@dimen/dp_10"
-                    tools:text="2019人" />
+                    tools:text="2019人"
+                    android:visibility="gone"/>
             </RelativeLayout>
 
             <ImageView

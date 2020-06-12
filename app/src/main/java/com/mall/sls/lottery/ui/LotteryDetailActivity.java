@@ -192,7 +192,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
             goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(prizeVo.getCounterPrice()));
             prizeTimeText=prizeVo.getPrizeTime();
             prizeTime.setText(prizeVo.getPrizeTime() + " 开奖");
-            participantNumber.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO, prizeVo.getParticipantNumber()) ? View.GONE : View.VISIBLE);
+//            participantNumber.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO, prizeVo.getParticipantNumber()) ? View.GONE : View.VISIBLE);
             participantNumber.setText(prizeVo.getParticipantNumber() + "人参与");
             goodsName.setText(prizeVo.getPrizeTitle());
             prizeId=prizeVo.getPrizeId();
@@ -411,6 +411,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
                     }
                     break;
                 case RequestCodeStatic.TIP_PAGE:
+                    MainStartManager.saveMainStart(StaticData.REFLASH_ONE);
                     MainFrameActivity.start(this);
                     finish();
                     break;
