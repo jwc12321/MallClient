@@ -9,12 +9,12 @@ import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
+import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.Ignore;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.data.request.CodeRequest;
-import com.mall.sls.data.request.OrderRequest;
 import com.mall.sls.homepage.HomepageContract;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +87,27 @@ public class HomePagePresenter implements HomepageContract.HomePagePresenter {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         homePageView.dismissLoading();
+                        homePageView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getAppUrlInfo() {
+        String queryString="version="+BuildConfig.VERSION_NAME;
+        String sign=SignUnit.signGet(RequestUrl.APP_URL_INFO_URL,queryString);
+        Disposable disposable = restApiService.getAppUrlInfo(sign,BuildConfig.VERSION_NAME)
+                .flatMap(new RxRemoteDataParse<AppUrlInfo>())
+                .compose(new RxSchedulerTransformer<AppUrlInfo>())
+                .subscribe(new Consumer<AppUrlInfo>() {
+                    @Override
+                    public void accept(AppUrlInfo appUrlInfo) throws Exception {
+                        homePageView.renderAppUrlInfo(appUrlInfo);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
                         homePageView.showError(throwable);
                     }
                 });

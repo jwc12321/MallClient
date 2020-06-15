@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 public class AppUrlInfo {
     //是否是最新版本
     @SerializedName("ifLatest")
-    private Boolean ifLatest;
+    private boolean ifLatest;
     //是否需要强制更新
     @SerializedName("forceUpdate")
-    private Boolean forceUpdate;
+    private boolean forceUpdate;
     //内容
     @SerializedName("message")
     private String message;
@@ -16,19 +16,19 @@ public class AppUrlInfo {
     @SerializedName("url")
     private String url;
 
-    public Boolean getIfLatest() {
+    public boolean isIfLatest() {
         return ifLatest;
     }
 
-    public void setIfLatest(Boolean ifLatest) {
+    public void setIfLatest(boolean ifLatest) {
         this.ifLatest = ifLatest;
     }
 
-    public Boolean getForceUpdate() {
+    public boolean isForceUpdate() {
         return forceUpdate;
     }
 
-    public void setForceUpdate(Boolean forceUpdate) {
+    public void setForceUpdate(boolean forceUpdate) {
         this.forceUpdate = forceUpdate;
     }
 

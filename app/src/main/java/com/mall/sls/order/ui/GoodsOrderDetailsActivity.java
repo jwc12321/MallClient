@@ -351,7 +351,6 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
         refreshLayout.finishRefresh();
         if (goodsOrderDetails != null) {
             orderStatusText = goodsOrderDetails.getOrderStatus();
-            setOrderStatus(orderStatusText);
             receiptAddress.setText(goodsOrderDetails.getAddress());
             namePhone.setText(goodsOrderDetails.getConsignee() + " " + goodsOrderDetails.getMobile());
             orderGoodsVos = goodsOrderDetails.getOrderGoodsVos();
@@ -367,6 +366,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 goodsProductId = orderGoodsVos.get(0).getProductId();
                 isOnSale=orderGoodsVos.get(0).getIsOnSale();
             }
+            setOrderStatus(orderStatusText);
             totalAmount.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getGoodsPrice()));
             deliveryFee.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getFreightPrice()));
             coupon.setText("-¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getCouponPrice()));

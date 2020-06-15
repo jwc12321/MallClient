@@ -43,6 +43,12 @@ public class AddAddressRequest {
     //邮编
     @SerializedName("postalCode")
     private String postalCode;
+    //地址纬度
+    @SerializedName("lat")
+    private String lat;
+    //地址经度
+    @SerializedName("lng")
+    private String lng;
 
     public String getName() {
         return name;
@@ -138,5 +144,21 @@ public class AddAddressRequest {
 
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
     }
 }

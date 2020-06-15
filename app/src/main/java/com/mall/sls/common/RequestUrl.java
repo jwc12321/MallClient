@@ -1,7 +1,7 @@
 package com.mall.sls.common;
 
 public class RequestUrl {
-    public static String APP_URL_INFO_URL="/api/public/f/version/android";
+    public static String APP_URL_INFO_URL="/app/version/android";
     public static String LOGIN_IN_URL="/app/auth/login/code";//登录
     public static String ONE_CLICK_LOGIN_URL="/app/auth/login/ali";//一键登录
     public static String SEND_CODE_V_URL="/app/auth/regCaptcha";//发送验证码
@@ -18,7 +18,7 @@ public class RequestUrl {
     public static String COUPON_SELECT_LIST_URL="/app/coupon/selectlist";//查询当前预提交订单可用优惠券
     public static String ORDER_UBMIT_URL="/app/order/submit";//提交订单
     public static String COUPON_MY_LIST_URL="/app/coupon/mylist";//优惠卷列表
-    public static String MINE_INFO_URL="/app/auth/inf";//我的
+    public static String MINE_INFO_URL="/app/auth/info";//我的
     public static String LOCAL_GOODS_URL="/app/goods";//本地拼团
     public static String GET_CERTIFY_ID_URL="/app/certify";//实人认证
     public static String ORDER_LIST="/app/order/list";//订单列表

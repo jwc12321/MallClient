@@ -22,6 +22,7 @@ import com.scwang.smartrefresh.layout.api.DefaultRefreshInitializer;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.tendcloud.tenddata.TCAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -81,7 +82,7 @@ public class MainApplication extends MultiDexApplication {
 
         UMShareAPI.get(this);//初始化sdk
         String channelId = WalleChannelReader.getChannel(this.getApplicationContext());
-        UMConfigure.init(this, "5e96ee00167eddbda8000228", channelId, UMConfigure.DEVICE_TYPE_PHONE, "");
+        UMConfigure.init(this, "5ed46e8cdbc2ec08279bd3d7", channelId, UMConfigure.DEVICE_TYPE_PHONE, "");
         disableAPIDialog();
         PushManager.getInstance().initialize(this);
         PushManager.getInstance().setDebugLogger(this, new IUserLoggerInterface() {
@@ -90,6 +91,13 @@ public class MainApplication extends MultiDexApplication {
                 Log.e("PUSH_LOG","个推："+s);
             }
         });
+        //talkingdata
+//        JLibrary.InitEntry(this); //移动安全联盟统一SDK初始化
+        TCAgent.LOG_ON=true;
+        // 渠道 ID: 是渠道标识符，可通过不同渠道单独追踪数据。
+        TCAgent.init(this, "466B709D82C84BED8F948E46D5F5755D", channelId);
+        // 如果已经在AndroidManifest.xml配置了App ID和渠道ID，调用TCAgent.init(this)即可；或与AndroidManifest.xml中的对应参数保持一致。
+        TCAgent.setReportUncaughtExceptions(true);
     }
 
     @TargetApi(9)

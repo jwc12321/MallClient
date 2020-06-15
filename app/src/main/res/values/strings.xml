@@ -323,5 +323,6 @@
 <string name="get_times">如何获得抽奖机会？</string>
     <string name="invitation">邀请拼单</string>
     <string name="yuan_draw">元抽奖</string>
+    <string name="new_version_update">版本更新</string>
 
 </resources>

@@ -4,24 +4,25 @@ package com.mall.sls.homepage;
 
 import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
-import com.mall.sls.certify.CertifyContract;
+import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderSubmitInfo;
-import com.mall.sls.data.entity.WXGoodsDetailsInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
 
 public interface HomepageContract {
     interface HomePagePresenter extends BasePresenter{
         void getHomePageInfo(String refreshType);
         void bindWx(String code);
+        void getAppUrlInfo();
     }
 
     interface HomePageView extends BaseView<HomePagePresenter>{
         void renderHomePageInfo(HomePageInfo homePageInfo);
         void renderBindWx();
+        void renderAppUrlInfo(AppUrlInfo appUrlInfo);
     }
 
     interface GoodsDetailsPresenter extends BasePresenter{

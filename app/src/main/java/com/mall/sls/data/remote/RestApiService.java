@@ -67,7 +67,7 @@ import retrofit2.http.Query;
 public interface RestApiService {
 
     //获取下载地址
-    @GET("api/public/f/version/android")
+    @GET("app/version/android")
     Flowable<RemoteDataWrapper<AppUrlInfo>> getAppUrlInfo(@Header("X-Hc-Sign") String sign, @Query("version") String version);
 
     //登录

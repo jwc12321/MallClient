@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/title_rel"
@@ -21,65 +21,72 @@
             style="@style/title_text_style"
             android:text="@string/search_address" />
     </RelativeLayout>
-    
+
     <RelativeLayout
         android:id="@+id/edit_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_56"
+        android:layout_below="@id/title_rel"
         android:background="@color/backGround1"
-        android:orientation="vertical"
-        android:layout_below="@id/title_rel">
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_32"
-            android:background="@drawable/common_sixteen_app_one_bg"
-            android:orientation="horizontal"
             android:layout_marginLeft="@dimen/dp_15"
             android:layout_marginTop="@dimen/dp_15"
-            android:layout_toLeftOf="@id/cancel_bt">
+            android:layout_toLeftOf="@id/cancel_bt"
+            android:background="@drawable/common_sixteen_app_one_bg"
+            android:orientation="horizontal">
+
             <LinearLayout
                 android:id="@+id/local_city_ll"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:paddingRight="@dimen/dp_8">
+
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/local_city"
                     style="@style/size14_color_app3_text_style"
-                    tools:text="杭州市"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp_15" />
+                    android:layout_marginLeft="@dimen/dp_15"
+                    tools:text="杭州市" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_down_arrow"
-                    android:scaleType="fitXY"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dp_6" />
+                    android:layout_marginLeft="@dimen/dp_6"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/icon_down_arrow" />
             </LinearLayout>
+
             <View
                 android:layout_width="@dimen/dp_1"
                 android:layout_height="@dimen/dp_20"
-                android:background="@color/backGround4"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:background="@color/backGround4" />
+
             <com.mall.sls.common.widget.textview.ConventionalEditTextView
                 android:id="@+id/address_et"
                 style="@style/login_input_phone_style"
+                android:layout_marginLeft="@dimen/dp_15"
                 android:hint="@string/input_shipping_address"
-                android:inputType="text"
-                android:layout_marginLeft="@dimen/dp_15"/>
+                android:inputType="text" />
         </LinearLayout>
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/cancel_bt"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/cancel"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
             android:paddingLeft="@dimen/dp_15"
             android:paddingRight="@dimen/dp_15"
-            android:layout_alignParentRight="true"
-            android:gravity="center"/>
+            android:text="@string/cancel" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/map_rl"
         android:layout_width="match_parent"
@@ -90,19 +97,49 @@
             android:id="@+id/mapView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_250" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_marker"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:src="@mipmap/icon_marker" />
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/address_rv"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="@string/layoutManager_LinearLayout"
-        android:layout_below="@id/map_rl"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/map_rl"
+        app:srlEnablePreviewInEditMode="false">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/black"
+            app:srlEnableLastTime="true"
+            app:srlPrimaryColor="@color/backGround8" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/address_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_14"
+                android:clickable="true"
+                android:visibility="visible"
+                app:layoutManager="@string/layoutManager_LinearLayout"
+                tools:listitem="@layout/adapter_map_address" />
+        </LinearLayout>
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/search_rl"
@@ -111,12 +148,13 @@
         android:layout_below="@id/edit_rl"
         android:background="@color/appText1"
         android:visibility="gone">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="@string/layoutManager_LinearLayout"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:layoutManager="@string/layoutManager_LinearLayout" />
 
         <LinearLayout
             android:id="@+id/no_record_ll"

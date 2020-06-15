@@ -140,6 +140,8 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
             labelType = addressInfo.getType();
             genderType = addressInfo.getGender();
             defaultType = addressInfo.getDefault();
+            lat=addressInfo.getLat();
+            lon=addressInfo.getLng();
             defaultIv.setSelected(defaultType);
             title.setText(getString(R.string.update_address));
         } else {
@@ -256,6 +258,8 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
         addAddressRequest.setAddressDetail(houseNumber);
         addAddressRequest.setType(labelType);
         addAddressRequest.setDefault(defaultType);
+        addAddressRequest.setLat(lat);
+        addAddressRequest.setLng(lon);
         addAddressPresenter.addAddress(addAddressRequest);
 
     }

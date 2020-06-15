@@ -32,15 +32,17 @@ import com.mall.sls.address.ui.AddressManageActivity;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.location.LocationHelper;
-import com.mall.sls.common.unit.AreaCodeManager;
 import com.mall.sls.common.unit.BindWxManager;
 import com.mall.sls.common.unit.ConvertDpAndPx;
+import com.mall.sls.common.unit.LocalCityManager;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.PermissionUtil;
 import com.mall.sls.common.unit.SpikeManager;
+import com.mall.sls.common.unit.UpdateManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.coupon.ui.CouponActivity;
+import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.BannerInfo;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.HomePageInfo;
@@ -62,6 +64,7 @@ import com.stx.xhb.androidx.XBanner;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.tendcloud.tenddata.TCAgent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -69,13 +72,20 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import constant.UiType;
+import listener.OnBtnClickListener;
+import model.UiConfig;
+import model.UpdateConfig;
+import update.UpdateAppUtils;
 
 /**
  * @author jwc on 2020/5/7.
@@ -182,6 +192,12 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             bindWxIv.setVisibility(View.GONE);
         }
         homePagePresenter.getHomePageInfo(StaticData.REFLASH_ONE);
+        homePagePresenter.getAppUrlInfo();
+//
+//        Map kv = new HashMap();
+//        kv.put("商品类型", "休闲食品");
+//        kv.put("价格","5～10元" );
+//        TCAgent.onEvent(getActivity(), "点击首页推荐位", "第3推广位", kv);
     }
 
     private void initAdapter() {
@@ -280,6 +296,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                     latitude = "";
                     areaCode = "";
                 } else {
+                    LocalCityManager.saveLocalCity(aMapLocation.getCity());
                     city = aMapLocation.getDistrict();
                     longitude = aMapLocation.getLongitude() + "";
                     latitude = aMapLocation.getLatitude() + "";
@@ -386,6 +403,44 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         BindWxManager.saveBindWx(StaticData.REFLASH_ONE);
         bindWxIv.setVisibility(View.GONE);
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void renderAppUrlInfo(AppUrlInfo appUrlInfo) {
+        if (appUrlInfo != null) {
+            updateApp(appUrlInfo);
+        }
+    }
+
+    private void updateApp(AppUrlInfo appUrlInfo){
+        if (appUrlInfo != null && !appUrlInfo.isIfLatest() && !TextUtils.isEmpty(appUrlInfo.getUrl())) {
+            if(!TextUtils.isEmpty(UpdateManager.getUpdate())&&!appUrlInfo.isForceUpdate()){
+                return;
+            }
+            UpdateConfig updateConfig = new UpdateConfig();
+            updateConfig.setCheckWifi(true);
+            updateConfig.setForce(appUrlInfo.isForceUpdate());
+            updateConfig.setAlwaysShowDownLoadDialog(!appUrlInfo.isForceUpdate());
+            updateConfig.setNotifyImgRes(R.mipmap.icon_update);
+            UiConfig uiConfig = new UiConfig();
+            uiConfig.setUiType(UiType.PLENTIFUL);
+            uiConfig.setUpdateLogoImgRes(R.mipmap.icon_update);
+            UpdateAppUtils
+                    .getInstance()
+                    .apkUrl(appUrlInfo.getUrl())
+                    .updateTitle(getString(R.string.new_version_update))
+                    .updateContent(appUrlInfo.getMessage())
+                    .uiConfig(uiConfig)
+                    .updateConfig(updateConfig)
+                    .setCancelBtnClickListener(new OnBtnClickListener() {
+                        @Override
+                        public boolean onClick() {
+                            UpdateManager.saveUpdate(StaticData.REFLASH_ONE);
+                            return false;
+                        }
+                    })
+                    .update();
+        }
     }
 
     @Override

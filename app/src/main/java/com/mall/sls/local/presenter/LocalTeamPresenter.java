@@ -52,7 +52,7 @@ public class LocalTeamPresenter implements LocalContract.LocalTeamPresenter {
             localTeamView.showLoading(StaticData.LOADING);
         }
         currentIndex=1;
-        String queryString="type="+type+"&type="+currentIndex+"&limit="+StaticData.TEN_LIST_SIZE;
+        String queryString="type="+type+"&page="+currentIndex+"&limit="+StaticData.TEN_LIST_SIZE;
         String sign= SignUnit.signGet(RequestUrl.LOCAL_GOODS_URL,queryString);
         Disposable disposable = restApiService.getLocalTeam(sign,type,String.valueOf(currentIndex),StaticData.TEN_LIST_SIZE)
                 .flatMap(new RxRemoteDataParse<LocalTeam>())

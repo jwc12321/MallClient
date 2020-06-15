@@ -138,5 +138,6 @@ public class StaticData {
     public static final String TOKEN_OVER_ONE="10001";
     public static final String SELECT_ID="selectId";
     public static final String AREA_CODE="areaCode";
+    public static final String ADDRESS_TITLE="addressTitle";
 
 }
