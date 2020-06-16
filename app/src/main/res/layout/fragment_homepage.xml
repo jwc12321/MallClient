@@ -108,13 +108,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/backGround1"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <com.stx.xhb.androidx.XBanner
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_167"
-                        android:layout_margin="@dimen/dp_15"
+                        android:layout_height="@dimen/dp_115"
+                        android:layout_marginBottom="@dimen/dp_10"
                         android:background="@color/backGround8"
                         app:AutoPlayTime="3000"
                         app:isHandLoop="true"
@@ -123,6 +123,28 @@
                         app:pointNormal="@drawable/pointnormal_bg"
                         app:pointSelect="@drawable/pointselect_bg"
                         app:pointsPosition="CENTER" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/coupon_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        app:layoutManager="@string/layoutManager_LinearLayout"
+                        tools:listitem="@layout/adapter_home_coupon" />
+
+                    <ImageView
+                        android:id="@+id/receive_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_11"
+                        android:layout_marginTop="@dimen/dp_7"
+                        android:layout_marginRight="@dimen/dp_11"
+                        android:layout_marginBottom="@dimen/dp_4"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/receive_coupon_select"
+                        android:visibility="gone" />
+
                 </LinearLayout>
 
 
@@ -134,76 +156,46 @@
                     android:nestedScrollingEnabled="false"
                     app:layoutManager="@string/layoutManager_Gridlayout" />
 
-                <RelativeLayout
-                    android:id="@+id/other_rl"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_44"
-                    android:layout_marginTop="@dimen/dp_6"
-                    android:layout_marginBottom="@dimen/dp_5">
-
-                    <com.mall.sls.common.widget.textview.MediumThickTextView
-                        android:id="@+id/selected_group_tv"
-                        style="@style/size16_color_back1_text_style"
-                        android:layout_centerInParent="true"
-                        android:text="@string/selected_group" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/dp_10"
-                        android:layout_toLeftOf="@id/selected_group_tv"
-                        android:src="@mipmap/icon_left_red_line" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_toRightOf="@id/selected_group_tv"
-                        android:src="@mipmap/icon_right_red_line" />
-
-                    <ImageView
-                        android:id="@+id/more_right_arrow_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/dp_14"
-                        android:src="@mipmap/icon_more_right_arrow" />
-
-                    <com.mall.sls.common.widget.textview.ConventionalTextView
-                        android:id="@+id/other_more_tv"
-                        style="@style/size12_color_back1_text_style"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true"
-                        android:layout_toLeftOf="@id/more_right_arrow_iv"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/dp_10"
-                        android:paddingRight="@dimen/dp_3"
-                        android:text="@string/more" />
-                </RelativeLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/goods_rv"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
+                    android:background="@drawable/home_goods_list_bg"
                     android:orientation="vertical"
-                    app:layoutManager="@string/layoutManager_LinearLayout"
-                    tools:listitem="@layout/adapter_goods_item" />
+                    android:layout_marginTop="@dimen/dp_7"
+                    android:layout_marginLeft="@dimen/dp_6"
+                    android:layout_marginRight="@dimen/dp_6">
+
+                    <RelativeLayout
+                        android:id="@+id/other_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_33">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/icon_home_selected_group"
+                            android:layout_marginLeft="@dimen/dp_8"/>
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            style="@style/size14_color_app1_text_style"
+                            android:text="@string/home_look_more"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/dp_3"/>
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/goods_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:orientation="vertical"
+                        app:layoutManager="@string/layoutManager_LinearLayout"
+                        tools:listitem="@layout/adapter_goods_item"
+                        android:layout_marginLeft="@dimen/dp_9"
+                        android:layout_marginRight="@dimen/dp_9"/>
+                </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-
-    <ImageView
-        android:id="@+id/bind_wx_iv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:src="@mipmap/icon_bind_wx"
-        android:layout_alignParentBottom="true"
-        android:adjustViewBounds="true"
-        android:visibility="gone"/>
 </RelativeLayout>

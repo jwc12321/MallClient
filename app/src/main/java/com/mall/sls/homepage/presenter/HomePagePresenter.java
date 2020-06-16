@@ -15,6 +15,7 @@ import com.mall.sls.data.entity.Ignore;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.data.request.CodeRequest;
+import com.mall.sls.data.request.TypeRequest;
 import com.mall.sls.homepage.HomepageContract;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +109,30 @@ public class HomePagePresenter implements HomepageContract.HomePagePresenter {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        homePageView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void couponReceive(String type) {
+        homePageView.showLoading(StaticData.PROCESSING);
+        TypeRequest request=new TypeRequest(type);
+        String sign= SignUnit.signPost(RequestUrl.COUPON_RECEIVE,gson.toJson(request));
+        Disposable disposable = restApiService.couponReceive(sign,request)
+                .flatMap(new RxRemoteDataParse<Ignore>())
+                .compose(new RxSchedulerTransformer<Ignore>())
+                .subscribe(new Consumer<Ignore>() {
+                    @Override
+                    public void accept(Ignore ignore) throws Exception {
+                        homePageView.dismissLoading();
+                        homePageView.renderCouponReceive();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        homePageView.dismissLoading();
                         homePageView.showError(throwable);
                     }
                 });

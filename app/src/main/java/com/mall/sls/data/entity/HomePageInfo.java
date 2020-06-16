@@ -23,6 +23,9 @@ public class HomePageInfo {
     private String unreadMsgCount;
     @SerializedName("jingang")
     private List<BannerInfo> jinGangInfos;
+    //新人优惠卷
+    @SerializedName("couponList")
+    private List<HomeCouponInfo> homeCouponInfos;
 
 
     public String getStatus() {
@@ -63,5 +66,13 @@ public class HomePageInfo {
 
     public void setJinGangInfos(List<BannerInfo> jinGangInfos) {
         this.jinGangInfos = jinGangInfos;
+    }
+
+    public List<HomeCouponInfo> getHomeCouponInfos() {
+        return homeCouponInfos;
+    }
+
+    public void setHomeCouponInfos(List<HomeCouponInfo> homeCouponInfos) {
+        this.homeCouponInfos = homeCouponInfos;
     }
 }

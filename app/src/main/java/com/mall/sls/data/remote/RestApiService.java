@@ -46,6 +46,7 @@ import com.mall.sls.data.request.OrderPayRequest;
 import com.mall.sls.data.request.OrderRequest;
 import com.mall.sls.data.request.OrderSubmitRequest;
 import com.mall.sls.data.request.SmsCodeBindRequest;
+import com.mall.sls.data.request.TypeRequest;
 import com.mall.sls.data.request.UserPayDtoRequest;
 import com.mall.sls.data.request.WeiXinLoginRequest;
 
@@ -267,5 +268,9 @@ public interface RestApiService {
     //开奖历史
     @GET("app/prize/history")
     Flowable<RemoteDataWrapper<LotteryRecord>> getLotteryRecord(@Header("X-Hc-Sign") String sign, @Query("page") String page, @Query("limit") String limit);
+
+    //领取优惠卷
+    @POST("app/coupon/receive")
+    Flowable<RemoteDataWrapper<Ignore>> couponReceive(@Header("X-Hc-Sign") String sign, @Body TypeRequest request);
 
 }

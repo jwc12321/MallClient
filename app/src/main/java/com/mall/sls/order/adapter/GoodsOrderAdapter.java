@@ -149,7 +149,7 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
             }
         }
 
-        //状态 101-待支付 102 -取消 103-系统自动取消 204-待分享 206-待发货 301-待收获 401-完成 402-完成(系统)
+        //状态 101-待支付 102 -取消 103-系统自动取消 "202-待退款" "203-已退款 204-待分享 206-待发货 301-待收获 401-完成 402-完成(系统)
         private void setOrderStatus(String status) {
             switch (status) {
                 case StaticData.TO_PAY:
@@ -172,6 +172,7 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
                     btLl.setVisibility(View.GONE);
                     break;
                 case StaticData.TO_BE_RECEIVED:
+                case StaticData.PENDING_REFUND:
                     orderStatus.setText(context.getString(R.string.shipping));
                     btLl.setVisibility(View.GONE);
                     break;
@@ -183,6 +184,10 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
                 case StaticData.CANCELLED:
                 case StaticData.SYS_CANCELLED:
                     orderStatus.setText(context.getString(R.string.is_cancel));
+                    btLl.setVisibility(View.GONE);
+                    break;
+                case StaticData.REFUNDED:
+                    orderStatus.setText(context.getString(R.string.refunded));
                     btLl.setVisibility(View.GONE);
                     break;
                 default:

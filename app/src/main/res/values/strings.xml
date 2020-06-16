@@ -324,5 +324,13 @@
     <string name="invitation">邀请拼单</string>
     <string name="yuan_draw">元抽奖</string>
     <string name="new_version_update">版本更新</string>
+    <string name="home_look_more">查看更多》</string>
+    <string name="receive_success">领取成功</string>
+    <string name="where_money_goes">钱款去向</string>
+    <string name="refunded">已退款</string>
+    <string name="refund_progress">退款进度</string>
+    <string name="refund_amount">（退款金额）</string>
+    <string name="refund_processing">退款处理中</string>
+    <string name="successful_account">到账成功</string>
 
 </resources>

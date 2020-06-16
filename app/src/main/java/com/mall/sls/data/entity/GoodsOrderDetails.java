@@ -82,6 +82,9 @@ public class GoodsOrderDetails {
     //顺丰H5页面url
     @SerializedName("sfH5Url")
     private String sfH5Url;
+    //是否显示查看地图按钮:0-不显示，1-显示
+    @SerializedName("showMap")
+    private String showMap;
 
 
     public String getCouponPrice() {
@@ -275,5 +278,13 @@ public class GoodsOrderDetails {
 
     public void setSfH5Url(String sfH5Url) {
         this.sfH5Url = sfH5Url;
+    }
+
+    public String getShowMap() {
+        return showMap;
+    }
+
+    public void setShowMap(String showMap) {
+        this.showMap = showMap;
     }
 }

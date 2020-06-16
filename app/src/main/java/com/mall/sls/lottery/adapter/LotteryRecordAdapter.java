@@ -75,10 +75,8 @@ public class LotteryRecordAdapter extends RecyclerView.Adapter<LotteryRecordAdap
     }
 
     public class LotteryRecordView extends RecyclerView.ViewHolder {
-        @BindView(R.id.participantNumber)
-        MediumThickTextView participantNumber;
-        @BindView(R.id.number_ll)
-        LinearLayout numberLl;
+        @BindView(R.id.prizeId)
+        ConventionalTextView prizeId;
         @BindView(R.id.prizeTime)
         ConventionalTextView prizeTime;
         @BindView(R.id.goods_iv)
@@ -98,12 +96,11 @@ public class LotteryRecordAdapter extends RecyclerView.Adapter<LotteryRecordAdap
         }
 
         public void bindData(PrizeVo prizeVo) {
-            participantNumber.setText(prizeVo.getParticipantNumber());
             GlideHelper.load((Activity) context, prizeVo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(prizeVo.getPrizeTitle());
             prizeTime.setText(prizeVo.getPrizeTime() + " 开奖");
             goodsPrice.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getCounterPrice()));
-
+            prizeId.setText("第"+prizeVo.getPrizeId()+"期");
         }
     }
 

@@ -52,5 +52,6 @@ public class RequestUrl {
     public static String PRIZE_RESULT="/app/prize/prizeResult";//抽奖结果
     public static String JOIN_PRIZE="/app/prize/joinPrize";// 参与抽奖
     public static String PRIZE_HISTORY="/app/prize/history";//开奖历史
+    public static String COUPON_RECEIVE="/app/coupon/receive";//领取优惠卷
 
 }

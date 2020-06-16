@@ -65,6 +65,10 @@ public class StaticData {
     public static final String CANCELLED="102";
     //已取消
     public static final String SYS_CANCELLED="103";
+    //待退款
+    public static final String PENDING_REFUND="202";
+    //已退款
+    public static final String REFUNDED="203";
     //代分享
     public static final String TO_BE_SHARE="204";
     //代发货
@@ -106,6 +110,7 @@ public class StaticData {
     public static final String INVITATION ="INVITATION";//邀请好友
     public static final String SECKILL ="SECKILL";//秒杀
     public static final String ADDRESS ="ADDRESS";
+    public static final String PRIZE="PRIZE";//抽奖
     public static final String CANCEL_TEXT="cancelText";
     public static final String CONFIRM_TEXT="confirmText";
     public static final String TIP_BACK="tipBack";
@@ -139,5 +144,9 @@ public class StaticData {
     public static final String SELECT_ID="selectId";
     public static final String AREA_CODE="areaCode";
     public static final String ADDRESS_TITLE="addressTitle";
+    public static final String ORDER_STATUS="orderStatus";//订单状态
+    public static final String PAY_TYPE="payType";//支付方式
+    public static final String REFUND_TIME="refundTime";//退款处理时间
+    public static final String ARRIVAL_TIME="arrivalTime";//到账时间
 
 }

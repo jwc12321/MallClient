@@ -15,10 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.StaticData;
-import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
-import com.mall.sls.common.widget.textview.LotteryTearDownView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.PrizeVo;
 
@@ -78,10 +76,8 @@ public class LotteryAdapter extends RecyclerView.Adapter<LotteryAdapter.LotteryV
     }
 
     public class LotteryView extends RecyclerView.ViewHolder {
-        @BindView(R.id.participantNumber)
-        MediumThickTextView participantNumber;
-        @BindView(R.id.number_ll)
-        LinearLayout numberLl;
+        @BindView(R.id.prizeId)
+        ConventionalTextView prizeId;
         @BindView(R.id.prizeTime)
         ConventionalTextView prizeTime;
         @BindView(R.id.goods_iv)
@@ -101,12 +97,11 @@ public class LotteryAdapter extends RecyclerView.Adapter<LotteryAdapter.LotteryV
         }
 
         public void bindData(PrizeVo prizeVo) {
-            participantNumber.setText(prizeVo.getParticipantNumber());
             GlideHelper.load((Activity) context, prizeVo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(prizeVo.getPrizeTitle());
             prizeTime.setText(prizeVo.getPrizeTime() + " 开奖");
             goodsPrice.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getCounterPrice()));
-//            numberLl.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO, prizeVo.getParticipantNumber()) ? View.GONE : View.VISIBLE);
+            prizeId.setText("第"+prizeVo.getPrizeId()+"期");
             if (TextUtils.equals(StaticData.REFLASH_ONE, prizeVo.getPrizeStatus())) {
                 confirmBt.setSelected(true);
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, prizeVo.getPrice()) || TextUtils.equals("0.00", prizeVo.getPrice())) {

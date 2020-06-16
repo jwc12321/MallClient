@@ -175,6 +175,12 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private WebViewDetailInfo webViewDetailInfo;
     private String sfH5Url;
     private String isOnSale;
+    private String showMap;
+    private String actualPrice;
+    private String payModeText;
+    private String refundTime="2010-09-08 19:00:99";
+    private String arrivalTime;
+
 
     @Inject
     OrderDetailsPresenter orderDetailsPresenter;
@@ -248,6 +254,8 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                     shareBitMap = QRCodeFileUtils.createBitmap3(goodsIv, goodsIv.getWidth(), goodsIv.getWidth());//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
                     Intent intent = new Intent(this, SelectShareTypeActivity.class);
                     startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
+                } else if (TextUtils.equals(StaticData.PENDING_REFUND, orderStatusText)||TextUtils.equals(StaticData.REFUNDED, orderStatusText)) {
+                    RefundProgressActivity.start(this,orderStatusText,actualPrice,payModeText,refundTime,arrivalTime);
                 } else {
                     webViewDetailInfo = new WebViewDetailInfo();
                     webViewDetailInfo.setTitle(getString(R.string.logistics_details));
@@ -354,6 +362,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             receiptAddress.setText(goodsOrderDetails.getAddress());
             namePhone.setText(goodsOrderDetails.getConsignee() + " " + goodsOrderDetails.getMobile());
             orderGoodsVos = goodsOrderDetails.getOrderGoodsVos();
+            showMap=goodsOrderDetails.getShowMap();
             if (orderGoodsVos != null && orderGoodsVos.size() > 0) {
                 GlideHelper.load(this, orderGoodsVos.get(0).getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
                 goodsName.setText(orderGoodsVos.get(0).getGoodsName());
@@ -371,6 +380,8 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             deliveryFee.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getFreightPrice()));
             coupon.setText("-¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getCouponPrice()));
             realPayment.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getActualPrice()));
+            actualPrice=goodsOrderDetails.getActualPrice();
+            payModeText=goodsOrderDetails.getPayModeText();
             orderTotalPrice = goodsOrderDetails.getActualPrice();
             orderTimeInfos.clear();
             if (!TextUtils.isEmpty(goodsOrderDetails.getOrderSn())) {
@@ -442,10 +453,10 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
         }
     }
 
-    //状态 101-待支付 102 -取消 103-系统自动取消 204-待分享 206-待发货 301-待收获 401-完成 402-完成(系统)
+    //状态 101-待支付 102 -取消 103-系统自动取消 "202-待退款","203-已退款,"204-待分享 206-待发货 301-待收获 401-完成 402-完成(系统)
     private void setOrderStatus(String status) {
         switch (status) {
-            case StaticData.TO_PAY:
+            case StaticData.TO_PAY://待支付
                 orderStatus.setText(getString(R.string.pending_payment));
                 countDownLl.setVisibility(View.VISIBLE);
                 remainingPaymentTimeTv.setText(getString(R.string.pay_remaining_time));
@@ -458,7 +469,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 fenGeLine.setVisibility(View.GONE);
                 statusIv.setBackgroundResource(R.mipmap.icon_to_pay);
                 break;
-            case StaticData.TO_BE_SHARE:
+            case StaticData.TO_BE_SHARE://待分享
                 orderStatus.setText(getString(R.string.pending_share));
                 countDownLl.setVisibility(View.GONE);
                 btRl.setVisibility(View.VISIBLE);
@@ -469,7 +480,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 fenGeLine.setVisibility(View.GONE);
                 statusIv.setBackgroundResource(R.mipmap.icon_to_share);
                 break;
-            case StaticData.TO_BE_DELIVERED:
+            case StaticData.TO_BE_DELIVERED://代发货
                 orderStatus.setText(getString(R.string.pending_delivery));
                 countDownLl.setVisibility(View.GONE);
                 btRl.setVisibility(View.GONE);
@@ -477,19 +488,19 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 fenGeLine.setVisibility(View.GONE);
                 statusIv.setBackgroundResource(R.mipmap.icon_to_delivered);
                 break;
-            case StaticData.TO_BE_RECEIVED:
+            case StaticData.TO_BE_RECEIVED://待收货
                 orderStatus.setText(getString(R.string.shipping));
                 countDownLl.setVisibility(View.GONE);
                 btRl.setVisibility(View.VISIBLE);
                 leftBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,isOnSale)?View.VISIBLE:View.GONE);
-                rightBt.setVisibility(View.VISIBLE);
+                rightBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,showMap)?View.VISIBLE:View.GONE);
                 leftBt.setText(getString(R.string.one_more_order));
                 rightBt.setText(getString(R.string.check_map));
                 deliveryRl.setVisibility(View.VISIBLE);
                 fenGeLine.setVisibility(View.VISIBLE);
                 statusIv.setBackgroundResource(R.mipmap.icon_to_received);
                 break;
-            case StaticData.RECEIVED:
+            case StaticData.RECEIVED://已完成
             case StaticData.SYS_RECEIVED:
                 orderStatus.setText(getString(R.string.completed));
                 countDownLl.setVisibility(View.GONE);
@@ -501,7 +512,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 fenGeLine.setVisibility(View.VISIBLE);
                 statusIv.setBackgroundResource(R.mipmap.icon_order_compled);
                 break;
-            case StaticData.CANCELLED:
+            case StaticData.CANCELLED://取消
             case StaticData.SYS_CANCELLED:
                 orderStatus.setText(getString(R.string.transaction_cancel));
                 countDownLl.setVisibility(View.GONE);
@@ -512,6 +523,30 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 deliveryRl.setVisibility(View.GONE);
                 fenGeLine.setVisibility(View.GONE);
                 statusIv.setBackgroundResource(R.mipmap.icon_order_cancel);
+                break;
+            case StaticData.PENDING_REFUND://待退款
+                orderStatus.setText(getString(R.string.shipping));
+                countDownLl.setVisibility(View.GONE);
+                statusIv.setBackgroundResource(R.mipmap.icon_to_received);
+                btRl.setVisibility(View.VISIBLE);
+                leftBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,isOnSale)?View.VISIBLE:View.GONE);
+                rightBt.setVisibility(View.VISIBLE);
+                leftBt.setText(getString(R.string.one_more_order));
+                rightBt.setText(getString(R.string.where_money_goes));
+                deliveryRl.setVisibility(View.VISIBLE);
+                fenGeLine.setVisibility(View.VISIBLE);
+                break;
+            case StaticData.REFUNDED://已退款
+                orderStatus.setText(getString(R.string.refunded));
+                countDownLl.setVisibility(View.GONE);
+                statusIv.setBackgroundResource(R.mipmap.icon_refunded);
+                btRl.setVisibility(View.VISIBLE);
+                leftBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,isOnSale)?View.VISIBLE:View.GONE);
+                rightBt.setVisibility(View.VISIBLE);
+                leftBt.setText(getString(R.string.one_more_order));
+                rightBt.setText(getString(R.string.where_money_goes));
+                deliveryRl.setVisibility(View.GONE);
+                fenGeLine.setVisibility(View.GONE);
                 break;
             default:
         }

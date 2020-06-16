@@ -21,6 +21,7 @@ import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.certify.ui.CerifyPayActivity;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.LocalCityManager;
 import com.mall.sls.common.widget.citypicker.adapter.CityListAdapter;
 import com.mall.sls.common.widget.citypicker.adapter.InnerListener;
 import com.mall.sls.common.widget.citypicker.adapter.OnPickListener;
@@ -79,9 +80,8 @@ public class CityPickerActivity extends BaseActivity implements TextWatcher, Sid
     private OnPickListener mOnPickListener;
     private String localCity;
 
-    public static void start(Context context, String localCity) {
+    public static void start(Context context) {
         Intent intent = new Intent(context, CityPickerActivity.class);
-        intent.putExtra(StaticData.LOCAL_CITY, localCity);
         context.startActivity(intent);
     }
 
@@ -127,7 +127,7 @@ public class CityPickerActivity extends BaseActivity implements TextWatcher, Sid
     }
 
     private void initData() {
-        localCity = getIntent().getStringExtra(StaticData.LOCAL_CITY);
+        localCity = LocalCityManager.getLocalCity();
         //初始化热门城市
         if (mHotCities == null || mHotCities.isEmpty()) {
             mHotCities = new ArrayList<>();

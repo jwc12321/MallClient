@@ -378,7 +378,6 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         switch (view.getId()) {
             case R.id.local_city_ll:
                 Intent intent = new Intent(this, CityPickerActivity.class);
-                intent.putExtra(StaticData.LOCAL_CITY, city);
                 startActivityForResult(intent, RequestCodeStatic.CHOICE_CITY);
                 break;
             case R.id.back:

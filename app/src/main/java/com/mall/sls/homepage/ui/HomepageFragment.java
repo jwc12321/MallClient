@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +44,7 @@ import com.mall.sls.coupon.ui.CouponActivity;
 import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.BannerInfo;
 import com.mall.sls.data.entity.CustomViewsInfo;
+import com.mall.sls.data.entity.HomeCouponInfo;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.WebViewDetailInfo;
 import com.mall.sls.data.event.WXLoginEvent;
@@ -52,8 +52,10 @@ import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.adapter.GoodsItemAdapter;
+import com.mall.sls.homepage.adapter.HomeCouponAdapter;
 import com.mall.sls.homepage.adapter.JinGangAdapter;
 import com.mall.sls.homepage.presenter.HomePagePresenter;
+import com.mall.sls.lottery.ui.LotteryListActivity;
 import com.mall.sls.message.ui.MessageTypeActivity;
 import com.mall.sls.mine.ui.InviteFriendsActivity;
 import com.mall.sls.webview.ui.WebViewActivity;
@@ -64,7 +66,6 @@ import com.stx.xhb.androidx.XBanner;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.tendcloud.tenddata.TCAgent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -72,9 +73,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -93,51 +92,48 @@ import update.UpdateAppUtils;
  */
 public class HomepageFragment extends BaseFragment implements HomepageContract.HomePageView, GoodsItemAdapter.OnItemClickListener, JinGangAdapter.OnItemClickListener {
 
+
     @BindView(R.id.small_)
     MediumThickTextView small;
     @BindView(R.id.title_rel)
     RelativeLayout titleRel;
+    @BindView(R.id.local_city)
+    ConventionalTextView localCity;
+    @BindView(R.id.local_ll)
+    LinearLayout localLl;
+    @BindView(R.id.message_count)
+    ConventionalTextView messageCount;
+    @BindView(R.id.message_rl)
+    RelativeLayout messageRl;
     @BindView(R.id.local_rl)
     RelativeLayout localRl;
     @BindView(R.id.banner)
     XBanner banner;
+    @BindView(R.id.coupon_rv)
+    RecyclerView couponRv;
+    @BindView(R.id.receive_iv)
+    ImageView receiveIv;
+    @BindView(R.id.jingang_rv)
+    RecyclerView jingangRv;
+    @BindView(R.id.other_rl)
+    RelativeLayout otherRl;
+    @BindView(R.id.goods_rv)
+    RecyclerView goodsRv;
     @BindView(R.id.scrollview)
     NestedScrollView scrollview;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    @BindView(R.id.local_city)
-    ConventionalTextView localCity;
-    @BindView(R.id.selected_group_tv)
-    MediumThickTextView selectedGroupTv;
-    @BindView(R.id.more_right_arrow_iv)
-    ImageView moreRightArrowIv;
-    @BindView(R.id.other_more_tv)
-    ConventionalTextView otherMoreTv;
-    @BindView(R.id.goods_rv)
-    RecyclerView goodsRv;
-    @BindView(R.id.message_rl)
-    RelativeLayout messageRl;
-    @BindView(R.id.message_count)
-    ConventionalTextView messageCount;
-    @BindView(R.id.other_rl)
-    RelativeLayout otherRl;
-    @BindView(R.id.jingang_rv)
-    RecyclerView jingangRv;
-    @BindView(R.id.local_ll)
-    LinearLayout localLl;
-    @BindView(R.id.bind_wx_iv)
-    ImageView bindWxIv;
+
     private LocationHelper mLocationHelper;
     private String city;
-    private String longitude;
-    private String latitude;
 
     private List<CustomViewsInfo> data;
     private GoodsItemAdapter goodsItemAdapter;
     private List<BannerInfo> bannerInfos;
-    private String areaCode;
     private JinGangAdapter jinGangAdapter;
     private List<BannerInfo> jinGangInfos;
+    private HomeCouponAdapter homeCouponAdapter;
+    private List<HomeCouponInfo> homeCouponInfos;
     @Inject
     HomePagePresenter homePagePresenter;
     private List<String> group;
@@ -184,13 +180,6 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         settingHeight();
         xBannerInit();
         initAdapter();
-        //绑定微信
-        if(TextUtils.equals(StaticData.REFLASH_ZERO, BindWxManager.getBindWx())){
-            bindWxIv.setVisibility(View.VISIBLE);
-            EventBus.getDefault().register(this);
-        }else {
-            bindWxIv.setVisibility(View.GONE);
-        }
         homePagePresenter.getHomePageInfo(StaticData.REFLASH_ONE);
         homePagePresenter.getAppUrlInfo();
 //
@@ -207,6 +196,8 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         jinGangAdapter = new JinGangAdapter(getActivity());
         jinGangAdapter.setOnItemClickListener(this);
         jingangRv.setAdapter(jinGangAdapter);
+        homeCouponAdapter=new HomeCouponAdapter(getActivity());
+        couponRv.setAdapter(homeCouponAdapter);
     }
 
     private void xBannerInit() {
@@ -252,18 +243,20 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                             ActivityGroupGoodsActivity.start(getActivity(), goodsId);
                         }
                     }
-                }else if(TextUtils.equals(StaticData.COUPON, nativeType)){
+                } else if (TextUtils.equals(StaticData.COUPON, nativeType)) {
                     Intent intent = new Intent(getActivity(), CouponActivity.class);
                     startActivityForResult(intent, RequestCodeStatic.GO_COUPON);
-                }else if(TextUtils.equals(StaticData.INVITATION, nativeType)){
+                } else if (TextUtils.equals(StaticData.INVITATION, nativeType)) {
                     InviteFriendsActivity.start(getActivity());
-                }else if(TextUtils.equals(StaticData.SECKILL, nativeType)){
+                } else if (TextUtils.equals(StaticData.SECKILL, nativeType)) {
                     if (homepageListener != null) {
                         SpikeManager.saveSpike(StaticData.REFLASH_ONE);
                         homepageListener.goLocalTeam();
                     }
-                }else if(TextUtils.equals(StaticData.ADDRESS, nativeType)){
-                    AddressManageActivity.start(getActivity(),StaticData.REFLASH_ONE);
+                } else if (TextUtils.equals(StaticData.ADDRESS, nativeType)) {
+                    AddressManageActivity.start(getActivity(), StaticData.REFLASH_ONE);
+                }else if(TextUtils.equals(StaticData.PRIZE, nativeType)){
+                    LotteryListActivity.start(getActivity());
                 }
             }
         }
@@ -272,9 +265,9 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     private void settingHeight() {
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-        screenWidth = dm.widthPixels - ConvertDpAndPx.Dp2Px(getActivity(), 30);
-        screenWidthBg = new BigDecimal(screenWidth);
-        screenHeightBg = screenWidthBg.multiply(new BigDecimal("1")).divide(new BigDecimal("2"), 0, BigDecimal.ROUND_DOWN);
+        screenWidth = dm.widthPixels;
+        screenWidthBg = new BigDecimal(dm.widthPixels - ConvertDpAndPx.Dp2Px(getActivity(), 30));
+        screenHeightBg = screenWidthBg.multiply(new BigDecimal("1")).divide(new BigDecimal("3"), 0, BigDecimal.ROUND_DOWN);
         screenHeight = Integer.parseInt(screenHeightBg.toString());
         LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) banner.getLayoutParams(); //取控件textView当前的布局参数
         linearParams.height = screenHeight;// 控件的高强制
@@ -292,15 +285,9 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                 if (aMapLocation == null || (TextUtils.isEmpty(aMapLocation.getDistrict()) && TextUtils.equals("0.0", String.valueOf(aMapLocation.getLongitude())) && TextUtils.equals("0.0", String.valueOf(aMapLocation.getLatitude())))) {
                     showMessage("定位失败，请重新定位");
                     city = "";
-                    longitude = "";
-                    latitude = "";
-                    areaCode = "";
                 } else {
                     LocalCityManager.saveLocalCity(aMapLocation.getCity());
                     city = aMapLocation.getDistrict();
-                    longitude = aMapLocation.getLongitude() + "";
-                    latitude = aMapLocation.getLatitude() + "";
-                    areaCode = aMapLocation.getAdCode() + "";
                 }
 //                AreaCodeManager.saveAreaCode(areaCode);
                 localCity.setText(city);
@@ -394,6 +381,22 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                 }
                 jinGangAdapter.setData(jinGangInfos);
             }
+            homeCouponInfos=homePageInfo.getHomeCouponInfos();
+            if(homeCouponInfos==null||homeCouponInfos.size()==0){
+                couponRv.setVisibility(View.GONE);
+                receiveIv.setVisibility(View.GONE);
+            }else {
+                couponRv.setVisibility(View.VISIBLE);
+                homeCouponAdapter.setData(homeCouponInfos);
+                receiveIv.setVisibility(View.VISIBLE);
+                //绑定微信
+                if (TextUtils.equals(StaticData.REFLASH_ZERO, BindWxManager.getBindWx())) {
+                    receiveIv.setSelected(false);
+                    EventBus.getDefault().register(this);
+                } else {
+                    receiveIv.setSelected(true);
+                }
+            }
         }
     }
 
@@ -401,8 +404,9 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     public void renderBindWx() {
         showMessage(getString(R.string.bind_success_wx));
         BindWxManager.saveBindWx(StaticData.REFLASH_ONE);
-        bindWxIv.setVisibility(View.GONE);
         EventBus.getDefault().unregister(this);
+        receiveIv.setSelected(true);
+        homePagePresenter.couponReceive(StaticData.REFLASH_ONE);
     }
 
     @Override
@@ -412,9 +416,16 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         }
     }
 
-    private void updateApp(AppUrlInfo appUrlInfo){
+    @Override
+    public void renderCouponReceive() {
+        showMessage(getString(R.string.receive_success));
+        receiveIv.setVisibility(View.GONE);
+        couponRv.setVisibility(View.GONE);
+    }
+
+    private void updateApp(AppUrlInfo appUrlInfo) {
         if (appUrlInfo != null && !appUrlInfo.isIfLatest() && !TextUtils.isEmpty(appUrlInfo.getUrl())) {
-            if(!TextUtils.isEmpty(UpdateManager.getUpdate())&&!appUrlInfo.isForceUpdate()){
+            if (!TextUtils.isEmpty(UpdateManager.getUpdate()) && !appUrlInfo.isForceUpdate()) {
                 return;
             }
             UpdateConfig updateConfig = new UpdateConfig();
@@ -465,7 +476,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         this.homepageListener = homepageListener;
     }
 
-    @OnClick({R.id.other_rl, R.id.message_rl, R.id.local_ll, R.id.bind_wx_iv})
+    @OnClick({R.id.other_rl, R.id.message_rl, R.id.local_ll, R.id.receive_iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.other_rl:
@@ -480,8 +491,12 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             case R.id.local_ll:
 //                CityPickerActivity.start(getActivity());
                 break;
-            case R.id.bind_wx_iv:
-                wxBind();
+            case R.id.receive_iv:
+                if (TextUtils.equals(StaticData.REFLASH_ZERO, BindWxManager.getBindWx())) {
+                    wxBind();
+                }else {
+                    homePagePresenter.couponReceive(StaticData.REFLASH_ONE);
+                }
                 break;
             default:
         }
@@ -508,7 +523,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     //获取code
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginSuccess(WXLoginEvent wxLoginEvent) {
-        if (wxLoginEvent!=null&&!TextUtils.isEmpty(wxLoginEvent.getCode())) {
+        if (wxLoginEvent != null && !TextUtils.isEmpty(wxLoginEvent.getCode())) {
             homePagePresenter.bindWx(wxLoginEvent.getCode());
         }
     }

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_red_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/refund_progress" />
+    </RelativeLayout>
+
+    <com.mall.sls.common.widget.scrollview.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadingEdge="none"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/appText1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_22"
+                android:src="@mipmap/icon_refund_coin" />
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                android:id="@+id/pay_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_4"
+                android:textColor="@color/appText3"
+                android:textSize="@dimen/sp_20"
+                tools:text="20" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/size14_color_app3_text_style"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/refund_amount" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_29">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_18"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/refund_processing_iv"
+                        style="@style/refund_progress_iv_style" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/refund_progress_content_style"
+                        android:text="@string/refund_processing" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/order_refund_time"
+                        style="@style/refund_progress_time_style"
+                        tools:text="2020-09-01 18:00:00" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/dp_18"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/successful_iv"
+                        style="@style/refund_progress_iv_style" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/refund_progress_content_style"
+                        android:text="@string/successful_account" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/order_arrival_time"
+                        style="@style/refund_progress_time_style"
+                        tools:text="2020-09-01 18:00:00" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/dp_171"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:src="@mipmap/icon_green_line" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_70"
+                android:layout_marginBottom="@dimen/dp_6"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/icon_red_tip" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/return_where"
+                    style="@style/size14_color_back1_text_style"
+                    android:layout_gravity="center_vertical"
+                    tools:text="（退款将会原路返回到您的支付宝账户中）" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.mall.sls.common.widget.scrollview.ReboundScrollView>
+</LinearLayout>

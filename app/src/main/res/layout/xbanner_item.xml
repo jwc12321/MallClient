@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_167"
+    android:layout_height="match_parent"
     android:scaleType="fitXY"
     android:adjustViewBounds="true"
     app:riv_corner_radius="@dimen/dp_4"
     app:riv_oval="false"
-    tools:background="@null" />
+    tools:background="@null"
+    android:paddingLeft="@dimen/dp_15"
+    android:paddingRight="@dimen/dp_15"/>

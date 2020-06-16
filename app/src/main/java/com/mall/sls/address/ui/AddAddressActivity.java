@@ -1,5 +1,6 @@
 package com.mall.sls.address.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
@@ -20,14 +22,15 @@ import com.mall.sls.address.presenter.AddAddressPresenter;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.address.AreaPickerView;
+import com.mall.sls.common.unit.PermissionUtil;
 import com.mall.sls.common.widget.textview.ConventionalEditTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.AddressInfo;
 import com.mall.sls.data.entity.ProvinceBean;
 import com.mall.sls.data.request.AddAddressRequest;
-import com.mall.sls.homepage.ui.CommonTipActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -78,6 +81,8 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
     MediumThickTextView confirmBt;
     @BindView(R.id.right_tv)
     MediumThickTextView rightTv;
+    @BindView(R.id.item_ll)
+    LinearLayout itemLl;
 
     private String labelType;
     private String genderType;
@@ -101,6 +106,7 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
     private String choiceType;
     private String lat;
     private String lon;
+    private List<String> group;
 
     @Inject
     AddAddressPresenter addAddressPresenter;
@@ -140,8 +146,8 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
             labelType = addressInfo.getType();
             genderType = addressInfo.getGender();
             defaultType = addressInfo.getDefault();
-            lat=addressInfo.getLat();
-            lon=addressInfo.getLng();
+            lat = addressInfo.getLat();
+            lon = addressInfo.getLng();
             defaultIv.setSelected(defaultType);
             title.setText(getString(R.string.update_address));
         } else {
@@ -151,6 +157,8 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
         }
         labelSelect();
         genderSelect();
+        group = new ArrayList<>();
+        group.add(Manifest.permission_group.LOCATION);
     }
 
     @Override
@@ -212,8 +220,10 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
             case R.id.address:
 //                areaPickerView.setSelect(i);
 //                areaPickerView.show();
-                Intent intent = new Intent(this, SelectAddressActivity.class);
-                startActivityForResult(intent, RequestCodeStatic.SELECT_LAT_LON);
+                if (requestRuntimePermissions(PermissionUtil.permissionGroup(group, null), RequestCodeStatic.REQUEST_PERMISSION_LOCATION)) {
+                    Intent intent = new Intent(this, SelectAddressActivity.class);
+                    startActivityForResult(intent, RequestCodeStatic.SELECT_LAT_LON);
+                }
                 break;
             case R.id.default_iv:
                 defaultType = !defaultType;
@@ -279,7 +289,7 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
 
     @Override
     public View getSnackBarHolderView() {
-        return null;
+        return itemLl;
     }
 
 
@@ -340,7 +350,7 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
                     if (data != null) {
                         province = data.getStringExtra(StaticData.PROVINCE);
                         city = data.getStringExtra(StaticData.CITY);
-                        county =data.getStringExtra(StaticData.COUNT);
+                        county = data.getStringExtra(StaticData.COUNT);
                         lat = data.getStringExtra(StaticData.LAT);
                         lon = data.getStringExtra(StaticData.LON);
                         houseNumber = data.getStringExtra(StaticData.DETAIL_ADDRESS);

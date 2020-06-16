@@ -17,12 +17,14 @@ public interface HomepageContract {
         void getHomePageInfo(String refreshType);
         void bindWx(String code);
         void getAppUrlInfo();
+        void couponReceive(String type);
     }
 
     interface HomePageView extends BaseView<HomePagePresenter>{
         void renderHomePageInfo(HomePageInfo homePageInfo);
         void renderBindWx();
         void renderAppUrlInfo(AppUrlInfo appUrlInfo);
+        void renderCouponReceive();
     }
 
     interface GoodsDetailsPresenter extends BasePresenter{
