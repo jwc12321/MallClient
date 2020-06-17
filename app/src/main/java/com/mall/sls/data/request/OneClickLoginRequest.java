@@ -18,12 +18,16 @@ public class OneClickLoginRequest {
     //邀请码
     @SerializedName("invitationCode")
     private String invitationCode;
+    //设备名
+    @SerializedName("deviceName")
+    private String deviceName;
 
-    public OneClickLoginRequest(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode) {
+    public OneClickLoginRequest(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode,String deviceName) {
         this.accessCode = accessCode;
         this.deviceId = deviceId;
         this.deviceOsVersion = deviceOsVersion;
         this.devicePlatform = devicePlatform;
         this.invitationCode=invitationCode;
+        this.deviceName=deviceName;
     }
 }

@@ -28,6 +28,7 @@ import com.mall.sls.certify.ui.NameVerifiedActivity;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.VerifyManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -187,7 +188,8 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
         }
     }
 
-    @OnClick({R.id.right_iv, R.id.all_order_rl, R.id.pending_payment_iv, R.id.pending_share_iv, R.id.pending_delivery_iv, R.id.shipping_iv, R.id.completed_iv, R.id.address_manage, R.id.invite_friends, R.id.verified_rl, R.id.my_invitation_iv, R.id.super_member_rl, R.id.member_type_iv, R.id.feedback, R.id.copy,R.id.lottery})
+    @OnClick({R.id.right_iv, R.id.all_order_rl, R.id.pending_payment_iv, R.id.pending_share_iv, R.id.pending_delivery_iv, R.id.shipping_iv, R.id.completed_iv, R.id.address_manage, R.id.invite_friends, R.id.verified_rl, R.id.my_invitation_iv,
+            R.id.super_member_rl, R.id.member_type_iv, R.id.feedback, R.id.copy,R.id.lottery,R.id.taobao_orde,R.id.mission_center})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.right_iv://设置
@@ -213,12 +215,15 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 GoodsOrderActivity.start(getActivity(), StaticData.REFLASH_FIVE);
                 break;
             case R.id.address_manage://地址管理
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.address_management));
                 AddressManageActivity.start(getActivity(), StaticData.REFLASH_ONE);
                 break;
             case R.id.invite_friends://邀请好友
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.invite_friends));
                 InviteFriendsActivity.start(getActivity());
                 break;
             case R.id.verified_rl://认证
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.verified));
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
                     goVerify = StaticData.REFLASH_ONE;
                     if (certifyPay) {
@@ -229,23 +234,34 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 }
                 break;
             case R.id.my_invitation_iv://我的邀请
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.my_fans));
                 MyInvitationActivity.start(getActivity());
                 break;
             case R.id.super_member_rl://超级会员
             case R.id.member_type_iv:
                 goVerify = StaticData.REFLASH_ONE;
                 SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount, vipDescription,certifyPay,certifyAmount,vipExpireDate);
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.super_member));
                 break;
             case R.id.feedback://意见反馈
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.feedback));
                 FeedBackActivity.start(getActivity());
                 break;
-            case R.id.copy:
+            case R.id.copy://复制
                 myClip = ClipData.newPlainText("text", inviteCode);
                 myClipboard.setPrimaryClip(myClip);
                 showMessage(getString(R.string.copy_successfully));
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.copy_invite_code));
                 break;
-            case R.id.lottery:
+            case R.id.lottery://抽奖
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.lottery));
                 LotteryListActivity.start(getActivity());
+                break;
+            case R.id.taobao_orde://淘宝订单
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.tao_bao_order));
+                break;
+            case R.id.mission_center://任务中心
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.mission_center));
                 break;
             default:
         }
@@ -272,6 +288,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
 
     @Override
     public void goCoupon() {
+        TCAgentUnit.setEventId(getActivity(),getString(R.string.my_coupon));
         Intent intent = new Intent(getActivity(), CouponActivity.class);
         startActivityForResult(intent, RequestCodeStatic.GO_COUPON);
     }
@@ -357,6 +374,12 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
             mineInfoPresenter.getMineInfo();
             mineInfoPresenter.getVipAmountInfo();
             mineInfoPresenter.getInvitationCodeInfo();
+        }
+
+        if (getUserVisibleHint()&&getActivity()!=null&&!getActivity().isDestroyed()) {
+            TCAgentUnit.pageStart(getActivity(), getString(R.string.mine));
+        } else if(getActivity()!=null&&!getActivity().isDestroyed()){
+            TCAgentUnit.pageEnd(getActivity(), getString(R.string.mine));
         }
     }
 }

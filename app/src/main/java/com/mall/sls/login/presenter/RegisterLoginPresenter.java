@@ -67,9 +67,9 @@ public class RegisterLoginPresenter implements LoginContract.RegisterLoginPresen
     }
 
     @Override
-    public void bindSmsCodeLogin(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code, String invitationCode, String unionId) {
+    public void bindSmsCodeLogin(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code, String invitationCode, String unionId,String deviceName) {
         registerLoginView.showLoading(StaticData.PROCESSING);
-        SmsCodeBindRequest request=new SmsCodeBindRequest(deviceId,deviceOsVersion,devicePlatform,mobile,code,invitationCode,unionId);
+        SmsCodeBindRequest request=new SmsCodeBindRequest(deviceId,deviceOsVersion,devicePlatform,mobile,code,invitationCode,unionId,deviceName);
         String sign= SignUnit.signPost(RequestUrl.BIND_SMS_CODE_LOGIN,gson.toJson(request));
         Disposable disposable = restApiService.bindSmsCodeLogin(sign,request)
                 .flatMap(new RxRemoteDataParse<TokenInfo>())
@@ -91,9 +91,9 @@ public class RegisterLoginPresenter implements LoginContract.RegisterLoginPresen
     }
 
     @Override
-    public void bindOneClickLogin(String deviceId, String deviceOsVersion, String devicePlatform, String accessCode, String invitationCode, String unionId) {
+    public void bindOneClickLogin(String deviceId, String deviceOsVersion, String devicePlatform, String accessCode, String invitationCode, String unionId,String deviceName) {
         registerLoginView.showLoading(StaticData.PROCESSING);
-        OnClickBindRequest request=new OnClickBindRequest(deviceId,deviceOsVersion,devicePlatform,accessCode,invitationCode,unionId);
+        OnClickBindRequest request=new OnClickBindRequest(deviceId,deviceOsVersion,devicePlatform,accessCode,invitationCode,unionId,deviceName);
         String sign= SignUnit.signPost(RequestUrl.BIND_ONE_CLICK,gson.toJson(request));
         Disposable disposable = restApiService.bindOneClickLogin(sign,request)
                 .flatMap(new RxRemoteDataParse<TokenInfo>())

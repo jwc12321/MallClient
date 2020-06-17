@@ -27,6 +27,7 @@ import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.unit.HtmlUnit;
 import com.mall.sls.common.unit.NumberFormatUnit;
+import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.TimeUtil;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DhmsTearDownView;
@@ -305,6 +306,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.confirm_bt:
+                TCAgentUnit.setEventId(this,getString(R.string.event_purchase_details));
                 goSelectSpec(StaticData.REFLASH_ONE);
                 break;
             case R.id.back:
@@ -343,5 +345,17 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
                 default:
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TCAgentUnit.pageStart(this,getString(R.string.event_page));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        TCAgentUnit.pageEnd(this,getString(R.string.event_page));
     }
 }

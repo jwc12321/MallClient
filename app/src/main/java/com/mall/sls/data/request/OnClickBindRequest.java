@@ -21,13 +21,17 @@ public class OnClickBindRequest {
     //unionId
     @SerializedName("unionId")
     private String unionId;
+    //设备名
+    @SerializedName("deviceName")
+    private String deviceName;
 
-    public OnClickBindRequest(String deviceId, String deviceOsVersion, String devicePlatform, String accessCode, String invitationCode, String unionId) {
+    public OnClickBindRequest(String deviceId, String deviceOsVersion, String devicePlatform, String accessCode, String invitationCode, String unionId,String deviceName) {
         this.deviceId = deviceId;
         this.deviceOsVersion = deviceOsVersion;
         this.devicePlatform = devicePlatform;
         this.accessCode = accessCode;
         this.invitationCode = invitationCode;
         this.unionId = unionId;
+        this.deviceName=deviceName;
     }
 }

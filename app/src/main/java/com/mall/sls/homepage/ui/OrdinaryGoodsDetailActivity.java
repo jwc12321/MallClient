@@ -37,6 +37,7 @@ import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
+import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
@@ -310,6 +311,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 purchaseType = StaticData.REFLASH_TWO;
                 isGroup = true;
                 initiateBill();
+                TCAgentUnit.setEventId(this,getString(R.string.initiate_bill_buy));
                 break;
             case R.id.service_iv:
                 CustomerServiceActivity.start(this, consumerPhone);
@@ -323,6 +325,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 purchaseType = StaticData.REFLASH_ONE;
                 isGroup = false;
                 individualShopping();
+                TCAgentUnit.setEventId(this,getString(R.string.individual_shopping));
                 break;
             case R.id.up_spell_bt:
                 groupId = upGroupId;
@@ -330,6 +333,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 purchaseType = StaticData.REFLASH_THREE;
                 isGroup = true;
                 goSpellingReminder(upMobile, upSurplus);
+                TCAgentUnit.setEventId(this,getString(R.string.buy_together));
                 break;
             case R.id.down_spell_bt:
                 groupId = downGroupId;
@@ -337,8 +341,10 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 purchaseType = StaticData.REFLASH_THREE;
                 isGroup = true;
                 goSpellingReminder(downMobile, downSurplus);
+                TCAgentUnit.setEventId(this,getString(R.string.buy_together));
                 break;
             case R.id.share://分享
+                TCAgentUnit.setEventId(this,getString(R.string.goods_details_share));
                 if (!PayTypeInstalledUtils.isWeixinAvilible(OrdinaryGoodsDetailActivity.this)) {
                     showMessage(getString(R.string.install_weixin));
                     return;
@@ -582,6 +588,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         purchaseType = StaticData.REFLASH_THREE;
         isGroup = true;
         goSpellingReminder(allGroupPurchases.get(position).getMobile(), allGroupPurchases.get(position).getSurplus());
+        TCAgentUnit.setEventId(this,getString(R.string.buy_together));
     }
 
     @Override
@@ -646,5 +653,17 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             selectList.add(localMedia);
         }
         PictureSelector.create(this).themeStyle(themeId).openExternalPreview(position, selectList);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TCAgentUnit.pageStart(this,getString(R.string.goods_details));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        TCAgentUnit.pageEnd(this,getString(R.string.goods_details));
     }
 }

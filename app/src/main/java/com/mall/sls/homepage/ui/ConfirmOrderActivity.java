@@ -27,6 +27,7 @@ import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayResult;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.StaticHandler;
+import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.coupon.ui.SelectCouponActivity;
@@ -242,6 +243,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                 back();
                 break;
             case R.id.confirm_bt://去支付
+                TCAgentUnit.setEventId(this,getString(R.string.payment));
                 if(TextUtils.isEmpty(addressId)){
                     showMessage(getString(R.string.select_address));
                     return;
@@ -505,5 +507,17 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private void paySuccess() {
         WXShareBackActivity.start(this, purchaseType, nameText, briefText, goodsId, wxUrl, inviteCode, grouponId, goodsProductId, orderId,picUrl);
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TCAgentUnit.pageStart(this,getString(R.string.submit_order_page));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        TCAgentUnit.pageEnd(this,getString(R.string.submit_order_page));
     }
 }

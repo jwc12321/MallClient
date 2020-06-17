@@ -44,9 +44,9 @@ public class WeiXinLoginPresenter implements LoginContract.WeiXinLoginPresenter 
     }
 
     @Override
-    public void weixinLogin(String deviceId, String deviceOsVersion, String devicePlatform, String wxCode) {
+    public void weixinLogin(String deviceId, String deviceOsVersion, String devicePlatform, String wxCode,String deviceName) {
         weiXinLoginView.showLoading(StaticData.PROCESSING);
-        WeiXinLoginRequest request=new WeiXinLoginRequest(deviceId,deviceOsVersion,devicePlatform,wxCode);
+        WeiXinLoginRequest request=new WeiXinLoginRequest(deviceId,deviceOsVersion,devicePlatform,wxCode,deviceName);
         String sign= SignUnit.signPost(RequestUrl.LOGIN_WEIXIN_URL,gson.toJson(request));
         Disposable disposable = restApiService.weiXinLogin(sign,request)
                 .flatMap(new RxRemoteDataParse<TokenInfo>())
@@ -68,8 +68,8 @@ public class WeiXinLoginPresenter implements LoginContract.WeiXinLoginPresenter 
     }
 
     @Override
-    public void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode) {
-        OneClickLoginRequest request=new OneClickLoginRequest(accessCode,deviceId,deviceOsVersion,devicePlatform,invitationCode);
+    public void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode,String deviceName) {
+        OneClickLoginRequest request=new OneClickLoginRequest(accessCode,deviceId,deviceOsVersion,devicePlatform,invitationCode,deviceName);
         String sign= SignUnit.signPost(RequestUrl.ONE_CLICK_LOGIN_URL,gson.toJson(request));
         Disposable disposable = restApiService.oneClickLogin(sign,request)
                 .flatMap(new RxRemoteDataParse<TokenInfo>())

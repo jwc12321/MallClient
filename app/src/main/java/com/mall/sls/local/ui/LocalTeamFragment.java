@@ -18,6 +18,7 @@ import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SpikeManager;
+import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.TextViewttf;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.mainframe.adapter.MainPagerAdapter;
@@ -158,6 +159,11 @@ public class LocalTeamFragment extends BaseFragment implements LootingFragment.L
                 }
             }
         }
+        if (getUserVisibleHint()&&getActivity()!=null&&!getActivity().isDestroyed()) {
+            TCAgentUnit.pageStart(getActivity(), getString(R.string.fight_together));
+        } else if(getActivity()!=null&&!getActivity().isDestroyed()){
+            TCAgentUnit.pageEnd(getActivity(), getString(R.string.fight_together));
+        }
     }
 
     @Override
@@ -169,4 +175,6 @@ public class LocalTeamFragment extends BaseFragment implements LootingFragment.L
     public void lootingSoonChoice(String type) {
         this.type=type;
     }
+
+
 }

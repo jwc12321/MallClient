@@ -62,6 +62,7 @@ public class FillCodeActivity extends BaseActivity implements LoginContract.Regi
     private String mobile;
     private String smsCode;
     private String choiceType;  //0：手机验证码绑定 1：一键绑定
+    private String deviceName;
 
     @Inject
     RegisterLoginPresenter registerLoginPresenter;
@@ -89,6 +90,7 @@ public class FillCodeActivity extends BaseActivity implements LoginContract.Regi
 
     private void initView(){
         deviceId = SystemUtil.getAndroidId(this);
+        deviceName=SystemUtil.getDeviceName(this);
         deviceOsVersion = SystemUtil.getSystemVersion();
         devicePlatform = "android";
         unionId=getIntent().getStringExtra(StaticData.UNION_ID);
@@ -136,9 +138,9 @@ public class FillCodeActivity extends BaseActivity implements LoginContract.Regi
 
     private void confirm(){
         if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
-            registerLoginPresenter.bindSmsCodeLogin(deviceId,deviceOsVersion,devicePlatform,mobile,smsCode,invitationCode,unionId);
+            registerLoginPresenter.bindSmsCodeLogin(deviceId,deviceOsVersion,devicePlatform,mobile,smsCode,invitationCode,unionId,deviceName);
         }else {
-            registerLoginPresenter.bindOneClickLogin(deviceId,deviceOsVersion,devicePlatform,accessCode,invitationCode,unionId);
+            registerLoginPresenter.bindOneClickLogin(deviceId,deviceOsVersion,devicePlatform,accessCode,invitationCode,unionId,deviceName);
         }
     }
 

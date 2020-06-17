@@ -62,6 +62,10 @@ public class SystemUtil {
         return androidId;
     }
 
+    public static String getDeviceName(Context context) {
+        return Settings.Global.getString(context.getContentResolver(), Settings.Global.DEVICE_NAME);
+    }
+
     /**
      * 获取手机IMEI(需要“android.permission.READ_PHONE_STATE”权限)
      *

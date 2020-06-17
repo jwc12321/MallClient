@@ -24,8 +24,11 @@ public class SmsCodeBindRequest {
     //unionId
     @SerializedName("unionId")
     private String unionId;
+    //设备名
+    @SerializedName("deviceName")
+    private String deviceName;
 
-    public SmsCodeBindRequest(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code, String invitationCode, String unionId) {
+    public SmsCodeBindRequest(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code, String invitationCode, String unionId,String deviceName) {
         this.deviceId = deviceId;
         this.deviceOsVersion = deviceOsVersion;
         this.devicePlatform = devicePlatform;
@@ -33,5 +36,6 @@ public class SmsCodeBindRequest {
         this.code = code;
         this.invitationCode = invitationCode;
         this.unionId = unionId;
+        this.deviceName=deviceName;
     }
 }

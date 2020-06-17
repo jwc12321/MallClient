@@ -26,6 +26,7 @@ import com.mall.sls.common.unit.BindWxManager;
 import com.mall.sls.common.unit.MobileManager;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.SystemUtil;
+import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -94,6 +95,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
     private String deviceId;
     private String deviceOsVersion;
     private String devicePlatform;
+    private String deviceName;
 
     private PhoneNumberAuthHelper mAlicomAuthHelper;
     private TokenResultListener mTokenListener;
@@ -124,6 +126,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
         sActivityRef = new WeakReference<>(this);
         EventBus.getDefault().register(this);
         deviceId = SystemUtil.getAndroidId(this);
+        deviceName=SystemUtil.getDeviceName(this);
         deviceOsVersion = SystemUtil.getSystemVersion();
         devicePlatform = "android";
         TokenManager.saveToken("");
@@ -136,6 +139,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
         switch (view.getId()) {
             case R.id.confirm_bt://登录
                 wxLogin();
+                TCAgentUnit.setEventId(this,getString(R.string.weixin_login_register));
                 break;
             case R.id.register_tv://用户协议
                 webViewDetailInfo = new WebViewDetailInfo();
@@ -196,7 +200,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginSuccess(WXLoginEvent wxLoginEvent) {
         if (wxLoginEvent!=null&&!TextUtils.isEmpty(wxLoginEvent.getCode())) {
-            weiXinLoginPresenter.weixinLogin(deviceId, deviceOsVersion, devicePlatform, wxLoginEvent.getCode());
+            weiXinLoginPresenter.weixinLogin(deviceId, deviceOsVersion, devicePlatform, wxLoginEvent.getCode(),deviceName);
         }
     }
 
@@ -294,7 +298,8 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                     if(TextUtils.equals(StaticData.REFLASH_ZERO,onClickType)) {
                         FillCodeActivity.start(WeixinLoginActivity.this, unionId, loginToken, "", "", StaticData.REFLASH_ONE);
                     }else {
-                        weiXinLoginPresenter.oneClickLogin(loginToken,deviceId,deviceOsVersion,devicePlatform,"");
+                        weiXinLoginPresenter.oneClickLogin(loginToken,deviceId,deviceOsVersion,devicePlatform,"",deviceName);
+                        TCAgentUnit.setEventId(WeixinLoginActivity.this,getString(R.string.login_register_bt));
                     }
                 }
                 mAlicomAuthHelper.quitLoginPage();

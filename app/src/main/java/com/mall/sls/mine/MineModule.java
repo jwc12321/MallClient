@@ -14,6 +14,7 @@ public class MineModule {
     private MineContract.MyTeamInfoView myTeamInfoView;
     private MineContract.ShareInfoView shareInfoView;
     private MineContract.FeedBackView feedBackView;
+    private MineContract.SettingView settingView;
 
     public MineModule(MineContract.MineInfoView mineInfoView) {
         this.mineInfoView = mineInfoView;
@@ -33,6 +34,10 @@ public class MineModule {
 
     public MineModule(MineContract.FeedBackView feedBackView) {
         this.feedBackView = feedBackView;
+    }
+
+    public MineModule(MineContract.SettingView settingView) {
+        this.settingView = settingView;
     }
 
     @Provides
@@ -58,5 +63,10 @@ public class MineModule {
     @Provides
     MineContract.FeedBackView provideFeedBackView(){
         return feedBackView;
+    }
+
+    @Provides
+    MineContract.SettingView provideSettingView(){
+        return settingView;
     }
 }

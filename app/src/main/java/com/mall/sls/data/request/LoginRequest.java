@@ -21,13 +21,17 @@ public class LoginRequest {
     //邀请码
     @SerializedName("invitationCode")
     private String invitationCode;
+    //设备名
+    @SerializedName("deviceName")
+    private String deviceName;
 
-    public LoginRequest(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code,String invitationCode) {
+    public LoginRequest(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code,String invitationCode,String deviceName) {
         this.deviceId = deviceId;
         this.deviceOsVersion = deviceOsVersion;
         this.devicePlatform = devicePlatform;
         this.mobile = mobile;
         this.code = code;
         this.invitationCode=invitationCode;
+        this.deviceName=deviceName;
     }
 }

@@ -98,6 +98,7 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
     }
 
     private void initView() {
+        map.clear();
         goodsDetailsInfo = (GoodsDetailsInfo) getIntent().getSerializableExtra(StaticData.GOODS_DETAILS_INFO);
         checkSkus = (List<String>) getIntent().getSerializableExtra(StaticData.SKU_CHECK);
         choiceType=getIntent().getStringExtra(StaticData.CHOICE_TYPE);
@@ -108,8 +109,9 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
             productListCallableInfos = goodsDetailsInfo.getProductListCallableInfos();
             if (checkSkus != null && checkSkus.size() > 0) {
                 shopselectView.setCheckSkus(checkSkus);
-                for (String goodsSku : checkSkus) {
-                    goodsSpecStr = goodsSpecStr + goodsSku + ",";
+                for (int i=0;i<checkSkus.size();i++){
+                    goodsSpecStr = goodsSpecStr + checkSkus.get(i) + ",";
+                    map.put(String.valueOf(i),checkSkus.get(i));
                 }
                 goodsSpecStr = goodsSpecStr.substring(0, goodsSpecStr.length() - 1);
                 for (ProductListCallableInfo productListCallableInfo : productListCallableInfos) {

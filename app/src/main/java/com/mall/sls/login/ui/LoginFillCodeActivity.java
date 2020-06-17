@@ -64,6 +64,7 @@ public class LoginFillCodeActivity extends BaseActivity implements LoginContract
     private String mobile;
     private String smsCode;
     private String choiceType;  //0：手机验证码登录 1：一键登录
+    private String deviceName;
 
     @Inject
     LoginPresenter loginPresenter;
@@ -90,6 +91,7 @@ public class LoginFillCodeActivity extends BaseActivity implements LoginContract
 
     private void initView(){
         deviceId = SystemUtil.getAndroidId(this);
+        deviceName=SystemUtil.getDeviceName(this);
         deviceOsVersion = SystemUtil.getSystemVersion();
         devicePlatform = "android";
         accessCode=getIntent().getStringExtra(StaticData.ACCESS_CODE);
@@ -136,9 +138,9 @@ public class LoginFillCodeActivity extends BaseActivity implements LoginContract
 
     private void confirm(){
         if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
-            loginPresenter.loginIn(deviceId,deviceOsVersion,devicePlatform,mobile,smsCode,invitationCode);
+            loginPresenter.loginIn(deviceId,deviceOsVersion,devicePlatform,mobile,smsCode,invitationCode,deviceName);
         }else {
-            loginPresenter.oneClickLogin(accessCode,deviceId,deviceOsVersion,devicePlatform,invitationCode);
+            loginPresenter.oneClickLogin(accessCode,deviceId,deviceOsVersion,devicePlatform,invitationCode,deviceName);
         }
     }
 

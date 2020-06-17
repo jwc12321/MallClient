@@ -89,6 +89,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     private boolean checkRet;
     private String loginKey ="+3do8fAWK3Tv3vsx/iNPefkUhXOaZOWlrRv8rWUt1muMwnRX/NVlymCa7pvf2fh2qC/XwPQ6fkhNmI+Ke/85gonr7bUw6Tti+4PDbDt8znZtVuhApw2gerNIiAKbeXbF89PBAS/4xAHxPcd1vnZJwfL0YQ9teT74JT+7GT4qsi83hgeS4K8C9MXoqzrhqTWVLdSk7aUAgx/gXrXKQ8PoMDZsGpjuJ02eRyRdaoiGX8fZIWQYq3RlEavsu++RnbULX4OguGRxDn8YDTNvmmdIDA==";
     private Gson gson=new Gson();
+    private String deviceName;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,6 +102,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
 
     private void initView(){
         deviceId = SystemUtil.getAndroidId(this);
+        deviceName=SystemUtil.getDeviceName(this);
         deviceOsVersion = SystemUtil.getSystemVersion();
         devicePlatform = "android";
         TokenManager.saveToken("");
@@ -162,7 +164,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
             showMessage(getString(R.string.choice_login));
             return;
         }
-        loginPresenter.loginIn(deviceId, deviceOsVersion, devicePlatform, phoneNumber, smsCode,"");
+        loginPresenter.loginIn(deviceId, deviceOsVersion, devicePlatform, phoneNumber, smsCode,"",deviceName);
     }
 
     private void sendVcode() {
@@ -233,7 +235,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
                 }
                 if (tokenRet != null && !("600001").equals(tokenRet.getCode())) {
                     loginToken = tokenRet.getToken();
-                    loginPresenter.oneClickLogin(loginToken, deviceId, deviceOsVersion, devicePlatform,"");
+                    loginPresenter.oneClickLogin(loginToken, deviceId, deviceOsVersion, devicePlatform,"",deviceName);
                 }
             }
 

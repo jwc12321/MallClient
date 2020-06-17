@@ -20,6 +20,7 @@ import com.mall.sls.common.unit.AvatarUrlManager;
 import com.mall.sls.common.unit.BindWxManager;
 import com.mall.sls.common.unit.MobileManager;
 import com.mall.sls.common.unit.SystemUtil;
+import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.common.widget.textview.ColdDownButton;
 import com.mall.sls.common.widget.textview.ConventionalEditTextView;
@@ -75,6 +76,7 @@ public class PhoneLoginActivity extends BaseActivity implements LoginContract.Lo
     private String deviceOsVersion;
     private String devicePlatform;
     private WebViewDetailInfo webViewDetailInfo;
+    private String deviceName;
     @Inject
     LoginPresenter loginPresenter;
 
@@ -94,6 +96,7 @@ public class PhoneLoginActivity extends BaseActivity implements LoginContract.Lo
 
     private void initView() {
         deviceId = SystemUtil.getAndroidId(this);
+        deviceName=SystemUtil.getDeviceName(this);
         deviceOsVersion = SystemUtil.getSystemVersion();
         devicePlatform = "android";
     }
@@ -132,6 +135,7 @@ public class PhoneLoginActivity extends BaseActivity implements LoginContract.Lo
                 break;
             case R.id.confirm_bt:
                 confirmBt();
+                TCAgentUnit.setEventId(this,getString(R.string.phone_login));
                 break;
             case R.id.send_vcode:
                 sendVcode();
@@ -165,7 +169,7 @@ public class PhoneLoginActivity extends BaseActivity implements LoginContract.Lo
             showMessage(getString(R.string.choice_login));
             return;
         }
-        loginPresenter.loginIn(deviceId, deviceOsVersion, devicePlatform, phoneNumber, smsCode, "");
+        loginPresenter.loginIn(deviceId, deviceOsVersion, devicePlatform, phoneNumber, smsCode, "",deviceName);
     }
 
     private void sendVcode() {

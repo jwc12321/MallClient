@@ -15,11 +15,15 @@ public class WeiXinLoginRequest {
     //微信code
     @SerializedName("wxCode")
     private String wxCode;
+    //设备名
+    @SerializedName("deviceName")
+    private String deviceName;
 
-    public WeiXinLoginRequest(String deviceId, String deviceOsVersion, String devicePlatform, String wxCode) {
+    public WeiXinLoginRequest(String deviceId, String deviceOsVersion, String devicePlatform, String wxCode,String deviceName) {
         this.deviceId = deviceId;
         this.deviceOsVersion = deviceOsVersion;
         this.devicePlatform = devicePlatform;
         this.wxCode = wxCode;
+        this.deviceName=deviceName;
     }
 }

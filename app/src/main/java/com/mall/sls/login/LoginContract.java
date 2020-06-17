@@ -10,10 +10,10 @@ import com.mall.sls.data.entity.TokenInfo;
 public interface LoginContract {
 
     interface LoginPresenter extends BasePresenter {
-        void loginIn(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code,String invitationCode);
+        void loginIn(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code,String invitationCode,String deviceName);
         void sendVCode(String mobile);
         void getAppUrlInfo();
-        void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode);
+        void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode,String deviceName);
         void getInvitationCode();
     }
 
@@ -25,8 +25,8 @@ public interface LoginContract {
     }
 
     interface WeiXinLoginPresenter extends BasePresenter{
-        void weixinLogin(String deviceId, String deviceOsVersion, String devicePlatform,String wxCode);
-        void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode);
+        void weixinLogin(String deviceId, String deviceOsVersion, String devicePlatform,String wxCode,String deviceName);
+        void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode,String deviceName);
     }
 
     interface WeiXinLoginView extends BaseView<WeiXinLoginPresenter>{
@@ -44,8 +44,8 @@ public interface LoginContract {
 
     interface RegisterLoginPresenter extends BasePresenter{
         void getInvitationCode();
-        void bindSmsCodeLogin(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code, String invitationCode, String unionId);
-        void bindOneClickLogin(String deviceId, String deviceOsVersion, String devicePlatform, String accessCode, String invitationCode, String unionId);
+        void bindSmsCodeLogin(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code, String invitationCode, String unionId,String deviceName);
+        void bindOneClickLogin(String deviceId, String deviceOsVersion, String devicePlatform, String accessCode, String invitationCode, String unionId,String deviceName);
     }
 
     interface RegisterLoginView extends BaseView<RegisterLoginPresenter>{

@@ -12,6 +12,7 @@ import com.mall.sls.mine.ui.InviteFriendsActivity;
 import com.mall.sls.mine.ui.MineFragment;
 import com.mall.sls.mine.ui.MyInvitationActivity;
 import com.mall.sls.mine.ui.MyTeamActivity;
+import com.mall.sls.mine.ui.SettingActivity;
 
 import dagger.Component;
 
@@ -23,4 +24,5 @@ public interface MineComponent {
     void inject(MyTeamActivity myTeamActivity);
     void inject(InviteFriendsActivity inviteFriendsActivity);
     void inject(FeedBackActivity feedBackActivity);
+    void inject(SettingActivity settingActivity);
 }

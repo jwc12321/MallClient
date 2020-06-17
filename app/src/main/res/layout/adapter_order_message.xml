@@ -45,7 +45,9 @@
             tools:text="2019"
             android:layout_below="@id/title"
             android:layout_marginTop="@dimen/dp_19"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:ellipsize="end"
+            android:maxLines="3"/>
 
         <RelativeLayout
             android:id="@+id/goods_rl"

@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ import com.mall.sls.common.unit.LocalCityManager;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.PermissionUtil;
 import com.mall.sls.common.unit.SpikeManager;
+import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.UpdateManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -182,11 +184,6 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         initAdapter();
         homePagePresenter.getHomePageInfo(StaticData.REFLASH_ONE);
         homePagePresenter.getAppUrlInfo();
-//
-//        Map kv = new HashMap();
-//        kv.put("商品类型", "休闲食品");
-//        kv.put("价格","5～10元" );
-//        TCAgent.onEvent(getActivity(), "点击首页推荐位", "第3推广位", kv);
     }
 
     private void initAdapter() {
@@ -196,7 +193,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         jinGangAdapter = new JinGangAdapter(getActivity());
         jinGangAdapter.setOnItemClickListener(this);
         jingangRv.setAdapter(jinGangAdapter);
-        homeCouponAdapter=new HomeCouponAdapter(getActivity());
+        homeCouponAdapter = new HomeCouponAdapter(getActivity());
         couponRv.setAdapter(homeCouponAdapter);
     }
 
@@ -207,7 +204,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             public void onItemClick(XBanner banner, Object model, View view, int position) {
                 if (bannerInfos != null && position < bannerInfos.size()) {
                     bannerInfo = bannerInfos.get(position);
-                    bannerClick();
+                    bannerClick(StaticData.REFLASH_ZERO);
                 }
             }
         });
@@ -224,8 +221,13 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     }
 
     //点击banner
-    private void bannerClick() {
+    private void bannerClick(String type) {
         if (bannerInfo != null) {
+            if (TextUtils.equals(StaticData.REFLASH_ZERO, type)) {
+                TCAgentUnit.setEventIdLabel(getActivity(), getString(R.string.home_banner), bannerInfo.getNativeType());
+            } else {
+                TCAgentUnit.setEventIdLabel(getActivity(), getString(R.string.king_kong), bannerInfo.getNativeType());
+            }
             if (TextUtils.equals(StaticData.REFLASH_ZERO, bannerInfo.getLinkType()) && bannerInfo.isLinkOpen()) {//h5界面
                 WebViewDetailInfo webViewDetailInfo = new WebViewDetailInfo();
                 webViewDetailInfo.setUrl(bannerInfo.getLink());
@@ -255,7 +257,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                     }
                 } else if (TextUtils.equals(StaticData.ADDRESS, nativeType)) {
                     AddressManageActivity.start(getActivity(), StaticData.REFLASH_ONE);
-                }else if(TextUtils.equals(StaticData.PRIZE, nativeType)){
+                } else if (TextUtils.equals(StaticData.PRIZE, nativeType)) {
                     LotteryListActivity.start(getActivity());
                 }
             }
@@ -340,11 +342,13 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
 
     @Override
     public void goOrdinaryGoodsDetails(String goodsId) {
+        TCAgentUnit.setEventId(getActivity(),getString(R.string.home_goods));
         OrdinaryGoodsDetailActivity.start(getActivity(), goodsId);
     }
 
     @Override
     public void goActivityGroupGoods(String goodsId) {
+        TCAgentUnit.setEventId(getActivity(),getString(R.string.home_goods));
         ActivityGroupGoodsActivity.start(getActivity(), goodsId);
     }
 
@@ -381,11 +385,11 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                 }
                 jinGangAdapter.setData(jinGangInfos);
             }
-            homeCouponInfos=homePageInfo.getHomeCouponInfos();
-            if(homeCouponInfos==null||homeCouponInfos.size()==0){
+            homeCouponInfos = homePageInfo.getHomeCouponInfos();
+            if (homeCouponInfos == null || homeCouponInfos.size() == 0) {
                 couponRv.setVisibility(View.GONE);
                 receiveIv.setVisibility(View.GONE);
-            }else {
+            } else {
                 couponRv.setVisibility(View.VISIBLE);
                 homeCouponAdapter.setData(homeCouponInfos);
                 receiveIv.setVisibility(View.VISIBLE);
@@ -434,7 +438,8 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             updateConfig.setAlwaysShowDownLoadDialog(!appUrlInfo.isForceUpdate());
             updateConfig.setNotifyImgRes(R.mipmap.icon_update);
             UiConfig uiConfig = new UiConfig();
-            uiConfig.setUiType(UiType.PLENTIFUL);
+            uiConfig.setUiType(UiType.CUSTOM);
+            uiConfig.setCustomLayoutId(R.layout.view_update_dialog_custom);
             uiConfig.setUpdateLogoImgRes(R.mipmap.icon_update);
             UpdateAppUtils
                     .getInstance()
@@ -462,7 +467,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     @Override
     public void goType(BannerInfo bannerInfo) {
         this.bannerInfo = bannerInfo;
-        bannerClick();
+        bannerClick(StaticData.REFLASH_ONE);
     }
 
 
@@ -494,7 +499,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             case R.id.receive_iv:
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, BindWxManager.getBindWx())) {
                     wxBind();
-                }else {
+                } else {
                     homePagePresenter.couponReceive(StaticData.REFLASH_ONE);
                 }
                 break;
@@ -551,5 +556,15 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint()&&getActivity()!=null&&!getActivity().isDestroyed()) {
+            TCAgentUnit.pageStart(getActivity(), getString(R.string.home));
+        } else if(getActivity()!=null&&!getActivity().isDestroyed()){
+            TCAgentUnit.pageEnd(getActivity(), getString(R.string.home));
+        }
     }
 }

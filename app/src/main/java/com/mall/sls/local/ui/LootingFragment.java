@@ -16,6 +16,7 @@ import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
 import com.mall.sls.common.ErrorCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.data.RemoteDataException;
 import com.mall.sls.data.entity.LocalTeam;
 import com.mall.sls.homepage.adapter.GoodsItemAdapter;
@@ -123,11 +124,13 @@ public class LootingFragment extends BaseFragment implements GoodsItemAdapter.On
 
     @Override
     public void goOrdinaryGoodsDetails(String goodsId) {
+        TCAgentUnit.setEventId(getActivity(),getString(R.string.fight_together_goods));
         OrdinaryGoodsDetailActivity.start(getActivity(), goodsId);
     }
 
     @Override
     public void goActivityGroupGoods(String goodsId) {
+        TCAgentUnit.setEventId(getActivity(),getString(R.string.fight_together_goods));
         ActivityGroupGoodsActivity.start(getActivity(), goodsId);
     }
 

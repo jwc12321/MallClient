@@ -36,6 +36,7 @@ import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
+import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DetailTearDownView;
@@ -272,9 +273,11 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 goSelectSpecReturn(StaticData.REFLASH_ONE);
                 break;
             case R.id.confirm_bt://发起拼单
+                TCAgentUnit.setEventId(this,getString(R.string.event_purchase_details));
                 initiateBill();
                 break;
             case R.id.share://分享
+                TCAgentUnit.setEventId(this,getString(R.string.goods_details_share));
                 if (!PayTypeInstalledUtils.isWeixinAvilible(ActivityGoodsDetailActivity.this)) {
                     showMessage(getString(R.string.install_weixin));
                     return;
@@ -509,6 +512,18 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         } else {    //滑动到banner下面设置普通颜色
             titleRel.setBackgroundColor(Color.argb((int) 255, 255, 255, 255));
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TCAgentUnit.pageStart(this,getString(R.string.goods_details));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        TCAgentUnit.pageEnd(this,getString(R.string.goods_details));
     }
 
 }

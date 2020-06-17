@@ -21,6 +21,7 @@ import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
+import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -131,11 +132,13 @@ public class WXShareBackActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.home_iv://首页
+                TCAgentUnit.setEventId(this,getString(R.string.pay_success_home));
                 MainStartManager.saveMainStart(StaticData.REFLASH_ONE);
                 MainFrameActivity.start(this);
                 finish();
                 break;
             case R.id.weixin_iv://微信分享
+                TCAgentUnit.setEventId(this,getString(R.string.pay_success_share));
                 if (!PayTypeInstalledUtils.isWeixinAvilible(WXShareBackActivity.this)) {
                     showMessage(getString(R.string.install_weixin));
                     return;
@@ -149,6 +152,7 @@ public class WXShareBackActivity extends BaseActivity {
                 break;
             case R.id.order_iv:
             case R.id.look_order:
+                TCAgentUnit.setEventId(this,getString(R.string.pay_success_goods_details));
                 GoodsOrderDetailsActivity.start(this, goodsOrderId);
                 finish();
                 break;

@@ -323,7 +323,7 @@
 <string name="get_times">如何获得抽奖机会？</string>
     <string name="invitation">邀请拼单</string>
     <string name="yuan_draw">元抽奖</string>
-    <string name="new_version_update">版本更新</string>
+    <string name="new_version_update">发现新版本</string>
     <string name="home_look_more">查看更多》</string>
     <string name="receive_success">领取成功</string>
     <string name="where_money_goes">钱款去向</string>
@@ -333,4 +333,26 @@
     <string name="refund_processing">退款处理中</string>
     <string name="successful_account">到账成功</string>
 
+    <!--mai_dian-->
+    <string name="home_banner">首页banner</string>
+    <string name="king_kong">金刚区</string>
+    <string name="home_goods">首页商品</string>
+    <string name="fight_together_goods">拼团商品列表</string>
+    <string name="my_coupon">我的优惠卷</string>
+    <string name="tao_bao_order">淘宝订单</string>
+    <string name="my_fans">我的粉丝</string>
+    <string name="mission_center">任务中心</string>
+    <string name="address_management">地址管理</string>
+    <string name="initiate_bill_buy">发起拼单购买</string>
+    <string name="buy_together">拼团购买</string>
+    <string name="goods_details">商品详情页</string>
+    <string name="event_page">活动页</string>
+    <string name="goods_details_share">商品详情页分享</string>
+    <string name="event_purchase_event">活动团购买-活动页</string>
+    <string name="event_purchase_details">活动团购买-详情页</string>
+    <string name="submit_order_page">提交订单页</string>
+    <string name="payment">付款</string>
+    <string name="pay_success_home">付款成功页回到首页</string>
+    <string name="pay_success_share">付款成功页分享</string>
+    <string name="pay_success_goods_details">付款成功页订单详情</string>
 </resources>

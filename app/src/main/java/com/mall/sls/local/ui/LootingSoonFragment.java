@@ -17,6 +17,7 @@ import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
 import com.mall.sls.common.ErrorCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.data.RemoteDataException;
 import com.mall.sls.data.entity.GoodsItemInfo;
 import com.mall.sls.data.entity.LocalTeam;
@@ -186,6 +187,7 @@ public class LootingSoonFragment extends BaseFragment implements LootingSoonAdap
 
     @Override
     public void goActivityGoodsDetail(String goodsId) {
+        TCAgentUnit.setEventId(getActivity(),getString(R.string.fight_together_goods));
         ActivityGoodsDetailActivity.start(getActivity(), goodsId);
     }
 

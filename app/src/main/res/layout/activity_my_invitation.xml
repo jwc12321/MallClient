@@ -18,7 +18,7 @@
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/title"
             style="@style/title_text_style"
-            android:text="@string/my_invitation" />
+            android:text="@string/my_fans" />
     </RelativeLayout>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"

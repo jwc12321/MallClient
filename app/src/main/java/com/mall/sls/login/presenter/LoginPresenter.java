@@ -68,8 +68,8 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
     }
 
     @Override
-    public void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode) {
-        OneClickLoginRequest request=new OneClickLoginRequest(accessCode,deviceId,deviceOsVersion,devicePlatform,invitationCode);
+    public void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode,String deviceName) {
+        OneClickLoginRequest request=new OneClickLoginRequest(accessCode,deviceId,deviceOsVersion,devicePlatform,invitationCode,deviceName);
         String sign= SignUnit.signPost(RequestUrl.ONE_CLICK_LOGIN_URL,gson.toJson(request));
         Disposable disposable = restApiService.oneClickLogin(sign,request)
                 .flatMap(new RxRemoteDataParse<TokenInfo>())
@@ -89,9 +89,9 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
     }
 
     @Override
-    public void loginIn(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code,String invitationCode) {
+    public void loginIn(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code,String invitationCode,String deviceName) {
         loginView.showLoading(StaticData.PROCESSING);
-        LoginRequest request=new LoginRequest(deviceId,deviceOsVersion,devicePlatform,mobile,code,invitationCode);
+        LoginRequest request=new LoginRequest(deviceId,deviceOsVersion,devicePlatform,mobile,code,invitationCode,deviceName);
         String sign= SignUnit.signPost(RequestUrl.LOGIN_IN_URL,gson.toJson(request));
         Disposable disposable = restApiService.loginIn(sign,request)
                 .flatMap(new RxRemoteDataParse<TokenInfo>())

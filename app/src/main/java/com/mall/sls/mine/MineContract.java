@@ -2,6 +2,7 @@ package com.mall.sls.mine;
 
 import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
+import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.InviteInfo;
 import com.mall.sls.data.entity.MineInfo;
@@ -16,50 +17,64 @@ import java.util.List;
  * 描述：
  */
 public interface MineContract {
-    interface MineInfoPresenter extends BasePresenter{
+    interface MineInfoPresenter extends BasePresenter {
         void getMineInfo();
+
         void getVipAmountInfo();
+
         void getInvitationCodeInfo();
     }
 
-    interface MineInfoView extends BaseView<MineInfoPresenter>{
+    interface MineInfoView extends BaseView<MineInfoPresenter> {
         void renderMineInfo(MineInfo mineInfo);
+
         void renderVipAmountInfo(VipAmountInfo vipAmountInfo);
+
         void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo);
     }
 
-    interface MyInvitePresenter extends BasePresenter{
+    interface MyInvitePresenter extends BasePresenter {
         void getMyInvite();
     }
 
-    interface MyInviteView extends BaseView<MyInvitePresenter>{
+    interface MyInviteView extends BaseView<MyInvitePresenter> {
         void renderMyInvite(List<InviteInfo> inviteInfos);
     }
 
-    interface MyTeamInfoPresenter extends BasePresenter{
+    interface MyTeamInfoPresenter extends BasePresenter {
         void getMyTeamInfo(String refreshType);
+
         void getMoreMyTeamInfo();
     }
 
-    interface MyTeamInfoView extends BaseView<MyTeamInfoPresenter>{
+    interface MyTeamInfoView extends BaseView<MyTeamInfoPresenter> {
         void renderMyTeamInfo(TeamInfo teamInfo);
+
         void renderMoreMyTeamInfo(TeamInfo teamInfo);
     }
 
-    interface ShareInfoPresenter extends BasePresenter{
+    interface ShareInfoPresenter extends BasePresenter {
         void getShareInfo();
     }
 
-    interface ShareInfoView extends BaseView<ShareInfoPresenter>{
+    interface ShareInfoView extends BaseView<ShareInfoPresenter> {
         void renderShareInfo(ShareInfo shareInfo);
     }
 
-    interface FeedBackPresenter extends BasePresenter{
+    interface FeedBackPresenter extends BasePresenter {
         void addFeedBack(String description);
     }
 
-    interface FeedBackView extends BaseView<FeedBackPresenter>{
+    interface FeedBackView extends BaseView<FeedBackPresenter> {
         void renderAddFeedBack(Boolean isBoolean);
+    }
+
+    interface SettingPresenter extends BasePresenter {
+        void getAppUrlInfo();
+    }
+
+    interface SettingView extends BaseView<SettingPresenter> {
+        void renderAppUrlInfo(AppUrlInfo appUrlInfo);
     }
 
 
