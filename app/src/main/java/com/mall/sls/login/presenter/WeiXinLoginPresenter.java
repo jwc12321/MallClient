@@ -2,10 +2,12 @@ package com.mall.sls.login.presenter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mall.sls.BuildConfig;
 import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
+import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
@@ -82,6 +84,30 @@ public class WeiXinLoginPresenter implements LoginContract.WeiXinLoginPresenter 
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        weiXinLoginView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getAppUrlInfo() {
+        weiXinLoginView.showLoading(StaticData.LOADING);
+        String queryString="version="+ BuildConfig.VERSION_NAME;
+        String sign=SignUnit.signGet(RequestUrl.APP_URL_INFO_URL,queryString);
+        Disposable disposable = restApiService.getAppUrlInfo(sign,BuildConfig.VERSION_NAME)
+                .flatMap(new RxRemoteDataParse<AppUrlInfo>())
+                .compose(new RxSchedulerTransformer<AppUrlInfo>())
+                .subscribe(new Consumer<AppUrlInfo>() {
+                    @Override
+                    public void accept(AppUrlInfo appUrlInfo) throws Exception {
+                        weiXinLoginView.dismissLoading();
+                        weiXinLoginView.renderAppUrlInfo(appUrlInfo);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        weiXinLoginView.dismissLoading();
                         weiXinLoginView.showError(throwable);
                     }
                 });

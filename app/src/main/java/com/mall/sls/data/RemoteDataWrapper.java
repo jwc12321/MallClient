@@ -1,7 +1,6 @@
 package com.mall.sls.data;
 
 
-import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
 

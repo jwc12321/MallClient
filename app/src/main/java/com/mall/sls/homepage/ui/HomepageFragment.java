@@ -268,8 +268,8 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
         screenWidth = dm.widthPixels;
-        screenWidthBg = new BigDecimal(dm.widthPixels - ConvertDpAndPx.Dp2Px(getActivity(), 30));
-        screenHeightBg = screenWidthBg.multiply(new BigDecimal("1")).divide(new BigDecimal("3"), 0, BigDecimal.ROUND_DOWN);
+        screenWidthBg = new BigDecimal(dm.widthPixels - ConvertDpAndPx.Dp2Px(getActivity(), 20));
+        screenHeightBg = screenWidthBg.multiply(new BigDecimal("140")).divide(new BigDecimal("355"), 0, BigDecimal.ROUND_DOWN);
         screenHeight = Integer.parseInt(screenHeightBg.toString());
         LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) banner.getLayoutParams(); //取控件textView当前的布局参数
         linearParams.height = screenHeight;// 控件的高强制

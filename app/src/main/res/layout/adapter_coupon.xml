@@ -27,8 +27,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp_12"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dp_6">
 
                     <com.mall.sls.common.widget.textview.ConventionalTextView
                         style="@style/size15_color_back1_text_style"
@@ -48,6 +48,7 @@
                     style="@style/size11_color_app3_text_style"
                     android:layout_gravity="center_horizontal"
                     tools:text="满60元可使用" />
+
             </LinearLayout>
 
             <View
@@ -65,14 +66,23 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dp_15"
                 android:src="@drawable/coupon_type_select"
-                android:visibility="visible" />
+                android:visibility="gone" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/used_bt"
+                style="@style/coupon_use_style"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_6"
+                android:text="@string/to_use"
+                android:visibility="gone" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_1"
-                android:layout_marginRight="@dimen/dp_8"
-                android:layout_toLeftOf="@id/status_iv"
+                android:layout_marginRight="@dimen/dp_75"
                 android:layout_toRightOf="@id/amount_ll"
                 android:orientation="vertical">
 
@@ -96,68 +106,68 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <View
-            style="@style/dotted_line_style"/>
+        <View style="@style/dotted_line_style" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_3"
-            android:orientation="vertical"
-            android:layout_marginBottom="@dimen/dp_3">
+            android:layout_marginBottom="@dimen/dp_3"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/up_down_rl"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_25">
+                android:layout_height="@dimen/dp_21">
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
-                    android:id="@+id/used_bt"
-                    style="@style/coupon_uesd_bt_style"
-                    android:text="@string/to_use" />
-                <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/use_tip"
-                   style="@style/size11_color_app3_text_style"
-                    tools:text="仅用于指定商品"
+                    style="@style/size11_color_app3_text_style"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dp_15"/>
+                    android:layout_marginLeft="@dimen/dp_15"
+                    tools:text="仅用于指定商品" />
+
                 <ImageView
                     android:id="@+id/down_iv"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/icon_down_arrow"
                     android:layout_toRightOf="@id/use_tip"
                     android:paddingLeft="@dimen/dp_10"
-                    android:paddingRight="@dimen/dp_10"/>
+                    android:paddingRight="@dimen/dp_10"
+                    android:src="@mipmap/icon_down_arrow" />
+
                 <ImageView
                     android:id="@+id/up_iv"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/icon_up_arrow"
                     android:layout_centerHorizontal="true"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingRight="@dimen/dp_10"
-                    android:visibility="gone"/>
+                    android:src="@mipmap/icon_up_arrow"
+                    android:visibility="gone" />
             </RelativeLayout>
+
             <com.mall.sls.common.widget.textview.ConventionalTextView
                 android:id="@+id/limit"
                 style="@style/size11_color_app2_text_style"
-                tools:text="限2020-05-12至2020-05-13 \n限水果类产品使用"
                 android:layout_marginLeft="@dimen/dp_15"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                tools:text="限2020-05-12至2020-05-13 \n限水果类产品使用" />
         </LinearLayout>
     </LinearLayout>
+
     <View
         android:layout_width="@dimen/dp_10"
         android:layout_height="@dimen/dp_10"
-        android:background="@drawable/common_five_back_six_bg"
+        android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_68"
-        android:layout_marginLeft="@dimen/dp_10"/>
+        android:background="@drawable/common_five_back_six_bg" />
+
     <View
         android:layout_width="@dimen/dp_10"
         android:layout_height="@dimen/dp_10"
-        android:background="@drawable/common_five_back_six_bg"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/dp_68"
         android:layout_marginRight="@dimen/dp_10"
-        android:layout_alignParentRight="true"/>
+        android:background="@drawable/common_five_back_six_bg" />
 </RelativeLayout>

@@ -116,16 +116,16 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
             name.setText(couponInfo.getName());
             endTime.setText(couponInfo.getEndTime() + "到期");
             if (TextUtils.equals(StaticData.REFLASH_ZERO, couponType)) {
-                statusIv.setVisibility(View.INVISIBLE);
-                usedBt.setEnabled(true);
+                statusIv.setVisibility(View.GONE);
+                usedBt.setVisibility(View.VISIBLE);
             } else if (TextUtils.equals(StaticData.REFLASH_ONE, couponType)) {
                 statusIv.setVisibility(View.VISIBLE);
                 statusIv.setSelected(true);
-                usedBt.setEnabled(false);
+                usedBt.setVisibility(View.GONE);
             } else {
                 statusIv.setVisibility(View.VISIBLE);
                 statusIv.setSelected(false);
-                usedBt.setEnabled(false);
+                usedBt.setVisibility(View.GONE);
             }
             StringBuilder stringBuilder = new StringBuilder();
             if (!TextUtils.isEmpty(couponInfo.getStartTime()) && !TextUtils.isEmpty(couponInfo.getEndTime())) {

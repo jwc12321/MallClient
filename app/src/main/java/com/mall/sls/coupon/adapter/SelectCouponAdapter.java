@@ -94,7 +94,7 @@ public class SelectCouponAdapter extends RecyclerView.Adapter<SelectCouponAdapte
         @BindView(R.id.name)
         MediumThickTextView name;
         @BindView(R.id.endTime)
-        MediumThickTextView endTime;
+        ConventionalTextView endTime;
         @BindView(R.id.use_tip)
         ConventionalTextView useTip;
         @BindView(R.id.down_iv)

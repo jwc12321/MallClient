@@ -28,8 +28,10 @@ import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.SystemUtil;
 import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.TokenManager;
+import com.mall.sls.common.unit.UpdateManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.entity.WebViewDetailInfo;
 import com.mall.sls.data.event.WXLoginEvent;
@@ -59,6 +61,11 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import constant.UiType;
+import listener.OnBtnClickListener;
+import model.UiConfig;
+import model.UpdateConfig;
+import update.UpdateAppUtils;
 
 /**
  * @author jwc on 2020/5/21.
@@ -120,6 +127,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
         ButterKnife.bind(this);
         setHeight(null, title, null);
         initView();
+        weiXinLoginPresenter.getAppUrlInfo();
     }
 
     private void initView() {
@@ -266,6 +274,43 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
             } else {
                 LoginFillCodeActivity.start(this,loginToken,"","",StaticData.REFLASH_ONE);
             }
+        }
+    }
+
+    @Override
+    public void renderAppUrlInfo(AppUrlInfo appUrlInfo) {
+        updateApp(appUrlInfo);
+    }
+
+    private void updateApp(AppUrlInfo appUrlInfo) {
+        if (appUrlInfo != null && !appUrlInfo.isIfLatest() && !TextUtils.isEmpty(appUrlInfo.getUrl())) {
+            if (!TextUtils.isEmpty(UpdateManager.getUpdate()) && !appUrlInfo.isForceUpdate()) {
+                return;
+            }
+            UpdateConfig updateConfig = new UpdateConfig();
+            updateConfig.setCheckWifi(true);
+            updateConfig.setForce(appUrlInfo.isForceUpdate());
+            updateConfig.setAlwaysShowDownLoadDialog(!appUrlInfo.isForceUpdate());
+            updateConfig.setNotifyImgRes(R.mipmap.icon_update);
+            UiConfig uiConfig = new UiConfig();
+            uiConfig.setUiType(UiType.CUSTOM);
+            uiConfig.setCustomLayoutId(R.layout.view_update_dialog_custom);
+            uiConfig.setUpdateLogoImgRes(R.mipmap.icon_update);
+            UpdateAppUtils
+                    .getInstance()
+                    .apkUrl(appUrlInfo.getUrl())
+                    .updateTitle(getString(R.string.new_version_update))
+                    .updateContent(appUrlInfo.getMessage())
+                    .uiConfig(uiConfig)
+                    .updateConfig(updateConfig)
+                    .setCancelBtnClickListener(new OnBtnClickListener() {
+                        @Override
+                        public boolean onClick() {
+                            UpdateManager.saveUpdate(StaticData.REFLASH_ONE);
+                            return false;
+                        }
+                    })
+                    .update();
         }
     }
 

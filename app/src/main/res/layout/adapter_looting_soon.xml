@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/item_rl"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_130"
+        android:layout_height="@dimen/dp_120"
         android:layout_marginBottom="@dimen/dp_15"
         android:background="@drawable/common_four_app_one_bg">
 
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_12"
-            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_15"
             android:layout_toRightOf="@id/goods_iv"
             android:gravity="center_vertical"
@@ -67,7 +67,7 @@
             android:layout_toRightOf="@id/goods_iv"
             android:layout_marginLeft="@dimen/dp_12"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/dp_14">
+            android:layout_marginBottom="@dimen/dp_9">
 
             <LinearLayout
                 android:id="@+id/current_price_rl"

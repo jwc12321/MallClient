@@ -63,7 +63,9 @@ public class SystemUtil {
     }
 
     public static String getDeviceName(Context context) {
-        return Settings.Global.getString(context.getContentResolver(), Settings.Global.DEVICE_NAME);
+//        return Settings.Global.getString(context.getContentResolver(), Settings.Global.DEVICE_NAME);
+        String s=android.os.Build.BRAND+"-"+ android.os.Build.MODEL;
+        return s;
     }
 
     /**

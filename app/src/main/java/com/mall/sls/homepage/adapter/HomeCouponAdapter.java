@@ -49,11 +49,11 @@ public class HomeCouponAdapter extends RecyclerView.Adapter<HomeCouponAdapter.Ho
         HomeCouponInfo homeCouponInfo = homeCouponInfos.get(holder.getAdapterPosition());
         holder.bindData(homeCouponInfo);
         if(position==0){
-            MarginsUnit.setMargins(holder.itemRl, ConvertDpAndPx.Dp2Px(context,15),0,ConvertDpAndPx.Dp2Px(context,4),0);
+            MarginsUnit.setMargins(holder.itemRl, ConvertDpAndPx.Dp2Px(context,10),0,ConvertDpAndPx.Dp2Px(context,3),0);
         }else if(position==homeCouponInfos.size()-1){
-            MarginsUnit.setMargins(holder.itemRl,ConvertDpAndPx.Dp2Px(context,4),0,ConvertDpAndPx.Dp2Px(context,15),0);
+            MarginsUnit.setMargins(holder.itemRl,ConvertDpAndPx.Dp2Px(context,3),0,ConvertDpAndPx.Dp2Px(context,10),0);
         }else {
-            MarginsUnit.setMargins(holder.itemRl,ConvertDpAndPx.Dp2Px(context,4),0,ConvertDpAndPx.Dp2Px(context,4),0);
+            MarginsUnit.setMargins(holder.itemRl,ConvertDpAndPx.Dp2Px(context,3),0,ConvertDpAndPx.Dp2Px(context,3),0);
         }
 
     }

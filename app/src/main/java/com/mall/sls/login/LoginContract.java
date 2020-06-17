@@ -27,11 +27,13 @@ public interface LoginContract {
     interface WeiXinLoginPresenter extends BasePresenter{
         void weixinLogin(String deviceId, String deviceOsVersion, String devicePlatform,String wxCode,String deviceName);
         void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode,String deviceName);
+        void getAppUrlInfo();
     }
 
     interface WeiXinLoginView extends BaseView<WeiXinLoginPresenter>{
         void renderWeixinLogin(TokenInfo tokenInfo);
         void renderLoginIn(TokenInfo tokenInfo);
+        void renderAppUrlInfo(AppUrlInfo appUrlInfo);
     }
 
     interface BindMobilePresenter extends BasePresenter{

@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="@dimen/dp_49"
-        android:layout_height="@dimen/dp_49"
+        android:layout_width="@dimen/dp_42"
+        android:layout_height="@dimen/dp_42"
         tools:src="@mipmap/icon_default_goods"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dp_10"/>
@@ -17,8 +17,8 @@
     <com.mall.sls.common.widget.textview.ConventionalTextView
         android:id="@+id/name"
         style="@style/size13_color_app3_text_style"
-        android:layout_marginTop="@dimen/dp_9"
+        android:layout_marginTop="@dimen/dp_4"
         tools:text="猜你喜欢"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/dp_8"/>
+        android:layout_marginBottom="@dimen/dp_10"/>
 </LinearLayout>
