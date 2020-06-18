@@ -23,6 +23,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.tendcloud.tenddata.TCAgent;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -83,6 +84,7 @@ public class MainApplication extends MultiDexApplication {
         UMShareAPI.get(this);//初始化sdk
         String channelId = WalleChannelReader.getChannel(this.getApplicationContext());
         UMConfigure.init(this, "5ed46e8cdbc2ec08279bd3d7", channelId, UMConfigure.DEVICE_TYPE_PHONE, "");
+        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
         disableAPIDialog();
         PushManager.getInstance().initialize(this);
         PushManager.getInstance().setDebugLogger(this, new IUserLoggerInterface() {
