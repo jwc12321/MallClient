@@ -148,5 +148,6 @@ public class StaticData {
     public static final String PAY_TYPE="payType";//支付方式
     public static final String REFUND_TIME="refundTime";//退款处理时间
     public static final String ARRIVAL_TIME="arrivalTime";//到账时间
+    public static final String LANDING_PAGE_URL="landingPageUrl";//落地页url
 
 }

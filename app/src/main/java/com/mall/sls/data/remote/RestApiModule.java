@@ -10,6 +10,7 @@ import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.mall.sls.BuildConfig;
 import com.mall.sls.common.unit.AreaCodeManager;
 import com.mall.sls.common.unit.FormatUtil;
+import com.mall.sls.common.unit.TimeManager;
 import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.data.EntitySerializer;
 import com.mall.sls.data.GsonSerializer;
@@ -118,7 +119,7 @@ public class RestApiModule {
                 Request original = chain.request();
                 Request request = original.newBuilder()
                         .header("Authorization", TokenManager.getToken() + "")
-                        .header("X-Hc-Timestamp", FormatUtil.timeSecond())
+                        .header("X-Hc-Timestamp", TimeManager.getTime())
 //                        .header("areaCode", AreaCodeManager.getAreaCode()+"")
                         .build();
                 return chain.proceed(request);

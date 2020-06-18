@@ -368,6 +368,12 @@
         <activity android:name=".order.ui.RefundProgressActivity"
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"/>
+        <activity android:name=".mine.ui.AboutAppActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
+        <activity android:name=".webview.ui.LandingPageActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

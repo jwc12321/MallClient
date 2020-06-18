@@ -60,6 +60,7 @@ import com.mall.sls.homepage.presenter.HomePagePresenter;
 import com.mall.sls.lottery.ui.LotteryListActivity;
 import com.mall.sls.message.ui.MessageTypeActivity;
 import com.mall.sls.mine.ui.InviteFriendsActivity;
+import com.mall.sls.webview.ui.LandingPageActivity;
 import com.mall.sls.webview.ui.WebViewActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -150,6 +151,8 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     // 微信登录
     private static IWXAPI WXapi;
 
+    private boolean isFirstAdd=true;
+
     public static HomepageFragment newInstance() {
         HomepageFragment fragment = new HomepageFragment();
         return fragment;
@@ -229,9 +232,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                 TCAgentUnit.setEventIdLabel(getActivity(), getString(R.string.king_kong), bannerInfo.getNativeType());
             }
             if (TextUtils.equals(StaticData.REFLASH_ZERO, bannerInfo.getLinkType()) && bannerInfo.isLinkOpen()) {//h5界面
-                WebViewDetailInfo webViewDetailInfo = new WebViewDetailInfo();
-                webViewDetailInfo.setUrl(bannerInfo.getLink());
-                WebViewActivity.start(getActivity(), webViewDetailInfo);
+                LandingPageActivity.start(getActivity(),bannerInfo.getLink());
             } else if (TextUtils.equals(StaticData.REFLASH_ONE, bannerInfo.getLinkType()) && bannerInfo.isLinkOpen()) {
                 nativeType = bannerInfo.getNativeType();
                 if (TextUtils.equals(StaticData.GOODS_INFO, nativeType)) {//商品详情

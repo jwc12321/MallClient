@@ -13,8 +13,9 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 public class SignUnit {
-    private static String key="123456";
-    public static String Hmacsha256( String key,String data) throws Exception {
+    private static String key = "123456";
+
+    public static String Hmacsha256(String key, String data) throws Exception {
 
         Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
 
@@ -35,36 +36,46 @@ public class SignUnit {
         return sb.toString();
     }
 
-    public static String signPost(String method,String body)  {
-        String postSignature;
-        if(!TextUtils.equals("null",body)){
-           postSignature= "POST"+ "\n" +method+ "\n" + "null"+"\n" + DigestUtils.md5Hex(body)+ "\n" + FormatUtil.timeSecond();
-        }else {
-            postSignature ="POST"+ "\n" +method+ "\n"+ "null"+"\n" +body+ "\n" + FormatUtil.timeSecond();
+    public static String signPost(String method, String body) {
+        if (TextUtils.isEmpty(TimeManager.getTime())) {
+            TimeManager.saveTime(FormatUtil.timeSecond());
+        } else if (Long.parseLong(FormatUtil.timeSecond()) - Long.parseLong(TimeManager.getTime()) > 2) {
+            TimeManager.saveTime(FormatUtil.timeSecond());
         }
-        Log.e("111","okhttp"+postSignature);
+        String postSignature;
+        if (!TextUtils.equals("null", body)) {
+            postSignature = "POST" + "\n" + method + "\n" + "null" + "\n" + DigestUtils.md5Hex(body) + "\n" + TimeManager.getTime();
+        } else {
+            postSignature = "POST" + "\n" + method + "\n" + "null" + "\n" + body + "\n" + TimeManager.getTime();
+        }
+        Log.e("111", "okhttp" + postSignature);
         return new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmacHex(postSignature);
     }
 
-    public static String signGet(String method,String queryString )  {
-        String postSignature ="GET"+ "\n" +method+ "\n" +queryString+ "\n" + "null"+"\n"+ FormatUtil.timeSecond();
-        Log.e("111","okhttp"+postSignature);
+    public static String signGet(String method, String queryString) {
+        if (TextUtils.isEmpty(TimeManager.getTime())) {
+            TimeManager.saveTime(FormatUtil.timeSecond());
+        } else if (Long.parseLong(FormatUtil.timeSecond()) - Long.parseLong(TimeManager.getTime()) > 2) {
+            TimeManager.saveTime(FormatUtil.timeSecond());
+        }
+        String postSignature = "GET" + "\n" + method + "\n" + queryString + "\n" + "null" + "\n" + TimeManager.getTime();
+        Log.e("111", "okhttp" + postSignature);
         return new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmacHex(postSignature);
     }
 
-    private static String md5hex(String body){
-        String hexStr="";
+    private static String md5hex(String body) {
+        String hexStr = "";
         try {
-            MessageDigest md5=MessageDigest.getInstance("MD5");
-            byte[] digest=md5.digest(body.getBytes("utf-8"));
-            hexStr=bytesToHexString(digest);
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            byte[] digest = md5.digest(body.getBytes("utf-8"));
+            hexStr = bytesToHexString(digest);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return hexStr;
     }
 
-    public  static String bytesToHexString(byte... src) {
+    public static String bytesToHexString(byte... src) {
         StringBuilder stringBuilder = new StringBuilder();
         if (src == null || src.length <= 0) {
             return null;

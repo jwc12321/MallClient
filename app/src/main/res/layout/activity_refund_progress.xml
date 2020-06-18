@@ -70,6 +70,7 @@
                         style="@style/refund_progress_iv_style" />
 
                     <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/refund_processing_tv"
                         style="@style/refund_progress_content_style"
                         android:text="@string/refund_processing" />
 
@@ -91,6 +92,7 @@
                         style="@style/refund_progress_iv_style" />
 
                     <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/successful_tv"
                         style="@style/refund_progress_content_style"
                         android:text="@string/successful_account" />
 

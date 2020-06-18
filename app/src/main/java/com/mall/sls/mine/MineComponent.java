@@ -7,6 +7,7 @@ package com.mall.sls.mine;
 
 import com.mall.sls.ActivityScope;
 import com.mall.sls.ApplicationComponent;
+import com.mall.sls.mine.ui.AboutAppActivity;
 import com.mall.sls.mine.ui.FeedBackActivity;
 import com.mall.sls.mine.ui.InviteFriendsActivity;
 import com.mall.sls.mine.ui.MineFragment;
@@ -25,4 +26,5 @@ public interface MineComponent {
     void inject(InviteFriendsActivity inviteFriendsActivity);
     void inject(FeedBackActivity feedBackActivity);
     void inject(SettingActivity settingActivity);
+    void inject(AboutAppActivity aboutAppActivity);
 }

@@ -25,6 +25,7 @@ import com.mall.sls.homepage.ui.OrdinaryGoodsDetailActivity;
 import com.mall.sls.local.DaggerLocalComponent;
 import com.mall.sls.local.LocalContract;
 import com.mall.sls.local.LocalModule;
+import com.mall.sls.local.adapter.LootingAdapter;
 import com.mall.sls.local.presenter.LocalTeamPresenter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -39,7 +40,7 @@ import butterknife.ButterKnife;
  * @author jwc on 2020/5/11.
  * 描述：正在疯抢
  */
-public class LootingFragment extends BaseFragment implements GoodsItemAdapter.OnItemClickListener, LocalContract.LocalTeamView {
+public class LootingFragment extends BaseFragment implements LootingAdapter.OnItemClickListener, LocalContract.LocalTeamView {
 
 
     @BindView(R.id.record_rv)
@@ -54,7 +55,7 @@ public class LootingFragment extends BaseFragment implements GoodsItemAdapter.On
     @BindView(R.id.no_record_tv)
     TextView noRecordTv;
 
-    private GoodsItemAdapter goodsItemAdapter;
+    private LootingAdapter lootingAdapter;
 
     public static LootingFragment newInstance() {
         LootingFragment fragment = new LootingFragment();
@@ -81,9 +82,9 @@ public class LootingFragment extends BaseFragment implements GoodsItemAdapter.On
     }
 
     private void initAdapter() {
-        goodsItemAdapter = new GoodsItemAdapter(getActivity());
-        goodsItemAdapter.setOnItemClickListener(this);
-        recordRv.setAdapter(goodsItemAdapter);
+        lootingAdapter = new LootingAdapter(getActivity());
+        lootingAdapter.setOnItemClickListener(this);
+        recordRv.setAdapter(lootingAdapter);
     }
 
 
@@ -146,7 +147,7 @@ public class LootingFragment extends BaseFragment implements GoodsItemAdapter.On
                 } else {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
-                goodsItemAdapter.setData(localTeam.getGoodsItemInfos());
+                lootingAdapter.setData(localTeam.getGoodsItemInfos());
             } else {
                 recordRv.setVisibility(View.GONE);
                 noRecordTv.setText(getString(R.string.no_data));
@@ -163,7 +164,7 @@ public class LootingFragment extends BaseFragment implements GoodsItemAdapter.On
             if (localTeam.getGoodsItemInfos().size() != Integer.parseInt(StaticData.TEN_LIST_SIZE)) {
                 refreshLayout.finishLoadMoreWithNoMoreData();
             }
-            goodsItemAdapter.addMore(localTeam.getGoodsItemInfos());
+            lootingAdapter.addMore(localTeam.getGoodsItemInfos());
         }
     }
 

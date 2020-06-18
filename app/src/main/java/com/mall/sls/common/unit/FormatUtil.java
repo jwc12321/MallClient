@@ -221,8 +221,8 @@ public class FormatUtil {
 
     public static String timeSecond() {
         long millisecond = System.currentTimeMillis();
-        long second = millisecond / 10000;
-        return second + "";
+        long second = millisecond / 1000;
+        return String.valueOf(second);
     }
 
     /**

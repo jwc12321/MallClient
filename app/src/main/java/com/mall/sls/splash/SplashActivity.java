@@ -11,15 +11,19 @@ import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.PrivacyManager;
 import com.mall.sls.common.unit.SpikeManager;
 import com.mall.sls.common.unit.StaticHandler;
+import com.mall.sls.common.unit.TimeManager;
 import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.login.ui.WeixinLoginActivity;
 import com.mall.sls.mainframe.ui.MainFrameActivity;
 import com.mall.sls.mine.ui.PrivacyPolicyTipActivity;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
+
+import java.sql.Time;
 
 import butterknife.ButterKnife;
 
@@ -82,6 +86,7 @@ public class  SplashActivity extends BaseActivity {
 
     //跳转到主页
     private void goMain() {
+        TimeManager.saveTime(FormatUtil.timeSecond());
         MainFrameActivity.start(this);
         finish();
     }

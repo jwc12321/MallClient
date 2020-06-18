@@ -85,7 +85,12 @@ public class GoodsOrderDetails {
     //是否显示查看地图按钮:0-不显示，1-显示
     @SerializedName("showMap")
     private String showMap;
-
+    //退款到账时间
+    @SerializedName("refundConfirmTime")
+    private String refundConfirmTime;
+    //退款发起时间
+    @SerializedName("refundTime")
+    private String refundTime;
 
     public String getCouponPrice() {
         return couponPrice;
@@ -286,5 +291,21 @@ public class GoodsOrderDetails {
 
     public void setShowMap(String showMap) {
         this.showMap = showMap;
+    }
+
+    public String getRefundConfirmTime() {
+        return refundConfirmTime;
+    }
+
+    public void setRefundConfirmTime(String refundConfirmTime) {
+        this.refundConfirmTime = refundConfirmTime;
+    }
+
+    public String getRefundTime() {
+        return refundTime;
+    }
+
+    public void setRefundTime(String refundTime) {
+        this.refundTime = refundTime;
     }
 }

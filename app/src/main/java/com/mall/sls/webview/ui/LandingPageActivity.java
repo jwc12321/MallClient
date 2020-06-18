@@ -1,17 +1,15 @@
 package com.mall.sls.webview.ui;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
@@ -22,60 +20,64 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
-import com.mall.sls.data.entity.WebViewDetailInfo;
-import com.mall.sls.webview.unit.BridgeImpl;
-import com.mall.sls.webview.unit.JSBridge;
 import com.mall.sls.webview.unit.JSBridgeWebChromeClient;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.view.KeyEvent.KEYCODE_BACK;
-
 /**
- * Created by JWC on 2018/4/27.
+ * @author jwc on 2020/6/18.
+ * 描述：
  */
+public class LandingPageActivity extends BaseActivity  {
 
-public class WebViewActivity extends BaseActivity {
-    @BindView(R.id.back)
-    ImageView back;
-    @BindView(R.id.title)
-    TextView title;
-    @BindView(R.id.title_rel)
-    RelativeLayout titleRel;
     @BindView(R.id.webView)
     WebView webView;
+    @BindView(R.id.back)
+    ImageView back;
+    @BindView(R.id.title_rel)
+    RelativeLayout titleRel;
+    private String landingPageUrl;
 
-    private BridgeImpl bridge;
-    private WebViewDetailInfo webViewDetailInfo;
-    private String isBack = "0";
-
-    public static void start(Context context, WebViewDetailInfo webViewDetailInfo) {
-        Intent intent = new Intent(context, WebViewActivity.class);
-        intent.putExtra(StaticData.WEBVIEW_DETAILINFO, webViewDetailInfo);
+    public static void start(Context context, String landingPageUrl) {
+        Intent intent = new Intent(context, LandingPageActivity.class);
+        intent.putExtra(StaticData.LANDING_PAGE_URL, landingPageUrl);
         context.startActivity(intent);
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_webview);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+        setContentView(R.layout.activity_landing_page);
         ButterKnife.bind(this);
-        setHeight(back, title, null);
+        setHeight(back, null, null);
         initView();
     }
 
+    @OnClick({R.id.back})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back:
+                finish();
+                break;
+            default:
+        }
+    }
+
     private void initView() {
-        webViewDetailInfo = (WebViewDetailInfo) getIntent().getSerializableExtra(StaticData.WEBVIEW_DETAILINFO);
-        title.setText(webViewDetailInfo.getTitle());
+        landingPageUrl = getIntent().getStringExtra(StaticData.LANDING_PAGE_URL);
         WebSettings settings = webView.getSettings();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.setMixedContentMode(
@@ -124,10 +126,6 @@ public class WebViewActivity extends BaseActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-//                String titleStr = view.getTitle();
-//                if (!TextUtils.isEmpty(titleStr)) {
-//                    title.setText(titleStr);
-//                }
             }
 
             @Override
@@ -150,22 +148,7 @@ public class WebViewActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-        webView.loadUrl(webViewDetailInfo.getUrl());
-        bridge = new BridgeImpl(this);
-        JSBridge.register("bridge", BridgeImpl.class);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data != null && resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
-//                case RequestCodeStatic.CALLBACK_DATA:
-//
-//                    break;
-                default:
-            }
-        }
+        webView.loadUrl(landingPageUrl);
     }
 
     @Override
@@ -173,43 +156,4 @@ public class WebViewActivity extends BaseActivity {
         return null;
     }
 
-    @OnClick({R.id.back})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                back();
-                break;
-            default:
-        }
-    }
-
-
-    private void back() {
-        if (TextUtils.equals("1", isBack)) {
-            Intent backIntent = new Intent();
-            setResult(Activity.RESULT_OK, backIntent);
-            finish();
-        } else {
-            finish();
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (webView.canGoBack()) {
-            webView.goBack();
-        } else {
-           back();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KEYCODE_BACK) && webView.canGoBack()) {
-            webView.goBack();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }

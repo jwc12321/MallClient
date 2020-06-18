@@ -77,5 +77,11 @@ public interface MineContract {
         void renderAppUrlInfo(AppUrlInfo appUrlInfo);
     }
 
+    interface AboutAppPresenter extends BasePresenter {
+        void getAppUrlInfo();
+    }
 
+    interface AboutAppView extends BaseView<AboutAppPresenter> {
+        void renderAppUrlInfo(AppUrlInfo appUrlInfo);
+    }
 }

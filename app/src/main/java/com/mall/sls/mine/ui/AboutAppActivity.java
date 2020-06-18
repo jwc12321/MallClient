@@ -1,5 +1,6 @@
 package com.mall.sls.mine.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,19 +11,15 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 
 import com.mall.sls.BaseActivity;
+import com.mall.sls.BuildConfig;
 import com.mall.sls.R;
-import com.mall.sls.common.StaticData;
-import com.mall.sls.common.unit.TokenManager;
-import com.mall.sls.common.unit.UpdateManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.AppUrlInfo;
-import com.mall.sls.data.entity.WebViewDetailInfo;
 import com.mall.sls.mine.DaggerMineComponent;
 import com.mall.sls.mine.MineContract;
 import com.mall.sls.mine.MineModule;
-import com.mall.sls.mine.presenter.SettingPresenter;
-import com.mall.sls.webview.ui.WebViewActivity;
+import com.mall.sls.mine.presenter.AboutAppPresenter;
 
 import javax.inject.Inject;
 
@@ -30,85 +27,56 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import constant.UiType;
-import listener.OnBtnClickListener;
 import model.UiConfig;
 import model.UpdateConfig;
 import update.UpdateAppUtils;
 
 /**
- * @author jwc on 2020/5/11.
- * 描述：设置
+ * @author jwc on 2020/6/18.
+ * 描述：
  */
-public class SettingActivity extends BaseActivity implements MineContract.SettingView {
+public class AboutAppActivity extends BaseActivity implements MineContract.AboutAppView {
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.title)
     MediumThickTextView title;
     @BindView(R.id.title_rel)
     RelativeLayout titleRel;
-    @BindView(R.id.confirm_bt)
-    MediumThickTextView confirmBt;
-    @BindView(R.id.feedback_rl)
-    RelativeLayout feedbackRl;
-    @BindView(R.id.clear_cache_rl)
-    RelativeLayout clearCacheRl;
-    @BindView(R.id.register_tv)
-    ConventionalTextView registerTv;
-    @BindView(R.id.privacy_tv)
-    ConventionalTextView privacyTv;
+    @BindView(R.id.new_version)
+    ConventionalTextView newVersion;
+    @BindView(R.id.right_arrow_iv)
+    ImageView rightArrowIv;
+    @BindView(R.id.last_version)
+    ConventionalTextView lastVersion;
     @BindView(R.id.update_rl)
     RelativeLayout updateRl;
-    @BindView(R.id.item_rl)
-    RelativeLayout itemRl;
-    private WebViewDetailInfo webViewDetailInfo;
 
     @Inject
-    SettingPresenter settingPresenter;
+    AboutAppPresenter aboutAppPresenter;
+    @BindView(R.id.current_version)
+    ConventionalTextView currentVersion;
+
+    private AppUrlInfo appUrlInfo;
+
+    public static void start(Context context) {
+        Intent intent = new Intent(context, AboutAppActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.activity_about_app);
         ButterKnife.bind(this);
         setHeight(back, title, null);
+        initView();
     }
 
-    @OnClick({R.id.back, R.id.confirm_bt, R.id.feedback_rl, R.id.clear_cache_rl, R.id.register_tv, R.id.privacy_tv, R.id.update_rl})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.back:
-                finish();
-                break;
-            case R.id.feedback_rl:
-                FeedBackActivity.start(this);
-                break;
-            case R.id.confirm_bt://确认退出登录
-                TokenManager.saveToken("");
-                Intent intent = new Intent();
-                setResult(RESULT_OK, intent);
-                finish();
-                break;
-            case R.id.clear_cache_rl:
-                showMessage(getString(R.string.clear_cache_success));
-                break;
-            case R.id.register_tv://用户协议
-                webViewDetailInfo = new WebViewDetailInfo();
-                webViewDetailInfo.setTitle(getString(R.string.registration_agreement_tv));
-                webViewDetailInfo.setUrl(StaticData.USER_AGREEMENT);
-                WebViewActivity.start(this, webViewDetailInfo);
-                break;
-            case R.id.privacy_tv://隐私政策
-                webViewDetailInfo = new WebViewDetailInfo();
-                webViewDetailInfo.setTitle(getString(R.string.privacy_policy_tv));
-                webViewDetailInfo.setUrl(StaticData.USER_PRIVACY);
-                WebViewActivity.start(this, webViewDetailInfo);
-                break;
-            case R.id.update_rl://版本检测
-                AboutAppActivity.start(this);
-                break;
-            default:
-        }
+    private void initView(){
+        currentVersion.setText("V"+BuildConfig.VERSION_NAME);
+        aboutAppPresenter.getAppUrlInfo();
     }
+
     @Override
     protected void initializeInjector() {
         DaggerMineComponent.builder()
@@ -118,20 +86,20 @@ public class SettingActivity extends BaseActivity implements MineContract.Settin
                 .inject(this);
     }
 
-
     @Override
     public View getSnackBarHolderView() {
-        return itemRl;
+        return null;
     }
 
     @Override
     public void renderAppUrlInfo(AppUrlInfo appUrlInfo) {
-        updateApp(appUrlInfo);
-    }
-
-    @Override
-    public void setPresenter(MineContract.SettingPresenter presenter) {
-
+        this.appUrlInfo = appUrlInfo;
+        if (appUrlInfo != null) {
+            lastVersion.setVisibility(appUrlInfo.isIfLatest() ? View.VISIBLE : View.GONE);
+            rightArrowIv.setVisibility(appUrlInfo.isIfLatest() ? View.GONE : View.VISIBLE);
+            newVersion.setVisibility(appUrlInfo.isIfLatest() ? View.GONE : View.VISIBLE);
+            updateRl.setEnabled(!appUrlInfo.isIfLatest());
+        }
     }
 
     private void updateApp(AppUrlInfo appUrlInfo) {
@@ -154,5 +122,24 @@ public class SettingActivity extends BaseActivity implements MineContract.Settin
                     .updateConfig(updateConfig)
                     .update();
         }
+    }
+
+
+    @OnClick({R.id.update_rl, R.id.back})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.update_rl:
+                updateApp(appUrlInfo);
+                break;
+            case R.id.back:
+                finish();
+                break;
+            default:
+        }
+    }
+
+    @Override
+    public void setPresenter(MineContract.AboutAppPresenter presenter) {
+
     }
 }

@@ -27,6 +27,9 @@ public class LotteryItemInfo {
     //规则
     @SerializedName("prizeRules")
     private List<String> prizeRules;
+    //落地页
+    @SerializedName("prizeRuleUrl")
+    private String prizeRuleUrl;
 
     public List<String> getBrocadeCarps() {
         return brocadeCarps;
@@ -74,5 +77,13 @@ public class LotteryItemInfo {
 
     public void setPrizeRules(List<String> prizeRules) {
         this.prizeRules = prizeRules;
+    }
+
+    public String getPrizeRuleUrl() {
+        return prizeRuleUrl;
+    }
+
+    public void setPrizeRuleUrl(String prizeRuleUrl) {
+        this.prizeRuleUrl = prizeRuleUrl;
     }
 }

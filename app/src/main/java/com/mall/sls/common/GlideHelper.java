@@ -19,4 +19,14 @@ public class GlideHelper {
         }
     }
 
+    public static void load(Activity activity, String url, ImageView target){
+        if(activity!=null) {
+            Glide.with(activity)
+                    .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .dontAnimate()
+                    .into(target);
+        }
+    }
+
 }

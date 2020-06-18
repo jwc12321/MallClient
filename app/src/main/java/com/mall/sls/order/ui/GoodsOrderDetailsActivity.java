@@ -178,7 +178,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private String showMap;
     private String actualPrice;
     private String payModeText;
-    private String refundTime="2010-09-08 19:00:99";
+    private String refundTime;
     private String arrivalTime;
 
 
@@ -363,6 +363,8 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             namePhone.setText(goodsOrderDetails.getConsignee() + " " + goodsOrderDetails.getMobile());
             orderGoodsVos = goodsOrderDetails.getOrderGoodsVos();
             showMap=goodsOrderDetails.getShowMap();
+            refundTime=goodsOrderDetails.getRefundTime();
+            arrivalTime=goodsOrderDetails.getRefundConfirmTime();
             if (orderGoodsVos != null && orderGoodsVos.size() > 0) {
                 GlideHelper.load(this, orderGoodsVos.get(0).getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
                 goodsName.setText(orderGoodsVos.get(0).getGoodsName());

@@ -14,7 +14,7 @@
     <string name="processing">处理中</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
-    <string name="alipay_verify">支付宝认证</string>
+    <string name="alipay_verify">实名认证</string>
     <string name="input_phone_number">输入手机号</string>
     <string name="input_vcode">输入验证码</string>
     <string name="send_verification_code">发送验证码</string>
@@ -191,7 +191,7 @@
     <string name="input_idcard_name">请填写身份证上的姓名</string>
     <string name="input_idcard_number">请填写身份证号码</string>
     <string name="confirm_id">请如实填写，一旦认证不可更改。</string>
-    <string name="verfiy_success">恭喜！您的实人认证已经通过审核</string>
+    <string name="verfiy_success">恭喜！您的实名认证已经通过审核</string>
     <string name="verfiy_failed">很遗憾，认证失败</string>
     <string name="next">下一步</string>
     <string name="auth_again">重新认证</string>
@@ -228,7 +228,7 @@
     <string name="pay_failed">支付失败</string>
     <string name="open_vip">您已开通超级会员</string>
     <string name="is_open">已开通</string>
-    <string name="to_open_person_authentication">请先开通实人认证</string>
+    <string name="to_open_person_authentication">请先开通实名认证</string>
     <string name="view_now">立即查看</string>
     <string name="stay_tuned">敬请期待</string>
     <string name="sys_message">系统通知</string>
@@ -355,4 +355,10 @@
     <string name="pay_success_home">付款成功页回到首页</string>
     <string name="pay_success_share">付款成功页分享</string>
     <string name="pay_success_goods_details">付款成功页订单详情</string>
+    <string name="about_app">关于特惠购</string>
+    <string name="current_version_info">当前版本信息</string>
+    <string name="about">关于</string>
+    <string name="current_version">当前版本</string>
+    <string name="check_updates">检测更新</string>
+    <string name="is_last_version">当前已是最新版本</string>
 </resources>

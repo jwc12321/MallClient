@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
-import com.mall.sls.certify.ui.CerifyTipActivity;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
@@ -45,6 +44,10 @@ public class RefundProgressActivity extends BaseActivity {
     ConventionalTextView orderRefundTime;
     @BindView(R.id.order_arrival_time)
     ConventionalTextView orderArrivalTime;
+    @BindView(R.id.successful_tv)
+    ConventionalTextView successfulTv;
+    @BindView(R.id.refund_processing_tv)
+    ConventionalTextView refundProcessingTv;
 
     private String orderStatus;
     private String amount;
@@ -52,8 +55,8 @@ public class RefundProgressActivity extends BaseActivity {
     private String refundTime;
     private String arrivalTime;
 
-    public static void start(Context context, String orderStatus, String amount, String payType,String refundTime,String arrivalTime) {
-        Intent intent = new Intent(context, CerifyTipActivity.class);
+    public static void start(Context context, String orderStatus, String amount, String payType, String refundTime, String arrivalTime) {
+        Intent intent = new Intent(context, RefundProgressActivity.class);
         intent.putExtra(StaticData.ORDER_STATUS, orderStatus);
         intent.putExtra(StaticData.PAYMENT_AMOUNT, amount);
         intent.putExtra(StaticData.PAY_TYPE, payType);
@@ -75,15 +78,21 @@ public class RefundProgressActivity extends BaseActivity {
         orderStatus = getIntent().getStringExtra(StaticData.ORDER_STATUS);
         amount = getIntent().getStringExtra(StaticData.PAYMENT_AMOUNT);
         payType = getIntent().getStringExtra(StaticData.PAY_TYPE);
-        refundTime=getIntent().getStringExtra(StaticData.REFUND_TIME);
-        arrivalTime=getIntent().getStringExtra(StaticData.ARRIVAL_TIME);
+        refundTime = getIntent().getStringExtra(StaticData.REFUND_TIME);
+        arrivalTime = getIntent().getStringExtra(StaticData.ARRIVAL_TIME);
         payAmount.setText("¥" + NumberFormatUnit.twoDecimalFormat(amount));
         refundProcessingIv.setSelected(true);
         successfulIv.setSelected(TextUtils.equals(StaticData.REFUNDED, orderStatus));
         returnWhere.setText("（退款将会原路返回到您的" + payType + "账户中）");
+        orderArrivalTime.setVisibility(TextUtils.equals(StaticData.REFUNDED, orderStatus) ? View.VISIBLE : View.INVISIBLE);
+        successfulTv.setSelected(TextUtils.equals(StaticData.REFUNDED, orderStatus));
+        refundProcessingTv.setSelected(true);
         orderRefundTime.setText(refundTime);
-        orderArrivalTime.setText(arrivalTime);
-        orderArrivalTime.setVisibility(TextUtils.equals(StaticData.REFUNDED, orderStatus)?View.VISIBLE:View.INVISIBLE);
+        if (TextUtils.isEmpty(arrivalTime)) {//为了布局
+            orderArrivalTime.setText(refundTime);
+        } else {
+            orderArrivalTime.setText(arrivalTime);
+        }
     }
 
     @Override
@@ -91,7 +100,7 @@ public class RefundProgressActivity extends BaseActivity {
         return null;
     }
 
-    @OnClick({ R.id.back})
+    @OnClick({R.id.back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:

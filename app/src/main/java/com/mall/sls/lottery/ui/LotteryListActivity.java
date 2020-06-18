@@ -18,11 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
-import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.LotteryItemInfo;
 import com.mall.sls.data.entity.PrizeVo;
+import com.mall.sls.webview.ui.LandingPageActivity;
 import com.mall.sls.lottery.DaggerLotteryComponent;
 import com.mall.sls.lottery.LotteryContract;
 import com.mall.sls.lottery.LotteryModule;
@@ -84,8 +84,8 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
     private List<String> brocadeCarps;
     private String prizeNumber;
     private List<String> prizeRules;
-    private String rulesTip = "";
     private boolean isFirst = true;
+    private String prizeRuleUrl;
 
 
     public static void start(Context context) {
@@ -148,13 +148,13 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
     @Override
     public void renderLotteryItemInfo(LotteryItemInfo lotteryItemInfo) {
         refreshLayout.finishRefresh();
-        rulesTip = "";
         if (lotteryItemInfo != null) {
             prizeNumber = lotteryItemInfo.getPrizeNumber();
             luckyDrawNumber.setText("x " + lotteryItemInfo.getPrizeNumber());
             lotteryRecordNumber.setText(lotteryItemInfo.getHistoryPrizeCount());
             brocadeCarps = lotteryItemInfo.getBrocadeCarps();
             koiRl.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO,lotteryItemInfo.getHistoryPrizeCount())?View.GONE:View.VISIBLE);
+            prizeRuleUrl=lotteryItemInfo.getPrizeRuleUrl();
             if (brocadeCarps != null && brocadeCarps.size() > 0) {
                 for (int i = 0; i < brocadeCarps.size(); i++) {
                     View view1 = View.inflate(this, R.layout.item_brocade_carps, null);
@@ -180,11 +180,6 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
                 refreshLayout.finishLoadMoreWithNoMoreData();
             }
             prizeRules = lotteryItemInfo.getPrizeRules();
-            if (prizeRules != null && prizeRules.size() > 0) {
-                for (int i = 0; i < prizeRules.size(); i++) {
-                    rulesTip = rulesTip + (i + 1) + "、" + prizeRules.get(i) + "\n";
-                }
-            }
         }
     }
 
@@ -220,7 +215,7 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
                 LotteryRecordActivity.start(this);
                 break;
             case R.id.tip_rl:
-                LotteryTipActivity.start(this, rulesTip);
+                LandingPageActivity.start(this,prizeRuleUrl);
                 break;
             default:
         }
