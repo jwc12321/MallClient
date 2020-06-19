@@ -132,7 +132,12 @@
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="ccapp" android:host="jp.app" android:pathPrefix="/openwith"/>
+<!--                <data android:scheme="ccapp" android:host="jp.app" android:pathPrefix="/openwith"/>-->
+                <data
+                    android:scheme="talkingdata.466b709d82c84bed8f948e46d5f5755d"
+                    android:host="token"
+                    >
+                </data>
             </intent-filter>
         </activity>
 

@@ -517,13 +517,13 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     @Override
     protected void onResume() {
         super.onResume();
-        TCAgentUnit.pageStart(this,getString(R.string.goods_details));
+        TCAgentUnit.pageStart(this,getString(R.string.event_page_detail));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        TCAgentUnit.pageEnd(this,getString(R.string.goods_details));
+        TCAgentUnit.pageEnd(this,getString(R.string.event_page_detail));
     }
 
 }

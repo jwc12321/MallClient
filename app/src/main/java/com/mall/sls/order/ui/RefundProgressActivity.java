@@ -48,6 +48,8 @@ public class RefundProgressActivity extends BaseActivity {
     ConventionalTextView successfulTv;
     @BindView(R.id.refund_processing_tv)
     ConventionalTextView refundProcessingTv;
+    @BindView(R.id.line_iv)
+    ImageView lineIv;
 
     private String orderStatus;
     private String amount;
@@ -86,6 +88,7 @@ public class RefundProgressActivity extends BaseActivity {
         returnWhere.setText("（退款将会原路返回到您的" + payType + "账户中）");
         orderArrivalTime.setVisibility(TextUtils.equals(StaticData.REFUNDED, orderStatus) ? View.VISIBLE : View.INVISIBLE);
         successfulTv.setSelected(TextUtils.equals(StaticData.REFUNDED, orderStatus));
+        lineIv.setSelected(TextUtils.equals(StaticData.REFUNDED, orderStatus));
         refundProcessingTv.setSelected(true);
         orderRefundTime.setText(refundTime);
         if (TextUtils.isEmpty(arrivalTime)) {//为了布局

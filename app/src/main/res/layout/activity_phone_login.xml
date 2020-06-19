@@ -34,7 +34,7 @@
             style="@style/size18_color_app3_text_style"
             android:layout_marginLeft="@dimen/dp_30"
             android:layout_marginTop="@dimen/dp_32"
-            android:text="@string/code_login_register" />
+            android:text="@string/phone_login" />
 
         <LinearLayout
             style="@style/login_input_rl_style"

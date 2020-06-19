@@ -215,15 +215,15 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 GoodsOrderActivity.start(getActivity(), StaticData.REFLASH_FIVE);
                 break;
             case R.id.address_manage://地址管理
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.address_management));
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.mine_address_management));
                 AddressManageActivity.start(getActivity(), StaticData.REFLASH_ONE);
                 break;
             case R.id.invite_friends://邀请好友
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.invite_friends));
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.mine_invite_friends));
                 InviteFriendsActivity.start(getActivity());
                 break;
             case R.id.verified_rl://认证
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.verified));
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.mine_verified));
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
                     goVerify = StaticData.REFLASH_ONE;
                     if (certifyPay) {
@@ -234,17 +234,17 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 }
                 break;
             case R.id.my_invitation_iv://我的邀请
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.my_fans));
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.mine_my_fans));
                 MyInvitationActivity.start(getActivity());
                 break;
             case R.id.super_member_rl://超级会员
             case R.id.member_type_iv:
                 goVerify = StaticData.REFLASH_ONE;
                 SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount, vipDescription,certifyPay,certifyAmount,vipExpireDate);
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.super_member));
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.member));
                 break;
             case R.id.feedback://意见反馈
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.feedback));
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.mine_feedback));
                 FeedBackActivity.start(getActivity());
                 break;
             case R.id.copy://复制
@@ -254,14 +254,14 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 TCAgentUnit.setEventId(getActivity(),getString(R.string.copy_invite_code));
                 break;
             case R.id.lottery://抽奖
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.lottery));
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.mine_lottery));
                 LotteryListActivity.start(getActivity());
                 break;
             case R.id.taobao_orde://淘宝订单
                 TCAgentUnit.setEventId(getActivity(),getString(R.string.tao_bao_order));
                 break;
             case R.id.mission_center://任务中心
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.mission_center));
+                TCAgentUnit.setEventId(getActivity(),getString(R.string.mine_mission_center));
                 break;
             default:
         }

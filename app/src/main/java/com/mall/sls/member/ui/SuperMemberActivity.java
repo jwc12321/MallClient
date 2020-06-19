@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,6 +42,9 @@ import com.mall.sls.member.MemberModule;
 import com.mall.sls.member.adapter.MemberGoodsItemAdapter;
 import com.mall.sls.member.presenter.SuperMemberPresenter;
 import com.mall.sls.mine.ui.InviteFriendsActivity;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -87,6 +91,8 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     ImageView memberTitleIv;
     @BindView(R.id.endTime)
     ConventionalTextView endTime;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     private Handler mHandler = new MyHandler(this);
 
     private MemberGoodsItemAdapter memberGoodsItemAdapter;
@@ -122,6 +128,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     }
 
     private void initView() {
+        refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         EventBus.getDefault().register(this);
         avatarUrl = getIntent().getStringExtra(StaticData.AVATAR_URL);
         mobile = getIntent().getStringExtra(StaticData.MOBILE);
@@ -140,13 +147,28 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
         if (TextUtils.equals(StaticData.REFLASH_TWO, VerifyManager.getVerify())) {
             confirmBt.setEnabled(false);
             status.setText(getString(R.string.is_open));
-            endTime.setText(vipExpireDate+"到期");
+            endTime.setText(vipExpireDate + "到期");
         } else {
             confirmBt.setEnabled(true);
             status.setText(getString(R.string.nonactivated));
         }
         superMemberPresenter.getVipGroupons(StaticData.REFLASH_ONE);
     }
+
+
+    SimpleMultiPurposeListener simpleMultiPurposeListener = new SimpleMultiPurposeListener() {
+        @Override
+        public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+            refreshLayout.finishRefresh(6000);
+            superMemberPresenter.getVipGroupons(StaticData.REFLASH_ZERO);
+        }
+
+        @Override
+        public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+            superMemberPresenter.getMoreVipGroupons();
+        }
+    };
+
 
     @OnClick({R.id.confirm_bt, R.id.back, R.id.description, R.id.invite_friends})
     public void onClick(View view) {
@@ -224,21 +246,34 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
 
     @Override
     public void renderVipGroupons(LocalTeam localTeam) {
+        refreshLayout.finishRefresh();
         if (localTeam != null) {
-            memberGoodsItemAdapter.setData(localTeam.getGoodsItemInfos());
-            if (localTeam.getGoodsItemInfos() == null || localTeam.getGoodsItemInfos().size() == 0) {
-                memberTitleIv.setVisibility(View.GONE);
-            } else {
+            if (localTeam.getGoodsItemInfos()!= null && localTeam.getGoodsItemInfos().size() > 0) {
+                recordRv.setVisibility(View.VISIBLE);
+                if (localTeam.getGoodsItemInfos().size() == Integer.parseInt(StaticData.TEN_LIST_SIZE)) {
+                    refreshLayout.resetNoMoreData();
+                } else {
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                }
+                memberGoodsItemAdapter.setData(localTeam.getGoodsItemInfos());
                 memberTitleIv.setVisibility(View.VISIBLE);
+            } else {
+                recordRv.setVisibility(View.GONE);
+                refreshLayout.finishLoadMoreWithNoMoreData();
+                memberTitleIv.setVisibility(View.GONE);
             }
-        } else {
-            memberTitleIv.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void renderMoreVipGroupons(LocalTeam localTeam) {
-
+        refreshLayout.finishLoadMore();
+        if (localTeam != null && localTeam.getGoodsItemInfos() != null) {
+            if (localTeam.getGoodsItemInfos().size() != Integer.parseInt(StaticData.TEN_LIST_SIZE)) {
+                refreshLayout.finishLoadMoreWithNoMoreData();
+            }
+            memberGoodsItemAdapter.addMore(localTeam.getGoodsItemInfos());
+        }
     }
 
     @Override

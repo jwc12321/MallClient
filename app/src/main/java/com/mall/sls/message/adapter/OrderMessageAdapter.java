@@ -13,11 +13,13 @@ import android.widget.RelativeLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.swipe.SwipeRevealLayout;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
+import com.mall.sls.data.entity.LinkUrlInfo;
 import com.mall.sls.data.entity.MessageItemInfo;
 
 import java.util.List;
@@ -29,6 +31,7 @@ public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapte
     private LayoutInflater layoutInflater;
     private List<MessageItemInfo> messageItemInfos;
     private Context context;
+    private Gson gson = new Gson();
 
     public OrderMessageAdapter(Context context) {
         this.context = context;
@@ -102,7 +105,8 @@ public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapte
         RelativeLayout goodsLayout;
         @BindView(R.id.swipe_layout)
         SwipeRevealLayout swipeLayout;
-
+        private LinkUrlInfo linkUrlInfo;
+        private String  nativeType;
 
         public OrderMessageView(View itemView) {
             super(itemView);
@@ -116,9 +120,17 @@ public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapte
             content.setText(messageItemInfo.getContent());
             goodsContent.setText(messageItemInfo.getContent());
             time.setText(messageItemInfo.getAddTime());
-            goodsRl.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, messageItemInfo.getLinkUrl()) ? View.VISIBLE : View.GONE);
-            content.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, messageItemInfo.getLinkUrl()) ? View.GONE : View.VISIBLE);
-            goodsLayout.setEnabled(TextUtils.equals(StaticData.REFLASH_ONE, messageItemInfo.getLinkUrl()));
+            if(!TextUtils.isEmpty(messageItemInfo.getLinkUrl())&&!TextUtils.equals(StaticData.REFLASH_ONE,messageItemInfo.getLinkUrl())&&!TextUtils.equals(StaticData.REFLASH_TWO,messageItemInfo.getLinkUrl())){
+                linkUrlInfo = gson.fromJson(messageItemInfo.getLinkUrl(), LinkUrlInfo.class);
+                nativeType = linkUrlInfo.getNativeType();
+                goodsRl.setVisibility(TextUtils.equals(StaticData.ORDERDETAIL, nativeType) ? View.VISIBLE : View.GONE);
+                content.setVisibility(TextUtils.equals(StaticData.ORDERDETAIL, nativeType) ? View.GONE : View.VISIBLE);
+                goodsLayout.setEnabled(TextUtils.equals(StaticData.ORDERDETAIL, nativeType));
+            }else {//兼顾老数据  之前数据1和2
+                goodsRl.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, messageItemInfo.getLinkUrl()) ? View.VISIBLE : View.GONE);
+                content.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, messageItemInfo.getLinkUrl()) ? View.GONE : View.VISIBLE);
+                goodsLayout.setEnabled(TextUtils.equals(StaticData.REFLASH_ONE, messageItemInfo.getLinkUrl()));
+            }
         }
 
     }

@@ -20,7 +20,7 @@
         <ImageView
             android:id="@+id/back"
             style="@style/title_left_image_match_style"
-            android:src="@mipmap/icon_detail_back" />
+            android:src="@mipmap/icon_circle_black_back" />
 
     </RelativeLayout>
 </RelativeLayout>

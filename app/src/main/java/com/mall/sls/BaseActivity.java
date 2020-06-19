@@ -38,6 +38,7 @@ import com.mall.sls.common.widget.dialog.LoadingDialog;
 import com.mall.sls.data.RemoteDataException;
 import com.mall.sls.login.ui.WeixinLoginActivity;
 import com.mall.sls.mainframe.ui.MainFrameActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.lang.reflect.Field;
 
@@ -275,11 +276,13 @@ public abstract class BaseActivity extends AppCompatActivity implements LoadData
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     /**

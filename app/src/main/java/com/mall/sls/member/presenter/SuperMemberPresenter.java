@@ -51,7 +51,7 @@ public class SuperMemberPresenter implements MemberContract.SuperMemberPresente 
             superMemberView.showLoading(StaticData.LOADING);
         }
         currentIndex=1;
-        String queryString="page="+currentIndex+"&limit="+StaticData.FIFTY_LIST_SIZE;
+        String queryString="page="+currentIndex+"&limit="+StaticData.TEN_LIST_SIZE;
         String sign= SignUnit.signGet(RequestUrl.VIP_GROUPONS_URL,queryString);
         Disposable disposable = restApiService.getVipGroupons(sign,String.valueOf(currentIndex),StaticData.TEN_LIST_SIZE)
                 .flatMap(new RxRemoteDataParse<LocalTeam>())
@@ -75,7 +75,7 @@ public class SuperMemberPresenter implements MemberContract.SuperMemberPresente 
     @Override
     public void getMoreVipGroupons() {
         currentIndex=currentIndex+1;
-        String queryString="page="+currentIndex+"&limit="+StaticData.FIFTY_LIST_SIZE;
+        String queryString="page="+currentIndex+"&limit="+StaticData.TEN_LIST_SIZE;
         String sign= SignUnit.signGet(RequestUrl.VIP_GROUPONS_URL,queryString);
         Disposable disposable = restApiService.getVipGroupons(sign,String.valueOf(currentIndex),StaticData.TEN_LIST_SIZE)
                 .flatMap(new RxRemoteDataParse<LocalTeam>())

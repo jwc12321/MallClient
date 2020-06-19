@@ -15,6 +15,9 @@ public class AppUrlInfo {
     //跟新url
     @SerializedName("url")
     private String url;
+    //当前最新版本
+    @SerializedName("currentVersion")
+    private String currentVersion;
 
     public boolean isIfLatest() {
         return ifLatest;
@@ -46,5 +49,13 @@ public class AppUrlInfo {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getCurrentVersion() {
+        return currentVersion;
+    }
+
+    public void setCurrentVersion(String currentVersion) {
+        this.currentVersion = currentVersion;
     }
 }

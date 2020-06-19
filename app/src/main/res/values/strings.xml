@@ -332,21 +332,23 @@
     <string name="refund_amount">（退款金额）</string>
     <string name="refund_processing">退款处理中</string>
     <string name="successful_account">到账成功</string>
+    <string name="my_fans">我的粉丝</string>
 
     <!--mai_dian-->
     <string name="home_banner">首页banner</string>
     <string name="king_kong">金刚区</string>
     <string name="home_goods">首页商品</string>
-    <string name="fight_together_goods">拼团商品列表</string>
-    <string name="my_coupon">我的优惠卷</string>
-    <string name="tao_bao_order">淘宝订单</string>
-    <string name="my_fans">我的粉丝</string>
-    <string name="mission_center">任务中心</string>
-    <string name="address_management">地址管理</string>
+    <string name="fight_together_goods">拼团商品</string>
+    <string name="my_coupon">优惠卷</string>
+    <string name="tao_bao_order">我的-淘宝订单</string>
+    <string name="mine_my_fans">我的-我的粉丝</string>
+    <string name="mine_mission_center">我的-任务中心</string>
+    <string name="mine_address_management">我的-地址管理</string>
     <string name="initiate_bill_buy">发起拼单购买</string>
     <string name="buy_together">拼团购买</string>
     <string name="goods_details">商品详情页</string>
-    <string name="event_page">活动页</string>
+    <string name="event_page">活动商品页</string>
+    <string name="event_page_detail">活动商品详情页</string>
     <string name="goods_details_share">商品详情页分享</string>
     <string name="event_purchase_event">活动团购买-活动页</string>
     <string name="event_purchase_details">活动团购买-详情页</string>
@@ -361,4 +363,9 @@
     <string name="current_version">当前版本</string>
     <string name="check_updates">检测更新</string>
     <string name="is_last_version">当前已是最新版本</string>
+    <string name="member">会员</string>
+    <string name="mine_invite_friends">我的-邀请好友</string>
+    <string name="mine_lottery">我的-抽奖</string>
+    <string name="mine_verified">我的-实名认证</string>
+    <string name="mine_feedback">我的-意见反馈</string>
 </resources>

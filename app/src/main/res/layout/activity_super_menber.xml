@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backGround6"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200"
+        android:background="@color/backGround27"/>
 
     <RelativeLayout
         android:id="@+id/title_rel"
@@ -23,157 +28,183 @@
 
     </RelativeLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fadingEdge="none"
-        android:overScrollMode="never">
+        app:srlEnablePreviewInEditMode="false"
+        android:layout_below="@id/title_rel">
 
-        <LinearLayout
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:srlAccentColor="@android:color/white" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fadingEdge="none"
+            android:overScrollMode="never">
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/icon_super_menber_bg" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_47"
-                    android:layout_marginTop="@dimen/dp_7">
-
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/head_photo"
-                        android:layout_width="@dimen/dp_47"
-                        android:layout_height="@dimen/dp_47"
-                        android:layout_marginLeft="@dimen/dp_15"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/ic_launcher"
-                        app:riv_border_color="@color/appText1"
-                        app:riv_border_width="0dp"
-                        app:riv_corner_radius="0dp"
-                        app:riv_oval="true"
-                        tools:background="@null" />
-
-                    <com.mall.sls.common.widget.textview.ConventionalTextView
-                        android:id="@+id/phone"
-                        style="@style/size16_color_app1_text_style"
-                        android:layout_marginLeft="@dimen/dp_15"
-                        android:layout_marginTop="@dimen/dp_1"
-                        android:layout_toRightOf="@id/head_photo"
-                        tools:text="111111" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/dp_15"
-                        android:layout_toRightOf="@id/head_photo">
-                        <com.mall.sls.common.widget.textview.ConventionalTextView
-                            android:id="@+id/status"
-                            style="@style/open_member_bt_style"
-                            tools:text="@string/nonactivated" />
-                        <com.mall.sls.common.widget.textview.ConventionalTextView
-                            android:id="@+id/endTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/sp_12"
-                            android:textColor="@color/backGround26"
-                            tools:text="2018"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="@dimen/dp_7"/>
-                    </LinearLayout>
-
-
-
-                    <com.mall.sls.common.widget.textview.ConventionalTextView
-                        android:id="@+id/description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableRight="@mipmap/icon_member_explain"
-                        android:drawablePadding="@dimen/dp_3"
-                        android:text="@string/super_member_description"
-                        android:textColor="@color/backGround26"
-                        android:textSize="@dimen/sp_14"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/dp_15" />
-                </RelativeLayout>
-            </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/common_four_app_one_bg"
                 android:orientation="vertical"
-                android:layout_marginTop="@dimen/dp_m_85"
-                android:layout_marginLeft="@dimen/dp_15"
-                android:layout_marginRight="@dimen/dp_15">
+                android:background="@color/backGround6">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/icon_super_menber_bg" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_47"
+                        android:layout_marginTop="@dimen/dp_7">
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/head_photo"
+                            android:layout_width="@dimen/dp_47"
+                            android:layout_height="@dimen/dp_47"
+                            android:layout_marginLeft="@dimen/dp_15"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/ic_launcher"
+                            app:riv_border_color="@color/appText1"
+                            app:riv_border_width="0dp"
+                            app:riv_corner_radius="0dp"
+                            app:riv_oval="true"
+                            tools:background="@null" />
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/phone"
+                            style="@style/size16_color_app1_text_style"
+                            android:layout_marginLeft="@dimen/dp_15"
+                            android:layout_marginTop="@dimen/dp_1"
+                            android:layout_toRightOf="@id/head_photo"
+                            tools:text="111111" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginLeft="@dimen/dp_15"
+                            android:layout_toRightOf="@id/head_photo"
+                            android:orientation="horizontal">
+
+                            <com.mall.sls.common.widget.textview.ConventionalTextView
+                                android:id="@+id/status"
+                                style="@style/open_member_bt_style"
+                                tools:text="@string/nonactivated" />
+
+                            <com.mall.sls.common.widget.textview.ConventionalTextView
+                                android:id="@+id/endTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/dp_7"
+                                android:textColor="@color/backGround26"
+                                android:textSize="@dimen/sp_12"
+                                tools:text="2018" />
+                        </LinearLayout>
+
+
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:id="@+id/description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dp_15"
+                            android:drawableRight="@mipmap/icon_member_explain"
+                            android:drawablePadding="@dimen/dp_3"
+                            android:text="@string/super_member_description"
+                            android:textColor="@color/backGround26"
+                            android:textSize="@dimen/sp_14" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_m_85"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:background="@drawable/common_four_app_one_bg"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/dp_25"
+                        android:src="@mipmap/icon_super_member_privilege_tv" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:layout_marginTop="@dimen/dp_38"
+                        android:layout_marginRight="@dimen/dp_15"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/icon_super_member_privilege_iv" />
+
+                    <ImageView
+                        android:id="@+id/confirm_bt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_11"
+                        android:layout_marginTop="@dimen/dp_18"
+                        android:layout_marginRight="@dimen/dp_11"
+                        android:layout_marginBottom="@dimen/dp_9"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/open_vip_bt_select" />
+                </LinearLayout>
+
                 <ImageView
+                    android:id="@+id/invite_friends"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_11"
+                    android:layout_marginTop="@dimen/dp_18"
+                    android:layout_marginRight="@dimen/dp_11"
+                    android:adjustViewBounds="false"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/icon_member_invite"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/member_title_iv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_super_member_privilege_tv"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dp_25"/>
-                <ImageView
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:src="@mipmap/icon_exclusive_members" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/record_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/icon_super_member_privilege_iv"
-                    android:layout_marginTop="@dimen/dp_38"
-                    android:layout_marginLeft="@dimen/dp_15"
-                    android:layout_marginRight="@dimen/dp_15"/>
-                <ImageView
-                    android:id="@+id/confirm_bt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/open_vip_bt_select"
-                    android:layout_marginTop="@dimen/dp_18"
-                    android:layout_marginLeft="@dimen/dp_11"
-                    android:layout_marginRight="@dimen/dp_11"
-                    android:layout_marginBottom="@dimen/dp_9"/>
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginBottom="@dimen/dp_15"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="vertical"
+                    app:layoutManager="@string/layoutManager_LinearLayout"
+                    tools:listitem="@layout/adapter_member_goods" />
             </LinearLayout>
-            <ImageView
-                android:id="@+id/invite_friends"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="false"
-                android:src="@mipmap/icon_member_invite"
-                android:layout_marginLeft="@dimen/dp_11"
-                android:layout_marginRight="@dimen/dp_11"
-                android:layout_marginTop="@dimen/dp_18"
-                android:visibility="visible"/>
-            <ImageView
-                android:id="@+id/member_title_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/icon_exclusive_members"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp_20" />
+        </androidx.core.widget.NestedScrollView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/record_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="@string/layoutManager_LinearLayout"
-                tools:listitem="@layout/adapter_member_goods"
-                android:layout_marginBottom="@dimen/dp_15"
-                android:orientation="vertical"
-                android:nestedScrollingEnabled="false"
-                android:layout_marginTop="@dimen/dp_20"/>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-</LinearLayout>
+
+</RelativeLayout>

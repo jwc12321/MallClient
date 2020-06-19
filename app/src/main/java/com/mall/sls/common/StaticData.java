@@ -105,12 +105,6 @@ public class StaticData {
     public static final String BACK_TYPE="backType";
     public static final String GOODS_PRODUCT_ID="goodsProductId";//skuId
 
-    public static final String GOODS_INFO ="GOODSINFO";//banner挑商品详情
-    public static final String COUPON ="COUPON";//优惠卷
-    public static final String INVITATION ="INVITATION";//邀请好友
-    public static final String SECKILL ="SECKILL";//秒杀
-    public static final String ADDRESS ="ADDRESS";
-    public static final String PRIZE="PRIZE";//抽奖
     public static final String CANCEL_TEXT="cancelText";
     public static final String CONFIRM_TEXT="confirmText";
     public static final String TIP_BACK="tipBack";
@@ -149,5 +143,16 @@ public class StaticData {
     public static final String REFUND_TIME="refundTime";//退款处理时间
     public static final String ARRIVAL_TIME="arrivalTime";//到账时间
     public static final String LANDING_PAGE_URL="landingPageUrl";//落地页url
+
+    //推送，金刚区，banner
+    public static final String ORDERDETAIL="ORDERDETAIL";//订单详情
+    public static final String GOODS_INFO ="GOODSINFO";//banner挑商品详情
+    public static final String COUPON ="COUPON";//优惠卷
+    public static final String INVITATION ="INVITATION";//邀请好友
+    public static final String SECKILL ="SECKILL";//秒杀
+    public static final String ADDRESS ="ADDRESS";
+    public static final String PRIZE="PRIZE";//抽奖
+    public static final String FANS="FANS";//我的粉丝
+    public static final String MSGBOX="MSGBOX";//消息盒子
 
 }

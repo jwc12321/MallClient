@@ -103,11 +103,12 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/line_iv"
                     android:layout_width="@dimen/dp_171"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/dp_8"
-                    android:src="@mipmap/icon_green_line" />
+                    android:src="@drawable/refund_progress_line_select" />
             </RelativeLayout>
 
             <LinearLayout

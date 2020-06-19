@@ -430,7 +430,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
 
     private void updateApp(AppUrlInfo appUrlInfo) {
         if (appUrlInfo != null && !appUrlInfo.isIfLatest() && !TextUtils.isEmpty(appUrlInfo.getUrl())) {
-            if (!TextUtils.isEmpty(UpdateManager.getUpdate()) && !appUrlInfo.isForceUpdate()) {
+            if (!TextUtils.isEmpty(UpdateManager.getUpdate()) &&TextUtils.equals(UpdateManager.getUpdate(),appUrlInfo.getCurrentVersion())&& !appUrlInfo.isForceUpdate()) {
                 return;
             }
             UpdateConfig updateConfig = new UpdateConfig();
@@ -452,7 +452,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                     .setCancelBtnClickListener(new OnBtnClickListener() {
                         @Override
                         public boolean onClick() {
-                            UpdateManager.saveUpdate(StaticData.REFLASH_ONE);
+                            UpdateManager.saveUpdate(appUrlInfo.getCurrentVersion());
                             return false;
                         }
                     })
