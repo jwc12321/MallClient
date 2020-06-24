@@ -37,6 +37,7 @@ import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.common.widget.textview.TearDownView;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
+import com.mall.sls.data.entity.GoodsSpec;
 import com.mall.sls.data.entity.GroupPeople;
 import com.mall.sls.data.entity.GroupPurchase;
 import com.mall.sls.data.entity.InvitationCodeInfo;
@@ -121,6 +122,8 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     private String inviteCode;
     private List<ProductListCallableInfo> productListCallableInfos;
     private List<String> checkSkus;
+    private List<GoodsSpec> goodsSpecs;
+    private String picUrl;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, ActivityGroupGoodsActivity.class);
@@ -247,6 +250,8 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
                 groupId = groupPurchases.get(0).getGrouponId();
                 groupRulesId = groupPurchases.get(0).getRulesId();
             }
+            picUrl=goodsDetailsInfo.getPicUrl();
+            goodsSpecs=goodsDetailsInfo.getGoodsSpecs();
             productListCallableInfos = goodsDetailsInfo.getProductListCallableInfos();
             if (productListCallableInfos != null && productListCallableInfos.size() == 1) {
                 ProductListCallableInfo productListCallableInfo = productListCallableInfos.get(0);
@@ -322,7 +327,9 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
 
     private void goSelectSpec(String type) {
         Intent intent = new Intent(this, SelectSpecActivity.class);
-        intent.putExtra(StaticData.GOODS_DETAILS_INFO, goodsDetailsInfo);
+        intent.putExtra(StaticData.PRODUCT_LIST, (Serializable) goodsSpecs);
+        intent.putExtra(StaticData.SPECIFICATION_LIST, (Serializable) productListCallableInfos);
+        intent.putExtra(StaticData.PIC_URL,picUrl);
         intent.putExtra(StaticData.SKU_CHECK, (Serializable) checkSkus);
         intent.putExtra(StaticData.CHOICE_TYPE, type);
         startActivityForResult(intent, RequestCodeStatic.REQUEST_SPEC);

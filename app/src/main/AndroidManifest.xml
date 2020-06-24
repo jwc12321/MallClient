@@ -144,7 +144,8 @@
         <activity
             android:name=".mainframe.ui.MainFrameActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="nosensor">
+            android:screenOrientation="nosensor"
+            android:configChanges="uiMode">
         </activity>
 
         <activity
@@ -156,7 +157,8 @@
             android:name=".login.ui.WeixinLoginActivity"
             android:launchMode="singleTop"
             android:screenOrientation="nosensor"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:configChanges="uiMode"/>
         <activity
             android:name=".certify.ui.CerifyTipActivity"
             android:launchMode="singleTop"
@@ -379,6 +381,10 @@
         <activity android:name=".webview.ui.LandingPageActivity"
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"/>
+        <activity
+            android:name=".homepage.ui.GeneralGoodsDetailsActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="nosensor" />
     </application>
 
 </manifest>

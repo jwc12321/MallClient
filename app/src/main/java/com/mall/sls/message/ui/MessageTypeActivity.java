@@ -107,8 +107,8 @@ public class MessageTypeActivity extends BaseActivity implements MessageContract
     }
 
     @Override
-    public void goOrderMessage(String id) {
-        OrderMessageActivity.start(this,id);
+    public void goOrderMessage(String id,String title) {
+        OrderMessageActivity.start(this,id,title);
     }
 
     @Override

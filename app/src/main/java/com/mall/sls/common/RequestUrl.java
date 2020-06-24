@@ -1,5 +1,7 @@
 package com.mall.sls.common;
 
+import retrofit2.http.PUT;
+
 public class RequestUrl {
     public static String APP_URL_INFO_URL="/app/version/android";
     public static String LOGIN_IN_URL="/app/auth/login/code";//登录
@@ -53,5 +55,13 @@ public class RequestUrl {
     public static String JOIN_PRIZE="/app/prize/joinPrize";// 参与抽奖
     public static String PRIZE_HISTORY="/app/prize/history";//开奖历史
     public static String COUPON_RECEIVE="/app/coupon/receive";//领取优惠卷
+    public static String CART_COUNT="/app/cart/general/count";//查询购物车商品数量
+    public static String CART_ADD="/app/cart/general/add";//加入购物车
+    public static String CART_GENERAL_CHECKED="/app/cart/general/checked";//购物车选中商品购买
+    public static String DELETE_CART_ITEM="/app/cart/general/delete/";//删除购物车item
+    public static String CART_GENERAL_LIST ="/app/cart/general/list";//查询购物车列表
+    public static String CART_UPDATE_NUMBER="/app/cart/general/update";//修改购物车商品数量
+    public static String GOODS_BASE_GOOD="/app/goods/baseGood";//普通商品详情
+    public static String CART_FAST_ADD="/app/cart/general/fastadd";//立即购买
 
 }

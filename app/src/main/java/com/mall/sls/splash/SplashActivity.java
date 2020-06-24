@@ -45,11 +45,11 @@ public class  SplashActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
-            // 在这里发送广播，唤醒之前启动的Activity
-            finish();
-            return;
-        }
+//        if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
+//            // 在这里发送广播，唤醒之前启动的Activity
+//            finish();
+//            return;
+//        }
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         MainStartManager.saveMainStart(StaticData.REFLASH_ZERO);

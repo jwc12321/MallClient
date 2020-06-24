@@ -30,7 +30,7 @@
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/title"
             style="@style/title_text_style"
-            android:text="@string/sys_message" />
+            tools:text="@string/sys_message" />
 
         <ImageView
             android:id="@+id/right_iv"

@@ -65,9 +65,11 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    if (TextUtils.equals(StaticData.REFLASH_ZERO, goodsItemInfo.getGroupType())) {
+                    if (TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGoodsType())) {
+                        onItemClickListener.goGeneralGoodsDetails(goodsItemInfo.getGoodsId());
+                    } else if(TextUtils.equals(StaticData.REFLASH_TWO, goodsItemInfo.getGoodsType())){
                         onItemClickListener.goOrdinaryGoodsDetails(goodsItemInfo.getGoodsId());
-                    } else {
+                    }else {
                         onItemClickListener.goActivityGroupGoods(goodsItemInfo.getGoodsId());
                     }
                 }
@@ -116,16 +118,19 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
             goodsIntroduction.setText(goodsItemInfo.getBrief());
             currentPrice.setText(NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getRetailPrice()));
             originalPrice.setText(NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getCounterPrice()));
-            groupType.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGroupType()) ? View.VISIBLE : View.GONE);
             groupType.setText(goodsItemInfo.getKeywords());
-            if (TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGroupType())) {
+            if (TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGoodsType())) {
+                groupType.setVisibility(View.GONE);
+                priceType.setText(context.getString(R.string.activity_price));
+                confirmBt.setText(context.getString(R.string.buy_now));
+            } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsItemInfo.getGoodsType())) {
+                groupType.setVisibility(View.VISIBLE);
+                priceType.setText(context.getString(R.string.group_purchase_price_tv));
+                confirmBt.setText(context.getString(R.string.go_to_spell));
+            } else {
                 groupType.setVisibility(View.VISIBLE);
                 priceType.setText(context.getString(R.string.activity_price));
                 confirmBt.setText(context.getString(R.string.go_buy));
-            } else {
-                groupType.setVisibility(View.GONE);
-                priceType.setText(context.getString(R.string.group_purchase_price_tv));
-                confirmBt.setText(context.getString(R.string.go_to_spell));
             }
         }
     }
@@ -134,6 +139,8 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
         void goOrdinaryGoodsDetails(String goodsId);
 
         void goActivityGroupGoods(String goodsId);
+
+        void goGeneralGoodsDetails(String goodsId);
     }
 
     private OnItemClickListener onItemClickListener;

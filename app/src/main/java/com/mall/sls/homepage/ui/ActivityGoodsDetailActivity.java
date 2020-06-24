@@ -45,6 +45,7 @@ import com.mall.sls.common.widget.textview.WhiteDrawTextView;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
+import com.mall.sls.data.entity.GoodsSpec;
 import com.mall.sls.data.entity.GroupPurchase;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.ProductListCallableInfo;
@@ -153,6 +154,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     private int screenWidth;
     private int screenHeight;
     private List<ProductListCallableInfo> productListCallableInfos;
+    private List<GoodsSpec> goodsSpecs;
+    private String picUrl;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, ActivityGoodsDetailActivity.class);
@@ -300,7 +303,9 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
 
     private void goSelectSpecReturn(String type) {
         Intent intent = new Intent(this, SelectSpecActivity.class);
-        intent.putExtra(StaticData.GOODS_DETAILS_INFO, goodsDetailsInfo);
+        intent.putExtra(StaticData.PRODUCT_LIST, (Serializable) goodsSpecs);
+        intent.putExtra(StaticData.SPECIFICATION_LIST, (Serializable) productListCallableInfos);
+        intent.putExtra(StaticData.PIC_URL,picUrl);
         intent.putExtra(StaticData.SKU_CHECK, (Serializable) checkSkus);
         intent.putExtra(StaticData.CHOICE_TYPE, type);
         intent.putExtra(StaticData.GOODS_COUNT, goodsCount);
@@ -310,7 +315,9 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
 
     private void goSelectSpec(String type) {
         Intent intent = new Intent(this, SelectSpecActivity.class);
-        intent.putExtra(StaticData.GOODS_DETAILS_INFO, goodsDetailsInfo);
+        intent.putExtra(StaticData.PRODUCT_LIST, (Serializable) goodsSpecs);
+        intent.putExtra(StaticData.SPECIFICATION_LIST, (Serializable) productListCallableInfos);
+        intent.putExtra(StaticData.PIC_URL,picUrl);
         intent.putExtra(StaticData.SKU_CHECK, (Serializable) checkSkus);
         intent.putExtra(StaticData.CHOICE_TYPE, type);
         intent.putExtra(StaticData.GOODS_COUNT, goodsCount);
@@ -380,7 +387,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             }
             banner.setPointsIsVisible(data.size() > 1);
             banner.setAutoPlayAble(data.size() > 1);
-            banner.setBannerData(R.layout.xbanner_item, data);
+            banner.setBannerData(R.layout.xbanner_zero_item, data);
             currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getRetailPrice()));
             unit = goodsDetailsInfo.getUnit();
             goodsUnit.setText("/" + unit);
@@ -435,6 +442,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 groupId = groupPurchases.get(0).getGrouponId();
                 groupRulesId = groupPurchases.get(0).getRulesId();
             }
+            picUrl=goodsDetailsInfo.getPicUrl();
+            goodsSpecs=goodsDetailsInfo.getGoodsSpecs();
             productListCallableInfos = goodsDetailsInfo.getProductListCallableInfos();
             if (productListCallableInfos != null && productListCallableInfos.size() == 1) {
                 ProductListCallableInfo productListCallableInfo = productListCallableInfos.get(0);

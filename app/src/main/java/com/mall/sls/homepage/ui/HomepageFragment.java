@@ -354,6 +354,11 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     }
 
     @Override
+    public void goGeneralGoodsDetails(String goodsId) {
+        GeneralGoodsDetailsActivity.start(getActivity(),goodsId);
+    }
+
+    @Override
     public void renderHomePageInfo(HomePageInfo homePageInfo) {
         refreshLayout.finishRefresh();
         if (homePageInfo != null) {

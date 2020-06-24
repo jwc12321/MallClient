@@ -5,12 +5,17 @@ package com.mall.sls.homepage;
 import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
 import com.mall.sls.data.entity.AppUrlInfo;
+import com.mall.sls.data.entity.ConfirmCartOrderDetail;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
+import com.mall.sls.data.entity.GeneralGoodsDetailsInfo;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderSubmitInfo;
+import com.mall.sls.data.entity.VipAmountInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
+
+import java.util.List;
 
 public interface HomepageContract {
     interface HomePagePresenter extends BasePresenter{
@@ -68,6 +73,28 @@ public interface HomepageContract {
         void renderWXGoodsDetailsInfo(GoodsDetailsInfo goodsDetailsInfo);
         void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail);
         void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo);
+    }
+
+    interface GeneralGoodsDetailsPresenter extends BasePresenter{
+        void getCartCount();
+        void cartAdd(String productId, String number);
+        void getGeneralGoodsDetailsInfo(String goodsId);
+        void buyNow(String productId, String number);
+    }
+
+    interface GeneralGoodsDetailsView extends BaseView<GeneralGoodsDetailsPresenter>{
+        void renderCartCount(String number);
+        void renderCartAdd();
+        void renderGeneralGoodsDetailsInfo(GeneralGoodsDetailsInfo generalGoodsDetailsInfo);
+        void renderBuyNow(ConfirmCartOrderDetail confirmCartOrderDetail);
+    }
+
+    interface CartConfirmOrderPresenter extends BasePresenter{
+        void cartGeneralChecked(String addressId, List<String> ids, String userCouponId);
+    }
+
+    interface CartConfirmOrderView extends BaseView<CartConfirmOrderPresenter>{
+        void renderCartGeneralChecked(ConfirmCartOrderDetail confirmCartOrderDetail);
     }
 
 }

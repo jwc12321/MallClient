@@ -10,6 +10,8 @@ public class HomepageModule {
     private HomepageContract.GoodsDetailsView goodsDetailsView;
     private HomepageContract.ConfirmOrderView confirmOrderView;
     private HomepageContract.WXGoodsDetailsView wxGoodsDetailsView;
+    private HomepageContract.GeneralGoodsDetailsView generalGoodsDetailsView;
+    private HomepageContract.CartConfirmOrderView cartConfirmOrderView;
 
     public HomepageModule(HomepageContract.HomePageView homePageView) {
         this.homePageView = homePageView;
@@ -25,6 +27,14 @@ public class HomepageModule {
 
     public HomepageModule(HomepageContract.WXGoodsDetailsView wxGoodsDetailsView) {
         this.wxGoodsDetailsView = wxGoodsDetailsView;
+    }
+
+    public HomepageModule(HomepageContract.GeneralGoodsDetailsView generalGoodsDetailsView) {
+        this.generalGoodsDetailsView = generalGoodsDetailsView;
+    }
+
+    public HomepageModule(HomepageContract.CartConfirmOrderView cartConfirmOrderView) {
+        this.cartConfirmOrderView = cartConfirmOrderView;
     }
 
     @Provides
@@ -45,5 +55,15 @@ public class HomepageModule {
     @Provides
     HomepageContract.WXGoodsDetailsView provideWXGoodsDetailsView(){
         return wxGoodsDetailsView;
+    }
+
+    @Provides
+    HomepageContract.GeneralGoodsDetailsView provideGeneralGoodsDetailsView(){
+        return generalGoodsDetailsView;
+    }
+
+    @Provides
+    HomepageContract.CartConfirmOrderView provideCartConfirmOrderView(){
+        return cartConfirmOrderView;
     }
 }

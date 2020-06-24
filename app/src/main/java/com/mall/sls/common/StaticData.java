@@ -1,5 +1,7 @@
 package com.mall.sls.common;
 
+import com.google.gson.annotations.SerializedName;
+
 public class StaticData {
     public static final String  WX_APP_ID = "wxcea8bff4c8e832be";
     //登录中
@@ -155,4 +157,6 @@ public class StaticData {
     public static final String FANS="FANS";//我的粉丝
     public static final String MSGBOX="MSGBOX";//消息盒子
 
+    public static final String PRODUCT_LIST="productList";//规格价格列表
+    public static final String SPECIFICATION_LIST="specificationList";//规格列表
 }

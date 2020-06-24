@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -46,6 +47,7 @@ import com.mall.sls.common.widget.textview.WhiteDrawTextView;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
+import com.mall.sls.data.entity.GoodsSpec;
 import com.mall.sls.data.entity.GroupPurchase;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.ProductListCallableInfo;
@@ -76,7 +78,7 @@ import butterknife.OnClick;
 
 /**
  * @author jwc on 2020/5/9.
- * 描述：普通商品详情
+ * 描述：普通商品平团详情
  */
 public class OrdinaryGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, NestedScrollView.OnScrollChangeListener {
 
@@ -176,6 +178,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     private String oldGroupRulesId;
     private boolean isGroup;
     private List<ProductListCallableInfo> productListCallableInfos;
+    private List<GoodsSpec> goodsSpecs;
+    private String picUrl;
     private WXShareManager wxShareManager;
     private String backType;
     private String nameText;
@@ -382,7 +386,9 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
 
     private void goSelectSpecReturn(String type) {
         Intent intent = new Intent(this, SelectSpecActivity.class);
-        intent.putExtra(StaticData.GOODS_DETAILS_INFO, goodsDetailsInfo);
+        intent.putExtra(StaticData.PRODUCT_LIST, (Serializable) goodsSpecs);
+        intent.putExtra(StaticData.SPECIFICATION_LIST, (Serializable) productListCallableInfos);
+        intent.putExtra(StaticData.PIC_URL,picUrl);
         intent.putExtra(StaticData.SKU_CHECK, (Serializable) checkSkus);
         intent.putExtra(StaticData.CHOICE_TYPE, type);
         intent.putExtra(StaticData.GOODS_COUNT, goodsCount);
@@ -391,7 +397,9 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
 
     private void goSelectSpec(String type) {
         Intent intent = new Intent(this, SelectSpecActivity.class);
-        intent.putExtra(StaticData.GOODS_DETAILS_INFO, goodsDetailsInfo);
+        intent.putExtra(StaticData.PRODUCT_LIST, (Serializable) goodsSpecs);
+        intent.putExtra(StaticData.SPECIFICATION_LIST, (Serializable) productListCallableInfos);
+        intent.putExtra(StaticData.PIC_URL,picUrl);
         intent.putExtra(StaticData.SKU_CHECK, (Serializable) checkSkus);
         intent.putExtra(StaticData.CHOICE_TYPE, type);
         intent.putExtra(StaticData.GOODS_COUNT, goodsCount);
@@ -467,7 +475,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             }
             banner.setPointsIsVisible(data.size() > 1);
             banner.setAutoPlayAble(data.size() > 1);
-            banner.setBannerData(R.layout.xbanner_item, data);
+            banner.setBannerData(R.layout.xbanner_zero_item, data);
             currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getRetailPrice()));
             unit = goodsDetailsInfo.getUnit();
             goodsUnit.setText("/" + unit);
@@ -484,6 +492,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             groupPurchases = goodsDetailsInfo.getGroupPurchases();
             oldGroupRulesId = goodsDetailsInfo.getRulesId();
             initGroup();
+            picUrl=goodsDetailsInfo.getPicUrl();
+            goodsSpecs=goodsDetailsInfo.getGoodsSpecs();
             productListCallableInfos = goodsDetailsInfo.getProductListCallableInfos();
             if (productListCallableInfos != null && productListCallableInfos.size() > 0) {
                 individualShoppingPrice.setText("¥" + productListCallableInfos.get(0).getPrice());

@@ -368,4 +368,12 @@
     <string name="mine_lottery">我的-抽奖</string>
     <string name="mine_verified">我的-实名认证</string>
     <string name="mine_feedback">我的-意见反馈</string>
+
+    <!--1.0.0-->
+    <string name="buy_now">立即购买</string>
+    <string name="add_cart_success">加入购物车成功</string>
+    <string name="same_city_delivery">配送方式：同城配送</string>
+    <string name="express_delivery">配送方式：快递配送</string>
+    <string name="cart">购物车</string>
+    <string name="invalid_goods_due_to_inventory_reasons">因库存原因导致失效的商品</string>
 </resources>

@@ -4,8 +4,12 @@ package com.mall.sls.data.remote;
 import com.mall.sls.data.RemoteDataWrapper;
 import com.mall.sls.data.entity.AddressInfo;
 import com.mall.sls.data.entity.AppUrlInfo;
+import com.mall.sls.data.entity.CartAddInfo;
+import com.mall.sls.data.entity.CartInfo;
+import com.mall.sls.data.entity.ConfirmCartOrderDetail;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CouponInfo;
+import com.mall.sls.data.entity.GeneralGoodsDetailsInfo;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.HomePageInfo;
@@ -22,7 +26,6 @@ import com.mall.sls.data.entity.MineInfo;
 import com.mall.sls.data.entity.MyCouponInfo;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.OrderSubmitInfo;
-import com.mall.sls.data.entity.PrizeVo;
 import com.mall.sls.data.entity.ProvinceBean;
 import com.mall.sls.data.entity.ShareInfo;
 import com.mall.sls.data.entity.TeamInfo;
@@ -30,7 +33,11 @@ import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.entity.VipAmountInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.request.AddAddressRequest;
+import com.mall.sls.data.request.BuyNowRequest;
+import com.mall.sls.data.request.CartAddRequest;
 import com.mall.sls.data.request.CartFastaddRequest;
+import com.mall.sls.data.request.CartGeneralCheckedRequest;
+import com.mall.sls.data.request.CartUpdateNumberRequest;
 import com.mall.sls.data.request.CertifyIdRequest;
 import com.mall.sls.data.request.CodeRequest;
 import com.mall.sls.data.request.DescriptionRequest;
@@ -272,5 +279,37 @@ public interface RestApiService {
     //领取优惠卷
     @POST("app/coupon/receive")
     Flowable<RemoteDataWrapper<Ignore>> couponReceive(@Header("X-Hc-Sign") String sign, @Body TypeRequest request);
+
+    //查询购物车商品数量
+    @GET("app/cart/general/count")
+    Flowable<RemoteDataWrapper<String>> getCartCount(@Header("X-Hc-Sign") String sign);
+
+    //加入购物车
+    @POST("app/cart/general/add")
+    Flowable<RemoteDataWrapper<CartAddInfo>> cartAdd(@Header("X-Hc-Sign") String sign, @Body CartAddRequest request);
+
+    //购物车选中商品购买
+    @POST("app/cart/general/checked")
+    Flowable<RemoteDataWrapper<ConfirmCartOrderDetail>> cartGeneralChecked(@Header("X-Hc-Sign") String sign, @Body CartGeneralCheckedRequest request);
+
+    //删除购物车指定商品
+    @DELETE("app/cart/general/delete/{id}")
+    Flowable<RemoteDataWrapper<Boolean>> deleteCartItem(@Header("X-Hc-Sign") String sign, @Path("id") String id);
+
+    //查询购物车列表
+    @GET("app/cart/general/list")
+    Flowable<RemoteDataWrapper<CartInfo>> getCartInfo(@Header("X-Hc-Sign") String sign);
+
+    //购物车内修改商品数量
+    @POST("app/cart/general/update")
+    Flowable<RemoteDataWrapper<CartAddInfo>> cartUpdateNumer(@Header("X-Hc-Sign") String sign, @Body CartUpdateNumberRequest request);
+
+    //立即购买
+    @POST("app/cart/general/fastadd")
+    Flowable<RemoteDataWrapper<ConfirmCartOrderDetail>> buyNow(@Header("X-Hc-Sign") String sign, @Body BuyNowRequest request);
+
+    //普通商品详情
+    @GET("app/goods/baseGood")
+    Flowable<RemoteDataWrapper<GeneralGoodsDetailsInfo>> getGeneralGoodsDetailsInfo(@Header("X-Hc-Sign") String sign, @Query("goodsId") String goodsId);
 
 }

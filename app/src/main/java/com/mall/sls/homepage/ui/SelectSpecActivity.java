@@ -26,8 +26,6 @@ import com.mall.sls.data.entity.GoodsSpec;
 import com.mall.sls.data.entity.ProductListCallableInfo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -77,12 +75,12 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
     private int currentCount;
     private List<GoodsSpec> goodsSpecs;
     Map<String, String> map = new HashMap<String, String>();
-    private GoodsDetailsInfo goodsDetailsInfo;
     private List<ProductListCallableInfo> productListCallableInfos;
     private List<String> checkSkus;
     private String goodsSpecStr = "";
     private ProductListCallableInfo productListCallableInfo;
     private String choiceType;//0：单独购买 1：拼单
+    private String picUrl;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, SelectSpecActivity.class);
@@ -99,54 +97,52 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
 
     private void initView() {
         map.clear();
-        goodsDetailsInfo = (GoodsDetailsInfo) getIntent().getSerializableExtra(StaticData.GOODS_DETAILS_INFO);
         checkSkus = (List<String>) getIntent().getSerializableExtra(StaticData.SKU_CHECK);
-        choiceType=getIntent().getStringExtra(StaticData.CHOICE_TYPE);
-        currentCount=getIntent().getIntExtra(StaticData.GOODS_COUNT,1);
+        choiceType = getIntent().getStringExtra(StaticData.CHOICE_TYPE);
+        currentCount = getIntent().getIntExtra(StaticData.GOODS_COUNT, 1);
         goodsCount.setText(String.valueOf(currentCount));
-        if (goodsDetailsInfo != null) {
-            goodsSpecs = goodsDetailsInfo.getGoodsSpecs();
-            productListCallableInfos = goodsDetailsInfo.getProductListCallableInfos();
-            if (checkSkus != null && checkSkus.size() > 0) {
-                shopselectView.setCheckSkus(checkSkus);
-                for (int i=0;i<checkSkus.size();i++){
-                    goodsSpecStr = goodsSpecStr + checkSkus.get(i) + ",";
-                    map.put(String.valueOf(i),checkSkus.get(i));
-                }
-                goodsSpecStr = goodsSpecStr.substring(0, goodsSpecStr.length() - 1);
-                for (ProductListCallableInfo productListCallableInfo : productListCallableInfos) {
-                    if (TextUtils.equals(productListCallableInfo.getSpecifications(), goodsSpecStr)) {
-                        this.productListCallableInfo = productListCallableInfo;
-                        break;
-                    }
-                }
-                if (productListCallableInfo != null) {
-                    GlideHelper.load(this, productListCallableInfo.getUrl(), R.mipmap.icon_default_goods, goodsIv);
-                    if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
-                        goodsPrice.setText("¥" + productListCallableInfo.getPrice());
-                    }else {
-                        goodsPrice.setText("¥" + productListCallableInfo.getPreferentialPrice());
-                    }
-                    if (TextUtils.equals("0", productListCallableInfo.getNumber())) {
-                        model.setText(getString(R.string.out_stock));
-                        confirmBt.setEnabled(false);
-                    } else {
-                        model.setText(getString(R.string.is_selected) + " " + productListCallableInfo.getSpecifications());
-                        confirmBt.setEnabled(true);
-                    }
-                }
-            } else {
-                GlideHelper.load(this, goodsDetailsInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
-                if(productListCallableInfos!=null&&productListCallableInfos.size()>0){
-                    if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
-                        goodsPrice.setText("¥" +productListCallableInfos.get(0).getPrice());
-                    }else {
-                        goodsPrice.setText("¥" + productListCallableInfos.get(0).getPreferentialPrice());
-                    }
-                }
-                model.setText(getString(R.string.is_selected));
-                confirmBt.setEnabled(false);
+        goodsSpecs = (List<GoodsSpec>) getIntent().getSerializableExtra(StaticData.PRODUCT_LIST);
+        productListCallableInfos = (List<ProductListCallableInfo>) getIntent().getSerializableExtra(StaticData.SPECIFICATION_LIST);
+        picUrl=getIntent().getStringExtra(StaticData.PIC_URL);
+        if (checkSkus != null && checkSkus.size() > 0) {
+            shopselectView.setCheckSkus(checkSkus);
+            for (int i = 0; i < checkSkus.size(); i++) {
+                goodsSpecStr = goodsSpecStr + checkSkus.get(i) + ",";
+                map.put(String.valueOf(i), checkSkus.get(i));
             }
+            goodsSpecStr = goodsSpecStr.substring(0, goodsSpecStr.length() - 1);
+            for (ProductListCallableInfo productListCallableInfo : productListCallableInfos) {
+                if (TextUtils.equals(productListCallableInfo.getSpecifications(), goodsSpecStr)) {
+                    this.productListCallableInfo = productListCallableInfo;
+                    break;
+                }
+            }
+            if (productListCallableInfo != null) {
+                GlideHelper.load(this, productListCallableInfo.getUrl(), R.mipmap.icon_default_goods, goodsIv);
+                if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {
+                    goodsPrice.setText("¥" + productListCallableInfo.getPrice());
+                } else {
+                    goodsPrice.setText("¥" + productListCallableInfo.getPreferentialPrice());
+                }
+                if (TextUtils.equals("0", productListCallableInfo.getNumber())) {
+                    model.setText(getString(R.string.out_stock));
+                    confirmBt.setEnabled(false);
+                } else {
+                    model.setText(getString(R.string.is_selected) + " " + productListCallableInfo.getSpecifications());
+                    confirmBt.setEnabled(true);
+                }
+            }
+        } else {
+            GlideHelper.load(this, picUrl, R.mipmap.icon_default_goods, goodsIv);
+            if (productListCallableInfos != null && productListCallableInfos.size() > 0) {
+                if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {
+                    goodsPrice.setText("¥" + productListCallableInfos.get(0).getPrice());
+                } else {
+                    goodsPrice.setText("¥" + productListCallableInfos.get(0).getPreferentialPrice());
+                }
+            }
+            model.setText(getString(R.string.is_selected));
+            confirmBt.setEnabled(false);
         }
         SoftKeyBoardListener.setListener(this, onSoftKeyBoardChangeListener);
         shopselectView.setOnSelectedListener(this);
@@ -184,7 +180,7 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
         }
     };
 
-    @OnClick({ R.id.confirm_bt,R.id.close_iv,R.id.decrease_count,R.id.increase_count})
+    @OnClick({R.id.confirm_bt, R.id.close_iv, R.id.decrease_count, R.id.increase_count})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.close_iv:
@@ -201,7 +197,7 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
                 finish();
                 break;
             case R.id.decrease_count://数量减少
-                if (currentCount == 1||currentCount==0) {
+                if (currentCount == 1 || currentCount == 0) {
                     return;
                 }
                 currentCount--;
@@ -218,10 +214,10 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
 
     private void calculatingPrice(ProductListCallableInfo productListCallableInfo) {
         if (productListCallableInfo != null) {
-            if(!TextUtils.isEmpty(productListCallableInfo.getNumber())&&(currentCount>Integer.parseInt(productListCallableInfo.getNumber()))){
-                currentCount=Integer.parseInt(productListCallableInfo.getNumber());
+            if (!TextUtils.isEmpty(productListCallableInfo.getNumber()) && (currentCount > Integer.parseInt(productListCallableInfo.getNumber()))) {
+                currentCount = Integer.parseInt(productListCallableInfo.getNumber());
                 goodsCount.setText(String.valueOf(currentCount));
-                showMessage("库存只有"+currentCount+"件");
+                showMessage("库存只有" + currentCount + "件");
             }
         }
     }
@@ -286,9 +282,9 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
             }
             if (productListCallableInfo != null) {
                 GlideHelper.load(this, productListCallableInfo.getUrl(), R.mipmap.icon_default_goods, goodsIv);
-                if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
+                if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {
                     goodsPrice.setText("¥" + productListCallableInfo.getPrice());
-                }else {
+                } else {
                     goodsPrice.setText("¥" + productListCallableInfo.getPreferentialPrice());
                 }
                 model.setText(getString(R.string.is_selected) + " " + productListCallableInfo.getSpecifications());

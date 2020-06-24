@@ -10,8 +10,8 @@ android {
         applicationId "com.mall.sls"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 3
+        versionName "1.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -56,8 +56,8 @@ android {
         }
         debug {
 //            buildConfigField "String", "API_BASE_URL", "\"https://api.specialbuy.cn/\""
-//            buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.117:8080/\""
-            buildConfigField "String", "API_BASE_URL", "\"http://47.114.109.50:8080/\""
+            buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.117:8080/\""
+//            buildConfigField "String", "API_BASE_URL", "\"http://47.114.109.50:8080/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug

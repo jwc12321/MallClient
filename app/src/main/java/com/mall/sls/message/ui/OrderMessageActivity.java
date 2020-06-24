@@ -69,13 +69,15 @@ public class OrderMessageActivity extends BaseActivity implements MessageContrac
     private boolean isClear=false;
 
     private String typeId;
+    private String commonTitle;
     @Inject
     MsgInfoPresenter msgInfoPresenter;
     private OrderMessageAdapter orderMessageAdapter;
 
-    public static void start(Context context, String typeId) {
+    public static void start(Context context, String typeId,String commonTitle) {
         Intent intent = new Intent(context, OrderMessageActivity.class);
         intent.putExtra(StaticData.TYPE_ID, typeId);
+        intent.putExtra(StaticData.COMMON_TITLE,commonTitle);
         context.startActivity(intent);
     }
 
@@ -91,6 +93,8 @@ public class OrderMessageActivity extends BaseActivity implements MessageContrac
     private void initView() {
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         typeId = getIntent().getStringExtra(StaticData.TYPE_ID);
+        commonTitle=getIntent().getStringExtra(StaticData.COMMON_TITLE);
+        title.setText(commonTitle);
         orderMessageAdapter = new OrderMessageAdapter(this);
         orderMessageAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(orderMessageAdapter);

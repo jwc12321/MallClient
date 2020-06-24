@@ -16,7 +16,7 @@
             android:layout_height="@dimen/dp_49"
             android:orientation="horizontal"
             android:layout_alignParentBottom="true"
-            android:weightSum="3">
+            android:weightSum="4">
             <RelativeLayout
                 android:id="@+id/home_rl"
                 style="@style/bottom_RelativeLayout_style">
@@ -46,19 +46,18 @@
                     android:text="@string/fight_together" />
             </RelativeLayout>
             <RelativeLayout
-                android:id="@+id/discount_rl"
-                style="@style/bottom_RelativeLayout_style"
-                android:visibility="gone">
+                android:id="@+id/cart_rl"
+                style="@style/bottom_RelativeLayout_style">
 
                 <ImageView
-                    android:id="@+id/discount_iv"
+                    android:id="@+id/cart_iv"
                     style="@style/bottom_imageView_style"
-                    android:src="@drawable/discount_select" />
+                    android:src="@drawable/cart_select" />
 
                 <TextView
-                    android:id="@+id/discount_tt"
+                    android:id="@+id/cart_tt"
                     style="@style/bottom_textView_style"
-                    android:text="@string/whole_network_discount" />
+                    android:text="@string/cart" />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/mine_rl"

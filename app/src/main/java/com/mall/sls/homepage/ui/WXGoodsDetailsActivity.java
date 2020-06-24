@@ -235,6 +235,11 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
         ActivityGroupGoodsActivity.start(this, goodsId);
     }
 
+    @Override
+    public void goGeneralGoodsDetails(String goodsId) {
+        GeneralGoodsDetailsActivity.start(this,goodsId);
+    }
+
     @OnClick({R.id.back,R.id.confirm_bt})
     public void onClick(View view) {
         switch (view.getId()) {

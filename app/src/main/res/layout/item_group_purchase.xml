@@ -15,7 +15,7 @@
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/list_up_spell_bt"
             style="@style/goods_detail_go_spell_bt_style"
-            android:text="@string/go_spell" />
+            android:text="@string/go_to_spell" />
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/list_up_poor_tv"
@@ -38,7 +38,7 @@
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/list_down_spell_bt"
             style="@style/goods_detail_go_spell_bt_style"
-            android:text="@string/go_spell" />
+            android:text="@string/go_to_spell" />
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/list_down_poor_tv"

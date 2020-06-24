@@ -42,6 +42,10 @@ public class GoodsItemInfo implements Serializable {
     //标签
     @SerializedName("keywords")
     private String keywords;
+    //商品类型 1普通商品 2普通团商品 3活动团商品 4抽奖商品
+    @SerializedName("goodsType")
+    private String goodsType;
+
     public String getBrief() {
         return brief;
     }
@@ -128,5 +132,13 @@ public class GoodsItemInfo implements Serializable {
 
     public void setKeywords(String keywords) {
         this.keywords = keywords;
+    }
+
+    public String getGoodsType() {
+        return goodsType;
+    }
+
+    public void setGoodsType(String goodsType) {
+        this.goodsType = goodsType;
     }
 }
