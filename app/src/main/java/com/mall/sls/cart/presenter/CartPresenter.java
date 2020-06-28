@@ -11,10 +11,8 @@ import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
 import com.mall.sls.data.entity.CartAddInfo;
 import com.mall.sls.data.entity.CartInfo;
-import com.mall.sls.data.entity.ConfirmCartOrderDetail;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
-import com.mall.sls.data.request.CartGeneralCheckedRequest;
 import com.mall.sls.data.request.CartUpdateNumberRequest;
 
 import java.util.ArrayList;
@@ -76,7 +74,7 @@ public class CartPresenter implements CartContract.CartPresenter {
     @Override
     public void deleteCartItem(String id) {
         cartView.showLoading(StaticData.PROCESSING);
-        String sign= SignUnit.signGet(RequestUrl.DELETE_CART_ITEM+id,"null");
+        String sign= SignUnit.signDelete(RequestUrl.DELETE_CART_ITEM+id,"null");
         Disposable disposable = restApiService.deleteCartItem(sign,id)
                 .flatMap(new RxRemoteDataParse<Boolean>())
                 .compose(new RxSchedulerTransformer<Boolean>())

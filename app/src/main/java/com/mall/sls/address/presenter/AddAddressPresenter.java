@@ -91,7 +91,7 @@ public class AddAddressPresenter implements AddressContract.AddAddressPresenter 
     @Override
     public void deleteAddress(String id) {
         addAddressView.showLoading(StaticData.PROCESSING);
-        String sign= SignUnit.signGet(RequestUrl.DELETE_ADDRESS_URL+id,"null");
+        String sign= SignUnit.signDelete(RequestUrl.DELETE_ADDRESS_URL+id,"null");
         Disposable disposable = restApiService.deleteAddress(sign,id)
                 .flatMap(new RxRemoteDataParse<Ignore>())
                 .compose(new RxSchedulerTransformer<Ignore>())

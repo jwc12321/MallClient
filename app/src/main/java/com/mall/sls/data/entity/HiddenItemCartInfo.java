@@ -1,12 +1,13 @@
 package com.mall.sls.data.entity;
 
 import com.google.gson.annotations.SerializedName;
+import com.mall.sls.cart.adapter.Literature;
 
 /**
  * @author jwc on 2020/6/24.
  * 描述：
  */
-public class HiddenItemCartInfo {
+public class HiddenItemCartInfo implements Literature {
     //数量
     @SerializedName("number")
     private String number;
@@ -30,6 +31,9 @@ public class HiddenItemCartInfo {
     //是否可以购买（下单商品列表 显示是否可以购买 false-显示灰色）
     @SerializedName("canBuy")
     private Boolean canBuy;
+    //购物车中的商品id
+    @SerializedName("id")
+    private String id;
 
     public String getNumber() {
         return number;
@@ -93,5 +97,18 @@ public class HiddenItemCartInfo {
 
     public void setCanBuy(Boolean canBuy) {
         this.canBuy = canBuy;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @Override
+    public int getType() {
+        return Literature.TYPE_CANCEL;
     }
 }

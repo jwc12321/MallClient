@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backGround6"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -17,53 +19,67 @@
             android:text="@string/cart" />
     </RelativeLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cart_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fadingEdge="none"
-        android:overScrollMode="never"
-        android:layout_below="@id/title_rel">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_rel"
+        android:layout_marginBottom="@dimen/dp_47"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="@string/layoutManager_LinearLayout"
+        tools:listitem="@layout/adapter_normal_cart_item" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_46"
+        android:layout_alignParentBottom="true"
+        android:background="@color/appText1">
+
+        <CheckBox
+            android:id="@+id/select_all"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:button="@drawable/cart_item_select"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/normal_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                android:visibility="gone"
-                app:layoutManager="@string/layoutManager_LinearLayout"
-                tools:listitem="@layout/adapter_goods_order" />
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_44">
-                <com.mall.sls.common.widget.textview.MediumThickTextView
-                   style="@style/size12_color_app3_text_style"
-                    android:text="@string/invalid_goods_due_to_inventory_reasons"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_centerVertical="true"/>
-                <com.mall.sls.common.widget.textview.MediumThickTextView
-                    style="@style/size12_color_app4_text_style"
-                    android:text="@string/empty"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:drawableRight="@mipmap/icon_cart_empty"
-                    android:drawablePadding="@dimen/dp_4"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"/>
-            </RelativeLayout>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/cancel_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                android:visibility="gone"
-                app:layoutManager="@string/layoutManager_LinearLayout"
-                tools:listitem="@layout/adapter_goods_order" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/size14_color_app3_text_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_1"
+            android:layout_toRightOf="@id/select_all"
+            android:text="@string/select_all" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/confirm_bt"
+            android:layout_width="@dimen/dp_93"
+            android:layout_height="@dimen/dp_34"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_15"
+            android:background="@drawable/cart_confirm_bt_select"
+            android:gravity="center"
+            android:textColor="@color/appText1"
+            android:textSize="@dimen/sp_14"
+            android:text="@string/settlement" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/total_price"
+            style="@style/size17_color_back1_text_style"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_12"
+            android:layout_toLeftOf="@id/confirm_bt"
+            tools:text="1111" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/size14_color_app3_text_style"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/total_price"
+            android:text="@string/total" />
+
+    </RelativeLayout>
 </RelativeLayout>

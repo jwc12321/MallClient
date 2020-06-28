@@ -63,6 +63,17 @@ public class SignUnit {
         return new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmacHex(postSignature);
     }
 
+    public static String signDelete(String method, String queryString) {
+        if (TextUtils.isEmpty(TimeManager.getTime())) {
+            TimeManager.saveTime(FormatUtil.timeSecond());
+        } else if (Long.parseLong(FormatUtil.timeSecond()) - Long.parseLong(TimeManager.getTime()) > 2) {
+            TimeManager.saveTime(FormatUtil.timeSecond());
+        }
+        String postSignature = "DELETE" + "\n" + method + "\n" + queryString + "\n" + "null" + "\n" + TimeManager.getTime();
+        Log.e("111", "okhttp" + postSignature);
+        return new HmacUtils(HmacAlgorithms.HMAC_SHA_256, key).hmacHex(postSignature);
+    }
+
     private static String md5hex(String body) {
         String hexStr = "";
         try {

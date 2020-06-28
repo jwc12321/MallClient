@@ -376,4 +376,8 @@
     <string name="express_delivery">配送方式：快递配送</string>
     <string name="cart">购物车</string>
     <string name="invalid_goods_due_to_inventory_reasons">因库存原因导致失效的商品</string>
+    <string name="goods_can_not_be_reduced">受不了了，商品不能在减少了。</string>
+    <string name="select_all">全选</string>
+    <string name="total">总计：</string>
+    <string name="settlement">结算</string>
 </resources>

@@ -20,6 +20,7 @@ import com.mall.sls.R;
 import com.mall.sls.cart.ui.CartFragment;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.MainStartManager;
+import com.mall.sls.common.widget.viewpage.ViewPagerSlide;
 import com.mall.sls.homepage.ui.HomepageFragment;
 import com.mall.sls.local.ui.LocalTeamFragment;
 import com.mall.sls.mainframe.adapter.MainPagerAdapter;
@@ -34,7 +35,7 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
 
 
     @BindView(R.id.viewPager)
-    ViewPager viewPager;
+    ViewPagerSlide viewPager;
     @BindView(R.id.home_iv)
     ImageView homeIv;
     @BindView(R.id.home_tt)
