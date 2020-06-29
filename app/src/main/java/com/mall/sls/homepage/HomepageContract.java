@@ -91,10 +91,16 @@ public interface HomepageContract {
 
     interface CartConfirmOrderPresenter extends BasePresenter{
         void cartGeneralChecked(String addressId, List<String> ids, String userCouponId);
+        void cartOrderSubmit(String addressId, List<String> ids, String userCouponId, String message);
+        void orderAliPay(String orderId,String type);
+        void orderWxPay(String orderId,String type);
     }
 
     interface CartConfirmOrderView extends BaseView<CartConfirmOrderPresenter>{
         void renderCartGeneralChecked(ConfirmCartOrderDetail confirmCartOrderDetail);
+        void renderCartOrderSubmit(OrderSubmitInfo orderSubmitInfo);
+        void renderOrderAliPay(String alipayStr);
+        void renderOrderWxPay(WXPaySignResponse wxPaySignResponse);
     }
 
 }

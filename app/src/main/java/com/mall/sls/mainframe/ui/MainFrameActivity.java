@@ -106,6 +106,9 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
         if (TextUtils.equals(StaticData.REFLASH_ONE, MainStartManager.getMainStart())) {
             viewPager.setCurrentItem(0, false);
             MainStartManager.saveMainStart(StaticData.REFLASH_ZERO);
+        }else if(TextUtils.equals(StaticData.REFLASH_THREE, MainStartManager.getMainStart())){
+            viewPager.setCurrentItem(2, false);
+            MainStartManager.saveMainStart(StaticData.REFLASH_ZERO);
         }
     }
 

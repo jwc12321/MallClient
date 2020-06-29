@@ -37,6 +37,7 @@ import com.mall.sls.data.request.BuyNowRequest;
 import com.mall.sls.data.request.CartAddRequest;
 import com.mall.sls.data.request.CartFastaddRequest;
 import com.mall.sls.data.request.CartGeneralCheckedRequest;
+import com.mall.sls.data.request.CartOrderSubmitRequest;
 import com.mall.sls.data.request.CartUpdateNumberRequest;
 import com.mall.sls.data.request.CertifyIdRequest;
 import com.mall.sls.data.request.CodeRequest;
@@ -132,7 +133,7 @@ public interface RestApiService {
 
     //查询当前预提交订单可用优惠券
     @GET("app/coupon/selectlist")
-    Flowable<RemoteDataWrapper<List<CouponInfo>>> getCouponSelect(@Header("X-Hc-Sign") String sign, @Query("cartIds") List<String> cartIds);
+    Flowable<RemoteDataWrapper<List<CouponInfo>>> getCouponSelect(@Header("X-Hc-Sign") String sign, @Query("cartIds") String cartIds);
 
     //提交订单
     @POST("app/order/submit")
@@ -311,5 +312,9 @@ public interface RestApiService {
     //普通商品详情
     @GET("app/goods/baseGood")
     Flowable<RemoteDataWrapper<GeneralGoodsDetailsInfo>> getGeneralGoodsDetailsInfo(@Header("X-Hc-Sign") String sign, @Query("goodsId") String goodsId);
+
+    //普通商品提交订单
+    @POST("app/order/general/submit")
+    Flowable<RemoteDataWrapper<OrderSubmitInfo>> cartOrderSubmit(@Header("X-Hc-Sign") String sign, @Body CartOrderSubmitRequest request);
 
 }

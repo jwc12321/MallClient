@@ -128,7 +128,6 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private CheckedGoods checkedGoods;
     private String couponId;
     private String userCouponId;
-    private String cartId;
     private String message = "";
     //1:单独购买 2：发起拼单 3：拼团 4：百人团
     private String purchaseType;
@@ -145,7 +144,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private String inviteCode;
     private String picUrl;
     private String selectType;
-    private List<String> cartIds;
+    private String cartIds;
 
     @Inject
     ConfirmOrderPresenter confirmOrderPresenter;
@@ -171,7 +170,6 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private void initView() {
         EventBus.getDefault().register(this);
         confirmOrderDetail = (ConfirmOrderDetail) getIntent().getSerializableExtra(StaticData.CONFIRM_ORDER_DETAIL);
-        cartIds=new ArrayList<>();
         purchaseType = getIntent().getStringExtra(StaticData.PURCHASE_TYPE);
         wxUrl = getIntent().getStringExtra(StaticData.WX_URL);
         inviteCode = getIntent().getStringExtra(StaticData.INVITE_CODE);
@@ -182,9 +180,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
         if (confirmOrderDetail != null) {
             addressInfo = confirmOrderDetail.getAddressInfo();
             address();
-            cartIds.clear();
-            cartId = confirmOrderDetail.getCartId();
-            cartIds.add(cartId);
+            cartIds = confirmOrderDetail.getCartId();
             checkedGoodsList = confirmOrderDetail.getCheckedGoods();
             if (checkedGoodsList != null && checkedGoodsList.size() > 0) {
                 //现在没有购物车，所以单独一个
@@ -254,7 +250,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                     return;
                 }
                 if(TextUtils.equals(StaticData.REFLASH_ZERO,orderTotalPrice)||TextUtils.equals("0.00",orderTotalPrice)){
-                    confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
+                    confirmOrderPresenter.orderSubmit(addressId, cartIds, couponId, userCouponId, message);
                 }else {
                     Intent intent = new Intent(this, SelectPayTypeActivity.class);
                     intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
@@ -291,7 +287,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                 case RequestCodeStatic.REQUEST_ADDRESS://地址
                     if (data != null) {
                         addressId = data.getStringExtra(StaticData.ADDRESS_ID);
-                        confirmOrderPresenter.cartCheckout(addressId, cartId, couponId, userCouponId);
+                        confirmOrderPresenter.cartCheckout(addressId, cartIds, couponId, userCouponId);
                     }
                     break;
                 case RequestCodeStatic.REQUEST_REMARK://备注
@@ -305,7 +301,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                         Bundle bundle = data.getExtras();
                         couponId = bundle.getString(StaticData.COUPON_ID);
                         userCouponId = bundle.getString(StaticData.USER_COUPON_ID);
-                        confirmOrderPresenter.cartCheckout(addressId, cartId, couponId, userCouponId);
+                        confirmOrderPresenter.cartCheckout(addressId, cartIds, couponId, userCouponId);
                     }
                     break;
                 case RequestCodeStatic.PAY_TYPE://选择支付方式
@@ -315,14 +311,14 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(ConfirmOrderActivity.this)) {
 //                                confirmOrderPresenter.orderWxPay(orderId,StaticData.REFLASH_ZERO);
-                                confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
+                                confirmOrderPresenter.orderSubmit(addressId, cartIds, couponId, userCouponId, message);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
                         } else if(TextUtils.equals(StaticData.REFLASH_ONE, selectType)){
                             if (PayTypeInstalledUtils.isAliPayInstalled(ConfirmOrderActivity.this)) {
 //                                confirmOrderPresenter.orderAliPay(orderId, StaticData.REFLASH_ONE);
-                                confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
+                                confirmOrderPresenter.orderSubmit(addressId, cartIds, couponId, userCouponId, message);
                             } else {
                                 showMessage(getString(R.string.install_alipay));
                             }
@@ -338,7 +334,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                                 return;
                             }
                             if(TextUtils.equals(StaticData.REFLASH_ZERO,orderTotalPrice)||TextUtils.equals("0.00",orderTotalPrice)){
-                                confirmOrderPresenter.orderSubmit(addressId, cartId, couponId, userCouponId, message);
+                                confirmOrderPresenter.orderSubmit(addressId, cartIds, couponId, userCouponId, message);
                             }else {
                                 Intent intent = new Intent(this, SelectPayTypeActivity.class);
                                 intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);

@@ -63,5 +63,6 @@ public class RequestUrl {
     public static String CART_UPDATE_NUMBER="/app/cart/general/update";//修改购物车商品数量
     public static String GOODS_BASE_GOOD="/app/goods/baseGood";//普通商品详情
     public static String CART_FAST_ADD="/app/cart/general/fastadd";//立即购买
+    public static String ORDER_GENERAL_SUBMIT="/app/order/general/submit";//普通商品下单
 
 }

@@ -19,6 +19,7 @@ public class StaticData {
     public static final String REFLASH_FOUR = "4";
     public static final String REFLASH_FIVE = "5";
     public static final String FIFTY_LIST_SIZE = "50";
+    public static final String REFLASH_NAGATIVE_ONE = "-1";
 
     //通用文本title
     public static final String COMMON_TITLE = "commonTitle";
@@ -27,11 +28,11 @@ public class StaticData {
     public static final String COMMON_CONFIRM_BT = "commonComfirmBt";
     public static final String WEBVIEW_DETAILINFO="webviewDetailInfo";
     //用户协议
-    public static final String USER_AGREEMENT="http://hhccrj.com/userRegisteredAgreement.html";
+    public static final String USER_AGREEMENT="https://www.specialbuy.cn/userRegisteredAgreement.html";
     //隐私政策
-    public static final String USER_PRIVACY ="http://hhccrj.com/userPrivacyAgreement.html";
+    public static final String USER_PRIVACY ="https://www.specialbuy.cn/userPrivacyAgreement.html";
     //实人认证协议
-    public static final String OCR_AGREEMENT="http://hhccrj.com/ocrAgreement.html";
+    public static final String OCR_AGREEMENT="https://www.specialbuy.cn/ocrAgreement.html";
     //选择的type
     public static final String CHOICE_TYPE="choiceType";
     //订单id

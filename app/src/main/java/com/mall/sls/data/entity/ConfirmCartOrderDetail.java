@@ -41,7 +41,8 @@ public class ConfirmCartOrderDetail {
     private String peiSongType;
     //可以下单的购物车id
     @SerializedName("cartIds")
-    private List<String> cartIds;
+    private String cartIds;
+
 
     public AddressInfo getAddressInfo() {
         return addressInfo;
@@ -123,11 +124,11 @@ public class ConfirmCartOrderDetail {
         this.peiSongType = peiSongType;
     }
 
-    public List<String> getCartIds() {
+    public String getCartIds() {
         return cartIds;
     }
 
-    public void setCartIds(List<String> cartIds) {
+    public void setCartIds(String cartIds) {
         this.cartIds = cartIds;
     }
 }

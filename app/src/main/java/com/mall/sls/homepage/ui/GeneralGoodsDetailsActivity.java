@@ -230,6 +230,9 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                 goSelectSpec();
                 break;
             case R.id.cart:
+                MainStartManager.saveMainStart(StaticData.REFLASH_THREE);
+                MainFrameActivity.start(this);
+                finish();
                 break;
             default:
         }
