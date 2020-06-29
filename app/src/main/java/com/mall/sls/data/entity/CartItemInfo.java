@@ -34,6 +34,7 @@ public class CartItemInfo implements Literature {
     //购物车中的商品id
     @SerializedName("id")
     private String id;
+    private String inputNumber="1";
     private boolean ischeck=false;
 
     public String getNumber() {
@@ -119,5 +120,13 @@ public class CartItemInfo implements Literature {
     @Override
     public int getType() {
         return Literature.TYPE_NORMAL;
+    }
+
+    public String getInputNumber() {
+        return inputNumber;
+    }
+
+    public void setInputNumber(String inputNumber) {
+        this.inputNumber = inputNumber;
     }
 }

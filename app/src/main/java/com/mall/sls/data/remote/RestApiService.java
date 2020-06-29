@@ -132,7 +132,7 @@ public interface RestApiService {
 
     //查询当前预提交订单可用优惠券
     @GET("app/coupon/selectlist")
-    Flowable<RemoteDataWrapper<List<CouponInfo>>> getCouponSelect(@Header("X-Hc-Sign") String sign, @Query("cartIds") String cartIds);
+    Flowable<RemoteDataWrapper<List<CouponInfo>>> getCouponSelect(@Header("X-Hc-Sign") String sign, @Query("cartIds") List<String> cartIds);
 
     //提交订单
     @POST("app/order/submit")

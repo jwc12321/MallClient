@@ -59,7 +59,7 @@ public class SelectCouponActivity extends BaseActivity implements CouponContract
     CouponSelectPresenter couponSelectPresenter;
     private List<CouponInfo> couponInfos;
 
-    private String cartIds;
+    private List<String> cartIds;
     private String userCouponId;
     private String couponId;
 
@@ -78,7 +78,7 @@ public class SelectCouponActivity extends BaseActivity implements CouponContract
     }
 
     private void initView() {
-        cartIds = getIntent().getStringExtra(StaticData.CART_IDS);
+        cartIds = (List<String>) getIntent().getSerializableExtra(StaticData.CART_IDS);
         userCouponId = getIntent().getStringExtra(StaticData.USER_COUPON_ID);
         selectCouponAdapter = new SelectCouponAdapter(userCouponId);
         selectCouponAdapter.setOnItemClickListener(this);

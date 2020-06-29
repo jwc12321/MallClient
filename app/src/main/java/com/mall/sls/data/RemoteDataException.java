@@ -9,6 +9,11 @@ import android.content.Context;
 
 public class RemoteDataException extends Exception {
 
+
+    public static final String TOKEN_OVER_TWO="10002";//token失效
+    public static final String TOKEN_OVER_ONE="10001";//token失效
+    public static final String CODE_SEVEN_ZERO_ONE="710";//库存不足
+
     private String mRetCode;
 
     public RemoteDataException(String retCode) {

@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface CouponContract {
     interface CouponSelectPresenter extends BasePresenter{
-        void getCouponSelect(String cartIds);
+        void getCouponSelect(List<String> cartIds);
     }
 
 

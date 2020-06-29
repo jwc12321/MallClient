@@ -294,7 +294,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                 if(TextUtils.equals(StaticData.REFLASH_ONE,goodsBaseVo.getCourierType())){
                     courierType.setText(getString(R.string.same_city_delivery));
                 }else {
-                    courierType.setText(getString(R.string.express_delivery));
+                    courierType.setText(getString(R.string.type_express_delivery));
                 }
             }
             goodsSpecs = generalGoodsDetailsInfo.getGoodsSpecs();

@@ -219,7 +219,7 @@ public abstract class BaseActivity extends AppCompatActivity implements LoadData
     public void showError(Throwable e) {
         if (e != null) {
             if (e instanceof RemoteDataException) {
-                if (TextUtils.equals(StaticData.TOKEN_OVER_ONE,((RemoteDataException) e).getRetCode())||TextUtils.equals(StaticData.TOKEN_OVER_TWO,((RemoteDataException) e).getRetCode())){
+                if (TextUtils.equals(RemoteDataException.TOKEN_OVER_ONE,((RemoteDataException) e).getRetCode())||TextUtils.equals(RemoteDataException.TOKEN_OVER_TWO,((RemoteDataException) e).getRetCode())){
                     WeixinLoginActivity.start(this);
                     MainFrameActivity.finishActivity();
                 }else{

@@ -7,12 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.BoolRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
 import com.mall.sls.cart.CartContract;
@@ -23,12 +26,17 @@ import com.mall.sls.cart.adapter.Literature;
 import com.mall.sls.cart.presenter.CartPresenter;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.NumberFormatUnit;
+import com.mall.sls.common.widget.edittextview.SoftKeyBoardListener;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.RemoteDataException;
 import com.mall.sls.data.entity.CartInfo;
 import com.mall.sls.data.entity.CartItemInfo;
 import com.mall.sls.data.entity.EmptyItem;
 import com.mall.sls.data.entity.HiddenItemCartInfo;
+import com.mall.sls.homepage.ui.CartConfirmOrderActivity;
+import com.mall.sls.login.ui.WeixinLoginActivity;
+import com.mall.sls.mainframe.ui.MainFrameActivity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -60,6 +68,12 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
 
     @Inject
     CartPresenter cartPresenter;
+    @BindView(R.id.statistics_rl)
+    RelativeLayout statisticsRl;
+    @BindView(R.id.no_record_bt)
+    MediumThickTextView noRecordBt;
+    @BindView(R.id.no_record_ll)
+    LinearLayout noRecordLl;
 
     private CartItemAdapter cartItemAdapter;
     private List<Literature> mLiteratureList;
@@ -77,6 +91,7 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
     private int totalCount = 0;
     private int deletePosition;
     private String type;
+    private List<String> ids;
 
 
     @Nullable
@@ -97,9 +112,24 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
 
     private void initView() {
         mLiteratureList = new ArrayList<>();
+        ids=new ArrayList<>();
         cartItemAdapter = new CartItemAdapter(getActivity());
         cartItemAdapter.setOnItemClickListener(this);
         cartRv.setAdapter(cartItemAdapter);
+
+        SoftKeyBoardListener.setListener(getActivity(), new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
+            @Override
+            public void keyBoardShow(int height) {
+
+            }
+
+            @Override
+            public void keyBoardHide(int height) {
+                if (showCountView != null) {
+                    ((EditText) showCountView).clearFocus();
+                }
+            }
+        });
     }
 
     @Override
@@ -117,31 +147,49 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
         if (cartInfo != null) {
             cartItemInfos = cartInfo.getNormalList();
             hiddenItemCartInfos = cartInfo.getCancelList();
-            emptyItems = new ArrayList<>();
-            emptyItems.add(new EmptyItem());
-            mLiteratureList.addAll(cartItemInfos);
-            if(hiddenItemCartInfos!=null&&hiddenItemCartInfos.size()>0) {
-                mLiteratureList.addAll(emptyItems);
-                mLiteratureList.addAll(hiddenItemCartInfos);
+            if(cartItemInfos.size()==0&&hiddenItemCartInfos.size()==0){
+                noRecordLl.setVisibility(View.VISIBLE);
+                cartRv.setVisibility(View.GONE);
+                statisticsRl.setVisibility(View.GONE);
+            }else {
+                noRecordLl.setVisibility(View.GONE);
+                cartRv.setVisibility(View.VISIBLE);
+                statisticsRl.setVisibility(View.VISIBLE);
+                emptyItems = new ArrayList<>();
+                emptyItems.add(new EmptyItem());
+                mLiteratureList.addAll(cartItemInfos);
+                if (hiddenItemCartInfos != null && hiddenItemCartInfos.size() > 0) {
+                    mLiteratureList.addAll(emptyItems);
+                    mLiteratureList.addAll(hiddenItemCartInfos);
+                }
+                cartItemAdapter.setLiteratureList(mLiteratureList);
+                calculatingPrice();
             }
-            cartItemAdapter.setLiteratureList(mLiteratureList);
-            calculatingPrice();
         }
     }
 
     @Override
     public void renderDeleteCartItem(Boolean isBoolean) {
-        if(TextUtils.equals(StaticData.REFLASH_ONE,type)){
+        if (TextUtils.equals(StaticData.REFLASH_ONE, type)) {
             cartItemInfos.remove(deletePosition);
             calculatingPrice();
-        }else if(TextUtils.equals(StaticData.REFLASH_TWO,type)){
-            if(deletePosition-1-cartItemInfos.size()>-1&&deletePosition-1-cartItemInfos.size()<hiddenItemCartInfos.size()) {
+        } else if (TextUtils.equals(StaticData.REFLASH_TWO, type)) {
+            if (deletePosition - 1 - cartItemInfos.size() > -1 && deletePosition - 1 - cartItemInfos.size() < hiddenItemCartInfos.size()) {
                 hiddenItemCartInfos.remove(deletePosition - 1 - cartItemInfos.size());
             }
-        }else {
+        } else {
             mLiteratureList.clear();
             mLiteratureList.addAll(cartItemInfos);
             cartItemAdapter.setLiteratureList(mLiteratureList);
+        }
+        if(cartItemInfos.size()==0&&hiddenItemCartInfos.size()==0){
+            noRecordLl.setVisibility(View.VISIBLE);
+            cartRv.setVisibility(View.GONE);
+            statisticsRl.setVisibility(View.GONE);
+        }else {
+            noRecordLl.setVisibility(View.GONE);
+            cartRv.setVisibility(View.VISIBLE);
+            statisticsRl.setVisibility(View.VISIBLE);
         }
     }
 
@@ -199,26 +247,51 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
     }
 
     @Override
-    public void deleteItem(String id,int position,String type) {
-        this.deletePosition=position;
-        this.type=type;
+    public void deleteItem(String id, int position, String type) {
+        this.deletePosition = position;
+        this.type = type;
         cartPresenter.deleteCartItem(id);
     }
 
     @Override
     public void deleteEmpty(String type) {
-        this.type=type;
-        String id="";
-        if(hiddenItemCartInfos!=null){
-            for (int i=0;i<hiddenItemCartInfos.size();i++){
-                if(i==hiddenItemCartInfos.size()-1){
-                    id=id+hiddenItemCartInfos.get(i).getId();
-                }else {
-                    id=id+hiddenItemCartInfos.get(i).getId()+",";
+        this.type = type;
+        String id = "";
+        if (hiddenItemCartInfos != null) {
+            for (int i = 0; i < hiddenItemCartInfos.size(); i++) {
+                if (i == hiddenItemCartInfos.size() - 1) {
+                    id = id + hiddenItemCartInfos.get(i).getId();
+                } else {
+                    id = id + hiddenItemCartInfos.get(i).getId() + ",";
                 }
             }
         }
         cartPresenter.deleteCartItem(id);
+    }
+
+    @Override
+    public void clickEditText(int position, View showCountView) {
+        this.showCountView = showCountView;
+        cartItemInfo = cartItemInfos.get(position);
+        if (!TextUtils.isEmpty(cartItemInfo.getNumber())) {
+            currentCount = Integer.parseInt(cartItemInfo.getNumber());
+            if (TextUtils.equals("0", cartItemInfo.getNumber()) || TextUtils.equals("00", cartItemInfo.getNumber())) {
+                showMessage(getString(R.string.goods_can_not_be_reduced));
+                ((EditText) showCountView).setText(String.valueOf(cartItemInfo.getNumber()));
+            } else {
+                currentCount = Integer.parseInt(cartItemInfo.getInputNumber());
+                cartPresenter.cartUpdateNumber(cartItemInfo.getId(), cartItemInfo.getInputNumber());
+            }
+        } else {
+            showMessage(getString(R.string.goods_can_not_be_reduced));
+            cartItemInfo.setNumber(String.valueOf(cartItemInfo.getNumber()));
+            ((EditText) showCountView).setText(String.valueOf(cartItemInfo.getNumber()));
+        }
+    }
+
+    @Override
+    public void returnEditText(View showCountView) {
+        this.showCountView = showCountView;
     }
 
     private void calculatingPrice() {
@@ -233,13 +306,13 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
                 totalPriceBd = unitPriceBd.multiply(countBd).add(totalPriceBd);
             }
         }
-        if(cartItemInfos==null||cartItemInfos.size()==0){
+        if (cartItemInfos == null || cartItemInfos.size() == 0) {
             confirmBt.setEnabled(false);
             confirmBt.setText(getString(R.string.settlement));
             selectAll.setChecked(true);
             selectAll.setEnabled(false);
             totalPrice.setText("0.00");
-        }else {
+        } else {
             selectAll.setEnabled(true);
             confirmBt.setText(getString(R.string.settlement) + "(" + totalCount + ")");
             if (totalCount == cartItemInfos.size()) {
@@ -252,8 +325,7 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
     }
 
 
-
-    @OnClick({R.id.select_all, R.id.confirm_bt})
+    @OnClick({R.id.select_all, R.id.confirm_bt,R.id.no_record_bt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.select_all:
@@ -272,16 +344,76 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
                 }
                 break;
             case R.id.confirm_bt:
-
+                confirm();
+                break;
+            case R.id.no_record_bt:
+                if(cartListener!=null){
+                    cartListener.goHomePage();
+                }
                 break;
             default:
         }
+    }
+
+    private void confirm(){
+        ids.clear();
+        for (int i=0;i<cartItemInfos.size();i++){
+            if(cartItemInfos.get(i).isIscheck()){
+                ids.add(cartItemInfos.get(i).getId());
+            }
+        }
+        if(ids.size()==0){
+            showMessage(getString(R.string.please_select_goods));
+            return;
+        }
+        CartConfirmOrderActivity.start(getActivity(),ids,StaticData.REFLASH_TWO);
     }
 
     private void returnFirst() {
         confirmBt.setText(getString(R.string.settlement));
         totalPrice.setText("0.00");
         selectAll.setChecked(false);
+    }
+
+
+    @Override
+    public void showError(Throwable e) {
+        if (e != null) {
+            if (e instanceof RemoteDataException) {
+                if (TextUtils.equals(RemoteDataException.TOKEN_OVER_ONE, ((RemoteDataException) e).getRetCode()) || TextUtils.equals(RemoteDataException.TOKEN_OVER_TWO, ((RemoteDataException) e).getRetCode())) {
+                    WeixinLoginActivity.start(getActivity());
+                    MainFrameActivity.finishActivity();
+                } else if (TextUtils.equals(RemoteDataException.CODE_SEVEN_ZERO_ONE, ((RemoteDataException) e).getRetCode())) {
+                    ((EditText) showCountView).setText(String.valueOf(cartItemInfo.getNumber()));
+                    showMessage(((RemoteDataException) e).getMessage(getActivity()));
+                } else {
+                    showMessage(((RemoteDataException) e).getMessage(getActivity()));
+                }
+            } else {
+                if (e instanceof HttpException) {
+                    HttpException exception = (HttpException) e;
+                    if (TextUtils.equals("401", exception.response().code() + "")) {
+                        WeixinLoginActivity.start(getActivity());
+                        MainFrameActivity.finishActivity();
+                    } else {
+                        showMessage(getString(R.string.fail_to_access_servers));
+                    }
+                } else {
+                    showMessage(getString(R.string.fail_to_access_servers));
+                }
+            }
+        }
+
+    }
+
+    public interface CartListener {
+        void goHomePage();
+    }
+
+    private CartListener cartListener;
+
+    public void setCartListener(CartListener cartListener) {
+        this.cartListener = cartListener;
     }
 
 }

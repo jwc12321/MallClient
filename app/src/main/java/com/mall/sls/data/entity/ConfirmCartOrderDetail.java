@@ -36,6 +36,12 @@ public class ConfirmCartOrderDetail {
     //订单总金额
     @SerializedName("orderTotalPrice")
     private String orderTotalPrice;
+    //配送方式
+    @SerializedName("peiSongType")
+    private String peiSongType;
+    //可以下单的购物车id
+    @SerializedName("cartIds")
+    private List<String> cartIds;
 
     public AddressInfo getAddressInfo() {
         return addressInfo;
@@ -107,5 +113,21 @@ public class ConfirmCartOrderDetail {
 
     public void setOrderTotalPrice(String orderTotalPrice) {
         this.orderTotalPrice = orderTotalPrice;
+    }
+
+    public String getPeiSongType() {
+        return peiSongType;
+    }
+
+    public void setPeiSongType(String peiSongType) {
+        this.peiSongType = peiSongType;
+    }
+
+    public List<String> getCartIds() {
+        return cartIds;
+    }
+
+    public void setCartIds(List<String> cartIds) {
+        this.cartIds = cartIds;
     }
 }

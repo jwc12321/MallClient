@@ -31,7 +31,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainFrameActivity extends BaseActivity implements HomepageFragment.HomepageListener, MineFragment.MineListener {
+public class MainFrameActivity extends BaseActivity implements HomepageFragment.HomepageListener, MineFragment.MineListener,CartFragment.CartListener {
 
 
     @BindView(R.id.viewPager)
@@ -115,6 +115,7 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
         cartFragment=new CartFragment();
         mineFragment = new MineFragment();
         homepageFragment.setHomepageListener(this);
+        cartFragment.setCartListener(this);
         mineFragment.setMineListener(this);
         fragments = new BaseFragment[4];
         fragments[0] = homepageFragment;
@@ -187,5 +188,10 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
     @Override
     public void goLocalTeam() {
         viewPager.setCurrentItem(1, false);
+    }
+
+    @Override
+    public void goHomePage() {
+        viewPager.setCurrentItem(0, false);
     }
 }

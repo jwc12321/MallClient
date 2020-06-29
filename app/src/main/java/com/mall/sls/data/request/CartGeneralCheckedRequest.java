@@ -15,7 +15,7 @@ public class CartGeneralCheckedRequest {
     //购物车中的商品id
     @SerializedName("ids")
     private List<String> ids ;
-    //优惠卷id
+    //用户优惠券id 不传参数或0使用默认 传-1不使用优惠券
     @SerializedName("userCouponId")
     private String userCouponId;
 

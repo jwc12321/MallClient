@@ -385,6 +385,10 @@
             android:name=".homepage.ui.GeneralGoodsDetailsActivity"
             android:launchMode="singleTop"
             android:screenOrientation="nosensor" />
+
+        <activity android:name=".homepage.ui.CartConfirmOrderActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import com.mall.sls.ActivityScope;
 import com.mall.sls.ApplicationComponent;
 import com.mall.sls.homepage.ui.ActivityGoodsDetailActivity;
 import com.mall.sls.homepage.ui.ActivityGroupGoodsActivity;
+import com.mall.sls.homepage.ui.CartConfirmOrderActivity;
 import com.mall.sls.homepage.ui.ConfirmOrderActivity;
 import com.mall.sls.homepage.ui.GeneralGoodsDetailsActivity;
 import com.mall.sls.homepage.ui.HomepageFragment;
@@ -22,4 +23,5 @@ public interface HomepageComponent {
     void inject(ConfirmOrderActivity confirmOrderActivity);
     void inject(WXGoodsDetailsActivity wxGoodsDetailsActivity);
     void inject(GeneralGoodsDetailsActivity generalGoodsDetailsActivity);
+    void inject(CartConfirmOrderActivity cartConfirmOrderActivity);
 }

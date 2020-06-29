@@ -38,7 +38,7 @@ public class CouponSelectPresenter implements CouponContract.CouponSelectPresent
     }
 
     @Override
-    public void getCouponSelect(String cartIds) {
+    public void getCouponSelect(List<String> cartIds) {
         couponSelectView.showLoading(StaticData.LOADING);
         String queryString = "cartIds=" +cartIds;
         String sign = SignUnit.signGet(RequestUrl.COUPON_SELECT_LIST_URL, queryString);

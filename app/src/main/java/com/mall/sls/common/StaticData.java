@@ -135,8 +135,6 @@ public class StaticData {
     public static final String PRIZE_ID="prizeId";
     public static final String PRIZE_TIME="prizeTime";
 
-    public static final String TOKEN_OVER_TWO="10002";
-    public static final String TOKEN_OVER_ONE="10001";
     public static final String SELECT_ID="selectId";
     public static final String AREA_CODE="areaCode";
     public static final String ADDRESS_TITLE="addressTitle";
@@ -159,4 +157,5 @@ public class StaticData {
 
     public static final String PRODUCT_LIST="productList";//规格价格列表
     public static final String SPECIFICATION_LIST="specificationList";//规格列表
+    public static final String CART_ITEM_IDS="cartItemIds";//购物车每个item的ids
 }

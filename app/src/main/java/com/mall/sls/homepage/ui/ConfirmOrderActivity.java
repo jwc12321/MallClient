@@ -52,6 +52,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -144,6 +145,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private String inviteCode;
     private String picUrl;
     private String selectType;
+    private List<String> cartIds;
 
     @Inject
     ConfirmOrderPresenter confirmOrderPresenter;
@@ -169,6 +171,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private void initView() {
         EventBus.getDefault().register(this);
         confirmOrderDetail = (ConfirmOrderDetail) getIntent().getSerializableExtra(StaticData.CONFIRM_ORDER_DETAIL);
+        cartIds=new ArrayList<>();
         purchaseType = getIntent().getStringExtra(StaticData.PURCHASE_TYPE);
         wxUrl = getIntent().getStringExtra(StaticData.WX_URL);
         inviteCode = getIntent().getStringExtra(StaticData.INVITE_CODE);
@@ -179,7 +182,9 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
         if (confirmOrderDetail != null) {
             addressInfo = confirmOrderDetail.getAddressInfo();
             address();
+            cartIds.clear();
             cartId = confirmOrderDetail.getCartId();
+            cartIds.add(cartId);
             checkedGoodsList = confirmOrderDetail.getCheckedGoods();
             if (checkedGoodsList != null && checkedGoodsList.size() > 0) {
                 //现在没有购物车，所以单独一个
@@ -259,7 +264,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                 break;
             case R.id.coupon_rl:
                 Intent couponIntent = new Intent(this, SelectCouponActivity.class);
-                couponIntent.putExtra(StaticData.CART_IDS, cartId);
+                couponIntent.putExtra(StaticData.CART_IDS, (Serializable) cartIds);
                 couponIntent.putExtra(StaticData.USER_COUPON_ID, userCouponId);
                 startActivityForResult(couponIntent, RequestCodeStatic.SELECT_COUPON);
                 break;

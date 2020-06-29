@@ -2,6 +2,9 @@ package com.mall.sls.cart.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.EditTextLimit;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.swipe.SwipeRevealLayout;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
@@ -164,6 +168,36 @@ public class CartItemAdapter extends RecyclerView.Adapter {
                         }
                     }
                 });
+                goodsCount.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        if (!TextUtils.isEmpty(goodsCount.getText().toString())) {
+                            EditTextLimit.editLimit(goodsCount,0);
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        cartItemInfo.setInputNumber(editable.toString());
+                    }
+                });
+
+                goodsCount.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus) {
+                            onItemClickListener.clickEditText(position,goodsCount);
+                        }else {
+                            onItemClickListener.returnEditText(goodsCount);
+                        }
+                    }
+                });
             }
         }
     }
@@ -241,9 +275,13 @@ public class CartItemAdapter extends RecyclerView.Adapter {
 
         void doReduce(int position, View showCountView, String id); //减少数量
 
-        void deleteItem(String id, int position, String type);
+        void deleteItem(String id, int position, String type);//删除单个
 
-        void deleteEmpty(String type);
+        void deleteEmpty(String type);//清空无效商品
+
+        void clickEditText(int position,View showCountView);//填写数量
+
+        void returnEditText(View showCountView);
     }
 
     private OnItemClickListener onItemClickListener;

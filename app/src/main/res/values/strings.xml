@@ -373,11 +373,24 @@
     <string name="buy_now">立即购买</string>
     <string name="add_cart_success">加入购物车成功</string>
     <string name="same_city_delivery">配送方式：同城配送</string>
-    <string name="express_delivery">配送方式：快递配送</string>
+    <string name="type_express_delivery">配送方式：快递配送</string>
     <string name="cart">购物车</string>
     <string name="invalid_goods_due_to_inventory_reasons">因库存原因导致失效的商品</string>
     <string name="goods_can_not_be_reduced">受不了了，商品不能在减少了。</string>
     <string name="select_all">全选</string>
     <string name="total">总计：</string>
     <string name="settlement">结算</string>
+    <string name="cart_empty">购物车是空的，快去填满它吧～</string>
+    <string name="delivery_method">配送方式</string>
+    <string name="same_city">同城</string>
+    <string name="express_delivery">快递</string>
+    <string name="order_delivery_fee">配送费</string>
+    <string name="order_notes_hint">选填，可以告诉我们您的特殊需求</string>
+    <string name="confirm_order_notes">订单备注</string>
+    <string name="please_select_goods">请选择商品</string>
+    <string name="cancel_goods_tip">以下商品不在配送范围内或商品暂时缺货</string>
+    <string name="continue_order">继续下单</string>
+    <string name="back_cart">返回购物车</string>
+    <string name="hidden_tip">亲，商品不在配送范围内</string>
+    <string name="go_homepage">去首页</string>
 </resources>

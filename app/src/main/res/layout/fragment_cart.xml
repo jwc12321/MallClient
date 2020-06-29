@@ -26,14 +26,17 @@
         android:layout_below="@id/title_rel"
         android:layout_marginBottom="@dimen/dp_47"
         android:nestedScrollingEnabled="false"
+        android:visibility="gone"
         app:layoutManager="@string/layoutManager_LinearLayout"
         tools:listitem="@layout/adapter_normal_cart_item" />
 
     <RelativeLayout
+        android:id="@+id/statistics_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_46"
         android:layout_alignParentBottom="true"
-        android:background="@color/appText1">
+        android:background="@color/appText1"
+        android:visibility="gone">
 
         <CheckBox
             android:id="@+id/select_all"
@@ -63,9 +66,9 @@
             android:layout_marginRight="@dimen/dp_15"
             android:background="@drawable/cart_confirm_bt_select"
             android:gravity="center"
+            android:text="@string/settlement"
             android:textColor="@color/appText1"
-            android:textSize="@dimen/sp_14"
-            android:text="@string/settlement" />
+            android:textSize="@dimen/sp_14" />
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/total_price"
@@ -82,4 +85,32 @@
             android:text="@string/total" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/no_record_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_rel"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_74"
+            android:src="@mipmap/icon_cart_no_item" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/size11_color_app2_text_style"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_17"
+            android:text="@string/cart_empty" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/no_record_bt"
+            style="@style/common_next_bt_style"
+            android:layout_marginTop="@dimen/dp_146"
+            android:text="@string/go_shopping" />
+    </LinearLayout>
 </RelativeLayout>
