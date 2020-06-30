@@ -14,6 +14,7 @@ import com.mall.sls.order.ui.PendingDeliveryFragment;
 import com.mall.sls.order.ui.PendingPaymentFragment;
 import com.mall.sls.order.ui.PendingShareFragment;
 import com.mall.sls.order.ui.ShippingFragment;
+import com.mall.sls.order.ui.ViewLogisticsActivity;
 
 import dagger.Component;
 
@@ -27,4 +28,5 @@ public interface OrderComponent {
     void inject(GoodsOrderDetailsActivity goodsOrderDetailsActivity);
     void inject(PendingShareFragment pendingShareFragment);
     void inject(CompletedFragment completedFragment);
+    void inject(ViewLogisticsActivity viewLogisticsActivity);
 }

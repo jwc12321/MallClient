@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_108"
+    android:background="@color/appText1"
+    android:id="@+id/item_rl">
+
+    <ImageView
+        android:id="@+id/goods_iv"
+        style="@style/confirm_order_goods_iv_style"
+        tools:src="@mipmap/ic_launcher" />
+
+
+    <com.mall.sls.common.widget.textview.MediumThickTextView
+        android:id="@+id/goods_name"
+        style="@style/confirm_order_goods_name_style"
+        android:layout_toRightOf="@id/goods_iv"
+        tools:text="香蕉" />
+
+    <com.mall.sls.common.widget.textview.ConventionalTextView
+        android:id="@+id/sku"
+        style="@style/confirm_order_goods_sku_style"
+        android:layout_above="@id/goods_price"
+        android:layout_below="@id/goods_name"
+        android:layout_toRightOf="@id/goods_iv"
+        tools:text="黑色" />
+
+    <com.mall.sls.common.widget.textview.ConventionalTextView
+        android:id="@+id/goods_number"
+        style="@style/confirm_order_goods_number_style"
+        android:layout_alignBottom="@id/goods_iv"
+        tools:text="x1" />
+
+    <com.mall.sls.common.widget.textview.ConventionalTextView
+        android:id="@+id/goods_price"
+        style="@style/size14_color_back1_text_style"
+        android:layout_alignBottom="@id/goods_iv"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_toRightOf="@id/goods_iv"
+        tools:text="111" />
+</RelativeLayout>

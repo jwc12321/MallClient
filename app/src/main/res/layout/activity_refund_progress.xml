@@ -116,20 +116,20 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dp_70"
-                android:layout_marginBottom="@dimen/dp_6"
+                android:layout_marginBottom="@dimen/dp_26"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:src="@mipmap/icon_red_tip" />
+                    android:src="@mipmap/icon_hui_tip" />
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/return_where"
-                    style="@style/size14_color_back1_text_style"
+                    style="@style/size14_color_app2_text_style"
                     android:layout_gravity="center_vertical"
-                    tools:text="（退款将会原路返回到您的支付宝账户中）" />
+                    android:text="@string/refund_same_way" />
             </LinearLayout>
 
         </LinearLayout>

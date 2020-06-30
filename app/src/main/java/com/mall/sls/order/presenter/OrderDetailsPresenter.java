@@ -15,6 +15,7 @@ import com.mall.sls.data.entity.OrderInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
+import com.mall.sls.data.request.OrderIdRequest;
 import com.mall.sls.data.request.OrderPayRequest;
 import com.mall.sls.data.request.OrderRequest;
 import com.mall.sls.order.OrderContract;
@@ -160,6 +161,30 @@ public class OrderDetailsPresenter implements OrderContract.OrderDetailsPresente
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        orderDetailsView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void addCartBatch(String orderId) {
+        orderDetailsView.showLoading(StaticData.PROCESSING);
+        OrderIdRequest request=new OrderIdRequest(orderId);
+        String sign= SignUnit.signPost(RequestUrl.ADD_CART_BATCH,gson.toJson(request));
+        Disposable disposable = restApiService.addCartBatch(sign,request)
+                .flatMap(new RxRemoteDataParse<Boolean>())
+                .compose(new RxSchedulerTransformer<Boolean>())
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean isBoolean) throws Exception {
+                        orderDetailsView.dismissLoading();
+                        orderDetailsView.renderAddCartBatch(isBoolean);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        orderDetailsView.dismissLoading();
                         orderDetailsView.showError(throwable);
                     }
                 });

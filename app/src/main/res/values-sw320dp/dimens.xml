@@ -52,6 +52,7 @@
 	<dimen name="dp_13_5">12.0000dp</dimen>
 	<dimen name="dp_14">12.4444dp</dimen>
 	<dimen name="dp_15">13.3333dp</dimen>
+	<dimen name="dp_15_5">13.7778dp</dimen>
 	<dimen name="dp_16">14.2222dp</dimen>
 	<dimen name="dp_16_5">14.6667dp</dimen>
 	<dimen name="dp_17">15.1111dp</dimen>

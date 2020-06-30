@@ -85,7 +85,6 @@ public class RefundProgressActivity extends BaseActivity {
         payAmount.setText("¥" + NumberFormatUnit.twoDecimalFormat(amount));
         refundProcessingIv.setSelected(true);
         successfulIv.setSelected(TextUtils.equals(StaticData.REFUNDED, orderStatus));
-        returnWhere.setText("（退款将会原路返回到您的" + payType + "账户中）");
         orderArrivalTime.setVisibility(TextUtils.equals(StaticData.REFUNDED, orderStatus) ? View.VISIBLE : View.INVISIBLE);
         successfulTv.setSelected(TextUtils.equals(StaticData.REFUNDED, orderStatus));
         lineIv.setSelected(TextUtils.equals(StaticData.REFUNDED, orderStatus));

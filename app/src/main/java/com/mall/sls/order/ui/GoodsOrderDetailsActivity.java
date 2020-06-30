@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -55,6 +54,7 @@ import com.mall.sls.mine.ui.SelectShareTypeActivity;
 import com.mall.sls.order.DaggerOrderComponent;
 import com.mall.sls.order.OrderContract;
 import com.mall.sls.order.OrderModule;
+import com.mall.sls.order.adapter.OrderDetailGoodsItemAdapter;
 import com.mall.sls.order.adapter.OrderInformationAdapter;
 import com.mall.sls.order.presenter.OrderDetailsPresenter;
 import com.mall.sls.webview.ui.WebViewActivity;
@@ -118,22 +118,20 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     ConventionalTextView namePhone;
     @BindView(R.id.receipt_address)
     ConventionalTextView receiptAddress;
-    @BindView(R.id.goods_iv)
-    ImageView goodsIv;
-    @BindView(R.id.goods_name)
-    MediumThickTextView goodsName;
-    @BindView(R.id.sku)
-    ConventionalTextView sku;
-    @BindView(R.id.goods_price)
-    ConventionalTextView goodsPrice;
-    @BindView(R.id.goods_number)
-    ConventionalTextView goodsNumber;
+    @BindView(R.id.goods_rv)
+    RecyclerView goodsRv;
     @BindView(R.id.total_amount)
     ConventionalTextView totalAmount;
-    @BindView(R.id.delivery_fee)
-    ConventionalTextView deliveryFee;
     @BindView(R.id.coupon)
     ConventionalTextView coupon;
+    @BindView(R.id.delivery_method)
+    ConventionalTextView deliveryMethod;
+    @BindView(R.id.delivery_fee)
+    ConventionalTextView deliveryFee;
+    @BindView(R.id.order_notes_tv)
+    ConventionalTextView orderNotesTv;
+    @BindView(R.id.notes)
+    ConventionalTextView notes;
     @BindView(R.id.is_pay)
     ConventionalTextView isPay;
     @BindView(R.id.real_payment)
@@ -150,6 +148,12 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     ConventionalTextView rightBt;
     @BindView(R.id.bt_rl)
     RelativeLayout btRl;
+    @BindView(R.id.goods_iv)
+    ImageView goodsIv;
+    @BindView(R.id.coupon_rl)
+    RelativeLayout couponRl;
+    @BindView(R.id.notes_rl)
+    RelativeLayout notesRl;
     private String goodsOrderId;
     private OrderInformationAdapter orderInformationAdapter;
 
@@ -180,7 +184,10 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private String payModeText;
     private String refundTime;
     private String arrivalTime;
+    private Boolean hasChild = false;
+    private Boolean general;
 
+    private OrderDetailGoodsItemAdapter orderGoodsItemAdapter;
 
     @Inject
     OrderDetailsPresenter orderDetailsPresenter;
@@ -216,6 +223,8 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     }
 
     private void addAdapter() {
+        orderGoodsItemAdapter = new OrderDetailGoodsItemAdapter(this);
+        goodsRv.setAdapter(orderGoodsItemAdapter);
         orderInformationAdapter = new OrderInformationAdapter(this);
         orderInformationAdapter.setOnItemClickListener(this);
         infoRv.setAdapter(orderInformationAdapter);
@@ -254,28 +263,40 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                     shareBitMap = QRCodeFileUtils.createBitmap3(goodsIv, goodsIv.getWidth(), goodsIv.getWidth());//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
                     Intent intent = new Intent(this, SelectShareTypeActivity.class);
                     startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
-                } else if (TextUtils.equals(StaticData.PENDING_REFUND, orderStatusText)||TextUtils.equals(StaticData.REFUNDED, orderStatusText)) {
-                    RefundProgressActivity.start(this,orderStatusText,actualPrice,payModeText,refundTime,arrivalTime);
+                } else if (TextUtils.equals(StaticData.PENDING_REFUND, orderStatusText) || TextUtils.equals(StaticData.REFUNDED, orderStatusText)) {
+                    RefundProgressActivity.start(this, orderStatusText, actualPrice, payModeText, refundTime, arrivalTime);
                 } else {
-                    webViewDetailInfo = new WebViewDetailInfo();
-                    webViewDetailInfo.setTitle(getString(R.string.logistics_details));
-                    webViewDetailInfo.setUrl(sfH5Url);
-                    WebViewActivity.start(this, webViewDetailInfo);
+                    if (hasChild) {
+                        ViewLogisticsActivity.start(this, goodsOrderId);
+                    } else {
+                        webViewDetailInfo = new WebViewDetailInfo();
+                        webViewDetailInfo.setTitle(getString(R.string.logistics_details));
+                        webViewDetailInfo.setUrl(sfH5Url);
+                        WebViewActivity.start(this, webViewDetailInfo);
+                    }
                 }
                 break;
             case R.id.left_bt:
                 if (TextUtils.equals(StaticData.TO_PAY, orderStatusText)) {
                     orderDetailsPresenter.cancelOrder(goodsOrderId);
                 } else {
-                    if (isActivity) {
-                        ActivityGroupGoodsActivity.start(this, goodsId);
-                    } else {
-                        OrdinaryGoodsDetailActivity.start(this, goodsId);
+                    if(general){//普通商品是加入购物车，拼团商品是去商品详情
+                        orderDetailsPresenter.addCartBatch(goodsOrderId);
+                    }else {
+                        if (isActivity) {
+                            ActivityGroupGoodsActivity.start(this, goodsId);
+                        } else {
+                            OrdinaryGoodsDetailActivity.start(this, goodsId);
+                        }
                     }
                 }
                 break;
             case R.id.delivery_rl://查看物流信息
-                DeliveryinfoActivity.start(this, shipOrderInfos);
+                if (hasChild) {
+                    ViewLogisticsActivity.start(this, goodsOrderId);
+                } else {
+                    DeliveryinfoActivity.start(this, shipOrderInfos);
+                }
                 break;
             default:
         }
@@ -362,29 +383,32 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             receiptAddress.setText(goodsOrderDetails.getAddress());
             namePhone.setText(goodsOrderDetails.getConsignee() + " " + goodsOrderDetails.getMobile());
             orderGoodsVos = goodsOrderDetails.getOrderGoodsVos();
-            showMap=goodsOrderDetails.getShowMap();
-            refundTime=goodsOrderDetails.getRefundTime();
-            arrivalTime=goodsOrderDetails.getRefundConfirmTime();
-            if (orderGoodsVos != null && orderGoodsVos.size() > 0) {
+            showMap = goodsOrderDetails.getShowMap();
+            refundTime = goodsOrderDetails.getRefundTime();
+            arrivalTime = goodsOrderDetails.getRefundConfirmTime();
+            orderGoodsItemAdapter.setData(orderGoodsVos);
+            hasChild = goodsOrderDetails.getHasChild();
+            general=goodsOrderDetails.getGeneral();
+            if (orderGoodsVos != null && orderGoodsVos.size() > 0) {//分享时候用到
                 GlideHelper.load(this, orderGoodsVos.get(0).getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
-                goodsName.setText(orderGoodsVos.get(0).getGoodsName());
-                goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(orderGoodsVos.get(0).getPrice()));
-                goodsNumber.setText("x" + orderGoodsVos.get(0).getNumber());
-                sku.setText(orderGoodsVos.get(0).getSpecifications());
                 nameText = BriefUnit.returnName(orderGoodsVos.get(0).getPrice(), orderGoodsVos.get(0).getGoodsName());
                 briefText = BriefUnit.returnBrief(orderGoodsVos.get(0).getBrief());
                 goodsId = orderGoodsVos.get(0).getGoodsId();
                 goodsProductId = orderGoodsVos.get(0).getProductId();
-                isOnSale=orderGoodsVos.get(0).getIsOnSale();
+                isOnSale = orderGoodsVos.get(0).getIsOnSale();
             }
             setOrderStatus(orderStatusText);
             totalAmount.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getGoodsPrice()));
             deliveryFee.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getFreightPrice()));
             coupon.setText("-¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getCouponPrice()));
+            couponRl.setVisibility(TextUtils.equals("0.00",goodsOrderDetails.getCouponPrice())?View.GONE:View.VISIBLE);
             realPayment.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getActualPrice()));
-            actualPrice=goodsOrderDetails.getActualPrice();
-            payModeText=goodsOrderDetails.getPayModeText();
+            deliveryMethod.setText(goodsOrderDetails.getPeiSongType());
+            actualPrice = goodsOrderDetails.getActualPrice();
+            payModeText = goodsOrderDetails.getPayModeText();
             orderTotalPrice = goodsOrderDetails.getActualPrice();
+            notes.setText(goodsOrderDetails.getMessage());
+            notesRl.setVisibility(TextUtils.isEmpty(goodsOrderDetails.getMessage())?View.GONE:View.VISIBLE);
             orderTimeInfos.clear();
             if (!TextUtils.isEmpty(goodsOrderDetails.getOrderSn())) {
                 orderTimeInfos.add(new OrderTimeInfo(getString(R.string.order_number), goodsOrderDetails.getOrderSn()));
@@ -422,6 +446,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             if (shipOrderInfos != null && shipOrderInfos.size() > 0) {
                 deliveryInfo.setText(shipOrderInfos.get(0).getStatusDesc());
                 deliveryTime.setText(shipOrderInfos.get(0).getStatusTime());
+                deliveryTime.setVisibility(TextUtils.isEmpty(shipOrderInfos.get(0).getStatusTime())?View.GONE:View.VISIBLE);
             }
             sfH5Url = goodsOrderDetails.getSfH5Url();
         }
@@ -453,6 +478,11 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             wxUrl = invitationCodeInfo.getBaseUrl();
             inviteCode = invitationCodeInfo.getInvitationCode();
         }
+    }
+
+    @Override
+    public void renderAddCartBatch(Boolean isBoolean) {
+        showMessage(getString(R.string.add_cart_success));
     }
 
     //状态 101-待支付 102 -取消 103-系统自动取消 "202-待退款","203-已退款,"204-待分享 206-待发货 301-待收获 401-完成 402-完成(系统)
@@ -494,10 +524,9 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 orderStatus.setText(getString(R.string.shipping));
                 countDownLl.setVisibility(View.GONE);
                 btRl.setVisibility(View.VISIBLE);
-                leftBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,isOnSale)?View.VISIBLE:View.GONE);
-                rightBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,showMap)?View.VISIBLE:View.GONE);
-                leftBt.setText(getString(R.string.one_more_order));
+                rightBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, showMap) ? View.VISIBLE : View.GONE);
                 rightBt.setText(getString(R.string.check_map));
+                oneMoreAddCart();
                 deliveryRl.setVisibility(View.VISIBLE);
                 fenGeLine.setVisibility(View.VISIBLE);
                 statusIv.setBackgroundResource(R.mipmap.icon_to_received);
@@ -507,9 +536,8 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 orderStatus.setText(getString(R.string.completed));
                 countDownLl.setVisibility(View.GONE);
                 btRl.setVisibility(View.VISIBLE);
-                leftBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,isOnSale)?View.VISIBLE:View.GONE);
                 rightBt.setVisibility(View.GONE);
-                leftBt.setText(getString(R.string.one_more_order));
+                oneMoreAddCart();
                 deliveryRl.setVisibility(View.VISIBLE);
                 fenGeLine.setVisibility(View.VISIBLE);
                 statusIv.setBackgroundResource(R.mipmap.icon_order_compled);
@@ -519,9 +547,8 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 orderStatus.setText(getString(R.string.transaction_cancel));
                 countDownLl.setVisibility(View.GONE);
                 btRl.setVisibility(View.VISIBLE);
-                leftBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,isOnSale)?View.VISIBLE:View.GONE);
                 rightBt.setVisibility(View.GONE);
-                leftBt.setText(getString(R.string.one_more_order));
+                oneMoreAddCart();
                 deliveryRl.setVisibility(View.GONE);
                 fenGeLine.setVisibility(View.GONE);
                 statusIv.setBackgroundResource(R.mipmap.icon_order_cancel);
@@ -531,10 +558,9 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 countDownLl.setVisibility(View.GONE);
                 statusIv.setBackgroundResource(R.mipmap.icon_to_received);
                 btRl.setVisibility(View.VISIBLE);
-                leftBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,isOnSale)?View.VISIBLE:View.GONE);
                 rightBt.setVisibility(View.VISIBLE);
-                leftBt.setText(getString(R.string.one_more_order));
                 rightBt.setText(getString(R.string.where_money_goes));
+                oneMoreAddCart();
                 deliveryRl.setVisibility(View.VISIBLE);
                 fenGeLine.setVisibility(View.VISIBLE);
                 break;
@@ -543,14 +569,23 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 countDownLl.setVisibility(View.GONE);
                 statusIv.setBackgroundResource(R.mipmap.icon_refunded);
                 btRl.setVisibility(View.VISIBLE);
-                leftBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,isOnSale)?View.VISIBLE:View.GONE);
                 rightBt.setVisibility(View.VISIBLE);
-                leftBt.setText(getString(R.string.one_more_order));
                 rightBt.setText(getString(R.string.where_money_goes));
+                oneMoreAddCart();
                 deliveryRl.setVisibility(View.GONE);
                 fenGeLine.setVisibility(View.GONE);
                 break;
             default:
+        }
+    }
+
+    private void oneMoreAddCart(){
+        if(general){
+            leftBt.setVisibility(View.VISIBLE);
+            leftBt.setText(getString(R.string.add_cart));
+        }else {
+            leftBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, isOnSale) ? View.VISIBLE : View.GONE);
+            leftBt.setText(getString(R.string.one_more_order));
         }
     }
 

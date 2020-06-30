@@ -64,8 +64,8 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
                 if (onItemClickListener != null) {
                     if (TextUtils.equals(StaticData.TO_PAY, goodsOrderInfo.getOrderStatus())) {
                         onItemClickListener.payOrder(goodsOrderInfo.getId(), goodsOrderInfo.getActualPrice());
-                    }else {
-                        onItemClickListener.wxShare(goodsOrderInfo ,holder.goodsIv);
+                    } else {
+                        onItemClickListener.wxShare(goodsOrderInfo, holder.goodsIv);
                     }
                 }
             }
@@ -93,21 +93,13 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
         return goodsOrderInfos == null ? 0 : goodsOrderInfos.size();
     }
 
-    public class GoodsOrderView extends RecyclerView.ViewHolder {
+    public class GoodsOrderView extends RecyclerView.ViewHolder implements OrderGoodsItemAdapter.OnItemClickListener{
         @BindView(R.id.time)
         ConventionalTextView time;
         @BindView(R.id.order_status)
         MediumThickTextView orderStatus;
-        @BindView(R.id.goods_iv)
-        ImageView goodsIv;
-        @BindView(R.id.goods_name)
-        MediumThickTextView goodsName;
-        @BindView(R.id.sku)
-        ConventionalTextView sku;
-        @BindView(R.id.goods_price)
-        ConventionalTextView goodsPrice;
-        @BindView(R.id.goods_number)
-        ConventionalTextView goodsNumber;
+        @BindView(R.id.goods_rv)
+        RecyclerView goodsRv;
         @BindView(R.id.total_number)
         ConventionalTextView totalNumber;
         @BindView(R.id.is_pay)
@@ -122,30 +114,33 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
         LinearLayout btLl;
         @BindView(R.id.item_ll)
         LinearLayout itemLl;
+        @BindView(R.id.goods_iv)
+        ImageView goodsIv;
 
+        private OrderGoodsItemAdapter orderGoodsItemAdapter;
         private List<OrderGoodsVo> orderGoodsVos;
 
         public GoodsOrderView(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            orderGoodsItemAdapter = new OrderGoodsItemAdapter(context);
+            orderGoodsItemAdapter.setOnItemClickListener(this);
+            goodsRv.setAdapter(orderGoodsItemAdapter);
         }
 
         public void bindData(GoodsOrderInfo goodsOrderInfo) {
             time.setText(goodsOrderInfo.getAddTime());
             orderGoodsVos = goodsOrderInfo.getOrderGoodsVos();
-            if (orderGoodsVos != null && orderGoodsVos.size() > 0) {
-                GlideHelper.load((Activity) context, orderGoodsVos.get(0).getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
-                goodsName.setText(orderGoodsVos.get(0).getGoodsName());
-                goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(orderGoodsVos.get(0).getPrice()));
-                goodsNumber.setText("x" + orderGoodsVos.get(0).getNumber());
-                sku.setText(orderGoodsVos.get(0).getSpecifications());
-            }
+            orderGoodsItemAdapter.setData(orderGoodsVos,goodsOrderInfo.getId());
             totalAmount.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderInfo.getActualPrice()));
             setOrderStatus(goodsOrderInfo.getOrderStatus());
             if (TextUtils.equals(StaticData.TO_PAY, goodsOrderInfo.getOrderStatus())) {
                 isPay.setText(context.getString(R.string.to_be_paid));
             } else {
                 isPay.setText(context.getString(R.string.actually_apaid));
+            }
+            if (orderGoodsVos != null && orderGoodsVos.size() > 0) {//为了分享
+                GlideHelper.load((Activity) context, orderGoodsVos.get(0).getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             }
         }
 
@@ -194,6 +189,12 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
             }
         }
 
+        @Override
+        public void goOrderDetail(String id) {
+            if(onItemClickListener!=null){
+                onItemClickListener.goOrderDetail(id);
+            }
+        }
     }
 
 
@@ -206,7 +207,7 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
 
         void goOrderDetail(String id);//去订单详情
 
-        void wxShare(GoodsOrderInfo goodsOrderInfo,ImageView shareIv);
+        void wxShare(GoodsOrderInfo goodsOrderInfo, ImageView shareIv);
 
     }
 

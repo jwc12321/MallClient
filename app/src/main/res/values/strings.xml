@@ -393,4 +393,8 @@
     <string name="back_cart">返回购物车</string>
     <string name="hidden_tip">亲，商品不在配送范围内</string>
     <string name="go_homepage">去首页</string>
+    <string name="view_logistics">查看物流</string>
+    <string name="view_map">查看地图</string>
+    <string name="refund_same_way">（退款将原路返回）</string>
+    <string name="add_cart">加入购物车</string>
 </resources>

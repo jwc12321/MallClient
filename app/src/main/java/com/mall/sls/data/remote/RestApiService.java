@@ -25,6 +25,7 @@ import com.mall.sls.data.entity.MessageTypeInfo;
 import com.mall.sls.data.entity.MineInfo;
 import com.mall.sls.data.entity.MyCouponInfo;
 import com.mall.sls.data.entity.OrderList;
+import com.mall.sls.data.entity.OrderPackageInfo;
 import com.mall.sls.data.entity.OrderSubmitInfo;
 import com.mall.sls.data.entity.ProvinceBean;
 import com.mall.sls.data.entity.ShareInfo;
@@ -50,6 +51,7 @@ import com.mall.sls.data.request.MsgIdRequest;
 import com.mall.sls.data.request.MsgReadRequest;
 import com.mall.sls.data.request.OnClickBindRequest;
 import com.mall.sls.data.request.OneClickLoginRequest;
+import com.mall.sls.data.request.OrderIdRequest;
 import com.mall.sls.data.request.OrderPayRequest;
 import com.mall.sls.data.request.OrderRequest;
 import com.mall.sls.data.request.OrderSubmitRequest;
@@ -316,5 +318,13 @@ public interface RestApiService {
     //普通商品提交订单
     @POST("app/order/general/submit")
     Flowable<RemoteDataWrapper<OrderSubmitInfo>> cartOrderSubmit(@Header("X-Hc-Sign") String sign, @Body CartOrderSubmitRequest request);
+
+    //查询物流接口
+    @GET("app/order/logistics/{id}")
+    Flowable<RemoteDataWrapper<List<OrderPackageInfo>>> getOrderLogistics(@Header("X-Hc-Sign") String sign, @Path("id") String id);
+
+    //订单详情加入购物车
+    @POST("app/order/general/addCartBatch")
+    Flowable<RemoteDataWrapper<Boolean>> addCartBatch(@Header("X-Hc-Sign") String sign, @Body OrderIdRequest request);
 
 }

@@ -91,6 +91,15 @@ public class GoodsOrderDetails {
     //退款发起时间
     @SerializedName("refundTime")
     private String refundTime;
+    //是否存在子订单
+    @SerializedName("hasChild")
+    private Boolean hasChild;
+    //配送方式
+    @SerializedName("peiSongType")
+    private String peiSongType;
+    //是否是普通商品
+    @SerializedName("general")
+    private Boolean general;
 
     public String getCouponPrice() {
         return couponPrice;
@@ -308,4 +317,30 @@ public class GoodsOrderDetails {
     public void setRefundTime(String refundTime) {
         this.refundTime = refundTime;
     }
+
+    public Boolean getHasChild() {
+        return hasChild;
+    }
+
+    public void setHasChild(Boolean hasChild) {
+        this.hasChild = hasChild;
+    }
+
+    public String getPeiSongType() {
+        return peiSongType;
+    }
+
+    public void setPeiSongType(String peiSongType) {
+        this.peiSongType = peiSongType;
+    }
+
+    public Boolean getGeneral() {
+        return general;
+    }
+
+    public void setGeneral(Boolean general) {
+        this.general = general;
+    }
 }
+
+

@@ -6,7 +6,10 @@ import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderInfo;
 import com.mall.sls.data.entity.OrderList;
+import com.mall.sls.data.entity.OrderPackageInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
+
+import java.util.List;
 
 /**
  * @author jwc on 2020/5/18.
@@ -37,6 +40,7 @@ public interface OrderContract {
         void orderWxPay(String orderId,String type);
         void cancelOrder(String orderId);
         void getInvitationCodeInfo();
+        void addCartBatch(String orderId);
     }
 
     interface OrderDetailsView extends BaseView<OrderDetailsPresenter>{
@@ -45,5 +49,14 @@ public interface OrderContract {
         void renderOrderWxPay(WXPaySignResponse wxPaySignResponse);
         void renderCancelOrder();
         void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo);
+        void renderAddCartBatch(Boolean isBoolean);
+    }
+
+    interface OrderLogisticsPresenter extends BasePresenter{
+        void getOrderLogistics(String id);
+    }
+
+    interface OrderLogisticsView extends BaseView<OrderLogisticsPresenter>{
+        void renderOrderLogistics(List<OrderPackageInfo> orderPackageInfos);
     }
 }

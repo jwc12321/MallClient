@@ -110,6 +110,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
     private List<String> checkSkus;
     private int goodsCount = 1;
     private String type;
+    private List<String> ids;
 
 
     @Inject
@@ -137,6 +138,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
     private void initView() {
         goodsId = getIntent().getStringExtra(StaticData.GOODS_ID);
         scrollview.setOnScrollChangeListener(this);
+        ids=new ArrayList<>();
         settingHeight();
         xBannerInit();
         initWebView();
@@ -316,8 +318,10 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
 
     @Override
     public void renderBuyNow(ConfirmCartOrderDetail confirmCartOrderDetail) {
+        ids.clear();
         if (confirmCartOrderDetail != null && confirmCartOrderDetail.getCartItemInfos() != null && confirmCartOrderDetail.getCartItemInfos().size() > 0) {
-
+            ids.add(confirmCartOrderDetail.getCartItemInfos().get(0).getId());
+            CartConfirmOrderActivity.start(this,ids,StaticData.REFLASH_ONE);
         }
     }
 

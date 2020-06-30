@@ -22,6 +22,7 @@ import com.mall.sls.R;
 import com.mall.sls.address.ui.AddressManageActivity;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.FlashCartManager;
 import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayResult;
@@ -261,6 +262,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
 
     @Override
     public void renderCartOrderSubmit(OrderSubmitInfo orderSubmitInfo) {
+        FlashCartManager.saveFlashCart(StaticData.REFLASH_ONE);
         if (orderSubmitInfo != null) {
             orderId = orderSubmitInfo.getOrderId();
             if (orderSubmitInfo.getPay()) {
@@ -525,6 +527,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
 
     private void paySuccess(){
         CartPaySuccessActivity.start(this,orderId,orderTotalPrice);
+        finish();
     }
 
 }

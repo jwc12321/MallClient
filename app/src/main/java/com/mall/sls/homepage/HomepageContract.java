@@ -12,7 +12,6 @@ import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderSubmitInfo;
-import com.mall.sls.data.entity.VipAmountInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
 
 import java.util.List;

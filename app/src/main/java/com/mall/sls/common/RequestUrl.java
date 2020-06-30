@@ -64,5 +64,7 @@ public class RequestUrl {
     public static String GOODS_BASE_GOOD="/app/goods/baseGood";//普通商品详情
     public static String CART_FAST_ADD="/app/cart/general/fastadd";//立即购买
     public static String ORDER_GENERAL_SUBMIT="/app/order/general/submit";//普通商品下单
+    public static String ORDER_LOGISTICS="/app/order/logistics/";//查询物流接口
+    public static String ADD_CART_BATCH="/app/order/general/addCartBatch";//订单详情加入购物车
 
 }

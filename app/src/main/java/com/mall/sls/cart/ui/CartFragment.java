@@ -25,6 +25,7 @@ import com.mall.sls.cart.adapter.CartItemAdapter;
 import com.mall.sls.cart.adapter.Literature;
 import com.mall.sls.cart.presenter.CartPresenter;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.FlashCartManager;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.edittextview.SoftKeyBoardListener;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
@@ -139,6 +140,15 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
                 .cartModule(new CartModule(this))
                 .build()
                 .inject(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint() && cartPresenter != null && TextUtils.equals(StaticData.REFLASH_ONE, FlashCartManager.getFlashCart())) {
+            cartPresenter.getCartInfo(StaticData.REFLASH_ONE);
+            FlashCartManager.saveFlashCart(StaticData.REFLASH_ZERO);
+        }
     }
 
     @Override

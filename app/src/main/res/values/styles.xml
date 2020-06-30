@@ -1693,4 +1693,23 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="order_goods_iv_style">
+        <item name="android:layout_width">@dimen/dp_87</item>
+        <item name="android:layout_height">@dimen/dp_87</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/dp_15</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+    <style name="view_map_bt_style">
+        <item name="android:layout_width">@dimen/dp_91</item>
+        <item name="android:layout_height">@dimen/dp_31</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/appText1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/common_one_five_five_back_one_bg</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginRight">@dimen/dp_15</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
 </resources>
