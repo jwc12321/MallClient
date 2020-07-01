@@ -38,6 +38,9 @@ public class CheckedGoods implements Serializable {
     //活动结束时间
     @SerializedName("groupExpireTime")
     private String groupExpireTime;
+    //sku
+    @SerializedName("specifications")
+    private String specifications;
 
     public String getNumber() {
         return number;
@@ -117,5 +120,13 @@ public class CheckedGoods implements Serializable {
 
     public void setGroupExpireTime(String groupExpireTime) {
         this.groupExpireTime = groupExpireTime;
+    }
+
+    public String getSpecifications() {
+        return specifications;
+    }
+
+    public void setSpecifications(String specifications) {
+        this.specifications = specifications;
     }
 }

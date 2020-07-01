@@ -200,8 +200,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
     }
 
     @Override
-    public void renderVCode(String vCode) {
-        vcodeEt.setText(vCode);
+    public void renderVCode() {
         sendVcode.startCold();
     }
 

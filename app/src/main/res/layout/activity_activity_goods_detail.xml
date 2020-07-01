@@ -199,8 +199,19 @@
                     tools:text="香蕉" />
 
             </LinearLayout>
-
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/courierType"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_49"
+                android:background="@color/appText1"
+                android:gravity="center_vertical"
+                tools:text="配送方式："
+                android:textColor="@color/appText3"
+                android:textSize="@dimen/sp_14"
+                android:paddingLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_10"/>
             <ImageView
+                android:id="@+id/goods_detail_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

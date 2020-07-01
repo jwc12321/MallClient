@@ -172,7 +172,7 @@ public class LoginFillCodeActivity extends BaseActivity implements LoginContract
     }
 
     @Override
-    public void renderVCode(String vCode) {
+    public void renderVCode() {
     }
 
     @Override

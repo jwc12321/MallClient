@@ -40,8 +40,10 @@ public class GeTuiService extends GTIntentService {
         // 透传消息的处理，详看 SDK demo
         String msgStr = new String(msg.getPayload());
         Log.d("111", "数据GTTransmitMessage" + msgStr + "==" + msg.getMessageId());
-        LinkUrlInfo linkUrlInfo = gson.fromJson(msgStr, LinkUrlInfo.class);
-        linkUrlClick(linkUrlInfo);
+        if(TextUtils.equals(msg.getMessageId(),clickMessageId)) {
+            LinkUrlInfo linkUrlInfo = gson.fromJson(msgStr, LinkUrlInfo.class);
+            linkUrlClick(linkUrlInfo);
+        }
     }
 
 

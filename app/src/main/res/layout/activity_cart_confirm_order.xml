@@ -104,7 +104,8 @@
                 android:nestedScrollingEnabled="false"
                 android:orientation="vertical"
                 app:layoutManager="@string/layoutManager_LinearLayout"
-                tools:listitem="@layout/adapter_confirm_goods_item" />
+                tools:listitem="@layout/adapter_confirm_goods_item"
+                android:layout_marginTop="@dimen/dp_8"/>
 
             <View style="@style/back_nine_line_style" />
 
@@ -247,6 +248,7 @@
                 app:layoutManager="@string/layoutManager_Gridlayout" />
 
             <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/hidden_number"
                 style="@style/size14_color_app3_text_style"
                 android:layout_gravity="center_horizontal"
                 tools:text="6件（共13件）" />

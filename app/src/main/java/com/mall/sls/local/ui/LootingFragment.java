@@ -21,12 +21,14 @@ import com.mall.sls.data.RemoteDataException;
 import com.mall.sls.data.entity.LocalTeam;
 import com.mall.sls.homepage.adapter.GoodsItemAdapter;
 import com.mall.sls.homepage.ui.ActivityGroupGoodsActivity;
+import com.mall.sls.homepage.ui.GeneralGoodsDetailsActivity;
 import com.mall.sls.homepage.ui.OrdinaryGoodsDetailActivity;
 import com.mall.sls.local.DaggerLocalComponent;
 import com.mall.sls.local.LocalContract;
 import com.mall.sls.local.LocalModule;
 import com.mall.sls.local.adapter.LootingAdapter;
 import com.mall.sls.local.presenter.LocalTeamPresenter;
+import com.mall.sls.local.presenter.RushBuyPresenter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -40,7 +42,7 @@ import butterknife.ButterKnife;
  * @author jwc on 2020/5/11.
  * 描述：正在疯抢
  */
-public class LootingFragment extends BaseFragment implements LootingAdapter.OnItemClickListener, LocalContract.LocalTeamView {
+public class LootingFragment extends BaseFragment implements LootingAdapter.OnItemClickListener, LocalContract.RushBuyView {
 
 
     @BindView(R.id.record_rv)
@@ -51,7 +53,7 @@ public class LootingFragment extends BaseFragment implements LootingAdapter.OnIt
     SmartRefreshLayout refreshLayout;
 
     @Inject
-    LocalTeamPresenter localTeamPresenter;
+    RushBuyPresenter rushBuyPresenter;
     @BindView(R.id.no_record_tv)
     TextView noRecordTv;
 
@@ -92,12 +94,12 @@ public class LootingFragment extends BaseFragment implements LootingAdapter.OnIt
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            localTeamPresenter.getLocalTeam(StaticData.REFLASH_ZERO, StaticData.REFLASH_ONE);
+            rushBuyPresenter.getRushBuy(StaticData.REFLASH_ZERO);
         }
 
         @Override
         public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-            localTeamPresenter.getMoreLocalTeam(StaticData.REFLASH_ONE);
+            rushBuyPresenter.getMoreRushBuy();
         }
     };
 
@@ -114,8 +116,8 @@ public class LootingFragment extends BaseFragment implements LootingAdapter.OnIt
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
-            if (localTeamPresenter != null) {
-                localTeamPresenter.getLocalTeam(StaticData.REFLASH_ONE, StaticData.REFLASH_ONE);
+            if (rushBuyPresenter != null) {
+                rushBuyPresenter.getRushBuy(StaticData.REFLASH_ONE);
             }
             if (lootingListener != null) {
                 lootingListener.lootingChoice("0");
@@ -136,7 +138,13 @@ public class LootingFragment extends BaseFragment implements LootingAdapter.OnIt
     }
 
     @Override
-    public void renderLocalTeam(LocalTeam localTeam) {
+    public void goGeneralGoodsDetails(String goodsId) {
+        GeneralGoodsDetailsActivity.start(getActivity(),goodsId);
+    }
+
+
+    @Override
+    public void renderRushBuy(LocalTeam localTeam) {
         refreshLayout.finishRefresh();
         if (localTeam != null) {
             if (localTeam.getGoodsItemInfos()!= null && localTeam.getGoodsItemInfos().size() > 0) {
@@ -158,7 +166,7 @@ public class LootingFragment extends BaseFragment implements LootingAdapter.OnIt
     }
 
     @Override
-    public void renderMoreLocalTeam(LocalTeam localTeam) {
+    public void renderMoreRushBuy(LocalTeam localTeam) {
         refreshLayout.finishLoadMore();
         if (localTeam != null && localTeam.getGoodsItemInfos() != null) {
             if (localTeam.getGoodsItemInfos().size() != Integer.parseInt(StaticData.TEN_LIST_SIZE)) {
@@ -169,24 +177,7 @@ public class LootingFragment extends BaseFragment implements LootingAdapter.OnIt
     }
 
     @Override
-    public void renderError(Throwable throwable) {
-        if (throwable instanceof RemoteDataException) {
-            if(TextUtils.equals(ErrorCodeStatic.CODE_ONE_ZERO_ZERO_ONE_ZERO,((RemoteDataException) throwable).getRetCode())){
-                recordRv.setVisibility(View.GONE);
-                noRecordLl.setVisibility(View.VISIBLE);
-                refreshLayout.finishLoadMoreWithNoMoreData();
-                noRecordTv.setText(getString(R.string.not_in_opening_area));
-            }
-        }
-    }
-
-    @Override
-    public void renderGroupRemind() {
-
-    }
-
-    @Override
-    public void setPresenter(LocalContract.LocalTeamPresenter presenter) {
+    public void setPresenter(LocalContract.RushBuyPresenter presenter) {
 
     }
 
@@ -202,8 +193,8 @@ public class LootingFragment extends BaseFragment implements LootingAdapter.OnIt
     }
 
     public void lootingRefresh() {
-        if (localTeamPresenter != null) {
-            localTeamPresenter.getLocalTeam(StaticData.REFLASH_ONE, StaticData.REFLASH_ONE);
+        if (rushBuyPresenter != null) {
+            rushBuyPresenter.getRushBuy(StaticData.REFLASH_ONE);
         }
     }
 }

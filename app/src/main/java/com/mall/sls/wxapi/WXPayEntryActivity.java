@@ -48,12 +48,13 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
                 result = "发送成功";
-                if (resp.getType() == ConstantsAPI.COMMAND_SENDAUTH) {  //登录
-                    String code = ((SendAuth.Resp) resp).code;
-                    EventBus.getDefault().post(new WXLoginEvent(code));
-                } else if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX) {    //分享成功
-                    EventBus.getDefault().post("分享成功");
-                } else if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {  //支付
+//                if (resp.getType() == ConstantsAPI.COMMAND_SENDAUTH) {  //登录
+//                    String code = ((SendAuth.Resp) resp).code;
+//                    EventBus.getDefault().post(new WXLoginEvent(code));
+//                } else if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX) {    //分享成功
+//                    EventBus.getDefault().post("分享成功");
+//                } else
+                if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {  //支付
                     EventBus.getDefault().post(new WXSuccessPayEvent());
                 }
                 finish();
@@ -61,14 +62,14 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
             case BaseResp.ErrCode.ERR_COMM:
                 result = "失败";
                 if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {  //支付
-                    EventBus.getDefault().post(new PayAbortEvent("支付取消",-1));
+                    EventBus.getDefault().post(new PayAbortEvent("支付取消", -1));
                 }
                 finish();
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
                 result = "发送取消";
                 if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {  //支付
-                    EventBus.getDefault().post(new PayAbortEvent("支付取消",-2));
+                    EventBus.getDefault().post(new PayAbortEvent("支付取消", -2));
                 }
                 finish();
                 break;

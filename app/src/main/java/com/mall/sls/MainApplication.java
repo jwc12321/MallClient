@@ -100,6 +100,8 @@ public class MainApplication extends MultiDexApplication {
         TCAgent.init(this, "466B709D82C84BED8F948E46D5F5755D", channelId);
         // 如果已经在AndroidManifest.xml配置了App ID和渠道ID，调用TCAgent.init(this)即可；或与AndroidManifest.xml中的对应参数保持一致。
         TCAgent.setReportUncaughtExceptions(true);
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 
     @TargetApi(9)

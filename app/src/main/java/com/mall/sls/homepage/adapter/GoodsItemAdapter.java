@@ -121,7 +121,7 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
             groupType.setText(goodsItemInfo.getKeywords());
             if (TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGoodsType())) {
                 groupType.setVisibility(View.GONE);
-                priceType.setText(context.getString(R.string.activity_price));
+                priceType.setText(context.getString(R.string.selling_price));
                 confirmBt.setText(context.getString(R.string.buy_now));
             } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsItemInfo.getGoodsType())) {
                 groupType.setVisibility(View.VISIBLE);

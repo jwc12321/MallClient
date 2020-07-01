@@ -66,5 +66,7 @@ public class RequestUrl {
     public static String ORDER_GENERAL_SUBMIT="/app/order/general/submit";//普通商品下单
     public static String ORDER_LOGISTICS="/app/order/logistics/";//查询物流接口
     public static String ADD_CART_BATCH="/app/order/general/addCartBatch";//订单详情加入购物车
+    public static String GOODS_RUSH_BUY="/app/goods/rushBuy";//正在疯抢
+    public static String GOODS_WAIT_BUY="/app/goods/waitBuy";//即将开抢
 
 }

@@ -398,11 +398,11 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 isOnSale = orderGoodsVos.get(0).getIsOnSale();
             }
             setOrderStatus(orderStatusText);
-            totalAmount.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getGoodsPrice()));
-            deliveryFee.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getFreightPrice()));
-            coupon.setText("-¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getCouponPrice()));
+            totalAmount.setText("¥ " + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getGoodsPrice()));
+            deliveryFee.setText("¥ " + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getFreightPrice()));
+            coupon.setText("-¥ " + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getCouponPrice()));
             couponRl.setVisibility(TextUtils.equals("0.00",goodsOrderDetails.getCouponPrice())?View.GONE:View.VISIBLE);
-            realPayment.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getActualPrice()));
+            realPayment.setText("¥ " + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getActualPrice()));
             deliveryMethod.setText(goodsOrderDetails.getPeiSongType());
             actualPrice = goodsOrderDetails.getActualPrice();
             payModeText = goodsOrderDetails.getPayModeText();
@@ -436,9 +436,9 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 } else {
                     countDown.setVisibility(View.GONE);
                 }
-                isPay.setText(getString(R.string.to_be_paid));
+                isPay.setText(getString(R.string.payable));
             } else {
-                isPay.setText(getString(R.string.actually_apaid));
+                isPay.setText(getString(R.string.actually_paid));
             }
             isActivity = goodsOrderDetails.getActivity();
             grouponId = goodsOrderDetails.getGrouponLinkId();

@@ -19,7 +19,7 @@ public interface LoginContract {
 
     interface LoginView extends BaseView<LoginPresenter> {
         void renderLoginIn(TokenInfo tokenInfo);
-        void renderVCode(String vCode);
+        void renderVCode();
         void renderAppUrlInfo(AppUrlInfo appUrlInfo);
         void renderInvitationCode(String invitationCode);
     }
@@ -41,7 +41,7 @@ public interface LoginContract {
     }
 
     interface BindMobileView extends BaseView<BindMobilePresenter>{
-        void renderVCode(String vCode);
+        void renderVCode();
     }
 
     interface RegisterLoginPresenter extends BasePresenter{

@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -20,8 +19,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ViewFlipper;
+
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.luck.picture.lib.PictureSelector;
@@ -39,7 +40,6 @@ import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.TCAgentUnit;
-import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -153,6 +153,10 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     ImageView shareIv;
     @BindView(R.id.group_flipper)
     ViewFlipper groupFlipper;
+    @BindView(R.id.goods_detail_iv)
+    ImageView goodsDetailIv;
+    @BindView(R.id.courierType)
+    ConventionalTextView courierType;
     private ProductListCallableInfo productListCallableInfo;
     private List<CustomViewsInfo> data;
     private String goodsId;
@@ -219,7 +223,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         wxShareManager = WXShareManager.getInstance(this);
         scrollview.setOnScrollChangeListener(this);
         themeId = R.style.picture_default_style;
-        allGroupPurchases=new ArrayList<>();
+        allGroupPurchases = new ArrayList<>();
         settingHeight();
         xBannerInit();
         initWebView();
@@ -315,7 +319,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 purchaseType = StaticData.REFLASH_TWO;
                 isGroup = true;
                 initiateBill();
-                TCAgentUnit.setEventId(this,getString(R.string.initiate_bill_buy));
+                TCAgentUnit.setEventId(this, getString(R.string.initiate_bill_buy));
                 break;
             case R.id.service_iv:
                 CustomerServiceActivity.start(this, consumerPhone);
@@ -329,7 +333,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 purchaseType = StaticData.REFLASH_ONE;
                 isGroup = false;
                 individualShopping();
-                TCAgentUnit.setEventId(this,getString(R.string.individual_shopping));
+                TCAgentUnit.setEventId(this, getString(R.string.individual_shopping));
                 break;
             case R.id.up_spell_bt:
                 groupId = upGroupId;
@@ -337,7 +341,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 purchaseType = StaticData.REFLASH_THREE;
                 isGroup = true;
                 goSpellingReminder(upMobile, upSurplus);
-                TCAgentUnit.setEventId(this,getString(R.string.buy_together));
+                TCAgentUnit.setEventId(this, getString(R.string.buy_together));
                 break;
             case R.id.down_spell_bt:
                 groupId = downGroupId;
@@ -345,10 +349,10 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 purchaseType = StaticData.REFLASH_THREE;
                 isGroup = true;
                 goSpellingReminder(downMobile, downSurplus);
-                TCAgentUnit.setEventId(this,getString(R.string.buy_together));
+                TCAgentUnit.setEventId(this, getString(R.string.buy_together));
                 break;
             case R.id.share://分享
-                TCAgentUnit.setEventId(this,getString(R.string.goods_details_share));
+                TCAgentUnit.setEventId(this, getString(R.string.goods_details_share));
                 if (!PayTypeInstalledUtils.isWeixinAvilible(OrdinaryGoodsDetailActivity.this)) {
                     showMessage(getString(R.string.install_weixin));
                     return;
@@ -388,7 +392,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         Intent intent = new Intent(this, SelectSpecActivity.class);
         intent.putExtra(StaticData.PRODUCT_LIST, (Serializable) goodsSpecs);
         intent.putExtra(StaticData.SPECIFICATION_LIST, (Serializable) productListCallableInfos);
-        intent.putExtra(StaticData.PIC_URL,picUrl);
+        intent.putExtra(StaticData.PIC_URL, picUrl);
         intent.putExtra(StaticData.SKU_CHECK, (Serializable) checkSkus);
         intent.putExtra(StaticData.CHOICE_TYPE, type);
         intent.putExtra(StaticData.GOODS_COUNT, goodsCount);
@@ -399,7 +403,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         Intent intent = new Intent(this, SelectSpecActivity.class);
         intent.putExtra(StaticData.PRODUCT_LIST, (Serializable) goodsSpecs);
         intent.putExtra(StaticData.SPECIFICATION_LIST, (Serializable) productListCallableInfos);
-        intent.putExtra(StaticData.PIC_URL,picUrl);
+        intent.putExtra(StaticData.PIC_URL, picUrl);
         intent.putExtra(StaticData.SKU_CHECK, (Serializable) checkSkus);
         intent.putExtra(StaticData.CHOICE_TYPE, type);
         intent.putExtra(StaticData.GOODS_COUNT, goodsCount);
@@ -491,9 +495,14 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             groupNumber.setText(goodsDetailsInfo.getGroupNum() + "人正在拼单，可直接参与");
             groupPurchases = goodsDetailsInfo.getGroupPurchases();
             oldGroupRulesId = goodsDetailsInfo.getRulesId();
+            if (TextUtils.equals(StaticData.REFLASH_ONE, goodsDetailsInfo.getCourierType())) {
+                courierType.setText(getString(R.string.same_city_delivery));
+            } else {
+                courierType.setText(getString(R.string.type_express_delivery));
+            }
             initGroup();
-            picUrl=goodsDetailsInfo.getPicUrl();
-            goodsSpecs=goodsDetailsInfo.getGoodsSpecs();
+            picUrl = goodsDetailsInfo.getPicUrl();
+            goodsSpecs = goodsDetailsInfo.getGoodsSpecs();
             productListCallableInfos = goodsDetailsInfo.getProductListCallableInfos();
             if (productListCallableInfos != null && productListCallableInfos.size() > 0) {
                 individualShoppingPrice.setText("¥" + productListCallableInfos.get(0).getPrice());
@@ -509,6 +518,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             if (!TextUtils.isEmpty(goodsDetailsInfo.getDetail())) {
                 webView.loadDataWithBaseURL(null, HtmlUnit.getHtmlData(goodsDetailsInfo.getDetail()), "text/html", "utf-8", null);
             }
+            goodsDetailIv.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getDetail()) ? View.GONE : View.VISIBLE);
             GlideHelper.load(this, goodsDetailsInfo.getPicUrl(), R.mipmap.icon_default_goods, shareIv);
         }
     }
@@ -551,24 +561,24 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 downGroup.setVisibility(View.GONE);
                 groupFlipper.setVisibility(View.VISIBLE);
                 allGroupPurchases.clear();
-                allGroupPurchases=groupPurchases;
-                if(groupPurchases.size()%2==1){
+                allGroupPurchases = groupPurchases;
+                if (groupPurchases.size() % 2 == 1) {
                     allGroupPurchases.addAll(groupPurchases);
                 }
-                for(int i=0;i<allGroupPurchases.size()/2;i++){
-                    View view1 = View.inflate(this,R.layout.item_group_purchase,null);
-                    ConventionalTextView listUpPhoneNumber=view1.findViewById(R.id.list_up_phone_number);
-                    ConventionalTextView listUpSpellBt=view1.findViewById(R.id.list_up_spell_bt);
-                    ConventionalTextView listUpPoorTv=view1.findViewById(R.id.list_up_poor_tv);
-                    ConventionalTextView listDownPhoneNumber=view1.findViewById(R.id.list_down_phone_number);
-                    ConventionalTextView listDownSpellBt=view1.findViewById(R.id.list_down_spell_bt);
-                    ConventionalTextView listDownPoorTv=view1.findViewById(R.id.list_down_poor_tv);
-                    listUpPhoneNumber.setText(allGroupPurchases.get(2*i).getMobile());
-                    listUpPoorTv.setText("还差" + allGroupPurchases.get(2*i).getSurplus()+ "人拼成");
-                    listUpSpellBt.setTag(2*i);
-                    listDownPhoneNumber.setText(allGroupPurchases.get(2*i+1).getMobile());
-                    listDownPoorTv.setText("还差" + allGroupPurchases.get(2*i+1).getSurplus()+ "人拼成");
-                    listDownSpellBt.setTag(2*i+1);
+                for (int i = 0; i < allGroupPurchases.size() / 2; i++) {
+                    View view1 = View.inflate(this, R.layout.item_group_purchase, null);
+                    ConventionalTextView listUpPhoneNumber = view1.findViewById(R.id.list_up_phone_number);
+                    ConventionalTextView listUpSpellBt = view1.findViewById(R.id.list_up_spell_bt);
+                    ConventionalTextView listUpPoorTv = view1.findViewById(R.id.list_up_poor_tv);
+                    ConventionalTextView listDownPhoneNumber = view1.findViewById(R.id.list_down_phone_number);
+                    ConventionalTextView listDownSpellBt = view1.findViewById(R.id.list_down_spell_bt);
+                    ConventionalTextView listDownPoorTv = view1.findViewById(R.id.list_down_poor_tv);
+                    listUpPhoneNumber.setText(allGroupPurchases.get(2 * i).getMobile());
+                    listUpPoorTv.setText("还差" + allGroupPurchases.get(2 * i).getSurplus() + "人拼成");
+                    listUpSpellBt.setTag(2 * i);
+                    listDownPhoneNumber.setText(allGroupPurchases.get(2 * i + 1).getMobile());
+                    listDownPoorTv.setText("还差" + allGroupPurchases.get(2 * i + 1).getSurplus() + "人拼成");
+                    listDownSpellBt.setTag(2 * i + 1);
                     groupFlipper.addView(view1);
                     listUpSpellBt.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -592,13 +602,13 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         }
     }
 
-    private void showReminder(int position){
+    private void showReminder(int position) {
         groupId = allGroupPurchases.get(position).getGrouponId();
         groupRulesId = allGroupPurchases.get(position).getRulesId();
         purchaseType = StaticData.REFLASH_THREE;
         isGroup = true;
         goSpellingReminder(allGroupPurchases.get(position).getMobile(), allGroupPurchases.get(position).getSurplus());
-        TCAgentUnit.setEventId(this,getString(R.string.buy_together));
+        TCAgentUnit.setEventId(this, getString(R.string.buy_together));
     }
 
     @Override
@@ -668,12 +678,12 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     @Override
     protected void onResume() {
         super.onResume();
-        TCAgentUnit.pageStart(this,getString(R.string.goods_details));
+        TCAgentUnit.pageStart(this, getString(R.string.goods_details));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        TCAgentUnit.pageEnd(this,getString(R.string.goods_details));
+        TCAgentUnit.pageEnd(this, getString(R.string.goods_details));
     }
 }

@@ -95,6 +95,8 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
     RelativeLayout titleRel;
     @BindView(R.id.courierType)
     ConventionalTextView courierType;
+    @BindView(R.id.goods_detail_iv)
+    ImageView goodsDetailIv;
     private String goodsId;
     private int screenWidth;
     private int screenHeight;
@@ -138,7 +140,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
     private void initView() {
         goodsId = getIntent().getStringExtra(StaticData.GOODS_ID);
         scrollview.setOnScrollChangeListener(this);
-        ids=new ArrayList<>();
+        ids = new ArrayList<>();
         settingHeight();
         xBannerInit();
         initWebView();
@@ -295,10 +297,11 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                 if (!TextUtils.isEmpty(goodsBaseVo.getDetail())) {
                     webView.loadDataWithBaseURL(null, HtmlUnit.getHtmlData(goodsBaseVo.getDetail()), "text/html", "utf-8", null);
                 }
+                goodsDetailIv.setVisibility(TextUtils.isEmpty(goodsBaseVo.getDetail())?View.GONE:View.VISIBLE);
                 picUrl = goodsBaseVo.getPicUrl();
-                if(TextUtils.equals(StaticData.REFLASH_ONE,goodsBaseVo.getCourierType())){
+                if (TextUtils.equals(StaticData.REFLASH_ONE, goodsBaseVo.getCourierType())) {
                     courierType.setText(getString(R.string.same_city_delivery));
-                }else {
+                } else {
                     courierType.setText(getString(R.string.type_express_delivery));
                 }
             }
@@ -321,7 +324,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
         ids.clear();
         if (confirmCartOrderDetail != null && confirmCartOrderDetail.getCartItemInfos() != null && confirmCartOrderDetail.getCartItemInfos().size() > 0) {
             ids.add(confirmCartOrderDetail.getCartItemInfos().get(0).getId());
-            CartConfirmOrderActivity.start(this,ids,StaticData.REFLASH_ONE);
+            CartConfirmOrderActivity.start(this, ids, StaticData.REFLASH_ONE);
         }
     }
 

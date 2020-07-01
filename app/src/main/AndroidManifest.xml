@@ -388,7 +388,8 @@
 
         <activity android:name=".homepage.ui.CartConfirmOrderActivity"
             android:screenOrientation="nosensor"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity android:name=".homepage.ui.CartPaySuccessActivity"
             android:screenOrientation="nosensor"

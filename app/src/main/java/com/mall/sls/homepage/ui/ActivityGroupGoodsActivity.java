@@ -11,7 +11,6 @@ import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,7 +31,6 @@ import com.mall.sls.common.unit.TimeUtil;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DhmsTearDownView;
 import com.mall.sls.common.widget.textview.DrawTextView;
-import com.mall.sls.common.widget.textview.FourTearDownView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.common.widget.textview.TearDownView;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
@@ -107,6 +105,8 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     ViewFlipper viewFlipper;
     @BindView(R.id.webView)
     WebView webView;
+    @BindView(R.id.goods_detail_iv)
+    ImageView goodsDetailIv;
 
 
     private String goodsId;
@@ -201,11 +201,11 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
             activityName.setText(goodsDetailsInfo.getGroupName());
             goodsName.setText(goodsDetailsInfo.getName());
             discountMember.setText(goodsDetailsInfo.getDiscountMember() + "人成团");
-            if(TextUtils.equals(StaticData.REFLASH_ZERO,goodsDetailsInfo.getGroupPeopleNum())){
+            if (TextUtils.equals(StaticData.REFLASH_ZERO, goodsDetailsInfo.getGroupPeopleNum())) {
                 snappedUpNumber.setVisibility(View.GONE);
-            }else {
+            } else {
                 snappedUpNumber.setVisibility(View.VISIBLE);
-                snappedUpNumber.setText(goodsDetailsInfo.getGroupPeopleNum() + "人已抢"+goodsDetailsInfo.getGroupGoodsNum()+",");
+                snappedUpNumber.setText(goodsDetailsInfo.getGroupPeopleNum() + "人已抢" + goodsDetailsInfo.getGroupGoodsNum() + ",");
             }
             countDown.setTimeOutListener(this);
             countDownTime.setTimeOutListener(this);
@@ -228,7 +228,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
                         countDown.startTearDown(groupExpireTime, now);
                         countDownTv.setText(getString(R.string.from_end));
                     }
-                    countDownTime.startTearDown(groupExpireTime/1000, now/1000);
+                    countDownTime.startTearDown(groupExpireTime / 1000, now / 1000);
                 }
             }
             groupPeoples = goodsDetailsInfo.getGroupPeoples();
@@ -250,8 +250,8 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
                 groupId = groupPurchases.get(0).getGrouponId();
                 groupRulesId = groupPurchases.get(0).getRulesId();
             }
-            picUrl=goodsDetailsInfo.getPicUrl();
-            goodsSpecs=goodsDetailsInfo.getGoodsSpecs();
+            picUrl = goodsDetailsInfo.getPicUrl();
+            goodsSpecs = goodsDetailsInfo.getGoodsSpecs();
             productListCallableInfos = goodsDetailsInfo.getProductListCallableInfos();
             if (productListCallableInfos != null && productListCallableInfos.size() == 1) {
                 ProductListCallableInfo productListCallableInfo = productListCallableInfos.get(0);
@@ -263,6 +263,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
             if (!TextUtils.isEmpty(goodsDetailsInfo.getDetail())) {
                 webView.loadDataWithBaseURL(null, HtmlUnit.getHtmlData(goodsDetailsInfo.getDetail()), "text/html", "utf-8", null);
             }
+            goodsDetailIv.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getDetail())?View.GONE:View.VISIBLE);
         }
 
     }
@@ -311,7 +312,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.confirm_bt:
-                TCAgentUnit.setEventId(this,getString(R.string.event_purchase_details));
+                TCAgentUnit.setEventId(this, getString(R.string.event_purchase_details));
                 goSelectSpec(StaticData.REFLASH_ONE);
                 break;
             case R.id.back:
@@ -329,7 +330,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
         Intent intent = new Intent(this, SelectSpecActivity.class);
         intent.putExtra(StaticData.PRODUCT_LIST, (Serializable) goodsSpecs);
         intent.putExtra(StaticData.SPECIFICATION_LIST, (Serializable) productListCallableInfos);
-        intent.putExtra(StaticData.PIC_URL,picUrl);
+        intent.putExtra(StaticData.PIC_URL, picUrl);
         intent.putExtra(StaticData.SKU_CHECK, (Serializable) checkSkus);
         intent.putExtra(StaticData.CHOICE_TYPE, type);
         startActivityForResult(intent, RequestCodeStatic.REQUEST_SPEC);
@@ -357,12 +358,12 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     @Override
     protected void onResume() {
         super.onResume();
-        TCAgentUnit.pageStart(this,getString(R.string.event_page));
+        TCAgentUnit.pageStart(this, getString(R.string.event_page));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        TCAgentUnit.pageEnd(this,getString(R.string.event_page));
+        TCAgentUnit.pageEnd(this, getString(R.string.event_page));
     }
 }

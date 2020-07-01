@@ -90,7 +90,7 @@ public class OrderGoodsItemAdapter extends RecyclerView.Adapter<OrderGoodsItemAd
             GlideHelper.load((Activity) context, orderGoodsVo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(orderGoodsVo.getGoodsName());
             sku.setText(orderGoodsVo.getSpecifications());
-            goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(orderGoodsVo.getPrice()));
+            goodsPrice.setText("¥ " + NumberFormatUnit.twoDecimalFormat(orderGoodsVo.getPrice()));
             goodsNumber.setText("x" + orderGoodsVo.getNumber());
         }
     }

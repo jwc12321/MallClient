@@ -7,7 +7,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -40,6 +43,7 @@ import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.location.LocationBean;
 import com.mall.sls.common.unit.LocalCityManager;
+import com.mall.sls.common.widget.edittextview.SoftKeyBoardListener;
 import com.mall.sls.common.widget.textview.ConventionalEditTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -94,6 +98,10 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
     RelativeLayout editRl;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.view)
+    View view;
+    @BindView(R.id.close_iv)
+    ImageView closeIv;
     private AMap aMap;
     private static final int STROKE_COLOR = Color.argb(180, 3, 145, 255);
     private static final int FILL_COLOR = Color.argb(10, 0, 0, 180);
@@ -113,10 +121,10 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
     private String keyWord;
     private String type;
     private AMapLocation aMapLocation;
-    private int currentIndex=0;
-    private int pageSize=20;
-    private int searchSize=50;
-    private boolean isAddMore=false;
+    private int currentIndex = 0;
+    private int pageSize = 20;
+    private int searchSize = 50;
+    private boolean isAddMore = false;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, SelectAddressActivity.class);
@@ -142,6 +150,21 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         searchAddressAdapter = new SearchAddressAdapter();
         searchAddressAdapter.setOnItemClickListener(this);
         searchRv.setAdapter(searchAddressAdapter);
+
+        SoftKeyBoardListener.setListener(this, new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
+            @Override
+            public void keyBoardShow(int height) {
+                closeIv.setVisibility(View.VISIBLE);
+                cancelBt.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void keyBoardHide(int height) {
+                addressEt.clearFocus();
+                closeIv.setVisibility(View.GONE);
+                cancelBt.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void initMap() {
@@ -155,15 +178,15 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            isAddMore=false;
-            currentIndex=0;
+            isAddMore = false;
+            currentIndex = 0;
             doSearchQuery("", "", latitude, longitude);
         }
 
         @Override
         public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-            isAddMore=true;
-            currentIndex=currentIndex+1;
+            isAddMore = true;
+            currentIndex = currentIndex + 1;
             doSearchQuery("", "", latitude, longitude);
         }
     };
@@ -195,9 +218,9 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         myLocationStyle.myLocationIcon(BitmapDescriptorFactory.
                 fromResource(R.mipmap.icon_gps_point));
         // 自定义精度范围的圆形边框颜色
-        myLocationStyle.strokeColor(STROKE_COLOR);
+        myLocationStyle.strokeColor(FILL_COLOR);
         //自定义精度范围的圆形边框宽度
-        myLocationStyle.strokeWidth(5);
+        myLocationStyle.strokeWidth(0);
         // 设置圆形的填充颜色
         myLocationStyle.radiusFillColor(FILL_COLOR);
         // 将自定义的 myLocationStyle 对象添加到地图上
@@ -269,7 +292,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
                 Log.d("jjj0", "精度和纬度" + aMapLocation.getLatitude() + "=====" + aMapLocation.getLongitude() + "==" + aMapLocation.getCity() + "==" + aMapLocation.getCityCode() + "==" + aMapLocation.getProvince());
                 city = aMapLocation.getCity();
                 mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
-                aMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 16, 0, 0)));
+                aMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 17, 0, 0)));
                 if (TextUtils.isEmpty(city)) {
                     localCity.setText(LocalCityManager.getLocalCity());
                 } else {
@@ -314,10 +337,10 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
                 if (poiResult.getQuery().equals(query)) {// 是否是同一条
                     List<PoiItem> poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
                     if (TextUtils.equals(StaticData.REFLASH_ONE, type)) {
-                        if(isAddMore){
+                        if (isAddMore) {
                             refreshLayout.finishLoadMore();
                             mapAddressAdapter.addMore(poiItems);
-                        }else {
+                        } else {
                             refreshLayout.finishRefresh();
                             mapAddressAdapter.setData(poiItems);
                         }
@@ -352,7 +375,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         latitude = cameraPosition.target.latitude;
         longitude = cameraPosition.target.longitude;
         Log.d("jjj0", "精度和纬度" + latitude + "=====" + longitude);
-        isAddMore=false;
+        isAddMore = false;
         doSearchQuery("", "", latitude, longitude);
 //        LatLngEntity latLngEntity = new LatLngEntity(cameraPosition.target.latitude, cameraPosition.target.longitude);
 //        //地理反编码工具类，代码在后面
@@ -373,7 +396,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         returnAddress(poiItem);
     }
 
-    @OnClick({R.id.local_city_ll, R.id.back, R.id.cancel_bt})
+    @OnClick({R.id.local_city_ll, R.id.back, R.id.cancel_bt, R.id.close_iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.local_city_ll:
@@ -384,7 +407,12 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
                 finish();
                 break;
             case R.id.cancel_bt:
+                addressEt.setText("");
                 searchRl.setVisibility(View.GONE);
+                hiddenEdit();
+                break;
+            case R.id.close_iv:
+                addressEt.setText("");
                 break;
             default:
         }
@@ -438,6 +466,18 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         }
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return getWindow().superDispatchTouchEvent(ev) || onTouchEvent(ev);
+    }
 
+    @Override
+    public boolean isShouldHideInput(View v, MotionEvent event) {
+        return super.isShouldHideInput(v, event);
+    }
 
+    private void hiddenEdit() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(addressEt.getWindowToken(), 0);
+    }
 }

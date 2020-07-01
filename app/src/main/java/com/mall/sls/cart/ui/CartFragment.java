@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import androidx.annotation.BoolRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,8 +35,12 @@ import com.mall.sls.data.entity.CartItemInfo;
 import com.mall.sls.data.entity.EmptyItem;
 import com.mall.sls.data.entity.HiddenItemCartInfo;
 import com.mall.sls.homepage.ui.CartConfirmOrderActivity;
+import com.mall.sls.homepage.ui.GeneralGoodsDetailsActivity;
 import com.mall.sls.login.ui.WeixinLoginActivity;
 import com.mall.sls.mainframe.ui.MainFrameActivity;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -75,6 +78,8 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
     MediumThickTextView noRecordBt;
     @BindView(R.id.no_record_ll)
     LinearLayout noRecordLl;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
 
     private CartItemAdapter cartItemAdapter;
     private List<Literature> mLiteratureList;
@@ -112,8 +117,9 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
     }
 
     private void initView() {
+        refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         mLiteratureList = new ArrayList<>();
-        ids=new ArrayList<>();
+        ids = new ArrayList<>();
         cartItemAdapter = new CartItemAdapter(getActivity());
         cartItemAdapter.setOnItemClickListener(this);
         cartRv.setAdapter(cartItemAdapter);
@@ -151,17 +157,33 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
         }
     }
 
+    SimpleMultiPurposeListener simpleMultiPurposeListener = new SimpleMultiPurposeListener() {
+        @Override
+        public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+            refreshLayout.finishRefresh(6000);
+            cartPresenter.getCartInfo(StaticData.REFLASH_ZERO);
+        }
+
+        @Override
+        public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+
+        }
+    };
+
     @Override
     public void renderCartInfo(CartInfo cartInfo) {
+        refreshLayout.finishRefresh();
         mLiteratureList.clear();
         if (cartInfo != null) {
             cartItemInfos = cartInfo.getNormalList();
             hiddenItemCartInfos = cartInfo.getCancelList();
-            if(cartItemInfos.size()==0&&hiddenItemCartInfos.size()==0){
+            if (cartItemInfos.size() == 0 && hiddenItemCartInfos.size() == 0) {
                 noRecordLl.setVisibility(View.VISIBLE);
                 cartRv.setVisibility(View.GONE);
                 statisticsRl.setVisibility(View.GONE);
-            }else {
+                refreshLayout.setVisibility(View.GONE);
+            } else {
+                refreshLayout.setVisibility(View.VISIBLE);
                 noRecordLl.setVisibility(View.GONE);
                 cartRv.setVisibility(View.VISIBLE);
                 statisticsRl.setVisibility(View.VISIBLE);
@@ -192,11 +214,11 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
             mLiteratureList.addAll(cartItemInfos);
             cartItemAdapter.setLiteratureList(mLiteratureList);
         }
-        if(cartItemInfos.size()==0&&hiddenItemCartInfos.size()==0){
+        if (cartItemInfos.size() == 0 && hiddenItemCartInfos.size() == 0) {
             noRecordLl.setVisibility(View.VISIBLE);
             cartRv.setVisibility(View.GONE);
             statisticsRl.setVisibility(View.GONE);
-        }else {
+        } else {
             noRecordLl.setVisibility(View.GONE);
             cartRv.setVisibility(View.VISIBLE);
             statisticsRl.setVisibility(View.VISIBLE);
@@ -304,6 +326,11 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
         this.showCountView = showCountView;
     }
 
+    @Override
+    public void goGoodsDetails(String goodsId) {
+        GeneralGoodsDetailsActivity.start(getActivity(), goodsId);
+    }
+
     private void calculatingPrice() {
         totalCount = 0;
         totalPriceBd = new BigDecimal(0);
@@ -324,6 +351,7 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
             totalPrice.setText("0.00");
         } else {
             selectAll.setEnabled(true);
+            confirmBt.setEnabled(true);
             confirmBt.setText(getString(R.string.settlement) + "(" + totalCount + ")");
             if (totalCount == cartItemInfos.size()) {
                 selectAll.setChecked(true);
@@ -335,7 +363,7 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
     }
 
 
-    @OnClick({R.id.select_all, R.id.confirm_bt,R.id.no_record_bt})
+    @OnClick({R.id.select_all, R.id.confirm_bt, R.id.no_record_bt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.select_all:
@@ -357,7 +385,7 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
                 confirm();
                 break;
             case R.id.no_record_bt:
-                if(cartListener!=null){
+                if (cartListener != null) {
                     cartListener.goHomePage();
                 }
                 break;
@@ -365,24 +393,25 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
         }
     }
 
-    private void confirm(){
+    private void confirm() {
         ids.clear();
-        for (int i=0;i<cartItemInfos.size();i++){
-            if(cartItemInfos.get(i).isIscheck()){
+        for (int i = 0; i < cartItemInfos.size(); i++) {
+            if (cartItemInfos.get(i).isIscheck()) {
                 ids.add(cartItemInfos.get(i).getId());
             }
         }
-        if(ids.size()==0){
+        if (ids.size() == 0) {
             showMessage(getString(R.string.please_select_goods));
             return;
         }
-        CartConfirmOrderActivity.start(getActivity(),ids,StaticData.REFLASH_TWO);
+        CartConfirmOrderActivity.start(getActivity(), ids, StaticData.REFLASH_TWO);
     }
 
     private void returnFirst() {
         confirmBt.setText(getString(R.string.settlement));
         totalPrice.setText("0.00");
         selectAll.setChecked(false);
+        confirmBt.setEnabled(true);
     }
 
 

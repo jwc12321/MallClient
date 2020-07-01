@@ -137,6 +137,8 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
     ConventionalTextView continueOrder;
     @BindView(R.id.back_cart)
     ConventionalTextView backCart;
+    @BindView(R.id.hidden_number)
+    ConventionalTextView hiddenNumber;
 
     private ConfirmGoodsItemAdapter confirmGoodsItemAdapter;
     private HiddenCartGoodsAdapter hiddenCartGoodsAdapter;
@@ -177,7 +179,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
     private void initView() {
         EventBus.getDefault().register(this);
         ids = (List<String>) getIntent().getSerializableExtra(StaticData.CART_ITEM_IDS);
-        normalIds=new ArrayList<>();
+        normalIds = new ArrayList<>();
         purchaseType = getIntent().getStringExtra(StaticData.PURCHASE_TYPE);
         confirmGoodsItemAdapter = new ConfirmGoodsItemAdapter(this);
         goodsRv.setAdapter(confirmGoodsItemAdapter);
@@ -223,10 +225,10 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
         if (confirmCartOrderDetail != null) {
             addressInfo = confirmCartOrderDetail.getAddressInfo();
             address();
-            cartItemInfos=confirmCartOrderDetail.getCartItemInfos();
+            cartItemInfos = confirmCartOrderDetail.getCartItemInfos();
             confirmGoodsItemAdapter.setData(cartItemInfos);
-            goodsTotalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(confirmCartOrderDetail.getGoodsTotalPrice()));
-            totalAmount.setText("¥" + NumberFormatUnit.twoDecimalFormat(confirmCartOrderDetail.getOrderTotalPrice()));
+            goodsTotalPrice.setText("¥ " + NumberFormatUnit.twoDecimalFormat(confirmCartOrderDetail.getGoodsTotalPrice()));
+            totalAmount.setText("¥ " + NumberFormatUnit.twoDecimalFormat(confirmCartOrderDetail.getOrderTotalPrice()));
             userCouponId = confirmCartOrderDetail.getCouponUserId();
             cartIds = confirmCartOrderDetail.getCartIds();
             orderTotalPrice = confirmCartOrderDetail.getOrderTotalPrice();
@@ -236,10 +238,10 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, userCouponId)) {
                     coupon.setText(confirmCartOrderDetail.getCouponCount() + "张优惠券可用");
                 } else {
-                    coupon.setText("-¥" + confirmCartOrderDetail.getCouponPrice());
+                    coupon.setText("-¥ " + confirmCartOrderDetail.getCouponPrice());
                 }
             }
-            deliveryFee.setText("¥" + NumberFormatUnit.twoDecimalFormat(confirmCartOrderDetail.getFreightPrice()));
+            deliveryFee.setText("¥ " + NumberFormatUnit.twoDecimalFormat(confirmCartOrderDetail.getFreightPrice()));
             deliveryMethod.setText(confirmCartOrderDetail.getPeiSongType());
             hiddenItemCartInfos = confirmCartOrderDetail.getHiddenItemCartInfos();
             if (hiddenItemCartInfos != null && hiddenItemCartInfos.size() > 0 && isBulletBox) {
@@ -248,12 +250,13 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                 } else {
                     cartBoxRl.setVisibility(View.VISIBLE);
                     hiddenCartGoodsAdapter.setData(hiddenItemCartInfos);
+                    hiddenNumber.setText(hiddenItemCartInfos.size()+"件  (共"+cartItemInfos.size()+"件)");
                 }
             }
             confirmBt.setEnabled(!(cartItemInfos.size() == hiddenItemCartInfos.size()));
             normalIds.clear();
-            for (CartItemInfo cartItemInfo:cartItemInfos){
-                if(cartItemInfo.getCanBuy()){
+            for (CartItemInfo cartItemInfo : cartItemInfos) {
+                if (cartItemInfo.getCanBuy()) {
                     normalIds.add(cartItemInfo.getId());
                 }
             }
@@ -286,7 +289,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
 
     @Override
     public void renderOrderWxPay(WXPaySignResponse wxPaySignResponse) {
-        if(wxPaySignResponse!=null) {
+        if (wxPaySignResponse != null) {
             wechatPay(wxPaySignResponse);
         }
     }
@@ -381,7 +384,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
-                        } else if(TextUtils.equals(StaticData.REFLASH_ONE, selectType)){
+                        } else if (TextUtils.equals(StaticData.REFLASH_ONE, selectType)) {
                             if (PayTypeInstalledUtils.isAliPayInstalled(CartConfirmOrderActivity.this)) {
                                 cartConfirmOrderPresenter.cartOrderSubmit(addressId, normalIds, userCouponId, message);
                             } else {
@@ -525,8 +528,8 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
         EventBus.getDefault().unregister(this);
     }
 
-    private void paySuccess(){
-        CartPaySuccessActivity.start(this,orderId,orderTotalPrice);
+    private void paySuccess() {
+        CartPaySuccessActivity.start(this, orderId, orderTotalPrice);
         finish();
     }
 

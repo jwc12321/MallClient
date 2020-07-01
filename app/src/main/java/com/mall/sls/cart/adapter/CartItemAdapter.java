@@ -136,7 +136,7 @@ public class CartItemAdapter extends RecyclerView.Adapter {
             GlideHelper.load((Activity) context, cartItemInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(cartItemInfo.getGoodsName());
             sku.setText(cartItemInfo.getSpecifications());
-            goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(cartItemInfo.getPrice()));
+            goodsPrice.setText("¥ " + NumberFormatUnit.twoDecimalFormat(cartItemInfo.getPrice()));
             choiceItem.setChecked(cartItemInfo.isIscheck());
             goodsCount.setText(cartItemInfo.getNumber());
             if (onItemClickListener != null) {
@@ -198,6 +198,12 @@ public class CartItemAdapter extends RecyclerView.Adapter {
                         }
                     }
                 });
+                goodsLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onItemClickListener.goGoodsDetails(cartItemInfo.getGoodsId());
+                    }
+                });
             }
         }
     }
@@ -253,7 +259,7 @@ public class CartItemAdapter extends RecyclerView.Adapter {
             GlideHelper.load((Activity) context, hiddenItemCartInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(hiddenItemCartInfo.getGoodsName());
             sku.setText(hiddenItemCartInfo.getSpecifications());
-            goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(hiddenItemCartInfo.getPrice()));
+            goodsPrice.setText("¥ " + NumberFormatUnit.twoDecimalFormat(hiddenItemCartInfo.getPrice()));
             deleteLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -270,18 +276,13 @@ public class CartItemAdapter extends RecyclerView.Adapter {
 
     public interface OnItemClickListener {
         void checkItem(boolean isChecked, int position);//点击店铺全选
-
         void doIncrease(int position, View showCountView, String id);  //增加数量
-
         void doReduce(int position, View showCountView, String id); //减少数量
-
         void deleteItem(String id, int position, String type);//删除单个
-
         void deleteEmpty(String type);//清空无效商品
-
         void clickEditText(int position,View showCountView);//填写数量
-
         void returnEditText(View showCountView);
+        void goGoodsDetails(String goodsId);
     }
 
     private OnItemClickListener onItemClickListener;

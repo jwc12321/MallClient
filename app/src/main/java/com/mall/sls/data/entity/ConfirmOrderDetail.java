@@ -40,6 +40,12 @@ public class ConfirmOrderDetail implements Serializable {
     //产品描述
     @SerializedName("brief")
     private String brief;
+    //配送方式
+    @SerializedName("peiSongType")
+    private String peiSongType;
+    //运费
+    @SerializedName("freightPrice")
+    private String freightPrice;
 
     public AddressInfo getAddressInfo() {
         return addressInfo;
@@ -119,5 +125,21 @@ public class ConfirmOrderDetail implements Serializable {
 
     public void setBrief(String brief) {
         this.brief = brief;
+    }
+
+    public String getPeiSongType() {
+        return peiSongType;
+    }
+
+    public void setPeiSongType(String peiSongType) {
+        this.peiSongType = peiSongType;
+    }
+
+    public String getFreightPrice() {
+        return freightPrice;
+    }
+
+    public void setFreightPrice(String freightPrice) {
+        this.freightPrice = freightPrice;
     }
 }

@@ -65,9 +65,10 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
                     EventBus.getDefault().post(new WXLoginEvent(code));
                 } else if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX) {    //分享成功
                     EventBus.getDefault().post("分享成功");
-                } else if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {  //支付
-                    EventBus.getDefault().post(new WXSuccessPayEvent());
                 }
+//                else if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {  //支付
+//                    EventBus.getDefault().post(new WXSuccessPayEvent());
+//                }
                 finish();
                 break;
             case BaseResp.ErrCode.ERR_COMM:

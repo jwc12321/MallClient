@@ -129,6 +129,10 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     RelativeLayout titleRel;
     @BindView(R.id.share_iv)
     ImageView shareIv;
+    @BindView(R.id.goods_detail_iv)
+    ImageView goodsDetailIv;
+    @BindView(R.id.courierType)
+    ConventionalTextView courierType;
     private ProductListCallableInfo productListCallableInfo;
     private List<CustomViewsInfo> data;
     private String goodsId;
@@ -276,11 +280,11 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 goSelectSpecReturn(StaticData.REFLASH_ONE);
                 break;
             case R.id.confirm_bt://发起拼单
-                TCAgentUnit.setEventId(this,getString(R.string.event_purchase_details));
+                TCAgentUnit.setEventId(this, getString(R.string.event_purchase_details));
                 initiateBill();
                 break;
             case R.id.share://分享
-                TCAgentUnit.setEventId(this,getString(R.string.goods_details_share));
+                TCAgentUnit.setEventId(this, getString(R.string.goods_details_share));
                 if (!PayTypeInstalledUtils.isWeixinAvilible(ActivityGoodsDetailActivity.this)) {
                     showMessage(getString(R.string.install_weixin));
                     return;
@@ -305,7 +309,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         Intent intent = new Intent(this, SelectSpecActivity.class);
         intent.putExtra(StaticData.PRODUCT_LIST, (Serializable) goodsSpecs);
         intent.putExtra(StaticData.SPECIFICATION_LIST, (Serializable) productListCallableInfos);
-        intent.putExtra(StaticData.PIC_URL,picUrl);
+        intent.putExtra(StaticData.PIC_URL, picUrl);
         intent.putExtra(StaticData.SKU_CHECK, (Serializable) checkSkus);
         intent.putExtra(StaticData.CHOICE_TYPE, type);
         intent.putExtra(StaticData.GOODS_COUNT, goodsCount);
@@ -317,7 +321,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         Intent intent = new Intent(this, SelectSpecActivity.class);
         intent.putExtra(StaticData.PRODUCT_LIST, (Serializable) goodsSpecs);
         intent.putExtra(StaticData.SPECIFICATION_LIST, (Serializable) productListCallableInfos);
-        intent.putExtra(StaticData.PIC_URL,picUrl);
+        intent.putExtra(StaticData.PIC_URL, picUrl);
         intent.putExtra(StaticData.SKU_CHECK, (Serializable) checkSkus);
         intent.putExtra(StaticData.CHOICE_TYPE, type);
         intent.putExtra(StaticData.GOODS_COUNT, goodsCount);
@@ -400,6 +404,11 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             goodsBrief.setText(goodsDetailsInfo.getBrief());
             goodsBrief.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getBrief()) ? View.GONE : View.VISIBLE);
             selectedGoods.setText(getString(R.string.select_spec));
+            if (TextUtils.equals(StaticData.REFLASH_ONE, goodsDetailsInfo.getCourierType())) {
+                courierType.setText(getString(R.string.same_city_delivery));
+            } else {
+                courierType.setText(getString(R.string.type_express_delivery));
+            }
             if (!TextUtils.isEmpty(goodsDetailsInfo.getNow()) && !TextUtils.isEmpty(goodsDetailsInfo.getGroupExpireTime()) && !TextUtils.isEmpty(goodsDetailsInfo.getStartTime())) {
                 long now = FormatUtil.dateToStamp(goodsDetailsInfo.getNow());
                 long groupExpireTime = FormatUtil.dateToStamp(goodsDetailsInfo.getGroupExpireTime());
@@ -442,8 +451,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 groupId = groupPurchases.get(0).getGrouponId();
                 groupRulesId = groupPurchases.get(0).getRulesId();
             }
-            picUrl=goodsDetailsInfo.getPicUrl();
-            goodsSpecs=goodsDetailsInfo.getGoodsSpecs();
+            picUrl = goodsDetailsInfo.getPicUrl();
+            goodsSpecs = goodsDetailsInfo.getGoodsSpecs();
             productListCallableInfos = goodsDetailsInfo.getProductListCallableInfos();
             if (productListCallableInfos != null && productListCallableInfos.size() == 1) {
                 ProductListCallableInfo productListCallableInfo = productListCallableInfos.get(0);
@@ -455,6 +464,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             if (!TextUtils.isEmpty(goodsDetailsInfo.getDetail())) {
                 webView.loadDataWithBaseURL(null, HtmlUnit.getHtmlData(goodsDetailsInfo.getDetail()), "text/html", "utf-8", null);
             }
+            goodsDetailIv.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getDetail()) ? View.GONE : View.VISIBLE);
             GlideHelper.load(this, goodsDetailsInfo.getPicUrl(), R.mipmap.icon_default_goods, shareIv);
         }
     }
@@ -526,13 +536,13 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     @Override
     protected void onResume() {
         super.onResume();
-        TCAgentUnit.pageStart(this,getString(R.string.event_page_detail));
+        TCAgentUnit.pageStart(this, getString(R.string.event_page_detail));
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        TCAgentUnit.pageEnd(this,getString(R.string.event_page_detail));
+        TCAgentUnit.pageEnd(this, getString(R.string.event_page_detail));
     }
 
 }

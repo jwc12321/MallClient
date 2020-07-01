@@ -104,7 +104,9 @@ public class GoodsDetailsInfo implements Serializable {
     //团购规则Id
     @SerializedName("grouponRulesId")
     private String grouponRulesId;
-
+    //发货方式 1同城配送 2快递配送
+    @SerializedName("courierType")
+    private String courierType;
 
 
 
@@ -347,5 +349,13 @@ public class GoodsDetailsInfo implements Serializable {
 
     public void setGrouponRulesId(String grouponRulesId) {
         this.grouponRulesId = grouponRulesId;
+    }
+
+    public String getCourierType() {
+        return courierType;
+    }
+
+    public void setCourierType(String courierType) {
+        this.courierType = courierType;
     }
 }

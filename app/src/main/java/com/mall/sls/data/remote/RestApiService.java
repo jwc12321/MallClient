@@ -91,7 +91,7 @@ public interface RestApiService {
 
     //发送验证码
     @POST("app/auth/regCaptcha")
-    Flowable<RemoteDataWrapper<String>> sendCodeV(@Header("X-Hc-Sign") String sign, @Body MobileRequest request);
+    Flowable<RemoteDataWrapper<Ignore>> sendCodeV(@Header("X-Hc-Sign") String sign, @Body MobileRequest request);
 
     //获取用户认证状态
     @GET("app/certify")
@@ -326,5 +326,13 @@ public interface RestApiService {
     //订单详情加入购物车
     @POST("app/order/general/addCartBatch")
     Flowable<RemoteDataWrapper<Boolean>> addCartBatch(@Header("X-Hc-Sign") String sign, @Body OrderIdRequest request);
+
+    //正在抢购
+    @GET("app/goods/rushBuy")
+    Flowable<RemoteDataWrapper<LocalTeam>> getRushBuy(@Header("X-Hc-Sign") String sign, @Query("page") String page, @Query("limit") String limit);
+
+    //即将开抢
+    @GET("app/goods/waitBuy")
+    Flowable<RemoteDataWrapper<LocalTeam>> getWaitBuy(@Header("X-Hc-Sign") String sign, @Query("page") String page, @Query("limit") String limit);
 
 }

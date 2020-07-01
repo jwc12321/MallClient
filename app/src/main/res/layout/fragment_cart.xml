@@ -19,16 +19,37 @@
             android:text="@string/cart" />
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cart_rv"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/title_rel"
         android:layout_marginBottom="@dimen/dp_47"
-        android:nestedScrollingEnabled="false"
-        android:visibility="gone"
-        app:layoutManager="@string/layoutManager_LinearLayout"
-        tools:listitem="@layout/adapter_normal_cart_item" />
+        app:srlEnablePreviewInEditMode="false">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/black"
+            app:srlEnableLastTime="true"
+            app:srlPrimaryColor="@color/backGround8" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backGround6"
+            android:orientation="vertical">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cart_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layoutManager="@string/layoutManager_LinearLayout"
+                tools:listitem="@layout/adapter_normal_cart_item" />
+        </LinearLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/statistics_rl"

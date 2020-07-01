@@ -6,6 +6,7 @@ import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
+import com.mall.sls.data.entity.Ignore;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.data.request.MobileRequest;
@@ -46,13 +47,13 @@ public class BindMobilePresenter implements LoginContract.BindMobilePresenter {
         MobileRequest request=new MobileRequest(mobile);
         String sign= SignUnit.signPost(RequestUrl.SEND_CODE_V_URL,gson.toJson(request));
         Disposable disposable = restApiService.sendCodeV(sign,request)
-                .flatMap(new RxRemoteDataParse<String>())
-                .compose(new RxSchedulerTransformer<String>())
-                .subscribe(new Consumer<String>() {
+                .flatMap(new RxRemoteDataParse<Ignore>())
+                .compose(new RxSchedulerTransformer<Ignore>())
+                .subscribe(new Consumer<Ignore>() {
                     @Override
-                    public void accept(String vCode) throws Exception {
+                    public void accept(Ignore ignore) throws Exception {
                         bindMobileView.dismissLoading();
-                        bindMobileView.renderVCode(vCode);
+                        bindMobileView.renderVCode();
                     }
                 }, new Consumer<Throwable>() {
                     @Override

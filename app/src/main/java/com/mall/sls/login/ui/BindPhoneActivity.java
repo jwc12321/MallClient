@@ -153,8 +153,7 @@ public class BindPhoneActivity extends BaseActivity implements LoginContract.Bin
     }
 
     @Override
-    public void renderVCode(String vCode) {
-//        vcodeEt.setText(vCode);
+    public void renderVCode() {
         sendVcode.startCold();
     }
 
