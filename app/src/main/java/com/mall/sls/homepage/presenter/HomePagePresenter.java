@@ -1,6 +1,7 @@
 package com.mall.sls.homepage.presenter;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -46,6 +47,7 @@ public class HomePagePresenter implements HomepageContract.HomePagePresenter {
 
     @Override
     public void getHomePageInfo(String refreshType) {
+        Log.d("111","我是重启1");
         if (TextUtils.equals(StaticData.REFLASH_ONE, refreshType)) {
             homePageView.showLoading(StaticData.LOADING);
         }

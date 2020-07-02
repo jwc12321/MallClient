@@ -33,6 +33,9 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.help.Inputtips;
+import com.amap.api.services.help.InputtipsQuery;
+import com.amap.api.services.help.Tip;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.mall.sls.BaseActivity;
@@ -306,7 +309,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         }
     }
 
-    protected void doSearchQuery(String city, String mType, double latitude, double longitude) {
+    private void doSearchQuery(String city, String mType, double latitude, double longitude) {
         type = StaticData.REFLASH_ONE;
         query = new PoiSearch.Query("", mType, city);// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
         query.setPageSize(pageSize);// 设置每页最多返回多少条poiitem
@@ -319,21 +322,26 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
         poiSearch.searchPOIAsyn();// 异步搜索
     }
 
-    protected void doSearchKeyWord(String keyWord, String city) {
+    private void doSearchKeyWord(String keyWord, String city) {
         type = StaticData.REFLASH_ZERO;
         query = new PoiSearch.Query(keyWord, "", city);// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
         query.setPageSize(searchSize);// 设置每页最多返回多少条poiitem
         query.setPageNum(0);// 设置查第一页
+        query.setCityLimit(true);
         poiSearch = new PoiSearch(this, query);
         poiSearch.setOnPoiSearchListener(this);
         poiSearch.searchPOIAsyn();// 异步搜索
     }
 
+
+
+
     @Override
     public void onPoiSearched(PoiResult poiResult, int i) {
         if (i == 1000) {
             if (poiResult != null && poiResult.getQuery() != null) {// 搜索poi的结果
-                Log.d("jjj0", "精度和纬度======" + poiResult + "==" + poiResult.getPois().size());
+                Log.d("jjj0", "精度和纬度======" + poiResult + "==" + poiResult.getPois().size()+poiResult.getPois().get(0));
+
                 if (poiResult.getQuery().equals(query)) {// 是否是同一条
                     List<PoiItem> poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
                     if (TextUtils.equals(StaticData.REFLASH_ONE, type)) {

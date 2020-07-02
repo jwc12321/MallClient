@@ -1446,13 +1446,13 @@
         <item name="cpGridItemBackground">@drawable/common_four_app_three_bg</item>
         <item name="cpGridItemSpace">@dimen/dp_16</item>
 
-        <item name="cpSectionHeight">@dimen/dp_32</item>
-        <item name="cpSectionTextSize">@dimen/sp_15</item>
+        <item name="cpSectionHeight">@dimen/dp_30</item>
+        <item name="cpSectionTextSize">@dimen/sp_14</item>
         <item name="cpSectionTextColor">@color/appText2</item>
-        <item name="cpSectionBackground">@color/appText1</item>
+        <item name="cpSectionBackground">@color/backGround6</item>
 
-        <item name="cpIndexBarTextSize">@dimen/sp_13</item>
-        <item name="cpIndexBarNormalTextColor">@color/appText2</item>
+        <item name="cpIndexBarTextSize">@dimen/sp_10</item>
+        <item name="cpIndexBarNormalTextColor">@color/appText3</item>
         <item name="cpIndexBarSelectedTextColor">@color/appText3</item>
 
         <item name="cpOverlayWidth">@dimen/dp_100</item>

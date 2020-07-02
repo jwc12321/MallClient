@@ -46,7 +46,7 @@ public class City {
                 return c.toUpperCase();
             }
             //在添加定位和热门数据时设置的section就是‘定’、’热‘开头
-            else if (TextUtils.equals(c, "定") || TextUtils.equals(c, "热"))
+            else if (TextUtils.equals(c, "当") || TextUtils.equals(c, "热"))
                 return pinyin;
             else
                 return "#";

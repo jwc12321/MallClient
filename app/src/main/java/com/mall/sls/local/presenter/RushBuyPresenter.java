@@ -1,6 +1,7 @@
 package com.mall.sls.local.presenter;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
@@ -43,6 +44,7 @@ public class RushBuyPresenter implements LocalContract.RushBuyPresenter {
 
     @Override
     public void getRushBuy(String refreshType) {
+        Log.d("111","我是重启2-1");
         if (TextUtils.equals("1", refreshType)) {
             rushBuyView.showLoading(StaticData.LOADING);
         }

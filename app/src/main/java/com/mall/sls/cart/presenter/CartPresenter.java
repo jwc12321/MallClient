@@ -1,6 +1,7 @@
 package com.mall.sls.cart.presenter;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -47,6 +48,7 @@ public class CartPresenter implements CartContract.CartPresenter {
 
     @Override
     public void getCartInfo(String refreshType) {
+        Log.d("111","我是重启3");
         if (TextUtils.equals("1", refreshType)) {
             cartView.showLoading(StaticData.LOADING);
         }

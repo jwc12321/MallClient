@@ -23,6 +23,7 @@ import com.mall.sls.common.widget.citypicker.model.City;
 import com.mall.sls.common.widget.citypicker.model.HotCity;
 import com.mall.sls.common.widget.citypicker.model.LocateState;
 import com.mall.sls.common.widget.citypicker.model.LocatedCity;
+import com.mall.sls.common.widget.textview.ConventionalTextView;
 
 import java.util.List;
 
@@ -91,7 +92,7 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
             if (TextUtils.equals(index.substring(0, 1), mData.get(i).getSection().substring(0, 1))){
                 if (mLayoutManager != null){
                     mLayoutManager.scrollToPositionWithOffset(i, 0);
-                    if (TextUtils.equals(index.substring(0, 1), "定")) {
+                    if (TextUtils.equals(index.substring(0, 1), "当")) {
                         //防止滚动时进行刷新
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -145,18 +146,6 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
             final City data = mData.get(pos);
             if (data == null) return;
             //设置宽高
-            DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
-            int screenWidth = dm.widthPixels;
-            TypedValue typedValue = new TypedValue();
-            mContext.getTheme().resolveAttribute(R.attr.cpGridItemSpace, typedValue, true);
-            int space = mContext.getResources().getDimensionPixelSize(R.dimen.dp_16);
-            int padding = mContext.getResources().getDimensionPixelSize(R.dimen.dp_16);
-            int indexBarWidth = mContext.getResources().getDimensionPixelSize(R.dimen.dp_36);
-            int itemWidth = (screenWidth - padding - space * (GridListAdapter.SPAN_COUNT - 1) - indexBarWidth) / GridListAdapter.SPAN_COUNT;
-            ViewGroup.LayoutParams lp = ((LocationViewHolder) holder).container.getLayoutParams();
-            lp.width = itemWidth;
-            lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            ((LocationViewHolder) holder).container.setLayoutParams(lp);
 
             switch (locateState){
                 case LocateState.LOCATING:
@@ -169,7 +158,7 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
                     ((LocationViewHolder) holder).current.setText(R.string.cp_locate_failed);
                     break;
             }
-            ((LocationViewHolder) holder).container.setOnClickListener(new View.OnClickListener() {
+            ((LocationViewHolder) holder).current.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (locateState == LocateState.SUCCESS) {
@@ -209,7 +198,7 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0 && TextUtils.equals("定", mData.get(position).getSection().substring(0, 1)))
+        if (position == 0 && TextUtils.equals("当", mData.get(position).getSection().substring(0, 1)))
             return VIEW_TYPE_LOCATION;
         if (position == 1 && TextUtils.equals("热", mData.get(position).getSection().substring(0, 1)))
             return VIEW_TYPE_HOT;
@@ -227,7 +216,7 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
     }
 
     public static class DefaultViewHolder extends BaseViewHolder{
-        TextView name;
+        ConventionalTextView name;
 
         DefaultViewHolder(View itemView) {
             super(itemView);
@@ -251,13 +240,13 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseVi
     }
 
     public static class LocationViewHolder extends BaseViewHolder {
-        FrameLayout container;
-        TextView current;
+        ConventionalTextView current;
+        ConventionalTextView reLocate;
 
         LocationViewHolder(View itemView) {
             super(itemView);
-            container = itemView.findViewById(R.id.cp_list_item_location_layout);
             current = itemView.findViewById(R.id.cp_list_item_location);
+            reLocate = itemView.findViewById(R.id.re_locate);
         }
     }
 }

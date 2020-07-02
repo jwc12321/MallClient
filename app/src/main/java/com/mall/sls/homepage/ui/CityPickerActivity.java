@@ -6,8 +6,9 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -19,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
-import com.mall.sls.certify.ui.CerifyPayActivity;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.LocalCityManager;
 import com.mall.sls.common.widget.citypicker.adapter.CityListAdapter;
@@ -34,6 +34,7 @@ import com.mall.sls.common.widget.citypicker.model.LocateState;
 import com.mall.sls.common.widget.citypicker.model.LocatedCity;
 import com.mall.sls.common.widget.citypicker.util.ScreenUtil;
 import com.mall.sls.common.widget.citypicker.view.SideIndexBar;
+import com.mall.sls.common.widget.edittextview.SoftKeyBoardListener;
 import com.mall.sls.common.widget.textview.ConventionalEditTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 
@@ -49,8 +50,6 @@ import butterknife.OnClick;
  * 描述：
  */
 public class CityPickerActivity extends BaseActivity implements TextWatcher, SideIndexBar.OnIndexTouchedChangedListener, InnerListener {
-    @BindView(R.id.back)
-    ImageView back;
     @BindView(R.id.title_rel)
     RelativeLayout titleRel;
     @BindView(R.id.index_bar)
@@ -65,6 +64,10 @@ public class CityPickerActivity extends BaseActivity implements TextWatcher, Sid
     ConventionalEditTextView addressEt;
     @BindView(R.id.no_record_ll)
     LinearLayout noRecordLl;
+    @BindView(R.id.close_iv)
+    ImageView closeIv;
+    @BindView(R.id.cancel_bt)
+    ConventionalTextView cancelBt;
 
     private LinearLayoutManager mLayoutManager;
     private CityListAdapter mAdapter;
@@ -124,6 +127,19 @@ public class CityPickerActivity extends BaseActivity implements TextWatcher, Sid
         mIndexBar.setOverlayTextView(overlay)
                 .setOnIndexChangedListener(this);
         addressEt.addTextChangedListener(this);
+
+        SoftKeyBoardListener.setListener(this, new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
+            @Override
+            public void keyBoardShow(int height) {
+                closeIv.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void keyBoardHide(int height) {
+                addressEt.clearFocus();
+                closeIv.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void initData() {
@@ -152,16 +168,21 @@ public class CityPickerActivity extends BaseActivity implements TextWatcher, Sid
 
         dbManager = new DBManager(this);
         mAllCities = dbManager.getAllCities();
+//        mAllCities.add(0, mLocatedCity);
         mAllCities.add(0, mLocatedCity);
-        mAllCities.add(1, new HotCity("热门城市", "0"));
+//        mAllCities.add(1, new HotCity("热门城市", "0"));
         mResults = mAllCities;
     }
 
-    @OnClick({R.id.back})
+    @OnClick({R.id.cancel_bt, R.id.close_iv})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.back:
+            case R.id.cancel_bt:
+                hiddenEdit();
                 finish();
+                break;
+            case R.id.close_iv:
+                addressEt.setText("");
                 break;
             default:
         }
@@ -232,5 +253,20 @@ public class CityPickerActivity extends BaseActivity implements TextWatcher, Sid
 
     public void setOnPickListener(OnPickListener listener) {
         this.mOnPickListener = listener;
+    }
+
+    private void hiddenEdit() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(addressEt.getWindowToken(), 0);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return getWindow().superDispatchTouchEvent(ev) || onTouchEvent(ev);
+    }
+
+    @Override
+    public boolean isShouldHideInput(View v, MotionEvent event) {
+        return super.isShouldHideInput(v, event);
     }
 }

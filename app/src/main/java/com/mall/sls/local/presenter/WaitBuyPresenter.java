@@ -1,6 +1,7 @@
 package com.mall.sls.local.presenter;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
@@ -42,6 +43,7 @@ public class WaitBuyPresenter implements LocalContract.WaitBuyPresenter {
 
     @Override
     public void getWaitBuy(String refreshType) {
+        Log.d("111","我是重启2-2");
         if (TextUtils.equals("1", refreshType)) {
             waitBuyView.showLoading(StaticData.LOADING);
         }

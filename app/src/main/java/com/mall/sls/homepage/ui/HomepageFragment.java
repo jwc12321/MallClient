@@ -46,6 +46,7 @@ import com.mall.sls.coupon.ui.CouponActivity;
 import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.BannerInfo;
 import com.mall.sls.data.entity.CustomViewsInfo;
+import com.mall.sls.data.entity.GoodsItemInfo;
 import com.mall.sls.data.entity.HomeCouponInfo;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.WebViewDetailInfo;
@@ -151,7 +152,9 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     // 微信登录
     private static IWXAPI WXapi;
 
-    private boolean isFirstAdd=true;
+    private List<GoodsItemInfo> startInfos;
+    private List<GoodsItemInfo> endInfos;
+    private List<GoodsItemInfo> goodsItemInfos;
 
     public static HomepageFragment newInstance() {
         HomepageFragment fragment = new HomepageFragment();
@@ -181,6 +184,9 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
 
     private void initView() {
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
+        startInfos = new ArrayList<>();
+        endInfos = new ArrayList<>();
+        goodsItemInfos=new ArrayList<>();
         mapLocal();
         settingHeight();
         xBannerInit();
@@ -232,7 +238,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                 TCAgentUnit.setEventIdLabel(getActivity(), getString(R.string.king_kong), bannerInfo.getNativeType());
             }
             if (TextUtils.equals(StaticData.REFLASH_ZERO, bannerInfo.getLinkType()) && bannerInfo.isLinkOpen()) {//h5界面
-                LandingPageActivity.start(getActivity(),bannerInfo.getLink());
+                LandingPageActivity.start(getActivity(), bannerInfo.getLink());
             } else if (TextUtils.equals(StaticData.REFLASH_ONE, bannerInfo.getLinkType()) && bannerInfo.isLinkOpen()) {
                 nativeType = bannerInfo.getNativeType();
                 if (TextUtils.equals(StaticData.GOODS_INFO, nativeType)) {//商品详情
@@ -313,7 +319,9 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
 
         @Override
         public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
+            goodsItemAdapter.addMore(endInfos);
+            refreshLayout.finishLoadMore();
+            refreshLayout.finishLoadMoreWithNoMoreData();
         }
     };
 
@@ -343,19 +351,19 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
 
     @Override
     public void goOrdinaryGoodsDetails(String goodsId) {
-        TCAgentUnit.setEventId(getActivity(),getString(R.string.home_goods));
+        TCAgentUnit.setEventId(getActivity(), getString(R.string.home_goods));
         OrdinaryGoodsDetailActivity.start(getActivity(), goodsId);
     }
 
     @Override
     public void goActivityGroupGoods(String goodsId) {
-        TCAgentUnit.setEventId(getActivity(),getString(R.string.home_goods));
+        TCAgentUnit.setEventId(getActivity(), getString(R.string.home_goods));
         ActivityGroupGoodsActivity.start(getActivity(), goodsId);
     }
 
     @Override
     public void goGeneralGoodsDetails(String goodsId) {
-        GeneralGoodsDetailsActivity.start(getActivity(),goodsId);
+        GeneralGoodsDetailsActivity.start(getActivity(), goodsId);
     }
 
     @Override
@@ -377,12 +385,6 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             banner.setAutoPlayAble(data.size() > 1);
             banner.setBannerData(R.layout.xbanner_item, data);
             messageCount.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO, homePageInfo.getUnreadMsgCount()) ? View.GONE : View.VISIBLE);
-            if (TextUtils.equals(StaticData.REFLASH_ONE, homePageInfo.getStatus())) {
-                //开通
-                goodsItemAdapter.setData(homePageInfo.getGoodsItemInfos());
-            } else {
-                CityNotOpenActivity.start(getActivity());
-            }
             jinGangInfos = homePageInfo.getJinGangInfos();
             if (jinGangInfos != null) {
                 if (isFirst) {
@@ -406,6 +408,23 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                 } else {
                     receiveIv.setSelected(true);
                 }
+            }
+            startInfos.clear();
+            endInfos.clear();
+            goodsItemInfos=homePageInfo.getGoodsItemInfos();//android加载慢，自己分页了
+            if(goodsItemInfos!=null&&goodsItemInfos.size()>5){
+                for (int i=0;i<goodsItemInfos.size();i++){
+                    if(i<5){
+                        startInfos.add(goodsItemInfos.get(i));
+                    }else {
+                        endInfos.add(goodsItemInfos.get(i));
+                    }
+                }
+                refreshLayout.resetNoMoreData();
+                goodsItemAdapter.setData(startInfos);
+            }else {
+                goodsItemAdapter.setData(goodsItemInfos);
+                refreshLayout.finishLoadMoreWithNoMoreData();
             }
         }
     }
@@ -435,7 +454,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
 
     private void updateApp(AppUrlInfo appUrlInfo) {
         if (appUrlInfo != null && !appUrlInfo.isIfLatest() && !TextUtils.isEmpty(appUrlInfo.getUrl())) {
-            if (!TextUtils.isEmpty(UpdateManager.getUpdate()) &&TextUtils.equals(UpdateManager.getUpdate(),appUrlInfo.getCurrentVersion())&& !appUrlInfo.isForceUpdate()) {
+            if (!TextUtils.isEmpty(UpdateManager.getUpdate()) && TextUtils.equals(UpdateManager.getUpdate(), appUrlInfo.getCurrentVersion()) && !appUrlInfo.isForceUpdate()) {
                 return;
             }
             UpdateConfig updateConfig = new UpdateConfig();
@@ -567,9 +586,9 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (getUserVisibleHint()&&getActivity()!=null&&!getActivity().isDestroyed()) {
+        if (getUserVisibleHint() && getActivity() != null && !getActivity().isDestroyed()) {
             TCAgentUnit.pageStart(getActivity(), getString(R.string.home));
-        } else if(getActivity()!=null&&!getActivity().isDestroyed()){
+        } else if (getActivity() != null && !getActivity().isDestroyed()) {
             TCAgentUnit.pageEnd(getActivity(), getString(R.string.home));
         }
     }
