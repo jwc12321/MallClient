@@ -113,6 +113,7 @@ public class PendingShareFragment extends BaseFragment implements OrderContract.
     }
 
     private void initView() {
+        EventBus.getDefault().register(this);
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         wxShareManager = WXShareManager.getInstance(getActivity());
         addAdapter();
@@ -196,7 +197,7 @@ public class PendingShareFragment extends BaseFragment implements OrderContract.
                 briefText = BriefUnit.returnBrief(orderGoodsVos.get(0).getBrief());
             }
             orderTotalPrice = goodsOrderInfo.getActualPrice();
-            shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, shareIv.getWidth(), shareIv.getWidth());
+            shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, 150,150);
             if (!PayTypeInstalledUtils.isWeixinAvilible(getActivity())) {
                 showMessage(getString(R.string.install_weixin));
                 return;

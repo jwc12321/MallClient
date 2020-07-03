@@ -289,7 +289,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                     showMessage(getString(R.string.install_weixin));
                     return;
                 }
-                shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, shareIv.getWidth(), shareIv.getWidth());//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
+                shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, 150,150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
                 Intent intent = new Intent(this, SelectShareTypeActivity.class);
                 startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
                 break;

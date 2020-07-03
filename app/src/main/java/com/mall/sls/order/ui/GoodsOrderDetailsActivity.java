@@ -260,7 +260,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                         showMessage(getString(R.string.install_weixin));
                         return;
                     }
-                    shareBitMap = QRCodeFileUtils.createBitmap3(goodsIv, goodsIv.getWidth(), goodsIv.getWidth());//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
+                    shareBitMap = QRCodeFileUtils.createBitmap3(goodsIv, 150,150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
                     Intent intent = new Intent(this, SelectShareTypeActivity.class);
                     startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
                 } else if (TextUtils.equals(StaticData.PENDING_REFUND, orderStatusText) || TextUtils.equals(StaticData.REFUNDED, orderStatusText)) {
