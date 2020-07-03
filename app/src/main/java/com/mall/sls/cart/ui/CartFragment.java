@@ -202,27 +202,28 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
 
     @Override
     public void renderDeleteCartItem(Boolean isBoolean) {
-        if (TextUtils.equals(StaticData.REFLASH_ONE, type)) {
-            cartItemInfos.remove(deletePosition);
-            calculatingPrice();
-        } else if (TextUtils.equals(StaticData.REFLASH_TWO, type)) {
-            if (deletePosition - 1 - cartItemInfos.size() > -1 && deletePosition - 1 - cartItemInfos.size() < hiddenItemCartInfos.size()) {
-                hiddenItemCartInfos.remove(deletePosition - 1 - cartItemInfos.size());
-            }
-        } else {
-            mLiteratureList.clear();
-            mLiteratureList.addAll(cartItemInfos);
-            cartItemAdapter.setLiteratureList(mLiteratureList);
-        }
-        if (cartItemInfos.size() == 0 && hiddenItemCartInfos.size() == 0) {
-            noRecordLl.setVisibility(View.VISIBLE);
-            cartRv.setVisibility(View.GONE);
-            statisticsRl.setVisibility(View.GONE);
-        } else {
-            noRecordLl.setVisibility(View.GONE);
-            cartRv.setVisibility(View.VISIBLE);
-            statisticsRl.setVisibility(View.VISIBLE);
-        }
+        cartPresenter.getCartInfo(StaticData.REFLASH_ZERO);
+//        if (TextUtils.equals(StaticData.REFLASH_ONE, type)) {
+//            cartItemInfos.remove(deletePosition);
+//            calculatingPrice();
+//        } else if (TextUtils.equals(StaticData.REFLASH_TWO, type)) {
+//            if (deletePosition - 1 - cartItemInfos.size() > -1 && deletePosition - 1 - cartItemInfos.size() < hiddenItemCartInfos.size()) {
+//                hiddenItemCartInfos.remove(deletePosition - 1 - cartItemInfos.size());
+//            }
+//        } else {
+//            mLiteratureList.clear();
+//            mLiteratureList.addAll(cartItemInfos);
+//            cartItemAdapter.setLiteratureList(mLiteratureList);
+//        }
+//        if (cartItemInfos.size() == 0 && hiddenItemCartInfos.size() == 0) {
+//            noRecordLl.setVisibility(View.VISIBLE);
+//            cartRv.setVisibility(View.GONE);
+//            statisticsRl.setVisibility(View.GONE);
+//        } else {
+//            noRecordLl.setVisibility(View.GONE);
+//            cartRv.setVisibility(View.VISIBLE);
+//            statisticsRl.setVisibility(View.VISIBLE);
+//        }
     }
 
     @Override

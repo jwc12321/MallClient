@@ -515,7 +515,9 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             case StaticData.TO_BE_DELIVERED://代发货
                 orderStatus.setText(getString(R.string.pending_delivery));
                 countDownLl.setVisibility(View.GONE);
-                btRl.setVisibility(View.GONE);
+                rightBt.setVisibility(View.GONE);
+                oneMoreAddCart();
+                downBtRlVis();
                 deliveryRl.setVisibility(View.GONE);
                 fenGeLine.setVisibility(View.GONE);
                 statusIv.setBackgroundResource(R.mipmap.icon_to_delivered);
@@ -523,10 +525,10 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             case StaticData.TO_BE_RECEIVED://待收货
                 orderStatus.setText(getString(R.string.shipping));
                 countDownLl.setVisibility(View.GONE);
-                btRl.setVisibility(View.VISIBLE);
                 rightBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, showMap) ? View.VISIBLE : View.GONE);
                 rightBt.setText(getString(R.string.check_map));
                 oneMoreAddCart();
+                downBtRlVis();
                 deliveryRl.setVisibility(View.VISIBLE);
                 fenGeLine.setVisibility(View.VISIBLE);
                 statusIv.setBackgroundResource(R.mipmap.icon_to_received);
@@ -535,9 +537,9 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             case StaticData.SYS_RECEIVED:
                 orderStatus.setText(getString(R.string.completed));
                 countDownLl.setVisibility(View.GONE);
-                btRl.setVisibility(View.VISIBLE);
                 rightBt.setVisibility(View.GONE);
                 oneMoreAddCart();
+                downBtRlVis();
                 deliveryRl.setVisibility(View.VISIBLE);
                 fenGeLine.setVisibility(View.VISIBLE);
                 statusIv.setBackgroundResource(R.mipmap.icon_order_compled);
@@ -546,9 +548,9 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             case StaticData.SYS_CANCELLED:
                 orderStatus.setText(getString(R.string.transaction_cancel));
                 countDownLl.setVisibility(View.GONE);
-                btRl.setVisibility(View.VISIBLE);
                 rightBt.setVisibility(View.GONE);
                 oneMoreAddCart();
+                downBtRlVis();
                 deliveryRl.setVisibility(View.GONE);
                 fenGeLine.setVisibility(View.GONE);
                 statusIv.setBackgroundResource(R.mipmap.icon_order_cancel);
@@ -586,6 +588,15 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
         }else {
             leftBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, isOnSale) ? View.VISIBLE : View.GONE);
             leftBt.setText(getString(R.string.one_more_order));
+        }
+
+    }
+
+    private void downBtRlVis(){
+        if(leftBt.getVisibility()==View.VISIBLE||rightBt.getVisibility()==View.VISIBLE){
+            btRl.setVisibility(View.VISIBLE);
+        }else {
+            btRl.setVisibility(View.GONE);
         }
     }
 
