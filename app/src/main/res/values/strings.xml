@@ -401,4 +401,5 @@
     <string name="actually_paid">实付</string>
     <string name="selling_price">销售价</string>
     <string name="city_re_locate">重新定位</string>
+    <string name="continue_draw">继续抽奖</string>
 </resources>

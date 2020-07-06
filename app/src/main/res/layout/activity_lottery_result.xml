@@ -87,7 +87,7 @@
                 android:layout_marginLeft="@dimen/dp_58"
                 android:layout_marginTop="@dimen/dp_13"
                 android:layout_marginRight="@dimen/dp_58"
-                android:text="@string/confirm" />
+                android:text="@string/continue_draw" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
