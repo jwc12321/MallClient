@@ -81,7 +81,7 @@ public class ShoppingSelectView extends LinearLayout {
     }
 
     public void getView() {
-        if (list.size() < 0) {
+        if (list==null||list.size() < 0) {
             return;
         }
         for (int z = 0; z < list.size(); z++) {

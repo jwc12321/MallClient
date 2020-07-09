@@ -21,7 +21,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -29,17 +28,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.PermissionChecker;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
-import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.HandleBackUtil;
 import com.mall.sls.common.widget.dialog.LoadingDialog;
 import com.mall.sls.data.RemoteDataException;
 import com.mall.sls.login.ui.WeixinLoginActivity;
 import com.mall.sls.mainframe.ui.MainFrameActivity;
-import com.umeng.analytics.MobclickAgent;
-
 import java.lang.reflect.Field;
 
 /**
@@ -276,13 +271,11 @@ public abstract class BaseActivity extends AppCompatActivity implements LoadData
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
     }
 
     /**

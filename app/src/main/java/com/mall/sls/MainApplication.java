@@ -23,10 +23,6 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.tendcloud.tenddata.TCAgent;
-import com.umeng.analytics.MobclickAgent;
-import com.umeng.commonsdk.UMConfigure;
-import com.umeng.socialize.PlatformConfig;
-import com.umeng.socialize.UMShareAPI;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -80,11 +76,6 @@ public class MainApplication extends MultiDexApplication {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
         SPManager.getInstance().register(this);
-
-        UMShareAPI.get(this);//初始化sdk
-        String channelId = WalleChannelReader.getChannel(this.getApplicationContext());
-        UMConfigure.init(this, "5ed46e8cdbc2ec08279bd3d7", channelId, UMConfigure.DEVICE_TYPE_PHONE, "");
-        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
         disableAPIDialog();
         PushManager.getInstance().initialize(this);
         PushManager.getInstance().setDebugLogger(this, new IUserLoggerInterface() {
@@ -94,6 +85,7 @@ public class MainApplication extends MultiDexApplication {
             }
         });
         //talkingdata
+        String channelId = WalleChannelReader.getChannel(this.getApplicationContext());
 //        JLibrary.InitEntry(this); //移动安全联盟统一SDK初始化
         TCAgent.LOG_ON=true;
         // 渠道 ID: 是渠道标识符，可通过不同渠道单独追踪数据。

@@ -10,8 +10,8 @@ android {
         applicationId "com.mall.sls"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 3
-        versionName "1.1.0"
+        versionCode 4
+        versionName "1.1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -55,9 +55,9 @@ android {
             zipAlignEnabled true
         }
         debug {
-//            buildConfigField "String", "API_BASE_URL", "\"https://api.specialbuy.cn/\""
+            buildConfigField "String", "API_BASE_URL", "\"https://api.specialbuy.cn/\""
 //            buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.117:8080/\""
-            buildConfigField "String", "API_BASE_URL", "\"http://47.114.109.50:8080/\""
+//            buildConfigField "String", "API_BASE_URL", "\"http://47.114.109.50:8080/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
@@ -130,13 +130,6 @@ dependencies {
     implementation files('libs/alipaySdk-15.7.5-20200422171619.aar')
     implementation 'com.squareup.okio:okio:1.14.0'
     implementation 'com.alibaba:fastjson:1.2.62'
-    //友盟统计
-    implementation 'com.umeng.sdk:common:1.5.1'
-    implementation 'com.umeng.sdk:analytics:7.5.0'
-    //友盟社会化分享
-    implementation 'com.umeng.sdk:share-core:6.9.1'
-    //分享面板
-    implementation 'com.umeng.sdk:shareboard-widget:6.9.1'
     // AndroidX下载更新
     implementation 'com.teprinciple:updateapputilsx:2.3.0'
     implementation 'com.alibaba:fastjson:1.2.60'
