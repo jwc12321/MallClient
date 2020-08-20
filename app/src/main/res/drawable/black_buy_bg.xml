@@ -4,6 +4,6 @@
                 android:topRightRadius="@dimen/dp_0"
                 android:bottomLeftRadius="@dimen/dp_20"
                 android:bottomRightRadius="@dimen/dp_0" />
-            <solid android:color="@color/appText3"/>
-            <stroke android:color="@color/appText3" android:width="@dimen/dp_1"/>
+            <solid android:color="@color/backGround58"/>
+            <stroke android:color="@color/backGround58" android:width="@dimen/dp_1"/>
 </shape>

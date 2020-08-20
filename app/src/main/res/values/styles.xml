@@ -17,20 +17,34 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+<!--    <style name="FullTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+<!--        <item name="android:windowIsTranslucent">false</item>-->
+<!--        <item name="android:windowNoTitle">true</item>-->
+<!--        <item name="android:windowActionBar">false</item>-->
+<!--        <item name="android:windowBackground">@android:color/transparent</item>-->
+<!--        <item name="android:windowFullscreen">true</item>-->
+<!--        <item name="android:windowDisablePreview">true</item>-->
+<!--    </style>-->
+
     <style name="FullTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowFullscreen">true</item>
+        <!--        <item name="android:windowFullscreen">true</item>-->
         <item name="android:windowDisablePreview">true</item>
+        <item name="colorPrimary">@color/backGround8</item>    <!-- 状态栏 -->
+        <item name="colorPrimaryDark">@color/backGround8</item> <!-- toolbar -->
+        <item name="colorAccent">@color/appText1</item>  <!-- 重点 -->
+        <item name="android:typeface">monospace</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">true</item>
     </style>
 
     <!--每个activity的title-->
     <style name="title_red_rl_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/backGround1</item>
+        <item name="android:background">@color/backGround56</item>
     </style>
     <!--每个activity的title-->
     <style name="title_white_rl_style">
@@ -498,7 +512,7 @@
         <item name="android:layout_height">@dimen/dp_49</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_gravity">bottom</item>
-        <item name="android:background">@color/appText1</item>
+        <item name="android:background">@color/backGround57</item>
     </style>
     <!--首页底部图片-->
     <style name="bottom_imageView_style">
@@ -523,7 +537,7 @@
 
     <style name="fifteen_back_nine_line_style">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/dp_1</item>
+        <item name="android:layout_height">@dimen/dp_0_5</item>
         <item name="android:background">@color/backGround9</item>
         <item name="android:layout_marginLeft">@dimen/dp_15</item>
         <item name="android:layout_marginRight">@dimen/dp_15</item>
@@ -531,7 +545,7 @@
 
     <style name="back_nine_line_style">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/dp_1</item>
+        <item name="android:layout_height">@dimen/dp_0_5</item>
         <item name="android:background">@color/backGround9</item>
     </style>
 
@@ -539,7 +553,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_49</item>
         <item name="android:orientation">horizontal</item>
-        <item name="android:background">@color/appText1</item>
+        <item name="android:background">@color/backGround57</item>
     </style>
 
     <style name="add_address_left_tv_style">
@@ -619,7 +633,7 @@
     <style name="goods_detail_rl_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_49</item>
-        <item name="android:background">@color/appText1</item>
+        <item name="android:background">@color/backGround57</item>
         <item name="android:orientation">horizontal</item>
     </style>
 
@@ -713,7 +727,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:background">@null</item>
-        <item name="android:textColor">@color/appText3</item>
+        <item name="android:textColor">@color/backGround58</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textCursorDrawable">@drawable/edittext_cursor_color</item>
     </style>
@@ -779,7 +793,7 @@
     <style name="confirm_order_rl_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_49</item>
-        <item name="android:background">@color/appText1</item>
+        <item name="android:background">@color/backGround57</item>
     </style>
 
     <style name="confirm_order_left_tv_style">
@@ -911,7 +925,7 @@
     <style name="four_ll_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/common_four_app_one_bg</item>
+        <item name="android:background">@drawable/common_four_back_fifty_seven_bg</item>
         <item name="android:orientation">vertical</item>
         <item name="android:layout_marginLeft">@dimen/dp_15</item>
         <item name="android:layout_marginRight">@dimen/dp_15</item>
@@ -1268,7 +1282,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@null</item>
-        <item name="android:textColor">@color/appText3</item>
+        <item name="android:textColor">@color/backGround58</item>
         <item name="android:textColorHint">@color/appText2</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textCursorDrawable">@drawable/edittext_cursor_color</item>
@@ -1711,5 +1725,31 @@
         <item name="android:layout_marginRight">@dimen/dp_15</item>
         <item name="android:layout_centerVertical">true</item>
     </style>
+    <style name="cart_checkbox_style">
+        <item name="android:layout_width">@dimen/dp_20</item>
+        <item name="android:layout_height">@dimen/dp_20</item>
+        <item name="android:layout_margin">@dimen/dp_10</item>
+        <item name="android:button">@null</item>
+        <item name="android:background">@drawable/cart_item_select</item>
+        <item name="android:layout_centerVertical">true</item>
+
+    </style>
+
+    <style name="pay_method_rl_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_60</item>
+    </style>
+
+    <style name="box_close_iv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@mipmap/icon_close</item>
+        <item name="android:paddingTop">@dimen/dp_15</item>
+        <item name="android:paddingLeft">@dimen/dp_5</item>
+        <item name="android:paddingRight">@dimen/dp_15</item>
+        <item name="android:layout_gravity">end</item>
+    </style>
+
+
 
 </resources>

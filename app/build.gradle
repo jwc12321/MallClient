@@ -55,9 +55,9 @@ android {
             zipAlignEnabled true
         }
         debug {
-            buildConfigField "String", "API_BASE_URL", "\"https://api.specialbuy.cn/\""
+//            buildConfigField "String", "API_BASE_URL", "\"https://api.specialbuy.cn/\""
 //            buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.117:8080/\""
-//            buildConfigField "String", "API_BASE_URL", "\"http://47.114.109.50:8080/\""
+            buildConfigField "String", "API_BASE_URL", "\"http://47.114.109.50:8080/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
@@ -126,7 +126,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     implementation 'com.makeramen:roundedimageview:2.2.1'
     implementation files('libs/aliyunface-sdk-release-117.aar')
-    implementation files('libs/AlicomPhoneNumberAuthSDK_L_Release_20191219_202532.aar')
+    implementation files('libs/phoneNumber-AuthSDK-2.8.4.1.aar')
     implementation files('libs/alipaySdk-15.7.5-20200422171619.aar')
     implementation 'com.squareup.okio:okio:1.14.0'
     implementation 'com.alibaba:fastjson:1.2.62'

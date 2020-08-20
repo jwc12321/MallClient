@@ -1,4 +1,4 @@
-package com.mall.sls.homepage.ui;
+package com.mall.sls.address.ui;
 
 import android.content.Context;
 import android.content.Intent;

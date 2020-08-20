@@ -82,7 +82,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_86"
-                android:background="@color/appText1">
+                android:background="@color/backGround57">
 
                 <com.mall.sls.common.widget.textview.MediumThickTextView
                     android:id="@+id/goods_name"
@@ -145,7 +145,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_49"
         android:layout_alignParentBottom="true"
-        android:background="@color/appText1">
+        android:background="@color/backGround57">
 
         <ImageView
             android:id="@+id/home_iv"

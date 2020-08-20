@@ -4,7 +4,7 @@
     android:id="@+id/cp_list_item_name"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_40"
-    android:background="@color/appText1"
+    android:background="@color/backGround60"
     android:clickable="true"
     android:focusable="true"
     android:gravity="center_vertical"

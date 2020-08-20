@@ -109,7 +109,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/appText1"
+                android:background="@color/backGround57"
                 android:orientation="vertical">
 
                 <com.mall.sls.common.widget.textview.MediumThickTextView
@@ -135,7 +135,7 @@
                 android:id="@+id/courierType"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_49"
-                android:background="@color/appText1"
+                android:background="@color/backGround57"
                 android:gravity="center_vertical"
                 tools:text="配送方式："
                 android:textColor="@color/appText3"
@@ -178,7 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_6"
-                android:background="@color/appText1"
+                android:background="@color/backGround57"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -293,7 +293,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_49"
         android:layout_alignParentBottom="true"
-        android:background="@color/appText1">
+        android:background="@color/backGround57">
 
         <ImageView
             android:id="@+id/service_iv"

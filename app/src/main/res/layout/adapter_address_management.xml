@@ -9,7 +9,7 @@
         android:id="@+id/item_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_74"
-        android:background="@color/appText1"
+        android:background="@color/backGround57"
         android:layout_marginTop="@dimen/dp_15">
 
         <com.mall.sls.common.widget.textview.ConventionalTextView

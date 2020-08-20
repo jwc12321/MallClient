@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_56"
         android:layout_below="@id/title_rel"
-        android:background="@color/backGround1"
+        android:background="@color/backGround56"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -37,7 +37,7 @@
             android:layout_marginLeft="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_15"
             android:layout_toLeftOf="@id/cancel_bt"
-            android:background="@drawable/common_ninteen_app_one_bg"
+            android:background="@drawable/common_nineteen_back_fifty_seven_bg"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -132,7 +132,7 @@
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srlAccentColor="@android:color/black"
+            app:srlAccentColor="@color/appText3"
             app:srlEnableLastTime="true"
             app:srlPrimaryColor="@color/backGround8" />
 
@@ -163,7 +163,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/edit_rl"
-        android:background="@color/appText1"
+        android:background="@color/backGround57"
         android:visibility="gone">
 
         <androidx.recyclerview.widget.RecyclerView

@@ -30,7 +30,7 @@
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srlAccentColor="@android:color/black"
+            app:srlAccentColor="@color/appText3"
             app:srlEnableLastTime="true"
             app:srlPrimaryColor="@color/backGround8" />
 
@@ -56,20 +56,12 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_46"
         android:layout_alignParentBottom="true"
-        android:background="@color/appText1"
+        android:background="@color/backGround57"
         android:visibility="gone">
 
         <CheckBox
             android:id="@+id/select_all"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:button="@drawable/cart_item_select"
-            android:paddingTop="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10"
-            android:paddingBottom="@dimen/dp_10" />
+            style="@style/cart_checkbox_style"/>
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             style="@style/size14_color_app3_text_style"

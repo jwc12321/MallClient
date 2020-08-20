@@ -20,7 +20,7 @@
         android:layout_height="@dimen/dp_49"
         android:orientation="horizontal"
         android:weightSum="2"
-        android:background="@color/appText1">
+        android:background="@color/backGround57">
 
         <LinearLayout
             android:id="@+id/looting_ll"

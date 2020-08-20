@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/appText1"
+    android:background="@color/backGround60"
     android:orientation="vertical"
     android:focusable="true"
     android:focusableInTouchMode="true">
@@ -21,12 +21,11 @@
     <RelativeLayout
         android:id="@+id/title_rel"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_62"
-        android:background="@color/backGround1">
+        android:layout_height="@dimen/dp_62">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_38"
-            android:background="@drawable/common_ninteen_app_one_bg"
+            android:background="@drawable/common_nineteen_back_fifty_seven_bg"
             android:orientation="horizontal"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_15"

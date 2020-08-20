@@ -337,7 +337,7 @@
         <activity android:name=".homepage.ui.CommonTipActivity"
             android:launchMode="singleTop"
             android:theme="@style/TranslucentFullScreenTheme"/>
-        <activity android:name=".homepage.ui.CityPickerActivity"
+        <activity android:name=".address.ui.CityPickerActivity"
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"
             android:theme="@style/DefaultCityPickerTheme"/>

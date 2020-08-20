@@ -5,9 +5,9 @@
     android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dp_1"
     app:dragEdge="right"
-    app:mode="same_level"
-    android:layout_marginBottom="@dimen/dp_1">
+    app:mode="same_level">
 
     <FrameLayout
         android:id="@+id/delete_layout"
@@ -28,87 +28,85 @@
         android:id="@+id/goods_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_108"
-        android:background="@drawable/common_four_app_one_bg">
+        android:background="@drawable/common_four_back_fifty_seven_bg">
 
         <CheckBox
             android:id="@+id/choice_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:button="@drawable/cart_item_select"
-            android:paddingTop="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10"
-            android:paddingBottom="@dimen/dp_10" />
+            style="@style/cart_checkbox_style" />
 
-        <ImageView
-            android:id="@+id/goods_iv"
-            android:layout_width="@dimen/dp_82"
-            android:layout_height="@dimen/dp_82"
-            android:layout_centerVertical="true"
+        <RelativeLayout
+            android:id="@+id/goods_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dp_3"
-            android:layout_toRightOf="@id/choice_item"
-            android:scaleType="fitXY"
-            tools:src="@mipmap/ic_launcher" />
-
-        <com.mall.sls.common.widget.textview.MediumThickTextView
-            android:id="@+id/goods_name"
-            style="@style/confirm_order_goods_name_style"
-            android:layout_toRightOf="@id/goods_iv"
-            tools:text="香蕉" />
-
-        <com.mall.sls.common.widget.textview.ConventionalTextView
-            android:id="@+id/goods_price"
-            style="@style/size14_color_back1_text_style"
-            android:layout_alignBottom="@id/goods_iv"
-            android:layout_marginLeft="@dimen/dp_12"
-            android:layout_toRightOf="@id/goods_iv"
-            tools:text="59" />
-
-        <com.mall.sls.common.widget.textview.ConventionalTextView
-            android:id="@+id/sku"
-            style="@style/confirm_order_goods_sku_style"
-            android:layout_above="@id/goods_price"
-            android:layout_below="@id/goods_name"
-            android:layout_toRightOf="@id/goods_iv"
-            tools:text="黑色" />
-
-        <LinearLayout
-            style="@style/cir_confirm_order_number_ll_style"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/dp_10">
+            android:layout_toRightOf="@id/choice_item">
 
             <ImageView
-                android:id="@+id/decrease_count"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/dp_15"
-                android:paddingRight="@dimen/dp_15"
-                android:src="@mipmap/icon_number_reduce" />
+                android:id="@+id/goods_iv"
+                android:layout_width="@dimen/dp_82"
+                android:layout_height="@dimen/dp_82"
+                android:layout_centerVertical="true"
+                android:scaleType="fitXY"
+                tools:src="@mipmap/ic_launcher" />
 
-            <RelativeLayout
-                android:layout_width="@dimen/dp_26"
-                android:layout_height="@dimen/dp_26"
-                android:background="@drawable/common_two_back_two_two_bg">
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                android:id="@+id/goods_name"
+                style="@style/confirm_order_goods_name_style"
+                android:layout_toRightOf="@id/goods_iv"
+                tools:text="香蕉" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/goods_price"
+                style="@style/size14_color_back1_text_style"
+                android:layout_alignBottom="@id/goods_iv"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_toRightOf="@id/goods_iv"
+                tools:text="59" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/sku"
+                style="@style/confirm_order_goods_sku_style"
+                android:layout_above="@id/goods_price"
+                android:layout_below="@id/goods_name"
+                android:layout_toRightOf="@id/goods_iv"
+                tools:text="黑色" />
+
+            <LinearLayout
+                style="@style/cir_confirm_order_number_ll_style"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp_10">
+
+                <ImageView
+                    android:id="@+id/decrease_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_15"
+                    android:src="@mipmap/icon_number_reduce" />
+
+                <RelativeLayout
+                    android:layout_width="@dimen/dp_26"
+                    android:layout_height="@dimen/dp_26"
+                    android:background="@drawable/common_two_back_two_two_bg">
 
 
-                <EditText
-                    android:id="@+id/goods_count"
-                    style="@style/cir_input_quantity_edittext_style"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:text="1"
-                    android:imeOptions="actionDone"/>
-            </RelativeLayout>
+                    <EditText
+                        android:id="@+id/goods_count"
+                        style="@style/cir_input_quantity_edittext_style"
+                        android:gravity="center"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:text="1" />
+                </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/increase_count"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/dp_15"
-                android:paddingRight="@dimen/dp_15"
-                android:src="@mipmap/icon_number_add" />
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/increase_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_15"
+                    android:src="@mipmap/icon_number_add" />
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </com.mall.sls.common.widget.swipe.SwipeRevealLayout>

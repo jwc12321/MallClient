@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_410"
         android:layout_alignParentBottom="true"
-        android:background="@color/appText1">
+        android:background="@color/backGround57">
 
         <RelativeLayout
             android:id="@+id/goods_rl"

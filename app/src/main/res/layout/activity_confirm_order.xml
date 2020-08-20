@@ -36,7 +36,7 @@
                 android:id="@+id/address_all"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_90"
-                android:background="@color/appText1">
+                android:background="@color/backGround57">
 
                 <ImageView
                     android:id="@+id/right_arrow_iv"
@@ -97,7 +97,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_108"
-                android:background="@color/appText1"
+                android:background="@color/backGround57"
                 android:layout_marginTop="@dimen/dp_10">
 
                 <ImageView
@@ -140,7 +140,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/appText1"
+                android:background="@color/backGround57"
                 android:orientation="vertical">
 
                 <RelativeLayout style="@style/confirm_order_rl_style">
@@ -220,7 +220,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_49"
         android:layout_alignParentBottom="true"
-        android:background="@color/appText1">
+        android:background="@color/backGround57">
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/confirm_bt"

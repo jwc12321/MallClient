@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_200"
-        android:background="@color/backGround1" />
+        android:background="@color/backGround56" />
 
     <RelativeLayout
         android:id="@+id/title_rel"
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_44"
         android:layout_below="@id/title_rel"
-        android:background="@color/backGround1">
+        android:background="@color/backGround56">
 
         <LinearLayout
             android:id="@+id/local_ll"
@@ -107,7 +107,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/backGround1"
+                    android:background="@color/backGround56"
                     android:orientation="vertical">
 
                     <com.stx.xhb.androidx.XBanner

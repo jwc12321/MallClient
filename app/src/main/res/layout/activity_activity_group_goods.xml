@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appText1"
+    android:background="@color/backGround6"
     android:orientation="vertical">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_300"
-        android:background="@color/backGround1" />
+        android:background="@color/backGround56" />
 
     <RelativeLayout
         android:id="@+id/title_rel"
@@ -41,7 +41,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_324"
-                android:background="@color/backGround1"
+                android:background="@color/backGround56"
                 android:orientation="vertical">
 
                 <ImageView
@@ -102,7 +102,7 @@
                 android:layout_marginLeft="@dimen/dp_15"
                 android:layout_marginTop="@dimen/dp_m_218"
                 android:layout_marginRight="@dimen/dp_15"
-                android:background="@drawable/common_four_app_one_bg"
+                android:background="@drawable/common_four_back_fifty_seven_bg"
                 android:orientation="vertical">
 
                 <RelativeLayout

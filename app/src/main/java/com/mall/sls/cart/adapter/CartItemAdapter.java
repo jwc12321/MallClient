@@ -122,6 +122,8 @@ public class CartItemAdapter extends RecyclerView.Adapter {
         RelativeLayout goodsLayout;
         @BindView(R.id.swipe_layout)
         SwipeRevealLayout swipeLayout;
+        @BindView(R.id.goods_rl)
+        RelativeLayout goodsRl;
 
         CartItemInfo cartItemInfo;
 
@@ -177,7 +179,7 @@ public class CartItemAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                         if (!TextUtils.isEmpty(goodsCount.getText().toString())) {
-                            EditTextLimit.editLimit(goodsCount,0);
+                            EditTextLimit.editLimit(goodsCount, 0);
                         }
                     }
 
@@ -187,18 +189,18 @@ public class CartItemAdapter extends RecyclerView.Adapter {
                     }
                 });
 
-                goodsCount.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+                goodsCount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (!hasFocus) {
-                            onItemClickListener.clickEditText(position,goodsCount);
-                        }else {
+                            onItemClickListener.clickEditText(position, goodsCount);
+                        } else {
                             onItemClickListener.returnEditText(goodsCount);
                         }
                     }
                 });
-                goodsLayout.setOnClickListener(new View.OnClickListener() {
+                goodsRl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         onItemClickListener.goGoodsDetails(cartItemInfo.getGoodsId());
@@ -211,6 +213,7 @@ public class CartItemAdapter extends RecyclerView.Adapter {
     class EmptyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_delete)
         RelativeLayout itemDelete;
+
         public EmptyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -220,7 +223,7 @@ public class CartItemAdapter extends RecyclerView.Adapter {
             itemDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(onItemClickListener!=null){
+                    if (onItemClickListener != null) {
                         onItemClickListener.deleteEmpty(StaticData.REFLASH_THREE);
                     }
                 }
@@ -276,12 +279,19 @@ public class CartItemAdapter extends RecyclerView.Adapter {
 
     public interface OnItemClickListener {
         void checkItem(boolean isChecked, int position);//点击店铺全选
+
         void doIncrease(int position, View showCountView, String id);  //增加数量
+
         void doReduce(int position, View showCountView, String id); //减少数量
+
         void deleteItem(String id, int position, String type);//删除单个
+
         void deleteEmpty(String type);//清空无效商品
-        void clickEditText(int position,View showCountView);//填写数量
+
+        void clickEditText(int position, View showCountView);//填写数量
+
         void returnEditText(View showCountView);
+
         void goGoodsDetails(String goodsId);
     }
 

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_120"
         android:layout_marginBottom="@dimen/dp_10"
-        android:background="@drawable/common_four_app_one_bg">
+        android:background="@drawable/common_four_back_fifty_seven_bg">
 
         <ImageView
             android:id="@+id/goods_iv"
