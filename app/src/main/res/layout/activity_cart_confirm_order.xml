@@ -39,7 +39,7 @@
                 android:id="@+id/address_all"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_90"
-                android:background="@color/appText1">
+                android:background="@color/backGround57">
 
                 <ImageView
                     android:id="@+id/right_arrow_iv"
@@ -194,7 +194,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_49"
         android:layout_alignParentBottom="true"
-        android:background="@color/appText1">
+        android:background="@color/backGround57">
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/confirm_bt"
@@ -227,7 +227,7 @@
             android:layout_width="@dimen/dp_260"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@drawable/common_four_app_one_bg"
+            android:background="@drawable/common_four_back_fifty_seven_bg"
             android:orientation="vertical">
 
             <com.mall.sls.common.widget.textview.ConventionalTextView
@@ -285,7 +285,7 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/dp_44"
             android:layout_marginRight="@dimen/dp_44"
-            android:background="@drawable/common_four_app_one_bg"
+            android:background="@drawable/common_four_back_fifty_seven_bg"
             android:orientation="vertical">
 
             <com.mall.sls.common.widget.textview.MediumThickTextView

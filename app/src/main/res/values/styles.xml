@@ -1349,7 +1349,7 @@
         <item name="android:layout_marginLeft">@dimen/dp_43</item>
         <item name="android:layout_marginRight">@dimen/dp_43</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:background">@drawable/common_four_app_one_bg</item>
+        <item name="android:background">@drawable/common_four_back_fifty_seven_bg</item>
         <item name="android:orientation">vertical</item>
     </style>
 

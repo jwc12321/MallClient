@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_108"
-    android:background="@color/appText1">
+    android:background="@color/backGround57">
 
     <ImageView
         android:id="@+id/goods_iv"
