@@ -135,7 +135,7 @@
                     android:layout_marginLeft="@dimen/dp_15"
                     android:layout_marginTop="@dimen/dp_m_85"
                     android:layout_marginRight="@dimen/dp_15"
-                    android:background="@drawable/common_four_app_one_bg"
+                    android:background="@drawable/common_four_back_fifty_seven_bg"
                     android:orientation="vertical">
 
                     <ImageView

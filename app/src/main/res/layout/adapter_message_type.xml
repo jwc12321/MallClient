@@ -4,7 +4,7 @@
     android:id="@+id/item_rl"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_80"
-    android:background="@color/appText1">
+    android:background="@color/backGround60">
 
     <ImageView
         android:id="@+id/icon"

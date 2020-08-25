@@ -13,7 +13,7 @@
         android:right="@dimen/dp_2"
         android:top="0dp">
         <shape>
-            <solid android:color="@color/appText1" />
+            <solid android:color="@color/backGround60" />
             <corners android:radius="6dp" />
         </shape>
     </item>
