@@ -134,7 +134,7 @@
                     android:layout_toRightOf="@id/use_tip"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingRight="@dimen/dp_10"
-                    android:src="@mipmap/icon_down_arrow" />
+                    android:src="@mipmap/icon_black_down_arrow" />
 
                 <ImageView
                     android:id="@+id/up_iv"
@@ -143,7 +143,7 @@
                     android:layout_centerHorizontal="true"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingRight="@dimen/dp_10"
-                    android:src="@mipmap/icon_up_arrow"
+                    android:src="@mipmap/icon_black_up_arrow"
                     android:visibility="gone" />
             </RelativeLayout>
 

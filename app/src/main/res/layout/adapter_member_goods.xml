@@ -11,7 +11,7 @@
         android:layout_marginLeft="@dimen/dp_15"
         android:layout_marginRight="@dimen/dp_15"
         android:layout_marginBottom="@dimen/dp_15"
-        android:background="@color/backGround57">
+        android:background="@drawable/common_four_back_fifty_seven_bg">
 
         <ImageView
             android:id="@+id/goods_iv"

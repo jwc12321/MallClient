@@ -22,7 +22,7 @@ android {
 
         ndk {
             //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
-            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a","arm64-v8a","x86_64","x86"
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
         }
 
         manifestPlaceholders = [
@@ -56,8 +56,8 @@ android {
         }
         debug {
 //            buildConfigField "String", "API_BASE_URL", "\"https://api.specialbuy.cn/\""
-//            buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.117:8080/\""
-            buildConfigField "String", "API_BASE_URL", "\"http://47.114.109.50:8080/\""
+            buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.176:8080/\""
+//            buildConfigField "String", "API_BASE_URL", "\"http://47.114.109.50:8080/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
@@ -73,14 +73,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-//    splits {
-//        abi {
-//            enable true
-//            reset()
-//            include 'x86', 'armeabi-v7a','x86_64'
-//            universalApk true
-//        }
-//    }
 
     sourceSets {
         main {
@@ -140,11 +132,14 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
     //高德地图
     //3D地图so及jar
-    implementation 'com.amap.api:3dmap:latest.integration'
-    //定位功能
-    implementation 'com.amap.api:location:latest.integration'
-    //搜索功能
-    implementation 'com.amap.api:search:latest.integration'
+//    implementation 'com.amap.api:3dmap:latest.integration'
+//    //定位功能
+//    implementation 'com.amap.api:location:latest.integration'
+//    //搜索功能
+//    implementation 'com.amap.api:search:latest.integration'
+    implementation 'com.amap.api:3dmap:7.4.0'
+    implementation 'com.amap.api:location:5.1.0'
+    implementation 'com.amap.api:search:7.4.0'
     //    //地址
     //    implementation 'com.smartTop:jd-address:1.0.3'
     implementation 'com.github.xiaohaibin:XBanner:androidx_v1.0.8'

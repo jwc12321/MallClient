@@ -440,8 +440,13 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                 .setPrivacyTextSize(12)
                 .setVendorPrivacyPrefix("《")
                 .setVendorPrivacySuffix("》")
+                .setPageBackgroundPath("common_zero_back_sixty_bg")
                 .setAppPrivacyOne(registerAgreeTxt, StaticData.USER_AGREEMENT)
                 .setAppPrivacyTwo(privacyPolicyTxt, StaticData.USER_PRIVACY)
+                .setWebViewStatusBarColor(getResources().getColor(R.color.backGround1))
+                .setWebNavColor(getResources().getColor(R.color.backGround1))
+                .setWebNavTextColor(getResources().getColor(R.color.appText3))
+                .setWebNavTextSize(16)
                 .create());
     }
 }

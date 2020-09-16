@@ -42,7 +42,8 @@
                     android:layout_marginLeft="@dimen/dp_15"
                     android:layout_marginRight="@dimen/dp_15"
                     android:layout_marginBottom="@dimen/dp_48"
-                    tools:text="超级会员是平台中高级的用户身份，认证会员可以通过以下两种途径成为获取超级会员" />
+                    tools:text="超级会员是平台中高级的用户身份，认证会员可以通过以下两种途径成为获取超级会员"
+                    android:textColor="@color/backGround58"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>

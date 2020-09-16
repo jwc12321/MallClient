@@ -1282,8 +1282,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@null</item>
-        <item name="android:textColor">@color/backGround58</item>
-        <item name="android:textColorHint">@color/appText2</item>
+        <item name="android:textColor">@color/appText3</item>
+        <item name="android:textColorHint">@color/appText3</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textCursorDrawable">@drawable/edittext_cursor_color</item>
         <item name="android:gravity">top|left</item>
@@ -1463,7 +1463,7 @@
         <item name="cpSectionHeight">@dimen/dp_30</item>
         <item name="cpSectionTextSize">@dimen/sp_14</item>
         <item name="cpSectionTextColor">@color/appText2</item>
-        <item name="cpSectionBackground">@color/backGround6</item>
+        <item name="cpSectionBackground">@color/backGround61</item>
 
         <item name="cpIndexBarTextSize">@dimen/sp_10</item>
         <item name="cpIndexBarNormalTextColor">@color/appText3</item>
