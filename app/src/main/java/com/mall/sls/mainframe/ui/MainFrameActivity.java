@@ -31,7 +31,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainFrameActivity extends BaseActivity implements HomepageFragment.HomepageListener, MineFragment.MineListener,CartFragment.CartListener {
+public class MainFrameActivity extends BaseActivity implements HomepageFragment.HomepageListener, MineFragment.MineListener, CartFragment.CartListener {
 
 
     @BindView(R.id.viewPager)
@@ -42,12 +42,18 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
     TextView homeTt;
     @BindView(R.id.home_rl)
     RelativeLayout homeRl;
-    @BindView(R.id.team_iv)
-    ImageView teamIv;
-    @BindView(R.id.team_tt)
-    TextView teamTt;
-    @BindView(R.id.team_rl)
-    RelativeLayout teamRl;
+    @BindView(R.id.sort_iv)
+    ImageView sortIv;
+    @BindView(R.id.sort_tt)
+    TextView sortTt;
+    @BindView(R.id.sort_rl)
+    RelativeLayout sortRl;
+    @BindView(R.id.cart_iv)
+    ImageView cartIv;
+    @BindView(R.id.cart_tt)
+    TextView cartTt;
+    @BindView(R.id.cart_rl)
+    RelativeLayout cartRl;
     @BindView(R.id.mine_iv)
     ImageView mineIv;
     @BindView(R.id.mine_tt)
@@ -58,13 +64,6 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
     LinearLayout bottomLl;
     @BindView(R.id.main_rl)
     RelativeLayout mainRl;
-    @BindView(R.id.cart_iv)
-    ImageView cartIv;
-    @BindView(R.id.cart_tt)
-    TextView cartTt;
-    @BindView(R.id.cart_rl)
-    RelativeLayout cartRl;
-
     private RelativeLayout[] relativeLayouts;
     private BaseFragment[] fragments;
     private ImageView[] imageViews;
@@ -106,7 +105,7 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
         if (TextUtils.equals(StaticData.REFLASH_ONE, MainStartManager.getMainStart())) {
             viewPager.setCurrentItem(0, false);
             MainStartManager.saveMainStart(StaticData.REFLASH_ZERO);
-        }else if(TextUtils.equals(StaticData.REFLASH_THREE, MainStartManager.getMainStart())){
+        } else if (TextUtils.equals(StaticData.REFLASH_THREE, MainStartManager.getMainStart())) {
             viewPager.setCurrentItem(2, false);
             MainStartManager.saveMainStart(StaticData.REFLASH_ZERO);
         }
@@ -115,7 +114,7 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
     private void initView() {
         sActivityRef = new WeakReference<>(this);
         homepageFragment = new HomepageFragment();
-        cartFragment=new CartFragment();
+        cartFragment = new CartFragment();
         mineFragment = new MineFragment();
         homepageFragment.setHomepageListener(this);
         cartFragment.setCartListener(this);
@@ -127,17 +126,17 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
         fragments[3] = mineFragment;
         relativeLayouts = new RelativeLayout[4];
         relativeLayouts[0] = homeRl;
-        relativeLayouts[1] = teamRl;
+        relativeLayouts[1] = sortRl;
         relativeLayouts[2] = cartRl;
         relativeLayouts[3] = mineRl;
         imageViews = new ImageView[4];
         imageViews[0] = homeIv;
-        imageViews[1] = teamIv;
+        imageViews[1] = sortIv;
         imageViews[2] = cartIv;
         imageViews[3] = mineIv;
         textViews = new TextView[4];
         textViews[0] = homeTt;
-        textViews[1] = teamTt;
+        textViews[1] = sortTt;
         textViews[2] = cartTt;
         textViews[3] = mineTt;
         for (RelativeLayout relativeLayout : relativeLayouts) {

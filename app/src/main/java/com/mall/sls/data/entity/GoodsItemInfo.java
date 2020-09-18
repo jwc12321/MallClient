@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 描述：
  */
 public class GoodsItemInfo implements Serializable {
-    //产品秒速
+    //简介
     @SerializedName("brief")
     private String brief;
     //商品id
@@ -45,6 +45,9 @@ public class GoodsItemInfo implements Serializable {
     //商品类型 1普通商品 2普通团商品 3活动团商品 4抽奖商品
     @SerializedName("goodsType")
     private String goodsType;
+    //副标题
+    @SerializedName("subtitleName")
+    private String subtitleName;
 
     public String getBrief() {
         return brief;
@@ -140,5 +143,13 @@ public class GoodsItemInfo implements Serializable {
 
     public void setGoodsType(String goodsType) {
         this.goodsType = goodsType;
+    }
+
+    public String getSubtitleName() {
+        return subtitleName;
+    }
+
+    public void setSubtitleName(String subtitleName) {
+        this.subtitleName = subtitleName;
     }
 }

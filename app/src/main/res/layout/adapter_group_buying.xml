@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_84"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:background="@drawable/common_four_back_fifty_seven_bg"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/goods_iv"
+            android:layout_width="@dimen/dp_84"
+            android:layout_height="@dimen/dp_84"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/icon_default_goods" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/goods_name"
+            style="@style/small_goods_name_style"
+            tools:text="电脑" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/size10_color_app18_text_style"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:text="@string/yuan_symbol" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/current_price"
+                style="@style/size12_color_app18_text_style"
+                android:layout_marginLeft="@dimen/dp_5"
+                tools:text="1234" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/dp_2">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/size10_color_app2_text_style"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:text="@string/yuan_symbol" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/original_price"
+                style="@style/size10_color_app2_text_style"
+                android:layout_marginLeft="@dimen/dp_5"
+                tools:text="1234" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -402,4 +402,13 @@
     <string name="selling_price">销售价</string>
     <string name="city_re_locate">重新定位</string>
     <string name="continue_draw">继续抽奖</string>
+
+    <!--1.1.2-->
+    <string name="group_buying">拼团抢购</string>
+    <string name="yuan_symbol">¥</string>
+    <string name="sort">分类</string>
+    <string name="featured_products">精选商品</string>
+    <string name="cumulative_sales">累计销量</string>
+    <string name="pieces">件</string>
+    <string name="invite_courteous">邀请有礼</string>
 </resources>

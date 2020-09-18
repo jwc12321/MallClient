@@ -38,45 +38,27 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_63"
+                android:layout_height="@dimen/dp_55"
                 android:background="@color/backGround1">
-
-                <com.mall.sls.common.widget.textview.MediumThickTextView
-                    android:id="@+id/current_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_15"
-                    android:layout_marginTop="@dimen/dp_5"
-                    android:textColor="@color/appText1"
-                    android:textSize="@dimen/sp_25"
-                    tools:text="¥25" />
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="@dimen/dp_6"
-                    android:orientation="horizontal">
-
-                    <com.mall.sls.common.widget.textview.WhiteDrawTextView
-                        android:id="@+id/original_price"
-                        style="@style/size12_color_app1_text_style"
-                        android:layout_marginLeft="@dimen/dp_19"
-                        tools:text="22" />
-
-
+                    android:orientation="horizontal"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_15">
                     <com.mall.sls.common.widget.textview.ConventionalTextView
                         style="@style/size12_color_app1_text_style"
-                        android:layout_marginLeft="@dimen/dp_9"
-                        android:text="@string/market_price" />
+                        android:text="@string/yuan_symbol"/>
+                    <com.mall.sls.common.widget.textview.MediumThickTextView
+                        android:id="@+id/current_price"
+                        style="@style/size25_color_app1_text_style"
+                        tools:text="1234"/>
                 </LinearLayout>
+
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/sales"
-                    style="@style/size12_color_app1_text_style"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp_15"
+                    style="@style/size15_app1_right_tv_style"
                     tools:text="累计销售" />
             </RelativeLayout>
 
@@ -88,15 +70,15 @@
 
                 <com.mall.sls.common.widget.textview.MediumThickTextView
                     android:id="@+id/goods_name"
-                    style="@style/size15_color_app3_text_style"
+                    style="@style/size14_color_app3_text_style"
                     android:layout_marginLeft="@dimen/dp_15"
-                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_4"
                     android:layout_marginRight="@dimen/dp_15"
                     tools:text="香蕉" />
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/goods_brief"
-                    style="@style/size12_color_app2_text_style"
+                    style="@style/size14_color_app4_text_style"
                     android:layout_marginLeft="@dimen/dp_15"
                     android:layout_marginTop="@dimen/dp_2"
                     android:layout_marginRight="@dimen/dp_15"

@@ -57,4 +57,11 @@
     <attr name="cpOverlayTextSize" format="dimension|reference"/>
     <attr name="cpOverlayTextColor" format="color|reference"/>
     <attr name="cpOverlayBackground" format="color|reference"/>
+
+
+    <declare-styleable name="DetailTearDownView">
+        <attr name="viewTextColor" />
+    </declare-styleable>
+
+    <attr name="viewTextColor" format="color" />
 </resources>

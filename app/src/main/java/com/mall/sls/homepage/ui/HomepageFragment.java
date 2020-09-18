@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,20 +48,17 @@ import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.GoodsItemInfo;
 import com.mall.sls.data.entity.HomeCouponInfo;
 import com.mall.sls.data.entity.HomePageInfo;
-import com.mall.sls.data.entity.WebViewDetailInfo;
 import com.mall.sls.data.event.WXLoginEvent;
 import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
-import com.mall.sls.homepage.adapter.GoodsItemAdapter;
+import com.mall.sls.homepage.adapter.GoodsItemGridAdapter;
 import com.mall.sls.homepage.adapter.HomeCouponAdapter;
-import com.mall.sls.homepage.adapter.JinGangAdapter;
 import com.mall.sls.homepage.presenter.HomePagePresenter;
 import com.mall.sls.lottery.ui.LotteryListActivity;
 import com.mall.sls.message.ui.MessageTypeActivity;
 import com.mall.sls.mine.ui.InviteFriendsActivity;
 import com.mall.sls.webview.ui.LandingPageActivity;
-import com.mall.sls.webview.ui.WebViewActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -94,7 +90,7 @@ import update.UpdateAppUtils;
  * @author jwc on 2020/5/7.
  * 描述：
  */
-public class HomepageFragment extends BaseFragment implements HomepageContract.HomePageView, GoodsItemAdapter.OnItemClickListener, JinGangAdapter.OnItemClickListener {
+public class HomepageFragment extends BaseFragment implements HomepageContract.HomePageView, GoodsItemGridAdapter.OnItemClickListener {
 
 
     @BindView(R.id.small_)
@@ -117,31 +113,29 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     RecyclerView couponRv;
     @BindView(R.id.receive_iv)
     ImageView receiveIv;
-    @BindView(R.id.jingang_rv)
-    RecyclerView jingangRv;
-    @BindView(R.id.other_rl)
-    RelativeLayout otherRl;
+    @BindView(R.id.coupon_ll)
+    LinearLayout couponLl;
+    @BindView(R.id.group_buying_rv)
+    RecyclerView groupBuyingRv;
     @BindView(R.id.goods_rv)
     RecyclerView goodsRv;
     @BindView(R.id.scrollview)
     NestedScrollView scrollview;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-
+    @BindView(R.id.group_more_rl)
+    RelativeLayout groupMoreRl;
     private LocationHelper mLocationHelper;
     private String city;
 
     private List<CustomViewsInfo> data;
-    private GoodsItemAdapter goodsItemAdapter;
+    private GoodsItemGridAdapter goodsItemAdapter;
     private List<BannerInfo> bannerInfos;
-    private JinGangAdapter jinGangAdapter;
-    private List<BannerInfo> jinGangInfos;
     private HomeCouponAdapter homeCouponAdapter;
     private List<HomeCouponInfo> homeCouponInfos;
     @Inject
     HomePagePresenter homePagePresenter;
     private List<String> group;
-    private boolean isFirst = true;
 
     private int screenWidth;
     private int screenHeight;
@@ -186,9 +180,9 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         startInfos = new ArrayList<>();
         endInfos = new ArrayList<>();
-        goodsItemInfos=new ArrayList<>();
+        goodsItemInfos = new ArrayList<>();
         mapLocal();
-        settingHeight();
+//        settingHeight();
         xBannerInit();
         initAdapter();
         homePagePresenter.getHomePageInfo(StaticData.REFLASH_ONE);
@@ -196,12 +190,10 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     }
 
     private void initAdapter() {
-        goodsItemAdapter = new GoodsItemAdapter(getActivity());
+        goodsItemAdapter = new GoodsItemGridAdapter(getActivity());
         goodsItemAdapter.setOnItemClickListener(this);
+        goodsRv.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         goodsRv.setAdapter(goodsItemAdapter);
-        jinGangAdapter = new JinGangAdapter(getActivity());
-        jinGangAdapter.setOnItemClickListener(this);
-        jingangRv.setAdapter(jinGangAdapter);
         homeCouponAdapter = new HomeCouponAdapter(getActivity());
         couponRv.setAdapter(homeCouponAdapter);
     }
@@ -298,7 +290,6 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                     LocalCityManager.saveLocalCity(aMapLocation.getCity());
                     city = aMapLocation.getDistrict();
                 }
-//                AreaCodeManager.saveAreaCode(areaCode);
                 localCity.setText(city);
             }
         });
@@ -385,14 +376,6 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             banner.setAutoPlayAble(data.size() > 1);
             banner.setBannerData(R.layout.xbanner_item, data);
             messageCount.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO, homePageInfo.getUnreadMsgCount()) ? View.GONE : View.VISIBLE);
-            jinGangInfos = homePageInfo.getJinGangInfos();
-            if (jinGangInfos != null) {
-                if (isFirst) {
-                    jingangRv.setLayoutManager(new GridLayoutManager(getActivity(), jinGangInfos.size()));
-                    isFirst = false;
-                }
-                jinGangAdapter.setData(jinGangInfos);
-            }
             homeCouponInfos = homePageInfo.getHomeCouponInfos();
             if (homeCouponInfos == null || homeCouponInfos.size() == 0) {
                 couponRv.setVisibility(View.GONE);
@@ -411,18 +394,18 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             }
             startInfos.clear();
             endInfos.clear();
-            goodsItemInfos=homePageInfo.getGoodsItemInfos();//android加载慢，自己分页了
-            if(goodsItemInfos!=null&&goodsItemInfos.size()>5){
-                for (int i=0;i<goodsItemInfos.size();i++){
-                    if(i<5){
+            goodsItemInfos = homePageInfo.getGoodsItemInfos();//android加载慢，自己分页了
+            if (goodsItemInfos != null && goodsItemInfos.size() > 6) {
+                for (int i = 0; i < goodsItemInfos.size(); i++) {
+                    if (i < 6) {
                         startInfos.add(goodsItemInfos.get(i));
-                    }else {
+                    } else {
                         endInfos.add(goodsItemInfos.get(i));
                     }
                 }
                 refreshLayout.resetNoMoreData();
                 goodsItemAdapter.setData(startInfos);
-            }else {
+            } else {
                 goodsItemAdapter.setData(goodsItemInfos);
                 refreshLayout.finishLoadMoreWithNoMoreData();
             }
@@ -489,12 +472,6 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
 
     }
 
-    @Override
-    public void goType(BannerInfo bannerInfo) {
-        this.bannerInfo = bannerInfo;
-        bannerClick(StaticData.REFLASH_ONE);
-    }
-
 
     public interface HomepageListener {
         void goLocalTeam();
@@ -506,10 +483,10 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         this.homepageListener = homepageListener;
     }
 
-    @OnClick({R.id.other_rl, R.id.message_rl, R.id.local_ll, R.id.receive_iv})
+    @OnClick({R.id.group_more_rl, R.id.message_rl, R.id.local_ll, R.id.receive_iv})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.other_rl:
+            case R.id.group_more_rl:
                 if (homepageListener != null) {
                     homepageListener.goLocalTeam();
                 }

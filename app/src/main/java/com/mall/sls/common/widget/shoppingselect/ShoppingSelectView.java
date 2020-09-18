@@ -42,21 +42,21 @@ public class ShoppingSelectView extends LinearLayout {
     /**
      * 属性按钮的高度
      */
-    private int buttonHeight = 25;
+    private int buttonHeight = 30;
     /**
      * 属性按钮之间的左边距
      */
-    private int buttonLeftMargin = 10;
+    private int buttonLeftMargin = 20;
     /**
      * 属性按钮之间的上边距
      */
-    private int buttonTopMargin = 8;
+    private int buttonTopMargin = 10;
     /**
      * 文字与按钮的边距
      */
-    private int textPadding = 11;
+    private int textPadding = 10;
 
-    private int textLeft=15;
+    private int textLeft=20;
     /**
      * 选择后的回调监听
      */
@@ -92,8 +92,8 @@ public class ShoppingSelectView extends LinearLayout {
                     ViewGroup.LayoutParams.WRAP_CONTENT);
             int margin = dip2px(context, titleMargin);
             int leftMargin=dip2px(context, textLeft);
-            textView.setTextColor(Color.parseColor("#666666"));
-            textView.setTextSize(14);
+            textView.setTextColor(Color.parseColor("#333333"));
+            textView.setTextSize(13);
             TextViewttf.setTextConventional(textView);
             textView.setText(attr.getName());
             params.setMargins(leftMargin, 0, leftMargin, margin);
@@ -129,7 +129,7 @@ public class ShoppingSelectView extends LinearLayout {
                 button.setGravity(Gravity.CENTER);
                 button.setBackgroundResource(R.drawable.tv_sel);
                 button.setButtonDrawable(android.R.color.transparent);
-                button.setTextSize(14);
+                button.setTextSize(13);
                 button.setText(attr.getSpecs().get(i).getValue());
                 button.setTextColor(getResources().getColorStateList(R.color.spec_text_select));
                 if(checkSkus!=null&&checkSkus.size()==list.size()) {

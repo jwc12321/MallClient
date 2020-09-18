@@ -159,4 +159,7 @@ public class StaticData {
     public static final String PRODUCT_LIST="productList";//规格价格列表
     public static final String SPECIFICATION_LIST="specificationList";//规格列表
     public static final String CART_ITEM_IDS="cartItemIds";//购物车每个item的ids
+
+
+    public static final String PRICE_ZERO = "0.00";
 }

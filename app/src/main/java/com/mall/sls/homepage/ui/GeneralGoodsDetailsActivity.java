@@ -32,7 +32,6 @@ import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
-import com.mall.sls.common.widget.textview.WhiteDrawTextView;
 import com.mall.sls.data.entity.ConfirmCartOrderDetail;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.GeneralGoodsDetailsInfo;
@@ -64,19 +63,20 @@ import butterknife.OnClick;
  */
 public class GeneralGoodsDetailsActivity extends BaseActivity implements HomepageContract.GeneralGoodsDetailsView, NestedScrollView.OnScrollChangeListener {
 
-
     @BindView(R.id.banner)
     XBanner banner;
     @BindView(R.id.current_price)
     MediumThickTextView currentPrice;
-    @BindView(R.id.original_price)
-    WhiteDrawTextView originalPrice;
     @BindView(R.id.sales)
     ConventionalTextView sales;
     @BindView(R.id.goods_name)
     MediumThickTextView goodsName;
     @BindView(R.id.goods_brief)
     ConventionalTextView goodsBrief;
+    @BindView(R.id.courierType)
+    ConventionalTextView courierType;
+    @BindView(R.id.goods_detail_iv)
+    ImageView goodsDetailIv;
     @BindView(R.id.webView)
     WebView webView;
     @BindView(R.id.scrollview)
@@ -93,10 +93,6 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
     ImageView cart;
     @BindView(R.id.title_rel)
     RelativeLayout titleRel;
-    @BindView(R.id.courierType)
-    ConventionalTextView courierType;
-    @BindView(R.id.goods_detail_iv)
-    ImageView goodsDetailIv;
     private String goodsId;
     private int screenWidth;
     private int screenHeight;
@@ -289,15 +285,15 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                 banner.setPointsIsVisible(data.size() > 1);
                 banner.setAutoPlayAble(data.size() > 1);
                 banner.setBannerData(R.layout.xbanner_zero_item, data);
-                currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsBaseVo.getRetailPrice()));
-                originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsBaseVo.getCounterPrice()));
-                sales.setText("累计销量" + goodsBaseVo.getSalesQuantity());
+                currentPrice.setText(NumberFormatUnit.numberFormat(goodsBaseVo.getRetailPrice()));
+                sales.setVisibility(NumberFormatUnit.isZero(goodsBaseVo.getSalesQuantity())?View.GONE:View.VISIBLE);
+                sales.setText(getString(R.string.cumulative_sales) + goodsBaseVo.getSalesQuantity()+getString(R.string.pieces));
                 goodsName.setText(goodsBaseVo.getName());
                 goodsBrief.setText(goodsBaseVo.getBrief());
                 if (!TextUtils.isEmpty(goodsBaseVo.getDetail())) {
                     webView.loadDataWithBaseURL(null, HtmlUnit.getHtmlData(goodsBaseVo.getDetail()), "text/html", "utf-8", null);
                 }
-                goodsDetailIv.setVisibility(TextUtils.isEmpty(goodsBaseVo.getDetail())?View.GONE:View.VISIBLE);
+                goodsDetailIv.setVisibility(TextUtils.isEmpty(goodsBaseVo.getDetail()) ? View.GONE : View.VISIBLE);
                 picUrl = goodsBaseVo.getPicUrl();
                 if (TextUtils.equals(StaticData.REFLASH_ONE, goodsBaseVo.getCourierType())) {
                     courierType.setText(getString(R.string.same_city_delivery));

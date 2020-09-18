@@ -1,6 +1,9 @@
 package com.mall.sls.common.unit;
 
 import android.text.TextUtils;
+
+import com.mall.sls.common.StaticData;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -73,6 +76,27 @@ public class NumberFormatUnit {
         }else {
             return "0";
         }
+    }
+
+    //自动取消小数点后面的0
+    public static String goodsFormat(String number) {
+        if (!TextUtils.isEmpty(number)) {
+            if (number.indexOf(".") > 0) {
+                number = number.replaceAll("0+?$", "");//去掉多余的0
+                number = number.replaceAll("[.]$", "");//如最后一位是.则去掉
+            }
+            return "¥ " + number;
+        } else {
+            return "";
+        }
+    }
+
+    //判断是否是0或0.00
+    public static Boolean isZero(String amount) {
+        if (TextUtils.isEmpty(amount) ||(TextUtils.equals(StaticData.PRICE_ZERO, amount) || TextUtils.equals(StaticData.REFLASH_ZERO, amount))||TextUtils.equals("0.0", amount)) {
+            return true;
+        }
+        return false;
     }
 
 }

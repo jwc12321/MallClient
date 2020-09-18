@@ -32,18 +32,18 @@
                     android:text="@string/home" />
             </RelativeLayout>
             <RelativeLayout
-                android:id="@+id/team_rl"
+                android:id="@+id/sort_rl"
                 style="@style/bottom_RelativeLayout_style">
 
                 <ImageView
-                    android:id="@+id/team_iv"
+                    android:id="@+id/sort_iv"
                     style="@style/bottom_imageView_style"
-                    android:src="@drawable/local_team_select" />
+                    android:src="@drawable/sort_select" />
 
                 <TextView
-                    android:id="@+id/team_tt"
+                    android:id="@+id/sort_tt"
                     style="@style/bottom_textView_style"
-                    android:text="@string/fight_together" />
+                    android:text="@string/sort" />
             </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/cart_rl"

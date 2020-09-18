@@ -15,6 +15,7 @@ import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.edittextview.SoftKeyBoardListener;
 import com.mall.sls.common.widget.scrollview.GradationScrollView;
 import com.mall.sls.common.widget.shoppingselect.OnSelectedListener;
@@ -56,16 +57,14 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
     RelativeLayout goodsRl;
     @BindView(R.id.line)
     View line;
-    @BindView(R.id.shopselectView)
-    ShoppingSelectView shopselectView;
+    @BindView(R.id.shop_select_view)
+    ShoppingSelectView shopSelectView;
     @BindView(R.id.decrease_count)
     ImageView decreaseCount;
     @BindView(R.id.goods_count)
     EditText goodsCount;
     @BindView(R.id.increase_count)
     ImageView increaseCount;
-    @BindView(R.id.scrollview)
-    GradationScrollView scrollview;
     @BindView(R.id.confirm_bt)
     MediumThickTextView confirmBt;
     @BindView(R.id.item_rl)
@@ -105,7 +104,7 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
         productListCallableInfos = (List<ProductListCallableInfo>) getIntent().getSerializableExtra(StaticData.SPECIFICATION_LIST);
         picUrl=getIntent().getStringExtra(StaticData.PIC_URL);
         if (checkSkus != null && checkSkus.size() > 0) {
-            shopselectView.setCheckSkus(checkSkus);
+            shopSelectView.setCheckSkus(checkSkus);
             for (int i = 0; i < checkSkus.size(); i++) {
                 goodsSpecStr = goodsSpecStr + checkSkus.get(i) + ",";
                 map.put(String.valueOf(i), checkSkus.get(i));
@@ -120,9 +119,9 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
             if (productListCallableInfo != null) {
                 GlideHelper.load(this, productListCallableInfo.getUrl(), R.mipmap.icon_default_goods, goodsIv);
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {
-                    goodsPrice.setText("¥" + productListCallableInfo.getPrice());
+                    goodsPrice.setText(NumberFormatUnit.numberFormat(productListCallableInfo.getPrice()));
                 } else {
-                    goodsPrice.setText("¥" + productListCallableInfo.getPreferentialPrice());
+                    goodsPrice.setText(NumberFormatUnit.numberFormat(productListCallableInfo.getPreferentialPrice()));
                 }
                 if (TextUtils.equals("0", productListCallableInfo.getNumber())) {
                     model.setText(getString(R.string.out_stock));
@@ -136,22 +135,22 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
             GlideHelper.load(this, picUrl, R.mipmap.icon_default_goods, goodsIv);
             if (productListCallableInfos != null && productListCallableInfos.size() > 0) {
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {
-                    goodsPrice.setText("¥" + productListCallableInfos.get(0).getPrice());
+                    goodsPrice.setText(NumberFormatUnit.numberFormat(productListCallableInfos.get(0).getPrice()));
                 } else {
-                    goodsPrice.setText("¥" + productListCallableInfos.get(0).getPreferentialPrice());
+                    goodsPrice.setText(NumberFormatUnit.numberFormat(productListCallableInfos.get(0).getPreferentialPrice()));
                 }
             }
             model.setText(getString(R.string.is_selected));
             confirmBt.setEnabled(false);
         }
         SoftKeyBoardListener.setListener(this, onSoftKeyBoardChangeListener);
-        shopselectView.setOnSelectedListener(this);
+        shopSelectView.setOnSelectedListener(this);
         initSpec();
 
     }
 
     private void initSpec() {
-        shopselectView.setData(goodsSpecs);
+        shopSelectView.setData(goodsSpecs);
     }
 
 
@@ -283,9 +282,9 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
             if (productListCallableInfo != null) {
                 GlideHelper.load(this, productListCallableInfo.getUrl(), R.mipmap.icon_default_goods, goodsIv);
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {
-                    goodsPrice.setText("¥" + productListCallableInfo.getPrice());
+                    goodsPrice.setText(NumberFormatUnit.numberFormat(productListCallableInfo.getPrice()));
                 } else {
-                    goodsPrice.setText("¥" + productListCallableInfo.getPreferentialPrice());
+                    goodsPrice.setText(NumberFormatUnit.numberFormat( productListCallableInfo.getPreferentialPrice()));
                 }
                 model.setText(getString(R.string.is_selected) + " " + productListCallableInfo.getSpecifications());
                 if (TextUtils.equals("0", productListCallableInfo.getNumber())) {

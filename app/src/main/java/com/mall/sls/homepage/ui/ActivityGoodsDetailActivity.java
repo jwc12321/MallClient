@@ -40,7 +40,9 @@ import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DetailTearDownView;
+import com.mall.sls.common.widget.textview.DrawTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.common.widget.textview.TwelveTearDownView;
 import com.mall.sls.common.widget.textview.WhiteDrawTextView;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CustomViewsInfo;
@@ -85,22 +87,22 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     XBanner banner;
     @BindView(R.id.current_price)
     MediumThickTextView currentPrice;
-    @BindView(R.id.goods_unit)
-    ConventionalTextView goodsUnit;
+    @BindView(R.id.current_price_ll)
+    LinearLayout currentPriceLl;
     @BindView(R.id.original_price)
     WhiteDrawTextView originalPrice;
-    @BindView(R.id.goods_original_unit)
-    ConventionalTextView goodsOriginalUnit;
-    @BindView(R.id.sales)
-    ConventionalTextView sales;
     @BindView(R.id.time_type)
     ConventionalTextView timeType;
     @BindView(R.id.count_down)
     DetailTearDownView countDown;
+    @BindView(R.id.day_tv)
+    MediumThickTextView dayTv;
     @BindView(R.id.goods_name)
     MediumThickTextView goodsName;
     @BindView(R.id.goods_brief)
     ConventionalTextView goodsBrief;
+    @BindView(R.id.courierType)
+    ConventionalTextView courierType;
     @BindView(R.id.selected_goods)
     ConventionalTextView selectedGoods;
     @BindView(R.id.right_arrow_iv)
@@ -109,30 +111,26 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     RelativeLayout skuRl;
     @BindView(R.id.delivery_time)
     ConventionalTextView deliveryTime;
+    @BindView(R.id.goods_detail_iv)
+    ImageView goodsDetailIv;
     @BindView(R.id.webView)
     WebView webView;
+    @BindView(R.id.scrollview)
+    NestedScrollView scrollview;
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.share)
     ImageView share;
+    @BindView(R.id.title_rel)
+    RelativeLayout titleRel;
     @BindView(R.id.service_iv)
     ImageView serviceIv;
     @BindView(R.id.home_iv)
     ImageView homeIv;
     @BindView(R.id.confirm_bt)
     MediumThickTextView confirmBt;
-    @BindView(R.id.day_tv)
-    MediumThickTextView dayTv;
-    @BindView(R.id.scrollview)
-    NestedScrollView scrollview;
-    @BindView(R.id.title_rel)
-    RelativeLayout titleRel;
     @BindView(R.id.share_iv)
     ImageView shareIv;
-    @BindView(R.id.goods_detail_iv)
-    ImageView goodsDetailIv;
-    @BindView(R.id.courierType)
-    ConventionalTextView courierType;
     private ProductListCallableInfo productListCallableInfo;
     private List<CustomViewsInfo> data;
     private String goodsId;
@@ -289,7 +287,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                     showMessage(getString(R.string.install_weixin));
                     return;
                 }
-                shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, 150,150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
+                shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, 150, 150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
                 Intent intent = new Intent(this, SelectShareTypeActivity.class);
                 startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
                 break;
@@ -392,12 +390,9 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             banner.setPointsIsVisible(data.size() > 1);
             banner.setAutoPlayAble(data.size() > 1);
             banner.setBannerData(R.layout.xbanner_zero_item, data);
-            currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getRetailPrice()));
+            currentPrice.setText(NumberFormatUnit.numberFormat(goodsDetailsInfo.getRetailPrice()));
             unit = goodsDetailsInfo.getUnit();
-            goodsUnit.setText("/" + unit);
-            goodsOriginalUnit.setText("/" + unit);
-            originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
-            sales.setText("累计销量" + goodsDetailsInfo.getSalesQuantity());
+            originalPrice.setText(NumberFormatUnit.goodsFormat(goodsDetailsInfo.getCounterPrice()));
             nameText = BriefUnit.returnName(goodsDetailsInfo.getRetailPrice(), goodsDetailsInfo.getName());
             briefText = BriefUnit.returnBrief(goodsDetailsInfo.getBrief());
             goodsName.setText(goodsDetailsInfo.getName());

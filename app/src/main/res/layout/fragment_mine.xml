@@ -51,13 +51,22 @@
                     android:layout_marginLeft="@dimen/dp_15"
                     android:layout_marginTop="@dimen/dp_17"
                     android:layout_marginRight="@dimen/dp_15"
-                    android:background="@drawable/mine_info_bg">
+                    android:background="@mipmap/icon_mine_red_bg">
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:id="@+id/head_photo"
+                        android:layout_width="@dimen/dp_60"
+                        android:layout_height="@dimen/dp_60"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:scaleType="centerCrop"
+                        app:riv_oval="true"
+                        tools:src="@mipmap/icon_defalut_head"
+                        android:layout_marginTop="@dimen/dp_10"/>
 
                     <com.mall.sls.common.widget.textview.MediumThickTextView
                         android:id="@+id/phone"
                         style="@style/size15_color_app1_text_style"
-                        android:layout_marginLeft="@dimen/dp_85"
-                        android:layout_marginTop="@dimen/dp_8"
+                        android:layout_marginLeft="@dimen/dp_88"
+                        android:layout_marginTop="@dimen/dp_21"
                         tools:text="43434343" />
 
                     <LinearLayout
@@ -65,10 +74,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/phone"
-                        android:layout_marginLeft="@dimen/dp_85"
+                        android:layout_marginLeft="@dimen/dp_88"
                         android:layout_marginTop="@dimen/dp_3"
                         android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <com.mall.sls.common.widget.textview.ConventionalTextView
                             android:id="@+id/invite_code_tv"
@@ -81,7 +90,7 @@
                             android:layout_width="@dimen/dp_69"
                             android:layout_height="@dimen/dp_20"
                             android:layout_marginLeft="@dimen/dp_10"
-                            android:background="@drawable/common_ten_back_forty_three_bg"
+                            android:background="@drawable/common_ten_back_sixty_eight_bg"
                             android:gravity="center"
                             android:text="@string/copy_invite_code"
                             android:textColor="@color/appText1"
@@ -96,28 +105,40 @@
                         android:layout_marginTop="@dimen/dp_21"
                         tools:src="@mipmap/icon_super_member" />
 
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/income_rv"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_82"
-                        android:nestedScrollingEnabled="false"
-                        app:layoutManager="@string/layoutManager_Gridlayout" />
+                        android:layout_height="@dimen/dp_65"
+                        android:layout_alignParentBottom="true"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+                        <LinearLayout
+                            android:id="@+id/mine_invite_ll"
+                            style="@style/mine_type_ll_style">
+                            <ImageView
+                                style="@style/mine_type_iv_style"
+                                android:src="@mipmap/icon_mine_invite"/>
+                            <com.mall.sls.common.widget.textview.ConventionalTextView
+                                style="@style/mine_type_tv_style"
+                                android:text="@string/invite_courteous"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="@dimen/dp_1"
+                            android:layout_height="@dimen/dp_14"
+                            android:background="@color/appText1"
+                            android:layout_marginTop="@dimen/dp_40"/>
+                        <LinearLayout
+                            android:id="@+id/mine_coupon_ll"
+                            style="@style/mine_type_ll_style">
+                            <ImageView
+                                style="@style/mine_type_iv_style"
+                                android:src="@mipmap/icon_mine_coupon"/>
+                            <com.mall.sls.common.widget.textview.ConventionalTextView
+                                android:id="@+id/mine_coupon_tv"
+                                style="@style/mine_type_tv_style"
+                                tools:text="优惠券（2）"/>
+                        </LinearLayout>
+                    </LinearLayout>
                 </RelativeLayout>
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/head_photo"
-                    android:layout_width="@dimen/dp_60"
-                    android:layout_height="@dimen/dp_60"
-                    android:layout_marginLeft="@dimen/dp_30"
-                    android:scaleType="centerCrop"
-                    app:riv_border_color="@color/appText1"
-                    app:riv_border_width="0dp"
-                    app:riv_corner_radius="0dp"
-                    app:riv_oval="true"
-                    tools:background="@null"
-                    tools:src="@mipmap/ic_launcher" />
             </RelativeLayout>
 
             <LinearLayout

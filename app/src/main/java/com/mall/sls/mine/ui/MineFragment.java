@@ -1,7 +1,6 @@
 package com.mall.sls.mine.ui;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
@@ -62,7 +61,7 @@ import static android.content.Context.CLIPBOARD_SERVICE;
  * @author jwc on 2020/5/7.
  * 描述：
  */
-public class MineFragment extends BaseFragment implements MineContract.MineInfoView, IncomeAdapter.OnItemClickListener {
+public class MineFragment extends BaseFragment implements MineContract.MineInfoView {
     @BindView(R.id.title)
     MediumThickTextView title;
     @BindView(R.id.right_iv)
@@ -73,8 +72,6 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     MediumThickTextView phone;
     @BindView(R.id.member_type_iv)
     ImageView memberTypeIv;
-    @BindView(R.id.income_rv)
-    RecyclerView incomeRv;
     @BindView(R.id.head_photo)
     RoundedImageView headPhoto;
     @BindView(R.id.right_arrow_iv)
@@ -124,6 +121,12 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
 
     @Inject
     MineInfoPresenter mineInfoPresenter;
+    @BindView(R.id.mine_invite_ll)
+    LinearLayout mineInviteLl;
+    @BindView(R.id.mine_coupon_tv)
+    ConventionalTextView mineCouponTv;
+    @BindView(R.id.mine_coupon_ll)
+    LinearLayout mineCouponLl;
     private String goVerify = "0";
 
     private UserInfo userInfo;
@@ -134,10 +137,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
 
     private String certifyAmount;
     private String vipAmount;
-    private String wxUrl;
     private String inviteCode;
-    private IncomeAdapter incomeAdapter;
-    private boolean isFirst = true;
     private ClipboardManager myClipboard;
     private ClipData myClip;
     private String vipDescription;
@@ -165,9 +165,6 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
 
     private void initView() {
         myClipboard = (ClipboardManager) getActivity().getSystemService(CLIPBOARD_SERVICE);
-        incomeAdapter = new IncomeAdapter(getActivity());
-        incomeAdapter.setOnItemClickListener(this);
-        incomeRv.setAdapter(incomeAdapter);
     }
 
     @Override
@@ -189,7 +186,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     }
 
     @OnClick({R.id.right_iv, R.id.all_order_rl, R.id.pending_payment_iv, R.id.pending_share_iv, R.id.pending_delivery_iv, R.id.shipping_iv, R.id.completed_iv, R.id.address_manage, R.id.invite_friends, R.id.verified_rl, R.id.my_invitation_iv,
-            R.id.super_member_rl, R.id.member_type_iv, R.id.feedback, R.id.copy,R.id.lottery,R.id.taobao_orde,R.id.mission_center})
+            R.id.super_member_rl, R.id.member_type_iv, R.id.feedback, R.id.copy, R.id.lottery, R.id.taobao_orde, R.id.mission_center,R.id.mine_invite_ll,R.id.mine_coupon_ll})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.right_iv://设置
@@ -215,15 +212,16 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 GoodsOrderActivity.start(getActivity(), StaticData.REFLASH_FIVE);
                 break;
             case R.id.address_manage://地址管理
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.mine_address_management));
+                TCAgentUnit.setEventId(getActivity(), getString(R.string.mine_address_management));
                 AddressManageActivity.start(getActivity(), StaticData.REFLASH_ONE);
                 break;
             case R.id.invite_friends://邀请好友
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.mine_invite_friends));
+            case R.id.mine_invite_ll:
+                TCAgentUnit.setEventId(getActivity(), getString(R.string.mine_invite_friends));
                 InviteFriendsActivity.start(getActivity());
                 break;
             case R.id.verified_rl://认证
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.mine_verified));
+                TCAgentUnit.setEventId(getActivity(), getString(R.string.mine_verified));
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
                     goVerify = StaticData.REFLASH_ONE;
                     if (certifyPay) {
@@ -234,34 +232,38 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 }
                 break;
             case R.id.my_invitation_iv://我的邀请
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.mine_my_fans));
+                TCAgentUnit.setEventId(getActivity(), getString(R.string.mine_my_fans));
                 MyInvitationActivity.start(getActivity());
                 break;
             case R.id.super_member_rl://超级会员
             case R.id.member_type_iv:
                 goVerify = StaticData.REFLASH_ONE;
-                SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount, vipDescription,certifyPay,certifyAmount,vipExpireDate);
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.member));
+                SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount, vipDescription, certifyPay, certifyAmount, vipExpireDate);
+                TCAgentUnit.setEventId(getActivity(), getString(R.string.member));
                 break;
             case R.id.feedback://意见反馈
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.mine_feedback));
+                TCAgentUnit.setEventId(getActivity(), getString(R.string.mine_feedback));
                 FeedBackActivity.start(getActivity());
                 break;
             case R.id.copy://复制
                 myClip = ClipData.newPlainText("text", inviteCode);
                 myClipboard.setPrimaryClip(myClip);
                 showMessage(getString(R.string.copy_successfully));
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.copy_invite_code));
+                TCAgentUnit.setEventId(getActivity(), getString(R.string.copy_invite_code));
                 break;
             case R.id.lottery://抽奖
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.mine_lottery));
+                TCAgentUnit.setEventId(getActivity(), getString(R.string.mine_lottery));
                 LotteryListActivity.start(getActivity());
                 break;
             case R.id.taobao_orde://淘宝订单
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.tao_bao_order));
+                TCAgentUnit.setEventId(getActivity(), getString(R.string.tao_bao_order));
                 break;
             case R.id.mission_center://任务中心
-                TCAgentUnit.setEventId(getActivity(),getString(R.string.mine_mission_center));
+                TCAgentUnit.setEventId(getActivity(), getString(R.string.mine_mission_center));
+                break;
+            case R.id.mine_coupon_ll://优惠卷
+                TCAgentUnit.setEventId(getActivity(), getString(R.string.my_coupon));
+                CouponActivity.start(getActivity());
                 break;
             default:
         }
@@ -286,12 +288,6 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
         }
     }
 
-    @Override
-    public void goCoupon() {
-        TCAgentUnit.setEventId(getActivity(),getString(R.string.my_coupon));
-        Intent intent = new Intent(getActivity(), CouponActivity.class);
-        startActivityForResult(intent, RequestCodeStatic.GO_COUPON);
-    }
 
     public interface MineListener {
         void goLocalTeam();
@@ -314,7 +310,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 GlideHelper.load(getActivity(), avatarUrl, R.mipmap.icon_defalut_head, headPhoto);
                 phone.setText(mobile);
                 VerifyManager.saveVerify(userInfo.getUserLevel());
-                vipExpireDate=mineInfo.getVipExpireDate();
+                vipExpireDate = mineInfo.getVipExpireDate();
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, userInfo.getUserLevel())) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_ordinary_member);
                     verifiedIv.setSelected(false);
@@ -333,12 +329,12 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 }
             }
             mineRewardInfos = mineInfo.getMineRewardInfos();
-            if (mineRewardInfos != null) {
-                if (isFirst) {
-                    incomeRv.setLayoutManager(new GridLayoutManager(getActivity(), mineRewardInfos.size()));
-                    isFirst = false;
+            if(mineRewardInfos!=null){
+                for (MineRewardInfo mineRewardInfo:mineRewardInfos){
+                    if (TextUtils.equals(getString(R.string.coupon), mineRewardInfo.getDes())){
+                        mineCouponTv.setText(getString(R.string.coupon)+"("+mineRewardInfo.getValue()+")");
+                    }
                 }
-                incomeAdapter.setData(mineRewardInfos);
             }
             vipDescription = mineInfo.getVipDescription();
         }
@@ -355,7 +351,6 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     @Override
     public void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo) {
         if (invitationCodeInfo != null) {
-            wxUrl = invitationCodeInfo.getBaseUrl();
             inviteCode = invitationCodeInfo.getInvitationCode();
             inviteCodeTv.setText(inviteCode);
             inviteCodeLl.setVisibility(TextUtils.isEmpty(inviteCode) ? View.GONE : View.VISIBLE);
@@ -376,9 +371,9 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
             mineInfoPresenter.getInvitationCodeInfo();
         }
 
-        if (getUserVisibleHint()&&getActivity()!=null&&!getActivity().isDestroyed()) {
+        if (getUserVisibleHint() && getActivity() != null && !getActivity().isDestroyed()) {
             TCAgentUnit.pageStart(getActivity(), getString(R.string.mine));
-        } else if(getActivity()!=null&&!getActivity().isDestroyed()){
+        } else if (getActivity() != null && !getActivity().isDestroyed()) {
             TCAgentUnit.pageEnd(getActivity(), getString(R.string.mine));
         }
     }
