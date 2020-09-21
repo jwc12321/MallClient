@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginRight="@dimen/dp_12"
+        android:layout_marginBottom="@dimen/dp_7"
+        android:background="@drawable/common_two_back_fifty_seven_bg"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/coupon_rl"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_82">
+
+            <LinearLayout
+                android:id="@+id/amount_ll"
+                android:layout_width="@dimen/dp_98"
+                android:layout_height="match_parent"
+                android:background="@drawable/coupon_amount_bg"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:orientation="horizontal">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/symbol"
+                        style="@style/size15_color_app1_text_style"
+                        android:text="¥" />
+
+                    <com.mall.sls.common.widget.textview.MediumThickTextView
+                        android:id="@+id/amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/appText1"
+                        android:textSize="@dimen/sp_25"
+                        tools:text="1000" />
+                </LinearLayout>
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/condition"
+                    style="@style/size12_color_app1_text_style"
+                    android:layout_gravity="center_horizontal"
+                    tools:text="满60元可使用" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_toRightOf="@id/amount_ll"
+                android:orientation="vertical">
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    android:id="@+id/name"
+                    style="@style/size15_color_app3_text_style"
+                    android:layout_marginTop="@dimen/dp_19"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    tools:text="七月一日新人优惠附近的开发的卷"
+                    android:layout_marginRight="@dimen/dp_12"/>
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/endTime"
+                    style="@style/size11_color_app2_text_style"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    tools:text="2019-09-09" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

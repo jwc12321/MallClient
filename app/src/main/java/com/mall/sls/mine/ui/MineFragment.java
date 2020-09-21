@@ -130,7 +130,6 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     private String goVerify = "0";
 
     private UserInfo userInfo;
-    private List<MineRewardInfo> mineRewardInfos;
     private String avatarUrl;
     private String mobile;
     private boolean certifyPay;
@@ -326,14 +325,6 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                     verifiedIv.setSelected(true);
                     vipType.setText(getString(R.string.view_now));
                     superMemberRl.setVisibility(View.GONE);
-                }
-            }
-            mineRewardInfos = mineInfo.getMineRewardInfos();
-            if(mineRewardInfos!=null){
-                for (MineRewardInfo mineRewardInfo:mineRewardInfos){
-                    if (TextUtils.equals(getString(R.string.coupon), mineRewardInfo.getDes())){
-                        mineCouponTv.setText(getString(R.string.coupon)+"("+mineRewardInfo.getValue()+")");
-                    }
                 }
             }
             vipDescription = mineInfo.getVipDescription();

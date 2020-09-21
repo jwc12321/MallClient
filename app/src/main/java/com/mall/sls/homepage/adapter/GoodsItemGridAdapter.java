@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,7 +30,6 @@ public class GoodsItemGridAdapter extends RecyclerView.Adapter<GoodsItemGridAdap
     private LayoutInflater layoutInflater;
     private List<GoodsItemInfo> goodsItemInfos;
     private Context context;
-    private SpannableString spanText;
 
     public void setData(List<GoodsItemInfo> goodsItemInfos) {
         this.goodsItemInfos = goodsItemInfos;
@@ -100,6 +98,8 @@ public class GoodsItemGridAdapter extends RecyclerView.Adapter<GoodsItemGridAdap
         DrawTextView originalPrice;
         @BindView(R.id.item_ll)
         LinearLayout itemLl;
+        @BindView(R.id.yuan_symbol)
+        ConventionalTextView yuanSymbol;
 
         public GoodsItemGridView(View itemView) {
             super(itemView);
@@ -110,6 +110,7 @@ public class GoodsItemGridAdapter extends RecyclerView.Adapter<GoodsItemGridAdap
             GlideHelper.load((Activity) context, goodsItemInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(goodsItemInfo.getName());
             goodsSubtitleName.setText(goodsItemInfo.getSubtitleName());
+            yuanSymbol.setText(StaticData.YUAN_SYMBOL);
             currentPrice.setText(NumberFormatUnit.numberFormat(goodsItemInfo.getRetailPrice()));
             originalPrice.setText(NumberFormatUnit.goodsFormat(goodsItemInfo.getCounterPrice()));
             groupType.setText(goodsItemInfo.getKeywords());

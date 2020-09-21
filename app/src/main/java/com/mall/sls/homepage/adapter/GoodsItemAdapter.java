@@ -19,7 +19,9 @@ import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.DrawTextView;
+import com.mall.sls.common.widget.textview.GoodsTypeTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.common.widget.textview.TagTextView;
 import com.mall.sls.data.entity.GoodsItemInfo;
 
 import java.util.List;
@@ -67,9 +69,9 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
                 if (onItemClickListener != null) {
                     if (TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGoodsType())) {
                         onItemClickListener.goGeneralGoodsDetails(goodsItemInfo.getGoodsId());
-                    } else if(TextUtils.equals(StaticData.REFLASH_TWO, goodsItemInfo.getGoodsType())){
+                    } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsItemInfo.getGoodsType())) {
                         onItemClickListener.goOrdinaryGoodsDetails(goodsItemInfo.getGoodsId());
-                    }else {
+                    } else {
                         onItemClickListener.goActivityGroupGoods(goodsItemInfo.getGoodsId());
                     }
                 }
@@ -86,24 +88,16 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
     public class GoodsItemView extends RecyclerView.ViewHolder {
         @BindView(R.id.goods_iv)
         ImageView goodsIv;
-        @BindView(R.id.groupType)
-        ConventionalTextView groupType;
         @BindView(R.id.goods_name)
-        ConventionalTextView goodsName;
-        @BindView(R.id.goods_name_rl)
-        LinearLayout goodsNameRl;
-        @BindView(R.id.goods_introduction)
-        ConventionalTextView goodsIntroduction;
-        @BindView(R.id.price_type)
-        ConventionalTextView priceType;
+        GoodsTypeTextView goodsName;
+        @BindView(R.id.goods_brief)
+        ConventionalTextView goodsBrief;
+        @BindView(R.id.yuan_symbol)
+        ConventionalTextView yuanSymbol;
         @BindView(R.id.current_price)
         MediumThickTextView currentPrice;
-        @BindView(R.id.current_price_rl)
-        LinearLayout currentPriceRl;
         @BindView(R.id.original_price)
-        MediumThickTextView originalPrice;
-        @BindView(R.id.confirm_bt)
-        ConventionalTextView confirmBt;
+        DrawTextView originalPrice;
         @BindView(R.id.item_rl)
         RelativeLayout itemRl;
 
@@ -114,23 +108,14 @@ public class GoodsItemAdapter extends RecyclerView.Adapter<GoodsItemAdapter.Good
 
         public void bindData(GoodsItemInfo goodsItemInfo) {
             GlideHelper.load((Activity) context, goodsItemInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
-            goodsName.setText(goodsItemInfo.getName());
-            goodsIntroduction.setText(goodsItemInfo.getBrief());
-            currentPrice.setText(NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getRetailPrice()));
-            originalPrice.setText(NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getCounterPrice()));
-            groupType.setText(goodsItemInfo.getKeywords());
-            if (TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGoodsType())) {
-                groupType.setVisibility(View.GONE);
-                priceType.setText(context.getString(R.string.selling_price));
-                confirmBt.setText(context.getString(R.string.buy_now));
-            } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsItemInfo.getGoodsType())) {
-                groupType.setVisibility(View.VISIBLE);
-                priceType.setText(context.getString(R.string.group_purchase_price_tv));
-                confirmBt.setText(context.getString(R.string.go_to_spell));
-            } else {
-                groupType.setVisibility(View.VISIBLE);
-                priceType.setText(context.getString(R.string.activity_price));
-                confirmBt.setText(context.getString(R.string.go_buy));
+            goodsBrief.setText(goodsItemInfo.getBrief());
+            yuanSymbol.setText(StaticData.YUAN_SYMBOL);
+            currentPrice.setText(NumberFormatUnit.numberFormat(goodsItemInfo.getRetailPrice()));
+            originalPrice.setText(NumberFormatUnit.goodsFormat(goodsItemInfo.getCounterPrice()));
+            if(!TextUtils.isEmpty(goodsItemInfo.getKeywords())){
+                goodsName.setSingleTagAndContent(goodsItemInfo.getKeywords(),goodsItemInfo.getName());
+            }else {
+                goodsName.setText(goodsItemInfo.getName());
             }
         }
     }

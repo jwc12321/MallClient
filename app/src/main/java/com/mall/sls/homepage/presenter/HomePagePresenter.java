@@ -11,7 +11,10 @@ import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
 import com.mall.sls.data.entity.AppUrlInfo;
+import com.mall.sls.data.entity.CouponInfo;
 import com.mall.sls.data.entity.HomePageInfo;
+import com.mall.sls.data.entity.HomeSnapUp;
+import com.mall.sls.data.entity.HomeSnapUpInfo;
 import com.mall.sls.data.entity.Ignore;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
@@ -47,7 +50,6 @@ public class HomePagePresenter implements HomepageContract.HomePagePresenter {
 
     @Override
     public void getHomePageInfo(String refreshType) {
-        Log.d("111","我是重启1");
         if (TextUtils.equals(StaticData.REFLASH_ONE, refreshType)) {
             homePageView.showLoading(StaticData.LOADING);
         }
@@ -123,18 +125,39 @@ public class HomePagePresenter implements HomepageContract.HomePagePresenter {
         TypeRequest request=new TypeRequest(type);
         String sign= SignUnit.signPost(RequestUrl.COUPON_RECEIVE,gson.toJson(request));
         Disposable disposable = restApiService.couponReceive(sign,request)
-                .flatMap(new RxRemoteDataParse<Ignore>())
-                .compose(new RxSchedulerTransformer<Ignore>())
-                .subscribe(new Consumer<Ignore>() {
+                .flatMap(new RxRemoteDataParse<List<CouponInfo>>())
+                .compose(new RxSchedulerTransformer<List<CouponInfo>>())
+                .subscribe(new Consumer<List<CouponInfo>>() {
                     @Override
-                    public void accept(Ignore ignore) throws Exception {
+                    public void accept(List<CouponInfo> couponInfos) throws Exception {
                         homePageView.dismissLoading();
-                        homePageView.renderCouponReceive();
+                        homePageView.renderCouponReceive(couponInfos);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         homePageView.dismissLoading();
+                        homePageView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getHomeSnapUp() {
+        String queryString="null";
+        String sign= SignUnit.signGet(RequestUrl.SNAP_UP,queryString);
+        Disposable disposable = restApiService.getHomeSnapUp(sign)
+                .flatMap(new RxRemoteDataParse<HomeSnapUp>())
+                .compose(new RxSchedulerTransformer<HomeSnapUp>())
+                .subscribe(new Consumer<HomeSnapUp>() {
+                    @Override
+                    public void accept(HomeSnapUp homeSnapUp) throws Exception {
+                        homePageView.renderHomeSnapUp(homeSnapUp);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
                         homePageView.showError(throwable);
                     }
                 });

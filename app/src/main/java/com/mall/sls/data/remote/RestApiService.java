@@ -9,10 +9,16 @@ import com.mall.sls.data.entity.CartInfo;
 import com.mall.sls.data.entity.ConfirmCartOrderDetail;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CouponInfo;
+import com.mall.sls.data.entity.FirstCategory;
+import com.mall.sls.data.entity.FirstCategoryInfo;
 import com.mall.sls.data.entity.GeneralGoodsDetailsInfo;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
+import com.mall.sls.data.entity.GoodsItem;
+import com.mall.sls.data.entity.GoodsItemInfo;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.HomePageInfo;
+import com.mall.sls.data.entity.HomeSnapUp;
+import com.mall.sls.data.entity.HomeSnapUpInfo;
 import com.mall.sls.data.entity.Ignore;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.InviteInfo;
@@ -28,6 +34,9 @@ import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.OrderPackageInfo;
 import com.mall.sls.data.entity.OrderSubmitInfo;
 import com.mall.sls.data.entity.ProvinceBean;
+import com.mall.sls.data.entity.SearchHistory;
+import com.mall.sls.data.entity.SecondCategory;
+import com.mall.sls.data.entity.SecondCategoryInfo;
 import com.mall.sls.data.entity.ShareInfo;
 import com.mall.sls.data.entity.TeamInfo;
 import com.mall.sls.data.entity.TokenInfo;
@@ -281,7 +290,7 @@ public interface RestApiService {
 
     //领取优惠卷
     @POST("app/coupon/receive")
-    Flowable<RemoteDataWrapper<Ignore>> couponReceive(@Header("X-Hc-Sign") String sign, @Body TypeRequest request);
+    Flowable<RemoteDataWrapper<List<CouponInfo>>> couponReceive(@Header("X-Hc-Sign") String sign, @Body TypeRequest request);
 
     //查询购物车商品数量
     @GET("app/cart/general/count")
@@ -335,4 +344,31 @@ public interface RestApiService {
     @GET("app/goods/waitBuy")
     Flowable<RemoteDataWrapper<LocalTeam>> getWaitBuy(@Header("X-Hc-Sign") String sign, @Query("page") String page, @Query("limit") String limit);
 
+    //拼团抢购列表
+    @GET("app/home/snap-up")
+    Flowable<RemoteDataWrapper<HomeSnapUp>> getHomeSnapUp(@Header("X-Hc-Sign") String sign);
+
+    //商品L1类目列表
+    @GET("app/goods/categories-l1")
+    Flowable<RemoteDataWrapper<FirstCategory>> getFirstCategory(@Header("X-Hc-Sign") String sign);
+
+    //根据L1类目过滤配置数量的商品
+    @GET("app/goods/l1/{categoryId}/goods")
+    Flowable<RemoteDataWrapper<SecondCategory>> getSecondCategory(@Header("X-Hc-Sign") String sign, @Path("categoryId") String categoryId);
+
+    //根据L2类目过滤全部商品
+    @GET("app/goods/l2/{categoryId}/goods")
+    Flowable<RemoteDataWrapper<GoodsItem>> getCategoryGoods(@Header("X-Hc-Sign") String sign, @Path("categoryId") String categoryId,@Query("sortType") String sortType, @Query("orderType") String orderType ,@Query("page") String page, @Query("limit") String limit);
+
+    //根据L2类目过滤全部商品
+    @GET("app/goods/goods/{keyword}")
+    Flowable<RemoteDataWrapper<GoodsItem>> getKeywordGoods(@Header("X-Hc-Sign") String sign, @Path("keyword") String keyword,@Query("sortType") String sortType, @Query("orderType") String orderType ,@Query("page") String page, @Query("limit") String limit);
+
+    //商品搜索历史记录
+    @GET("app/goods/search-history")
+    Flowable<RemoteDataWrapper<List<String>>> getSearchHistory(@Header("X-Hc-Sign") String sign);
+
+    //删除历史记录
+    @DELETE("app/goods/search-history")
+    Flowable<RemoteDataWrapper<Ignore>> deleteHistory(@Header("X-Hc-Sign") String sign);
 }

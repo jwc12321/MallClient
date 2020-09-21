@@ -15,9 +15,6 @@ public class GoodsItemInfo implements Serializable {
     //商品id
     @SerializedName("goodsId")
     private String goodsId;
-    //团购规则id
-    @SerializedName("grouponRulesId")
-    private String grouponRulesId;
     //名字
     @SerializedName("name")
     private String name;
@@ -33,9 +30,6 @@ public class GoodsItemInfo implements Serializable {
     //团类型0日常团 1活动团
     @SerializedName("groupType")
     private String groupType;
-    //订阅状态 0:未提醒 1：已预约
-    @SerializedName("subscriptionStatus")
-    private String subscriptionStatus;
     //团购开始时间
     @SerializedName("groupStartTime")
     private String startTime;
@@ -63,14 +57,6 @@ public class GoodsItemInfo implements Serializable {
 
     public void setGoodsId(String goodsId) {
         this.goodsId = goodsId;
-    }
-
-    public String getGrouponRulesId() {
-        return grouponRulesId;
-    }
-
-    public void setGrouponRulesId(String grouponRulesId) {
-        this.grouponRulesId = grouponRulesId;
     }
 
     public String getName() {
@@ -113,13 +99,6 @@ public class GoodsItemInfo implements Serializable {
         this.groupType = groupType;
     }
 
-    public String getSubscriptionStatus() {
-        return subscriptionStatus;
-    }
-
-    public void setSubscriptionStatus(String subscriptionStatus) {
-        this.subscriptionStatus = subscriptionStatus;
-    }
 
     public String getStartTime() {
         return startTime;

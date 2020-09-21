@@ -398,6 +398,19 @@
         <activity android:name=".order.ui.ViewLogisticsActivity"
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"/>
+
+        <activity android:name=".coupon.ui.HomeCouponActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"
+            android:theme="@style/TranslucentFullScreenTheme"/>
+
+        <activity android:name=".sort.ui.CategoryGoodsActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
+
+        <activity android:name=".sort.ui.SearchGoodsActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

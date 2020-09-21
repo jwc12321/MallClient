@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/dp_33"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/common_four_back_sixty_nine_bg"
+    android:id="@+id/tag_btn"
+    android:paddingLeft="@dimen/dp_16"
+    android:paddingRight="@dimen/dp_16"
+    android:gravity="center_vertical"
+    tools:text="这是一个标签积分到家发的客服的积分快到付款的积分的"
+    android:textSize="@dimen/sp_14"
+    android:textColor="@color/appText3"
+    android:layout_margin="@dimen/dp_8"
+    android:maxEms="12"
+    android:maxLines="1"
+    android:ellipsize="end">
+</TextView>

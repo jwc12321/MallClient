@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6"
+    android:orientation="vertical">
+
+    <RelativeLayout style="@style/title_white_rl_style">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/small_title"
+            style="@style/small_title_text_style" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/search_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:background="@color/backGround60">
+
+        <RelativeLayout
+            style="@style/search_rl_bg_style"
+            android:layout_marginRight="@dimen/dp_15">
+
+            <ImageView
+                android:id="@+id/search_iv"
+                style="@style/search_iv_style" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/search_brand"
+                style="@style/search_text_style"
+                android:layout_toRightOf="@id/search_iv"
+                android:text="@string/enter_keyword" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_1"
+        android:orientation="horizontal">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/first_category_rv"
+            android:layout_width="@dimen/dp_90"
+            android:layout_height="wrap_content"
+            app:layoutManager="@string/layoutManager_LinearLayout"
+            tools:listitem="@layout/adapter_first_category" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/second_category_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="@string/layoutManager_LinearLayout"
+            tools:listitem="@layout/adapter_second_category"
+            android:background="@color/backGround57"/>
+    </LinearLayout>
+
+</LinearLayout>

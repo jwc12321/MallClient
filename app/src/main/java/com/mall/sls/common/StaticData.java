@@ -1,7 +1,5 @@
 package com.mall.sls.common;
 
-import com.google.gson.annotations.SerializedName;
-
 public class StaticData {
     public static final String  WX_APP_ID = "wxcea8bff4c8e832be";
     //登录中
@@ -162,4 +160,14 @@ public class StaticData {
 
 
     public static final String PRICE_ZERO = "0.00";
+
+    public static final String YUAN_SYMBOL="¥ ";
+    public static final String COUPON_INFO_S="couponInfos";
+    public static final String CATEGORY_ID="categoryId";
+    public static final String CATEGORY_NAME="categoryName";
+    public static final String SORT_TYPE_PRICE="Price";
+    public static final String SORT_TYPE_SALES="Sales";
+    public static final String ORDER_TYPE_DESC="Desc";//降序
+    public static final String ORDER_TYPE_ASC="Asc";//升序
+
 }

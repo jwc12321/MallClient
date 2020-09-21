@@ -68,5 +68,12 @@ public class RequestUrl {
     public static String ADD_CART_BATCH="/app/order/general/addCartBatch";//订单详情加入购物车
     public static String GOODS_RUSH_BUY="/app/goods/rushBuy";//正在疯抢
     public static String GOODS_WAIT_BUY="/app/goods/waitBuy";//即将开抢
+    public static String SNAP_UP ="/app/home/snap-up";//拼团抢购列表
+    public static String FIRST_CATEGORY="/app/goods/categories-l1";//商品L1类目列表
+    public static String SECOND_CATEGORY="/app/goods/l1/";//根据L1类目过滤配置数量的商品
+    public static String GOODS="/goods";//根据L1类目过滤配置数量的商品
+    public static String SECOND_CATEGORY_ITEM ="/app/goods/l2/";//根据L2类目过滤全部商品
+    public static String SEARCH_GOODS="/app/goods/goods/";//关键字搜索
+    public static String SEARCH_HISTORY="/app/goods/search-history";//商品搜索历史记录
 
 }

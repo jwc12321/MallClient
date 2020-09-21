@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_white_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_black_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_black_text_style"
+            tools:text="创意设计本" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginTop="@dimen/dp_1"
+        android:background="@color/backGround57"
+        android:weightSum="3">
+
+        <RelativeLayout
+            android:id="@+id/default_rl"
+            style="@style/default_rl_style">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/default_tv"
+                style="@style/default_tv_style"
+                android:text="@string/select_default" />
+
+            <ImageView
+                android:id="@+id/default_iv"
+                style="@style/default_down_style" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/price_rl"
+            style="@style/default_rl_style">
+
+            <LinearLayout style="@style/default_ll_style">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/price_tv"
+                    style="@style/default_tv_style"
+                    android:text="@string/price" />
+
+                <ImageView
+                    android:id="@+id/price_arrow_iv"
+                    style="@style/default_right_iv_style"
+                    android:background="@mipmap/icon_up_down_arrow" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/price_iv"
+                style="@style/default_down_style"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/sales_rl"
+            style="@style/default_rl_style">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/sales_tv"
+                style="@style/default_tv_style"
+                android:text="@string/sales" />
+
+            <ImageView
+                android:id="@+id/sales_iv"
+                style="@style/default_down_style"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlEnablePreviewInEditMode="false"
+        android:layout_marginTop="@dimen/dp_1">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@color/appText3" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/record_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="@string/layoutManager_LinearLayout"
+                tools:listitem="@layout/adapter_goods_item" />
+
+            <LinearLayout
+                android:id="@+id/no_record_ll"
+                style="@style/common_no_record_ll_style"
+                android:visibility="gone">
+
+                <ImageView
+                    style="@style/common_no_record_iv_style"
+                    android:src="@mipmap/icon_no_search_goods" />
+
+                <TextView
+                    style="@style/common_no_record_tv_style"
+                    android:text="@string/no_search_goods" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

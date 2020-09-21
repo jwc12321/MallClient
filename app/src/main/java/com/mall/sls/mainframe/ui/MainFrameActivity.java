@@ -3,6 +3,7 @@ package com.mall.sls.mainframe.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,11 +26,13 @@ import com.mall.sls.homepage.ui.HomepageFragment;
 import com.mall.sls.local.ui.LocalTeamFragment;
 import com.mall.sls.mainframe.adapter.MainPagerAdapter;
 import com.mall.sls.mine.ui.MineFragment;
+import com.mall.sls.sort.ui.SortFragment;
 
 import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainFrameActivity extends BaseActivity implements HomepageFragment.HomepageListener, MineFragment.MineListener, CartFragment.CartListener {
 
@@ -121,7 +124,7 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
         mineFragment.setMineListener(this);
         fragments = new BaseFragment[4];
         fragments[0] = homepageFragment;
-        fragments[1] = LocalTeamFragment.newInstance();
+        fragments[1] = SortFragment.newInstance();
         fragments[2] = cartFragment;
         fragments[3] = mineFragment;
         relativeLayouts = new RelativeLayout[4];
@@ -139,9 +142,6 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
         textViews[1] = sortTt;
         textViews[2] = cartTt;
         textViews[3] = mineTt;
-        for (RelativeLayout relativeLayout : relativeLayouts) {
-            relativeLayout.setOnClickListener(onClickListener);
-        }
         viewPager.setOffscreenPageLimit(3);
         adapter = new MainPagerAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
@@ -149,19 +149,9 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
         viewPager.setCurrentItem(0);
         imageViews[0].setSelected(true);
         textViews[0].setSelected(true);
+        navigationBar(StaticData.REFLASH_ZERO);
     }
 
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            for (int i = 0; i < relativeLayouts.length; i++) {
-                if (v == relativeLayouts[i]) {
-                    viewPager.setCurrentItem(i, false);
-                    break;
-                }
-            }
-        }
-    };
 
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
         @Override
@@ -195,5 +185,43 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
     @Override
     public void goHomePage() {
         viewPager.setCurrentItem(0, false);
+    }
+
+    @OnClick({R.id.home_rl, R.id.sort_rl, R.id.cart_rl, R.id.mine_rl})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.home_rl:
+                navigationBar(StaticData.REFLASH_ZERO);
+                viewPager.setCurrentItem(0, false);
+                break;
+            case R.id.sort_rl:
+                navigationBar(StaticData.REFLASH_ONE);
+                viewPager.setCurrentItem(1, false);
+                break;
+            case R.id.cart_rl:
+                navigationBar(StaticData.REFLASH_ONE);
+                viewPager.setCurrentItem(2, false);
+                break;
+            case R.id.mine_rl:
+                navigationBar(StaticData.REFLASH_ZERO);
+                viewPager.setCurrentItem(3, false);
+                break;
+            default:
+        }
+    }
+
+
+    private void navigationBar(String type) {
+        if (!isNightMode(this)) {
+            if (TextUtils.equals(StaticData.REFLASH_ONE, type)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                }
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+                }
+            }
+        }
     }
 }

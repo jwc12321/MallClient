@@ -2,11 +2,13 @@ package com.mall.sls.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * @author jwc on 2020/5/13.
  * 描述：
  */
-public class CouponInfo {
+public class CouponInfo implements Serializable {
     //用户优惠券ID
     @SerializedName("id")
     private String id;

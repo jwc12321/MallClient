@@ -135,7 +135,7 @@
                             <com.mall.sls.common.widget.textview.ConventionalTextView
                                 android:id="@+id/mine_coupon_tv"
                                 style="@style/mine_type_tv_style"
-                                tools:text="优惠券（2）"/>
+                                android:text="@string/coupon"/>
                         </LinearLayout>
                     </LinearLayout>
                 </RelativeLayout>

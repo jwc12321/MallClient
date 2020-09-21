@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -42,17 +43,22 @@ import com.mall.sls.common.unit.UpdateManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.coupon.ui.CouponActivity;
+import com.mall.sls.coupon.ui.HomeCouponActivity;
 import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.BannerInfo;
+import com.mall.sls.data.entity.CouponInfo;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.GoodsItemInfo;
 import com.mall.sls.data.entity.HomeCouponInfo;
 import com.mall.sls.data.entity.HomePageInfo;
+import com.mall.sls.data.entity.HomeSnapUp;
+import com.mall.sls.data.entity.HomeSnapUpInfo;
 import com.mall.sls.data.event.WXLoginEvent;
 import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.adapter.GoodsItemGridAdapter;
+import com.mall.sls.homepage.adapter.GroupBuyingAdapter;
 import com.mall.sls.homepage.adapter.HomeCouponAdapter;
 import com.mall.sls.homepage.presenter.HomePagePresenter;
 import com.mall.sls.lottery.ui.LotteryListActivity;
@@ -90,7 +96,7 @@ import update.UpdateAppUtils;
  * @author jwc on 2020/5/7.
  * 描述：
  */
-public class HomepageFragment extends BaseFragment implements HomepageContract.HomePageView, GoodsItemGridAdapter.OnItemClickListener {
+public class HomepageFragment extends BaseFragment implements HomepageContract.HomePageView, GoodsItemGridAdapter.OnItemClickListener,GroupBuyingAdapter.OnItemClickListener {
 
 
     @BindView(R.id.small_)
@@ -125,6 +131,8 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.group_more_rl)
     RelativeLayout groupMoreRl;
+    @BindView(R.id.group_buying_ll)
+    LinearLayout groupBuyingLl;
     private LocationHelper mLocationHelper;
     private String city;
 
@@ -133,6 +141,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     private List<BannerInfo> bannerInfos;
     private HomeCouponAdapter homeCouponAdapter;
     private List<HomeCouponInfo> homeCouponInfos;
+    private GroupBuyingAdapter groupBuyingAdapter;
     @Inject
     HomePagePresenter homePagePresenter;
     private List<String> group;
@@ -187,6 +196,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         initAdapter();
         homePagePresenter.getHomePageInfo(StaticData.REFLASH_ONE);
         homePagePresenter.getAppUrlInfo();
+        homePagePresenter.getHomeSnapUp();
     }
 
     private void initAdapter() {
@@ -196,6 +206,10 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         goodsRv.setAdapter(goodsItemAdapter);
         homeCouponAdapter = new HomeCouponAdapter(getActivity());
         couponRv.setAdapter(homeCouponAdapter);
+        groupBuyingAdapter=new GroupBuyingAdapter(getActivity());
+        groupBuyingAdapter.setOnItemClickListener(this);
+        groupBuyingRv.setAdapter(groupBuyingAdapter);
+
     }
 
     private void xBannerInit() {
@@ -306,6 +320,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
             homePagePresenter.getHomePageInfo(StaticData.REFLASH_ZERO);
+            homePagePresenter.getHomeSnapUp();
         }
 
         @Override
@@ -378,12 +393,10 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             messageCount.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO, homePageInfo.getUnreadMsgCount()) ? View.GONE : View.VISIBLE);
             homeCouponInfos = homePageInfo.getHomeCouponInfos();
             if (homeCouponInfos == null || homeCouponInfos.size() == 0) {
-                couponRv.setVisibility(View.GONE);
-                receiveIv.setVisibility(View.GONE);
+                couponLl.setVisibility(View.GONE);
             } else {
-                couponRv.setVisibility(View.VISIBLE);
+                couponLl.setVisibility(View.VISIBLE);
                 homeCouponAdapter.setData(homeCouponInfos);
-                receiveIv.setVisibility(View.VISIBLE);
                 //绑定微信
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, BindWxManager.getBindWx())) {
                     receiveIv.setSelected(false);
@@ -429,10 +442,23 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     }
 
     @Override
-    public void renderCouponReceive() {
+    public void renderCouponReceive(List<CouponInfo> couponInfos) {
         showMessage(getString(R.string.receive_success));
         receiveIv.setVisibility(View.GONE);
         couponRv.setVisibility(View.GONE);
+        if(couponInfos!=null&&couponInfos.size()>0){
+            HomeCouponActivity.start(getActivity(),couponInfos);
+        }
+    }
+
+    @Override
+    public void renderHomeSnapUp(HomeSnapUp homeSnapUp) {
+        if (homeSnapUp != null &&homeSnapUp.getGoodsItemInfos()!=null&& homeSnapUp.getGoodsItemInfos().size() > 0) {
+            groupBuyingLl.setVisibility(View.VISIBLE);
+            groupBuyingAdapter.setData(homeSnapUp.getGoodsItemInfos());
+        }else {
+            groupBuyingRv.setVisibility(View.GONE);
+        }
     }
 
     private void updateApp(AppUrlInfo appUrlInfo) {

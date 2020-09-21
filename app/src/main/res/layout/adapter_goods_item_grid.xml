@@ -58,13 +58,13 @@
             android:layout_marginTop="@dimen/dp_8"
             android:layout_marginBottom="@dimen/dp_12">
             <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/yuan_symbol"
                 style="@style/size10_color_app18_text_style"
                 android:text="@string/yuan_symbol"/>
             <com.mall.sls.common.widget.textview.ConventionalTextView
                 android:id="@+id/current_price"
                 style="@style/size12_color_app18_text_style"
-                tools:text="1234"
-                android:layout_marginLeft="@dimen/dp_2"/>
+                tools:text="1234" />
             <com.mall.sls.common.widget.textview.DrawTextView
                 android:id="@+id/original_price"
                 style="@style/size10_color_app2_text_style"

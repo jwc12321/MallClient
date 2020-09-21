@@ -405,10 +405,19 @@
 
     <!--1.1.2-->
     <string name="group_buying">拼团抢购</string>
-    <string name="yuan_symbol">¥</string>
+    <string name="yuan_symbol">¥ </string>
     <string name="sort">分类</string>
     <string name="featured_products">精选商品</string>
     <string name="cumulative_sales">累计销量</string>
     <string name="pieces">件</string>
     <string name="invite_courteous">邀请有礼</string>
+    <string name="congratulations_getting">恭喜您获得</string>
+    <string name="view_coupon">请到“我的-优惠券”中查看</string>
+    <string name="enter_keyword">请输入关键词</string>
+    <string name="select_default">默认</string>
+    <string name="sales">销量</string>
+    <string name="price">价格</string>
+    <string name="no_search_goods">暂时没有符合要求的商品，换个条件试试吧</string>
+    <string name="search_history">搜索历史</string>
+    <string name="clear_history">清除记录</string>
 </resources>

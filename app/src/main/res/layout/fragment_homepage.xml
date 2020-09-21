@@ -141,7 +141,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_15"
                         android:background="@color/backGround1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/coupon_rv"
@@ -165,13 +166,15 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/group_buying_ll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_15"
                         android:layout_marginRight="@dimen/dp_10"
                         android:background="@drawable/common_four_back_sixty_two_bg"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <RelativeLayout
                             android:id="@+id/group_more_rl"
@@ -191,7 +194,6 @@
                             android:id="@+id/group_buying_rv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp_5"
                             android:layout_marginBottom="@dimen/dp_8"
                             android:orientation="horizontal"
                             app:layoutManager="@string/layoutManager_LinearLayout"

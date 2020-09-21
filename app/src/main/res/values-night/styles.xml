@@ -41,7 +41,7 @@
     <style name="title_white_rl_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/appText1</item>
+        <item name="android:background">@color/backGround60</item>
     </style>
 
     <!--每个activity的title-->

@@ -2,14 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_16"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:paddingRight="@dimen/dp_5">
 
-    <TextView
+    <com.mall.sls.common.widget.textview.ConventionalTextView
         android:id="@+id/tv_tags"
-        android:layout_width="@dimen/dp_31"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_16"
         android:textSize="@dimen/sp_12"
-        android:gravity="center"/>
+        android:gravity="center"
+        tools:text="千人秒杀"
+        android:paddingLeft="@dimen/dp_5"
+        android:paddingRight="@dimen/dp_5"/>
 
 </LinearLayout>
