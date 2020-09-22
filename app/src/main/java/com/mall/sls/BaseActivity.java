@@ -59,12 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity implements LoadData
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
         }
-        int width = metrics.widthPixels;
-        int height = metrics.heightPixels;
         mainApplication = (MainApplication) getApplication();//获取MyApplication的对象
-//        if (width == 720) {
-//            mainApplication.setData(width, height);
-//        }
         changeStateBar();
         initializeInjector();
     }

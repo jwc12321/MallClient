@@ -73,7 +73,7 @@ public class RequestUrl {
     public static String SECOND_CATEGORY="/app/goods/l1/";//根据L1类目过滤配置数量的商品
     public static String GOODS="/goods";//根据L1类目过滤配置数量的商品
     public static String SECOND_CATEGORY_ITEM ="/app/goods/l2/";//根据L2类目过滤全部商品
-    public static String SEARCH_GOODS="/app/goods/goods/";//关键字搜索
+    public static String SEARCH_GOODS="/app/goods/search";//关键字搜索
     public static String SEARCH_HISTORY="/app/goods/search-history";//商品搜索历史记录
 
 }

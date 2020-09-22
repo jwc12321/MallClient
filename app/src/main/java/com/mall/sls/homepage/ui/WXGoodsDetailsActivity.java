@@ -225,21 +225,6 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
     }
 
 
-    @Override
-    public void goOrdinaryGoodsDetails(String goodsId) {
-        OrdinaryGoodsDetailActivity.start(this, goodsId);
-    }
-
-    @Override
-    public void goActivityGroupGoods(String goodsId) {
-        ActivityGroupGoodsActivity.start(this, goodsId);
-    }
-
-    @Override
-    public void goGeneralGoodsDetails(String goodsId) {
-        GeneralGoodsDetailsActivity.start(this,goodsId);
-    }
-
     @OnClick({R.id.back,R.id.confirm_bt})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -277,4 +262,14 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
         }
     }
 
+    @Override
+    public void goGoodsDetails(String goodsType, String goodsId) {
+        if (TextUtils.equals(StaticData.REFLASH_ONE, goodsType)) {
+            GeneralGoodsDetailsActivity.start(this, goodsId);
+        } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsType)) {
+            OrdinaryGoodsDetailActivity.start(this, goodsId);
+        } else {
+            ActivityGroupGoodsActivity.start(this, goodsId);
+        }
+    }
 }

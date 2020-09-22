@@ -1,5 +1,7 @@
 package com.mall.sls.mine.presenter;
 
+import android.text.TextUtils;
+
 import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
@@ -38,8 +40,10 @@ public class MyInvitePresenter implements MineContract.MyInvitePresenter {
     }
 
     @Override
-    public void getMyInvite() {
-        myInviteView.showLoading(StaticData.LOADING);
+    public void getMyInvite(String refreshType) {
+        if (TextUtils.equals(StaticData.REFLASH_ONE, refreshType)) {
+            myInviteView.showLoading(StaticData.LOADING);
+        }
         String queryString = "null";
         String sign = SignUnit.signGet(RequestUrl.AUTH_INVITER, queryString);
         Disposable disposable = restApiService.getInviteInfos(sign)

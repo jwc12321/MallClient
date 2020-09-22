@@ -58,13 +58,7 @@ public class GroupBuyingAdapter extends RecyclerView.Adapter<GroupBuyingAdapter.
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    if (TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGoodsType())) {
-                        onItemClickListener.goGeneralGoodsDetails(goodsItemInfo.getGoodsId());
-                    } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsItemInfo.getGoodsType())) {
-                        onItemClickListener.goOrdinaryGoodsDetails(goodsItemInfo.getGoodsId());
-                    } else {
-                        onItemClickListener.goActivityGroupGoods(goodsItemInfo.getGoodsId());
-                    }
+                    onItemClickListener.goGoodsDetails(goodsItemInfo.getGoodsType(),goodsItemInfo.getGoodsId());
                 }
             }
         });
@@ -112,11 +106,7 @@ public class GroupBuyingAdapter extends RecyclerView.Adapter<GroupBuyingAdapter.
     }
 
     public interface OnItemClickListener {
-        void goOrdinaryGoodsDetails(String goodsId);
-
-        void goActivityGroupGoods(String goodsId);
-
-        void goGeneralGoodsDetails(String goodsId);
+        void goGoodsDetails(String goodsType,String goodsId);
     }
 
     private OnItemClickListener onItemClickListener;

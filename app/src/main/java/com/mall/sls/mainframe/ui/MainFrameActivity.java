@@ -90,18 +90,6 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
         initView();
     }
 
-    private void initData() {
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        if (Intent.ACTION_VIEW.equals(action)) {
-            Uri uri = intent.getData();
-            if (uri != null) {
-                String name = uri.getQueryParameter("name");
-                String age = uri.getQueryParameter("age");
-            }
-        }
-    }
-
     @Override
     protected void onStart() {
         super.onStart();

@@ -21,6 +21,10 @@
     <color name="appText14">#330000</color>
     <color name="appText15">#AB3D00</color>
     <color name="appText16">#FF5F06</color>
+    <color name="appText17">#0092FF</color>
+    <color name="appText18">#FA4C00</color>
+    <color name="appText19">#F2290E</color>
+    <color name="appText20">#EF3342</color>
 
     <color name="backGround1">#EF3342</color>
     <color name="backGround2">#13000000</color>
@@ -30,7 +34,7 @@
     <color name="backGround6">#16120F</color>
     <color name="backGround7">#C9C9C9</color>
     <color name="backGround8">#00000000</color>
-    <color name="backGround9">#EEEEEE</color>
+    <color name="backGround9">#4F4C4C</color>
     <color name="backGround10">#6AB3D1</color>
     <color name="backGround11">#EEFCFF</color>
     <color name="backGround12">#E7E7E7</color>
@@ -81,4 +85,13 @@
     <color name="backGround59">#501F1F1F</color>
     <color name="backGround60">#16120F</color>
     <color name="backGround61">#262626</color>
+    <color name="backGround62">#2E2624</color>
+    <color name="backGround63">#FF5200</color>
+    <color name="backGround64">#393939</color>
+    <color name="backGround65">#F22B10</color>
+    <color name="backGround66">#FCEDEB</color>
+    <color name="backGround67">#F2F2F2</color>
+    <color name="backGround68">#181818</color>
+    <color name="backGround69">#1F1F1F</color>
+    <color name="backGround70">#00000000</color>
 </resources>

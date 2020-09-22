@@ -104,11 +104,15 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/price_rl"
-                style="@style/default_rl_style">
+            <LinearLayout
+                android:id="@+id/price_ll"
+                style="@style/default_rl_style"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                <LinearLayout style="@style/default_ll_style">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
 
                     <com.mall.sls.common.widget.textview.ConventionalTextView
                         android:id="@+id/price_tv"
@@ -116,17 +120,21 @@
                         android:text="@string/price" />
 
                     <ImageView
-                        android:id="@+id/price_arrow_iv"
-                        style="@style/default_right_iv_style"
-                        android:background="@mipmap/icon_up_down_arrow" />
-                </LinearLayout>
+                        android:id="@+id/price_iv"
+                        style="@style/default_down_style"
+                        android:visibility="gone"/>
+                </RelativeLayout>
 
                 <ImageView
-                    android:id="@+id/price_iv"
-                    style="@style/default_down_style"
+                    android:id="@+id/price_arrow_iv"
+                    style="@style/default_right_iv_style"
+                    android:src="@mipmap/icon_up_down_arrow" />
+                <ImageView
+                    android:id="@+id/price_arrow"
+                    style="@style/default_right_iv_style"
+                    android:src="@drawable/up_down_select"
                     android:visibility="gone"/>
-
-            </RelativeLayout>
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/sales_rl"
@@ -168,20 +176,6 @@
                     android:layout_height="wrap_content"
                     app:layoutManager="@string/layoutManager_LinearLayout"
                     tools:listitem="@layout/adapter_goods_item" />
-
-                <LinearLayout
-                    android:id="@+id/no_record_ll"
-                    style="@style/common_no_record_ll_style"
-                    android:visibility="gone">
-
-                    <ImageView
-                        style="@style/common_no_record_iv_style"
-                        android:src="@mipmap/icon_no_search_goods" />
-
-                    <TextView
-                        style="@style/common_no_record_tv_style"
-                        android:text="@string/no_search_goods" />
-                </LinearLayout>
             </LinearLayout>
 
             <com.scwang.smartrefresh.layout.footer.ClassicsFooter
@@ -191,5 +185,18 @@
     </LinearLayout>
 
 
+    <LinearLayout
+        android:id="@+id/no_record_ll"
+        style="@style/common_no_record_ll_style">
+
+        <ImageView
+            style="@style/common_no_record_iv_style"
+            android:src="@mipmap/icon_no_search_goods" />
+
+        <TextView
+            style="@style/common_no_record_tv_style"
+            android:text="@string/no_search_goods"
+            android:layout_marginTop="@dimen/dp_92"/>
+    </LinearLayout>
 
 </LinearLayout>

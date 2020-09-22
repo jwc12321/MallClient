@@ -70,7 +70,7 @@
 
                 <com.mall.sls.common.widget.textview.MediumThickTextView
                     android:id="@+id/goods_name"
-                    style="@style/size14_color_app3_text_style"
+                    style="@style/size15_color_app3_text_style"
                     android:layout_marginLeft="@dimen/dp_15"
                     android:layout_marginTop="@dimen/dp_4"
                     android:layout_marginRight="@dimen/dp_15"
@@ -78,7 +78,7 @@
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/goods_brief"
-                    style="@style/size14_color_app4_text_style"
+                    style="@style/size12_color_app2_text_style"
                     android:layout_marginLeft="@dimen/dp_15"
                     android:layout_marginTop="@dimen/dp_2"
                     android:layout_marginRight="@dimen/dp_15"

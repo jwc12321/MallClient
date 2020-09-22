@@ -61,6 +61,7 @@ import com.mall.sls.homepage.adapter.GoodsItemGridAdapter;
 import com.mall.sls.homepage.adapter.GroupBuyingAdapter;
 import com.mall.sls.homepage.adapter.HomeCouponAdapter;
 import com.mall.sls.homepage.presenter.HomePagePresenter;
+import com.mall.sls.local.ui.LocalTeamActivity;
 import com.mall.sls.lottery.ui.LotteryListActivity;
 import com.mall.sls.message.ui.MessageTypeActivity;
 import com.mall.sls.mine.ui.InviteFriendsActivity;
@@ -125,8 +126,8 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     RecyclerView groupBuyingRv;
     @BindView(R.id.goods_rv)
     RecyclerView goodsRv;
-    @BindView(R.id.scrollview)
-    NestedScrollView scrollview;
+//    @BindView(R.id.scrollview)
+//    NestedScrollView scrollview;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.group_more_rl)
@@ -356,23 +357,6 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     }
 
     @Override
-    public void goOrdinaryGoodsDetails(String goodsId) {
-        TCAgentUnit.setEventId(getActivity(), getString(R.string.home_goods));
-        OrdinaryGoodsDetailActivity.start(getActivity(), goodsId);
-    }
-
-    @Override
-    public void goActivityGroupGoods(String goodsId) {
-        TCAgentUnit.setEventId(getActivity(), getString(R.string.home_goods));
-        ActivityGroupGoodsActivity.start(getActivity(), goodsId);
-    }
-
-    @Override
-    public void goGeneralGoodsDetails(String goodsId) {
-        GeneralGoodsDetailsActivity.start(getActivity(), goodsId);
-    }
-
-    @Override
     public void renderHomePageInfo(HomePageInfo homePageInfo) {
         refreshLayout.finishRefresh();
         if (homePageInfo != null) {
@@ -498,6 +482,17 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
 
     }
 
+    @Override
+    public void goGoodsDetails(String goodsType, String goodsId) {
+        if (TextUtils.equals(StaticData.REFLASH_ONE, goodsType)) {
+            GeneralGoodsDetailsActivity.start(getActivity(), goodsId);
+        } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsType)) {
+            OrdinaryGoodsDetailActivity.start(getActivity(), goodsId);
+        } else {
+            ActivityGroupGoodsActivity.start(getActivity(), goodsId);
+        }
+    }
+
 
     public interface HomepageListener {
         void goLocalTeam();
@@ -513,9 +508,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.group_more_rl:
-                if (homepageListener != null) {
-                    homepageListener.goLocalTeam();
-                }
+                LocalTeamActivity.start(getActivity());
                 break;
             case R.id.message_rl:
                 Intent intent = new Intent(getActivity(), MessageTypeActivity.class);

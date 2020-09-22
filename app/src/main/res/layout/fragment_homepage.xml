@@ -183,11 +183,13 @@
 
                             <com.mall.sls.common.widget.textview.MediumThickTextView
                                 style="@style/size16_app3_left_tv_style"
-                                android:text="@string/group_buying" />
+                                android:text="@string/group_buying"
+                                android:textColor="@color/appText20"/>
 
                             <com.mall.sls.common.widget.textview.ConventionalTextView
                                 style="@style/more_right_tv_style"
-                                android:text="@string/home_look_more" />
+                                android:text="@string/more"
+                                android:drawableRight="@mipmap/icon_home_more"/>
                         </RelativeLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -205,7 +207,8 @@
                         android:layout_margin="@dimen/dp_10"
                         android:drawableLeft="@mipmap/icon_featured_products"
                         android:drawablePadding="@dimen/dp_2"
-                        android:text="@string/featured_products" />
+                        android:text="@string/featured_products"
+                        android:textColor="@color/appText20"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/goods_rv"

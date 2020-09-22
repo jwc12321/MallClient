@@ -25,6 +25,7 @@ import com.mall.sls.coupon.presenter.CouponListPresenter;
 import com.mall.sls.data.entity.CouponInfo;
 import com.mall.sls.data.entity.MyCouponInfo;
 import com.mall.sls.homepage.ui.HomepageFragment;
+import com.mall.sls.local.ui.LocalTeamActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -160,18 +161,14 @@ public class CouponExpiredFragment extends BaseFragment implements CouponContrac
 
     @Override
     public void goUsed() {
-        if(listener!=null){
-            listener.goLocalTeam();
-        }
+        LocalTeamActivity.start(getActivity());
     }
 
     @OnClick({R.id.no_record_bt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.no_record_bt:
-                if(listener!=null){
-                    listener.goLocalTeam();
-                }
+                LocalTeamActivity.start(getActivity());
                 break;
             default:
         }

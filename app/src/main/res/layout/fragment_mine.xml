@@ -121,11 +121,11 @@
                                 style="@style/mine_type_tv_style"
                                 android:text="@string/invite_courteous"/>
                         </LinearLayout>
-                        <View
+                        <ImageView
                             android:layout_width="@dimen/dp_1"
                             android:layout_height="@dimen/dp_14"
-                            android:background="@color/appText1"
-                            android:layout_marginTop="@dimen/dp_40"/>
+                            android:src="@color/appText1"
+                            android:layout_marginTop="@dimen/dp_38"/>
                         <LinearLayout
                             android:id="@+id/mine_coupon_ll"
                             style="@style/mine_type_ll_style">

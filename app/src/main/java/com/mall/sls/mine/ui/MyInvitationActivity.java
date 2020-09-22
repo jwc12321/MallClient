@@ -8,11 +8,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.InvitItemInfo;
 import com.mall.sls.data.entity.InviteInfo;
@@ -22,6 +24,8 @@ import com.mall.sls.mine.MineModule;
 import com.mall.sls.mine.adapter.InviteAdapter;
 import com.mall.sls.mine.presenter.MyInvitePresenter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,11 +75,25 @@ public class MyInvitationActivity extends BaseActivity implements MineContract.M
     }
 
     private void initView() {
+        refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         inviteAdapter = new InviteAdapter(this);
         inviteAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(inviteAdapter);
-        myInvitePresenter.getMyInvite();
+        refreshLayout.finishLoadMoreWithNoMoreData();
+        myInvitePresenter.getMyInvite(StaticData.REFLASH_ONE);
     }
+
+    SimpleMultiPurposeListener simpleMultiPurposeListener = new SimpleMultiPurposeListener() {
+        @Override
+        public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+            refreshLayout.finishRefresh(6000);
+            myInvitePresenter.getMyInvite(StaticData.REFLASH_ZERO);
+        }
+
+        @Override
+        public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+        }
+    };
 
 
     @Override
@@ -122,6 +140,7 @@ public class MyInvitationActivity extends BaseActivity implements MineContract.M
 
     @Override
     public void renderMyInvite(List<InviteInfo> inviteInfos) {
+        refreshLayout.finishRefresh();
         this.inviteInfos=inviteInfos;
         if(inviteInfos!=null&&inviteInfos.size()>0){
             recordRv.setVisibility(View.VISIBLE);

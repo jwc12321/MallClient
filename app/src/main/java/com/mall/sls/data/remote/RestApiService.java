@@ -360,9 +360,9 @@ public interface RestApiService {
     @GET("app/goods/l2/{categoryId}/goods")
     Flowable<RemoteDataWrapper<GoodsItem>> getCategoryGoods(@Header("X-Hc-Sign") String sign, @Path("categoryId") String categoryId,@Query("sortType") String sortType, @Query("orderType") String orderType ,@Query("page") String page, @Query("limit") String limit);
 
-    //根据L2类目过滤全部商品
-    @GET("app/goods/goods/{keyword}")
-    Flowable<RemoteDataWrapper<GoodsItem>> getKeywordGoods(@Header("X-Hc-Sign") String sign, @Path("keyword") String keyword,@Query("sortType") String sortType, @Query("orderType") String orderType ,@Query("page") String page, @Query("limit") String limit);
+    //关键字搜索
+    @GET("app/goods/search")
+    Flowable<RemoteDataWrapper<GoodsItem>> getKeywordGoods(@Header("X-Hc-Sign") String sign, @Query("keyword") String keyword,@Query("sortType") String sortType, @Query("orderType") String orderType ,@Query("page") String page, @Query("limit") String limit);
 
     //商品搜索历史记录
     @GET("app/goods/search-history")

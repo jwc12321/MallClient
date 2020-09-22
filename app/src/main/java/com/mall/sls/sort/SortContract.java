@@ -35,7 +35,7 @@ public interface SortContract {
     }
 
     interface SearchGoodsPresenter extends BasePresenter{
-        void getSearchHistory();
+        void getSearchHistory(String refreshType);
         void deleteHistory();
         void getKeywordGoods(String refreshType,String keyword,String sortType,String orderType);
         void getMoreKeywordGoods(String keyword,String sortType,String orderType);

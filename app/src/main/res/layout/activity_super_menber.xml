@@ -38,7 +38,7 @@
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srlAccentColor="@android:color/white" />
+            app:srlAccentColor="@color/appText1" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

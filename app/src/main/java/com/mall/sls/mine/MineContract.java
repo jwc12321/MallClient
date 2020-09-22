@@ -34,7 +34,7 @@ public interface MineContract {
     }
 
     interface MyInvitePresenter extends BasePresenter {
-        void getMyInvite();
+        void getMyInvite(String refreshType);
     }
 
     interface MyInviteView extends BaseView<MyInvitePresenter> {

@@ -90,23 +90,17 @@ public class SecondCategoryAdapter extends RecyclerView.Adapter<SecondCategoryAd
         }
 
         @Override
-        public void goOrdinaryGoodsDetails(String goodsId) {
-
-        }
-
-        @Override
-        public void goActivityGroupGoods(String goodsId) {
-
-        }
-
-        @Override
-        public void goGeneralGoodsDetails(String goodsId) {
+        public void goGoodsDetails(String goodsType, String goodsId) {
+            if(onItemClickListener!=null){
+                onItemClickListener.goGoodsDetails(goodsType,goodsId);
+            }
 
         }
     }
 
     public interface OnItemClickListener {
         void goCategoryGoods(String categoryName,String categoryId);
+        void goGoodsDetails(String goodsType,String goodsId);
     }
 
     private OnItemClickListener onItemClickListener;

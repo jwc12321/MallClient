@@ -7,17 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
-import com.mall.sls.common.ErrorCodeStatic;
 import com.mall.sls.common.StaticData;
-import com.mall.sls.common.unit.TCAgentUnit;
-import com.mall.sls.data.RemoteDataException;
 import com.mall.sls.data.entity.LocalTeam;
 import com.mall.sls.homepage.adapter.GoodsItemAdapter;
 import com.mall.sls.homepage.ui.ActivityGroupGoodsActivity;
@@ -26,8 +21,6 @@ import com.mall.sls.homepage.ui.OrdinaryGoodsDetailActivity;
 import com.mall.sls.local.DaggerLocalComponent;
 import com.mall.sls.local.LocalContract;
 import com.mall.sls.local.LocalModule;
-import com.mall.sls.local.adapter.LootingAdapter;
-import com.mall.sls.local.presenter.LocalTeamPresenter;
 import com.mall.sls.local.presenter.RushBuyPresenter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -42,7 +35,7 @@ import butterknife.ButterKnife;
  * @author jwc on 2020/5/11.
  * 描述：正在疯抢
  */
-public class LootingFragment extends BaseFragment implements LootingAdapter.OnItemClickListener, LocalContract.RushBuyView {
+public class LootingFragment extends BaseFragment implements GoodsItemAdapter.OnItemClickListener, LocalContract.RushBuyView {
 
 
     @BindView(R.id.record_rv)
@@ -57,7 +50,7 @@ public class LootingFragment extends BaseFragment implements LootingAdapter.OnIt
     @BindView(R.id.no_record_tv)
     TextView noRecordTv;
 
-    private LootingAdapter lootingAdapter;
+    private GoodsItemAdapter goodsItemAdapter;
 
     public static LootingFragment newInstance() {
         LootingFragment fragment = new LootingFragment();
@@ -81,12 +74,13 @@ public class LootingFragment extends BaseFragment implements LootingAdapter.OnIt
     private void initView() {
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         initAdapter();
+        rushBuyPresenter.getRushBuy(StaticData.REFLASH_ONE);
     }
 
     private void initAdapter() {
-        lootingAdapter = new LootingAdapter(getActivity());
-        lootingAdapter.setOnItemClickListener(this);
-        recordRv.setAdapter(lootingAdapter);
+        goodsItemAdapter = new GoodsItemAdapter(getActivity());
+        goodsItemAdapter.setOnItemClickListener(this);
+        recordRv.setAdapter(goodsItemAdapter);
     }
 
 
@@ -119,29 +113,8 @@ public class LootingFragment extends BaseFragment implements LootingAdapter.OnIt
             if (rushBuyPresenter != null) {
                 rushBuyPresenter.getRushBuy(StaticData.REFLASH_ONE);
             }
-            if (lootingListener != null) {
-                lootingListener.lootingChoice("0");
-            }
         }
     }
-
-    @Override
-    public void goOrdinaryGoodsDetails(String goodsId) {
-        TCAgentUnit.setEventId(getActivity(),getString(R.string.fight_together_goods));
-        OrdinaryGoodsDetailActivity.start(getActivity(), goodsId);
-    }
-
-    @Override
-    public void goActivityGroupGoods(String goodsId) {
-        TCAgentUnit.setEventId(getActivity(),getString(R.string.fight_together_goods));
-        ActivityGroupGoodsActivity.start(getActivity(), goodsId);
-    }
-
-    @Override
-    public void goGeneralGoodsDetails(String goodsId) {
-        GeneralGoodsDetailsActivity.start(getActivity(),goodsId);
-    }
-
 
     @Override
     public void renderRushBuy(LocalTeam localTeam) {
@@ -155,7 +128,7 @@ public class LootingFragment extends BaseFragment implements LootingAdapter.OnIt
                 } else {
                     refreshLayout.finishLoadMoreWithNoMoreData();
                 }
-                lootingAdapter.setData(localTeam.getGoodsItemInfos());
+                goodsItemAdapter.setData(localTeam.getGoodsItemInfos());
             } else {
                 recordRv.setVisibility(View.GONE);
                 noRecordTv.setText(getString(R.string.no_data));
@@ -172,13 +145,24 @@ public class LootingFragment extends BaseFragment implements LootingAdapter.OnIt
             if (localTeam.getGoodsItemInfos().size() != Integer.parseInt(StaticData.TEN_LIST_SIZE)) {
                 refreshLayout.finishLoadMoreWithNoMoreData();
             }
-            lootingAdapter.addMore(localTeam.getGoodsItemInfos());
+            goodsItemAdapter.addMore(localTeam.getGoodsItemInfos());
         }
     }
 
     @Override
     public void setPresenter(LocalContract.RushBuyPresenter presenter) {
 
+    }
+
+    @Override
+    public void goGoodsDetails(String goodsType, String goodsId) {
+        if (TextUtils.equals(StaticData.REFLASH_ONE, goodsType)) {
+            GeneralGoodsDetailsActivity.start(getActivity(), goodsId);
+        } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsType)) {
+            OrdinaryGoodsDetailActivity.start(getActivity(), goodsId);
+        } else {
+            ActivityGroupGoodsActivity.start(getActivity(), goodsId);
+        }
     }
 
 

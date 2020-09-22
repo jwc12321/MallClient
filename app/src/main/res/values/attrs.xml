@@ -63,6 +63,10 @@
         <attr name="viewTextColor" />
     </declare-styleable>
 
+    <declare-styleable name="ShoppingSelectView">
+        <attr name="viewTextColor" />
+    </declare-styleable>
+
     <attr name="viewTextColor" format="color" />
 
 

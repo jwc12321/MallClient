@@ -1,6 +1,7 @@
 package com.mall.sls.sort.ui;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.data.entity.FirstCategory;
 import com.mall.sls.data.entity.FirstCategoryInfo;
 import com.mall.sls.data.entity.SecondCategory;
+import com.mall.sls.homepage.ui.ActivityGroupGoodsActivity;
+import com.mall.sls.homepage.ui.GeneralGoodsDetailsActivity;
+import com.mall.sls.homepage.ui.OrdinaryGoodsDetailActivity;
 import com.mall.sls.sort.DaggerSortComponent;
 import com.mall.sls.sort.SortContract;
 import com.mall.sls.sort.SortModule;
@@ -151,6 +156,17 @@ public class SortFragment extends BaseFragment implements SortContract.SortView,
     @Override
     public void goCategoryGoods(String categoryName,String categoryId) {
         CategoryGoodsActivity.start(getActivity(),categoryName,categoryId);
+    }
+
+    @Override
+    public void goGoodsDetails(String goodsType, String goodsId) {
+        if (TextUtils.equals(StaticData.REFLASH_ONE, goodsType)) {
+            GeneralGoodsDetailsActivity.start(getActivity(), goodsId);
+        } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsType)) {
+            OrdinaryGoodsDetailActivity.start(getActivity(), goodsId);
+        } else {
+            ActivityGroupGoodsActivity.start(getActivity(), goodsId);
+        }
     }
 
     @OnClick({R.id.search_rl})

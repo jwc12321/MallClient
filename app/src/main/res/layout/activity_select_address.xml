@@ -179,7 +179,7 @@
 
             <ImageView
                 style="@style/common_no_record_iv_style"
-                android:src="@mipmap/icon_no_goods" />
+                android:src="@mipmap/icon_no_data" />
 
             <TextView
                 style="@style/common_no_record_tv_style"

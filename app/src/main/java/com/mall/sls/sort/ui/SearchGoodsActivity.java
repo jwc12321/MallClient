@@ -18,14 +18,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
-import com.mall.sls.common.unit.ConvertDpAndPx;
-import com.mall.sls.common.widget.GridSpacesItemDecoration;
 import com.mall.sls.common.widget.edittextview.SoftKeyBoardListener;
 import com.mall.sls.common.widget.flowlayout.FlowLayoutView;
 import com.mall.sls.common.widget.flowlayout.TagAdapter;
@@ -33,7 +30,6 @@ import com.mall.sls.common.widget.flowlayout.TagFlowLayout;
 import com.mall.sls.common.widget.textview.ConventionalEditTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.data.entity.GoodsItem;
-import com.mall.sls.data.entity.SearchHistory;
 import com.mall.sls.homepage.adapter.GoodsItemAdapter;
 import com.mall.sls.homepage.ui.ActivityGroupGoodsActivity;
 import com.mall.sls.homepage.ui.GeneralGoodsDetailsActivity;
@@ -86,12 +82,12 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
     RelativeLayout defaultRl;
     @BindView(R.id.price_tv)
     ConventionalTextView priceTv;
-    @BindView(R.id.price_arrow_iv)
-    ImageView priceArrowIv;
     @BindView(R.id.price_iv)
     ImageView priceIv;
-    @BindView(R.id.price_rl)
-    RelativeLayout priceRl;
+    @BindView(R.id.price_arrow_iv)
+    ImageView priceArrowIv;
+    @BindView(R.id.price_ll)
+    LinearLayout priceLl;
     @BindView(R.id.sales_tv)
     ConventionalTextView salesTv;
     @BindView(R.id.sales_iv)
@@ -100,12 +96,14 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
     RelativeLayout salesRl;
     @BindView(R.id.record_rv)
     RecyclerView recordRv;
-    @BindView(R.id.no_record_ll)
-    LinearLayout noRecordLl;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.goods_ll)
     LinearLayout goodsLl;
+    @BindView(R.id.no_record_ll)
+    LinearLayout noRecordLl;
+    @BindView(R.id.price_arrow)
+    ImageView priceArrow;
     private List<String> wordDatas;
     private TagAdapter<String> wordAdapter;//选择后写入的tag
     private int screenWidth;
@@ -141,7 +139,7 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
         addAdapter();
         setTagview();
         editText();
-        searchGoodsPresenter.getSearchHistory();
+        searchGoodsPresenter.getSearchHistory(StaticData.REFLASH_ONE);
     }
 
     @Override
@@ -197,25 +195,25 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
     }
 
     private void getGoodsData() {
-        if (historyLl.getVisibility() == View.VISIBLE) {
-            historyLl.setVisibility(View.GONE);
-        }
-        if (goodsLl.getVisibility() == View.GONE) {
-            goodsLl.setVisibility(View.VISIBLE);
-        }
         keyword = goodsEt.getText().toString().trim();
         if (!TextUtils.isEmpty(keyword)) {
             searchGoodsPresenter.getKeywordGoods(StaticData.REFLASH_ONE, keyword, sortType, orderType);
+        } else {
+            historyLl.setVisibility(View.VISIBLE);
+            goodsLl.setVisibility(View.GONE);
+            noRecordLl.setVisibility(View.GONE);
         }
     }
 
     private void getSearchGoodsData() {
         goodsEt.setText(keyword);
         closeIv.setVisibility(View.VISIBLE);
-        historyLl.setVisibility(View.GONE);
-        goodsLl.setVisibility(View.VISIBLE);
         if (!TextUtils.isEmpty(keyword)) {
             searchGoodsPresenter.getKeywordGoods(StaticData.REFLASH_ONE, keyword, sortType, orderType);
+        } else {
+            historyLl.setVisibility(View.VISIBLE);
+            goodsLl.setVisibility(View.GONE);
+            noRecordLl.setVisibility(View.GONE);
         }
     }
 
@@ -277,7 +275,7 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
         return super.isShouldHideInput(v, event);
     }
 
-    @OnClick({R.id.back, R.id.close_iv, R.id.clear_history, R.id.default_rl, R.id.price_rl, R.id.sales_rl})
+    @OnClick({R.id.back, R.id.close_iv, R.id.clear_history, R.id.default_rl, R.id.price_ll, R.id.sales_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -295,7 +293,7 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
                 selectType = StaticData.REFLASH_ONE;
                 selectType(selectType);
                 break;
-            case R.id.price_rl:
+            case R.id.price_ll:
                 priceDesc = !priceDesc;
                 if (priceDesc) {
                     selectType = StaticData.REFLASH_TWO;
@@ -320,19 +318,25 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
         if (TextUtils.equals(StaticData.REFLASH_ONE, type)) {
             sortType = "";
             orderType = "";
-            priceArrowIv.setBackgroundResource(R.mipmap.icon_up_down_arrow);
+            priceArrowIv.setVisibility(View.VISIBLE);
+            priceArrow.setVisibility(View.GONE);
         } else if (TextUtils.equals(StaticData.REFLASH_TWO, type)) {
             sortType = StaticData.SORT_TYPE_PRICE;
             orderType = StaticData.ORDER_TYPE_DESC;
-            priceArrowIv.setBackgroundResource(R.mipmap.icon_down_arrow);
+            priceArrowIv.setVisibility(View.GONE);
+            priceArrow.setVisibility(View.VISIBLE);
+            priceArrow.setSelected(false);
         } else if (TextUtils.equals(StaticData.REFLASH_THREE, type)) {
             sortType = StaticData.SORT_TYPE_PRICE;
             orderType = StaticData.ORDER_TYPE_ASC;
-            priceArrowIv.setBackgroundResource(R.mipmap.icon_up_arrow);
+            priceArrowIv.setVisibility(View.GONE);
+            priceArrow.setVisibility(View.VISIBLE);
+            priceArrow.setSelected(true);
         } else if (TextUtils.equals(StaticData.REFLASH_FOUR, type)) {
             sortType = StaticData.SORT_TYPE_SALES;
             orderType = StaticData.ORDER_TYPE_DESC;
-            priceArrowIv.setBackgroundResource(R.mipmap.icon_up_down_arrow);
+            priceArrowIv.setVisibility(View.VISIBLE);
+            priceArrow.setVisibility(View.GONE);
         }
         searchGoodsPresenter.getKeywordGoods(StaticData.REFLASH_ONE, keyword, sortType, orderType);
 
@@ -352,10 +356,12 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
 
     @Override
     public void renderKeywordGoods(GoodsItem goodsItem) {
+        searchGoodsPresenter.getSearchHistory(StaticData.REFLASH_ZERO);
+        historyLl.setVisibility(View.GONE);
         refreshLayout.finishRefresh();
         if (goodsItem != null) {
             if (goodsItem.getGoodsItemInfos() != null && goodsItem.getGoodsItemInfos().size() > 0) {
-                recordRv.setVisibility(View.VISIBLE);
+                goodsLl.setVisibility(View.VISIBLE);
                 noRecordLl.setVisibility(View.GONE);
                 if (goodsItem.getGoodsItemInfos().size() == Integer.parseInt(StaticData.TEN_LIST_SIZE)) {
                     refreshLayout.resetNoMoreData();
@@ -364,7 +370,7 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
                 }
                 goodsItemAdapter.setData(goodsItem.getGoodsItemInfos());
             } else {
-                recordRv.setVisibility(View.GONE);
+                goodsLl.setVisibility(View.GONE);
                 noRecordLl.setVisibility(View.VISIBLE);
                 refreshLayout.finishLoadMoreWithNoMoreData();
             }
@@ -388,17 +394,13 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
     }
 
     @Override
-    public void goOrdinaryGoodsDetails(String goodsId) {
-        OrdinaryGoodsDetailActivity.start(this, goodsId);
-    }
-
-    @Override
-    public void goActivityGroupGoods(String goodsId) {
-        ActivityGroupGoodsActivity.start(this, goodsId);
-    }
-
-    @Override
-    public void goGeneralGoodsDetails(String goodsId) {
-        GeneralGoodsDetailsActivity.start(this, goodsId);
+    public void goGoodsDetails(String goodsType, String goodsId) {
+        if (TextUtils.equals(StaticData.REFLASH_ONE, goodsType)) {
+            GeneralGoodsDetailsActivity.start(this, goodsId);
+        } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsType)) {
+            OrdinaryGoodsDetailActivity.start(this, goodsId);
+        } else {
+            ActivityGroupGoodsActivity.start(this, goodsId);
+        }
     }
 }

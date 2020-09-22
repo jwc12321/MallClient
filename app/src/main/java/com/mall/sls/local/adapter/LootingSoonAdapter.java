@@ -3,6 +3,7 @@ package com.mall.sls.local.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
+import com.mall.sls.common.widget.textview.DrawTextView;
+import com.mall.sls.common.widget.textview.GoodsTypeTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.GoodsItemInfo;
 
@@ -79,25 +83,19 @@ public class LootingSoonAdapter extends RecyclerView.Adapter<LootingSoonAdapter.
         @BindView(R.id.goods_iv)
         ImageView goodsIv;
         @BindView(R.id.goods_name)
-        ConventionalTextView goodsName;
-        @BindView(R.id.goods_name_rl)
-        LinearLayout goodsNameRl;
-        @BindView(R.id.goods_introduction)
-        ConventionalTextView goodsIntroduction;
-        @BindView(R.id.price_type)
-        ConventionalTextView priceType;
+        GoodsTypeTextView goodsName;
+        @BindView(R.id.goods_brief)
+        ConventionalTextView goodsBrief;
+        @BindView(R.id.yuan_symbol)
+        ConventionalTextView yuanSymbol;
         @BindView(R.id.current_price)
         MediumThickTextView currentPrice;
-        @BindView(R.id.current_price_rl)
-        LinearLayout currentPriceRl;
         @BindView(R.id.original_price)
-        MediumThickTextView originalPrice;
+        DrawTextView originalPrice;
         @BindView(R.id.confirm_bt)
         ConventionalTextView confirmBt;
         @BindView(R.id.item_rl)
         RelativeLayout itemRl;
-        @BindView(R.id.groupType)
-        ConventionalTextView groupType;
 
         public LootingSoonView(View itemView) {
             super(itemView);
@@ -106,13 +104,17 @@ public class LootingSoonAdapter extends RecyclerView.Adapter<LootingSoonAdapter.
 
         public void bindData(GoodsItemInfo goodsItemInfo) {
             GlideHelper.load((Activity) context, goodsItemInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
-            goodsName.setText(goodsItemInfo.getName());
-            goodsIntroduction.setText(goodsItemInfo.getBrief());
-            currentPrice.setText(NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getRetailPrice()));
-            originalPrice.setText(NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getCounterPrice()));
+            goodsBrief.setText(goodsItemInfo.getBrief());
+            yuanSymbol.setText(StaticData.YUAN_SYMBOL);
+            currentPrice.setText(NumberFormatUnit.numberFormat(goodsItemInfo.getRetailPrice()));
+            originalPrice.setText(NumberFormatUnit.goodsFormat(goodsItemInfo.getCounterPrice()));
             long startTime = FormatUtil.dateToStamp(goodsItemInfo.getStartTime());
             confirmBt.setText(FormatUtil.formatDate(String.valueOf(startTime)) + "开抢");
-            groupType.setText(goodsItemInfo.getKeywords());
+            if(!TextUtils.isEmpty(goodsItemInfo.getKeywords())){
+                goodsName.setSingleTagAndContent(goodsItemInfo.getKeywords(),goodsItemInfo.getName());
+            }else {
+                goodsName.setText(goodsItemInfo.getName());
+            }
         }
     }
 

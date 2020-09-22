@@ -113,9 +113,6 @@ public class LootingSoonFragment extends BaseFragment implements LootingSoonAdap
             if (waitBuyPresenter != null) {
                 waitBuyPresenter.getWaitBuy(StaticData.REFLASH_ONE);
             }
-            if (lootingSoonListener != null) {
-                lootingSoonListener.lootingSoonChoice("1");
-            }
         }
     }
 

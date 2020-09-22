@@ -138,7 +138,6 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
         deviceOsVersion = SystemUtil.getSystemVersion();
         devicePlatform = "android";
         TokenManager.saveToken("");
-//        PushManager.getInstance().unBindAlias(this, MobileManager.getMobile(), true);
         init();
     }
 
@@ -361,7 +360,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        if (tokenRet == null || ("600011").equals(tokenRet.getCode())) {
+                        if (tokenRet == null || ("600011").equals(tokenRet.getCode())|| ("600005").equals(tokenRet.getCode())) {
                             if(TextUtils.equals(StaticData.REFLASH_ZERO,onClickType)) {
                                 BindPhoneActivity.start(WeixinLoginActivity.this, unionId);
                             }else {

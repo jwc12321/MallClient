@@ -1,6 +1,7 @@
 package com.mall.sls.common.widget.shoppingselect;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -38,7 +39,7 @@ public class ShoppingSelectView extends LinearLayout {
     /**
      * 整个商品属性的左右间距
      */
-    private int flowLayoutMargin = 2;
+    private int flowLayoutMargin = 0;
     /**
      * 属性按钮的高度
      */
@@ -55,8 +56,10 @@ public class ShoppingSelectView extends LinearLayout {
      * 文字与按钮的边距
      */
     private int textPadding = 10;
+    private int topTextPadding = 6;
 
     private int textLeft=20;
+    private int textColor;
     /**
      * 选择后的回调监听
      */
@@ -75,8 +78,18 @@ public class ShoppingSelectView extends LinearLayout {
         initView(context);
     }
 
+    public ShoppingSelectView(Context context,
+                           AttributeSet attributeSet, int defStyle) {
+        super(context, attributeSet, defStyle);
+        initView(context);
+//        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attributeSet, R.styleable.ShoppingSelectView, defStyle, 0);
+//        textColor = typedArray.getColor(R.styleable.ShoppingSelectView_viewTextColor, 0XFFFFFFFF);
+    }
+
+
     private void initView(Context context) {
         setOrientation(LinearLayout.VERTICAL);
+        textColor=getResources().getColor(R.color.appText3);
         this.context = context;
     }
 
@@ -92,17 +105,17 @@ public class ShoppingSelectView extends LinearLayout {
                     ViewGroup.LayoutParams.WRAP_CONTENT);
             int margin = dip2px(context, titleMargin);
             int leftMargin=dip2px(context, textLeft);
-            textView.setTextColor(Color.parseColor("#333333"));
+            textView.setTextColor(getResources().getColor(R.color.appText3));
             textView.setTextSize(13);
             TextViewttf.setTextConventional(textView);
             textView.setText(attr.getName());
-            params.setMargins(leftMargin, 0, leftMargin, margin);
+            params.setMargins(0, 0, 0, margin);
             textView.setLayoutParams(params);
             addView(textView);
             //设置一个大规格下的所有小规格
             FlowLayout layout = new FlowLayout(context);
             layout.setTitle(attr.getName(), String.valueOf(z));
-            layout.setPadding(dip2px(context, flowLayoutMargin), 0, dip2px(context, flowLayoutMargin), 0);
+//            layout.setPadding(dip2px(context, flowLayoutMargin), 0, dip2px(context, flowLayoutMargin), 0);
             //设置选择监听
             if (listener != null) {
                 layout.setListener(listener);
@@ -115,18 +128,20 @@ public class ShoppingSelectView extends LinearLayout {
 //                    button.setChecked(true);
 //                }
                 //设置按钮的参数
-                LayoutParams buttonParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
-                        dip2px(context, buttonHeight));
+//                LayoutParams buttonParams = new LayoutParams(LayoutParams.WRAP_CONTENT, dip2px(context, buttonHeight));
+                LayoutParams buttonParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
                 //设置文字的边距
                 int padding = dip2px(context, textPadding);
-                button.setPadding(padding, 0, padding, 0);
+                int topPadding = dip2px(context, topTextPadding);
+                button.setPadding(padding, topPadding, padding, topPadding);
                 //设置margin属性，需传入LayoutParams否则会丢失原有的布局参数
                 MarginLayoutParams marginParams = new MarginLayoutParams(buttonParams);
-                marginParams.leftMargin = dip2px(context, buttonLeftMargin);
+//                marginParams.leftMargin = dip2px(context, buttonLeftMargin);
+                marginParams.rightMargin = dip2px(context, buttonLeftMargin);
                 marginParams.bottomMargin = dip2px(context, buttonTopMargin);
 
                 button.setLayoutParams(marginParams);
-                button.setGravity(Gravity.CENTER);
+//                button.setGravity(Gravity.CENTER);
                 button.setBackgroundResource(R.drawable.tv_sel);
                 button.setButtonDrawable(android.R.color.transparent);
                 button.setTextSize(13);

@@ -411,6 +411,10 @@
         <activity android:name=".sort.ui.SearchGoodsActivity"
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"/>
+        
+        <activity android:name=".local.ui.LocalTeamActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

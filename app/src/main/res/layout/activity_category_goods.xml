@@ -43,11 +43,15 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/price_rl"
-            style="@style/default_rl_style">
+        <LinearLayout
+            android:id="@+id/price_ll"
+            style="@style/default_rl_style"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <LinearLayout style="@style/default_ll_style">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/price_tv"
@@ -55,17 +59,21 @@
                     android:text="@string/price" />
 
                 <ImageView
-                    android:id="@+id/price_arrow_iv"
-                    style="@style/default_right_iv_style"
-                    android:background="@mipmap/icon_up_down_arrow" />
-            </LinearLayout>
+                    android:id="@+id/price_iv"
+                    style="@style/default_down_style"
+                    android:visibility="gone"/>
+            </RelativeLayout>
 
             <ImageView
-                android:id="@+id/price_iv"
-                style="@style/default_down_style"
+                android:id="@+id/price_arrow_iv"
+                style="@style/default_right_iv_style"
+                android:src="@mipmap/icon_up_down_arrow" />
+            <ImageView
+                android:id="@+id/price_arrow"
+                style="@style/default_right_iv_style"
+                android:src="@drawable/up_down_select"
                 android:visibility="gone"/>
-
-        </RelativeLayout>
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/sales_rl"
@@ -79,7 +87,7 @@
             <ImageView
                 android:id="@+id/sales_iv"
                 style="@style/default_down_style"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
         </RelativeLayout>
     </LinearLayout>
@@ -88,8 +96,8 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlEnablePreviewInEditMode="false"
-        android:layout_marginTop="@dimen/dp_1">
+        android:layout_marginTop="@dimen/dp_1"
+        app:srlEnablePreviewInEditMode="false">
 
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"

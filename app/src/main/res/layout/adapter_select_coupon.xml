@@ -92,7 +92,7 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <View style="@style/dotted_line_style" />
+        <View style="@style/fifteen_back_nine_line_style" />
 
         <LinearLayout
             android:layout_width="match_parent"
