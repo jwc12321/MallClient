@@ -126,8 +126,6 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     RecyclerView groupBuyingRv;
     @BindView(R.id.goods_rv)
     RecyclerView goodsRv;
-//    @BindView(R.id.scrollview)
-//    NestedScrollView scrollview;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.group_more_rl)
@@ -153,6 +151,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     private BigDecimal screenHeightBg;
     private BannerInfo bannerInfo;
     private String nativeType;
+    private Boolean isFirst=true;
     // 微信登录
     private static IWXAPI WXapi;
 
@@ -383,8 +382,11 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                 homeCouponAdapter.setData(homeCouponInfos);
                 //绑定微信
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, BindWxManager.getBindWx())) {
+                    if(isFirst){
+                        isFirst=false;
+                        EventBus.getDefault().register(this);
+                    }
                     receiveIv.setSelected(false);
-                    EventBus.getDefault().register(this);
                 } else {
                     receiveIv.setSelected(true);
                 }

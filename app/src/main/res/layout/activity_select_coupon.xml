@@ -70,7 +70,7 @@
 
                 <TextView
                     style="@style/common_no_record_tv_style"
-                    android:text="@string/no_coupon" />
+                    android:text="@string/no_available_coupon" />
             </LinearLayout>
         </LinearLayout>
     </com.mall.sls.common.widget.scrollview.ReboundScrollView>

@@ -444,7 +444,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                 .setAppPrivacyTwo(privacyPolicyTxt, StaticData.USER_PRIVACY)
                 .setWebViewStatusBarColor(getResources().getColor(R.color.backGround1))
                 .setWebNavColor(getResources().getColor(R.color.backGround1))
-                .setWebNavTextColor(getResources().getColor(R.color.appText3))
+                .setWebNavTextColor(getResources().getColor(R.color.appText1))
                 .setWebNavTextSize(16)
                 .create());
     }

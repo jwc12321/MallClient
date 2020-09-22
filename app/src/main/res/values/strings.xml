@@ -420,4 +420,5 @@
     <string name="no_search_goods">暂时没有符合要求的商品，换个条件试试吧</string>
     <string name="search_history">搜索历史</string>
     <string name="clear_history">清除记录</string>
+    <string name="no_available_coupon">暂无可用优惠券</string>
 </resources>
