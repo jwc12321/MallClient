@@ -147,8 +147,8 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
         if(goodsDetailsInfo!=null){
             GlideHelper.load(this, goodsDetailsInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(goodsDetailsInfo.getName());
-            currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getRetailPrice()));
-            originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
+            currentPrice.setText(NumberFormatUnit.goodsFormat(goodsDetailsInfo.getRetailPrice()));
+            originalPrice.setText(NumberFormatUnit.goodsFormat(goodsDetailsInfo.getCounterPrice()));
             goodsItemAdapter.setData(goodsDetailsInfo.getGoodsItemInfos());
             memberPhoneList=goodsDetailsInfo.getMemberPhoneList();
             goodsId=goodsDetailsInfo.getGoodsId();

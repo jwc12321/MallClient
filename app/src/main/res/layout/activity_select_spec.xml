@@ -131,7 +131,8 @@
                         style="@style/cir_input_quantity_edittext_style"
                         android:gravity="center"
                         android:inputType="number"
-                        android:text="1" />
+                        android:text="1"
+                        android:maxLength="4"/>
                 </RelativeLayout>
 
                 <ImageView

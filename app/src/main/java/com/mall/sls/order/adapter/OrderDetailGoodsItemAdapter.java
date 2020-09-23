@@ -80,7 +80,7 @@ public class OrderDetailGoodsItemAdapter extends RecyclerView.Adapter<OrderDetai
             GlideHelper.load((Activity) context, orderGoodsVo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(orderGoodsVo.getGoodsName());
             sku.setText(orderGoodsVo.getSpecifications());
-            goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(orderGoodsVo.getPrice()));
+            goodsPrice.setText(NumberFormatUnit.goodsFormat(orderGoodsVo.getPrice()));
             goodsNumber.setText("x" + orderGoodsVo.getNumber());
         }
     }

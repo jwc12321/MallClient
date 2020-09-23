@@ -9,7 +9,7 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
-    <RelativeLayout style="@style/title_white_rl_style">
+    <RelativeLayout style="@style/title_rl_style">
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/small_title"
@@ -24,7 +24,7 @@
         android:background="@color/backGround60">
         <ImageView
             android:id="@+id/back"
-           style="@style/title_left_black_back_style"/>
+           style="@style/title_left_back_style"/>
 
         <RelativeLayout
             android:layout_toRightOf="@id/back"

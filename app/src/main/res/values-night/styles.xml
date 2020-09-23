@@ -38,7 +38,7 @@
         <item name="android:background">@color/backGround56</item>
     </style>
     <!--每个activity的title-->
-    <style name="title_white_rl_style">
+    <style name="title_rl_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/backGround60</item>
@@ -60,7 +60,7 @@
     <style name="title_left_back_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">@dimen/dp_44</item>
-        <item name="android:src">@mipmap/icon_white_back</item>
+        <item name="android:src">@mipmap/icon_black_back</item>
         <item name="android:background">@null</item>
         <item name="android:paddingLeft">@dimen/dp_22</item>
         <item name="android:paddingRight">@dimen/dp_22</item>
@@ -100,7 +100,7 @@
     <style name="title_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">@dimen/dp_44</item>
-        <item name="android:textColor">@color/appText1</item>
+        <item name="android:textColor">@color/appText3</item>
         <item name="android:textSize">@dimen/sp_16</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_centerHorizontal">true</item>
@@ -109,7 +109,7 @@
     <style name="title_right_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">@dimen/dp_44</item>
-        <item name="android:textColor">@color/appText1</item>
+        <item name="android:textColor">@color/appText3</item>
         <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_centerHorizontal">true</item>
@@ -2011,15 +2011,6 @@
     </style>
 
 
-    <style name="title_black_text_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/dp_44</item>
-        <item name="android:textColor">@color/appText3</item>
-        <item name="android:textSize">@dimen/sp_16</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_centerHorizontal">true</item>
-    </style>
-
     <style name="default_rl_style">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
@@ -2054,6 +2045,25 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <!--title最左边的返回-->
+    <style name="title_left_white_back_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/dp_44</item>
+        <item name="android:src">@mipmap/icon_white_back</item>
+        <item name="android:background">@null</item>
+        <item name="android:paddingLeft">@dimen/dp_22</item>
+        <item name="android:paddingRight">@dimen/dp_22</item>
+    </style>
+
+    <style name="title_white_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/dp_44</item>
+        <item name="android:textColor">@color/appText1</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_centerHorizontal">true</item>
     </style>
 
 </resources>

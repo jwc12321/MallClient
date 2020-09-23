@@ -6,15 +6,15 @@
     android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/title_rel"
-        style="@style/title_white_rl_style">
+        style="@style/title_rl_style">
 
         <ImageView
             android:id="@+id/back"
-            style="@style/title_left_black_back_style" />
+            style="@style/title_left_back_style" />
 
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/title"
-            style="@style/title_black_text_style"
+            style="@style/title_text_style"
             android:text="@string/fight_together" />
     </RelativeLayout>
 

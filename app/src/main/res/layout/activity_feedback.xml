@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:id="@+id/title_rel"
-        style="@style/title_red_rl_style">
+        style="@style/title_rl_style">
 
         <ImageView
             android:id="@+id/back"

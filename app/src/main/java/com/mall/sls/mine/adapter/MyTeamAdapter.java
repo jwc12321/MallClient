@@ -135,10 +135,10 @@ public class MyTeamAdapter extends RecyclerView.Adapter<MyTeamAdapter.MyTeamView
             setOrderStatus(myTeamInfo.getStatus());
             GlideHelper.load((Activity) context, myTeamInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(myTeamInfo.getName());
-            goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(myTeamInfo.getGoodsPrice()));
+            goodsPrice.setText(NumberFormatUnit.goodsFormat(myTeamInfo.getGoodsPrice()));
             goodsNumber.setText("x" + myTeamInfo.getNumber());
             totalNumber.setText("共" + myTeamInfo.getNumber() + "件");
-            totalAmount.setText(NumberFormatUnit.twoDecimalFormat(myTeamInfo.getActualPrice()));
+            totalAmount.setText(NumberFormatUnit.numberFormat(myTeamInfo.getActualPrice()));
         }
 
         //10:拼团中 20：拼团成

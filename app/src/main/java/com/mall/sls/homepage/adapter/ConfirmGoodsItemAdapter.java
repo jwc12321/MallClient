@@ -80,7 +80,7 @@ public class ConfirmGoodsItemAdapter extends RecyclerView.Adapter<ConfirmGoodsIt
             GlideHelper.load((Activity) context, cartItemInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(cartItemInfo.getGoodsName());
             sku.setText(cartItemInfo.getSpecifications());
-            goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(cartItemInfo.getPrice()));
+            goodsPrice.setText(NumberFormatUnit.goodsFormat(cartItemInfo.getPrice()));
             goodsNumber.setText("x"+cartItemInfo.getNumber());
             hideRl.setVisibility(cartItemInfo.getCanBuy()?View.GONE:View.VISIBLE);
         }

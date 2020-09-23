@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:id="@+id/title_rel"
-        style="@style/title_red_rl_style">
+        style="@style/title_rl_style">
 
         <ImageView
             android:id="@+id/back"
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_56"
         android:layout_below="@id/title_rel"
-        android:background="@color/backGround56"
+        android:background="@color/backGround60"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -37,7 +37,7 @@
             android:layout_marginLeft="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_15"
             android:layout_toLeftOf="@id/cancel_bt"
-            android:background="@drawable/common_nineteen_back_fifty_seven_bg"
+            android:background="@drawable/common_nineteen_back_sixty_nine_bg"
             android:orientation="horizontal">
 
             <LinearLayout

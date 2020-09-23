@@ -82,7 +82,7 @@ public class RefundProgressActivity extends BaseActivity {
         payType = getIntent().getStringExtra(StaticData.PAY_TYPE);
         refundTime = getIntent().getStringExtra(StaticData.REFUND_TIME);
         arrivalTime = getIntent().getStringExtra(StaticData.ARRIVAL_TIME);
-        payAmount.setText("¥" + NumberFormatUnit.twoDecimalFormat(amount));
+        payAmount.setText(NumberFormatUnit.goodsFormat(amount));
         refundProcessingIv.setSelected(true);
         successfulIv.setSelected(TextUtils.equals(StaticData.REFUNDED, orderStatus));
         orderArrivalTime.setVisibility(TextUtils.equals(StaticData.REFUNDED, orderStatus) ? View.VISIBLE : View.INVISIBLE);

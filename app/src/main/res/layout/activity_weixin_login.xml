@@ -6,13 +6,16 @@
 
     <RelativeLayout
         android:id="@+id/title_rel"
-        style="@style/title_red_rl_style">
+        style="@style/title_rl_style">
 
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/title"
             style="@style/title_text_style"
             android:text="@string/login_register" />
     </RelativeLayout>
+    <View
+       style="@style/back_nine_line_style"
+        android:layout_below="@id/title_rel"/>
 
     <ImageView
         android:id="@+id/iv"

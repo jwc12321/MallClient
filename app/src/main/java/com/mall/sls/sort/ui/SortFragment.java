@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -41,7 +42,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/9/21.
  * 描述：
  */
-public class SortFragment extends BaseFragment implements SortContract.SortView, FirstCategoryAdapter.OnItemClickListener,SecondCategoryAdapter.OnItemClickListener {
+public class SortFragment extends BaseFragment implements SortContract.SortView, FirstCategoryAdapter.OnItemClickListener, SecondCategoryAdapter.OnItemClickListener {
 
     @BindView(R.id.small_title)
     ConventionalTextView smallTitle;
@@ -55,6 +56,8 @@ public class SortFragment extends BaseFragment implements SortContract.SortView,
     RecyclerView firstCategoryRv;
     @BindView(R.id.second_category_rv)
     RecyclerView secondCategoryRv;
+    @BindView(R.id.no_record_ll)
+    LinearLayout noRecordLl;
     private String categoryId;
     private List<FirstCategoryInfo> firstCategoryInfos;
 
@@ -121,8 +124,13 @@ public class SortFragment extends BaseFragment implements SortContract.SortView,
 
     @Override
     public void renderSecondCategory(SecondCategory secondCategory) {
-        if (secondCategory != null) {
+        if (secondCategory != null&&secondCategory.getSecondCategoryInfos()!=null&&secondCategory.getSecondCategoryInfos().size()>0) {
+            secondCategoryRv.setVisibility(View.VISIBLE);
+            noRecordLl.setVisibility(View.GONE);
             secondCategoryAdapter.setData(secondCategory.getSecondCategoryInfos());
+        }else {
+            secondCategoryRv.setVisibility(View.GONE);
+            noRecordLl.setVisibility(View.VISIBLE);
         }
     }
 
@@ -134,7 +142,7 @@ public class SortFragment extends BaseFragment implements SortContract.SortView,
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (getUserVisibleHint() && sortPresenter != null && (firstCategoryInfos==null||firstCategoryInfos.size()==0)) {
+        if (getUserVisibleHint() && sortPresenter != null && (firstCategoryInfos == null || firstCategoryInfos.size() == 0)) {
             sortPresenter.getFirstCategory();
         }
     }
@@ -154,8 +162,8 @@ public class SortFragment extends BaseFragment implements SortContract.SortView,
     }
 
     @Override
-    public void goCategoryGoods(String categoryName,String categoryId) {
-        CategoryGoodsActivity.start(getActivity(),categoryName,categoryId);
+    public void goCategoryGoods(String categoryName, String categoryId) {
+        CategoryGoodsActivity.start(getActivity(), categoryName, categoryId);
     }
 
     @Override

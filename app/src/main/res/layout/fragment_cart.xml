@@ -11,7 +11,7 @@
 
     <RelativeLayout
         android:id="@+id/title_rel"
-        style="@style/title_red_rl_style">
+        style="@style/title_rl_style">
 
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/title"
@@ -25,7 +25,8 @@
         android:layout_height="match_parent"
         android:layout_below="@id/title_rel"
         android:layout_marginBottom="@dimen/dp_47"
-        app:srlEnablePreviewInEditMode="false">
+        app:srlEnablePreviewInEditMode="false"
+        android:layout_marginTop="@dimen/dp_1">
 
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"

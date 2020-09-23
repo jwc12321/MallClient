@@ -190,15 +190,15 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                 goodsNumber.setText("x" + checkedGoods.getNumber());
                 nameText = BriefUnit.returnName(checkedGoods.getPrice(), checkedGoods.getGoodsName());
                 goodsName.setText(checkedGoods.getGoodsName());
-                goodsPrice.setText("¥ " + NumberFormatUnit.twoDecimalFormat(checkedGoods.getPrice()));
+                goodsPrice.setText(NumberFormatUnit.goodsFormat(checkedGoods.getPrice()));
                 GlideHelper.load(this, checkedGoods.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
                 sku.setText(checkedGoods.getSpecifications());
                 picUrl = checkedGoods.getPicUrl();
             }
             briefText = BriefUnit.returnBrief(confirmOrderDetail.getBrief());
             orderTotalPrice = confirmOrderDetail.getOrderTotalPrice();
-            goodsTotalPrice.setText("¥ " + NumberFormatUnit.twoDecimalFormat(confirmOrderDetail.getGoodsTotalPrice()));
-            totalAmount.setText("¥ " + NumberFormatUnit.twoDecimalFormat(confirmOrderDetail.getOrderTotalPrice()));
+            goodsTotalPrice.setText( NumberFormatUnit.goodsFormat(confirmOrderDetail.getGoodsTotalPrice()));
+            totalAmount.setText(NumberFormatUnit.goodsFormat(confirmOrderDetail.getOrderTotalPrice()));
             couponId = confirmOrderDetail.getCouponId();
             userCouponId = confirmOrderDetail.getUserCouponId();
             if (TextUtils.equals(StaticData.REFLASH_ZERO, confirmOrderDetail.getAvailableCouponLength())) {
@@ -207,10 +207,10 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                 if (TextUtils.equals("-1", couponId)) {
                     coupon.setText(confirmOrderDetail.getAvailableCouponLength() + "张优惠券可用");
                 } else {
-                    coupon.setText("-¥ " + confirmOrderDetail.getCouponPrice());
+                    coupon.setText("-" + NumberFormatUnit.goodsFormat(confirmOrderDetail.getCouponPrice()));
                 }
             }
-            deliveryFee.setText("¥ " + NumberFormatUnit.twoDecimalFormat(confirmOrderDetail.getFreightPrice()));
+            deliveryFee.setText(NumberFormatUnit.goodsFormat(confirmOrderDetail.getFreightPrice()));
             deliveryMethod.setText(confirmOrderDetail.getPeiSongType());
         }
     }

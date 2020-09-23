@@ -417,8 +417,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                         productListCallableInfo = (ProductListCallableInfo) bundle.getSerializable(StaticData.SKU_INFO);
                         goodsCount = bundle.getInt(StaticData.GOODS_COUNT);
                         selectedGoods.setText(getString(R.string.is_selected) + " " + productListCallableInfo.getSpecifications() + "/" + unit);
-                        individualShoppingPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(productListCallableInfo.getPrice()));
-                        initiateBillPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(productListCallableInfo.getPreferentialPrice()));
+                        individualShoppingPrice.setText(NumberFormatUnit.goodsFormat(productListCallableInfo.getPrice()));
+                        initiateBillPrice.setText(NumberFormatUnit.goodsFormat(productListCallableInfo.getPreferentialPrice()));
                     }
                     break;
                 case RequestCodeStatic.REQUEST_SPEC://单独购买和发起拼单取选择规格
@@ -428,8 +428,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                         productListCallableInfo = (ProductListCallableInfo) bundle.getSerializable(StaticData.SKU_INFO);
                         goodsCount = bundle.getInt(StaticData.GOODS_COUNT);
                         selectedGoods.setText(getString(R.string.is_selected) + " " + productListCallableInfo.getSpecifications() + "/" + unit);
-                        individualShoppingPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(productListCallableInfo.getPrice()));
-                        initiateBillPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(productListCallableInfo.getPreferentialPrice()));
+                        individualShoppingPrice.setText(NumberFormatUnit.goodsFormat(productListCallableInfo.getPrice()));
+                        initiateBillPrice.setText(NumberFormatUnit.goodsFormat(productListCallableInfo.getPreferentialPrice()));
                         goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), isGroup, String.valueOf(goodsCount), groupId, groupRulesId);
                     }
                     break;
@@ -499,8 +499,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             goodsSpecs = goodsDetailsInfo.getGoodsSpecs();
             productListCallableInfos = goodsDetailsInfo.getProductListCallableInfos();
             if (productListCallableInfos != null && productListCallableInfos.size() > 0) {
-                individualShoppingPrice.setText("¥" + productListCallableInfos.get(0).getPrice());
-                initiateBillPrice.setText("¥" + productListCallableInfos.get(0).getPreferentialPrice());
+                individualShoppingPrice.setText(NumberFormatUnit.goodsFormat(productListCallableInfos.get(0).getPrice()));
+                initiateBillPrice.setText(NumberFormatUnit.goodsFormat(productListCallableInfos.get(0).getPreferentialPrice()));
                 if (productListCallableInfos.size() == 1) {
                     ProductListCallableInfo productListCallableInfo = productListCallableInfos.get(0);
                     String specifications = productListCallableInfo.getSpecifications();

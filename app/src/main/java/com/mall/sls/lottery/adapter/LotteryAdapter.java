@@ -100,14 +100,14 @@ public class LotteryAdapter extends RecyclerView.Adapter<LotteryAdapter.LotteryV
             GlideHelper.load((Activity) context, prizeVo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(prizeVo.getPrizeTitle());
             prizeTime.setText(prizeVo.getPrizeTime() + " 开奖");
-            goodsPrice.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getCounterPrice()));
+            goodsPrice.setText(NumberFormatUnit.numberFormat(prizeVo.getCounterPrice()));
             prizeId.setText("第"+prizeVo.getPrizeId()+"期");
             if (TextUtils.equals(StaticData.REFLASH_ONE, prizeVo.getPrizeStatus())) {
                 confirmBt.setSelected(true);
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, prizeVo.getPrice()) || TextUtils.equals("0.00", prizeVo.getPrice())) {
                     confirmBt.setText("0" + context.getString(R.string.yuan_draw));
                 } else {
-                    confirmBt.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getPrice()) + context.getString(R.string.yuan_draw));
+                    confirmBt.setText(NumberFormatUnit.numberFormat(prizeVo.getPrice()) + context.getString(R.string.yuan_draw));
                 }
             } else {
                 confirmBt.setSelected(false);

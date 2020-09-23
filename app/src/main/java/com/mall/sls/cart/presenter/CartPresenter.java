@@ -97,6 +97,7 @@ public class CartPresenter implements CartContract.CartPresenter {
 
     @Override
     public void cartUpdateNumber(String id, String number) {
+        cartView.dismissLoading();
         cartView.showLoading(StaticData.PROCESSING);
         CartUpdateNumberRequest request = new CartUpdateNumberRequest(id,number);
         String sign = SignUnit.signPost(RequestUrl.CART_UPDATE_NUMBER, gson.toJson(request));

@@ -11,7 +11,7 @@
 
     <RelativeLayout
         android:id="@+id/title_rel"
-        style="@style/title_red_rl_style">
+        style="@style/title_rl_style">
 
         <ImageView
             android:id="@+id/back"
@@ -28,5 +28,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layoutManager="@string/layoutManager_LinearLayout"
-        tools:listitem="@layout/adapter_message_type" />
+        tools:listitem="@layout/adapter_message_type"
+        android:layout_marginTop="@dimen/dp_1"/>
 </LinearLayout>

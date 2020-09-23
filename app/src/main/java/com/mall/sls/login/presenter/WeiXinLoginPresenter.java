@@ -63,7 +63,7 @@ public class WeiXinLoginPresenter implements LoginContract.WeiXinLoginPresenter 
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         weiXinLoginView.dismissLoading();
-                        weiXinLoginView.showError(throwable);
+//                        weiXinLoginView.showError(throwable);
                     }
                 });
         mDisposableList.add(disposable);

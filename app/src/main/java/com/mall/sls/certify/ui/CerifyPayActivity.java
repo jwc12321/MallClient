@@ -91,7 +91,7 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
     private void initView() {
         EventBus.getDefault().register(this);
         certifyAmount = getIntent().getStringExtra(StaticData.CRETIFY_AMOUNT);
-        amount.setText("¥" + NumberFormatUnit.twoDecimalFormat(certifyAmount));
+        amount.setText(NumberFormatUnit.goodsFormat(certifyAmount));
         selectPayType();
     }
 

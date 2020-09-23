@@ -42,7 +42,7 @@
             android:layout_marginRight="@dimen/dp_15"
             android:layout_toRightOf="@id/goods_iv"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="1"
             tools:text="脆甜小果子桃醉你付款的肌肤的JFK的肌肤肌肤的空间就付款的肌肤的JFK的肌肤的就付款的肌肤的的心" />
 
         <LinearLayout

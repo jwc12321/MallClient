@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/backGround48">
+    android:background="@color/backGround71">
 
     <ImageView
         android:layout_width="match_parent"
@@ -20,11 +20,11 @@
 
         <ImageView
             android:id="@+id/back"
-            style="@style/title_left_back_style" />
+            style="@style/title_left_white_back_style" />
 
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/title"
-            style="@style/title_text_style"
+            style="@style/title_white_text_style"
             android:text="@string/invite_friend_vip" />
 
     </RelativeLayout>
@@ -106,16 +106,16 @@
                     android:scaleType="fitXY"/>
 
                 <RelativeLayout
-                    android:layout_width="@dimen/dp_71"
-                    android:layout_height="@dimen/dp_71"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="@dimen/dp_45"
+                    android:layout_width="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_60"
                     android:background="@drawable/common_four_app_three_bg"
-                    android:layout_alignParentBottom="true">
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/dp_50"
+                    android:layout_marginBottom="@dimen/dp_26">
                     <ImageView
                         android:id="@+id/qrcode_iv"
-                        android:layout_width="@dimen/dp_69"
-                        android:layout_height="@dimen/dp_69"
+                        android:layout_width="@dimen/dp_59"
+                        android:layout_height="@dimen/dp_59"
                         android:background="@color/appText1"
                         android:scaleType="fitXY"
                         android:layout_centerInParent="true"/>

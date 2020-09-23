@@ -210,8 +210,8 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
             countDown.setTimeOutListener(this);
             countDownTime.setTimeOutListener(this);
             goodsIntroduction.setText(goodsDetailsInfo.getBrief());
-            currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getRetailPrice()));
-            originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsDetailsInfo.getCounterPrice()));
+            currentPrice.setText(NumberFormatUnit.goodsFormat(goodsDetailsInfo.getRetailPrice()));
+            originalPrice.setText(NumberFormatUnit.goodsFormat(goodsDetailsInfo.getCounterPrice()));
             if (!TextUtils.isEmpty(goodsDetailsInfo.getNow()) && !TextUtils.isEmpty(goodsDetailsInfo.getGroupExpireTime())) {
                 long now = FormatUtil.dateToStamp(goodsDetailsInfo.getNow());
                 long groupExpireTime = FormatUtil.dateToStamp(goodsDetailsInfo.getGroupExpireTime());
@@ -239,7 +239,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
                     long now = FormatUtil.dateToStamp(goodsDetailsInfo.getNow());
                     long createTime = FormatUtil.dateToStamp(groupPeoples.get(i).getAddTime());
                     String timeLast = TimeUtil.getTimeFormatText(String.valueOf(now), String.valueOf(createTime));
-                    people.setText(groupPeoples.get(i).getNickname() + timeLast + "参与拼单");
+                    people.setText(groupPeoples.get(i).getNickname() + "在"+timeLast + "参与拼单");
                     viewFlipper.addView(view1);
                 }
                 viewFlipper.setFlipInterval(2000);

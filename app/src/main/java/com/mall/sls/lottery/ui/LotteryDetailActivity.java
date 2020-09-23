@@ -186,7 +186,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
             banner.setBannerData(R.layout.xbanner_item, data);
             name=prizeVo.getPrizeTitle();
             picUrl=prizeVo.getPicUrl();
-            goodsPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(prizeVo.getCounterPrice()));
+            goodsPrice.setText(NumberFormatUnit.goodsFormat(prizeVo.getCounterPrice()));
             prizeTimeText=prizeVo.getPrizeTime();
             prizeTime.setText(prizeVo.getPrizeTime() + " 开奖");
 //            participantNumber.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO, prizeVo.getParticipantNumber()) ? View.GONE : View.VISIBLE);
@@ -224,7 +224,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
                 if(TextUtils.equals(StaticData.REFLASH_ZERO,prizeVo.getPrice())||TextUtils.equals("0.00",prizeVo.getPrice())){
                     confirmBt.setText("0"+getString(R.string.yuan_draw));
                 }else {
-                    confirmBt.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getPrice())+getString(R.string.yuan_draw));
+                    confirmBt.setText(NumberFormatUnit.numberFormat(prizeVo.getPrice())+getString(R.string.yuan_draw));
                 }
             }else if(TextUtils.equals(StaticData.REFLASH_TWO,prizeVo.getPrizeStatus())){
                 confirmBt.setEnabled(false);

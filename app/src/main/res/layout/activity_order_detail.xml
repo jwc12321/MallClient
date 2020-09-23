@@ -17,11 +17,11 @@
 
         <ImageView
             android:id="@+id/back"
-            style="@style/title_left_back_style" />
+            style="@style/title_left_white_back_style" />
 
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/title"
-            style="@style/title_text_style"
+            style="@style/title_white_text_style"
             android:text="@string/order_detail" />
     </RelativeLayout>
 

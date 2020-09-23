@@ -99,7 +99,7 @@ public class LotteryRecordAdapter extends RecyclerView.Adapter<LotteryRecordAdap
             GlideHelper.load((Activity) context, prizeVo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(prizeVo.getPrizeTitle());
             prizeTime.setText(prizeVo.getPrizeTime() + " 开奖");
-            goodsPrice.setText(NumberFormatUnit.twoDecimalFormat(prizeVo.getCounterPrice()));
+            goodsPrice.setText(NumberFormatUnit.numberFormat(prizeVo.getCounterPrice()));
             prizeId.setText("第"+prizeVo.getPrizeId()+"期");
         }
     }

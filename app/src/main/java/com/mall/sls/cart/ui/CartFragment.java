@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -95,8 +96,6 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
     private BigDecimal countBd;//数量
     private BigDecimal unitPriceBd;//单价
     private int totalCount = 0;
-    private int deletePosition;
-    private String type;
     private List<String> ids;
 
 
@@ -203,27 +202,6 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
     @Override
     public void renderDeleteCartItem(Boolean isBoolean) {
         cartPresenter.getCartInfo(StaticData.REFLASH_ZERO);
-//        if (TextUtils.equals(StaticData.REFLASH_ONE, type)) {
-//            cartItemInfos.remove(deletePosition);
-//            calculatingPrice();
-//        } else if (TextUtils.equals(StaticData.REFLASH_TWO, type)) {
-//            if (deletePosition - 1 - cartItemInfos.size() > -1 && deletePosition - 1 - cartItemInfos.size() < hiddenItemCartInfos.size()) {
-//                hiddenItemCartInfos.remove(deletePosition - 1 - cartItemInfos.size());
-//            }
-//        } else {
-//            mLiteratureList.clear();
-//            mLiteratureList.addAll(cartItemInfos);
-//            cartItemAdapter.setLiteratureList(mLiteratureList);
-//        }
-//        if (cartItemInfos.size() == 0 && hiddenItemCartInfos.size() == 0) {
-//            noRecordLl.setVisibility(View.VISIBLE);
-//            cartRv.setVisibility(View.GONE);
-//            statisticsRl.setVisibility(View.GONE);
-//        } else {
-//            noRecordLl.setVisibility(View.GONE);
-//            cartRv.setVisibility(View.VISIBLE);
-//            statisticsRl.setVisibility(View.VISIBLE);
-//        }
     }
 
     @Override
@@ -281,14 +259,11 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
 
     @Override
     public void deleteItem(String id, int position, String type) {
-        this.deletePosition = position;
-        this.type = type;
         cartPresenter.deleteCartItem(id);
     }
 
     @Override
     public void deleteEmpty(String type) {
-        this.type = type;
         String id = "";
         if (hiddenItemCartInfos != null) {
             for (int i = 0; i < hiddenItemCartInfos.size(); i++) {
@@ -308,17 +283,19 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
         cartItemInfo = cartItemInfos.get(position);
         if (!TextUtils.isEmpty(cartItemInfo.getNumber())) {
             currentCount = Integer.parseInt(cartItemInfo.getNumber());
-            if (TextUtils.equals("0", cartItemInfo.getNumber()) || TextUtils.equals("00", cartItemInfo.getNumber())) {
+            if (Integer.parseInt(cartItemInfo.getNumber())==0) {
                 showMessage(getString(R.string.goods_can_not_be_reduced));
                 ((EditText) showCountView).setText(String.valueOf(cartItemInfo.getNumber()));
             } else {
-                currentCount = Integer.parseInt(cartItemInfo.getInputNumber());
-                cartPresenter.cartUpdateNumber(cartItemInfo.getId(), cartItemInfo.getInputNumber());
+                if(TextUtils.isEmpty(cartItemInfo.getInputNumber())||Integer.parseInt(cartItemInfo.getInputNumber())==0){
+                    showMessage(getString(R.string.goods_can_not_be_reduced));
+                    cartItemInfo.setNumber(String.valueOf(cartItemInfo.getNumber()));
+                    ((EditText) showCountView).setText(String.valueOf(cartItemInfo.getNumber()));
+                }else {
+                    currentCount = Integer.parseInt(cartItemInfo.getInputNumber());
+                    cartPresenter.cartUpdateNumber(cartItemInfo.getId(), cartItemInfo.getInputNumber());
+                }
             }
-        } else {
-            showMessage(getString(R.string.goods_can_not_be_reduced));
-            cartItemInfo.setNumber(String.valueOf(cartItemInfo.getNumber()));
-            ((EditText) showCountView).setText(String.valueOf(cartItemInfo.getNumber()));
         }
     }
 
@@ -359,7 +336,7 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
             } else {
                 selectAll.setChecked(false);
             }
-            totalPrice.setText(NumberFormatUnit.twoDecimalFormat(totalPriceBd.toString()));
+            totalPrice.setText(NumberFormatUnit.numberFormat(totalPriceBd.toString()));
         }
     }
 

@@ -132,7 +132,7 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
             time.setText(goodsOrderInfo.getAddTime());
             orderGoodsVos = goodsOrderInfo.getOrderGoodsVos();
             orderGoodsItemAdapter.setData(orderGoodsVos,goodsOrderInfo.getId());
-            totalAmount.setText("¥ " + NumberFormatUnit.twoDecimalFormat(goodsOrderInfo.getActualPrice()));
+            totalAmount.setText(NumberFormatUnit.goodsFormat(goodsOrderInfo.getActualPrice()));
             setOrderStatus(goodsOrderInfo.getOrderStatus());
             if (TextUtils.equals(StaticData.TO_PAY, goodsOrderInfo.getOrderStatus())) {
                 isPay.setText(context.getString(R.string.to_be_paid));

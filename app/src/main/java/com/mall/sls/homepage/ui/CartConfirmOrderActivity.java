@@ -227,8 +227,8 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
             address();
             cartItemInfos = confirmCartOrderDetail.getCartItemInfos();
             confirmGoodsItemAdapter.setData(cartItemInfos);
-            goodsTotalPrice.setText("¥ " + NumberFormatUnit.twoDecimalFormat(confirmCartOrderDetail.getGoodsTotalPrice()));
-            totalAmount.setText("¥ " + NumberFormatUnit.twoDecimalFormat(confirmCartOrderDetail.getOrderTotalPrice()));
+            goodsTotalPrice.setText(NumberFormatUnit.goodsFormat(confirmCartOrderDetail.getGoodsTotalPrice()));
+            totalAmount.setText(NumberFormatUnit.goodsFormat(confirmCartOrderDetail.getOrderTotalPrice()));
             userCouponId = confirmCartOrderDetail.getCouponUserId();
             cartIds = confirmCartOrderDetail.getCartIds();
             orderTotalPrice = confirmCartOrderDetail.getOrderTotalPrice();
@@ -238,10 +238,10 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                 if (TextUtils.equals(StaticData.REFLASH_ZERO, userCouponId)) {
                     coupon.setText(confirmCartOrderDetail.getCouponCount() + "张优惠券可用");
                 } else {
-                    coupon.setText("-¥ " + confirmCartOrderDetail.getCouponPrice());
+                    coupon.setText("-" + NumberFormatUnit.goodsFormat(confirmCartOrderDetail.getCouponPrice()));
                 }
             }
-            deliveryFee.setText("¥ " + NumberFormatUnit.twoDecimalFormat(confirmCartOrderDetail.getFreightPrice()));
+            deliveryFee.setText(NumberFormatUnit.goodsFormat(confirmCartOrderDetail.getFreightPrice()));
             deliveryMethod.setText(confirmCartOrderDetail.getPeiSongType());
             hiddenItemCartInfos = confirmCartOrderDetail.getHiddenItemCartInfos();
             if (hiddenItemCartInfos != null && hiddenItemCartInfos.size() > 0 && isBulletBox) {

@@ -11,7 +11,7 @@
 
     <RelativeLayout
         android:id="@+id/title_rel"
-        style="@style/title_red_rl_style">
+        style="@style/title_rl_style">
 
         <ImageView
             android:id="@+id/back"
@@ -22,6 +22,8 @@
             style="@style/title_text_style"
             android:text="@string/bind_mobile" />
     </RelativeLayout>
+    <View
+        style="@style/back_nine_line_style"/>
 
     <com.mall.sls.common.widget.scrollview.ReboundScrollView
         android:layout_width="match_parent"

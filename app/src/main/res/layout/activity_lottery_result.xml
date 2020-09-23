@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appText1"
+    android:background="@color/backGround60"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/title_rel"
-        style="@style/title_red_rl_style">
+        style="@style/title_rl_style">
 
         <ImageView
             android:id="@+id/back"
@@ -20,6 +20,8 @@
             style="@style/title_text_style"
             android:text="@string/lottery_detail" />
     </RelativeLayout>
+    <View
+       style="@style/back_nine_line_style"/>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollview"

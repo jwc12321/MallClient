@@ -9,7 +9,7 @@
 
     <RelativeLayout
         android:id="@+id/title_rel"
-        style="@style/title_red_rl_style">
+        style="@style/title_rl_style">
         <ImageView
             android:id="@+id/back"
             style="@style/title_left_back_style" />
@@ -20,7 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fadingEdge="none"
-        android:overScrollMode="never">
+        android:overScrollMode="never"
+        android:layout_marginTop="@dimen/dp_1">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -101,8 +101,8 @@ public class MemberGoodsItemAdapter extends RecyclerView.Adapter<MemberGoodsItem
             GlideHelper.load((Activity) context, goodsItemInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(goodsItemInfo.getName());
             goodsIntroduction.setText(goodsItemInfo.getBrief());
-            currentPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getRetailPrice()));
-            originalPrice.setText("¥" + NumberFormatUnit.twoDecimalFormat(goodsItemInfo.getCounterPrice()));
+            currentPrice.setText(NumberFormatUnit.goodsFormat(goodsItemInfo.getRetailPrice()));
+            originalPrice.setText(NumberFormatUnit.goodsFormat(goodsItemInfo.getCounterPrice()));
         }
     }
 

@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:id="@+id/title_rel"
-        style="@style/title_red_rl_style">
+        style="@style/title_rl_style">
 
         <ImageView
             android:id="@+id/back"
@@ -24,7 +24,8 @@
         android:layout_height="@dimen/dp_40"
         android:background="@color/backGround57"
         android:orientation="horizontal"
-        android:weightSum="3" >
+        android:weightSum="3"
+        android:layout_marginTop="@dimen/dp_1">
         <LinearLayout
             android:id="@+id/unused_ll"
             style="@style/order_status_ll_style">

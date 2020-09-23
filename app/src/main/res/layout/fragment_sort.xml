@@ -7,7 +7,7 @@
     android:background="@color/backGround6"
     android:orientation="vertical">
 
-    <RelativeLayout style="@style/title_white_rl_style">
+    <RelativeLayout style="@style/title_rl_style">
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/small_title"
@@ -54,7 +54,22 @@
             android:layout_height="match_parent"
             app:layoutManager="@string/layoutManager_LinearLayout"
             tools:listitem="@layout/adapter_second_category"
-            android:background="@color/backGround57"/>
+            android:background="@color/backGround57"
+            android:visibility="gone"/>
+        <LinearLayout
+            android:id="@+id/no_record_ll"
+            style="@style/common_no_record_ll_style"
+            android:background="@color/backGround57"
+            android:layout_height="match_parent">
+
+            <ImageView
+                style="@style/common_no_record_iv_style"
+                android:src="@mipmap/icon_no_data" />
+
+            <TextView
+                style="@style/common_no_record_tv_style"
+                android:text="@string/no_data" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

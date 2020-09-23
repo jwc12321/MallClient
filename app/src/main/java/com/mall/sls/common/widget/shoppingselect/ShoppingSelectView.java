@@ -1,21 +1,15 @@
 package com.mall.sls.common.widget.shoppingselect;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-
 import com.mall.sls.R;
 import com.mall.sls.common.unit.TextViewttf;
-import com.mall.sls.data.entity.GoodsItemInfo;
 import com.mall.sls.data.entity.GoodsSpec;
-
 import java.util.List;
 
 

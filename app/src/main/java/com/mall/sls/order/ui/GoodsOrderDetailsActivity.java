@@ -398,11 +398,11 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 isOnSale = orderGoodsVos.get(0).getIsOnSale();
             }
             setOrderStatus(orderStatusText);
-            totalAmount.setText("¥ " + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getGoodsPrice()));
-            deliveryFee.setText("¥ " + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getFreightPrice()));
-            coupon.setText("-¥ " + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getCouponPrice()));
+            totalAmount.setText(NumberFormatUnit.goodsFormat(goodsOrderDetails.getGoodsPrice()));
+            deliveryFee.setText( NumberFormatUnit.goodsFormat(goodsOrderDetails.getFreightPrice()));
+            coupon.setText("-" + NumberFormatUnit.goodsFormat(goodsOrderDetails.getCouponPrice()));
             couponRl.setVisibility(TextUtils.equals("0.00",goodsOrderDetails.getCouponPrice())?View.GONE:View.VISIBLE);
-            realPayment.setText("¥ " + NumberFormatUnit.twoDecimalFormat(goodsOrderDetails.getActualPrice()));
+            realPayment.setText(NumberFormatUnit.goodsFormat(goodsOrderDetails.getActualPrice()));
             deliveryMethod.setText(goodsOrderDetails.getPeiSongType());
             actualPrice = goodsOrderDetails.getActualPrice();
             payModeText = goodsOrderDetails.getPayModeText();

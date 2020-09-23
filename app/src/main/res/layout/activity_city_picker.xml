@@ -10,7 +10,7 @@
     android:focusableInTouchMode="true">
 
     <RelativeLayout
-        style="@style/title_red_rl_style">
+        style="@style/title_rl_style">
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/small_title"
@@ -21,14 +21,11 @@
     <RelativeLayout
         android:id="@+id/title_rel"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_62">
+        android:layout_height="@dimen/dp_45"
+        android:background="@color/backGround60">
+
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_38"
-            android:background="@drawable/common_nineteen_back_fifty_seven_bg"
-            android:orientation="horizontal"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_15"
+            style="@style/search_rl_bg_style"
             android:layout_toLeftOf="@id/cancel_bt">
             <com.mall.sls.common.widget.textview.ConventionalEditTextView
                 android:id="@+id/address_et"
@@ -38,13 +35,7 @@
                 android:layout_marginLeft="@dimen/dp_15" />
             <ImageView
                 android:id="@+id/close_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@mipmap/icon_search_close"
-                android:layout_alignParentRight="true"
-                android:paddingRight="@dimen/dp_19"
-                android:paddingLeft="@dimen/dp_10"
-                android:visibility="gone"/>
+                style="@style/search_close_iv_style"/>
         </RelativeLayout>
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/cancel_bt"
@@ -54,7 +45,7 @@
             android:gravity="center"
             android:paddingRight="@dimen/dp_15"
             android:text="@string/cancel"
-            android:textColor="@color/appText1"
+            android:textColor="@color/appText3"
             android:textSize="@dimen/sp_14"
             android:paddingLeft="@dimen/dp_15"/>
     </RelativeLayout>

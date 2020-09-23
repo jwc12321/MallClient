@@ -142,7 +142,7 @@
             android:id="@+id/add_cart_bt"
             style="@style/goods_add_cart_bt_style"
             android:layout_toLeftOf="@id/buy_now_bt"
-            android:text="@string/cart" />
+            android:text="@string/add_cart" />
     </RelativeLayout>
 
     <RelativeLayout

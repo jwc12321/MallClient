@@ -62,7 +62,7 @@ public class CartPaySuccessActivity extends BaseActivity {
     private void initView(){
         goodsOrderId=getIntent().getStringExtra(StaticData.GOODS_ORDER_ID);
         payAmount=getIntent().getStringExtra(StaticData.PAYMENT_AMOUNT);
-        amount.setText("实付：¥"+ NumberFormatUnit.twoDecimalFormat(payAmount));
+        amount.setText("实付："+ NumberFormatUnit.goodsFormat(payAmount));
     }
 
     @OnClick({R.id.home_iv, R.id.back, R.id.order_iv})

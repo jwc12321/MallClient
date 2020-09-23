@@ -6,7 +6,7 @@
     android:background="@color/backGround60">
     <RelativeLayout
         android:id="@+id/title_rel"
-        style="@style/title_red_rl_style">
+        style="@style/title_rl_style">
 
         <ImageView
             android:id="@+id/back"
@@ -17,6 +17,9 @@
             style="@style/title_text_style"
             android:text="@string/alipay_verify" />
     </RelativeLayout>
+    <View
+        style="@style/back_nine_line_style"
+        android:layout_below="@id/title_rel"/>
     <RelativeLayout
         android:id="@+id/bottom_rl"
         android:layout_width="match_parent"

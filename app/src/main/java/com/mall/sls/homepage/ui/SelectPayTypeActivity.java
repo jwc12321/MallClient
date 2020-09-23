@@ -69,7 +69,7 @@ public class SelectPayTypeActivity extends BaseActivity {
         choiceType=getIntent().getStringExtra(StaticData.CHOICE_TYPE);
         confirmBt.setSelected(TextUtils.equals(StaticData.REFLASH_ONE,choiceType)?true:false);
         amount=getIntent().getStringExtra(StaticData.PAYMENT_AMOUNT);
-        payAmount.setText(getString(R.string.payment_amount)+"¥"+ NumberFormatUnit.twoDecimalFormat(amount));
+        payAmount.setText(getString(R.string.payment_amount)+NumberFormatUnit.goodsFormat(amount));
         selectPayType();
     }
 
