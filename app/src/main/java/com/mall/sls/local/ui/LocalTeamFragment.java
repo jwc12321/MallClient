@@ -148,13 +148,13 @@ public class LocalTeamFragment extends BaseFragment implements LootingFragment.L
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
-            if(TextUtils.equals(StaticData.REFLASH_ONE, SpikeManager.getSpike())){
+            if(TextUtils.equals(StaticData.REFRESH_ONE, SpikeManager.getSpike())){
                 viewPager.setCurrentItem(1,false);
-                SpikeManager.saveSpike(StaticData.REFLASH_ZERO);
+                SpikeManager.saveSpike(StaticData.REFRESH_ZERO);
             }else {
-                if (TextUtils.equals("0", type)) {
+                if (TextUtils.equals(StaticData.REFRESH_ZERO, type)) {
                     lootingFragment.lootingRefresh();
-                } else if (TextUtils.equals("1", type)) {
+                } else if (TextUtils.equals(StaticData.REFRESH_ONE, type)) {
                     lootingSoonFragment.lootingSoonRefresh();
                 }
             }

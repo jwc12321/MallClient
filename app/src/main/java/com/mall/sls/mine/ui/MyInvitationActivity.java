@@ -80,14 +80,14 @@ public class MyInvitationActivity extends BaseActivity implements MineContract.M
         inviteAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(inviteAdapter);
         refreshLayout.finishLoadMoreWithNoMoreData();
-        myInvitePresenter.getMyInvite(StaticData.REFLASH_ONE);
+        myInvitePresenter.getMyInvite(StaticData.REFRESH_ONE);
     }
 
     SimpleMultiPurposeListener simpleMultiPurposeListener = new SimpleMultiPurposeListener() {
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            myInvitePresenter.getMyInvite(StaticData.REFLASH_ZERO);
+            myInvitePresenter.getMyInvite(StaticData.REFRESH_ZERO);
         }
 
         @Override

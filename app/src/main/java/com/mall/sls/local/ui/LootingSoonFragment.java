@@ -97,7 +97,7 @@ public class LootingSoonFragment extends BaseFragment implements LootingSoonAdap
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            waitBuyPresenter.getWaitBuy(StaticData.REFLASH_ZERO);
+            waitBuyPresenter.getWaitBuy(StaticData.REFRESH_ZERO);
         }
 
         @Override
@@ -111,7 +111,7 @@ public class LootingSoonFragment extends BaseFragment implements LootingSoonAdap
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
             if (waitBuyPresenter != null) {
-                waitBuyPresenter.getWaitBuy(StaticData.REFLASH_ONE);
+                waitBuyPresenter.getWaitBuy(StaticData.REFRESH_ONE);
             }
         }
     }
@@ -189,7 +189,7 @@ public class LootingSoonFragment extends BaseFragment implements LootingSoonAdap
 
     public void lootingSoonRefresh() {
         if (waitBuyPresenter != null) {
-            waitBuyPresenter.getWaitBuy(StaticData.REFLASH_ONE);
+            waitBuyPresenter.getWaitBuy(StaticData.REFRESH_ONE);
         }
     }
 }

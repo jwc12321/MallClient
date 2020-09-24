@@ -164,7 +164,7 @@ public class CartItemAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onClick(View v) {
                         if (onItemClickListener != null) {
-                            onItemClickListener.deleteItem(cartItemInfo.getId(), position, StaticData.REFLASH_ONE);
+                            onItemClickListener.deleteItem(cartItemInfo.getId(), position, StaticData.REFRESH_ONE);
 //                            mLiteratureList.remove(position);
 //                            notifyItemRemoved(position);
                         }
@@ -224,7 +224,7 @@ public class CartItemAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     if (onItemClickListener != null) {
-                        onItemClickListener.deleteEmpty(StaticData.REFLASH_THREE);
+                        onItemClickListener.deleteEmpty(StaticData.REFRESH_THREE);
                     }
                 }
             });
@@ -267,7 +267,7 @@ public class CartItemAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     if (onItemClickListener != null) {
-                        onItemClickListener.deleteItem(hiddenItemCartInfo.getId(), position, StaticData.REFLASH_TWO);
+                        onItemClickListener.deleteItem(hiddenItemCartInfo.getId(), position, StaticData.REFRESH_TWO);
 //                        mLiteratureList.remove(position);
 //                        notifyItemRemoved(position);
                     }

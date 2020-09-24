@@ -101,7 +101,7 @@ public class AddressManageAdapter extends RecyclerView.Adapter<AddressManageAdap
             phone.setText(addressInfo.getTel());
             if(addressInfo.getDefault()&&!TextUtils.isEmpty(addressInfo.getType())){
                 address.addressTag("默认",addressInfo.getType(),addressStr);
-            }else if(!addressInfo.getDefault()&&!TextUtils.isEmpty(addressInfo.getType())&&!TextUtils.equals(context.getString(R.string.other),addressInfo.getType())){
+            }else if(!addressInfo.getDefault()&&!TextUtils.isEmpty(addressInfo.getType())){
                 address.setSingleTagAndContent(addressInfo.getType(),addressStr);
             }else {
                 address.setText(addressStr);

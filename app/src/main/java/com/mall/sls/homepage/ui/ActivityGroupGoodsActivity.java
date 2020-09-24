@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -201,7 +202,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
             activityName.setText(goodsDetailsInfo.getGroupName());
             goodsName.setText(goodsDetailsInfo.getName());
             discountMember.setText(goodsDetailsInfo.getDiscountMember() + "人成团");
-            if (TextUtils.equals(StaticData.REFLASH_ZERO, goodsDetailsInfo.getGroupPeopleNum())) {
+            if (TextUtils.equals(StaticData.REFRESH_ZERO, goodsDetailsInfo.getGroupPeopleNum())) {
                 snappedUpNumber.setVisibility(View.GONE);
             } else {
                 snappedUpNumber.setVisibility(View.VISIBLE);
@@ -275,7 +276,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
 
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
-        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_FOUR, wxUrl, inviteCode);
+        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFRESH_FOUR, wxUrl, inviteCode);
     }
 
     @Override
@@ -313,7 +314,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
         switch (view.getId()) {
             case R.id.confirm_bt:
                 TCAgentUnit.setEventId(this, getString(R.string.event_purchase_details));
-                goSelectSpec(StaticData.REFLASH_ONE);
+                goSelectSpec(StaticData.REFRESH_ONE);
                 break;
             case R.id.back:
                 finish();

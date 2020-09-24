@@ -45,7 +45,7 @@ public class LotteryRecordPresenter implements LotteryContract.LotteryRecordPres
 
     @Override
     public void getLotteryRecord(String refreshType) {
-        if (TextUtils.equals("1", refreshType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             lotteryRecordView.showLoading(StaticData.LOADING);
         }
         currentIndex=1;

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround8">
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_260"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/common_four_back_fifty_seven_bg"
+        android:orientation="vertical">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/title"
+            style="@style/size14_color_app3_text_style"
+            android:layout_marginLeft="@dimen/dp_28"
+            android:layout_marginTop="@dimen/dp_14"
+            android:layout_marginRight="@dimen/dp_28"
+            android:text="@string/cancel_goods_tip" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/record_rv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_148"
+            android:layout_marginLeft="@dimen/dp_25"
+            android:layout_marginTop="@dimen/dp_14"
+            android:layout_marginRight="@dimen/dp_25"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="@string/layoutManager_Gridlayout" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/hidden_number"
+            style="@style/size14_color_app3_text_style"
+            android:layout_gravity="center_horizontal"
+            tools:text="6件（共13件）" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_12">
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/left_bt"
+                style="@style/continue_order_bt_style"
+                android:text="@string/continue_order" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/right_bt"
+                style="@style/back_cart_bt_style"
+                android:text="@string/back_cart" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -93,7 +93,7 @@ public class NumberFormatUnit {
 
     //判断是否是0或0.00
     public static Boolean isZero(String amount) {
-        if (TextUtils.isEmpty(amount) ||(TextUtils.equals(StaticData.PRICE_ZERO, amount) || TextUtils.equals(StaticData.REFLASH_ZERO, amount))||TextUtils.equals("0.0", amount)) {
+        if (TextUtils.isEmpty(amount) ||(TextUtils.equals(StaticData.PRICE_ZERO, amount) || TextUtils.equals(StaticData.REFRESH_ZERO, amount))||TextUtils.equals("0.0", amount)) {
             return true;
         }
         return false;

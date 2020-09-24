@@ -101,7 +101,7 @@ public class OrderLogisticsAdapter extends RecyclerView.Adapter<OrderLogisticsAd
             statusDesc.setText(orderPackageInfo.getStatusDesc());
             logisticsGoodsAdapter.setData(orderPackageInfo.getOrderGoodsVos(),orderPackageInfo.getShipOrderInfos());
             totalNumber.setText("共"+orderPackageInfo.getOrderGoodsVos().size()+"件商品");
-            viewMapBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE,orderPackageInfo.getShowMap())?View.VISIBLE:View.GONE);
+            viewMapBt.setVisibility(TextUtils.equals(StaticData.REFRESH_ONE,orderPackageInfo.getShowMap())?View.VISIBLE:View.GONE);
         }
 
         @Override

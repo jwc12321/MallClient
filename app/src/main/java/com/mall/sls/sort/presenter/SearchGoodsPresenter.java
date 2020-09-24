@@ -46,7 +46,7 @@ public class SearchGoodsPresenter implements SortContract.SearchGoodsPresenter {
 
     @Override
     public void getSearchHistory(String refreshType) {
-        if(TextUtils.equals(StaticData.REFLASH_ONE,refreshType)) {
+        if(TextUtils.equals(StaticData.REFRESH_ONE,refreshType)) {
             searchGoodsView.showLoading(StaticData.LOADING);
         }
         String queryString="null";
@@ -96,7 +96,7 @@ public class SearchGoodsPresenter implements SortContract.SearchGoodsPresenter {
 
     @Override
     public void getKeywordGoods(String refreshType, String keyword, String sortType, String orderType) {
-        if (TextUtils.equals("1", refreshType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             searchGoodsView.showLoading(StaticData.LOADING);
         }
         currentIndex = 1;

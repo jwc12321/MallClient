@@ -264,7 +264,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 finish();
                 break;
             case R.id.home_iv:
-                MainStartManager.saveMainStart(StaticData.REFLASH_ONE);
+                MainStartManager.saveMainStart(StaticData.REFRESH_ONE);
                 MainFrameActivity.start(this);
                 finish();
                 break;
@@ -272,7 +272,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 CustomerServiceActivity.start(this, consumerPhone);
                 break;
             case R.id.sku_rl:
-                goSelectSpecReturn(StaticData.REFLASH_ONE);
+                goSelectSpecReturn(StaticData.REFRESH_ONE);
                 break;
             case R.id.confirm_bt://发起拼单
                 TCAgentUnit.setEventId(this, getString(R.string.event_purchase_details));
@@ -294,7 +294,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
 
     private void initiateBill() {
 //        if (productListCallableInfo == null) {
-        goSelectSpec(StaticData.REFLASH_ONE);
+        goSelectSpec(StaticData.REFRESH_ONE);
 //        } else {
 //            goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
 //        }
@@ -350,7 +350,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 case RequestCodeStatic.SELECT_SHARE_TYPE:
                     if (data != null) {
                         backType = data.getStringExtra(StaticData.BACK_TYPE);
-                        shareWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                        shareWx(TextUtils.equals(StaticData.REFRESH_ONE, backType));
                     }
                     break;
                 default:
@@ -396,7 +396,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             goodsBrief.setText(goodsDetailsInfo.getBrief());
             goodsBrief.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getBrief()) ? View.GONE : View.VISIBLE);
             selectedGoods.setText(getString(R.string.select_spec));
-            if (TextUtils.equals(StaticData.REFLASH_ONE, goodsDetailsInfo.getCourierType())) {
+            if (TextUtils.equals(StaticData.REFRESH_ONE, goodsDetailsInfo.getCourierType())) {
                 courierType.setText(getString(R.string.same_city_delivery));
             } else {
                 courierType.setText(getString(R.string.type_express_delivery));
@@ -410,7 +410,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                     timeType.setText(getString(R.string.open_time));
                     confirmBt.setEnabled(false);
                     confirmBt.setText(FormatUtil.formatDate(String.valueOf(startTime)) + "开抢");
-                    teamType = StaticData.REFLASH_ONE;
+                    teamType = StaticData.REFRESH_ONE;
                     if (day > 0) {
                         dayTv.setText(day + "天");
                         dayTv.setVisibility(View.VISIBLE);
@@ -424,7 +424,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                     long day = FormatUtil.day(now, groupExpireTime);
                     timeType.setText(getString(R.string.remaining_spike));
                     confirmBt.setEnabled(true);
-                    teamType = StaticData.REFLASH_TWO;
+                    teamType = StaticData.REFRESH_TWO;
                     confirmBt.setText(getString(R.string.go_buy));
                     if (day > 0) {
                         dayTv.setText(day + "天");
@@ -468,7 +468,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
 
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
-        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_FOUR, wxUrl, inviteCode);
+        ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFRESH_FOUR, wxUrl, inviteCode);
     }
 
     @Override
@@ -498,7 +498,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
 
     @Override
     public void timeOut() {
-        if (TextUtils.equals(StaticData.REFLASH_ONE, teamType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, teamType)) {
             goodsDetailsPresenter.getGoodsDetails(goodsId);
         } else {
             showMessage(getString(R.string.activity_over));

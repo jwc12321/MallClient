@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_rl_style">
+
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/pay_result" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/result_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_rel"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_55"
+        android:src="@drawable/bank_pay_result_select" />
+
+    <com.mall.sls.common.widget.textview.MediumThickTextView
+        android:id="@+id/result_status"
+        style="@style/size15_color_app2_text_style"
+        tools:text="处理中"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/result_iv"
+        android:layout_marginTop="@dimen/dp_23"/>
+
+    <com.mall.sls.common.widget.textview.MediumThickTextView
+        android:id="@+id/process_tip"
+        style="@style/size16_color_app3_text_style"
+        android:text="@string/result_process"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/result_status"
+        android:layout_marginTop="@dimen/dp_23"
+        android:visibility="gone"/>
+
+    <com.mall.sls.common.widget.textview.MediumThickTextView
+        android:id="@+id/confirm_bt"
+        style="@style/common_bottom_30_next_bt_style"
+        android:text="@string/view_order"
+        android:layout_marginBottom="@dimen/dp_113"/>
+</RelativeLayout>

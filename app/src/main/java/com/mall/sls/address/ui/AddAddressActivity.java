@@ -151,7 +151,7 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
             defaultIv.setSelected(defaultType);
             title.setText(getString(R.string.update_address));
         } else {
-            genderType = StaticData.REFLASH_ZERO;
+            genderType = StaticData.REFRESH_ZERO;
             rightTv.setVisibility(View.INVISIBLE);
             title.setText(getString(R.string.add_new_address));
         }
@@ -210,11 +210,11 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
                 labelSelect();
                 break;
             case R.id.ms_iv://性别 女
-                genderType = StaticData.REFLASH_ZERO;
+                genderType = StaticData.REFRESH_ZERO;
                 genderSelect();
                 break;
             case R.id.men_iv://性别 男
-                genderType = StaticData.REFLASH_ONE;
+                genderType = StaticData.REFRESH_ONE;
                 genderSelect();
                 break;
             case R.id.address:
@@ -282,8 +282,8 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
     }
 
     private void genderSelect() {
-        msIv.setSelected(TextUtils.equals(StaticData.REFLASH_ZERO, genderType) ? true : false);
-        menIv.setSelected(TextUtils.equals(StaticData.REFLASH_ONE, genderType) ? true : false);
+        msIv.setSelected(TextUtils.equals(StaticData.REFRESH_ZERO, genderType) ? true : false);
+        menIv.setSelected(TextUtils.equals(StaticData.REFRESH_ONE, genderType) ? true : false);
     }
 
 
@@ -295,7 +295,7 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
 
     @Override
     public void renderAddAddress(String addressId) {
-        if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ZERO, choiceType)) {
             Intent intent = new Intent();
             intent.putExtra(StaticData.ADDRESS_ID, addressId);
             setResult(RESULT_OK, intent);
@@ -353,7 +353,7 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
                         county = data.getStringExtra(StaticData.COUNT);
                         lat = data.getStringExtra(StaticData.LAT);
                         lon = data.getStringExtra(StaticData.LON);
-                        houseNumber = data.getStringExtra(StaticData.DETAIL_ADDRESS);
+                        houseNumber = data.getStringExtra(StaticData.DETAIL_ADDRESS)+data.getStringExtra(StaticData.ADDRESS_TITLE);
                         areaCode = data.getStringExtra(StaticData.AREA_CODE);
                         address.setText(province + city + county);
                         houseNumberEt.setText(houseNumber);

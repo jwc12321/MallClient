@@ -1,5 +1,7 @@
 package com.mall.sls.common;
 
+import retrofit2.http.PUT;
+
 public class StaticData {
     public static final String  WX_APP_ID = "wxcea8bff4c8e832be";
     //登录中
@@ -8,29 +10,33 @@ public class StaticData {
     public static final String LOADING="2";
     //处理中
     public static final String PROCESSING ="3";
+
     //list每一页取10个
     public static final String TEN_LIST_SIZE = "10";
-    public static final String REFLASH_ZERO = "0";
-    public static final String REFLASH_ONE = "1";
-    public static final String REFLASH_TWO = "2";
-    public static final String REFLASH_THREE = "3";
-    public static final String REFLASH_FOUR = "4";
-    public static final String REFLASH_FIVE = "5";
+    public static final String REFRESH_ZERO = "0";
+    public static final String REFRESH_ONE = "1";
+    public static final String REFRESH_TWO = "2";
+    public static final String REFRESH_THREE = "3";
+    public static final String REFRESH_FOUR = "4";
+    public static final String REFRESH_FIVE = "5";
     public static final String FIFTY_LIST_SIZE = "50";
-    public static final String REFLASH_NAGATIVE_ONE = "-1";
+    public static final String REFRESH_MINUS_ONE = "-1";
 
     //通用文本title
     public static final String COMMON_TITLE = "commonTitle";
     //通用文本内容
     public static final String COMMON_CONTENT = "commonContent";
     public static final String COMMON_CONFIRM_BT = "commonComfirmBt";
-    public static final String WEBVIEW_DETAILINFO="webviewDetailInfo";
     //用户协议
     public static final String USER_AGREEMENT="https://www.specialbuy.cn/userRegisteredAgreement.html";
     //隐私政策
     public static final String USER_PRIVACY ="https://www.specialbuy.cn/userPrivacyAgreement.html";
     //实人认证协议
     public static final String OCR_AGREEMENT="https://www.specialbuy.cn/ocrAgreement.html";
+    //合作银行
+    public static final String COOPERATE_BANK="http://h5.easyluxury.cn/#/app/bank-sort";
+    //特惠购快捷支付协议
+    public static final String FAST_PAYMENT_AGREEMENT="https://www.easyluxury.cn/quick-pay.html";
     //选择的type
     public static final String CHOICE_TYPE="choiceType";
     //订单id
@@ -98,7 +104,7 @@ public class StaticData {
     public static final String UNION_ID="unionId";//微信登录的unionid
     public static final String ACCESS_CODE="accessCode";//一键登录的code
     public static final String SMS_CODE="smsCode";//短信验证码
-    public static final String CRETIFY_AMOUNT="certifyAmount";//实人认证费用
+    public static final String CERTIFY_AMOUNT="certifyAmount";//实人认证费用
     public static final String VIP_AMOUNT="vipAmount";//开通超级会员费用
     public static final String GROUPON_ID="grouponId";//团购ID
     public static final String ACTIVITY_URL="activityUrl";//活动团分享url
@@ -169,5 +175,30 @@ public class StaticData {
     public static final String SORT_TYPE_SALES="Sales";
     public static final String ORDER_TYPE_DESC="Desc";//降序
     public static final String ORDER_TYPE_ASC="Asc";//升序
+    public static final String WEB_URL="webUrl";
+    //webView暗黑模式
+    public static final String THEME_DARK="theme-dark";
+    public static final String THEME_LIGHT="theme-light";
+    public static final String CHU_XU="CHUXU";
+    public static final String BANK_CARD_INFO="bankCardInfo";
+    public static final String ENABLE_ID_CARD="enableIdCard";
+    public static final String ENABLE_BANK_CARD="enableBankCard";
+    public static final String SCAN_DATA="scanResult";
+    public static final String SCAN_PATH="scanPath";
+    public static final String PHONE_NUMBER="phoneNumber";
+    public static final String BANK_ID="bankId";
+    public static final String BIND_RESULT="bindResult";
+    public static final String BAO_FU_PAY_INFO="baoFuPayInfo";
+    public static final String PAY_RESULT="payResult";//银行支付结果
+    public static final String LEFT_BT_TEXT="leftBtText";
+    public static final String RIGHT_BT_TEXT="rightBtText";
+    public static final String HIDDEN_CART_INFO_S="hiddenCartInfos";
+    public static final String TOTAL_NUMBER="totalNumber";
+    public static final String HIDDEN_TYPE="hiddenType";
+
+    public static final String BANK_PAY_SUCCESS="Success";
+    public static final String BANK_PAY_PROCESSING="Processing";
+    public static final String BANK_PAY_FAILED="Failed";
+    public static final String BANK_PAY_CANCEL="Cancel";
 
 }

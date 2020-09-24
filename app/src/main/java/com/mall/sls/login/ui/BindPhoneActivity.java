@@ -135,7 +135,7 @@ public class BindPhoneActivity extends BaseActivity implements LoginContract.Bin
             showMessage(getString(R.string.input_vcode));
             return;
         }
-        FillCodeActivity.start(BindPhoneActivity.this,unionId,"",phoneNumber,smsCode,StaticData.REFLASH_ZERO);
+        FillCodeActivity.start(BindPhoneActivity.this,unionId,"",phoneNumber,smsCode,StaticData.REFRESH_ZERO);
         finish();
     }
 

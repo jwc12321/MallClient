@@ -98,14 +98,14 @@ public class OrderMessageActivity extends BaseActivity implements MessageContrac
         orderMessageAdapter = new OrderMessageAdapter(this);
         orderMessageAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(orderMessageAdapter);
-        msgInfoPresenter.getMsgInfo(StaticData.REFLASH_ONE, typeId);
+        msgInfoPresenter.getMsgInfo(StaticData.REFRESH_ONE, typeId);
     }
 
     SimpleMultiPurposeListener simpleMultiPurposeListener = new SimpleMultiPurposeListener() {
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            msgInfoPresenter.getMsgInfo(StaticData.REFLASH_ZERO, typeId);
+            msgInfoPresenter.getMsgInfo(StaticData.REFRESH_ZERO, typeId);
         }
 
         @Override

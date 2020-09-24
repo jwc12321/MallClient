@@ -48,7 +48,7 @@ public class LocalTeamPresenter implements LocalContract.LocalTeamPresenter {
 
     @Override
     public void getLocalTeam(String refreshType, String type) {
-        if (TextUtils.equals("1", refreshType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             localTeamView.showLoading(StaticData.LOADING);
         }
         currentIndex=1;
@@ -100,7 +100,7 @@ public class LocalTeamPresenter implements LocalContract.LocalTeamPresenter {
     @Override
     public void groupRemind(String ruleId) {
         localTeamView.showLoading(StaticData.PROCESSING);
-        GroupRemindRequest request=new GroupRemindRequest(ruleId,StaticData.REFLASH_ONE);
+        GroupRemindRequest request=new GroupRemindRequest(ruleId,StaticData.REFRESH_ONE);
         String sign= SignUnit.signPost(RequestUrl.GROUP_REMIND_URL,gson.toJson(request));
         Disposable disposable = restApiService.groupRemind(sign,request)
                 .flatMap(new RxRemoteDataParse<Ignore>())

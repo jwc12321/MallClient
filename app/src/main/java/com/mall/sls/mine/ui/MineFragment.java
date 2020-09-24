@@ -178,9 +178,9 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     @Override
     public void onResume() {
         super.onResume();
-        if (TextUtils.equals(StaticData.REFLASH_ONE, goVerify)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, goVerify)) {
             mineInfoPresenter.getMineInfo();
-            goVerify = StaticData.REFLASH_ZERO;
+            goVerify = StaticData.REFRESH_ZERO;
         }
     }
 
@@ -193,26 +193,26 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 startActivityForResult(intent, RequestCodeStatic.SETTING);
                 break;
             case R.id.all_order_rl://全部订单
-                GoodsOrderActivity.start(getActivity(), StaticData.REFLASH_ZERO);
+                GoodsOrderActivity.start(getActivity(), StaticData.REFRESH_ZERO);
                 break;
             case R.id.pending_payment_iv://待付款
-                GoodsOrderActivity.start(getActivity(), StaticData.REFLASH_ONE);
+                GoodsOrderActivity.start(getActivity(), StaticData.REFRESH_ONE);
                 break;
             case R.id.pending_share_iv:
-                GoodsOrderActivity.start(getActivity(), StaticData.REFLASH_TWO);
+                GoodsOrderActivity.start(getActivity(), StaticData.REFRESH_TWO);
                 break;
             case R.id.pending_delivery_iv://待配送
-                GoodsOrderActivity.start(getActivity(), StaticData.REFLASH_THREE);
+                GoodsOrderActivity.start(getActivity(), StaticData.REFRESH_THREE);
                 break;
             case R.id.shipping_iv://配送中
-                GoodsOrderActivity.start(getActivity(), StaticData.REFLASH_FOUR);
+                GoodsOrderActivity.start(getActivity(), StaticData.REFRESH_FOUR);
                 break;
             case R.id.completed_iv://完成
-                GoodsOrderActivity.start(getActivity(), StaticData.REFLASH_FIVE);
+                GoodsOrderActivity.start(getActivity(), StaticData.REFRESH_FIVE);
                 break;
             case R.id.address_manage://地址管理
                 TCAgentUnit.setEventId(getActivity(), getString(R.string.mine_address_management));
-                AddressManageActivity.start(getActivity(), StaticData.REFLASH_ONE);
+                AddressManageActivity.start(getActivity(), StaticData.REFRESH_ONE);
                 break;
             case R.id.invite_friends://邀请好友
             case R.id.mine_invite_ll:
@@ -221,8 +221,8 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 break;
             case R.id.verified_rl://认证
                 TCAgentUnit.setEventId(getActivity(), getString(R.string.mine_verified));
-                if (TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
-                    goVerify = StaticData.REFLASH_ONE;
+                if (TextUtils.equals(StaticData.REFRESH_ZERO, VerifyManager.getVerify())) {
+                    goVerify = StaticData.REFRESH_ONE;
                     if (certifyPay) {
                         NameVerifiedActivity.start(getActivity());
                     } else {
@@ -236,7 +236,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 break;
             case R.id.super_member_rl://超级会员
             case R.id.member_type_iv:
-                goVerify = StaticData.REFLASH_ONE;
+                goVerify = StaticData.REFRESH_ONE;
                 SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount, vipDescription, certifyPay, certifyAmount, vipExpireDate);
                 TCAgentUnit.setEventId(getActivity(), getString(R.string.member));
                 break;
@@ -310,17 +310,17 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 phone.setText(mobile);
                 VerifyManager.saveVerify(userInfo.getUserLevel());
                 vipExpireDate = mineInfo.getVipExpireDate();
-                if (TextUtils.equals(StaticData.REFLASH_ZERO, userInfo.getUserLevel())) {
+                if (TextUtils.equals(StaticData.REFRESH_ZERO, userInfo.getUserLevel())) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_ordinary_member);
                     verifiedIv.setSelected(false);
                     vipType.setText(getString(R.string.open_now));
                     superMemberRl.setVisibility(View.GONE);
-                } else if (TextUtils.equals(StaticData.REFLASH_ONE, userInfo.getUserLevel())) {
+                } else if (TextUtils.equals(StaticData.REFRESH_ONE, userInfo.getUserLevel())) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_certified_member);
                     verifiedIv.setSelected(true);
                     vipType.setText(getString(R.string.open_now));
                     superMemberRl.setVisibility(View.GONE);
-                } else if (TextUtils.equals(StaticData.REFLASH_TWO, userInfo.getUserLevel())) {
+                } else if (TextUtils.equals(StaticData.REFRESH_TWO, userInfo.getUserLevel())) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_super_member);
                     verifiedIv.setSelected(true);
                     vipType.setText(getString(R.string.view_now));

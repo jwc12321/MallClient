@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
@@ -18,7 +17,6 @@ import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
-import com.mall.sls.data.entity.WebViewDetailInfo;
 import com.mall.sls.webview.ui.WebViewActivity;
 
 import butterknife.BindView;
@@ -36,7 +34,6 @@ public class PrivacyPolicyTipActivity extends BaseActivity {
     ConventionalTextView hideCancelBt;
     @BindView(R.id.hide_confirm_bt)
     ConventionalTextView hideConfirmBt;
-    private WebViewDetailInfo webViewDetailInfo;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,10 +47,10 @@ public class PrivacyPolicyTipActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.hide_cancel_bt:
-                selectBack(StaticData.REFLASH_ZERO);
+                selectBack(StaticData.REFRESH_ZERO);
                 break;
             case R.id.hide_confirm_bt:
-                selectBack(StaticData.REFLASH_ONE);
+                selectBack(StaticData.REFRESH_ONE);
                 break;
             default:
         }
@@ -72,10 +69,7 @@ public class PrivacyPolicyTipActivity extends BaseActivity {
 
         spannableString1.setSpan(new ClickableSpan() {
             public void onClick(View widget) {
-                webViewDetailInfo = new WebViewDetailInfo();
-                webViewDetailInfo.setTitle(getString(R.string.registration_agreement_tv));
-                webViewDetailInfo.setUrl(StaticData.USER_AGREEMENT);
-                WebViewActivity.start(PrivacyPolicyTipActivity.this, webViewDetailInfo);
+                WebViewActivity.start(PrivacyPolicyTipActivity.this, StaticData.USER_AGREEMENT);
 
             }
         }, 27, 33, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -83,10 +77,7 @@ public class PrivacyPolicyTipActivity extends BaseActivity {
                 .getColor(R.color.backGround51)), 27, 33, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         spannableString1.setSpan(new ClickableSpan() {
             public void onClick(View widget) {
-                webViewDetailInfo = new WebViewDetailInfo();
-                webViewDetailInfo.setTitle(getString(R.string.privacy_policy_tv));
-                webViewDetailInfo.setUrl(StaticData.USER_PRIVACY);
-                WebViewActivity.start(PrivacyPolicyTipActivity.this, webViewDetailInfo);
+                WebViewActivity.start(PrivacyPolicyTipActivity.this, StaticData.USER_PRIVACY);
 
             }
         }, 34, 40, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

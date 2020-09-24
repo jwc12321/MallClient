@@ -137,7 +137,7 @@ public class FillCodeActivity extends BaseActivity implements LoginContract.Regi
     }
 
     private void confirm(){
-        if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
+        if(TextUtils.equals(StaticData.REFRESH_ZERO,choiceType)){
             registerLoginPresenter.bindSmsCodeLogin(deviceId,deviceOsVersion,devicePlatform,mobile,smsCode,invitationCode,unionId,deviceName);
         }else {
             registerLoginPresenter.bindOneClickLogin(deviceId,deviceOsVersion,devicePlatform,accessCode,invitationCode,unionId,deviceName);

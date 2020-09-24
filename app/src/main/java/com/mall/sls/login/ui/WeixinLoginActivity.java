@@ -33,7 +33,6 @@ import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.TokenInfo;
-import com.mall.sls.data.entity.WebViewDetailInfo;
 import com.mall.sls.data.event.WXLoginEvent;
 import com.mall.sls.login.DaggerLoginComponent;
 import com.mall.sls.login.LoginContract;
@@ -110,8 +109,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
     private String loginKey = "+3do8fAWK3Tv3vsx/iNPefkUhXOaZOWlrRv8rWUt1muMwnRX/NVlymCa7pvf2fh2qC/XwPQ6fkhNmI+Ke/85gonr7bUw6Tti+4PDbDt8znZtVuhApw2gerNIiAKbeXbF89PBAS/4xAHxPcd1vnZJwfL0YQ9teT74JT+7GT4qsi83hgeS4K8C9MXoqzrhqTWVLdSk7aUAgx/gXrXKQ8PoMDZsGpjuJ02eRyRdaoiGX8fZIWQYq3RlEavsu++RnbULX4OguGRxDn8YDTNvmmdIDA==";
     private boolean checkRet;
     private String unionId;
-    private WebViewDetailInfo webViewDetailInfo;
-    private String onClickType=StaticData.REFLASH_ZERO;//0:一键绑定 1：一键登录
+    private String onClickType=StaticData.REFRESH_ZERO;//0:一键绑定 1：一键登录
 
 
     public static void start(Context context) {
@@ -149,20 +147,14 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                 TCAgentUnit.setEventId(this,getString(R.string.weixin_login_register));
                 break;
             case R.id.register_tv://用户协议
-                webViewDetailInfo = new WebViewDetailInfo();
-                webViewDetailInfo.setTitle(getString(R.string.registration_agreement_tv));
-                webViewDetailInfo.setUrl(StaticData.USER_AGREEMENT);
-                WebViewActivity.start(this, webViewDetailInfo);
+                WebViewActivity.start(this, StaticData.USER_AGREEMENT);
                 break;
             case R.id.privacy_tv://隐私政策
-                webViewDetailInfo = new WebViewDetailInfo();
-                webViewDetailInfo.setTitle(getString(R.string.privacy_policy_tv));
-                webViewDetailInfo.setUrl(StaticData.USER_PRIVACY);
-                WebViewActivity.start(this, webViewDetailInfo);
+                WebViewActivity.start(this, StaticData.USER_PRIVACY);
                 break;
             case R.id.phone_login_bt://手机号登录
                 if (checkRet) {
-                    onClickType=StaticData.REFLASH_ONE;
+                    onClickType=StaticData.REFRESH_ONE;
                     configLoginTokenPort(getString(R.string.login_register),getString(R.string.login_register),getString(R.string.other_login));
                     mAlicomAuthHelper.getLoginToken(WeixinLoginActivity.this, 5000);
                 } else {
@@ -237,13 +229,13 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                 if(tokenInfo.getUserInfo()!=null) {
                     AvatarUrlManager.saveAvatarUrl(tokenInfo.getUserInfo().getAvatarUrl());
                 }
-                BindWxManager.saveBindWx(tokenInfo.getBindWx() ? StaticData.REFLASH_ONE : StaticData.REFLASH_ZERO);
+                BindWxManager.saveBindWx(tokenInfo.getBindWx() ? StaticData.REFRESH_ONE : StaticData.REFRESH_ZERO);
                 MainFrameActivity.start(this);
                 finish();
             } else {
                 unionId = tokenInfo.getUnionId();
                 if (checkRet) {
-                    onClickType=StaticData.REFLASH_ZERO;
+                    onClickType=StaticData.REFRESH_ZERO;
                     configLoginTokenPort(getString(R.string.bind_mobile),getString(R.string.bind_onclick_mobile),getString(R.string.code_bind));
                     mAlicomAuthHelper.getLoginToken(WeixinLoginActivity.this, 5000);
                 } else {
@@ -267,11 +259,11 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                 if(tokenInfo.getUserInfo()!=null) {
                     AvatarUrlManager.saveAvatarUrl(tokenInfo.getUserInfo().getAvatarUrl());
                 }
-                BindWxManager.saveBindWx(tokenInfo.getBindWx() ? StaticData.REFLASH_ONE : StaticData.REFLASH_ZERO);
+                BindWxManager.saveBindWx(tokenInfo.getBindWx() ? StaticData.REFRESH_ONE : StaticData.REFRESH_ZERO);
                 MainFrameActivity.start(this);
                 finish();
             } else {
-                LoginFillCodeActivity.start(this,loginToken,"","",StaticData.REFLASH_ONE);
+                LoginFillCodeActivity.start(this,loginToken,"","",StaticData.REFRESH_ONE);
             }
         }
     }
@@ -339,8 +331,8 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                 }
                 if (tokenRet != null && !("600001").equals(tokenRet.getCode())) {
                     loginToken = tokenRet.getToken();
-                    if(TextUtils.equals(StaticData.REFLASH_ZERO,onClickType)) {
-                        FillCodeActivity.start(WeixinLoginActivity.this, unionId, loginToken, "", "", StaticData.REFLASH_ONE);
+                    if(TextUtils.equals(StaticData.REFRESH_ZERO,onClickType)) {
+                        FillCodeActivity.start(WeixinLoginActivity.this, unionId, loginToken, "", "", StaticData.REFRESH_ONE);
                     }else {
                         weiXinLoginPresenter.oneClickLogin(loginToken,deviceId,deviceOsVersion,devicePlatform,"",deviceName);
                         TCAgentUnit.setEventId(WeixinLoginActivity.this,getString(R.string.login_register_bt));
@@ -360,8 +352,8 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        if (tokenRet == null || ("600011").equals(tokenRet.getCode())|| ("600005").equals(tokenRet.getCode())) {
-                            if(TextUtils.equals(StaticData.REFLASH_ZERO,onClickType)) {
+                        if (tokenRet == null || ("600011").equals(tokenRet.getCode())|| ("600005").equals(tokenRet.getCode())|| ("600002").equals(tokenRet.getCode())|| ("600015").equals(tokenRet.getCode())) {
+                            if(TextUtils.equals(StaticData.REFRESH_ZERO,onClickType)) {
                                 BindPhoneActivity.start(WeixinLoginActivity.this, unionId);
                             }else {
                                 PhoneLoginActivity.start(WeixinLoginActivity.this);
@@ -384,7 +376,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
             public void onClick(String code, Context context, JSONObject jsonObj) {
                 Log.e("authSDK", "OnUIControlClick:code=" + code + ", jsonObj=" + (jsonObj == null ? "" : jsonObj.toJSONString()));
                 if (TextUtils.equals("700001", code)) {
-                    if(TextUtils.equals(StaticData.REFLASH_ZERO,onClickType)) {
+                    if(TextUtils.equals(StaticData.REFRESH_ZERO,onClickType)) {
                         BindPhoneActivity.start(WeixinLoginActivity.this, unionId);
                     }else {
                         PhoneLoginActivity.start(WeixinLoginActivity.this);

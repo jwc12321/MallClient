@@ -43,7 +43,7 @@ public class LotteryItemPresenter implements LotteryContract.LotteryItemPresente
 
     @Override
     public void getLotteryItemInfo(String refreshType) {
-        if (TextUtils.equals("1", refreshType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             lotteryItemView.showLoading(StaticData.LOADING);
         }
         currentIndex=1;

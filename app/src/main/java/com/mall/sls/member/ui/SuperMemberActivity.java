@@ -113,7 +113,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
         intent.putExtra(StaticData.VIP_AMOUNT, vipAmount);
         intent.putExtra(StaticData.VIP_DESCRIPTION, vipDescription);
         intent.putExtra(StaticData.CERTIFY_PAY, certifyPay);
-        intent.putExtra(StaticData.CRETIFY_AMOUNT, certifyAmount);
+        intent.putExtra(StaticData.CERTIFY_AMOUNT, certifyAmount);
         intent.putExtra(StaticData.VIP_EXPIRE_DATE, vipExpireDate);
         context.startActivity(intent);
     }
@@ -135,16 +135,16 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
         vipAmount = getIntent().getStringExtra(StaticData.VIP_AMOUNT);
         vipDescription = getIntent().getStringExtra(StaticData.VIP_DESCRIPTION);
         certifyPay = getIntent().getBooleanExtra(StaticData.CERTIFY_PAY, false);
-        certifyAmount = getIntent().getStringExtra(StaticData.CRETIFY_AMOUNT);
+        certifyAmount = getIntent().getStringExtra(StaticData.CERTIFY_AMOUNT);
         vipExpireDate = getIntent().getStringExtra(StaticData.VIP_EXPIRE_DATE);
         GlideHelper.load(this, avatarUrl, R.mipmap.icon_defalut_head, headPhoto);
         phone.setText(mobile);
         memberGoodsItemAdapter = new MemberGoodsItemAdapter(this);
         memberGoodsItemAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(memberGoodsItemAdapter);
-        confirmBt.setEnabled(TextUtils.equals(StaticData.REFLASH_THREE, VerifyManager.getVerify()) ? false : true);
+        confirmBt.setEnabled(TextUtils.equals(StaticData.REFRESH_THREE, VerifyManager.getVerify()) ? false : true);
 
-        if (TextUtils.equals(StaticData.REFLASH_TWO, VerifyManager.getVerify())) {
+        if (TextUtils.equals(StaticData.REFRESH_TWO, VerifyManager.getVerify())) {
             confirmBt.setEnabled(false);
             status.setText(getString(R.string.is_open));
             endTime.setText(vipExpireDate + "到期");
@@ -152,7 +152,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
             confirmBt.setEnabled(true);
             status.setText(getString(R.string.nonactivated));
         }
-        superMemberPresenter.getVipGroupons(StaticData.REFLASH_ONE);
+        superMemberPresenter.getVipGroupons(StaticData.REFRESH_ONE);
     }
 
 
@@ -160,7 +160,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            superMemberPresenter.getVipGroupons(StaticData.REFLASH_ZERO);
+            superMemberPresenter.getVipGroupons(StaticData.REFRESH_ZERO);
         }
 
         @Override
@@ -174,7 +174,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.confirm_bt:
-                if (TextUtils.equals(StaticData.REFLASH_ZERO, VerifyManager.getVerify())) {
+                if (TextUtils.equals(StaticData.REFRESH_ZERO, VerifyManager.getVerify())) {
                     showMessage(getString(R.string.to_open_person_authentication));
                     if (certifyPay) {
                         NameVerifiedActivity.start(this);
@@ -183,7 +183,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
                     }
                 } else {
                     Intent intent = new Intent(this, SelectPayTypeActivity.class);
-                    intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_ONE);
+                    intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_ONE);
                     intent.putExtra(StaticData.PAYMENT_AMOUNT, vipAmount);
                     startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
                 }
@@ -209,16 +209,16 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
                 case RequestCodeStatic.PAY_TYPE:
                     if (data != null) {
                         String selectType = data.getStringExtra(StaticData.SELECT_TYPE);
-                        if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
+                        if (TextUtils.equals(StaticData.REFRESH_ZERO, selectType)) {
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(SuperMemberActivity.this)) {
-                                superMemberPresenter.wxPayMember(StaticData.REFLASH_ONE, selectType);
+                                superMemberPresenter.wxPayMember(StaticData.REFRESH_ONE, selectType);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
-                        } else if (TextUtils.equals(StaticData.REFLASH_ONE, selectType)) {
+                        } else if (TextUtils.equals(StaticData.REFRESH_ONE, selectType)) {
                             if (PayTypeInstalledUtils.isAliPayInstalled(SuperMemberActivity.this)) {
-                                superMemberPresenter.alipayMember(StaticData.REFLASH_ONE, selectType);
+                                superMemberPresenter.alipayMember(StaticData.REFRESH_ONE, selectType);
                             } else {
                                 showMessage(getString(R.string.install_alipay));
                             }
@@ -295,7 +295,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     public void renderVipOpen(Boolean isBoolean) {
         if (isBoolean) {
             showMessage(getString(R.string.open_vip));
-            VerifyManager.saveVerify(StaticData.REFLASH_THREE);
+            VerifyManager.saveVerify(StaticData.REFRESH_THREE);
             confirmBt.setEnabled(false);
             status.setText(getString(R.string.is_open));
         }

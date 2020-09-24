@@ -99,7 +99,7 @@
             android:gravity="center"
             android:paddingRight="@dimen/dp_15"
             android:text="@string/cancel"
-            android:textColor="@color/appText1"
+            android:textColor="@color/appText3"
             android:textSize="@dimen/sp_14"
             android:visibility="gone"/>
     </RelativeLayout>

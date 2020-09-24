@@ -14,7 +14,6 @@ import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
-import com.mall.sls.data.entity.WebViewDetailInfo;
 import com.mall.sls.webview.ui.WebViewActivity;
 
 import butterknife.BindView;
@@ -59,10 +58,7 @@ public class StartVerifyActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.face_protocol://人脸识别认证协议
-                WebViewDetailInfo webViewDetailInfo = new WebViewDetailInfo();
-                webViewDetailInfo.setTitle(getString(R.string.face_protocol));
-                webViewDetailInfo.setUrl(StaticData.OCR_AGREEMENT);
-                WebViewActivity.start(this, webViewDetailInfo);
+                WebViewActivity.start(this, StaticData.OCR_AGREEMENT);
                 break;
             default:
         }

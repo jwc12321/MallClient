@@ -48,7 +48,7 @@ public class MsgInfoPresenter implements MessageContract.MsgInfoPresenter {
 
     @Override
     public void getMsgInfo(String refreshType, String typeId) {
-        if (TextUtils.equals("1", refreshType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             msgInfoView.showLoading(StaticData.LOADING);
         }
         currentIndex=1;
@@ -124,7 +124,7 @@ public class MsgInfoPresenter implements MessageContract.MsgInfoPresenter {
     @Override
     public void msgChangeStatus(String msgId) {
         msgInfoView.showLoading(StaticData.PROCESSING);
-        MsgReadRequest request=new MsgReadRequest(msgId,StaticData.REFLASH_ONE);
+        MsgReadRequest request=new MsgReadRequest(msgId,StaticData.REFRESH_ONE);
         String sign= SignUnit.signPost(RequestUrl.MSG_CHANGE_STATUS,gson.toJson(request));
         Disposable disposable = restApiService.msgChangeStatus(sign,request)
                 .flatMap(new RxRemoteDataParse<Ignore>())

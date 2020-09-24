@@ -28,7 +28,6 @@ import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.TokenInfo;
-import com.mall.sls.data.entity.WebViewDetailInfo;
 import com.mall.sls.login.DaggerLoginComponent;
 import com.mall.sls.login.LoginContract;
 import com.mall.sls.login.LoginModule;
@@ -75,7 +74,6 @@ public class PhoneLoginActivity extends BaseActivity implements LoginContract.Lo
     private String deviceId;
     private String deviceOsVersion;
     private String devicePlatform;
-    private WebViewDetailInfo webViewDetailInfo;
     private String deviceName;
     @Inject
     LoginPresenter loginPresenter;
@@ -141,16 +139,10 @@ public class PhoneLoginActivity extends BaseActivity implements LoginContract.Lo
                 sendVcode();
                 break;
             case R.id.register_tv://用户协议
-                webViewDetailInfo = new WebViewDetailInfo();
-                webViewDetailInfo.setTitle(getString(R.string.registration_agreement_tv));
-                webViewDetailInfo.setUrl(StaticData.USER_AGREEMENT);
-                WebViewActivity.start(this, webViewDetailInfo);
+                WebViewActivity.start(this, StaticData.USER_AGREEMENT);
                 break;
             case R.id.privacy_tv://隐私政策
-                webViewDetailInfo = new WebViewDetailInfo();
-                webViewDetailInfo.setTitle(getString(R.string.privacy_policy_tv));
-                webViewDetailInfo.setUrl(StaticData.USER_PRIVACY);
-                WebViewActivity.start(this, webViewDetailInfo);
+                WebViewActivity.start(this, StaticData.USER_PRIVACY);
                 break;
             default:
         }
@@ -196,7 +188,7 @@ public class PhoneLoginActivity extends BaseActivity implements LoginContract.Lo
                 PushManager.getInstance().setTag(this, tags, String.valueOf(System.currentTimeMillis()));
                 MobileManager.saveMobile(tokenInfo.getUserInfo().getMobile());
                 TokenManager.saveToken(tokenInfo.getToken());
-                BindWxManager.saveBindWx(tokenInfo.getBindWx() ? StaticData.REFLASH_ONE : StaticData.REFLASH_ZERO);
+                BindWxManager.saveBindWx(tokenInfo.getBindWx() ? StaticData.REFRESH_ONE : StaticData.REFRESH_ZERO);
                 if(tokenInfo.getUserInfo()!=null) {
                     AvatarUrlManager.saveAvatarUrl(tokenInfo.getUserInfo().getAvatarUrl());
                 }
@@ -204,7 +196,7 @@ public class PhoneLoginActivity extends BaseActivity implements LoginContract.Lo
                 MainFrameActivity.start(this);
                 finish();
             } else {
-                LoginFillCodeActivity.start(this,"",phoneNumber,smsCode,StaticData.REFLASH_ZERO);
+                LoginFillCodeActivity.start(this,"",phoneNumber,smsCode,StaticData.REFRESH_ZERO);
             }
         }
     }

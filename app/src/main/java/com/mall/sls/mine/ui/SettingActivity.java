@@ -13,11 +13,9 @@ import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.TokenManager;
-import com.mall.sls.common.unit.UpdateManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.AppUrlInfo;
-import com.mall.sls.data.entity.WebViewDetailInfo;
 import com.mall.sls.mine.DaggerMineComponent;
 import com.mall.sls.mine.MineContract;
 import com.mall.sls.mine.MineModule;
@@ -30,7 +28,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import constant.UiType;
-import listener.OnBtnClickListener;
 import model.UiConfig;
 import model.UpdateConfig;
 import update.UpdateAppUtils;
@@ -60,7 +57,6 @@ public class SettingActivity extends BaseActivity implements MineContract.Settin
     RelativeLayout updateRl;
     @BindView(R.id.item_rl)
     RelativeLayout itemRl;
-    private WebViewDetailInfo webViewDetailInfo;
 
     @Inject
     SettingPresenter settingPresenter;
@@ -92,16 +88,10 @@ public class SettingActivity extends BaseActivity implements MineContract.Settin
                 showMessage(getString(R.string.clear_cache_success));
                 break;
             case R.id.register_tv://用户协议
-                webViewDetailInfo = new WebViewDetailInfo();
-                webViewDetailInfo.setTitle(getString(R.string.registration_agreement_tv));
-                webViewDetailInfo.setUrl(StaticData.USER_AGREEMENT);
-                WebViewActivity.start(this, webViewDetailInfo);
+                WebViewActivity.start(this, StaticData.USER_AGREEMENT);
                 break;
             case R.id.privacy_tv://隐私政策
-                webViewDetailInfo = new WebViewDetailInfo();
-                webViewDetailInfo.setTitle(getString(R.string.privacy_policy_tv));
-                webViewDetailInfo.setUrl(StaticData.USER_PRIVACY);
-                WebViewActivity.start(this, webViewDetailInfo);
+                WebViewActivity.start(this, StaticData.USER_PRIVACY);
                 break;
             case R.id.update_rl://版本检测
                 AboutAppActivity.start(this);

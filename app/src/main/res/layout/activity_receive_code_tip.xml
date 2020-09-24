@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround8"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <RelativeLayout
+        android:id="@+id/item_ll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_300"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:background="@drawable/common_four_back_fifty_seven_bg">
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/size15_color_app3_text_style"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="@string/can_not_receive_check_code" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/confirm_bt"
+            android:layout_below="@id/title"
+            android:fadingEdge="none"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout style="@style/receive_code_ll_style">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/receive_code_left_tv_style"
+                        android:text="1" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/receive_code_right_tv_style"
+                        android:text="@string/can_not_receive_first" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/receive_code_ll_style">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/receive_code_left_tv_style"
+                        android:text="2" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/receive_code_right_tv_style"
+                        android:text="@string/can_not_receive_second" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/receive_code_ll_style">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/receive_code_left_tv_style"
+                        android:text="3" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/receive_code_right_tv_style"
+                        android:text="@string/can_not_receive_third" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/receive_code_ll_style">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/receive_code_left_tv_style"
+                        android:text="4" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/receive_code_right_tv_style"
+                        android:text="@string/can_not_receive_fourth" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/confirm_bt"
+            style="@style/phone_tip_bt_style"
+            android:text="@string/i_know" />
+
+        <View
+            style="@style/back_nine_line_style"
+            android:layout_above="@id/confirm_bt" />
+    </RelativeLayout>
+</RelativeLayout>

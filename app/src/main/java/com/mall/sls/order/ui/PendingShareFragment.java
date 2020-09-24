@@ -77,6 +77,7 @@ public class PendingShareFragment extends BaseFragment implements OrderContract.
     private List<OrderGoodsVo> orderGoodsVos;
     private String orderTotalPrice;
     private String backType;
+    private String showType;
 
     private GoodsOrderAdapter goodsOrderAdapter;
     @Inject
@@ -116,10 +117,11 @@ public class PendingShareFragment extends BaseFragment implements OrderContract.
         EventBus.getDefault().register(this);
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         wxShareManager = WXShareManager.getInstance(getActivity());
+        showType=StaticData.REFRESH_TWO;
         addAdapter();
-        if(TextUtils.equals(StaticData.REFLASH_TWO,choiceType)) {
+        if(TextUtils.equals(StaticData.REFRESH_TWO,choiceType)) {
             orderListPresenter.getInvitationCodeInfo();
-            orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_TWO);
+            orderListPresenter.getOrderList(StaticData.REFRESH_ONE,showType);
         }
     }
 
@@ -135,12 +137,12 @@ public class PendingShareFragment extends BaseFragment implements OrderContract.
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            orderListPresenter.getOrderList(StaticData.REFLASH_ZERO,StaticData.REFLASH_TWO);
+            orderListPresenter.getOrderList(StaticData.REFRESH_ZERO,showType);
         }
 
         @Override
         public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-            orderListPresenter.getMoreOrderList(StaticData.REFLASH_TWO);
+            orderListPresenter.getMoreOrderList(showType);
         }
     };
 
@@ -159,7 +161,7 @@ public class PendingShareFragment extends BaseFragment implements OrderContract.
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()&&orderListPresenter!=null) {
             orderListPresenter.getInvitationCodeInfo();
-            orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_TWO);
+            orderListPresenter.getOrderList(StaticData.REFRESH_ONE,showType);
         }
     }
 
@@ -188,13 +190,13 @@ public class PendingShareFragment extends BaseFragment implements OrderContract.
     public void wxShare(GoodsOrderInfo goodsOrderInfo, ImageView shareIv) {
         if (goodsOrderInfo != null) {
             this.isActivity = goodsOrderInfo.getActivity();
-            this.goodsId = goodsOrderInfo.getId();
             this.grouponId = goodsOrderInfo.getGrouponLinkId();
             orderGoodsVos = goodsOrderInfo.getOrderGoodsVos();
             if (orderGoodsVos != null && orderGoodsVos.size() > 0) {
                 this.goodsProductId = orderGoodsVos.get(0).getProductId();
                 nameText = BriefUnit.returnName(orderGoodsVos.get(0).getPrice(), orderGoodsVos.get(0).getGoodsName());
                 briefText = BriefUnit.returnBrief(orderGoodsVos.get(0).getBrief());
+                this.goodsId=orderGoodsVos.get(0).getGoodsId();
             }
             orderTotalPrice = goodsOrderInfo.getActualPrice();
             shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, 150,150);
@@ -262,9 +264,9 @@ public class PendingShareFragment extends BaseFragment implements OrderContract.
                     if (data != null) {
                         backType = data.getStringExtra(StaticData.BACK_TYPE);
                         if (!isActivity) {
-                            shareGroupWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                            shareGroupWx(TextUtils.equals(StaticData.REFRESH_ONE, backType));
                         } else {
-                            shareActivityWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                            shareActivityWx(TextUtils.equals(StaticData.REFRESH_ONE, backType));
                         }
                     }
                     break;

@@ -66,7 +66,7 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
     MediumThickTextView confirmBt;
     @BindView(R.id.amount)
     ConventionalTextView amount;
-    private String selectType = StaticData.REFLASH_ZERO;
+    private String selectType = StaticData.REFRESH_ZERO;
     private Handler mHandler = new MyHandler(this);
     private String certifyAmount;
 
@@ -75,7 +75,7 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
 
     public static void start(Context context, String certifyAmount) {
         Intent intent = new Intent(context, CerifyPayActivity.class);
-        intent.putExtra(StaticData.CRETIFY_AMOUNT, certifyAmount);
+        intent.putExtra(StaticData.CERTIFY_AMOUNT, certifyAmount);
         context.startActivity(intent);
     }
 
@@ -90,7 +90,7 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
 
     private void initView() {
         EventBus.getDefault().register(this);
-        certifyAmount = getIntent().getStringExtra(StaticData.CRETIFY_AMOUNT);
+        certifyAmount = getIntent().getStringExtra(StaticData.CERTIFY_AMOUNT);
         amount.setText(NumberFormatUnit.goodsFormat(certifyAmount));
         selectPayType();
     }
@@ -116,11 +116,11 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
                 finish();
                 break;
             case R.id.select_weixin_iv:
-                selectType = StaticData.REFLASH_ZERO;
+                selectType = StaticData.REFRESH_ZERO;
                 selectPayType();
                 break;
             case R.id.select_ali_iv:
-                selectType = StaticData.REFLASH_ONE;
+                selectType = StaticData.REFRESH_ONE;
                 selectPayType();
                 break;
             default:
@@ -128,17 +128,17 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
     }
 
     private void confirm() {
-        if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ZERO, selectType)) {
             //微信
             if (PayTypeInstalledUtils.isWeixinAvilible(CerifyPayActivity.this)) {
-                certifyPayPresenter.wxPay(StaticData.REFLASH_ZERO, selectType);
+                certifyPayPresenter.wxPay(StaticData.REFRESH_ZERO, selectType);
 
             } else {
                 showMessage(getString(R.string.install_weixin));
             }
         } else {
             if (PayTypeInstalledUtils.isAliPayInstalled(CerifyPayActivity.this)) {
-                certifyPayPresenter.aliPay(StaticData.REFLASH_ZERO, selectType);
+                certifyPayPresenter.aliPay(StaticData.REFRESH_ZERO, selectType);
             } else {
                 showMessage(getString(R.string.install_alipay));
             }
@@ -146,8 +146,8 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
     }
 
     private void selectPayType() {
-        selectWeixinIv.setSelected(TextUtils.equals(StaticData.REFLASH_ZERO, selectType));
-        selectAliIv.setSelected(TextUtils.equals(StaticData.REFLASH_ONE, selectType));
+        selectWeixinIv.setSelected(TextUtils.equals(StaticData.REFRESH_ZERO, selectType));
+        selectAliIv.setSelected(TextUtils.equals(StaticData.REFRESH_ONE, selectType));
     }
 
     @Override

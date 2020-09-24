@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/backGround8"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_365"
+        android:layout_alignParentBottom="true"
+        android:background="@color/backGround57"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/dp_47">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10">
+
+            <ImageView
+                android:id="@+id/back"
+                style="@style/pay_back_iv_style" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/size15_color_app3_text_style"
+                android:layout_centerInParent="true"
+                android:text="@string/select_pay_bank" />
+        </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/record_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="@string/layoutManager_LinearLayout"
+            tools:listitem="@layout/adapter_select_bank_card" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/confirm_bt"
+        style="@style/confirm_bt_ll_style">
+        <ImageView
+            style="@style/confirm_bt_iv_style"
+            android:src="@mipmap/icon_white_add"/>
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+          style="@style/confirm_bt_tv_style"
+            android:text="@string/add_bank_card"/>
+    </LinearLayout>
+</RelativeLayout>

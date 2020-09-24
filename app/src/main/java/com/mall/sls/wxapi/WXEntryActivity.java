@@ -43,7 +43,6 @@ public class WXEntryActivity extends AppCompatActivity implements IWXAPIEventHan
             ShowMessageFromWX.Req showReq = (ShowMessageFromWX.Req) req;
             WXMediaMessage mediaMsg = showReq.message;
             String extInfo = mediaMsg.messageExt;
-            Log.d("1111", "数据" +extInfo);
             Intent intent = new Intent(this, SplashActivity.class);
             intent.setData(Uri.parse(extInfo));
             startActivity(intent);

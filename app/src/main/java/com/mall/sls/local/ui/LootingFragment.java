@@ -74,7 +74,7 @@ public class LootingFragment extends BaseFragment implements GoodsItemAdapter.On
     private void initView() {
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         initAdapter();
-        rushBuyPresenter.getRushBuy(StaticData.REFLASH_ONE);
+        rushBuyPresenter.getRushBuy(StaticData.REFRESH_ONE);
     }
 
     private void initAdapter() {
@@ -88,7 +88,7 @@ public class LootingFragment extends BaseFragment implements GoodsItemAdapter.On
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            rushBuyPresenter.getRushBuy(StaticData.REFLASH_ZERO);
+            rushBuyPresenter.getRushBuy(StaticData.REFRESH_ZERO);
         }
 
         @Override
@@ -111,7 +111,7 @@ public class LootingFragment extends BaseFragment implements GoodsItemAdapter.On
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
             if (rushBuyPresenter != null) {
-                rushBuyPresenter.getRushBuy(StaticData.REFLASH_ONE);
+                rushBuyPresenter.getRushBuy(StaticData.REFRESH_ONE);
             }
         }
     }
@@ -156,9 +156,9 @@ public class LootingFragment extends BaseFragment implements GoodsItemAdapter.On
 
     @Override
     public void goGoodsDetails(String goodsType, String goodsId) {
-        if (TextUtils.equals(StaticData.REFLASH_ONE, goodsType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, goodsType)) {
             GeneralGoodsDetailsActivity.start(getActivity(), goodsId);
-        } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsType)) {
+        } else if (TextUtils.equals(StaticData.REFRESH_TWO, goodsType)) {
             OrdinaryGoodsDetailActivity.start(getActivity(), goodsId);
         } else {
             ActivityGroupGoodsActivity.start(getActivity(), goodsId);
@@ -178,7 +178,7 @@ public class LootingFragment extends BaseFragment implements GoodsItemAdapter.On
 
     public void lootingRefresh() {
         if (rushBuyPresenter != null) {
-            rushBuyPresenter.getRushBuy(StaticData.REFLASH_ONE);
+            rushBuyPresenter.getRushBuy(StaticData.REFRESH_ONE);
         }
     }
 }

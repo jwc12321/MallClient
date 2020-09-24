@@ -55,9 +55,9 @@ public class MsgTypeAdapter extends RecyclerView.Adapter<MsgTypeAdapter.MsgTypeV
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    if(TextUtils.equals(StaticData.REFLASH_ONE,messageTypeInfo.getId())){
+                    if(TextUtils.equals(StaticData.REFRESH_ONE,messageTypeInfo.getId())){
                         onItemClickListener.goOrderMessage(messageTypeInfo.getId(),messageTypeInfo.getType());
-                    }else if(TextUtils.equals(StaticData.REFLASH_TWO,messageTypeInfo.getId())){
+                    }else if(TextUtils.equals(StaticData.REFRESH_TWO,messageTypeInfo.getId())){
 
                     }
                 }

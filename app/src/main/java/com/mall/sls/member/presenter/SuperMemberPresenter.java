@@ -47,7 +47,7 @@ public class SuperMemberPresenter implements MemberContract.SuperMemberPresente 
 
     @Override
     public void getVipGroupons(String refreshType) {
-        if (TextUtils.equals("1", refreshType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             superMemberView.showLoading(StaticData.LOADING);
         }
         currentIndex=1;

@@ -34,7 +34,7 @@ public class CerifyTipActivity extends BaseActivity {
 
     public static void start(Context context,String certifyAmount) {
         Intent intent = new Intent(context, CerifyTipActivity.class);
-        intent.putExtra(StaticData.CRETIFY_AMOUNT,certifyAmount);
+        intent.putExtra(StaticData.CERTIFY_AMOUNT,certifyAmount);
         context.startActivity(intent);
     }
 
@@ -49,7 +49,7 @@ public class CerifyTipActivity extends BaseActivity {
 
     private void initView() {
         String bottomTip = " 1:身份证信息仅供平台提供诚信保证使用。\n 2:我方承诺不向其他第三方透露您的个人信息";
-        certifyAmount=getIntent().getStringExtra(StaticData.CRETIFY_AMOUNT);
+        certifyAmount=getIntent().getStringExtra(StaticData.CERTIFY_AMOUNT);
         bottomTipTv.setText(bottomTip);
     }
 

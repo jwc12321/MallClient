@@ -120,16 +120,16 @@ public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapte
             content.setText(messageItemInfo.getContent());
             goodsContent.setText(messageItemInfo.getContent());
             time.setText(messageItemInfo.getAddTime());
-            if(!TextUtils.isEmpty(messageItemInfo.getLinkUrl())&&!TextUtils.equals(StaticData.REFLASH_ONE,messageItemInfo.getLinkUrl())&&!TextUtils.equals(StaticData.REFLASH_TWO,messageItemInfo.getLinkUrl())){
+            if(!TextUtils.isEmpty(messageItemInfo.getLinkUrl())&&!TextUtils.equals(StaticData.REFRESH_ONE,messageItemInfo.getLinkUrl())&&!TextUtils.equals(StaticData.REFRESH_TWO,messageItemInfo.getLinkUrl())){
                 linkUrlInfo = gson.fromJson(messageItemInfo.getLinkUrl(), LinkUrlInfo.class);
                 nativeType = linkUrlInfo.getNativeType();
                 goodsRl.setVisibility(TextUtils.equals(StaticData.ORDERDETAIL, nativeType) ? View.VISIBLE : View.GONE);
                 content.setVisibility(TextUtils.equals(StaticData.ORDERDETAIL, nativeType) ? View.GONE : View.VISIBLE);
                 goodsLayout.setEnabled(TextUtils.equals(StaticData.ORDERDETAIL, nativeType));
             }else {//兼顾老数据  之前数据1和2
-                goodsRl.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, messageItemInfo.getLinkUrl()) ? View.VISIBLE : View.GONE);
-                content.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, messageItemInfo.getLinkUrl()) ? View.GONE : View.VISIBLE);
-                goodsLayout.setEnabled(TextUtils.equals(StaticData.REFLASH_ONE, messageItemInfo.getLinkUrl()));
+                goodsRl.setVisibility(TextUtils.equals(StaticData.REFRESH_ONE, messageItemInfo.getLinkUrl()) ? View.VISIBLE : View.GONE);
+                content.setVisibility(TextUtils.equals(StaticData.REFRESH_ONE, messageItemInfo.getLinkUrl()) ? View.GONE : View.VISIBLE);
+                goodsLayout.setEnabled(TextUtils.equals(StaticData.REFRESH_ONE, messageItemInfo.getLinkUrl()));
             }
         }
 

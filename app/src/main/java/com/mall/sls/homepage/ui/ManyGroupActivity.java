@@ -70,7 +70,7 @@ public class ManyGroupActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onShareSuccess(String code) {
         Intent backIntent = new Intent();
-        backIntent.putExtra(StaticData.BACK_TYPE, StaticData.REFLASH_ONE);
+        backIntent.putExtra(StaticData.BACK_TYPE, StaticData.REFRESH_ONE);
         setResult(Activity.RESULT_OK, backIntent);
         finish();
 
@@ -81,7 +81,7 @@ public class ManyGroupActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.close_iv:
                 Intent backIntent = new Intent();
-                backIntent.putExtra(StaticData.BACK_TYPE, StaticData.REFLASH_ZERO);
+                backIntent.putExtra(StaticData.BACK_TYPE, StaticData.REFRESH_ZERO);
                 setResult(Activity.RESULT_OK, backIntent);
                 finish();
                 break;
@@ -107,7 +107,7 @@ public class ManyGroupActivity extends BaseActivity {
                 case RequestCodeStatic.SELECT_SHARE_TYPE:
                     if (data != null) {
                         backType = data.getStringExtra(StaticData.BACK_TYPE);
-                        shareWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                        shareWx(TextUtils.equals(StaticData.REFRESH_ONE, backType));
                     }
                     break;
                 default:

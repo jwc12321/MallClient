@@ -113,7 +113,7 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            lotteryItemPresenter.getLotteryItemInfo(StaticData.REFLASH_ZERO);
+            lotteryItemPresenter.getLotteryItemInfo(StaticData.REFRESH_ZERO);
         }
 
         @Override
@@ -126,7 +126,7 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
     protected void onResume() {
         super.onResume();
         if (isFirst) {
-            lotteryItemPresenter.getLotteryItemInfo(StaticData.REFLASH_ONE);
+            lotteryItemPresenter.getLotteryItemInfo(StaticData.REFRESH_ONE);
             isFirst = false;
         }
     }
@@ -153,7 +153,7 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
             luckyDrawNumber.setText("x " + lotteryItemInfo.getPrizeNumber());
             lotteryRecordNumber.setText(lotteryItemInfo.getHistoryPrizeCount());
             brocadeCarps = lotteryItemInfo.getBrocadeCarps();
-            koiRl.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO,lotteryItemInfo.getHistoryPrizeCount())?View.GONE:View.VISIBLE);
+            koiRl.setVisibility(TextUtils.equals(StaticData.REFRESH_ZERO,lotteryItemInfo.getHistoryPrizeCount())?View.GONE:View.VISIBLE);
             prizeRuleUrl=lotteryItemInfo.getPrizeRuleUrl();
             if (brocadeCarps != null && brocadeCarps.size() > 0) {
                 for (int i = 0; i < brocadeCarps.size(); i++) {

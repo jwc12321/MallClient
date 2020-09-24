@@ -43,7 +43,7 @@ public class WaitBuyPresenter implements LocalContract.WaitBuyPresenter {
 
     @Override
     public void getWaitBuy(String refreshType) {
-        if (TextUtils.equals("1", refreshType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             waitBuyView.showLoading(StaticData.LOADING);
         }
         currentIndex=1;

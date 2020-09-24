@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.Window;
 
 import com.mall.sls.R;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 
 
@@ -38,11 +39,11 @@ public class LoadingDialog extends AlertDialog {
                 ColorDrawable(Color.TRANSPARENT));
         setContentView(R.layout.dialog_loading);
         textView=(ConventionalTextView) findViewById(R.id.text);
-        if (TextUtils.equals("1",tips)){
+        if (TextUtils.equals(StaticData.REFRESH_ONE,tips)){
             textView.setText(context.getString(R.string.signing_on));
-        }else if(TextUtils.equals("2",tips)){
+        }else if(TextUtils.equals(StaticData.REFRESH_TWO,tips)){
             textView.setText(context.getString(R.string.loading));
-        }else if(TextUtils.equals("3",tips)){
+        }else if(TextUtils.equals(StaticData.REFRESH_THREE,tips)){
             textView.setText(context.getString(R.string.processing));
         }
         setCanceledOnTouchOutside(false);

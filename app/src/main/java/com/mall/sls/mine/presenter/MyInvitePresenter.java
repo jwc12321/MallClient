@@ -41,7 +41,7 @@ public class MyInvitePresenter implements MineContract.MyInvitePresenter {
 
     @Override
     public void getMyInvite(String refreshType) {
-        if (TextUtils.equals(StaticData.REFLASH_ONE, refreshType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             myInviteView.showLoading(StaticData.LOADING);
         }
         String queryString = "null";

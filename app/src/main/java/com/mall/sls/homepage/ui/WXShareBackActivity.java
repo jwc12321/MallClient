@@ -113,7 +113,7 @@ public class WXShareBackActivity extends BaseActivity {
         goodsProductId = getIntent().getStringExtra(StaticData.GOODS_PRODUCT_ID);
         goodsOrderId = getIntent().getStringExtra(StaticData.GOODS_ORDER_ID);
         picUrl = getIntent().getStringExtra(StaticData.PIC_URL);
-        if (TextUtils.equals(StaticData.REFLASH_ONE, purchaseType) || TextUtils.equals(StaticData.REFLASH_THREE, purchaseType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, purchaseType) || TextUtils.equals(StaticData.REFRESH_THREE, purchaseType)) {
             orderIv.setVisibility(View.VISIBLE);
             weixinIv.setVisibility(View.GONE);
             tip.setVisibility(View.INVISIBLE);
@@ -133,7 +133,7 @@ public class WXShareBackActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.home_iv://首页
                 TCAgentUnit.setEventId(this,getString(R.string.pay_success_home));
-                MainStartManager.saveMainStart(StaticData.REFLASH_ONE);
+                MainStartManager.saveMainStart(StaticData.REFRESH_ONE);
                 MainFrameActivity.start(this);
                 finish();
                 break;
@@ -180,10 +180,10 @@ public class WXShareBackActivity extends BaseActivity {
                 case RequestCodeStatic.SELECT_SHARE_TYPE:
                     if (data != null) {
                         backType = data.getStringExtra(StaticData.BACK_TYPE);
-                        if (TextUtils.equals(StaticData.REFLASH_TWO, purchaseType)) {
-                            shareGroupWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                        if (TextUtils.equals(StaticData.REFRESH_TWO, purchaseType)) {
+                            shareGroupWx(TextUtils.equals(StaticData.REFRESH_ONE, backType));
                         } else {
-                            shareActivityWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                            shareActivityWx(TextUtils.equals(StaticData.REFRESH_ONE, backType));
                         }
                     }
                     break;

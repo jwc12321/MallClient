@@ -53,6 +53,11 @@
                         android:id="@+id/current_price"
                         style="@style/size25_color_app1_text_style"
                         tools:text="1234"/>
+                    <com.mall.sls.common.widget.textview.WhiteDrawTextView
+                        android:id="@+id/original_price"
+                        style="@style/size12_color_app1_text_style"
+                        tools:text="1234"
+                        android:layout_marginLeft="@dimen/dp_20" />
                 </LinearLayout>
 
 

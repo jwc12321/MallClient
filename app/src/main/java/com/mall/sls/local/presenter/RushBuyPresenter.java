@@ -44,7 +44,7 @@ public class RushBuyPresenter implements LocalContract.RushBuyPresenter {
 
     @Override
     public void getRushBuy(String refreshType) {
-        if (TextUtils.equals("1", refreshType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             rushBuyView.showLoading(StaticData.LOADING);
         }
         currentIndex=1;

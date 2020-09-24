@@ -70,7 +70,7 @@ public class CartPaySuccessActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.home_iv://首页
                 TCAgentUnit.setEventId(this,getString(R.string.pay_success_home));
-                MainStartManager.saveMainStart(StaticData.REFLASH_ONE);
+                MainStartManager.saveMainStart(StaticData.REFRESH_ONE);
                 MainFrameActivity.start(this);
                 finish();
                 break;

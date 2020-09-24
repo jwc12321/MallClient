@@ -74,6 +74,7 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     private GoodsOrderAdapter goodsOrderAdapter;
     private String goodsOrderId;
     private Handler mHandler = new MyHandler(this);
+    private String showType;
 
     @Inject
     OrderListPresenter orderListPresenter;
@@ -111,9 +112,10 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     private void initView() {
         EventBus.getDefault().register(this);
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
+        showType=StaticData.REFRESH_ONE;
         addAdapter();
-        if(TextUtils.equals(StaticData.REFLASH_ONE,choiceType)) {
-            orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_ONE);
+        if(TextUtils.equals(StaticData.REFRESH_ONE,choiceType)) {
+            orderListPresenter.getOrderList(StaticData.REFRESH_ONE,showType);
         }
     }
 
@@ -137,12 +139,12 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            orderListPresenter.getOrderList(StaticData.REFLASH_ZERO,StaticData.REFLASH_ONE);
+            orderListPresenter.getOrderList(StaticData.REFRESH_ZERO,showType);
         }
 
         @Override
         public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-            orderListPresenter.getMoreOrderList(StaticData.REFLASH_ONE);
+            orderListPresenter.getMoreOrderList(showType);
         }
     };
 
@@ -150,7 +152,7 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()&&orderListPresenter!=null) {
-            orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_ONE);
+            orderListPresenter.getOrderList(StaticData.REFRESH_ONE,showType);
         }
     }
 
@@ -164,7 +166,7 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     public void payOrder(String id, String amount) {
         this.goodsOrderId=id;
         Intent intent = new Intent(getActivity(), SelectPayTypeActivity.class);
-        intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
+        intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_TWO);
         intent.putExtra(StaticData.PAYMENT_AMOUNT,amount);
         startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
     }
@@ -235,7 +237,7 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
 
     @Override
     public void renderCancelOrder() {
-        orderListPresenter.getOrderList(StaticData.REFLASH_ZERO,StaticData.REFLASH_ONE);
+        orderListPresenter.getOrderList(StaticData.REFRESH_ZERO,showType);
     }
 
     @Override
@@ -256,16 +258,16 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
                 case RequestCodeStatic.PAY_TYPE:
                     if (data != null) {
                         String selectType = data.getStringExtra(StaticData.SELECT_TYPE);
-                        if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
+                        if (TextUtils.equals(StaticData.REFRESH_ZERO, selectType)) {
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(getActivity())) {
-                                orderListPresenter.orderWxPay(goodsOrderId,StaticData.REFLASH_ZERO);
+                                orderListPresenter.orderWxPay(goodsOrderId,StaticData.REFRESH_ZERO);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
-                        } else if(TextUtils.equals(StaticData.REFLASH_ONE, selectType)){
+                        } else if(TextUtils.equals(StaticData.REFRESH_ONE, selectType)){
                             if (PayTypeInstalledUtils.isAliPayInstalled(getActivity())) {
-                                orderListPresenter.orderAliPay(goodsOrderId,StaticData.REFLASH_ONE);
+                                orderListPresenter.orderAliPay(goodsOrderId,StaticData.REFRESH_ONE);
                             } else {
                                 showMessage(getString(R.string.install_alipay));
                             }
@@ -273,7 +275,7 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
                     }
                     break;
                 case RequestCodeStatic.ORDER_DETAIL:
-                    orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_ONE);
+                    orderListPresenter.getOrderList(StaticData.REFRESH_ONE,showType);
                     break;
                 default:
             }
@@ -319,7 +321,7 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
         PayResult payResult = new PayResult((Map<String, String>) msg.obj);
         String resultStatus = payResult.getResultStatus();
         if (TextUtils.equals(resultStatus, "9000")) {
-            orderListPresenter.getOrderList(StaticData.REFLASH_ZERO,StaticData.REFLASH_ONE);
+            orderListPresenter.getOrderList(StaticData.REFRESH_ZERO,showType);
         } else if (TextUtils.equals(resultStatus, "6001")) {
             showMessage(getString(R.string.pay_cancel));
         } else {
@@ -345,7 +347,7 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPaySuccess(WXSuccessPayEvent event) {
         if (getUserVisibleHint()&&orderListPresenter!=null) {
-            orderListPresenter.getOrderList(StaticData.REFLASH_ZERO,StaticData.REFLASH_ONE);
+            orderListPresenter.getOrderList(StaticData.REFRESH_ZERO,showType);
         }
     }
 

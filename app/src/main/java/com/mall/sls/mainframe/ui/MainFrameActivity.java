@@ -93,12 +93,12 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
     @Override
     protected void onStart() {
         super.onStart();
-        if (TextUtils.equals(StaticData.REFLASH_ONE, MainStartManager.getMainStart())) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, MainStartManager.getMainStart())) {
             viewPager.setCurrentItem(0, false);
-            MainStartManager.saveMainStart(StaticData.REFLASH_ZERO);
-        } else if (TextUtils.equals(StaticData.REFLASH_THREE, MainStartManager.getMainStart())) {
+            MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
+        } else if (TextUtils.equals(StaticData.REFRESH_THREE, MainStartManager.getMainStart())) {
             viewPager.setCurrentItem(2, false);
-            MainStartManager.saveMainStart(StaticData.REFLASH_ZERO);
+            MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
         }
     }
 
@@ -137,7 +137,7 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
         viewPager.setCurrentItem(0);
         imageViews[0].setSelected(true);
         textViews[0].setSelected(true);
-        navigationBar(StaticData.REFLASH_ZERO);
+        navigationBar(StaticData.REFRESH_ZERO);
     }
 
 
@@ -179,19 +179,19 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.home_rl:
-                navigationBar(StaticData.REFLASH_ZERO);
+                navigationBar(StaticData.REFRESH_ZERO);
                 viewPager.setCurrentItem(0, false);
                 break;
             case R.id.sort_rl:
-                navigationBar(StaticData.REFLASH_ONE);
+                navigationBar(StaticData.REFRESH_ONE);
                 viewPager.setCurrentItem(1, false);
                 break;
             case R.id.cart_rl:
-                navigationBar(StaticData.REFLASH_ONE);
+                navigationBar(StaticData.REFRESH_ONE);
                 viewPager.setCurrentItem(2, false);
                 break;
             case R.id.mine_rl:
-                navigationBar(StaticData.REFLASH_ZERO);
+                navigationBar(StaticData.REFRESH_ZERO);
                 viewPager.setCurrentItem(3, false);
                 break;
             default:
@@ -201,7 +201,7 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
 
     private void navigationBar(String type) {
         if (!isNightMode(this)) {
-            if (TextUtils.equals(StaticData.REFLASH_ONE, type)) {
+            if (TextUtils.equals(StaticData.REFRESH_ONE, type)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 }

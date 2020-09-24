@@ -32,7 +32,6 @@ import com.mall.sls.common.unit.VerifyManager;
 import com.mall.sls.common.widget.textview.ConventionalEditTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
-import com.mall.sls.data.entity.WebViewDetailInfo;
 import com.mall.sls.homepage.ui.BackTipActivity;
 import com.mall.sls.webview.ui.WebViewActivity;
 
@@ -224,10 +223,7 @@ public class NameVerifiedActivity extends BaseActivity implements CertifyContrac
                 verifyId();
                 break;
             case R.id.protocol_tv:
-                WebViewDetailInfo webViewDetailInfo=new WebViewDetailInfo();
-                webViewDetailInfo.setTitle(getString(R.string.face_protocol));
-                webViewDetailInfo.setUrl(StaticData.OCR_AGREEMENT);
-                WebViewActivity.start(this,webViewDetailInfo);
+                WebViewActivity.start(this,StaticData.OCR_AGREEMENT);
                 break;
             default:
         }
@@ -274,7 +270,7 @@ public class NameVerifiedActivity extends BaseActivity implements CertifyContrac
                         // 认证成功
                         pageType = 3;
                         authStatus(pageType);
-                        VerifyManager.saveVerify(StaticData.REFLASH_ONE);
+                        VerifyManager.saveVerify(StaticData.REFRESH_ONE);
                         realName.setText(HideUnit.hideLastName(certName));
                         realId.setText(HideUnit.hideIdCard(certNo));
                         nameVerifiedPresenter.getUsersRpStatus();
@@ -283,7 +279,7 @@ public class NameVerifiedActivity extends BaseActivity implements CertifyContrac
                         pageType = 4;
                         showMessage("失败");
                         authStatus(pageType);
-                        VerifyManager.saveVerify(StaticData.REFLASH_ZERO);
+                        VerifyManager.saveVerify(StaticData.REFRESH_ZERO);
                     }
                     return true;
                 }

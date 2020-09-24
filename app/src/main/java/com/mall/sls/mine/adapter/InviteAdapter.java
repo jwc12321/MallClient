@@ -102,7 +102,7 @@ public class InviteAdapter extends RecyclerView.Adapter<InviteAdapter.InviteView
         public void bindData(InviteInfo inviteInfo) {
             GlideHelper.load((Activity) context, inviteInfo.getAvatar(), R.mipmap.icon_defalut_head, headPhoto);
             phone.setText(inviteInfo.getMobile());
-            if (TextUtils.equals(StaticData.REFLASH_ZERO, inviteInfo.getUserLevel())) {
+            if (TextUtils.equals(StaticData.REFRESH_ZERO, inviteInfo.getUserLevel())) {
                 statusTv.setText(context.getString(R.string.not_certified));
                 statusTv.setSelected(false);
                 statusIv.setSelected(false);

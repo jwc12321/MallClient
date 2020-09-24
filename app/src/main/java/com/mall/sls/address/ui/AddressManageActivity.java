@@ -92,7 +92,7 @@ public class AddressManageActivity extends BaseActivity implements AddressContra
     private void initView(){
         choiceType=getIntent().getStringExtra(StaticData.CHOICE_TYPE);
         selectId=getIntent().getStringExtra(StaticData.SELECT_ID);
-        if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
+        if(TextUtils.equals(StaticData.REFRESH_ZERO,choiceType)){
             title.setText(getString(R.string.select_address));
         }else {
             title.setText(getString(R.string.my_address));
@@ -129,7 +129,7 @@ public class AddressManageActivity extends BaseActivity implements AddressContra
     }
 
     private void back(){
-        if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)&&!TextUtils.isEmpty(selectId)) {
+        if(TextUtils.equals(StaticData.REFRESH_ZERO,choiceType)&&!TextUtils.isEmpty(selectId)) {
             Intent intent = new Intent();
             intent.putExtra(StaticData.ADDRESS_ID, selectId);
             setResult(RESULT_OK, intent);
@@ -164,7 +164,7 @@ public class AddressManageActivity extends BaseActivity implements AddressContra
 
     @Override
     public void select(String addressId) {
-        if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
+        if(TextUtils.equals(StaticData.REFRESH_ZERO,choiceType)){
             returnAddress(addressId);
         }
     }

@@ -3,11 +3,13 @@ package com.mall.sls.data.entity;
 import com.google.gson.annotations.SerializedName;
 import com.mall.sls.cart.adapter.Literature;
 
+import java.io.Serializable;
+
 /**
  * @author jwc on 2020/6/24.
  * 描述：
  */
-public class HiddenItemCartInfo implements Literature {
+public class HiddenItemCartInfo implements Literature, Serializable {
     //数量
     @SerializedName("number")
     private String number;

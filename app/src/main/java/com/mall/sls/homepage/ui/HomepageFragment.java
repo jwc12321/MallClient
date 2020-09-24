@@ -185,7 +185,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
 //        settingHeight();
         xBannerInit();
         initAdapter();
-        homePagePresenter.getHomePageInfo(StaticData.REFLASH_ONE);
+        homePagePresenter.getHomePageInfo(StaticData.REFRESH_ONE);
         homePagePresenter.getAppUrlInfo();
         homePagePresenter.getHomeSnapUp();
     }
@@ -210,7 +210,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             public void onItemClick(XBanner banner, Object model, View view, int position) {
                 if (bannerInfos != null && position < bannerInfos.size()) {
                     bannerInfo = bannerInfos.get(position);
-                    bannerClick(StaticData.REFLASH_ZERO);
+                    bannerClick(StaticData.REFRESH_ZERO);
                 }
             }
         });
@@ -229,23 +229,23 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     //点击banner
     private void bannerClick(String type) {
         if (bannerInfo != null) {
-            if (TextUtils.equals(StaticData.REFLASH_ZERO, type)) {
+            if (TextUtils.equals(StaticData.REFRESH_ZERO, type)) {
                 TCAgentUnit.setEventIdLabel(getActivity(), getString(R.string.home_banner), bannerInfo.getNativeType());
             } else {
                 TCAgentUnit.setEventIdLabel(getActivity(), getString(R.string.king_kong), bannerInfo.getNativeType());
             }
-            if (TextUtils.equals(StaticData.REFLASH_ZERO, bannerInfo.getLinkType()) && bannerInfo.isLinkOpen()) {//h5界面
+            if (TextUtils.equals(StaticData.REFRESH_ZERO, bannerInfo.getLinkType()) && bannerInfo.isLinkOpen()) {//h5界面
                 LandingPageActivity.start(getActivity(), bannerInfo.getLink());
-            } else if (TextUtils.equals(StaticData.REFLASH_ONE, bannerInfo.getLinkType()) && bannerInfo.isLinkOpen()) {
+            } else if (TextUtils.equals(StaticData.REFRESH_ONE, bannerInfo.getLinkType()) && bannerInfo.isLinkOpen()) {
                 nativeType = bannerInfo.getNativeType();
                 if (TextUtils.equals(StaticData.GOODS_INFO, nativeType)) {//商品详情
                     if (!TextUtils.isEmpty(bannerInfo.getLink()) && bannerInfo.isLinkOpen()) {
                         Uri uri = Uri.parse("?" + bannerInfo.getLink());
                         String goodsId = uri.getQueryParameter("goodsId");
                         String groupType = uri.getQueryParameter("groupType");
-                        if (TextUtils.equals(StaticData.REFLASH_ZERO, groupType)) {
+                        if (TextUtils.equals(StaticData.REFRESH_ZERO, groupType)) {
                             OrdinaryGoodsDetailActivity.start(getActivity(), goodsId);
-                        } else if(TextUtils.equals(StaticData.REFLASH_ONE, groupType)){
+                        } else if(TextUtils.equals(StaticData.REFRESH_ONE, groupType)){
                             ActivityGroupGoodsActivity.start(getActivity(), goodsId);
                         }else {
                             GeneralGoodsDetailsActivity.start(getActivity(), goodsId);
@@ -258,11 +258,11 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                     InviteFriendsActivity.start(getActivity());
                 } else if (TextUtils.equals(StaticData.SECKILL, nativeType)) {
                     if (homepageListener != null) {
-                        SpikeManager.saveSpike(StaticData.REFLASH_ONE);
+                        SpikeManager.saveSpike(StaticData.REFRESH_ONE);
                         homepageListener.goLocalTeam();
                     }
                 } else if (TextUtils.equals(StaticData.ADDRESS, nativeType)) {
-                    AddressManageActivity.start(getActivity(), StaticData.REFLASH_ONE);
+                    AddressManageActivity.start(getActivity(), StaticData.REFRESH_ONE);
                 } else if (TextUtils.equals(StaticData.PRIZE, nativeType)) {
                     LotteryListActivity.start(getActivity());
                 }
@@ -312,7 +312,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            homePagePresenter.getHomePageInfo(StaticData.REFLASH_ZERO);
+            homePagePresenter.getHomePageInfo(StaticData.REFRESH_ZERO);
             homePagePresenter.getHomeSnapUp();
         }
 
@@ -366,7 +366,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             banner.setPointsIsVisible(data.size() > 1);
             banner.setAutoPlayAble(data.size() > 1);
             banner.setBannerData(R.layout.xbanner_item, data);
-            messageCount.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO, homePageInfo.getUnreadMsgCount()) ? View.GONE : View.VISIBLE);
+            messageCount.setVisibility(TextUtils.equals(StaticData.REFRESH_ZERO, homePageInfo.getUnreadMsgCount()) ? View.GONE : View.VISIBLE);
             homeCouponInfos = homePageInfo.getHomeCouponInfos();
             if (homeCouponInfos == null || homeCouponInfos.size() == 0) {
                 couponLl.setVisibility(View.GONE);
@@ -374,7 +374,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                 couponLl.setVisibility(View.VISIBLE);
                 homeCouponAdapter.setData(homeCouponInfos);
                 //绑定微信
-                if (TextUtils.equals(StaticData.REFLASH_ZERO, BindWxManager.getBindWx())) {
+                if (TextUtils.equals(StaticData.REFRESH_ZERO, BindWxManager.getBindWx())) {
                     if(isFirst){
                         isFirst=false;
                         EventBus.getDefault().register(this);
@@ -407,10 +407,10 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
     @Override
     public void renderBindWx() {
         showMessage(getString(R.string.bind_success_wx));
-        BindWxManager.saveBindWx(StaticData.REFLASH_ONE);
+        BindWxManager.saveBindWx(StaticData.REFRESH_ONE);
         EventBus.getDefault().unregister(this);
         receiveIv.setSelected(true);
-        homePagePresenter.couponReceive(StaticData.REFLASH_ONE);
+        homePagePresenter.couponReceive(StaticData.REFRESH_ONE);
     }
 
     @Override
@@ -479,9 +479,9 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
 
     @Override
     public void goGoodsDetails(String goodsType, String goodsId) {
-        if (TextUtils.equals(StaticData.REFLASH_ONE, goodsType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, goodsType)) {
             GeneralGoodsDetailsActivity.start(getActivity(), goodsId);
-        } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsType)) {
+        } else if (TextUtils.equals(StaticData.REFRESH_TWO, goodsType)) {
             OrdinaryGoodsDetailActivity.start(getActivity(), goodsId);
         } else {
             ActivityGroupGoodsActivity.start(getActivity(), goodsId);
@@ -513,10 +513,10 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
 //                CityPickerActivity.start(getActivity());
                 break;
             case R.id.receive_iv:
-                if (TextUtils.equals(StaticData.REFLASH_ZERO, BindWxManager.getBindWx())) {
+                if (TextUtils.equals(StaticData.REFRESH_ZERO, BindWxManager.getBindWx())) {
                     wxBind();
                 } else {
-                    homePagePresenter.couponReceive(StaticData.REFLASH_ONE);
+                    homePagePresenter.couponReceive(StaticData.REFRESH_ONE);
                 }
                 break;
             default:
@@ -556,7 +556,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case RequestCodeStatic.MESSAGE:
-                    homePagePresenter.getHomePageInfo(StaticData.REFLASH_ZERO);
+                    homePagePresenter.getHomePageInfo(StaticData.REFRESH_ZERO);
                     break;
                 case RequestCodeStatic.GO_COUPON:
                     if (homepageListener != null) {

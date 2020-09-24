@@ -48,7 +48,7 @@ public class CartPresenter implements CartContract.CartPresenter {
 
     @Override
     public void getCartInfo(String refreshType) {
-        if (TextUtils.equals("1", refreshType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             cartView.showLoading(StaticData.LOADING);
         }
         String queryString = "null";

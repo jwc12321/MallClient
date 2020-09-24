@@ -171,7 +171,7 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
             }
             specification.setText("拼主所选规格："+specificationStr);
             groupRulesId=goodsDetailsInfo.getGrouponRulesId();
-            if(TextUtils.equals(StaticData.REFLASH_ZERO,goodsDetailsInfo.getSurplus())){
+            if(TextUtils.equals(StaticData.REFRESH_ZERO,goodsDetailsInfo.getSurplus())){
                 teamResult.setText(getString(R.string.bill_full));
                 confirmBt.setText(getString(R.string.initiate_bill));
                 isEnd=true;
@@ -193,10 +193,10 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
     @Override
     public void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail) {
         if(isEnd){
-            ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_TWO,wxUrl,inviteCode);
+            ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFRESH_TWO,wxUrl,inviteCode);
             finish();
         }else {
-            ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFLASH_THREE,wxUrl,inviteCode);
+            ConfirmOrderActivity.start(this, confirmOrderDetail, StaticData.REFRESH_THREE,wxUrl,inviteCode);
             finish();
         }
     }
@@ -232,7 +232,7 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
                 finish();
                 break;
             case R.id.confirm_bt:
-                goSelectSpec(StaticData.REFLASH_ONE);
+                goSelectSpec(StaticData.REFRESH_ONE);
                 break;
             default:
         }
@@ -264,9 +264,9 @@ public class WXGoodsDetailsActivity extends BaseActivity implements HomepageCont
 
     @Override
     public void goGoodsDetails(String goodsType, String goodsId) {
-        if (TextUtils.equals(StaticData.REFLASH_ONE, goodsType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, goodsType)) {
             GeneralGoodsDetailsActivity.start(this, goodsId);
-        } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsType)) {
+        } else if (TextUtils.equals(StaticData.REFRESH_TWO, goodsType)) {
             OrdinaryGoodsDetailActivity.start(this, goodsId);
         } else {
             ActivityGroupGoodsActivity.start(this, goodsId);

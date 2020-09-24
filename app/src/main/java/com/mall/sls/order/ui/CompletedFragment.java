@@ -46,6 +46,7 @@ public class CompletedFragment extends BaseFragment implements OrderContract.Ord
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     private String choiceType;
+    private String showType;
 
     private GoodsOrderAdapter goodsOrderAdapter;
 
@@ -85,9 +86,10 @@ public class CompletedFragment extends BaseFragment implements OrderContract.Ord
 
     private void initView() {
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
+        showType=StaticData.REFRESH_FIVE;
         addAdapter();
-        if(TextUtils.equals(StaticData.REFLASH_FIVE,choiceType)) {
-            orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_FIVE);
+        if(TextUtils.equals(StaticData.REFRESH_FIVE,choiceType)) {
+            orderListPresenter.getOrderList(StaticData.REFRESH_ONE,showType);
         }
     }
 
@@ -111,7 +113,7 @@ public class CompletedFragment extends BaseFragment implements OrderContract.Ord
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()&&orderListPresenter!=null) {
-            orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_FIVE);
+            orderListPresenter.getOrderList(StaticData.REFRESH_ONE,showType);
         }
     }
 
@@ -119,12 +121,12 @@ public class CompletedFragment extends BaseFragment implements OrderContract.Ord
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            orderListPresenter.getOrderList(StaticData.REFLASH_ZERO,StaticData.REFLASH_FIVE);
+            orderListPresenter.getOrderList(StaticData.REFRESH_ZERO,showType);
         }
 
         @Override
         public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-            orderListPresenter.getMoreOrderList(StaticData.REFLASH_FIVE);
+            orderListPresenter.getMoreOrderList(showType);
         }
     };
 

@@ -189,7 +189,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
             goodsPrice.setText(NumberFormatUnit.goodsFormat(prizeVo.getCounterPrice()));
             prizeTimeText=prizeVo.getPrizeTime();
             prizeTime.setText(prizeVo.getPrizeTime() + " 开奖");
-//            participantNumber.setVisibility(TextUtils.equals(StaticData.REFLASH_ZERO, prizeVo.getParticipantNumber()) ? View.GONE : View.VISIBLE);
+//            participantNumber.setVisibility(TextUtils.equals(StaticData.REFRESH_ZERO, prizeVo.getParticipantNumber()) ? View.GONE : View.VISIBLE);
             participantNumber.setText(prizeVo.getParticipantNumber() + "人参与");
             goodsName.setText(prizeVo.getPrizeTitle());
             prizeId=prizeVo.getPrizeId();
@@ -218,15 +218,15 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
                 countDownLl.setVisibility(View.GONE);
             }
             counterPrice=prizeVo.getPrice();
-            if(TextUtils.equals(StaticData.REFLASH_ONE,prizeVo.getPrizeStatus())){
+            if(TextUtils.equals(StaticData.REFRESH_ONE,prizeVo.getPrizeStatus())){
                 confirmBt.setEnabled(true);
                 confirmBt.setBackgroundResource(R.drawable.common_twenty_back_one_bg);
-                if(TextUtils.equals(StaticData.REFLASH_ZERO,prizeVo.getPrice())||TextUtils.equals("0.00",prizeVo.getPrice())){
+                if(TextUtils.equals(StaticData.REFRESH_ZERO,prizeVo.getPrice())||TextUtils.equals("0.00",prizeVo.getPrice())){
                     confirmBt.setText("0"+getString(R.string.yuan_draw));
                 }else {
                     confirmBt.setText(NumberFormatUnit.numberFormat(prizeVo.getPrice())+getString(R.string.yuan_draw));
                 }
-            }else if(TextUtils.equals(StaticData.REFLASH_TWO,prizeVo.getPrizeStatus())){
+            }else if(TextUtils.equals(StaticData.REFRESH_TWO,prizeVo.getPrizeStatus())){
                 confirmBt.setEnabled(false);
                 confirmBt.setBackgroundResource(R.drawable.common_twenty_back_twenty_three_bg);
                 confirmBt.setText(getString(R.string.waiting_draw));
@@ -325,12 +325,12 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
     @Override
     public void renderJoinPrizeInfo(JoinPrizeInfo joinPrizeInfo) {
         if(joinPrizeInfo!=null){
-            if(TextUtils.equals(StaticData.REFLASH_TWO,selectType)){//免费
+            if(TextUtils.equals(StaticData.REFRESH_TWO,selectType)){//免费
                 LotteryResultActivity.start(this,prizeId,prizeTimeText);
                 finish();
-            }else if(TextUtils.equals(StaticData.REFLASH_ONE,selectType)&&!TextUtils.isEmpty(joinPrizeInfo.getAliPaySign())){//支付宝
+            }else if(TextUtils.equals(StaticData.REFRESH_ONE,selectType)&&!TextUtils.isEmpty(joinPrizeInfo.getAliPaySign())){//支付宝
                 startAliPay(joinPrizeInfo.getAliPaySign());
-            }else if(TextUtils.equals(StaticData.REFLASH_ZERO,selectType)&&joinPrizeInfo.getWxPaySignResponse()!=null){//微信
+            }else if(TextUtils.equals(StaticData.REFRESH_ZERO,selectType)&&joinPrizeInfo.getWxPaySignResponse()!=null){//微信
                 wechatPay(joinPrizeInfo.getWxPaySignResponse());
 
             }
@@ -349,7 +349,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
                 finish();
                 break;
             case R.id.home_iv:
-                MainStartManager.saveMainStart(StaticData.REFLASH_ONE);
+                MainStartManager.saveMainStart(StaticData.REFRESH_ONE);
                 MainFrameActivity.start(this);
                 finish();
                 break;
@@ -361,7 +361,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
     }
 
     private void confirm(){
-        if(TextUtils.equals(StaticData.REFLASH_ZERO,prizeNumber)){
+        if(TextUtils.equals(StaticData.REFRESH_ZERO,prizeNumber)){
             Intent intent = new Intent(this, TitleContentActivity.class);
             intent.putExtra(StaticData.COMMON_TITLE, getString(R.string.no_lottery_time));
             intent.putExtra(StaticData.COMMON_CONTENT, getString(R.string.do_the_task));
@@ -391,14 +391,14 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
                 case RequestCodeStatic.PAY_TYPE://选择支付方式
                     if (data != null) {
                         selectType = data.getStringExtra(StaticData.SELECT_TYPE);
-                        if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
+                        if (TextUtils.equals(StaticData.REFRESH_ZERO, selectType)) {
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(LotteryDetailActivity.this)) {
                                 lotteryDetailsPresenter.getJoinPrizeInfo(prizeId,goodsCount,selectType);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
-                        } else if(TextUtils.equals(StaticData.REFLASH_ONE, selectType)){
+                        } else if(TextUtils.equals(StaticData.REFRESH_ONE, selectType)){
                             if (PayTypeInstalledUtils.isAliPayInstalled(LotteryDetailActivity.this)) {
                                 lotteryDetailsPresenter.getJoinPrizeInfo(prizeId,goodsCount,selectType);
                             } else {
@@ -408,7 +408,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
                     }
                     break;
                 case RequestCodeStatic.TIP_PAGE:
-                    MainStartManager.saveMainStart(StaticData.REFLASH_ONE);
+                    MainStartManager.saveMainStart(StaticData.REFRESH_ONE);
                     MainFrameActivity.start(this);
                     finish();
                     break;
@@ -424,11 +424,11 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
         totalBg=priceBg.multiply(countBg);
         if(totalBg.compareTo(new BigDecimal(0))>0){
             Intent intent = new Intent(this, SelectPayTypeActivity.class);
-            intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
+            intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_TWO);
             intent.putExtra(StaticData.PAYMENT_AMOUNT, totalBg.toPlainString());
             startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
         }else {
-            selectType=StaticData.REFLASH_TWO;
+            selectType=StaticData.REFRESH_TWO;
             lotteryDetailsPresenter.getJoinPrizeInfo(prizeId,goodsCount,"");
         }
     }

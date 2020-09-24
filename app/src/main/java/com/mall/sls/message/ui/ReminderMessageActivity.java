@@ -93,14 +93,14 @@ public class ReminderMessageActivity extends BaseActivity implements MessageCont
         reminderMessageAdapter = new ReminderMessageAdapter(this);
         reminderMessageAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(reminderMessageAdapter);
-        msgInfoPresenter.getMsgInfo(StaticData.REFLASH_ONE, typeId);
+        msgInfoPresenter.getMsgInfo(StaticData.REFRESH_ONE, typeId);
     }
 
     SimpleMultiPurposeListener simpleMultiPurposeListener = new SimpleMultiPurposeListener() {
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            msgInfoPresenter.getMsgInfo(StaticData.REFLASH_ZERO, typeId);
+            msgInfoPresenter.getMsgInfo(StaticData.REFRESH_ZERO, typeId);
         }
 
         @Override

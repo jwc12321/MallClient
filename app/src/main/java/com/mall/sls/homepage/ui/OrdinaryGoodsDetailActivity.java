@@ -304,14 +304,14 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 finish();
                 break;
             case R.id.home_iv:
-                MainStartManager.saveMainStart(StaticData.REFLASH_ONE);
+                MainStartManager.saveMainStart(StaticData.REFRESH_ONE);
                 MainFrameActivity.start(this);
                 finish();
                 break;
             case R.id.initiate_bill_bt://发起拼单
                 groupId = "";
                 groupRulesId = oldGroupRulesId;
-                purchaseType = StaticData.REFLASH_TWO;
+                purchaseType = StaticData.REFRESH_TWO;
                 isGroup = true;
                 initiateBill();
                 TCAgentUnit.setEventId(this, getString(R.string.initiate_bill_buy));
@@ -320,12 +320,12 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 CustomerServiceActivity.start(this, consumerPhone);
                 break;
             case R.id.sku_rl:
-                goSelectSpecReturn(StaticData.REFLASH_ZERO);
+                goSelectSpecReturn(StaticData.REFRESH_ZERO);
                 break;
             case R.id.individual_shopping_tv://单独购买
                 groupId = "";
                 groupRulesId = oldGroupRulesId;
-                purchaseType = StaticData.REFLASH_ONE;
+                purchaseType = StaticData.REFRESH_ONE;
                 isGroup = false;
                 individualShopping();
                 TCAgentUnit.setEventId(this, getString(R.string.individual_shopping));
@@ -333,7 +333,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             case R.id.up_spell_bt:
                 groupId = upGroupId;
                 groupRulesId = upGroupRulesId;
-                purchaseType = StaticData.REFLASH_THREE;
+                purchaseType = StaticData.REFRESH_THREE;
                 isGroup = true;
                 goSpellingReminder(upMobile, upSurplus);
                 TCAgentUnit.setEventId(this, getString(R.string.buy_together));
@@ -341,7 +341,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             case R.id.down_spell_bt:
                 groupId = downGroupId;
                 groupRulesId = downGroupRulesId;
-                purchaseType = StaticData.REFLASH_THREE;
+                purchaseType = StaticData.REFRESH_THREE;
                 isGroup = true;
                 goSpellingReminder(downMobile, downSurplus);
                 TCAgentUnit.setEventId(this, getString(R.string.buy_together));
@@ -369,7 +369,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
 
     private void initiateBill() {
 //        if (productListCallableInfo == null) {
-        goSelectSpec(StaticData.REFLASH_ONE);
+        goSelectSpec(StaticData.REFRESH_ONE);
 //        } else {
 //            goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), true, String.valueOf(goodsCount), groupId, groupRulesId);
 //        }
@@ -377,7 +377,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
 
     private void individualShopping() {
 //        if (productListCallableInfo == null) {
-        goSelectSpec(StaticData.REFLASH_ZERO);
+        goSelectSpec(StaticData.REFRESH_ZERO);
 //        } else {
 //            goodsDetailsPresenter.cartFastAdd(goodsId, productListCallableInfo.getId(), false, String.valueOf(goodsCount), groupId, groupRulesId);
 //        }
@@ -439,7 +439,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 case RequestCodeStatic.SELECT_SHARE_TYPE:
                     if (data != null) {
                         backType = data.getStringExtra(StaticData.BACK_TYPE);
-                        shareWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                        shareWx(TextUtils.equals(StaticData.REFRESH_ONE, backType));
                     }
                     break;
                 default:
@@ -489,7 +489,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             groupNumber.setText(goodsDetailsInfo.getGroupNum() + "人正在拼单，可直接参与");
             groupPurchases = goodsDetailsInfo.getGroupPurchases();
             oldGroupRulesId = goodsDetailsInfo.getRulesId();
-            if (TextUtils.equals(StaticData.REFLASH_ONE, goodsDetailsInfo.getCourierType())) {
+            if (TextUtils.equals(StaticData.REFRESH_ONE, goodsDetailsInfo.getCourierType())) {
                 courierType.setText(getString(R.string.same_city_delivery));
             } else {
                 courierType.setText(getString(R.string.type_express_delivery));
@@ -599,7 +599,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     private void showReminder(int position) {
         groupId = allGroupPurchases.get(position).getGrouponId();
         groupRulesId = allGroupPurchases.get(position).getRulesId();
-        purchaseType = StaticData.REFLASH_THREE;
+        purchaseType = StaticData.REFRESH_THREE;
         isGroup = true;
         goSpellingReminder(allGroupPurchases.get(position).getMobile(), allGroupPurchases.get(position).getSurplus());
         TCAgentUnit.setEventId(this, getString(R.string.buy_together));

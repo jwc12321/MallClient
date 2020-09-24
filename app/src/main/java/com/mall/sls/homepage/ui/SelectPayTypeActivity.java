@@ -67,7 +67,7 @@ public class SelectPayTypeActivity extends BaseActivity {
 
     private void initView(){
         choiceType=getIntent().getStringExtra(StaticData.CHOICE_TYPE);
-        confirmBt.setSelected(TextUtils.equals(StaticData.REFLASH_ONE,choiceType)?true:false);
+        confirmBt.setSelected(TextUtils.equals(StaticData.REFRESH_ONE,choiceType)?true:false);
         amount=getIntent().getStringExtra(StaticData.PAYMENT_AMOUNT);
         payAmount.setText(getString(R.string.payment_amount)+NumberFormatUnit.goodsFormat(amount));
         selectPayType();
@@ -94,11 +94,11 @@ public class SelectPayTypeActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.select_weixin_iv:
-                selectType=StaticData.REFLASH_ZERO;
+                selectType=StaticData.REFRESH_ZERO;
                 selectPayType();
                 break;
             case R.id.select_ali_iv:
-                selectType=StaticData.REFLASH_ONE;
+                selectType=StaticData.REFRESH_ONE;
                 selectPayType();
                 break;
             default:
@@ -106,8 +106,8 @@ public class SelectPayTypeActivity extends BaseActivity {
     }
 
     private void selectPayType(){
-        selectWeixinIv.setSelected(TextUtils.equals(StaticData.REFLASH_ZERO,selectType));
-        selectAliIv.setSelected(TextUtils.equals(StaticData.REFLASH_ONE,selectType));
+        selectWeixinIv.setSelected(TextUtils.equals(StaticData.REFRESH_ZERO,selectType));
+        selectAliIv.setSelected(TextUtils.equals(StaticData.REFRESH_ONE,selectType));
     }
 
 
@@ -122,7 +122,7 @@ public class SelectPayTypeActivity extends BaseActivity {
     }
 
     private void back() {
-        selectType=StaticData.REFLASH_TWO;
+        selectType=StaticData.REFRESH_TWO;
         Intent intent = new Intent();
         intent.putExtra(StaticData.SELECT_TYPE, selectType);
         setResult(Activity.RESULT_OK, intent);

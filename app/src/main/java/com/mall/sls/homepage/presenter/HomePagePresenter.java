@@ -50,7 +50,7 @@ public class HomePagePresenter implements HomepageContract.HomePagePresenter {
 
     @Override
     public void getHomePageInfo(String refreshType) {
-        if (TextUtils.equals(StaticData.REFLASH_ONE, refreshType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             homePageView.showLoading(StaticData.LOADING);
         }
         String queryString="null";

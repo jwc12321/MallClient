@@ -52,8 +52,8 @@ public class  SplashActivity extends BaseActivity {
 //        }
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-        MainStartManager.saveMainStart(StaticData.REFLASH_ZERO);
-        SpikeManager.saveSpike(StaticData.REFLASH_ZERO);
+        MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
+        SpikeManager.saveSpike(StaticData.REFRESH_ZERO);
 //        initData();
         if(TextUtils.isEmpty(PrivacyManager.getPrivacy())){//隐私政策弹框
             Intent intent = new Intent(this, PrivacyPolicyTipActivity.class);
@@ -125,8 +125,8 @@ public class  SplashActivity extends BaseActivity {
                 case RequestCodeStatic.PRIVACY_POLICY:
                     if (data != null) {
                         backType = data.getStringExtra(StaticData.BACK_TYPE);
-                        if (TextUtils.equals(StaticData.REFLASH_ONE, backType)) {//同意
-                            PrivacyManager.savePrivacy("1");
+                        if (TextUtils.equals(StaticData.REFRESH_ONE, backType)) {//同意
+                            PrivacyManager.savePrivacy(StaticData.REFRESH_ONE);
                             if(!TextUtils.isEmpty(TokenManager.getToken())) {
                                 mHandler.sendEmptyMessageDelayed(GO_MAIN, 300);
                             }else {

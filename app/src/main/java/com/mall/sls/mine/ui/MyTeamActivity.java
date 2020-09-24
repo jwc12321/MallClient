@@ -100,7 +100,7 @@ public class MyTeamActivity extends BaseActivity implements MineContract.MyTeamI
         wxUrl = getIntent().getStringExtra(StaticData.WX_URL);
         inviteCode = getIntent().getStringExtra(StaticData.INVITE_CODE);
         addAdapter();
-        myTeamInfoPresenter.getMyTeamInfo(StaticData.REFLASH_ONE);
+        myTeamInfoPresenter.getMyTeamInfo(StaticData.REFRESH_ONE);
     }
 
     private void addAdapter() {
@@ -114,7 +114,7 @@ public class MyTeamActivity extends BaseActivity implements MineContract.MyTeamI
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            myTeamInfoPresenter.getMyTeamInfo(StaticData.REFLASH_ZERO);
+            myTeamInfoPresenter.getMyTeamInfo(StaticData.REFRESH_ZERO);
         }
 
         @Override
@@ -207,7 +207,7 @@ public class MyTeamActivity extends BaseActivity implements MineContract.MyTeamI
                 case RequestCodeStatic.SELECT_SHARE_TYPE:
                     if (data != null) {
                         backType = data.getStringExtra(StaticData.BACK_TYPE);
-                        shareGroupWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                        shareGroupWx(TextUtils.equals(StaticData.REFRESH_ONE, backType));
                     }
                     break;
                 default:

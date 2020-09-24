@@ -43,7 +43,7 @@ public class CategoryGoodsPresenter implements SortContract.CategoryGoodsPresent
 
     @Override
     public void getCategoryGoods(String refreshType, String categoryId, String sortType, String orderType) {
-        if (TextUtils.equals("1", refreshType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             categoryGoodsView.showLoading(StaticData.LOADING);
         }
         currentIndex = 1;

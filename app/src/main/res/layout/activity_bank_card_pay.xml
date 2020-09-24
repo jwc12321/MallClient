@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround8"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_365"
+        android:layout_alignParentBottom="true"
+        android:background="@color/backGround57">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <ImageView
+                    android:id="@+id/close_iv"
+                    style="@style/pay_close_iv_style" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/size15_color_app3_text_style"
+                    android:layout_centerInParent="true"
+                    android:text="@string/payment_details" />
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/bank_pay_rl_style">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/size15_app3_margin15_left_tv_style"
+                    android:text="@string/order_info" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/order_no_tv"
+                    style="@style/size14_app3_margin15_right_tv_style"
+                    tools:text="111111111111111" />
+            </RelativeLayout>
+
+            <View style="@style/fifteen_back_nine_line_style" />
+
+            <RelativeLayout
+                android:id="@+id/bank_pay_type_rl"
+                style="@style/bank_pay_rl_style">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/size15_app3_margin15_left_tv_style"
+                    android:text="@string/bank_pay_type" />
+
+                <ImageView
+                    android:id="@+id/right_arrow_iv"
+                    style="@style/black_right_arrow_iv_style" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/bank_card_no"
+                    style="@style/size14_color_app3_text_style"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/right_arrow_iv"
+                    tools:text="111111111111111" />
+
+                <ImageView
+                    android:id="@+id/add_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_6"
+                    android:layout_toLeftOf="@id/bank_card_no"
+                    android:src="@mipmap/icon_add"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+
+            <View style="@style/fifteen_back_nine_line_style" />
+
+            <RelativeLayout style="@style/bank_pay_rl_style">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/size15_app3_margin15_left_tv_style"
+                    android:text="@string/need_pay" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/need_pay"
+                    style="@style/size14_app3_margin15_right_tv_style"
+                    tools:text="111111111111111" />
+            </RelativeLayout>
+
+            <View style="@style/fifteen_back_nine_line_style" />
+
+            <RelativeLayout
+                android:id="@+id/cooperate_bank_rl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:paddingTop="@dimen/dp_8">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/cooperate_bank_tv"
+                    style="@style/deposit_view_detail_style"
+                    android:text="@string/cooperate_bank"
+                    android:textSize="@dimen/sp_13" />
+
+                <View
+                    style="@style/deposit_view_detail_line_style"
+                    android:layout_width="@dimen/dp_63"
+                    android:layout_below="@id/cooperate_bank_tv" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/confirm_bt"
+            style="@style/common_black_confirm_bt_style"
+            android:layout_alignParentBottom="true"
+            android:text="@string/confirm_pay" />
+    </RelativeLayout>
+</RelativeLayout>

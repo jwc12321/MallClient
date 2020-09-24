@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/bank_card" />
+    </RelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/record_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_rel"
+        android:visibility="gone"
+        app:layoutManager="@string/layoutManager_LinearLayout"
+        tools:listitem="@layout/adapter_bank_card_manage"
+        android:layout_marginBottom="@dimen/dp_120"/>
+
+
+    <LinearLayout
+        android:id="@+id/no_record_ll"
+        style="@style/common_no_record_ll_style"
+        android:layout_below="@id/title_rel">
+
+        <ImageView
+            style="@style/common_no_record_iv_style"
+            android:src="@mipmap/icon_no_bank_card"
+            android:layout_marginTop="@dimen/dp_135"/>
+
+        <TextView
+            style="@style/common_no_record_tv_style"
+            android:text="@string/no_bank_card" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cooperate_bank_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_above="@id/add_bt"
+        android:layout_centerHorizontal="true"
+        android:padding="@dimen/dp_8">
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/size13_color_back1_text_style"
+            android:text="@string/cooperate_bank"/>
+        <View
+            android:layout_width="@dimen/dp_63"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/backGround2"
+            android:layout_marginTop="@dimen/dp_1"/>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/add_bt"
+        style="@style/add_bank_card_bt_style" />
+</RelativeLayout>

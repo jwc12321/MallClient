@@ -51,10 +51,10 @@ public class GeTuiService extends GTIntentService {
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (linkUrlInfo != null) {
-            if (TextUtils.equals(StaticData.REFLASH_ZERO, linkUrlInfo.getLinkType())) {//h5界面
+            if (TextUtils.equals(StaticData.REFRESH_ZERO, linkUrlInfo.getLinkType())) {//h5界面
                 intent.setClass(this, LandingPageActivity.class);
                 intent.putExtra(StaticData.LANDING_PAGE_URL, linkUrlInfo.getLink());
-            } else if (TextUtils.equals(StaticData.REFLASH_ONE, linkUrlInfo.getLinkType())) {
+            } else if (TextUtils.equals(StaticData.REFRESH_ONE, linkUrlInfo.getLinkType())) {
                 nativeType = linkUrlInfo.getNativeType();
                 if (TextUtils.equals(StaticData.ORDERDETAIL, nativeType)) {//订单详情
                     if (!TextUtils.isEmpty(linkUrlInfo.getLink())) {

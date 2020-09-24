@@ -139,7 +139,7 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
         addAdapter();
         setTagview();
         editText();
-        searchGoodsPresenter.getSearchHistory(StaticData.REFLASH_ONE);
+        searchGoodsPresenter.getSearchHistory(StaticData.REFRESH_ONE);
     }
 
     @Override
@@ -155,7 +155,7 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            searchGoodsPresenter.getKeywordGoods(StaticData.REFLASH_ZERO, keyword, sortType, orderType);
+            searchGoodsPresenter.getKeywordGoods(StaticData.REFRESH_ZERO, keyword, sortType, orderType);
         }
 
         @Override
@@ -197,7 +197,7 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
     private void getGoodsData() {
         keyword = goodsEt.getText().toString().trim();
         if (!TextUtils.isEmpty(keyword)) {
-            searchGoodsPresenter.getKeywordGoods(StaticData.REFLASH_ONE, keyword, sortType, orderType);
+            searchGoodsPresenter.getKeywordGoods(StaticData.REFRESH_ONE, keyword, sortType, orderType);
         } else {
             historyLl.setVisibility(View.VISIBLE);
             goodsLl.setVisibility(View.GONE);
@@ -209,7 +209,7 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
         goodsEt.setText(keyword);
         closeIv.setVisibility(View.VISIBLE);
         if (!TextUtils.isEmpty(keyword)) {
-            searchGoodsPresenter.getKeywordGoods(StaticData.REFLASH_ONE, keyword, sortType, orderType);
+            searchGoodsPresenter.getKeywordGoods(StaticData.REFRESH_ONE, keyword, sortType, orderType);
         } else {
             historyLl.setVisibility(View.VISIBLE);
             goodsLl.setVisibility(View.GONE);
@@ -290,21 +290,21 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
                 break;
             case R.id.default_rl:
                 priceDesc = false;
-                selectType = StaticData.REFLASH_ONE;
+                selectType = StaticData.REFRESH_ONE;
                 selectType(selectType);
                 break;
             case R.id.price_ll:
                 priceDesc = !priceDesc;
                 if (priceDesc) {
-                    selectType = StaticData.REFLASH_TWO;
+                    selectType = StaticData.REFRESH_TWO;
                 } else {
-                    selectType = StaticData.REFLASH_THREE;
+                    selectType = StaticData.REFRESH_THREE;
                 }
                 selectType(selectType);
                 break;
             case R.id.sales_rl:
                 priceDesc = false;
-                selectType = StaticData.REFLASH_FOUR;
+                selectType = StaticData.REFRESH_FOUR;
                 selectType(selectType);
                 break;
             default:
@@ -312,33 +312,33 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
     }
 
     private void selectType(String type) {
-        defaultIv.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, type) ? View.VISIBLE : View.GONE);
-        priceIv.setVisibility((TextUtils.equals(StaticData.REFLASH_TWO, type) || TextUtils.equals(StaticData.REFLASH_THREE, type)) ? View.VISIBLE : View.GONE);
-        salesIv.setVisibility(TextUtils.equals(StaticData.REFLASH_FOUR, type) ? View.VISIBLE : View.GONE);
-        if (TextUtils.equals(StaticData.REFLASH_ONE, type)) {
+        defaultIv.setVisibility(TextUtils.equals(StaticData.REFRESH_ONE, type) ? View.VISIBLE : View.GONE);
+        priceIv.setVisibility((TextUtils.equals(StaticData.REFRESH_TWO, type) || TextUtils.equals(StaticData.REFRESH_THREE, type)) ? View.VISIBLE : View.GONE);
+        salesIv.setVisibility(TextUtils.equals(StaticData.REFRESH_FOUR, type) ? View.VISIBLE : View.GONE);
+        if (TextUtils.equals(StaticData.REFRESH_ONE, type)) {
             sortType = "";
             orderType = "";
             priceArrowIv.setVisibility(View.VISIBLE);
             priceArrow.setVisibility(View.GONE);
-        } else if (TextUtils.equals(StaticData.REFLASH_TWO, type)) {
+        } else if (TextUtils.equals(StaticData.REFRESH_TWO, type)) {
             sortType = StaticData.SORT_TYPE_PRICE;
             orderType = StaticData.ORDER_TYPE_DESC;
             priceArrowIv.setVisibility(View.GONE);
             priceArrow.setVisibility(View.VISIBLE);
             priceArrow.setSelected(false);
-        } else if (TextUtils.equals(StaticData.REFLASH_THREE, type)) {
+        } else if (TextUtils.equals(StaticData.REFRESH_THREE, type)) {
             sortType = StaticData.SORT_TYPE_PRICE;
             orderType = StaticData.ORDER_TYPE_ASC;
             priceArrowIv.setVisibility(View.GONE);
             priceArrow.setVisibility(View.VISIBLE);
             priceArrow.setSelected(true);
-        } else if (TextUtils.equals(StaticData.REFLASH_FOUR, type)) {
+        } else if (TextUtils.equals(StaticData.REFRESH_FOUR, type)) {
             sortType = StaticData.SORT_TYPE_SALES;
             orderType = StaticData.ORDER_TYPE_DESC;
             priceArrowIv.setVisibility(View.VISIBLE);
             priceArrow.setVisibility(View.GONE);
         }
-        searchGoodsPresenter.getKeywordGoods(StaticData.REFLASH_ONE, keyword, sortType, orderType);
+        searchGoodsPresenter.getKeywordGoods(StaticData.REFRESH_ONE, keyword, sortType, orderType);
 
     }
 
@@ -356,7 +356,7 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
 
     @Override
     public void renderKeywordGoods(GoodsItem goodsItem) {
-        searchGoodsPresenter.getSearchHistory(StaticData.REFLASH_ZERO);
+        searchGoodsPresenter.getSearchHistory(StaticData.REFRESH_ZERO);
         historyLl.setVisibility(View.GONE);
         refreshLayout.finishRefresh();
         if (goodsItem != null) {
@@ -395,9 +395,9 @@ public class SearchGoodsActivity extends BaseActivity implements SortContract.Se
 
     @Override
     public void goGoodsDetails(String goodsType, String goodsId) {
-        if (TextUtils.equals(StaticData.REFLASH_ONE, goodsType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, goodsType)) {
             GeneralGoodsDetailsActivity.start(this, goodsId);
-        } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsType)) {
+        } else if (TextUtils.equals(StaticData.REFRESH_TWO, goodsType)) {
             OrdinaryGoodsDetailActivity.start(this, goodsId);
         } else {
             ActivityGroupGoodsActivity.start(this, goodsId);

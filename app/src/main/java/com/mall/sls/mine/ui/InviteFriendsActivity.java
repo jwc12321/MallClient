@@ -180,7 +180,7 @@ public class InviteFriendsActivity extends BaseActivity implements MineContract.
                     if (data != null) {
                         backType = data.getStringExtra(StaticData.BACK_TYPE);
                         WXImageObject imgObj = new WXImageObject(posterBitmap);
-                        if (TextUtils.equals(StaticData.REFLASH_ONE, backType)) {//朋友圈
+                        if (TextUtils.equals(StaticData.REFRESH_ONE, backType)) {//朋友圈
                             wxShareManager.sharePictureToWX(imgObj, posterBitmap, true);
                         } else {//好友
                             wxShareManager.sharePictureToWX(imgObj, posterBitmap, false);

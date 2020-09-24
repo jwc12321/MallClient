@@ -41,10 +41,10 @@ public class SuccessfulOrderActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.close_iv:
             case R.id.down_bt:
-                selectBack(StaticData.REFLASH_ONE);
+                selectBack(StaticData.REFRESH_ONE);
                 break;
             case R.id.up_bt:
-                selectBack(StaticData.REFLASH_ZERO);
+                selectBack(StaticData.REFRESH_ZERO);
                 break;
             default:
         }

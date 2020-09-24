@@ -150,9 +150,9 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
     @Override
     public void onResume() {
         super.onResume();
-        if (getUserVisibleHint() && cartPresenter != null && TextUtils.equals(StaticData.REFLASH_ONE, FlashCartManager.getFlashCart())) {
-            cartPresenter.getCartInfo(StaticData.REFLASH_ONE);
-            FlashCartManager.saveFlashCart(StaticData.REFLASH_ZERO);
+        if (getUserVisibleHint() && cartPresenter != null && TextUtils.equals(StaticData.REFRESH_ONE, FlashCartManager.getFlashCart())) {
+            cartPresenter.getCartInfo(StaticData.REFRESH_ONE);
+            FlashCartManager.saveFlashCart(StaticData.REFRESH_ZERO);
         }
     }
 
@@ -160,7 +160,7 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            cartPresenter.getCartInfo(StaticData.REFLASH_ZERO);
+            cartPresenter.getCartInfo(StaticData.REFRESH_ZERO);
         }
 
         @Override
@@ -201,7 +201,7 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
 
     @Override
     public void renderDeleteCartItem(Boolean isBoolean) {
-        cartPresenter.getCartInfo(StaticData.REFLASH_ZERO);
+        cartPresenter.getCartInfo(StaticData.REFRESH_ZERO);
     }
 
     @Override
@@ -222,7 +222,7 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint() && cartPresenter != null) {
             returnFirst();
-            cartPresenter.getCartInfo(StaticData.REFLASH_ONE);
+            cartPresenter.getCartInfo(StaticData.REFRESH_ONE);
         }
     }
 
@@ -382,7 +382,7 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
             showMessage(getString(R.string.please_select_goods));
             return;
         }
-        CartConfirmOrderActivity.start(getActivity(), ids, StaticData.REFLASH_TWO);
+        CartConfirmOrderActivity.start(getActivity(), ids, StaticData.REFRESH_TWO);
     }
 
     private void returnFirst() {

@@ -47,6 +47,7 @@ public class CouponUnusedFragment extends BaseFragment implements CouponContract
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     private CouponAdapter couponAdapter;
+    private String status;
 
     @Inject
     CouponListPresenter couponListPresenter;
@@ -78,10 +79,11 @@ public class CouponUnusedFragment extends BaseFragment implements CouponContract
 
     private void initView() {
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
-        couponAdapter = new CouponAdapter(StaticData.REFLASH_ZERO);
+        status=StaticData.REFRESH_ZERO;
+        couponAdapter = new CouponAdapter(StaticData.REFRESH_ZERO);
         couponAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(couponAdapter);
-        couponListPresenter.getCouponInfos(StaticData.REFLASH_ONE, StaticData.REFLASH_ZERO);
+        couponListPresenter.getCouponInfos(StaticData.REFRESH_ONE, status);
     }
 
     @Override
@@ -98,12 +100,12 @@ public class CouponUnusedFragment extends BaseFragment implements CouponContract
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            couponListPresenter.getCouponInfos(StaticData.REFLASH_ZERO, StaticData.REFLASH_ZERO);
+            couponListPresenter.getCouponInfos(StaticData.REFRESH_ZERO, status);
         }
 
         @Override
         public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-            couponListPresenter.getMoreCouponInfos(StaticData.REFLASH_ZERO);
+            couponListPresenter.getMoreCouponInfos(status);
         }
     };
 
@@ -111,7 +113,7 @@ public class CouponUnusedFragment extends BaseFragment implements CouponContract
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()&&couponListPresenter!=null) {
-            couponListPresenter.getCouponInfos(StaticData.REFLASH_ONE,StaticData.REFLASH_ZERO);
+            couponListPresenter.getCouponInfos(StaticData.REFRESH_ONE,status);
         }
     }
 

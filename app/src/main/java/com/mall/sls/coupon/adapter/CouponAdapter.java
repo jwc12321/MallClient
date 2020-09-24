@@ -115,10 +115,10 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
             condition.setText("满" + NumberFormatUnit.numberFormat(couponInfo.getMin()) + "元可使用");
             name.setText(couponInfo.getName());
             endTime.setText(couponInfo.getEndTime() + "到期");
-            if (TextUtils.equals(StaticData.REFLASH_ZERO, couponType)) {
+            if (TextUtils.equals(StaticData.REFRESH_ZERO, couponType)) {
                 statusIv.setVisibility(View.GONE);
                 usedBt.setVisibility(View.VISIBLE);
-            } else if (TextUtils.equals(StaticData.REFLASH_ONE, couponType)) {
+            } else if (TextUtils.equals(StaticData.REFRESH_ONE, couponType)) {
                 statusIv.setVisibility(View.VISIBLE);
                 statusIv.setSelected(true);
                 usedBt.setVisibility(View.GONE);

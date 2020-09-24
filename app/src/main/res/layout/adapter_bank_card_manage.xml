@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/bank_rl"
+        style="@style/bank_card_rl_style">
+
+        <ImageView
+            android:id="@+id/logo_iv"
+            style="@style/bank_card_logo_iv_style"
+            tools:src="@mipmap/app_icon" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/bank_name"
+            style="@style/bank_name_style"
+            android:layout_toRightOf="@id/logo_iv"
+            tools:text="工商银行" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/card_type"
+            style="@style/bank_card_type_style"
+            android:layout_below="@id/bank_name"
+            android:layout_toRightOf="@id/logo_iv"
+            tools:text="储蓄卡" />
+        <LinearLayout
+            style="@style/bank_card_number_ll_style"
+            android:layout_toRightOf="@id/logo_iv">
+            <ImageView
+                style="@style/bank_card_dot_iv_style"/>
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                android:id="@+id/card_number"
+                style="@style/size25_color_app1_text_style"
+                tools:text="8989"/>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

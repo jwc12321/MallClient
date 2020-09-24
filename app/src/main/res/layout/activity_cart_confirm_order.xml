@@ -88,7 +88,9 @@
                         style="@style/size14_color_app3_text_style"
                         android:layout_marginLeft="@dimen/dp_15"
                         android:layout_marginTop="@dimen/dp_6"
-                        tools:text="FJDKJFDKJFD" />
+                        tools:text="FJDKJFDKJFD"
+                        android:maxLines="2"
+                        android:ellipsize="end"/>
                 </LinearLayout>
 
             </RelativeLayout>

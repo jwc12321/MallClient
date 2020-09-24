@@ -63,7 +63,7 @@ public class MyTeamAdapter extends RecyclerView.Adapter<MyTeamAdapter.MyTeamView
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    if(TextUtils.equals(StaticData.REFLASH_ONE,myTeamInfo.getStatus())){
+                    if(TextUtils.equals(StaticData.REFRESH_ONE,myTeamInfo.getStatus())){
                         onItemClickListener.shareWx(myTeamInfo.getGrouponId(),myTeamInfo.getGoodsProductId(),myTeamInfo.getName(),myTeamInfo.getBrief());
                     }else {
                         onItemClickListener.goOrderDetails(myTeamInfo.getOrderId());
@@ -127,7 +127,7 @@ public class MyTeamAdapter extends RecyclerView.Adapter<MyTeamAdapter.MyTeamView
 
         public void bindData(MyTeamInfo myTeamInfo) {
             time.setText(myTeamInfo.getAddTime());
-            if(TextUtils.equals(StaticData.REFLASH_ZERO,myTeamInfo.getIsActivity())){
+            if(TextUtils.equals(StaticData.REFRESH_ZERO,myTeamInfo.getIsActivity())){
                 teamType.setText(context.getString(R.string.daily_group));
             }else {
                 teamType.setText(context.getString(R.string.activity_group));
@@ -144,12 +144,12 @@ public class MyTeamAdapter extends RecyclerView.Adapter<MyTeamAdapter.MyTeamView
         //10:拼团中 20：拼团成
         private void setOrderStatus(String status) {
             switch (status) {
-                case StaticData.REFLASH_ONE:
+                case StaticData.REFRESH_ONE:
                     teamStatus.setText(context.getString(R.string.in_group));
                     leftBt.setVisibility(View.GONE);
                     rightBt.setVisibility(View.VISIBLE);
                     break;
-                case StaticData.REFLASH_THREE:
+                case StaticData.REFRESH_THREE:
                     teamStatus.setText(context.getString(R.string.successful_team));
                     leftBt.setVisibility(View.VISIBLE);
                     rightBt.setVisibility(View.GONE);

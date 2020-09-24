@@ -114,14 +114,14 @@ public class CategoryGoodsActivity extends BaseActivity implements SortContract.
         goodsItemAdapter = new GoodsItemAdapter(this);
         goodsItemAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(goodsItemAdapter);
-        categoryGoodsPresenter.getCategoryGoods(StaticData.REFLASH_ONE, categoryId, sortType, orderType);
+        categoryGoodsPresenter.getCategoryGoods(StaticData.REFRESH_ONE, categoryId, sortType, orderType);
     }
 
     SimpleMultiPurposeListener simpleMultiPurposeListener = new SimpleMultiPurposeListener() {
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            categoryGoodsPresenter.getCategoryGoods(StaticData.REFLASH_ZERO, categoryId, sortType, orderType);
+            categoryGoodsPresenter.getCategoryGoods(StaticData.REFRESH_ZERO, categoryId, sortType, orderType);
         }
 
         @Override
@@ -141,33 +141,33 @@ public class CategoryGoodsActivity extends BaseActivity implements SortContract.
 
     //setBackgroundResource暗黑模式没用
     private void selectType(String type) {
-        defaultIv.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, type) ? View.VISIBLE : View.GONE);
-        priceIv.setVisibility((TextUtils.equals(StaticData.REFLASH_TWO, type) || TextUtils.equals(StaticData.REFLASH_THREE, type)) ? View.VISIBLE : View.GONE);
-        salesIv.setVisibility(TextUtils.equals(StaticData.REFLASH_FOUR, type) ? View.VISIBLE : View.GONE);
-        if (TextUtils.equals(StaticData.REFLASH_ONE, type)) {
+        defaultIv.setVisibility(TextUtils.equals(StaticData.REFRESH_ONE, type) ? View.VISIBLE : View.GONE);
+        priceIv.setVisibility((TextUtils.equals(StaticData.REFRESH_TWO, type) || TextUtils.equals(StaticData.REFRESH_THREE, type)) ? View.VISIBLE : View.GONE);
+        salesIv.setVisibility(TextUtils.equals(StaticData.REFRESH_FOUR, type) ? View.VISIBLE : View.GONE);
+        if (TextUtils.equals(StaticData.REFRESH_ONE, type)) {
             sortType = "";
             orderType = "";
             priceArrowIv.setVisibility(View.VISIBLE);
             priceArrow.setVisibility(View.GONE);
-        } else if (TextUtils.equals(StaticData.REFLASH_TWO, type)) {
+        } else if (TextUtils.equals(StaticData.REFRESH_TWO, type)) {
             sortType = StaticData.SORT_TYPE_PRICE;
             orderType = StaticData.ORDER_TYPE_DESC;
             priceArrowIv.setVisibility(View.GONE);
             priceArrow.setVisibility(View.VISIBLE);
             priceArrow.setSelected(false);
-        } else if (TextUtils.equals(StaticData.REFLASH_THREE, type)) {
+        } else if (TextUtils.equals(StaticData.REFRESH_THREE, type)) {
             sortType = StaticData.SORT_TYPE_PRICE;
             orderType = StaticData.ORDER_TYPE_ASC;
             priceArrowIv.setVisibility(View.GONE);
             priceArrow.setVisibility(View.VISIBLE);
             priceArrow.setSelected(true);
-        } else if (TextUtils.equals(StaticData.REFLASH_FOUR, type)) {
+        } else if (TextUtils.equals(StaticData.REFRESH_FOUR, type)) {
             sortType = StaticData.SORT_TYPE_SALES;
             orderType = StaticData.ORDER_TYPE_DESC;
             priceArrowIv.setVisibility(View.VISIBLE);
             priceArrow.setVisibility(View.GONE);
         }
-        categoryGoodsPresenter.getCategoryGoods(StaticData.REFLASH_ONE, categoryId, sortType, orderType);
+        categoryGoodsPresenter.getCategoryGoods(StaticData.REFRESH_ONE, categoryId, sortType, orderType);
 
     }
 
@@ -179,9 +179,9 @@ public class CategoryGoodsActivity extends BaseActivity implements SortContract.
 
     @Override
     public void goGoodsDetails(String goodsType, String goodsId) {
-        if (TextUtils.equals(StaticData.REFLASH_ONE, goodsType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, goodsType)) {
             GeneralGoodsDetailsActivity.start(this, goodsId);
-        } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsType)) {
+        } else if (TextUtils.equals(StaticData.REFRESH_TWO, goodsType)) {
             OrdinaryGoodsDetailActivity.start(this, goodsId);
         } else {
             ActivityGroupGoodsActivity.start(this, goodsId);
@@ -233,21 +233,21 @@ public class CategoryGoodsActivity extends BaseActivity implements SortContract.
                 break;
             case R.id.default_rl:
                 priceDesc = false;
-                selectType = StaticData.REFLASH_ONE;
+                selectType = StaticData.REFRESH_ONE;
                 selectType(selectType);
                 break;
             case R.id.price_ll:
                 priceDesc = !priceDesc;
                 if (priceDesc) {
-                    selectType = StaticData.REFLASH_TWO;
+                    selectType = StaticData.REFRESH_TWO;
                 } else {
-                    selectType = StaticData.REFLASH_THREE;
+                    selectType = StaticData.REFRESH_THREE;
                 }
                 selectType(selectType);
                 break;
             case R.id.sales_rl:
                 priceDesc = false;
-                selectType = StaticData.REFLASH_FOUR;
+                selectType = StaticData.REFRESH_FOUR;
                 selectType(selectType);
                 break;
             default:

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/operation_result" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/right_tv"
+            style="@style/title_right_text_style"
+            android:text="@string/complete"
+            android:textColor="@color/appText10" />
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/result_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bank_bind_result_select"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_51"/>
+    <com.mall.sls.common.widget.textview.ConventionalTextView
+        android:id="@+id/bind_result_tv"
+        style="@style/size15_color_app3_text_style"
+        tools:text="@string/add_bank_card_success"
+        android:layout_marginTop="@dimen/dp_19"
+        android:layout_gravity="center_horizontal"/>
+</LinearLayout>

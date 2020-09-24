@@ -35,6 +35,7 @@ import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.coupon.ui.SelectCouponActivity;
 import com.mall.sls.data.entity.AddressInfo;
+import com.mall.sls.data.entity.BindResultInfo;
 import com.mall.sls.data.entity.CartItemInfo;
 import com.mall.sls.data.entity.ConfirmCartOrderDetail;
 import com.mall.sls.data.entity.HiddenItemCartInfo;
@@ -158,6 +159,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
     private List<CartItemInfo> cartItemInfos;
     private String orderId;
     private Handler mHandler = new MyHandler(this);
+    private String hiddenType;
 
 
     public static void start(Context context, List<String> ids, String purchaseType) {
@@ -232,10 +234,10 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
             userCouponId = confirmCartOrderDetail.getCouponUserId();
             cartIds = confirmCartOrderDetail.getCartIds();
             orderTotalPrice = confirmCartOrderDetail.getOrderTotalPrice();
-            if (TextUtils.equals(StaticData.REFLASH_ZERO, confirmCartOrderDetail.getCouponCount())) {
+            if (TextUtils.equals(StaticData.REFRESH_ZERO, confirmCartOrderDetail.getCouponCount())) {
                 coupon.setText(getString(R.string.no_available));
             } else {
-                if (TextUtils.equals(StaticData.REFLASH_ZERO, userCouponId)) {
+                if (TextUtils.equals(StaticData.REFRESH_ZERO, userCouponId)) {
                     coupon.setText(confirmCartOrderDetail.getCouponCount() + "张优惠券可用");
                 } else {
                     coupon.setText("-" + NumberFormatUnit.goodsFormat(confirmCartOrderDetail.getCouponPrice()));
@@ -245,12 +247,13 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
             deliveryMethod.setText(confirmCartOrderDetail.getPeiSongType());
             hiddenItemCartInfos = confirmCartOrderDetail.getHiddenItemCartInfos();
             if (hiddenItemCartInfos != null && hiddenItemCartInfos.size() > 0 && isBulletBox) {
-                if (TextUtils.equals(StaticData.REFLASH_ONE, purchaseType)) {
+                if (TextUtils.equals(StaticData.REFRESH_ONE, purchaseType)) {
                     directBoxRl.setVisibility(View.VISIBLE);
                 } else {
-                    cartBoxRl.setVisibility(View.VISIBLE);
-                    hiddenCartGoodsAdapter.setData(hiddenItemCartInfos);
-                    hiddenNumber.setText(hiddenItemCartInfos.size()+"件  (共"+cartItemInfos.size()+"件)");
+//                    cartBoxRl.setVisibility(View.VISIBLE);
+//                    hiddenCartGoodsAdapter.setData(hiddenItemCartInfos);
+//                    hiddenNumber.setText(hiddenItemCartInfos.size()+"件  (共"+cartItemInfos.size()+"件)");
+                    CartBoxActivity.start(this,getString(R.string.cancel_goods_tip),getString(R.string.continue_order),getString(R.string.back_cart),String.valueOf(cartItemInfos.size()),hiddenItemCartInfos);
                 }
             }
             confirmBt.setEnabled(!(cartItemInfos.size() == hiddenItemCartInfos.size()));
@@ -265,14 +268,14 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
 
     @Override
     public void renderCartOrderSubmit(OrderSubmitInfo orderSubmitInfo) {
-        FlashCartManager.saveFlashCart(StaticData.REFLASH_ONE);
+        FlashCartManager.saveFlashCart(StaticData.REFRESH_ONE);
         if (orderSubmitInfo != null) {
             orderId = orderSubmitInfo.getOrderId();
             if (orderSubmitInfo.getPay()) {
-                if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
-                    cartConfirmOrderPresenter.orderWxPay(orderId, StaticData.REFLASH_ZERO);
+                if (TextUtils.equals(StaticData.REFRESH_ZERO, selectType)) {
+                    cartConfirmOrderPresenter.orderWxPay(orderId, StaticData.REFRESH_ZERO);
                 } else {
-                    cartConfirmOrderPresenter.orderAliPay(orderId, StaticData.REFLASH_ONE);
+                    cartConfirmOrderPresenter.orderAliPay(orderId, StaticData.REFRESH_ONE);
                 }
             } else {
                 paySuccess();
@@ -300,7 +303,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
     }
 
     private void address() {
-        if (addressInfo != null && !TextUtils.equals(StaticData.REFLASH_ZERO, addressInfo.getId())) {
+        if (addressInfo != null && !TextUtils.equals(StaticData.REFRESH_ZERO, addressInfo.getId())) {
             addressId = addressInfo.getId();
             noAddressTv.setVisibility(View.GONE);
             addressRl.setVisibility(View.VISIBLE);
@@ -333,7 +336,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
             case R.id.address_all://选择地址
                 isBulletBox = true;
                 Intent intent = new Intent(this, AddressManageActivity.class);
-                intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_ZERO);
+                intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_ZERO);
                 intent.putExtra(StaticData.SELECT_ID, addressId);
                 startActivityForResult(intent, RequestCodeStatic.REQUEST_ADDRESS);
                 break;
@@ -341,7 +344,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                 directBoxRl.setVisibility(View.GONE);
                 break;
             case R.id.go_homepage:
-                MainStartManager.saveMainStart(StaticData.REFLASH_ONE);
+                MainStartManager.saveMainStart(StaticData.REFRESH_ONE);
                 MainFrameActivity.start(this);
                 finish();
                 break;
@@ -377,14 +380,14 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                 case RequestCodeStatic.PAY_TYPE://选择支付方式
                     if (data != null) {
                         selectType = data.getStringExtra(StaticData.SELECT_TYPE);
-                        if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
+                        if (TextUtils.equals(StaticData.REFRESH_ZERO, selectType)) {
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(CartConfirmOrderActivity.this)) {
                                 cartConfirmOrderPresenter.cartOrderSubmit(addressId, normalIds, userCouponId, message);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
-                        } else if (TextUtils.equals(StaticData.REFLASH_ONE, selectType)) {
+                        } else if (TextUtils.equals(StaticData.REFRESH_ONE, selectType)) {
                             if (PayTypeInstalledUtils.isAliPayInstalled(CartConfirmOrderActivity.this)) {
                                 cartConfirmOrderPresenter.cartOrderSubmit(addressId, normalIds, userCouponId, message);
                             } else {
@@ -396,15 +399,30 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                 case RequestCodeStatic.TIP_PAGE://点击返回
                     if (data != null) {
                         tipBack = data.getStringExtra(StaticData.TIP_BACK);
-                        if (TextUtils.equals(StaticData.REFLASH_ONE, tipBack)) {
+                        if (TextUtils.equals(StaticData.REFRESH_ONE, tipBack)) {
                             confirm();
                         } else {
                             finish();
                         }
                     }
                     break;
+                case RequestCodeStatic.HIDDEN_CART:
+                    if(data!=null){
+                        hiddenType=data.getStringExtra(StaticData.HIDDEN_TYPE);
+                        hiddenCart();
+                    }
+                    break;
                 default:
             }
+        }
+    }
+
+    private void hiddenCart(){
+        if(TextUtils.equals(StaticData.REFRESH_ONE,hiddenType)){
+            cartBoxRl.setVisibility(View.GONE);
+        }else {
+            cartBoxRl.setVisibility(View.GONE);
+            finish();
         }
     }
 
@@ -423,11 +441,11 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
             showMessage(getString(R.string.select_address));
             return;
         }
-        if (TextUtils.equals(StaticData.REFLASH_ZERO, orderTotalPrice) || TextUtils.equals("0.00", orderTotalPrice)) {
+        if (TextUtils.equals(StaticData.REFRESH_ZERO, orderTotalPrice) || TextUtils.equals("0.00", orderTotalPrice)) {
             cartConfirmOrderPresenter.cartOrderSubmit(addressId, normalIds, userCouponId, message);
         } else {
             Intent intent = new Intent(this, SelectPayTypeActivity.class);
-            intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
+            intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_TWO);
             intent.putExtra(StaticData.PAYMENT_AMOUNT, orderTotalPrice);
             startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
         }

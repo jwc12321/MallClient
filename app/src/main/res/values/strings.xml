@@ -7,6 +7,17 @@
     <string name="fail_to_access_servers">网络繁忙，请重试</string>
     <string name="layoutManager_Gridlayout">GridLayoutManager</string>
     <string name="layoutManager_LinearLayout">LinearLayoutManager</string>
+
+    <!--空格-->
+    <string name="space_card_number">卡号&#8195;</string>
+
+    <!--mai_dian-->
+    <string name="bank_card_page">银行卡页</string>
+
+    <!--按钮点击-->
+    <string name="mine_bank_card_click">我的-银行卡</string>
+    <string name="bank_card_add_click">银行卡添加</string>
+
     <!--1.0.0-->
     <string name="successfully_saved">保存成功</string>
     <string name="signing_on">登录中</string>
@@ -312,7 +323,6 @@
     <string name="lottery_number">您的抽奖编号为：</string>
     <string name="no_lottery_time">亲，您还没有抽奖次数哦</string>
     <string name="do_the_task">去做任务得更多抽奖机会吧！</string>
-    <string name="i_know">知道了</string>
     <string name="go_shop">去购物</string>
     <string name="is_over">已结束</string>
 
@@ -421,4 +431,84 @@
     <string name="search_history">搜索历史</string>
     <string name="clear_history">清除记录</string>
     <string name="no_available_coupon">暂无可用优惠券</string>
+
+
+    <!--1.1.3-->
+    <string name="bank_card">银行卡</string>
+    <string name="no_bank_card">暂无银行卡</string>
+    <string name="bank_card_manage">银行卡管理</string>
+    <string name="unbind">解除绑定</string>
+    <string name="add_bank_card">添加银行卡</string>
+    <string name="bind_own_bank_card">请绑定本人的银行卡（储蓄卡）</string>
+    <string name="cardholder">持卡人</string>
+    <string name="card_number">卡号</string>
+    <string name="card_type">卡类型</string>
+    <string name="id_card">身份证</string>
+    <string name="safe_code">安全码</string>
+    <string name="expire_date">有效期</string>
+    <string name="cardholder_name">持卡人姓名</string>
+    <string name="cardholder_card_number">持卡人卡号</string>
+    <string name="cardholder_id_card">持卡人身份证号</string>
+    <string name="bank_phone_number">银行预留手机号</string>
+    <string name="phone_number_description_title">手机号说明</string>
+    <string name="phone_number_description_content">银行预留手机号指你在办理银行卡时所填写的手机号，或你在银行认可的第三方机构办理的本人手机号码。如有疑问，请联系银行客服</string>
+    <string name="i_know">我知道了</string>
+    <string name="is_give_up_binding">是否放弃绑定银行卡？</string>
+    <string name="no">否</string>
+    <string name="yes">是</string>
+    <string name="input_cardholder_name">请填写持卡人姓名</string>
+    <string name="input_cardholder_card_number">请填写持卡人卡号</string>
+    <string name="input_right_cardholder_card_number">请填写正确持卡人卡号</string>
+    <string name="input_cardholder_id_card">请填写持卡人身份证号</string>
+    <string name="input_bank_phone_number">请填写银行预留手机号</string>
+    <string name="input_security_code">请填写安全码</string>
+    <string name="input_valid_period">请填写有效期</string>
+    <string name="authentication">身份验证</string>
+    <string name="check_code">校验码</string>
+    <string name="input_check_code">请填写验证码</string>
+    <string name="resend_verification_code">重发验证码</string>
+    <string name="operation_result">操作结果</string>
+    <string name="add_bank_card_success">银行卡添加成功</string>
+    <string name="payment_details">付款详情</string>
+    <string name="bank_pay_type">付款方式</string>
+    <string name="need_pay">需支付</string>
+    <string name="cooperate_bank">支持的银行</string>
+    <string name="input_pay_info">填写付款信息</string>
+    <string name="name">姓名</string>
+    <string name="certificate_type">证件类型</string>
+    <string name="license_number">证件号</string>
+    <string name="v_code">验证码</string>
+    <string name="confirm_pay">确认付款</string>
+    <string name="sms_code">短信验证码</string>
+    <string name="untie_success">解绑成功</string>
+    <string name="can_not_receive_check_code_question">收不到验证码?</string>
+    <string name="can_not_receive_check_code">收不到验证码</string>
+    <string name="can_not_receive_first">请确认该银行预留手机号是否为当前使用手机号。</string>
+    <string name="can_not_receive_second">请查看短信是否被安全软件拦截，若是双卡双待手机，请检查副卡短信情况。</string>
+    <string name="can_not_receive_third">由于运营商网络原因，可能存在短信延迟，请耐心等待或稍后再试。</string>
+    <string name="can_not_receive_fourth">若银行预留手机号已停用，请联系银行客服处理。</string>
+    <string name="debit_card">储蓄卡</string>
+    <string name="credit_card">信用卡</string>
+    <string name="pay_limit">支付限额</string>
+    <string name="one_limit">单笔限额</string>
+    <string name="day_limit">每日限额</string>
+    <string name="select_pay_bank">选择付款方式</string>
+    <string name="pay_result">付款结果</string>
+    <string name="result_process">订单已提交，银行系统正在处理中，请您耐心\n等待。如您需要咨询，可致电银行。</string>
+    <string name="order_pay_failed">订单支付失败</string>
+    <string name="pay_status">支付状态：</string>
+    <string name="user_agreement_agreement">我已阅读并同意《用户协议》</string>
+    <string name="agree_user_agreement">请阅读并同意《用户协议》</string>
+    <string name="select_bank_card">请选择银行卡</string>
+    <string name="not_support_bank">该卡暂不支持，请使用《支持的银行卡》</string>
+    <string name="fast_payment_agreement">我已阅读并同意《特惠购快捷支付协议》</string>
+    <string name="agree_fast_payment_agreement">请阅读并同意《特惠购快捷支付协议》</string>
+    <string name="add_bank_card_processing">银行卡添加处理中</string>
+    <string name="add_bank_card_failed">银行卡添加失败</string>
+    <string name="view_fund_tip">根据支付方式的不同退款到账需要1-3个工作日</string>
+    <string name="one_three_day">1-3个工作日</string>
+    <string name="input_right_phone_number">请输入正确手机号</string>
+    <string name="scan">扫描</string>
+    <string name="view_order">查看订单</string>
+    <string name="buy_again">再次购买</string>
 </resources>

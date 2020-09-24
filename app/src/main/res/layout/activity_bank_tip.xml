@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround8"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <LinearLayout
+        android:id="@+id/item_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:background="@drawable/common_four_back_fifty_seven_bg"
+        android:orientation="vertical">
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_61"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/appText3"
+            android:gravity="center"
+            android:text="@string/phone_number_description_title" />
+
+        <View style="@style/back_nine_line_style" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/confirm_bt"
+            style="@style/phone_tip_bt_style"
+            android:text="@string/i_know" />
+    </LinearLayout>
+</RelativeLayout>

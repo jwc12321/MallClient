@@ -108,7 +108,7 @@ public class GoodsItemGridAdapter extends RecyclerView.Adapter<GoodsItemGridAdap
             currentPrice.setText(NumberFormatUnit.numberFormat(goodsItemInfo.getRetailPrice()));
             originalPrice.setText(NumberFormatUnit.goodsFormat(goodsItemInfo.getCounterPrice()));
             groupType.setText(goodsItemInfo.getKeywords());
-            groupType.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGoodsType()) ? View.GONE : View.VISIBLE);
+            groupType.setVisibility(TextUtils.equals(StaticData.REFRESH_ONE, goodsItemInfo.getGoodsType()) ? View.GONE : View.VISIBLE);
         }
     }
 

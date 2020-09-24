@@ -42,7 +42,7 @@ public class CouponListPresenter implements CouponContract.CouponListPresenter {
 
     @Override
     public void getCouponInfos(String refreshType, String status) {
-        if (TextUtils.equals("1", refreshType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             couponListView.showLoading(StaticData.LOADING);
         }
         currentIndex=1;

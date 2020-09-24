@@ -305,7 +305,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
     }
 
     private void doSearchQuery(String city, String mType, double latitude, double longitude) {
-        type = StaticData.REFLASH_ONE;
+        type = StaticData.REFRESH_ONE;
         query = new PoiSearch.Query("", mType, city);// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
         query.setPageSize(pageSize);// 设置每页最多返回多少条poiitem
         query.setPageNum(currentIndex);// 设置查第一页
@@ -318,7 +318,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
     }
 
     private void doSearchKeyWord(String keyWord, String city) {
-        type = StaticData.REFLASH_ZERO;
+        type = StaticData.REFRESH_ZERO;
         query = new PoiSearch.Query(keyWord, "", city);// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
         query.setPageSize(searchSize);// 设置每页最多返回多少条poiitem
         query.setPageNum(0);// 设置查第一页
@@ -339,7 +339,7 @@ public class SelectAddressActivity extends BaseActivity implements LocationSourc
 
                 if (poiResult.getQuery().equals(query)) {// 是否是同一条
                     List<PoiItem> poiItems = poiResult.getPois();// 取得第一页的poiitem数据，页数从数字0开始
-                    if (TextUtils.equals(StaticData.REFLASH_ONE, type)) {
+                    if (TextUtils.equals(StaticData.REFRESH_ONE, type)) {
                         if (isAddMore) {
                             refreshLayout.finishLoadMore();
                             mapAddressAdapter.addMore(poiItems);

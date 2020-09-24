@@ -111,13 +111,13 @@ public class LootingAdapter extends RecyclerView.Adapter<LootingAdapter.LootingV
             goodsIntroduction.setText(goodsItemInfo.getBrief());
             currentPrice.setText(NumberFormatUnit.numberFormat(goodsItemInfo.getRetailPrice()));
             originalPrice.setText(NumberFormatUnit.numberFormat(goodsItemInfo.getCounterPrice()));
-            groupType.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGroupType()) ? View.VISIBLE : View.GONE);
+            groupType.setVisibility(TextUtils.equals(StaticData.REFRESH_ONE, goodsItemInfo.getGroupType()) ? View.VISIBLE : View.GONE);
             groupType.setText(goodsItemInfo.getKeywords());
-            if (TextUtils.equals(StaticData.REFLASH_ONE, goodsItemInfo.getGoodsType())) {
+            if (TextUtils.equals(StaticData.REFRESH_ONE, goodsItemInfo.getGoodsType())) {
                 groupType.setVisibility(View.GONE);
                 priceType.setText(context.getString(R.string.selling_price));
                 confirmBt.setText(context.getString(R.string.buy_now));
-            } else if (TextUtils.equals(StaticData.REFLASH_TWO, goodsItemInfo.getGoodsType())) {
+            } else if (TextUtils.equals(StaticData.REFRESH_TWO, goodsItemInfo.getGoodsType())) {
                 groupType.setVisibility(View.VISIBLE);
                 priceType.setText(context.getString(R.string.group_purchase_price_tv));
                 confirmBt.setText(context.getString(R.string.go_to_spell));

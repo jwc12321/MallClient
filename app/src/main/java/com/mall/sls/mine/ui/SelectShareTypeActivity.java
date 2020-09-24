@@ -43,10 +43,10 @@ public class SelectShareTypeActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.wx_friends:
-                selectBack(StaticData.REFLASH_ZERO);
+                selectBack(StaticData.REFRESH_ZERO);
                 break;
             case R.id.wx_circle:
-                selectBack(StaticData.REFLASH_ONE);
+                selectBack(StaticData.REFRESH_ONE);
                 break;
             default:
         }

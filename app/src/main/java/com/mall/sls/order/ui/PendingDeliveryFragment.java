@@ -50,6 +50,7 @@ public class PendingDeliveryFragment extends BaseFragment implements OrderContra
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     private String choiceType;
+    private String showType;
 
     private GoodsOrderAdapter goodsOrderAdapter;
     @Inject
@@ -87,9 +88,10 @@ public class PendingDeliveryFragment extends BaseFragment implements OrderContra
 
     private void initView() {
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
+        showType=StaticData.REFRESH_THREE;
         addAdapter();
-        if(TextUtils.equals(StaticData.REFLASH_THREE,choiceType)) {
-            orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_THREE);
+        if(TextUtils.equals(StaticData.REFRESH_THREE,choiceType)) {
+            orderListPresenter.getOrderList(StaticData.REFRESH_ONE,showType);
         }
     }
 
@@ -105,12 +107,12 @@ public class PendingDeliveryFragment extends BaseFragment implements OrderContra
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            orderListPresenter.getOrderList(StaticData.REFLASH_ZERO,StaticData.REFLASH_THREE);
+            orderListPresenter.getOrderList(StaticData.REFRESH_ZERO,showType);
         }
 
         @Override
         public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-            orderListPresenter.getMoreOrderList(StaticData.REFLASH_THREE);
+            orderListPresenter.getMoreOrderList(showType);
         }
     };
 
@@ -128,7 +130,7 @@ public class PendingDeliveryFragment extends BaseFragment implements OrderContra
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()&&orderListPresenter!=null) {
-            orderListPresenter.getOrderList(StaticData.REFLASH_ONE,StaticData.REFLASH_THREE);
+            orderListPresenter.getOrderList(StaticData.REFRESH_ONE,showType);
         }
     }
 

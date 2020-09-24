@@ -12,13 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
-import com.mall.sls.certify.ui.CerifyPayActivity;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.OrderPackageInfo;
 import com.mall.sls.data.entity.ShipOrderInfo;
-import com.mall.sls.data.entity.WebViewDetailInfo;
 import com.mall.sls.order.DaggerOrderComponent;
 import com.mall.sls.order.OrderContract;
 import com.mall.sls.order.OrderModule;
@@ -52,7 +50,6 @@ public class ViewLogisticsActivity extends BaseActivity implements OrderContract
 
     private OrderLogisticsAdapter orderLogisticsAdapter;
     private String goodsOrderId;
-    private WebViewDetailInfo webViewDetailInfo;
 
     @Inject
     OrderLogisticsPresenter orderLogisticsPresenter;
@@ -126,9 +123,6 @@ public class ViewLogisticsActivity extends BaseActivity implements OrderContract
 
     @Override
     public void goSfH5Url(String sfH5Url) {
-        webViewDetailInfo = new WebViewDetailInfo();
-        webViewDetailInfo.setTitle(getString(R.string.logistics_details));
-        webViewDetailInfo.setUrl(sfH5Url);
-        WebViewActivity.start(this, webViewDetailInfo);
+        WebViewActivity.start(this, sfH5Url);
     }
 }

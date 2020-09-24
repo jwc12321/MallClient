@@ -44,7 +44,6 @@ import com.mall.sls.data.entity.OrderGoodsVo;
 import com.mall.sls.data.entity.OrderTimeInfo;
 import com.mall.sls.data.entity.ShipOrderInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
-import com.mall.sls.data.entity.WebViewDetailInfo;
 import com.mall.sls.data.event.PayAbortEvent;
 import com.mall.sls.data.event.WXSuccessPayEvent;
 import com.mall.sls.homepage.ui.ActivityGroupGoodsActivity;
@@ -176,7 +175,6 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private String goodsProductId;
     private String goodsId;
     private List<ShipOrderInfo> shipOrderInfos;
-    private WebViewDetailInfo webViewDetailInfo;
     private String sfH5Url;
     private String isOnSale;
     private String showMap;
@@ -191,7 +189,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
 
     @Inject
     OrderDetailsPresenter orderDetailsPresenter;
-    private String activityResult = StaticData.REFLASH_ZERO;//会列表是否需要刷新  ：不用 1：要
+    private String activityResult = StaticData.REFRESH_ZERO;//会列表是否需要刷新  ：不用 1：要
 
 
     public static void start(Context context, String goodsOrderId) {
@@ -252,7 +250,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             case R.id.right_bt:
                 if (TextUtils.equals(StaticData.TO_PAY, orderStatusText)) {
                     Intent intent = new Intent(this, SelectPayTypeActivity.class);
-                    intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_TWO);
+                    intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_TWO);
                     intent.putExtra(StaticData.PAYMENT_AMOUNT, orderTotalPrice);
                     startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
                 } else if (TextUtils.equals(StaticData.TO_BE_SHARE, orderStatusText)) {
@@ -269,10 +267,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                     if (hasChild) {
                         ViewLogisticsActivity.start(this, goodsOrderId);
                     } else {
-                        webViewDetailInfo = new WebViewDetailInfo();
-                        webViewDetailInfo.setTitle(getString(R.string.logistics_details));
-                        webViewDetailInfo.setUrl(sfH5Url);
-                        WebViewActivity.start(this, webViewDetailInfo);
+                        WebViewActivity.start(this, sfH5Url);
                     }
                 }
                 break;
@@ -323,16 +318,16 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 case RequestCodeStatic.PAY_TYPE:
                     if (data != null) {
                         String selectType = data.getStringExtra(StaticData.SELECT_TYPE);
-                        if (TextUtils.equals(StaticData.REFLASH_ZERO, selectType)) {
+                        if (TextUtils.equals(StaticData.REFRESH_ZERO, selectType)) {
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(GoodsOrderDetailsActivity.this)) {
-                                orderDetailsPresenter.orderWxPay(goodsOrderId, StaticData.REFLASH_ZERO);
+                                orderDetailsPresenter.orderWxPay(goodsOrderId, StaticData.REFRESH_ZERO);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
-                        } else if (TextUtils.equals(StaticData.REFLASH_ONE, selectType)) {
+                        } else if (TextUtils.equals(StaticData.REFRESH_ONE, selectType)) {
                             if (PayTypeInstalledUtils.isAliPayInstalled(GoodsOrderDetailsActivity.this)) {
-                                orderDetailsPresenter.orderAliPay(goodsOrderId, StaticData.REFLASH_ONE);
+                                orderDetailsPresenter.orderAliPay(goodsOrderId, StaticData.REFRESH_ONE);
                             } else {
                                 showMessage(getString(R.string.install_alipay));
                             }
@@ -343,9 +338,9 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                     if (data != null) {
                         backType = data.getStringExtra(StaticData.BACK_TYPE);
                         if (!isActivity) {
-                            shareGroupWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                            shareGroupWx(TextUtils.equals(StaticData.REFRESH_ONE, backType));
                         } else {
-                            shareActivityWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                            shareActivityWx(TextUtils.equals(StaticData.REFRESH_ONE, backType));
                         }
                     }
                     break;
@@ -468,7 +463,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
 
     @Override
     public void renderCancelOrder() {
-        activityResult = StaticData.REFLASH_ONE;
+        activityResult = StaticData.REFRESH_ONE;
         orderDetailsPresenter.getOrderDetails(goodsOrderId);
     }
 
@@ -525,7 +520,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             case StaticData.TO_BE_RECEIVED://待收货
                 orderStatus.setText(getString(R.string.shipping));
                 countDownLl.setVisibility(View.GONE);
-                rightBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, showMap) ? View.VISIBLE : View.GONE);
+                rightBt.setVisibility(TextUtils.equals(StaticData.REFRESH_ONE, showMap) ? View.VISIBLE : View.GONE);
                 rightBt.setText(getString(R.string.check_map));
                 oneMoreAddCart();
                 downBtRlVis();
@@ -584,9 +579,9 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private void oneMoreAddCart(){
         if(general){
             leftBt.setVisibility(View.VISIBLE);
-            leftBt.setText(getString(R.string.add_cart));
+            leftBt.setText(getString(R.string.buy_again));
         }else {
-            leftBt.setVisibility(TextUtils.equals(StaticData.REFLASH_ONE, isOnSale) ? View.VISIBLE : View.GONE);
+            leftBt.setVisibility(TextUtils.equals(StaticData.REFRESH_ONE, isOnSale) ? View.VISIBLE : View.GONE);
             leftBt.setText(getString(R.string.one_more_order));
         }
 
@@ -650,7 +645,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
         PayResult payResult = new PayResult((Map<String, String>) msg.obj);
         String resultStatus = payResult.getResultStatus();
         if (TextUtils.equals(resultStatus, "9000")) {
-            activityResult = StaticData.REFLASH_ONE;
+            activityResult = StaticData.REFRESH_ONE;
             orderDetailsPresenter.getOrderDetails(goodsOrderId);
         } else if (TextUtils.equals(resultStatus, "6001")) {
             showMessage(getString(R.string.pay_cancel));
@@ -676,7 +671,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     //支付成功
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPaySuccess(WXSuccessPayEvent event) {
-        activityResult = StaticData.REFLASH_ONE;
+        activityResult = StaticData.REFRESH_ONE;
         orderDetailsPresenter.getOrderDetails(goodsOrderId);
     }
 
@@ -715,7 +710,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     }
 
     private void back() {
-        if (TextUtils.equals(StaticData.REFLASH_ONE, activityResult)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, activityResult)) {
             Intent backIntent = new Intent();
             setResult(Activity.RESULT_OK, backIntent);
             finish();

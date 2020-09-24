@@ -32,6 +32,7 @@ import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.common.widget.textview.WhiteDrawTextView;
 import com.mall.sls.data.entity.ConfirmCartOrderDetail;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.GeneralGoodsDetailsInfo;
@@ -93,6 +94,8 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
     ImageView cart;
     @BindView(R.id.title_rel)
     RelativeLayout titleRel;
+    @BindView(R.id.original_price)
+    WhiteDrawTextView originalPrice;
     private String goodsId;
     private int screenWidth;
     private int screenHeight;
@@ -214,20 +217,20 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                 finish();
                 break;
             case R.id.home_iv:
-                MainStartManager.saveMainStart(StaticData.REFLASH_ONE);
+                MainStartManager.saveMainStart(StaticData.REFRESH_ONE);
                 MainFrameActivity.start(this);
                 finish();
                 break;
             case R.id.add_cart_bt://加入购物车
-                type = StaticData.REFLASH_ZERO;
+                type = StaticData.REFRESH_ZERO;
                 goSelectSpec();
                 break;
             case R.id.buy_now_bt://立即购买
-                type = StaticData.REFLASH_ONE;
+                type = StaticData.REFRESH_ONE;
                 goSelectSpec();
                 break;
             case R.id.cart:
-                MainStartManager.saveMainStart(StaticData.REFLASH_THREE);
+                MainStartManager.saveMainStart(StaticData.REFRESH_THREE);
                 MainFrameActivity.start(this);
                 finish();
                 break;
@@ -242,7 +245,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
         intent.putExtra(StaticData.SPECIFICATION_LIST, (Serializable) productListCallableInfos);
         intent.putExtra(StaticData.PIC_URL, picUrl);
         intent.putExtra(StaticData.SKU_CHECK, (Serializable) checkSkus);
-        intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFLASH_ONE);
+        intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_ONE);
         intent.putExtra(StaticData.GOODS_COUNT, goodsCount);
         startActivityForResult(intent, RequestCodeStatic.REQUEST_SPEC);
     }
@@ -283,8 +286,9 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                 banner.setAutoPlayAble(data.size() > 1);
                 banner.setBannerData(R.layout.xbanner_zero_item, data);
                 currentPrice.setText(NumberFormatUnit.numberFormat(goodsBaseVo.getRetailPrice()));
-                sales.setVisibility(NumberFormatUnit.isZero(goodsBaseVo.getSalesQuantity())?View.GONE:View.VISIBLE);
-                sales.setText(getString(R.string.cumulative_sales) + goodsBaseVo.getSalesQuantity()+getString(R.string.pieces));
+                originalPrice.setText(NumberFormatUnit.goodsFormat(goodsBaseVo.getCounterPrice()));
+                sales.setVisibility(NumberFormatUnit.isZero(goodsBaseVo.getSalesQuantity()) ? View.GONE : View.VISIBLE);
+                sales.setText(getString(R.string.cumulative_sales) + goodsBaseVo.getSalesQuantity() + getString(R.string.pieces));
                 goodsName.setText(goodsBaseVo.getName());
                 goodsBrief.setText(goodsBaseVo.getBrief());
                 if (!TextUtils.isEmpty(goodsBaseVo.getDetail())) {
@@ -292,7 +296,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                 }
                 goodsDetailIv.setVisibility(TextUtils.isEmpty(goodsBaseVo.getDetail()) ? View.GONE : View.VISIBLE);
                 picUrl = goodsBaseVo.getPicUrl();
-                if (TextUtils.equals(StaticData.REFLASH_ONE, goodsBaseVo.getCourierType())) {
+                if (TextUtils.equals(StaticData.REFRESH_ONE, goodsBaseVo.getCourierType())) {
                     courierType.setText(getString(R.string.same_city_delivery));
                 } else {
                     courierType.setText(getString(R.string.type_express_delivery));
@@ -317,7 +321,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
         ids.clear();
         if (confirmCartOrderDetail != null && confirmCartOrderDetail.getCartItemInfos() != null && confirmCartOrderDetail.getCartItemInfos().size() > 0) {
             ids.add(confirmCartOrderDetail.getCartItemInfos().get(0).getId());
-            CartConfirmOrderActivity.start(this, ids, StaticData.REFLASH_ONE);
+            CartConfirmOrderActivity.start(this, ids, StaticData.REFRESH_ONE);
         }
     }
 
@@ -332,7 +336,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                         checkSkus = (List<String>) bundle.getSerializable(StaticData.SKU_CHECK);
                         productListCallableInfo = (ProductListCallableInfo) bundle.getSerializable(StaticData.SKU_INFO);
                         goodsCount = bundle.getInt(StaticData.GOODS_COUNT);
-                        if (TextUtils.equals(StaticData.REFLASH_ZERO, type)) {
+                        if (TextUtils.equals(StaticData.REFRESH_ZERO, type)) {
                             generalGoodsDetailsPresenter.cartAdd(productListCallableInfo.getId(), String.valueOf(goodsCount));
                         } else {
                             generalGoodsDetailsPresenter.buyNow(productListCallableInfo.getId(), String.valueOf(goodsCount));

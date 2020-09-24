@@ -74,7 +74,7 @@ public class LotteryRecordActivity extends BaseActivity implements LotteryContra
         lotteryRecordAdapter = new LotteryRecordAdapter(this);
         lotteryRecordAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(lotteryRecordAdapter);
-        lotteryRecordPresenter.getLotteryRecord(StaticData.REFLASH_ONE);
+        lotteryRecordPresenter.getLotteryRecord(StaticData.REFRESH_ONE);
 
 
     }
@@ -83,7 +83,7 @@ public class LotteryRecordActivity extends BaseActivity implements LotteryContra
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            lotteryRecordPresenter.getLotteryRecord(StaticData.REFLASH_ZERO);
+            lotteryRecordPresenter.getLotteryRecord(StaticData.REFRESH_ZERO);
         }
 
         @Override

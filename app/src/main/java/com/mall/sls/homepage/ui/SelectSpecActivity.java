@@ -118,7 +118,7 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
             }
             if (productListCallableInfo != null) {
                 GlideHelper.load(this, productListCallableInfo.getUrl(), R.mipmap.icon_default_goods, goodsIv);
-                if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {
+                if (TextUtils.equals(StaticData.REFRESH_ZERO, choiceType)) {
                     goodsPrice.setText(NumberFormatUnit.numberFormat(productListCallableInfo.getPrice()));
                 } else {
                     goodsPrice.setText(NumberFormatUnit.numberFormat(productListCallableInfo.getPreferentialPrice()));
@@ -134,7 +134,7 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
         } else {
             GlideHelper.load(this, picUrl, R.mipmap.icon_default_goods, goodsIv);
             if (productListCallableInfos != null && productListCallableInfos.size() > 0) {
-                if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {
+                if (TextUtils.equals(StaticData.REFRESH_ZERO, choiceType)) {
                     goodsPrice.setText(NumberFormatUnit.numberFormat(productListCallableInfos.get(0).getPrice()));
                 } else {
                     goodsPrice.setText(NumberFormatUnit.numberFormat(productListCallableInfos.get(0).getPreferentialPrice()));
@@ -167,12 +167,12 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
         public void keyBoardHide(int height) {
             if (TextUtils.isEmpty(goodsCount.getText().toString())) {
                 currentCount = 1;
-                goodsCount.setText("1");
+                goodsCount.setText(StaticData.REFRESH_ONE);
             } else {
                 currentCount = Integer.parseInt(goodsCount.getText().toString());
                 if (currentCount == 0) {
                     currentCount = 1;
-                    goodsCount.setText("1");
+                    goodsCount.setText(StaticData.REFRESH_ONE);
                 }
             }
             calculatingPrice(productListCallableInfo);
@@ -281,7 +281,7 @@ public class SelectSpecActivity extends BaseActivity implements OnSelectedListen
             }
             if (productListCallableInfo != null) {
                 GlideHelper.load(this, productListCallableInfo.getUrl(), R.mipmap.icon_default_goods, goodsIv);
-                if (TextUtils.equals(StaticData.REFLASH_ZERO, choiceType)) {
+                if (TextUtils.equals(StaticData.REFRESH_ZERO, choiceType)) {
                     goodsPrice.setText(NumberFormatUnit.numberFormat(productListCallableInfo.getPrice()));
                 } else {
                     goodsPrice.setText(NumberFormatUnit.numberFormat( productListCallableInfo.getPreferentialPrice()));

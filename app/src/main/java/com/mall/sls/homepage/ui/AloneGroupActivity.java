@@ -72,7 +72,7 @@ public class AloneGroupActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.close_iv:
                 Intent backIntent = new Intent();
-                backIntent.putExtra(StaticData.BACK_TYPE, StaticData.REFLASH_ZERO);
+                backIntent.putExtra(StaticData.BACK_TYPE, StaticData.REFRESH_ZERO);
                 setResult(Activity.RESULT_OK, backIntent);
                 finish();
                 break;
@@ -93,7 +93,7 @@ public class AloneGroupActivity extends BaseActivity {
                 case RequestCodeStatic.SELECT_SHARE_TYPE:
                     if (data != null) {
                         backType = data.getStringExtra(StaticData.BACK_TYPE);
-                        shareGroupWx(TextUtils.equals(StaticData.REFLASH_ONE, backType));
+                        shareGroupWx(TextUtils.equals(StaticData.REFRESH_ONE, backType));
                     }
                     break;
                 default:
@@ -111,7 +111,7 @@ public class AloneGroupActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onShareSuccess(String code) {
         Intent backIntent = new Intent();
-        backIntent.putExtra(StaticData.BACK_TYPE, StaticData.REFLASH_ONE);
+        backIntent.putExtra(StaticData.BACK_TYPE, StaticData.REFRESH_ONE);
         setResult(Activity.RESULT_OK, backIntent);
         finish();
 

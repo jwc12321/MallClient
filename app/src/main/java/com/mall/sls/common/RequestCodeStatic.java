@@ -28,4 +28,11 @@ public class RequestCodeStatic {
     public static final int SELECT_QUANTITY=26;//选择数量
     public static final int PRIVACY_POLICY=27;//隐私政策弹框
     public static final int SELECT_LAT_LON=28;//经纬度
+    public static final int SCAN=37;//扫描
+    public static final int SELECT_BANK_CARD=39;//选择银行卡
+    public static final int BACK_BANE_RESULT=40;
+    public static final int BANK_DETAIL=41;
+    public static final int HIDDEN_CART=42;
+
+    public static final int REQUEST_CAMERA=501;//权限相机
 }

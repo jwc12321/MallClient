@@ -63,7 +63,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-
+        <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing"
+            android:value="true"/>
         <service
             android:name=".service.GeTuiService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
@@ -415,6 +416,52 @@
         <activity android:name=".local.ui.LocalTeamActivity"
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"/>
+
+        <activity android:name=".mainframe.ui.ScanActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".bank.ui.BankCardManageActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".bank.ui.UntieBankCardActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".bank.ui.AddBankCardActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".bank.ui.PhoneTipActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"
+            android:theme="@style/TranslucentFullScreenTheme"/>
+        <activity android:name=".bank.ui.AuthenticationActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
+        <activity android:name=".bank.ui.OperationResultActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="nosensor"/>
+        <activity android:name=".bank.ui.BankCardPayActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="nosensor"
+            android:theme="@style/TranslucentFullScreenTheme"/>
+        <activity android:name=".bank.ui.ReceiveCodeTipActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"
+            android:theme="@style/TranslucentFullScreenTheme"/>
+        <activity android:name=".bank.ui.SelectBankCardActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"
+            android:theme="@style/TranslucentFullScreenTheme"/>
+        <activity android:name=".bank.ui.BankPayResultActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
+        <activity android:name=".bank.ui.BankTipActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"
+            android:theme="@style/TranslucentFullScreenTheme"/>
+        <activity android:name=".homepage.ui.CartBoxActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"
+            android:theme="@style/TranslucentFullScreenTheme"/>
     </application>
 
 </manifest>

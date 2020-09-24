@@ -50,6 +50,7 @@ public class CouponUsedFragment extends BaseFragment  implements CouponContract.
     @Inject
     CouponListPresenter couponListPresenter;
     private List<CouponInfo> couponInfos;
+    private String status;
 
     public static CouponUsedFragment newInstance() {
         CouponUsedFragment fragment = new CouponUsedFragment();
@@ -77,7 +78,8 @@ public class CouponUsedFragment extends BaseFragment  implements CouponContract.
 
     private void initView() {
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
-        couponAdapter = new CouponAdapter(StaticData.REFLASH_ONE);
+        status=StaticData.REFRESH_ONE;
+        couponAdapter = new CouponAdapter(StaticData.REFRESH_ONE);
         couponAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(couponAdapter);
     }
@@ -95,12 +97,12 @@ public class CouponUsedFragment extends BaseFragment  implements CouponContract.
         @Override
         public void onRefresh(@NonNull RefreshLayout refreshLayout) {
             refreshLayout.finishRefresh(6000);
-            couponListPresenter.getCouponInfos(StaticData.REFLASH_ZERO, StaticData.REFLASH_ONE);
+            couponListPresenter.getCouponInfos(StaticData.REFRESH_ZERO, status);
         }
 
         @Override
         public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-            couponListPresenter.getMoreCouponInfos(StaticData.REFLASH_ONE);
+            couponListPresenter.getMoreCouponInfos(status);
         }
     };
 
@@ -108,7 +110,7 @@ public class CouponUsedFragment extends BaseFragment  implements CouponContract.
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()&&couponListPresenter!=null) {
-            couponListPresenter.getCouponInfos(StaticData.REFLASH_ONE,StaticData.REFLASH_ONE);
+            couponListPresenter.getCouponInfos(StaticData.REFRESH_ONE,status);
         }
     }
 

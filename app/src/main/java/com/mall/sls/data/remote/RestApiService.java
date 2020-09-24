@@ -4,8 +4,13 @@ package com.mall.sls.data.remote;
 import com.mall.sls.data.RemoteDataWrapper;
 import com.mall.sls.data.entity.AddressInfo;
 import com.mall.sls.data.entity.AppUrlInfo;
+import com.mall.sls.data.entity.BankCardInfo;
+import com.mall.sls.data.entity.BankPayInfo;
+import com.mall.sls.data.entity.BindResultInfo;
+import com.mall.sls.data.entity.CardInfo;
 import com.mall.sls.data.entity.CartAddInfo;
 import com.mall.sls.data.entity.CartInfo;
+import com.mall.sls.data.entity.CertifyInfo;
 import com.mall.sls.data.entity.ConfirmCartOrderDetail;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CouponInfo;
@@ -43,6 +48,7 @@ import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.entity.VipAmountInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.request.AddAddressRequest;
+import com.mall.sls.data.request.BankPayRequest;
 import com.mall.sls.data.request.BuyNowRequest;
 import com.mall.sls.data.request.CartAddRequest;
 import com.mall.sls.data.request.CartFastaddRequest;
@@ -51,6 +57,7 @@ import com.mall.sls.data.request.CartOrderSubmitRequest;
 import com.mall.sls.data.request.CartUpdateNumberRequest;
 import com.mall.sls.data.request.CertifyIdRequest;
 import com.mall.sls.data.request.CodeRequest;
+import com.mall.sls.data.request.ConfirmBindBankRequest;
 import com.mall.sls.data.request.DescriptionRequest;
 import com.mall.sls.data.request.GroupRemindRequest;
 import com.mall.sls.data.request.JoinPrizeRequest;
@@ -65,6 +72,7 @@ import com.mall.sls.data.request.OrderPayRequest;
 import com.mall.sls.data.request.OrderRequest;
 import com.mall.sls.data.request.OrderSubmitRequest;
 import com.mall.sls.data.request.SmsCodeBindRequest;
+import com.mall.sls.data.request.StartBindBankRequest;
 import com.mall.sls.data.request.TypeRequest;
 import com.mall.sls.data.request.UserPayDtoRequest;
 import com.mall.sls.data.request.WeiXinLoginRequest;
@@ -371,4 +379,36 @@ public interface RestApiService {
     //删除历史记录
     @DELETE("app/goods/search-history")
     Flowable<RemoteDataWrapper<Ignore>> deleteHistory(@Header("X-Hc-Sign") String sign);
+
+    //查询绑定的银行卡记录
+    @GET("api/f/baofoo/list")
+    Flowable<RemoteDataWrapper<List<BankCardInfo>>> getBankCardInfos(@Header("X-Hc-Sign") String sign);
+
+    //查询银行卡的属性信息
+    @GET("api/f/baofoo/card-info")
+    Flowable<RemoteDataWrapper<CardInfo>> getCardInfo(@Header("X-Hc-Sign") String sign, @Query("cardNo") String cardNo);
+
+    //开始绑定银行卡
+    @POST("api/f/baofoo/begin-sign")
+    Flowable<RemoteDataWrapper<BankCardInfo>> getStartBindBankInfo(@Header("X-Hc-Sign") String sign, @Body StartBindBankRequest request);
+
+    //确认绑定银行卡
+    @POST("api/f/baofoo/confirm-sign")
+    Flowable<RemoteDataWrapper<BindResultInfo>> confirmBindBank(@Header("X-Hc-Sign") String sign, @Body ConfirmBindBankRequest request);
+
+    //解绑银行卡
+    @POST("api/f/baofoo/{id}/cancel-sign")
+    Flowable<RemoteDataWrapper<Boolean>> untieBankCard(@Header("X-Hc-Sign") String sign, @Path("id") String id);
+
+    //宝付直接支付
+    @POST("api/f/baofoo/single-pay")
+    Flowable<RemoteDataWrapper<BankPayInfo>> baoFooSinglePay(@Header("X-Hc-Sign") String sign, @Body BankPayRequest request);
+
+    //获取宝付支付验证码
+    @POST("public/f/code/baofoo")
+    Flowable<RemoteDataWrapper<Ignore>> sendBaoFuCode(@Header("X-Hc-Sign") String sign, @Body MobileRequest request);
+
+    //获取用户认证的信息
+    @GET("api/f/user/info/certify")
+    Flowable<RemoteDataWrapper<CertifyInfo>> getCertifyInfo(@Header("X-Hc-Sign") String sign);
 }

@@ -137,7 +137,7 @@ public class LoginFillCodeActivity extends BaseActivity implements LoginContract
     }
 
     private void confirm(){
-        if(TextUtils.equals(StaticData.REFLASH_ZERO,choiceType)){
+        if(TextUtils.equals(StaticData.REFRESH_ZERO,choiceType)){
             loginPresenter.loginIn(deviceId,deviceOsVersion,devicePlatform,mobile,smsCode,invitationCode,deviceName);
         }else {
             loginPresenter.oneClickLogin(accessCode,deviceId,deviceOsVersion,devicePlatform,invitationCode,deviceName);
@@ -161,7 +161,7 @@ public class LoginFillCodeActivity extends BaseActivity implements LoginContract
             PushManager.getInstance().setTag(this,tags, String.valueOf(System.currentTimeMillis()));
             MobileManager.saveMobile(tokenInfo.getUserInfo().getMobile());
             TokenManager.saveToken(tokenInfo.getToken());
-            BindWxManager.saveBindWx(tokenInfo.getBindWx() ? StaticData.REFLASH_ONE : StaticData.REFLASH_ZERO);
+            BindWxManager.saveBindWx(tokenInfo.getBindWx() ? StaticData.REFRESH_ONE : StaticData.REFRESH_ZERO);
             if(tokenInfo.getUserInfo()!=null) {
                 AvatarUrlManager.saveAvatarUrl(tokenInfo.getUserInfo().getAvatarUrl());
             }

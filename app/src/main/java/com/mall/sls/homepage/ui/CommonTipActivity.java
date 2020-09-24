@@ -62,10 +62,10 @@ public class CommonTipActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cancel_bt:
-                selectBack(StaticData.REFLASH_ZERO);
+                selectBack(StaticData.REFRESH_ZERO);
                 break;
             case R.id.confirm_bt:
-                selectBack(StaticData.REFLASH_ONE);
+                selectBack(StaticData.REFRESH_ONE);
                 break;
             default:
         }

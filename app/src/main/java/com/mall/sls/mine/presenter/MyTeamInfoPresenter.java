@@ -41,7 +41,7 @@ public class MyTeamInfoPresenter implements MineContract.MyTeamInfoPresenter {
 
     @Override
     public void getMyTeamInfo(String refreshType) {
-        if (TextUtils.equals("1", refreshType)) {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             myTeamInfoView.showLoading(StaticData.LOADING);
         }
         currentIndex=1;
