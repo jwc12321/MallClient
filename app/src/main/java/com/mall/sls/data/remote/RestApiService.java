@@ -35,6 +35,7 @@ import com.mall.sls.data.entity.MessageInfo;
 import com.mall.sls.data.entity.MessageTypeInfo;
 import com.mall.sls.data.entity.MineInfo;
 import com.mall.sls.data.entity.MyCouponInfo;
+import com.mall.sls.data.entity.OrderAddCartInfo;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.OrderPackageInfo;
 import com.mall.sls.data.entity.OrderSubmitInfo;
@@ -67,6 +68,7 @@ import com.mall.sls.data.request.MsgIdRequest;
 import com.mall.sls.data.request.MsgReadRequest;
 import com.mall.sls.data.request.OnClickBindRequest;
 import com.mall.sls.data.request.OneClickLoginRequest;
+import com.mall.sls.data.request.OrderAddCartRequest;
 import com.mall.sls.data.request.OrderIdRequest;
 import com.mall.sls.data.request.OrderPayRequest;
 import com.mall.sls.data.request.OrderRequest;
@@ -411,4 +413,14 @@ public interface RestApiService {
     //获取用户认证的信息
     @GET("api/f/user/info/certify")
     Flowable<RemoteDataWrapper<CertifyInfo>> getCertifyInfo(@Header("X-Hc-Sign") String sign);
+
+    //普通商品订单再来一单
+    @POST("app/order/general/add-cart")
+    Flowable<RemoteDataWrapper<OrderAddCartInfo>> orderAddCart(@Header("X-Hc-Sign") String sign, @Body OrderAddCartRequest request);
+
+    //是否打开邀请码
+    @GET("app/common/invitation-open")
+    Flowable<RemoteDataWrapper<Boolean>> getInvitationOpen(@Header("X-Hc-Sign") String sign);
+
+
 }

@@ -89,7 +89,7 @@ public class DhmsTearDownView extends LinearLayout {
     public void tearDown() {
         if (mIsAttachedToWindow) {
             long remainTime= cutdownTime;
-            if (remainTime >0) {
+            if (remainTime >-1) {
                 long day = 0;
                 long hour = 0;
                 long min = 0;

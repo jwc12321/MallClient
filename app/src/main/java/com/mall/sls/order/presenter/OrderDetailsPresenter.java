@@ -11,10 +11,12 @@ import com.mall.sls.data.RxSchedulerTransformer;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.Ignore;
 import com.mall.sls.data.entity.InvitationCodeInfo;
+import com.mall.sls.data.entity.OrderAddCartInfo;
 import com.mall.sls.data.entity.OrderInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
+import com.mall.sls.data.request.OrderAddCartRequest;
 import com.mall.sls.data.request.OrderIdRequest;
 import com.mall.sls.data.request.OrderPayRequest;
 import com.mall.sls.data.request.OrderRequest;
@@ -180,6 +182,30 @@ public class OrderDetailsPresenter implements OrderContract.OrderDetailsPresente
                     public void accept(Boolean isBoolean) throws Exception {
                         orderDetailsView.dismissLoading();
                         orderDetailsView.renderAddCartBatch(isBoolean);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        orderDetailsView.dismissLoading();
+                        orderDetailsView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void orderAddCart(String orderId, Boolean forceAdd) {
+        orderDetailsView.showLoading(StaticData.PROCESSING);
+        OrderAddCartRequest request=new OrderAddCartRequest(orderId,forceAdd);
+        String sign= SignUnit.signPost(RequestUrl.ORDER_ADD_CART,gson.toJson(request));
+        Disposable disposable = restApiService.orderAddCart(sign,request)
+                .flatMap(new RxRemoteDataParse<OrderAddCartInfo>())
+                .compose(new RxSchedulerTransformer<OrderAddCartInfo>())
+                .subscribe(new Consumer<OrderAddCartInfo>() {
+                    @Override
+                    public void accept(OrderAddCartInfo orderAddCartInfo) throws Exception {
+                        orderDetailsView.dismissLoading();
+                        orderDetailsView.renderOrderAddCart(orderAddCartInfo);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

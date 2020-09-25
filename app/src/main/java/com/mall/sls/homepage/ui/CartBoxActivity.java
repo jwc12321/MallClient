@@ -79,13 +79,13 @@ public class CartBoxActivity extends BaseActivity {
         hiddenNumber.setText(hiddenItemCartInfos.size()+"件  (共"+totalNumber+"件)");
     }
 
-    @OnClick({R.id.left_bt, R.id.right_tv})
+    @OnClick({R.id.left_bt, R.id.right_bt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.left_bt:
                 returnData(StaticData.REFRESH_ZERO);
                 break;
-            case R.id.right_tv:
+            case R.id.right_bt:
                 returnData(StaticData.REFRESH_ONE);
                 break;
             default:

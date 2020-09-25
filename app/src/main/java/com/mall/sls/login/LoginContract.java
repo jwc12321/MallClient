@@ -28,20 +28,27 @@ public interface LoginContract {
         void weixinLogin(String deviceId, String deviceOsVersion, String devicePlatform,String wxCode,String deviceName);
         void oneClickLogin(String accessCode, String deviceId, String deviceOsVersion, String devicePlatform,String invitationCode,String deviceName);
         void getAppUrlInfo();
+        void getInvitationOpen();
+        void bindOneClickLogin(String deviceId, String deviceOsVersion, String devicePlatform, String accessCode, String invitationCode, String unionId,String deviceName);
     }
 
     interface WeiXinLoginView extends BaseView<WeiXinLoginPresenter>{
         void renderWeixinLogin(TokenInfo tokenInfo);
         void renderLoginIn(TokenInfo tokenInfo);
         void renderAppUrlInfo(AppUrlInfo appUrlInfo);
+        void renderInvitationOpen(Boolean isBoolean);
     }
 
     interface BindMobilePresenter extends BasePresenter{
         void sendVCode(String mobile);
+        void getInvitationOpen();
+        void bindSmsCodeLogin(String deviceId, String deviceOsVersion, String devicePlatform, String mobile, String code, String invitationCode, String unionId,String deviceName);
     }
 
     interface BindMobileView extends BaseView<BindMobilePresenter>{
         void renderVCode();
+        void renderInvitationOpen(Boolean isBoolean);
+        void renderLoginIn(TokenInfo tokenInfo);
     }
 
     interface RegisterLoginPresenter extends BasePresenter{

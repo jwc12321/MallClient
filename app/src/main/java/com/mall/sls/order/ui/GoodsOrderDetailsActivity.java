@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,12 +24,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alipay.sdk.app.PayTask;
 import com.mall.sls.BaseActivity;
+import com.mall.sls.MainActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.BriefUnit;
 import com.mall.sls.common.unit.FormatUtil;
+import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayResult;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
@@ -40,6 +43,7 @@ import com.mall.sls.common.widget.textview.MSTearDownView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.InvitationCodeInfo;
+import com.mall.sls.data.entity.OrderAddCartInfo;
 import com.mall.sls.data.entity.OrderGoodsVo;
 import com.mall.sls.data.entity.OrderTimeInfo;
 import com.mall.sls.data.entity.ShipOrderInfo;
@@ -47,8 +51,10 @@ import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.event.PayAbortEvent;
 import com.mall.sls.data.event.WXSuccessPayEvent;
 import com.mall.sls.homepage.ui.ActivityGroupGoodsActivity;
+import com.mall.sls.homepage.ui.CartBoxActivity;
 import com.mall.sls.homepage.ui.OrdinaryGoodsDetailActivity;
 import com.mall.sls.homepage.ui.SelectPayTypeActivity;
+import com.mall.sls.mainframe.ui.MainFrameActivity;
 import com.mall.sls.mine.ui.SelectShareTypeActivity;
 import com.mall.sls.order.DaggerOrderComponent;
 import com.mall.sls.order.OrderContract;
@@ -184,6 +190,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private String arrivalTime;
     private Boolean hasChild = false;
     private Boolean general;
+    private String hiddenType;
 
     private OrderDetailGoodsItemAdapter orderGoodsItemAdapter;
 
@@ -258,7 +265,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                         showMessage(getString(R.string.install_weixin));
                         return;
                     }
-                    shareBitMap = QRCodeFileUtils.createBitmap3(goodsIv, 150,150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
+                    shareBitMap = QRCodeFileUtils.createBitmap3(goodsIv, 150, 150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
                     Intent intent = new Intent(this, SelectShareTypeActivity.class);
                     startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
                 } else if (TextUtils.equals(StaticData.PENDING_REFUND, orderStatusText) || TextUtils.equals(StaticData.REFUNDED, orderStatusText)) {
@@ -275,9 +282,9 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 if (TextUtils.equals(StaticData.TO_PAY, orderStatusText)) {
                     orderDetailsPresenter.cancelOrder(goodsOrderId);
                 } else {
-                    if(general){//普通商品是加入购物车，拼团商品是去商品详情
-                        orderDetailsPresenter.addCartBatch(goodsOrderId);
-                    }else {
+                    if (general) {//普通商品是加入购物车，拼团商品是去商品详情
+                        orderDetailsPresenter.orderAddCart(goodsOrderId, false);
+                    } else {
                         if (isActivity) {
                             ActivityGroupGoodsActivity.start(this, goodsId);
                         } else {
@@ -344,8 +351,20 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                         }
                     }
                     break;
+                case RequestCodeStatic.HIDDEN_CART:
+                    if (data != null) {
+                        hiddenType = data.getStringExtra(StaticData.HIDDEN_TYPE);
+                        hiddenCart();
+                    }
+                    break;
                 default:
             }
+        }
+    }
+
+    private void hiddenCart() {
+        if (TextUtils.equals(StaticData.REFRESH_ONE, hiddenType)) {
+            orderDetailsPresenter.orderAddCart(goodsOrderId, true);
         }
     }
 
@@ -383,27 +402,33 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             arrivalTime = goodsOrderDetails.getRefundConfirmTime();
             orderGoodsItemAdapter.setData(orderGoodsVos);
             hasChild = goodsOrderDetails.getHasChild();
-            general=goodsOrderDetails.getGeneral();
+            general = goodsOrderDetails.getGeneral();
             if (orderGoodsVos != null && orderGoodsVos.size() > 0) {//分享时候用到
                 GlideHelper.load(this, orderGoodsVos.get(0).getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
                 nameText = BriefUnit.returnName(orderGoodsVos.get(0).getPrice(), orderGoodsVos.get(0).getGoodsName());
                 briefText = BriefUnit.returnBrief(orderGoodsVos.get(0).getBrief());
                 goodsId = orderGoodsVos.get(0).getGoodsId();
                 goodsProductId = orderGoodsVos.get(0).getProductId();
-                isOnSale = orderGoodsVos.get(0).getIsOnSale();
+                isOnSale = StaticData.PRICE_ZERO;
+                for (OrderGoodsVo orderGoodsVo : orderGoodsVos) {
+                    if (TextUtils.equals(StaticData.REFRESH_ONE, orderGoodsVo.getIsOnSale())) {
+                        isOnSale = StaticData.REFRESH_ONE;
+                        break;
+                    }
+                }
             }
             setOrderStatus(orderStatusText);
             totalAmount.setText(NumberFormatUnit.goodsFormat(goodsOrderDetails.getGoodsPrice()));
-            deliveryFee.setText( NumberFormatUnit.goodsFormat(goodsOrderDetails.getFreightPrice()));
+            deliveryFee.setText(NumberFormatUnit.goodsFormat(goodsOrderDetails.getFreightPrice()));
             coupon.setText("-" + NumberFormatUnit.goodsFormat(goodsOrderDetails.getCouponPrice()));
-            couponRl.setVisibility(TextUtils.equals("0.00",goodsOrderDetails.getCouponPrice())?View.GONE:View.VISIBLE);
+            couponRl.setVisibility(TextUtils.equals("0.00", goodsOrderDetails.getCouponPrice()) ? View.GONE : View.VISIBLE);
             realPayment.setText(NumberFormatUnit.goodsFormat(goodsOrderDetails.getActualPrice()));
             deliveryMethod.setText(goodsOrderDetails.getPeiSongType());
             actualPrice = goodsOrderDetails.getActualPrice();
             payModeText = goodsOrderDetails.getPayModeText();
             orderTotalPrice = goodsOrderDetails.getActualPrice();
             notes.setText(goodsOrderDetails.getMessage());
-            notesRl.setVisibility(TextUtils.isEmpty(goodsOrderDetails.getMessage())?View.GONE:View.VISIBLE);
+            notesRl.setVisibility(TextUtils.isEmpty(goodsOrderDetails.getMessage()) ? View.GONE : View.VISIBLE);
             orderTimeInfos.clear();
             if (!TextUtils.isEmpty(goodsOrderDetails.getOrderSn())) {
                 orderTimeInfos.add(new OrderTimeInfo(getString(R.string.order_number), goodsOrderDetails.getOrderSn()));
@@ -441,7 +466,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             if (shipOrderInfos != null && shipOrderInfos.size() > 0) {
                 deliveryInfo.setText(shipOrderInfos.get(0).getStatusDesc());
                 deliveryTime.setText(shipOrderInfos.get(0).getStatusTime());
-                deliveryTime.setVisibility(TextUtils.isEmpty(shipOrderInfos.get(0).getStatusTime())?View.GONE:View.VISIBLE);
+                deliveryTime.setVisibility(TextUtils.isEmpty(shipOrderInfos.get(0).getStatusTime()) ? View.GONE : View.VISIBLE);
             }
             sfH5Url = goodsOrderDetails.getSfH5Url();
         }
@@ -478,6 +503,19 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     @Override
     public void renderAddCartBatch(Boolean isBoolean) {
         showMessage(getString(R.string.add_cart_success));
+    }
+
+    @Override
+    public void renderOrderAddCart(OrderAddCartInfo orderAddCartInfo) {
+        if (orderAddCartInfo != null) {
+            if (orderAddCartInfo.getShowData()) {
+                CartBoxActivity.start(this, getString(R.string.add_other_goods), getString(R.string.let_me_think), getString(R.string.add_cart), orderAddCartInfo.getTotalCount(), orderAddCartInfo.getHiddenItemCartInfos());
+            } else {
+                showMessage(getString(R.string.add_cart_success));
+                MainStartManager.saveMainStart(StaticData.REFRESH_TWO);
+                MainFrameActivity.start(this);
+            }
+        }
     }
 
     //状态 101-待支付 102 -取消 103-系统自动取消 "202-待退款","203-已退款,"204-待分享 206-待发货 301-待收获 401-完成 402-完成(系统)
@@ -576,21 +614,20 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
         }
     }
 
-    private void oneMoreAddCart(){
-        if(general){
-            leftBt.setVisibility(View.VISIBLE);
+    private void oneMoreAddCart() {
+        leftBt.setVisibility(TextUtils.equals(StaticData.REFRESH_ONE, isOnSale) ? View.VISIBLE : View.GONE);
+        if (general) {
             leftBt.setText(getString(R.string.buy_again));
-        }else {
-            leftBt.setVisibility(TextUtils.equals(StaticData.REFRESH_ONE, isOnSale) ? View.VISIBLE : View.GONE);
+        } else {
             leftBt.setText(getString(R.string.one_more_order));
         }
 
     }
 
-    private void downBtRlVis(){
-        if(leftBt.getVisibility()==View.VISIBLE||rightBt.getVisibility()==View.VISIBLE){
+    private void downBtRlVis() {
+        if (leftBt.getVisibility() == View.VISIBLE || rightBt.getVisibility() == View.VISIBLE) {
             btRl.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             btRl.setVisibility(View.GONE);
         }
     }

@@ -87,10 +87,6 @@ public class SortFragment extends BaseFragment implements SortContract.SortView,
         addAdapter();
     }
 
-    private void initView() {
-
-    }
-
     private void addAdapter() {
         firstCategoryAdapter = new FirstCategoryAdapter();
         firstCategoryAdapter.setOnItemClickListener(this);

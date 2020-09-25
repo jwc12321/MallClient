@@ -102,6 +102,9 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
     private String deviceOsVersion;
     private String devicePlatform;
     private String deviceName;
+    private String mobile;
+    private String smsCode;
+    private String invitationCode;
 
     private PhoneNumberAuthHelper mAlicomAuthHelper;
     private TokenResultListener mTokenListener;
@@ -110,6 +113,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
     private boolean checkRet;
     private String unionId;
     private String onClickType=StaticData.REFRESH_ZERO;//0:一键绑定 1：一键登录
+    private Boolean isInvitationOpen=true;
 
 
     public static void start(Context context) {
@@ -126,6 +130,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
         setHeight(null, title, null);
         initView();
         weiXinLoginPresenter.getAppUrlInfo();
+        weiXinLoginPresenter.getInvitationOpen();
     }
 
     private void initView() {
@@ -263,7 +268,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                 MainFrameActivity.start(this);
                 finish();
             } else {
-                LoginFillCodeActivity.start(this,loginToken,"","",StaticData.REFRESH_ONE);
+                LoginFillCodeActivity.start(this,loginToken,mobile,smsCode,StaticData.REFRESH_ONE);
             }
         }
     }
@@ -271,6 +276,11 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
     @Override
     public void renderAppUrlInfo(AppUrlInfo appUrlInfo) {
         updateApp(appUrlInfo);
+    }
+
+    @Override
+    public void renderInvitationOpen(Boolean isBoolean) {
+        this.isInvitationOpen=isBoolean;
     }
 
     private void updateApp(AppUrlInfo appUrlInfo) {
@@ -332,9 +342,13 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
                 if (tokenRet != null && !("600001").equals(tokenRet.getCode())) {
                     loginToken = tokenRet.getToken();
                     if(TextUtils.equals(StaticData.REFRESH_ZERO,onClickType)) {
-                        FillCodeActivity.start(WeixinLoginActivity.this, unionId, loginToken, "", "", StaticData.REFRESH_ONE);
+                        if(isInvitationOpen) {
+                            FillCodeActivity.start(WeixinLoginActivity.this, unionId, loginToken, mobile, smsCode, StaticData.REFRESH_ONE);
+                        }else {
+                            weiXinLoginPresenter.bindOneClickLogin(deviceId,deviceOsVersion,devicePlatform,loginToken,invitationCode,unionId,deviceName);
+                        }
                     }else {
-                        weiXinLoginPresenter.oneClickLogin(loginToken,deviceId,deviceOsVersion,devicePlatform,"",deviceName);
+                        weiXinLoginPresenter.oneClickLogin(loginToken,deviceId,deviceOsVersion,devicePlatform,invitationCode,deviceName);
                         TCAgentUnit.setEventId(WeixinLoginActivity.this,getString(R.string.login_register_bt));
                     }
                 }

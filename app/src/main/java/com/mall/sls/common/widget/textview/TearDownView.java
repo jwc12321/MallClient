@@ -87,7 +87,7 @@ public class TearDownView extends LinearLayout {
     public void tearDown() {
         if (mIsAttachedToWindow) {
             long remainTime= cutdownTime;
-            if (remainTime >0) {
+            if (remainTime >-1) {
                 long hour = 0;
                 long min = 0;
                 long sec = 0;

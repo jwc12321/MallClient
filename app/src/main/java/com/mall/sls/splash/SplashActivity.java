@@ -52,7 +52,7 @@ public class  SplashActivity extends BaseActivity {
 //        }
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-        MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
+        MainStartManager.saveMainStart(StaticData.REFRESH_MINUS_ONE);
         SpikeManager.saveSpike(StaticData.REFRESH_ZERO);
 //        initData();
         if(TextUtils.isEmpty(PrivacyManager.getPrivacy())){//隐私政策弹框
@@ -65,23 +65,6 @@ public class  SplashActivity extends BaseActivity {
                 mHandler.sendEmptyMessageDelayed(GO_LOGIN, 300);
             }
         }
-    }
-
-    private void initData() {
-//        Intent intent = getIntent();
-//        String action = intent.getAction();
-//        if(Intent.ACTION_VIEW.equals(action)){
-//            Uri uri = intent.getData();
-//            if(uri != null){
-//                String name = uri.getQueryParameter("name");
-//                String age= uri.getQueryParameter("age");
-//            }
-//        }
-        // 通过WXAPIFactory工厂，获取IWXAPI的实例
-//        api = WXAPIFactory.createWXAPI(this, StaticData.WX_APP_ID, true);
-//
-//        // 将应用的appId注册到微信
-//        api.registerApp( StaticData.WX_APP_ID);
     }
 
     //跳转到主页

@@ -1173,7 +1173,7 @@
         <item name="android:textColor">@color/backGround1</item>
         <item name="android:textSize">@dimen/sp_12</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/common_two_app_one_bg</item>
+        <item name="android:background">@drawable/common_two_back_fifty_seven_bg</item>
     </style>
 
     <style name="detail_countdown_time_style">
@@ -1182,7 +1182,7 @@
         <item name="android:textColor">@color/backGround1</item>
         <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/common_two_app_one_bg</item>
+        <item name="android:background">@drawable/common_two_back_fifty_seven_bg</item>
     </style>
 
     <style name="countdown_time_colon_style">
@@ -1555,7 +1555,7 @@
         <item name="android:layout_marginLeft">@dimen/dp_17</item>
         <item name="android:layout_marginRight">@dimen/dp_17</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:background">@drawable/common_four_app_one_bg</item>
+        <item name="android:background">@drawable/common_four_back_fifty_seven_bg</item>
         <item name="android:orientation">vertical</item>
     </style>
 
@@ -1644,7 +1644,7 @@
         <item name="android:maxLines">2</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_marginTop">@dimen/dp_15</item>
+        <item name="android:layout_marginTop">@dimen/dp_12</item>
     </style>
 
     <style name="confirm_order_goods_sku_style">

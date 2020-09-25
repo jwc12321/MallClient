@@ -511,4 +511,6 @@
     <string name="scan">扫描</string>
     <string name="view_order">查看订单</string>
     <string name="buy_again">再次购买</string>
+    <string name="let_me_think">我再想想</string>
+    <string name="add_other_goods">以下商品卖光啦，先将其他有货商品加入购物车？</string>
 </resources>

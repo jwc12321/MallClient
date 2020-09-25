@@ -4,10 +4,12 @@ import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.InvitationCodeInfo;
+import com.mall.sls.data.entity.OrderAddCartInfo;
 import com.mall.sls.data.entity.OrderInfo;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.OrderPackageInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.order.ui.ViewLogisticsActivity;
 
 import java.util.List;
 
@@ -41,6 +43,7 @@ public interface OrderContract {
         void cancelOrder(String orderId);
         void getInvitationCodeInfo();
         void addCartBatch(String orderId);
+        void orderAddCart(String orderId, Boolean forceAdd);
     }
 
     interface OrderDetailsView extends BaseView<OrderDetailsPresenter>{
@@ -50,6 +53,7 @@ public interface OrderContract {
         void renderCancelOrder();
         void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo);
         void renderAddCartBatch(Boolean isBoolean);
+        void renderOrderAddCart(OrderAddCartInfo orderAddCartInfo);
     }
 
     interface OrderLogisticsPresenter extends BasePresenter{

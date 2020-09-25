@@ -1,6 +1,5 @@
 package com.mall.sls.common;
 
-import retrofit2.http.PUT;
 
 public class StaticData {
     public static final String  WX_APP_ID = "wxcea8bff4c8e832be";

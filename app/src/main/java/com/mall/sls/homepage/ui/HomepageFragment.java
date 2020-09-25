@@ -364,7 +364,6 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                 }
             }
             banner.setPointsIsVisible(data.size() > 1);
-            banner.setAutoPlayAble(data.size() > 1);
             banner.setBannerData(R.layout.xbanner_item, data);
             messageCount.setVisibility(TextUtils.equals(StaticData.REFRESH_ZERO, homePageInfo.getUnreadMsgCount()) ? View.GONE : View.VISIBLE);
             homeCouponInfos = homePageInfo.getHomeCouponInfos();

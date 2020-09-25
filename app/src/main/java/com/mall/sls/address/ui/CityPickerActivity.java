@@ -165,10 +165,15 @@ public class CityPickerActivity extends BaseActivity implements TextWatcher, Sid
         } else {
             locateState = LocateState.SUCCESS;
         }
+        try {
+            dbManager = new DBManager(this);
+            mAllCities = dbManager.getAllCities();
+        }catch (Throwable throwable){
 
-        dbManager = new DBManager(this);
-        mAllCities = dbManager.getAllCities();
-//        mAllCities.add(0, mLocatedCity);
+        }
+        if(mAllCities==null){
+            mAllCities=new ArrayList<>();
+        }
         mAllCities.add(0, mLocatedCity);
 //        mAllCities.add(1, new HotCity("热门城市", "0"));
         mResults = mAllCities;

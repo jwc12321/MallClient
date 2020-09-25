@@ -38,6 +38,7 @@ public class SortPresenter implements SortContract.SortPresenter {
 
     @Override
     public void getFirstCategory() {
+        sortView.dismissLoading();
         sortView.showLoading(StaticData.LOADING);
         String queryString = "null";
         String sign = SignUnit.signGet(RequestUrl.FIRST_CATEGORY, queryString);

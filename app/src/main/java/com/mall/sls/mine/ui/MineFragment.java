@@ -127,7 +127,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     ConventionalTextView mineCouponTv;
     @BindView(R.id.mine_coupon_ll)
     LinearLayout mineCouponLl;
-    private String goVerify = "0";
+    private String goVerify = StaticData.REFRESH_ZERO;
 
     private UserInfo userInfo;
     private String avatarUrl;
@@ -326,6 +326,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                     vipType.setText(getString(R.string.view_now));
                     superMemberRl.setVisibility(View.GONE);
                 }
+                verifiedIv.setVisibility(View.VISIBLE);
             }
             vipDescription = mineInfo.getVipDescription();
         }

@@ -93,12 +93,12 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
     @Override
     protected void onStart() {
         super.onStart();
-        if (TextUtils.equals(StaticData.REFRESH_ONE, MainStartManager.getMainStart())) {
+        if (TextUtils.equals(StaticData.REFRESH_ZERO, MainStartManager.getMainStart())) {
             viewPager.setCurrentItem(0, false);
-            MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
-        } else if (TextUtils.equals(StaticData.REFRESH_THREE, MainStartManager.getMainStart())) {
+            MainStartManager.saveMainStart(StaticData.REFRESH_MINUS_ONE);
+        } else if (TextUtils.equals(StaticData.REFRESH_TWO, MainStartManager.getMainStart())) {
             viewPager.setCurrentItem(2, false);
-            MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
+            MainStartManager.saveMainStart(StaticData.REFRESH_MINUS_ONE);
         }
     }
 

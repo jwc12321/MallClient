@@ -44,6 +44,7 @@ public class MineInfoPresenter implements MineContract.MineInfoPresenter {
 
     @Override
     public void getMineInfo() {
+        mineInfoView.dismissLoading();
         mineInfoView.showLoading(StaticData.LOADING);
         String queryString = "null";
         String sign = SignUnit.signGet(RequestUrl.MINE_INFO_URL, queryString);

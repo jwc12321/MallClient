@@ -84,5 +84,7 @@ public class RequestUrl {
     public static String BAO_FOO_SINGLE_PAY="/api/f/baofoo/single-pay";//宝付直接支付
     public static String SEND_BAO_FU_CODE="/public/f/code/baofoo";//获取宝付支付验证码
     public static String CERTIFY_INFO="/api/f/user/info/certify";//获取用户认证的信息
+    public static String ORDER_ADD_CART="/app/order/general/add-cart";//普通商品订单再来一单
+    public static String INVITATION_OPEN="/app/common/invitation-open";//是否打开邀请码
 
 }

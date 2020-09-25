@@ -14,16 +14,25 @@ import androidx.annotation.Nullable;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.igexin.sdk.PushManager;
+import com.igexin.sdk.Tag;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.AvatarUrlManager;
+import com.mall.sls.common.unit.MobileManager;
+import com.mall.sls.common.unit.PhoneUnit;
+import com.mall.sls.common.unit.SystemUtil;
+import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.common.widget.textview.ColdDownButton;
 import com.mall.sls.common.widget.textview.ConventionalEditTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.login.DaggerLoginComponent;
 import com.mall.sls.login.LoginContract;
 import com.mall.sls.login.LoginModule;
 import com.mall.sls.login.presenter.BindMobilePresenter;
+import com.mall.sls.mainframe.ui.MainFrameActivity;
 import com.mobile.auth.gatewayauth.AuthUIConfig;
 import com.mobile.auth.gatewayauth.AuthUIControlClickListener;
 import com.mobile.auth.gatewayauth.PhoneNumberAuthHelper;
@@ -58,15 +67,22 @@ public class BindPhoneActivity extends BaseActivity implements LoginContract.Bin
     @BindView(R.id.confirm_bt)
     MediumThickTextView confirmBt;
 
-    private String phoneNumber;
     private String smsCode;
     @Inject
     BindMobilePresenter bindMobilePresenter;
     private String unionId;
+    private Boolean isInvitationOpen=true;
+    private String invitationCode;
+    private String deviceId;
+    private String deviceOsVersion;
+    private String devicePlatform;
+    private String accessCode;
+    private String mobile;
+    private String deviceName;
 
-    public static void start(Context context,String unionId) {
+    public static void start(Context context, String unionId) {
         Intent intent = new Intent(context, BindPhoneActivity.class);
-        intent.putExtra(StaticData.UNION_ID,unionId);
+        intent.putExtra(StaticData.UNION_ID, unionId);
         context.startActivity(intent);
     }
 
@@ -77,10 +93,15 @@ public class BindPhoneActivity extends BaseActivity implements LoginContract.Bin
         ButterKnife.bind(this);
         setHeight(back, title, null);
         initView();
+        bindMobilePresenter.getInvitationOpen();
     }
 
     private void initView() {
-        unionId=getIntent().getStringExtra(StaticData.UNION_ID);
+        unionId = getIntent().getStringExtra(StaticData.UNION_ID);
+        deviceId = SystemUtil.getAndroidId(this);
+        deviceName=SystemUtil.getDeviceName(this);
+        deviceOsVersion = SystemUtil.getSystemVersion();
+        devicePlatform = "android";
     }
 
     @Override
@@ -97,7 +118,7 @@ public class BindPhoneActivity extends BaseActivity implements LoginContract.Bin
      */
     @OnTextChanged({R.id.phone_et})
     public void checkPhoneEnable() {
-        phoneNumber = phoneEt.getText().toString().trim();
+        mobile = phoneEt.getText().toString().trim();
     }
 
     /**
@@ -107,7 +128,6 @@ public class BindPhoneActivity extends BaseActivity implements LoginContract.Bin
     public void checkVCOdeEnable() {
         smsCode = vcodeEt.getText().toString().trim();
     }
-
 
 
     @OnClick({R.id.back, R.id.confirm_bt, R.id.send_vcode})
@@ -127,7 +147,7 @@ public class BindPhoneActivity extends BaseActivity implements LoginContract.Bin
     }
 
     private void confirmBt() {
-        if (TextUtils.isEmpty(phoneNumber)) {
+        if (TextUtils.isEmpty(mobile)) {
             showMessage(getString(R.string.input_phone_number));
             return;
         }
@@ -135,16 +155,24 @@ public class BindPhoneActivity extends BaseActivity implements LoginContract.Bin
             showMessage(getString(R.string.input_vcode));
             return;
         }
-        FillCodeActivity.start(BindPhoneActivity.this,unionId,"",phoneNumber,smsCode,StaticData.REFRESH_ZERO);
-        finish();
+        if(isInvitationOpen) {
+            FillCodeActivity.start(BindPhoneActivity.this, unionId, accessCode, mobile, smsCode, StaticData.REFRESH_ZERO);
+            finish();
+        }else {
+            bindMobilePresenter.bindSmsCodeLogin(deviceId,deviceOsVersion,devicePlatform,mobile,smsCode,invitationCode,unionId,deviceName);
+        }
     }
 
     private void sendVcode() {
-        if (TextUtils.isEmpty(phoneNumber)) {
+        if (TextUtils.isEmpty(mobile)) {
             showError(getString(R.string.input_phone_number));
-        } else {
-            bindMobilePresenter.sendVCode(phoneNumber);
+            return;
         }
+        if (!PhoneUnit.isPhone(mobile)) {
+            showMessage(getString(R.string.input_right_phone_number));
+            return;
+        }
+        bindMobilePresenter.sendVCode(mobile);
     }
 
     @Override
@@ -155,6 +183,30 @@ public class BindPhoneActivity extends BaseActivity implements LoginContract.Bin
     @Override
     public void renderVCode() {
         sendVcode.startCold();
+    }
+
+    @Override
+    public void renderInvitationOpen(Boolean isBoolean) {
+        this.isInvitationOpen=isBoolean;
+    }
+
+    @Override
+    public void renderLoginIn(TokenInfo tokenInfo) {
+        if(tokenInfo!=null){
+            //设置个推的别名和标签
+            PushManager.getInstance().bindAlias(this,tokenInfo.getUserInfo().getMobile());
+            Tag[] tags=new Tag[1];
+            tags[0]=new Tag().setName("all");
+            PushManager.getInstance().setTag(this,tags, String.valueOf(System.currentTimeMillis()));
+            MobileManager.saveMobile(tokenInfo.getUserInfo().getMobile());
+            TokenManager.saveToken(tokenInfo.getToken());
+            if(tokenInfo.getUserInfo()!=null) {
+                AvatarUrlManager.saveAvatarUrl(tokenInfo.getUserInfo().getAvatarUrl());
+            }
+            WeixinLoginActivity.finishActivity();
+            MainFrameActivity.start(this);
+            finish();
+        }
     }
 
     @Override

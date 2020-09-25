@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_117"
+    android:layout_height="@dimen/dp_108"
     android:id="@+id/item_rl">
 
     <ImageView
         android:id="@+id/goods_iv"
-        style="@style/order_goods_iv_style"
+        style="@style/confirm_order_goods_iv_style"
         tools:src="@mipmap/ic_launcher" />
 
 

@@ -304,7 +304,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 finish();
                 break;
             case R.id.home_iv:
-                MainStartManager.saveMainStart(StaticData.REFRESH_ONE);
+                MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
                 MainFrameActivity.start(this);
                 finish();
                 break;
@@ -473,7 +473,6 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 }
             }
             banner.setPointsIsVisible(data.size() > 1);
-            banner.setAutoPlayAble(data.size() > 1);
             banner.setBannerData(R.layout.xbanner_zero_item, data);
             currentPrice.setText(NumberFormatUnit.numberFormat(goodsDetailsInfo.getRetailPrice()));
             unit = goodsDetailsInfo.getUnit();

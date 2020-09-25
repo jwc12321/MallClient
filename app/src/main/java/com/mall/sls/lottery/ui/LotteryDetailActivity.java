@@ -182,7 +182,6 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
                 }
             }
             banner.setPointsIsVisible(data.size() > 1);
-            banner.setAutoPlayAble(data.size() > 1);
             banner.setBannerData(R.layout.xbanner_item, data);
             name=prizeVo.getPrizeTitle();
             picUrl=prizeVo.getPicUrl();
@@ -349,7 +348,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
                 finish();
                 break;
             case R.id.home_iv:
-                MainStartManager.saveMainStart(StaticData.REFRESH_ONE);
+                MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
                 MainFrameActivity.start(this);
                 finish();
                 break;
@@ -408,7 +407,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
                     }
                     break;
                 case RequestCodeStatic.TIP_PAGE:
-                    MainStartManager.saveMainStart(StaticData.REFRESH_ONE);
+                    MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
                     MainFrameActivity.start(this);
                     finish();
                     break;

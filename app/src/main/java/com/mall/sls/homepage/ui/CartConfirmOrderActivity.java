@@ -344,7 +344,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                 directBoxRl.setVisibility(View.GONE);
                 break;
             case R.id.go_homepage:
-                MainStartManager.saveMainStart(StaticData.REFRESH_ONE);
+                MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
                 MainFrameActivity.start(this);
                 finish();
                 break;
@@ -419,9 +419,6 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
 
     private void hiddenCart(){
         if(TextUtils.equals(StaticData.REFRESH_ONE,hiddenType)){
-            cartBoxRl.setVisibility(View.GONE);
-        }else {
-            cartBoxRl.setVisibility(View.GONE);
             finish();
         }
     }

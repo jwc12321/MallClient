@@ -15,6 +15,7 @@ import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
 import com.mall.sls.certify.ui.CerifyPayActivity;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.coupon.CouponContract;
@@ -26,6 +27,7 @@ import com.mall.sls.data.entity.CouponInfo;
 import com.mall.sls.data.entity.MyCouponInfo;
 import com.mall.sls.homepage.ui.HomepageFragment;
 import com.mall.sls.local.ui.LocalTeamActivity;
+import com.mall.sls.mainframe.ui.MainFrameActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -163,14 +165,16 @@ public class CouponExpiredFragment extends BaseFragment implements CouponContrac
 
     @Override
     public void goUsed() {
-        LocalTeamActivity.start(getActivity());
+        MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
+        MainFrameActivity.start(getActivity());
     }
 
     @OnClick({R.id.no_record_bt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.no_record_bt:
-                LocalTeamActivity.start(getActivity());
+                MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
+                MainFrameActivity.start(getActivity());
                 break;
             default:
         }

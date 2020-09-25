@@ -217,7 +217,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                 finish();
                 break;
             case R.id.home_iv:
-                MainStartManager.saveMainStart(StaticData.REFRESH_ONE);
+                MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
                 MainFrameActivity.start(this);
                 finish();
                 break;
@@ -230,7 +230,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                 goSelectSpec();
                 break;
             case R.id.cart:
-                MainStartManager.saveMainStart(StaticData.REFRESH_THREE);
+                MainStartManager.saveMainStart(StaticData.REFRESH_TWO);
                 MainFrameActivity.start(this);
                 finish();
                 break;
@@ -283,7 +283,6 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                     }
                 }
                 banner.setPointsIsVisible(data.size() > 1);
-                banner.setAutoPlayAble(data.size() > 1);
                 banner.setBannerData(R.layout.xbanner_zero_item, data);
                 currentPrice.setText(NumberFormatUnit.numberFormat(goodsBaseVo.getRetailPrice()));
                 originalPrice.setText(NumberFormatUnit.goodsFormat(goodsBaseVo.getCounterPrice()));

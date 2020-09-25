@@ -48,6 +48,7 @@ public class CartPresenter implements CartContract.CartPresenter {
 
     @Override
     public void getCartInfo(String refreshType) {
+        cartView.dismissLoading();
         if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             cartView.showLoading(StaticData.LOADING);
         }

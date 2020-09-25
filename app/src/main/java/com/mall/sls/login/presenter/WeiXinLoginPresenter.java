@@ -12,6 +12,7 @@ import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.data.request.LoginRequest;
+import com.mall.sls.data.request.OnClickBindRequest;
 import com.mall.sls.data.request.OneClickLoginRequest;
 import com.mall.sls.data.request.WeiXinLoginRequest;
 import com.mall.sls.login.LoginContract;
@@ -103,6 +104,51 @@ public class WeiXinLoginPresenter implements LoginContract.WeiXinLoginPresenter 
                     public void accept(AppUrlInfo appUrlInfo) throws Exception {
                         weiXinLoginView.dismissLoading();
                         weiXinLoginView.renderAppUrlInfo(appUrlInfo);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        weiXinLoginView.dismissLoading();
+                        weiXinLoginView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getInvitationOpen() {
+        String queryString="null";
+        String sign=SignUnit.signGet(RequestUrl.INVITATION_OPEN,queryString);
+        Disposable disposable = restApiService.getInvitationOpen(sign)
+                .flatMap(new RxRemoteDataParse<Boolean>())
+                .compose(new RxSchedulerTransformer<Boolean>())
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean isBoolean) throws Exception {
+                        weiXinLoginView.renderInvitationOpen(isBoolean);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        weiXinLoginView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void bindOneClickLogin(String deviceId, String deviceOsVersion, String devicePlatform, String accessCode, String invitationCode, String unionId,String deviceName) {
+        weiXinLoginView.showLoading(StaticData.PROCESSING);
+        OnClickBindRequest request=new OnClickBindRequest(deviceId,deviceOsVersion,devicePlatform,accessCode,invitationCode,unionId,deviceName);
+        String sign= SignUnit.signPost(RequestUrl.BIND_ONE_CLICK,gson.toJson(request));
+        Disposable disposable = restApiService.bindOneClickLogin(sign,request)
+                .flatMap(new RxRemoteDataParse<TokenInfo>())
+                .compose(new RxSchedulerTransformer<TokenInfo>())
+                .subscribe(new Consumer<TokenInfo>() {
+                    @Override
+                    public void accept(TokenInfo tokenInfo) throws Exception {
+                        weiXinLoginView.dismissLoading();
+                        weiXinLoginView.renderLoginIn(tokenInfo);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

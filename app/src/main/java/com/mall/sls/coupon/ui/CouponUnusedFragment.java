@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.coupon.CouponContract;
 import com.mall.sls.coupon.CouponModule;
@@ -23,6 +24,7 @@ import com.mall.sls.coupon.presenter.CouponListPresenter;
 import com.mall.sls.data.entity.CouponInfo;
 import com.mall.sls.data.entity.MyCouponInfo;
 import com.mall.sls.local.ui.LocalTeamActivity;
+import com.mall.sls.mainframe.ui.MainFrameActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
@@ -160,14 +162,16 @@ public class CouponUnusedFragment extends BaseFragment implements CouponContract
 
     @Override
     public void goUsed() {
-        LocalTeamActivity.start(getActivity());
+        MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
+        MainFrameActivity.start(getActivity());
     }
 
     @OnClick({R.id.no_record_bt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.no_record_bt:
-                LocalTeamActivity.start(getActivity());
+                MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
+                MainFrameActivity.start(getActivity());
                 break;
             default:
         }
