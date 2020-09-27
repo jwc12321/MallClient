@@ -616,11 +616,11 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
 
     private void oneMoreAddCart() {
         leftBt.setVisibility(TextUtils.equals(StaticData.REFRESH_ONE, isOnSale) ? View.VISIBLE : View.GONE);
-        if (general) {
+//        if (general) {
             leftBt.setText(getString(R.string.buy_again));
-        } else {
-            leftBt.setText(getString(R.string.one_more_order));
-        }
+//        } else {
+//            leftBt.setText(getString(R.string.one_more_order));
+//        }
 
     }
 

@@ -208,7 +208,6 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
                 snappedUpNumber.setVisibility(View.VISIBLE);
                 snappedUpNumber.setText(goodsDetailsInfo.getGroupPeopleNum() + "人已抢" + goodsDetailsInfo.getGroupGoodsNum() + ",");
             }
-            countDown.setTimeOutListener(this);
             countDownTime.setTimeOutListener(this);
             goodsIntroduction.setText(goodsDetailsInfo.getBrief());
             currentPrice.setText(NumberFormatUnit.goodsFormat(goodsDetailsInfo.getRetailPrice()));
@@ -226,7 +225,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
                     } else {
                         dayTv.setVisibility(View.GONE);
                         countDown.setVisibility(View.VISIBLE);
-                        countDown.startTearDown(groupExpireTime, now);
+                        countDown.startTearDown(groupExpireTime/ 1000, now/ 1000);
                         countDownTv.setText(getString(R.string.from_end));
                     }
                     countDownTime.startTearDown(groupExpireTime / 1000, now / 1000);
@@ -299,7 +298,8 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
 
     @Override
     public void timeOut() {
-
+        showMessage(getString(R.string.activity_over));
+        finish();
     }
 
     @Override

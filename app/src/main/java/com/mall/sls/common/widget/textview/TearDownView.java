@@ -71,7 +71,7 @@ public class TearDownView extends LinearLayout {
     protected void onAttachedToWindow() {
         // TODO Auto-generated method stub
         mHandler.removeMessages(MESSAGE_WHAT);
-        mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT, 100);
+        mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT, 1000);
         mIsAttachedToWindow = true;
         super.onAttachedToWindow();
     }
@@ -91,9 +91,12 @@ public class TearDownView extends LinearLayout {
                 long hour = 0;
                 long min = 0;
                 long sec = 0;
-                hour = (remainTime / (60 * 60))/1000;
-                min = (remainTime / 60 /1000 - hour * 60);
-                sec = (remainTime/1000 -  hour * 60 * 60 - min * 60);
+                long day = 0;
+                day = remainTime / (24 * 60 * 60);
+                hour = (remainTime / (60 * 60) - day * 24);
+                min = (remainTime / 60 - day * 24 * 60 - hour * 60);
+                sec = (remainTime - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+
                 if(String.valueOf(hour).length()==1){
                     hourTextView.setText("0"+hour);
                 }else {
@@ -109,7 +112,7 @@ public class TearDownView extends LinearLayout {
                 }else {
                     secondTextView.setText(String.valueOf(sec));
                 }
-                mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT, 100);
+                mHandler.sendEmptyMessageDelayed(MESSAGE_WHAT, 1000);
             } else {
                 if(timeOutListener!=null) {
                     timeOutListener.timeOut();
@@ -138,7 +141,7 @@ public class TearDownView extends LinearLayout {
     }
 
     private void cutDown(){
-        cutdownTime=cutdownTime-100;
+        cutdownTime=cutdownTime-1;
     }
 
     public void cancel() {

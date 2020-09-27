@@ -17,6 +17,7 @@ import com.mall.sls.data.GsonSerializer;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.Proxy;
 import java.net.URLDecoder;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
@@ -161,7 +162,7 @@ public class RestApiModule {
                     }
                 })
 //                .sslSocketFactory(sslSocketFactory)
-//                .proxy(Proxy.NO_PROXY)
+                .proxy(Proxy.NO_PROXY)
                 .build();
     }
 
