@@ -252,14 +252,13 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                         }
                     }
                 } else if (TextUtils.equals(StaticData.COUPON, nativeType)) {
-                    Intent intent = new Intent(getActivity(), CouponActivity.class);
-                    startActivityForResult(intent, RequestCodeStatic.GO_COUPON);
+                    CouponActivity.start(getActivity());
                 } else if (TextUtils.equals(StaticData.INVITATION, nativeType)) {
                     InviteFriendsActivity.start(getActivity());
                 } else if (TextUtils.equals(StaticData.SECKILL, nativeType)) {
                     if (homepageListener != null) {
                         SpikeManager.saveSpike(StaticData.REFRESH_ONE);
-                        homepageListener.goLocalTeam();
+                        LocalTeamActivity.start(getActivity());
                     }
                 } else if (TextUtils.equals(StaticData.ADDRESS, nativeType)) {
                     AddressManageActivity.start(getActivity(), StaticData.REFRESH_ONE);
@@ -489,7 +488,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
 
 
     public interface HomepageListener {
-        void goLocalTeam();
+
     }
 
     private HomepageListener homepageListener;
@@ -556,11 +555,6 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             switch (requestCode) {
                 case RequestCodeStatic.MESSAGE:
                     homePagePresenter.getHomePageInfo(StaticData.REFRESH_ZERO);
-                    break;
-                case RequestCodeStatic.GO_COUPON:
-                    if (homepageListener != null) {
-                        homepageListener.goLocalTeam();
-                    }
                     break;
                 default:
             }

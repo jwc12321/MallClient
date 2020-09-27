@@ -277,11 +277,6 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                     WeixinLoginActivity.start(getActivity());
                     getActivity().finish();
                     break;
-                case RequestCodeStatic.GO_COUPON:
-                    if (listener != null) {
-                        listener.goLocalTeam();
-                    }
-                    break;
                 default:
             }
         }
@@ -289,7 +284,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
 
 
     public interface MineListener {
-        void goLocalTeam();
+
     }
 
     private MineListener listener;

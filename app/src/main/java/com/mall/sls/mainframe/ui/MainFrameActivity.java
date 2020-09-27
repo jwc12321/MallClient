@@ -23,7 +23,6 @@ import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.widget.viewpage.ViewPagerSlide;
 import com.mall.sls.homepage.ui.HomepageFragment;
-import com.mall.sls.local.ui.LocalTeamFragment;
 import com.mall.sls.mainframe.adapter.MainPagerAdapter;
 import com.mall.sls.mine.ui.MineFragment;
 import com.mall.sls.sort.ui.SortFragment;
@@ -108,7 +107,6 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
         cartFragment = new CartFragment();
         mineFragment = new MineFragment();
         homepageFragment.setHomepageListener(this);
-        cartFragment.setCartListener(this);
         mineFragment.setMineListener(this);
         fragments = new BaseFragment[4];
         fragments[0] = homepageFragment;
@@ -163,11 +161,6 @@ public class MainFrameActivity extends BaseActivity implements HomepageFragment.
     @Override
     public View getSnackBarHolderView() {
         return mainRl;
-    }
-
-    @Override
-    public void goLocalTeam() {
-        viewPager.setCurrentItem(1, false);
     }
 
     @Override

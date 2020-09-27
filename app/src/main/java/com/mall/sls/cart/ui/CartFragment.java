@@ -1,5 +1,6 @@
 package com.mall.sls.cart.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -363,8 +364,8 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
                 confirm();
                 break;
             case R.id.no_record_bt:
-                if (cartListener != null) {
-                    cartListener.goHomePage();
+                if (listener != null) {
+                    listener.goHomePage();
                 }
                 break;
             default:
@@ -427,10 +428,16 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
         void goHomePage();
     }
 
-    private CartListener cartListener;
+    private CartListener listener;
 
-    public void setCartListener(CartListener cartListener) {
-        this.cartListener = cartListener;
+    public void setCartListener(CartListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        listener=(CartListener) getActivity();
     }
 
 }
