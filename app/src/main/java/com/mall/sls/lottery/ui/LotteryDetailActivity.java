@@ -37,9 +37,9 @@ import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayResult;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.StaticHandler;
+import com.mall.sls.common.widget.textview.CommonTearDownView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
-import com.mall.sls.common.widget.textview.WhiteDMSTearDownView;
 import com.mall.sls.data.entity.CustomViewsInfo;
 import com.mall.sls.data.entity.JoinPrizeInfo;
 import com.mall.sls.data.entity.PrizeVo;
@@ -79,13 +79,13 @@ import butterknife.OnClick;
  * @author jwc on 2020/6/9.
  * 描述：抽奖详情
  */
-public class LotteryDetailActivity extends BaseActivity implements LotteryContract.LotteryDetailsView,NestedScrollView.OnScrollChangeListener {
+public class LotteryDetailActivity extends BaseActivity implements LotteryContract.LotteryDetailsView,NestedScrollView.OnScrollChangeListener,CommonTearDownView.TimeOutListener {
     @BindView(R.id.banner)
     XBanner banner;
     @BindView(R.id.goods_price)
     MediumThickTextView goodsPrice;
     @BindView(R.id.count_down)
-    WhiteDMSTearDownView countDown;
+    CommonTearDownView countDown;
     @BindView(R.id.count_down_ll)
     LinearLayout countDownLl;
     @BindView(R.id.goods_name)
@@ -208,6 +208,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
                     } else {
                         dayTv.setVisibility(View.GONE);
                         countDown.setVisibility(View.VISIBLE);
+                        countDown.setTimeOutListener(this);
                         countDown.startTearDown(groupExpireTime / 1000, now / 1000);
                     }
                 } else {
@@ -304,14 +305,22 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
 
     @Override
     public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-        if (scrollY <= 0) {   //设置标题的背景颜色
-            titleRel.setBackgroundColor(Color.argb((int) 0, 144, 151, 166));
-        } else if (scrollY > 0 && scrollY <= titleRel.getHeight()) { //滑动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
-            float scale = (float) scrollY / titleRel.getHeight();
-            float alpha = (255 * scale);
-            titleRel.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
-        } else {    //滑动到banner下面设置普通颜色
-            titleRel.setBackgroundColor(Color.argb((int) 255, 255, 255, 255));
+        if (isNightMode(this)) {
+            if (scrollY <= 0) {   //设置标题的背景颜色
+                titleRel.setBackgroundColor(Color.argb((int) 0, 144, 151, 166));
+            } else {    //滑动到banner下面设置普通颜色
+                titleRel.setBackgroundColor(getResources().getColor(R.color.backGround60));
+            }
+        } else {
+            if (scrollY <= 0) {   //设置标题的背景颜色
+                titleRel.setBackgroundColor(Color.argb((int) 0, 144, 151, 166));
+            } else if (scrollY > 0 && scrollY <= titleRel.getHeight()) { //滑动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
+                float scale = (float) scrollY / titleRel.getHeight();
+                float alpha = (255 * scale);
+                titleRel.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
+            } else {    //滑动到banner下面设置普通颜色
+                titleRel.setBackgroundColor(Color.argb((int) 255, 255, 255, 255));
+            }
         }
     }
 
@@ -449,6 +458,11 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
         };
 
         new Thread(runnable).start();
+    }
+
+    @Override
+    public void timeOut() {
+        lotteryDetailsPresenter.getSystemTime();
     }
 
     public static class MyHandler extends StaticHandler<LotteryDetailActivity> {

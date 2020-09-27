@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.SslErrorHandler;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -29,8 +28,8 @@ import com.mall.sls.common.unit.HtmlUnit;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.TimeUtil;
+import com.mall.sls.common.widget.textview.CommonTearDownView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
-import com.mall.sls.common.widget.textview.DhmsTearDownView;
 import com.mall.sls.common.widget.textview.DrawTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.common.widget.textview.TearDownView;
@@ -61,7 +60,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/14.
  * 描述：活动团
  */
-public class ActivityGroupGoodsActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, TearDownView.TimeOutListener, DhmsTearDownView.TimeOutListener {
+public class ActivityGroupGoodsActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, TearDownView.TimeOutListener, CommonTearDownView.TimeOutListener {
 
 
     @Inject
@@ -101,7 +100,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     @BindView(R.id.snapped_up_number)
     ConventionalTextView snappedUpNumber;
     @BindView(R.id.count_down_time)
-    DhmsTearDownView countDownTime;
+    CommonTearDownView countDownTime;
     @BindView(R.id.view_flipper)
     ViewFlipper viewFlipper;
     @BindView(R.id.webView)

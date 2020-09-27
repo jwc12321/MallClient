@@ -38,11 +38,9 @@ import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.WXShareManager;
+import com.mall.sls.common.widget.textview.CommonTearDownView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
-import com.mall.sls.common.widget.textview.DetailTearDownView;
-import com.mall.sls.common.widget.textview.DrawTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
-import com.mall.sls.common.widget.textview.TwelveTearDownView;
 import com.mall.sls.common.widget.textview.WhiteDrawTextView;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CustomViewsInfo;
@@ -60,18 +58,14 @@ import com.mall.sls.mine.ui.CustomerServiceActivity;
 import com.mall.sls.mine.ui.SelectShareTypeActivity;
 import com.mall.sls.webview.unit.JSBridgeWebChromeClient;
 import com.stx.xhb.androidx.XBanner;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -80,7 +74,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/9.
  * 描述：活动商品详情
  */
-public class ActivityGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, DetailTearDownView.TimeOutListener, NestedScrollView.OnScrollChangeListener {
+public class ActivityGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, CommonTearDownView.TimeOutListener, NestedScrollView.OnScrollChangeListener {
 
 
     @BindView(R.id.banner)
@@ -94,7 +88,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     @BindView(R.id.time_type)
     ConventionalTextView timeType;
     @BindView(R.id.count_down)
-    DetailTearDownView countDown;
+    CommonTearDownView countDown;
     @BindView(R.id.day_tv)
     MediumThickTextView dayTv;
     @BindView(R.id.goods_name)
@@ -513,16 +507,25 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         showMessage(getString(R.string.share_success));
     }
 
+
     @Override
     public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-        if (scrollY <= 0) {   //设置标题的背景颜色
-            titleRel.setBackgroundColor(Color.argb((int) 0, 144, 151, 166));
-        } else if (scrollY > 0 && scrollY <= titleRel.getHeight()) { //滑动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
-            float scale = (float) scrollY / titleRel.getHeight();
-            float alpha = (255 * scale);
-            titleRel.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
-        } else {    //滑动到banner下面设置普通颜色
-            titleRel.setBackgroundColor(Color.argb((int) 255, 255, 255, 255));
+        if (isNightMode(this)) {
+            if (scrollY <= 0) {   //设置标题的背景颜色
+                titleRel.setBackgroundColor(Color.argb((int) 0, 144, 151, 166));
+            } else {    //滑动到banner下面设置普通颜色
+                titleRel.setBackgroundColor(getResources().getColor(R.color.backGround60));
+            }
+        } else {
+            if (scrollY <= 0) {   //设置标题的背景颜色
+                titleRel.setBackgroundColor(Color.argb((int) 0, 144, 151, 166));
+            } else if (scrollY > 0 && scrollY <= titleRel.getHeight()) { //滑动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
+                float scale = (float) scrollY / titleRel.getHeight();
+                float alpha = (255 * scale);
+                titleRel.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
+            } else {    //滑动到banner下面设置普通颜色
+                titleRel.setBackgroundColor(Color.argb((int) 255, 255, 255, 255));
+            }
         }
     }
 

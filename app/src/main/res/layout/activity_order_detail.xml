@@ -82,11 +82,14 @@
                                 android:layout_gravity="center_vertical"
                                 tools:text="@string/remaining_payment_time" />
 
-                            <com.mall.sls.common.widget.textview.MSTearDownView
+                            <com.mall.sls.common.widget.textview.CommonTearDownView
                                 android:id="@+id/count_down"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical" />
+                                app:viewTextColor="@color/appText1"
+                                app:viewTextSize="@dimen/sp_15"
+                                app:colonType="1"
+                                android:layout_gravity="center_vertical"/>
                         </LinearLayout>
                     </LinearLayout>
 

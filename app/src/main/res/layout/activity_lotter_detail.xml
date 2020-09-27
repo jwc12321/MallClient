@@ -70,10 +70,13 @@
                         android:visibility="gone"
                         tools:text="12天" />
 
-                    <com.mall.sls.common.widget.textview.WhiteDMSTearDownView
+                    <com.mall.sls.common.widget.textview.CommonTearDownView
                         android:id="@+id/count_down"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:viewTextSize="@dimen/sp_14"
+                        app:viewTextColor="@color/appText1"
+                        app:colonType="1"
                         android:layout_marginLeft="@dimen/dp_5"
                         android:visibility="gone" />
                 </LinearLayout>

@@ -355,14 +355,22 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
 
     @Override
     public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-        if (scrollY <= 0) {   //设置标题的背景颜色
-            titleRel.setBackgroundColor(Color.argb((int) 0, 144, 151, 166));
-        } else if (scrollY > 0 && scrollY <= titleRel.getHeight()) { //滑动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
-            float scale = (float) scrollY / titleRel.getHeight();
-            float alpha = (255 * scale);
-            titleRel.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
-        } else {    //滑动到banner下面设置普通颜色
-            titleRel.setBackgroundColor(Color.argb((int) 255, 255, 255, 255));
+        if (isNightMode(this)) {
+            if (scrollY <= 0) {   //设置标题的背景颜色
+                titleRel.setBackgroundColor(Color.argb((int) 0, 144, 151, 166));
+            } else {    //滑动到banner下面设置普通颜色
+                titleRel.setBackgroundColor(getResources().getColor(R.color.backGround60));
+            }
+        } else {
+            if (scrollY <= 0) {   //设置标题的背景颜色
+                titleRel.setBackgroundColor(Color.argb((int) 0, 144, 151, 166));
+            } else if (scrollY > 0 && scrollY <= titleRel.getHeight()) { //滑动距离小于banner图的高度时，设置背景和字体颜色颜色透明度渐变
+                float scale = (float) scrollY / titleRel.getHeight();
+                float alpha = (255 * scale);
+                titleRel.setBackgroundColor(Color.argb((int) alpha, 255, 255, 255));
+            } else {    //滑动到banner下面设置普通颜色
+                titleRel.setBackgroundColor(Color.argb((int) 255, 255, 255, 255));
+            }
         }
     }
 }

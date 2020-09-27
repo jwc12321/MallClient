@@ -58,9 +58,12 @@
     <attr name="cpOverlayTextColor" format="color|reference"/>
     <attr name="cpOverlayBackground" format="color|reference"/>
 
-
-    <declare-styleable name="DetailTearDownView">
+    <declare-styleable name="CommonTearDownView">
         <attr name="viewTextColor" />
+        <attr name="viewTextSize"/>
+        <attr name="colonType"/>
+        <attr name="textBackground"/>
+        <attr name="hourHide"/>
     </declare-styleable>
 
     <declare-styleable name="ShoppingSelectView">
@@ -68,7 +71,10 @@
     </declare-styleable>
 
     <attr name="viewTextColor" format="color" />
-
+    <attr name="viewTextSize" format="float" />
+    <attr name="colonType" format="string" />
+    <attr name="textBackground" format="reference" />
+    <attr name="hourHide" format="string" />
 
     <declare-styleable name="TagFlowLayout">
         <attr name="max_select" format="integer"></attr>

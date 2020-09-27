@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alipay.sdk.app.PayTask;
 import com.mall.sls.BaseActivity;
-import com.mall.sls.MainActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
@@ -38,8 +37,8 @@ import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.unit.WXShareManager;
+import com.mall.sls.common.widget.textview.CommonTearDownView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
-import com.mall.sls.common.widget.textview.MSTearDownView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.InvitationCodeInfo;
@@ -88,7 +87,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/12.
  * 描述：订单详情
  */
-public class GoodsOrderDetailsActivity extends BaseActivity implements OrderContract.OrderDetailsView, OrderInformationAdapter.OnItemClickListener, MSTearDownView.TimeOutListener {
+public class GoodsOrderDetailsActivity extends BaseActivity implements OrderContract.OrderDetailsView, OrderInformationAdapter.OnItemClickListener, CommonTearDownView.TimeOutListener {
 
 
     @BindView(R.id.back)
@@ -102,7 +101,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     @BindView(R.id.remaining_payment_time_tv)
     ConventionalTextView remainingPaymentTimeTv;
     @BindView(R.id.count_down)
-    MSTearDownView countDown;
+    CommonTearDownView countDown;
     @BindView(R.id.count_down_ll)
     LinearLayout countDownLl;
     @BindView(R.id.status_iv)

@@ -2397,5 +2397,22 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="common_countdown_time_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="common_countdown_time_colon_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/dp_2</item>
+        <item name="android:layout_marginRight">@dimen/dp_2</item>
+        <item name="android:text">:</item>
+    </style>
+
 
 </resources>

@@ -91,10 +91,16 @@
                         android:layout_marginTop="@dimen/dp_7"
                         android:layout_centerHorizontal="true"
                         tools:text="@string/remaining_spike" />
-                    <com.mall.sls.common.widget.textview.DetailTearDownView
+
+                    <com.mall.sls.common.widget.textview.CommonTearDownView
                         android:id="@+id/count_down"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:viewTextColor="@color/backGround1"
+                        app:viewTextSize="@dimen/sp_14"
+                        app:colonType="1"
+                        app:textBackground="@drawable/detail_count_down_time_bg"
+                        app:hourHide="1"
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="@dimen/dp_4"
                         android:layout_centerHorizontal="true"
