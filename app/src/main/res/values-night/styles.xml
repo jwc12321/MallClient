@@ -1903,7 +1903,7 @@
         <item name="android:textSize">@dimen/sp_12</item>
         <item name="android:textColor">@color/appText1</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/common_eleven_back_forty_three_bg</item>
+        <item name="android:background">@drawable/common_eleven_back_eighty_four_bg</item>
     </style>
 
     <style name="original_price_tv_style">

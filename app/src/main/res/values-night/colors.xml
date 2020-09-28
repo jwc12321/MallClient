@@ -39,11 +39,11 @@
     <color name="backGround8">#00000000</color>
     <color name="backGround9">#4F4C4C</color>
     <color name="backGround10">#6AB3D1</color>
-    <color name="backGround11">#EEFCFF</color>
+    <color name="backGround11">#00000000</color>
     <color name="backGround12">#E7E7E7</color>
     <color name="backGround13">#616468</color>
-    <color name="backGround14">#E3E3E3</color>
-    <color name="backGround15">#F7F7F7</color>
+    <color name="backGround14">#939393</color>
+    <color name="backGround15">#00000000</color>
     <color name="backGround16">#FFD7DA</color>
     <color name="backGround17">#FD2500</color>
     <color name="backGround18">#FFB543</color>
@@ -51,14 +51,14 @@
     <color name="backGround20">#D8D8D8</color>
     <color name="backGround21">#FFFFFF</color>
     <color name="backGround22">#2E2624</color>
-    <color name="backGround23">#FFBE3B</color>
+    <color name="backGround23">#FA6400</color>
     <color name="backGround24">#FF2E46</color>
     <color name="backGround25">#FF3F4E</color>
     <color name="backGround26">#FFCA00</color>
     <color name="backGround27">#262626</color>
     <color name="backGround28">#E2E2E2</color>
-    <color name="backGround29">#F8D897</color>
-    <color name="backGround30">#FEBC4A</color>
+    <color name="backGround29">#FA6400</color>
+    <color name="backGround30">#FA6400</color>
     <color name="backGround31">#AB474F</color>
     <color name="backGround34">#000000</color>
     <color name="backGround35">#1F1F1F</color>
@@ -93,7 +93,7 @@
     <color name="backGround64">#393939</color>
     <color name="backGround65">#F22B10</color>
     <color name="backGround66">#00000000</color>
-    <color name="backGround67">#F2F2F2</color>
+    <color name="backGround67">#939393</color>
     <color name="backGround68">#181818</color>
     <color name="backGround69">#1F1F1F</color>
     <color name="backGround70">#00000000</color>
@@ -109,4 +109,7 @@
     <color name="backGround80">#9E23BA</color>
     <color name="backGround81">#151413</color>
     <color name="backGround82">#C8C8C8</color>
+    <color name="backGround83">#16120F</color>
+    <color name="backGround84">#16120F</color>
+    <color name="backGround85">#16120F</color>
 </resources>

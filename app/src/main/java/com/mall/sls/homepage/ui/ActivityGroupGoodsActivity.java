@@ -160,6 +160,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     }
 
     private void initWebView() {
+        webView.setBackgroundColor(getResources().getColor(R.color.backGround83));
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
@@ -243,6 +244,9 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
                 }
                 viewFlipper.setFlipInterval(2000);
                 viewFlipper.startFlipping();
+                viewFlipper.setVisibility(View.VISIBLE);
+            }else {
+                viewFlipper.setVisibility(View.GONE);
             }
             groupPurchases = goodsDetailsInfo.getGroupPurchases();
             if (groupPurchases != null && groupPurchases.size() == 1) {

@@ -23,6 +23,7 @@ import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.address.AreaPickerView;
 import com.mall.sls.common.unit.PermissionUtil;
+import com.mall.sls.common.unit.PhoneUnit;
 import com.mall.sls.common.widget.textview.ConventionalEditTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -88,7 +89,7 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
     private String genderType;
     private Boolean defaultType = false;
     private String name;
-    private String phoneNumebr;
+    private String phoneNumber;
     private String houseNumber;
 
     private AddressInfo addressInfo;
@@ -178,7 +179,7 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
 
     @OnTextChanged({R.id.phone_number_et})
     public void checPhoneNumberEnable() {
-        phoneNumebr = phoneNumberEt.getText().toString().trim();
+        phoneNumber = phoneNumberEt.getText().toString().trim();
     }
 
     @OnTextChanged({R.id.house_number_et})
@@ -244,8 +245,12 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
             showMessage(getString(R.string.input_receiver));
             return;
         }
-        if (TextUtils.isEmpty(phoneNumebr)) {
+        if (TextUtils.isEmpty(phoneNumber)) {
             showMessage(getString(R.string.input_phone_number));
+            return;
+        }
+        if (!PhoneUnit.isPhone(phoneNumber)) {
+            showMessage(getString(R.string.input_right_phone_number));
             return;
         }
         if (TextUtils.isEmpty(province) || TextUtils.isEmpty(city) || TextUtils.isEmpty(county)) {
@@ -260,7 +265,7 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
         addAddressRequest.setId(addressId);
         addAddressRequest.setName(name);
 //        addAddressRequest.setGender(genderType);
-        addAddressRequest.setTel(phoneNumebr);
+        addAddressRequest.setTel(phoneNumber);
         addAddressRequest.setProvince(province);
         addAddressRequest.setCity(city);
         addAddressRequest.setCounty(county);
@@ -357,10 +362,20 @@ public class AddAddressActivity extends BaseActivity implements AddressContract.
                         areaCode = data.getStringExtra(StaticData.AREA_CODE);
                         address.setText(province + city + county);
                         houseNumberEt.setText(houseNumber);
+                        initDetailAddress();
                     }
                     break;
                 default:
             }
+        }
+    }
+    private void initDetailAddress(){
+        houseNumberEt.setFocusable(true);
+        houseNumberEt.setFocusableInTouchMode(true);
+        houseNumberEt.requestFocus();
+        houseNumberEt.setText(houseNumber);
+        if(!TextUtils.isEmpty(houseNumber)) {
+            houseNumberEt.setSelection(houseNumber.length());//将光标移至文字末尾
         }
     }
 }

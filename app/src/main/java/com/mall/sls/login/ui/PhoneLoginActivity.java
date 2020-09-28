@@ -19,6 +19,7 @@ import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.AvatarUrlManager;
 import com.mall.sls.common.unit.BindWxManager;
 import com.mall.sls.common.unit.MobileManager;
+import com.mall.sls.common.unit.PhoneUnit;
 import com.mall.sls.common.unit.SystemUtil;
 import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.TokenManager;
@@ -151,6 +152,10 @@ public class PhoneLoginActivity extends BaseActivity implements LoginContract.Lo
     private void confirmBt() {
         if (TextUtils.isEmpty(phoneNumber)) {
             showMessage(getString(R.string.input_phone_number));
+            return;
+        }
+        if (!PhoneUnit.isPhone(phoneNumber)) {
+            showMessage(getString(R.string.input_right_phone_number));
             return;
         }
         if (TextUtils.isEmpty(smsCode)) {

@@ -309,13 +309,9 @@
                                 android:src="@drawable/verified_select"
                                 android:visibility="invisible" />
 
-                            <ImageView
+                            <com.mall.sls.common.widget.textview.ConventionalTextView
                                 android:id="@+id/verified_iv"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:layout_weight="1"
-                                android:src="@drawable/verified_select"
+                                style="@style/mine_cert_iv_style"
                                 android:visibility="invisible"/>
                         </LinearLayout>
 

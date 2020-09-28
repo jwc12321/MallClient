@@ -103,7 +103,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     @BindView(R.id.lottery)
     ImageView lottery;
     @BindView(R.id.verified_iv)
-    ImageView verifiedIv;
+    ConventionalTextView verifiedIv;
     @BindView(R.id.verified_rl)
     RelativeLayout verifiedRl;
     @BindView(R.id.mission_center)
@@ -305,19 +305,23 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 phone.setText(mobile);
                 VerifyManager.saveVerify(userInfo.getUserLevel());
                 vipExpireDate = mineInfo.getVipExpireDate();
+
                 if (TextUtils.equals(StaticData.REFRESH_ZERO, userInfo.getUserLevel())) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_ordinary_member);
                     verifiedIv.setSelected(false);
+                    verifiedIv.setText(getString(R.string.not_certified));
                     vipType.setText(getString(R.string.open_now));
                     superMemberRl.setVisibility(View.GONE);
                 } else if (TextUtils.equals(StaticData.REFRESH_ONE, userInfo.getUserLevel())) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_certified_member);
                     verifiedIv.setSelected(true);
+                    verifiedIv.setText(getString(R.string.is_verified));
                     vipType.setText(getString(R.string.open_now));
                     superMemberRl.setVisibility(View.GONE);
                 } else if (TextUtils.equals(StaticData.REFRESH_TWO, userInfo.getUserLevel())) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_super_member);
                     verifiedIv.setSelected(true);
+                    verifiedIv.setText(getString(R.string.is_verified));
                     vipType.setText(getString(R.string.view_now));
                     superMemberRl.setVisibility(View.GONE);
                 }
