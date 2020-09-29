@@ -116,7 +116,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_49"
-                android:background="@color/appText1"
                 android:orientation="vertical">
 
                 <RelativeLayout style="@style/confirm_order_rl_style">

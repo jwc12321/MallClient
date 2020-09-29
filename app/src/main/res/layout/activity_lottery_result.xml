@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp_27"
+                android:layout_marginTop="@dimen/dp_40"
                 android:src="@mipmap/icon_lottery_success" />
 
             <com.mall.sls.common.widget.textview.ConventionalTextView

@@ -116,7 +116,7 @@
                         android:id="@+id/qrcode_iv"
                         android:layout_width="@dimen/dp_59"
                         android:layout_height="@dimen/dp_59"
-                        android:background="@color/appText1"
+                        android:background="@color/backGround57"
                         android:scaleType="fitXY"
                         android:layout_centerInParent="true"/>
                 </RelativeLayout>

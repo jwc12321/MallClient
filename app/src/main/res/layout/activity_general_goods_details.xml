@@ -25,7 +25,7 @@
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_313"
-                android:background="@color/appText1"
+                android:background="@color/backGround57"
                 app:AutoPlayTime="5000"
                 app:isHandLoop="true"
                 app:isShowIndicatorOnlyOne="true"

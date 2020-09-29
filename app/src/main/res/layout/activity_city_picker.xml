@@ -80,7 +80,6 @@
         <LinearLayout
             android:id="@+id/no_record_ll"
             style="@style/common_no_record_ll_style"
-            android:background="@color/appText1"
             android:layout_height="match_parent">
 
             <ImageView
