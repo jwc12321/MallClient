@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -77,33 +76,33 @@ public class NameVerifiedActivity extends BaseActivity implements CertifyContrac
     @BindView(R.id.certNo_et)
     ConventionalEditTextView certNoEt;
     @BindView(R.id.next_bt)
-    TextView nextBt;
+    MediumThickTextView nextBt;
     @BindView(R.id.first_ll)
     LinearLayout firstLl;
-    @BindView(R.id.result_success_ll)
-    LinearLayout resultSuccessLl;
-    @BindView(R.id.result_ll)
-    LinearLayout resultLl;
+    @BindView(R.id.name_tv)
+    ConventionalTextView nameTv;
+    @BindView(R.id.face_bt)
+    MediumThickTextView faceBt;
+    @BindView(R.id.protocol_tv)
+    ConventionalTextView protocolTv;
+    @BindView(R.id.second_ll)
+    LinearLayout secondLl;
     @BindView(R.id.status_iv)
     ImageView statusIv;
     @BindView(R.id.status_tv)
     ConventionalTextView statusTv;
     @BindView(R.id.auth_again_bt)
-    TextView authAgainBt;
-    @BindView(R.id.name_tv)
-    ConventionalTextView nameTv;
-    @BindView(R.id.face_bt)
-    TextView faceBt;
-    @BindView(R.id.second_ll)
-    LinearLayout secondLl;
+    MediumThickTextView authAgainBt;
     @BindView(R.id.real_name)
     ConventionalTextView realName;
     @BindView(R.id.real_id)
     ConventionalTextView realId;
     @BindView(R.id.confirm_bt)
-    TextView confirmBt;
-    @BindView(R.id.protocol_tv)
-    ConventionalTextView protocolTv;
+    MediumThickTextView confirmBt;
+    @BindView(R.id.result_success_ll)
+    LinearLayout resultSuccessLl;
+    @BindView(R.id.result_ll)
+    LinearLayout resultLl;
     private String metaInfos;
     private String certName;
     private String certNo;
@@ -185,7 +184,7 @@ public class NameVerifiedActivity extends BaseActivity implements CertifyContrac
         nextBt.setEnabled(!TextUtils.isEmpty(certName) && !TextUtils.isEmpty(certNo));
     }
 
-    @OnClick({R.id.back, R.id.next_bt, R.id.auth_again_bt, R.id.face_bt, R.id.confirm_bt,R.id.protocol_tv})
+    @OnClick({R.id.back, R.id.next_bt, R.id.auth_again_bt, R.id.face_bt, R.id.confirm_bt, R.id.protocol_tv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -223,7 +222,7 @@ public class NameVerifiedActivity extends BaseActivity implements CertifyContrac
                 verifyId();
                 break;
             case R.id.protocol_tv:
-                WebViewActivity.start(this,StaticData.OCR_AGREEMENT);
+                WebViewActivity.start(this, StaticData.OCR_AGREEMENT);
                 break;
             default:
         }

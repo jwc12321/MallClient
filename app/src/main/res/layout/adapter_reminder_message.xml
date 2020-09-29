@@ -22,14 +22,14 @@
             android:gravity="center"
             android:text="@string/delete"
             android:textColor="@color/appText1"
-            android:textSize="@dimen/sp_24"/>
+            android:textSize="@dimen/sp_18"/>
     </FrameLayout>
 
     <RelativeLayout
         android:id="@+id/goods_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_116"
-        android:background="@drawable/common_four_app_one_bg"
+        android:background="@drawable/common_four_back_fifty_seven_bg"
         android:orientation="vertical">
 
         <com.mall.sls.common.widget.textview.ConventionalTextView

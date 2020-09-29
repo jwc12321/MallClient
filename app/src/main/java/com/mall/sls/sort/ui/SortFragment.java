@@ -112,9 +112,9 @@ public class SortFragment extends BaseFragment implements SortContract.SortView,
             if (firstCategoryInfos != null && firstCategoryInfos.size() > 0) {
                 firstCategoryInfos.get(0).setSelect(true);
                 categoryId = firstCategoryInfos.get(0).getId();
+                sortPresenter.getSecondCategory(categoryId);
             }
             firstCategoryAdapter.setData(firstCategoryInfos);
-            sortPresenter.getSecondCategory(categoryId);
         }
     }
 

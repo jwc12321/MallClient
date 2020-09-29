@@ -66,6 +66,11 @@ public class MessageTypeActivity extends BaseActivity implements MessageContract
         msgTypeAdapter=new MsgTypeAdapter(this);
         msgTypeAdapter.setOnItemClickListener(this);
         recordRv.setAdapter(msgTypeAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         msgTypePresenter.getMsgType();
     }
 

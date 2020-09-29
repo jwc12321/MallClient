@@ -455,9 +455,13 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 } else {
                     countDown.setVisibility(View.GONE);
                 }
-                isPay.setText(getString(R.string.payable));
-            } else {
-                isPay.setText(getString(R.string.actually_paid));
+            }
+            if(TextUtils.equals(StaticData.TO_PAY, goodsOrderDetails.getOrderStatus())
+                    ||TextUtils.equals(StaticData.CANCELLED, goodsOrderDetails.getOrderStatus())
+                    ||TextUtils.equals(StaticData.SYS_CANCELLED, goodsOrderDetails.getOrderStatus())){
+                isPay.setText(getString(R.string.to_be_paid));
+            }else {
+                isPay.setText(getString(R.string.actually_paid_colon));
             }
             isActivity = goodsOrderDetails.getActivity();
             grouponId = goodsOrderDetails.getGrouponLinkId();

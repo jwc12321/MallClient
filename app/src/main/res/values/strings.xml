@@ -130,8 +130,8 @@
     <string name="pending_delivery">待发货</string>
     <string name="shipping">待收货</string>
     <string name="completed">已完成</string>
-    <string name="to_be_paid">待付：</string>
-    <string name="actually_apaid">实付：</string>
+    <string name="to_be_paid">需付：</string>
+    <string name="actually_paid_colon">实付：</string>
     <string name="received">已签收</string>
     <string name="closed">已关闭</string>
     <string name="confirm_receipt">确认收货</string>

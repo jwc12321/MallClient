@@ -111,7 +111,7 @@
                     android:id="@+id/is_pay"
                     style="@style/size14_color_app3_text_style"
                     android:layout_marginLeft="@dimen/dp_8"
-                    android:text="@string/actually_apaid" />
+                    android:text="@string/actually_paid_colon" />
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     android:id="@+id/total_amount"

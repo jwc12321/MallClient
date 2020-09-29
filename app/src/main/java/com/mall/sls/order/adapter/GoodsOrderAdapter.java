@@ -134,10 +134,12 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
             orderGoodsItemAdapter.setData(orderGoodsVos,goodsOrderInfo.getId());
             totalAmount.setText(NumberFormatUnit.goodsFormat(goodsOrderInfo.getActualPrice()));
             setOrderStatus(goodsOrderInfo.getOrderStatus());
-            if (TextUtils.equals(StaticData.TO_PAY, goodsOrderInfo.getOrderStatus())) {
+            if (TextUtils.equals(StaticData.TO_PAY, goodsOrderInfo.getOrderStatus())
+                    ||TextUtils.equals(StaticData.CANCELLED, goodsOrderInfo.getOrderStatus())
+                    ||TextUtils.equals(StaticData.SYS_CANCELLED, goodsOrderInfo.getOrderStatus())) {
                 isPay.setText(context.getString(R.string.to_be_paid));
             } else {
-                isPay.setText(context.getString(R.string.actually_apaid));
+                isPay.setText(context.getString(R.string.actually_paid_colon));
             }
             if (orderGoodsVos != null && orderGoodsVos.size() > 0) {//为了分享
                 GlideHelper.load((Activity) context, orderGoodsVos.get(0).getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
