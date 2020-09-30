@@ -2,9 +2,12 @@ package com.mall.sls.homepage;
 
 
 
+import androidx.viewpager.widget.ViewPager;
+
 import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
 import com.mall.sls.data.entity.AppUrlInfo;
+import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.ConfirmCartOrderDetail;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CouponInfo;
@@ -56,15 +59,17 @@ public interface HomepageContract {
     interface ConfirmOrderPresenter extends BasePresenter{
         void cartCheckout(String addressId, String cartId, String couponId, String userCouponId);
         void orderSubmit(String addressId, String cartId, String couponId, String userCouponId, String message);
-        void orderAliPay(String orderId,String type);
-        void orderWxPay(String orderId,String type);
+        void getWxPay(String orderId, String orderType, String paymentMethod);
+        void getAliPay(String orderId, String orderType, String paymentMethod);
+        void getBaoFuPay(String orderId, String orderType, String paymentMethod);
     }
 
     interface ConfirmOrderView extends BaseView<ConfirmOrderPresenter>{
         void renderCartCheckout(ConfirmOrderDetail confirmOrderDetail);
         void renderOrderSubmit(OrderSubmitInfo orderSubmitInfo);
-        void renderOrderAliPay(String alipayStr);
-        void renderOrderWxPay(WXPaySignResponse wxPaySignResponse);
+        void renderWxPay(WXPaySignResponse wxPaySignResponse);
+        void renderAliPay(String aliPayStr);
+        void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo);
     }
 
     interface WXGoodsDetailsPresenter extends BasePresenter{
@@ -96,15 +101,23 @@ public interface HomepageContract {
     interface CartConfirmOrderPresenter extends BasePresenter{
         void cartGeneralChecked(String addressId, List<String> ids, String userCouponId);
         void cartOrderSubmit(String addressId, List<String> ids, String userCouponId, String message);
-        void orderAliPay(String orderId,String type);
-        void orderWxPay(String orderId,String type);
+        void getWxPay(String orderId, String orderType, String paymentMethod);
+        void getAliPay(String orderId, String orderType, String paymentMethod);
+        void getBaoFuPay(String orderId, String orderType, String paymentMethod);
     }
 
     interface CartConfirmOrderView extends BaseView<CartConfirmOrderPresenter>{
         void renderCartGeneralChecked(ConfirmCartOrderDetail confirmCartOrderDetail);
         void renderCartOrderSubmit(OrderSubmitInfo orderSubmitInfo);
-        void renderOrderAliPay(String alipayStr);
-        void renderOrderWxPay(WXPaySignResponse wxPaySignResponse);
+        void renderWxPay(WXPaySignResponse wxPaySignResponse);
+        void renderAliPay(String aliPayStr);
+        void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo);
+    }
+    interface PayMethodPresenter extends BasePresenter{
+        void getPayMethod(String devicePlatform);
     }
 
+    interface PayMethodView extends BaseView<PayMethodPresenter>{
+        void renderPayMethod(List<String> payMethods);
+    }
 }

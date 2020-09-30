@@ -29,7 +29,7 @@
         android:layout_marginTop="@dimen/dp_1">
         <ImageView
             android:id="@+id/select_iv"
-            style="@style/cerify_pay_right_iv_style"
+            style="@style/certify_pay_right_iv_style"
             android:layout_marginRight="@dimen/dp_42"/>
         <com.mall.sls.common.widget.textview.MediumThickTextView
            style="@style/size15_color_app3_text_style"

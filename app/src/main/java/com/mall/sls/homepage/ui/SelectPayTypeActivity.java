@@ -17,7 +17,16 @@ import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.NumberFormatUnit;
+import com.mall.sls.common.unit.SystemUtil;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.homepage.DaggerHomepageComponent;
+import com.mall.sls.homepage.HomepageContract;
+import com.mall.sls.homepage.HomepageModule;
+import com.mall.sls.homepage.presenter.PayMethodPresenter;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +36,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/11.
  * 描述：
  */
-public class SelectPayTypeActivity extends BaseActivity {
+public class SelectPayTypeActivity extends BaseActivity implements HomepageContract.PayMethodView {
     @BindView(R.id.pay_amount)
     MediumThickTextView payAmount;
     @BindView(R.id.weixin_iv)
@@ -46,10 +55,23 @@ public class SelectPayTypeActivity extends BaseActivity {
     RelativeLayout allRl;
     @BindView(R.id.close_iv)
     ImageView closeIv;
+    @BindView(R.id.weixin_rl)
+    RelativeLayout weixinRl;
+    @BindView(R.id.ali_rl)
+    RelativeLayout aliRl;
+    @BindView(R.id.bank_iv)
+    ImageView bankIv;
+    @BindView(R.id.select_bank_iv)
+    ImageView selectBankIv;
+    @BindView(R.id.bank_rl)
+    RelativeLayout bankRl;
 
     private String choiceType;
-    private String selectType="0";
     private String amount;
+    private String devicePlatform;
+    private String paymentMethod;
+    @Inject
+    PayMethodPresenter payMethodPresenter;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, SelectPayTypeActivity.class);
@@ -65,12 +87,22 @@ public class SelectPayTypeActivity extends BaseActivity {
         initView();
     }
 
-    private void initView(){
-        choiceType=getIntent().getStringExtra(StaticData.CHOICE_TYPE);
-        confirmBt.setSelected(TextUtils.equals(StaticData.REFRESH_ONE,choiceType)?true:false);
-        amount=getIntent().getStringExtra(StaticData.PAYMENT_AMOUNT);
-        payAmount.setText(getString(R.string.payment_amount)+NumberFormatUnit.goodsFormat(amount));
-        selectPayType();
+    private void initView() {
+        choiceType = getIntent().getStringExtra(StaticData.CHOICE_TYPE);
+        confirmBt.setSelected(TextUtils.equals(StaticData.REFRESH_ONE, choiceType) ? true : false);
+        amount = getIntent().getStringExtra(StaticData.PAYMENT_AMOUNT);
+        payAmount.setText(getString(R.string.payment_amount) + NumberFormatUnit.goodsFormat(amount));
+        devicePlatform = SystemUtil.getChannel(this);
+        payMethodPresenter.getPayMethod(devicePlatform);
+    }
+
+    @Override
+    protected void initializeInjector() {
+        DaggerHomepageComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .homepageModule(new HomepageModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -78,7 +110,7 @@ public class SelectPayTypeActivity extends BaseActivity {
         return null;
     }
 
-    @OnClick({R.id.all_rl, R.id.item_rl, R.id.close_iv, R.id.confirm_bt,R.id.select_weixin_iv,R.id.select_ali_iv})
+    @OnClick({R.id.all_rl, R.id.item_rl, R.id.close_iv, R.id.confirm_bt, R.id.weixin_rl, R.id.ali_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.all_rl:
@@ -89,25 +121,30 @@ public class SelectPayTypeActivity extends BaseActivity {
                 break;
             case R.id.confirm_bt:
                 Intent backIntent = new Intent();
-                backIntent.putExtra(StaticData.SELECT_TYPE, selectType);
+                backIntent.putExtra(StaticData.PAYMENT_METHOD, paymentMethod);
                 setResult(Activity.RESULT_OK, backIntent);
                 finish();
                 break;
-            case R.id.select_weixin_iv:
-                selectType=StaticData.REFRESH_ZERO;
+            case R.id.weixin_rl:
+                paymentMethod = StaticData.WX_PAY;
                 selectPayType();
                 break;
-            case R.id.select_ali_iv:
-                selectType=StaticData.REFRESH_ONE;
+            case R.id.ali_rl:
+                paymentMethod = StaticData.ALI_PAY;
+                selectPayType();
+                break;
+            case R.id.bank_rl:
+                paymentMethod = StaticData.BAO_FU_PAY;
                 selectPayType();
                 break;
             default:
         }
     }
 
-    private void selectPayType(){
-        selectWeixinIv.setSelected(TextUtils.equals(StaticData.REFRESH_ZERO,selectType));
-        selectAliIv.setSelected(TextUtils.equals(StaticData.REFRESH_ONE,selectType));
+    private void selectPayType() {
+        selectWeixinIv.setSelected(TextUtils.equals(StaticData.WX_PAY, paymentMethod));
+        selectAliIv.setSelected(TextUtils.equals(StaticData.ALI_PAY, paymentMethod));
+        selectBankIv.setSelected(TextUtils.equals(StaticData.BAO_FU_PAY, paymentMethod));
     }
 
 
@@ -122,13 +159,36 @@ public class SelectPayTypeActivity extends BaseActivity {
     }
 
     private void back() {
-        selectType=StaticData.REFRESH_TWO;
-        Intent intent = new Intent();
-        intent.putExtra(StaticData.SELECT_TYPE, selectType);
-        setResult(Activity.RESULT_OK, intent);
         finish();
     }
 
 
+    @Override
+    public void renderPayMethod(List<String> payMethods) {
+        if (payMethods != null) {
+            weixinRl.setVisibility(payMethods.contains(StaticData.WX_PAY) ? View.VISIBLE : View.GONE);
+            aliRl.setVisibility(payMethods.contains(StaticData.ALI_PAY) ? View.VISIBLE : View.GONE);
+            bankRl.setVisibility(payMethods.contains(StaticData.BAO_FU_PAY) ? View.VISIBLE : View.GONE);
+            if (weixinRl.getVisibility() == View.VISIBLE) {
+                paymentMethod = StaticData.WX_PAY;
+                selectPayType();
+                return;
+            }
+            if (aliRl.getVisibility() == View.VISIBLE) {
+                paymentMethod = StaticData.ALI_PAY;
+                selectPayType();
+                return;
+            }
+            if (bankRl.getVisibility() == View.VISIBLE) {
+                paymentMethod = StaticData.BAO_FU_PAY;
+                selectPayType();
+                return;
+            }
+        }
+    }
 
+    @Override
+    public void setPresenter(HomepageContract.PayMethodPresenter presenter) {
+
+    }
 }

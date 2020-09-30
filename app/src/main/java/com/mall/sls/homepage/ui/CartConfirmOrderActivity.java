@@ -35,6 +35,7 @@ import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.coupon.ui.SelectCouponActivity;
 import com.mall.sls.data.entity.AddressInfo;
+import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.BindResultInfo;
 import com.mall.sls.data.entity.CartItemInfo;
 import com.mall.sls.data.entity.ConfirmCartOrderDetail;
@@ -150,7 +151,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
     private String purchaseType;//1:直接购买 2：购物车购买
     private List<HiddenItemCartInfo> hiddenItemCartInfos;
     private String cartIds;
-    private String selectType;
+    private String paymentMethod;
     private String tipBack;
     private String orderTotalPrice;
     private Boolean isBulletBox = true;//是否需要弹框 选择地址或者第一次需要谈 选择优惠卷不弹框
@@ -160,6 +161,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
     private String orderId;
     private Handler mHandler = new MyHandler(this);
     private String hiddenType;
+    private String orderType;
 
 
     public static void start(Context context, List<String> ids, String purchaseType) {
@@ -183,6 +185,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
         ids = (List<String>) getIntent().getSerializableExtra(StaticData.CART_ITEM_IDS);
         normalIds = new ArrayList<>();
         purchaseType = getIntent().getStringExtra(StaticData.PURCHASE_TYPE);
+        orderType=StaticData.TYPE_ORDER;
         confirmGoodsItemAdapter = new ConfirmGoodsItemAdapter(this);
         goodsRv.setAdapter(confirmGoodsItemAdapter);
         hiddenCartGoodsAdapter = new HiddenCartGoodsAdapter(this);
@@ -272,10 +275,10 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
         if (orderSubmitInfo != null) {
             orderId = orderSubmitInfo.getOrderId();
             if (orderSubmitInfo.getPay()) {
-                if (TextUtils.equals(StaticData.REFRESH_ZERO, selectType)) {
-                    cartConfirmOrderPresenter.orderWxPay(orderId, StaticData.REFRESH_ZERO);
-                } else {
-                    cartConfirmOrderPresenter.orderAliPay(orderId, StaticData.REFRESH_ONE);
+                if (TextUtils.equals(StaticData.WX_PAY, paymentMethod)) {
+                    cartConfirmOrderPresenter.getWxPay(orderId,orderType,paymentMethod);
+                } else if(TextUtils.equals(StaticData.ALI_PAY, paymentMethod)){
+                    cartConfirmOrderPresenter.getAliPay(orderId, orderType,paymentMethod);
                 }
             } else {
                 paySuccess();
@@ -284,17 +287,22 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
     }
 
     @Override
-    public void renderOrderAliPay(String alipayStr) {
-        if (!TextUtils.isEmpty(alipayStr)) {
-            startAliPay(alipayStr);
+    public void renderWxPay(WXPaySignResponse wxPaySignResponse) {
+        if (wxPaySignResponse != null) {
+            wechatPay(wxPaySignResponse);
         }
     }
 
     @Override
-    public void renderOrderWxPay(WXPaySignResponse wxPaySignResponse) {
-        if (wxPaySignResponse != null) {
-            wechatPay(wxPaySignResponse);
+    public void renderAliPay(String aliPayStr) {
+        if (!TextUtils.isEmpty(aliPayStr)) {
+            startAliPay(aliPayStr);
         }
+    }
+
+    @Override
+    public void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo) {
+
     }
 
     @Override
@@ -379,20 +387,22 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                     break;
                 case RequestCodeStatic.PAY_TYPE://选择支付方式
                     if (data != null) {
-                        selectType = data.getStringExtra(StaticData.SELECT_TYPE);
-                        if (TextUtils.equals(StaticData.REFRESH_ZERO, selectType)) {
+                        paymentMethod = data.getStringExtra(StaticData.PAYMENT_METHOD);
+                        if (TextUtils.equals(StaticData.WX_PAY, paymentMethod)) {
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(CartConfirmOrderActivity.this)) {
                                 cartConfirmOrderPresenter.cartOrderSubmit(addressId, normalIds, userCouponId, message);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
-                        } else if (TextUtils.equals(StaticData.REFRESH_ONE, selectType)) {
+                        } else if (TextUtils.equals(StaticData.ALI_PAY, paymentMethod)) {
                             if (PayTypeInstalledUtils.isAliPayInstalled(CartConfirmOrderActivity.this)) {
                                 cartConfirmOrderPresenter.cartOrderSubmit(addressId, normalIds, userCouponId, message);
                             } else {
                                 showMessage(getString(R.string.install_alipay));
                             }
+                        }else if (TextUtils.equals(StaticData.BAO_FU_PAY, paymentMethod)){
+                            cartConfirmOrderPresenter.cartOrderSubmit(addressId, normalIds, userCouponId, message);
                         }
                     }
                     break;

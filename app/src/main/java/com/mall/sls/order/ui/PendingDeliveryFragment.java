@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.GoodsOrderInfo;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderList;
@@ -194,22 +195,27 @@ public class PendingDeliveryFragment extends BaseFragment implements OrderContra
     }
 
     @Override
-    public void renderOrderAliPay(String alipayStr) {
-
-    }
-
-    @Override
-    public void renderOrderWxPay(WXPaySignResponse wxPaySignResponse) {
-
-    }
-
-    @Override
     public void renderCancelOrder() {
 
     }
 
     @Override
     public void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo) {
+
+    }
+
+    @Override
+    public void renderWxPay(WXPaySignResponse wxPaySignResponse) {
+
+    }
+
+    @Override
+    public void renderAliPay(String aliPayStr) {
+
+    }
+
+    @Override
+    public void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo) {
 
     }
 

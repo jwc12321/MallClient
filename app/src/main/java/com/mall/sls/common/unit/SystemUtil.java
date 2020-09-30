@@ -9,6 +9,8 @@ import android.telephony.TelephonyManager;
 
 import androidx.core.app.ActivityCompat;
 
+import com.meituan.android.walle.WalleChannelReader;
+
 import java.util.Locale;
 
 public class SystemUtil {
@@ -88,5 +90,12 @@ public class SystemUtil {
             }
         }
         return null;
+    }
+
+    public static String getChannel(Context context) {
+        if (WalleChannelReader.getChannel(context) == null) {
+            return "official";//默认渠道
+        }
+        return WalleChannelReader.getChannel(context);
     }
 }

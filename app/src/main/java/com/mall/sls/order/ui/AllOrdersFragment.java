@@ -23,12 +23,14 @@ import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.ActivityForeground;
 import com.mall.sls.common.unit.BriefUnit;
 import com.mall.sls.common.unit.PayResult;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.unit.WXShareManager;
+import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.GoodsOrderInfo;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderGoodsVo;
@@ -94,6 +96,8 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
     private String orderTotalPrice;
     private String backType;
     private String showType;
+    private String paymentMethod;
+    private String orderType;
 
     @Inject
     OrderListPresenter orderListPresenter;
@@ -130,9 +134,10 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
 
     private void initView() {
         EventBus.getDefault().register(this);
+        orderType=StaticData.TYPE_ORDER;
         wxShareManager = WXShareManager.getInstance(getActivity());
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
-        showType=StaticData.REFRESH_ZERO;
+        showType = StaticData.REFRESH_ZERO;
         addAdapter();
         if (TextUtils.equals(StaticData.REFRESH_ZERO, choiceType)) {
             orderListPresenter.getInvitationCodeInfo();
@@ -217,7 +222,7 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
                 this.goodsId = orderGoodsVos.get(0).getGoodsId();
             }
             orderTotalPrice = goodsOrderInfo.getActualPrice();
-            shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, 150,150);
+            shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, 150, 150);
             if (!PayTypeInstalledUtils.isWeixinAvilible(getActivity())) {
                 showMessage(getString(R.string.install_weixin));
                 return;
@@ -243,7 +248,7 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
     public void renderOrderList(OrderList orderList) {
         refreshLayout.finishRefresh();
         if (orderList != null) {
-            if (orderList.getGoodsOrderInfos()!= null && orderList.getGoodsOrderInfos().size() > 0) {
+            if (orderList.getGoodsOrderInfos() != null && orderList.getGoodsOrderInfos().size() > 0) {
                 recordRv.setVisibility(View.VISIBLE);
                 noRecordLl.setVisibility(View.GONE);
                 if (orderList.getGoodsOrderInfos().size() == Integer.parseInt(StaticData.TEN_LIST_SIZE)) {
@@ -271,19 +276,6 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
         }
     }
 
-    @Override
-    public void renderOrderAliPay(String alipayStr) {
-        if (!TextUtils.isEmpty(alipayStr)) {
-            startAliPay(alipayStr);
-        }
-    }
-
-    @Override
-    public void renderOrderWxPay(WXPaySignResponse wxPaySignResponse) {
-        if (wxPaySignResponse != null) {
-            wechatPay(wxPaySignResponse);
-        }
-    }
 
     @Override
     public void renderCancelOrder() {
@@ -299,6 +291,25 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
     }
 
     @Override
+    public void renderWxPay(WXPaySignResponse wxPaySignResponse) {
+        if (wxPaySignResponse != null) {
+            wechatPay(wxPaySignResponse);
+        }
+    }
+
+    @Override
+    public void renderAliPay(String aliPayStr) {
+        if (!TextUtils.isEmpty(aliPayStr)) {
+            startAliPay(aliPayStr);
+        }
+    }
+
+    @Override
+    public void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo) {
+
+    }
+
+    @Override
     public void setPresenter(OrderContract.OrderListPresenter presenter) {
 
     }
@@ -310,17 +321,17 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
             switch (requestCode) {
                 case RequestCodeStatic.PAY_TYPE:
                     if (data != null) {
-                        String selectType = data.getStringExtra(StaticData.SELECT_TYPE);
-                        if (TextUtils.equals(StaticData.REFRESH_ZERO, selectType)) {
+                        paymentMethod = data.getStringExtra(StaticData.PAYMENT_METHOD);
+                        if (TextUtils.equals(StaticData.WX_PAY, paymentMethod)) {
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(getActivity())) {
-                                orderListPresenter.orderWxPay(goodsOrderId, StaticData.REFRESH_ZERO);
+                                orderListPresenter.getWxPay(goodsOrderId, orderType, paymentMethod);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
-                        } else if (TextUtils.equals(StaticData.REFRESH_ONE, selectType)) {
+                        } else if (TextUtils.equals(StaticData.ALI_PAY, paymentMethod)) {
                             if (PayTypeInstalledUtils.isAliPayInstalled(getActivity())) {
-                                orderListPresenter.orderAliPay(goodsOrderId, StaticData.REFRESH_ONE);
+                                orderListPresenter.getAliPay(goodsOrderId, orderType, paymentMethod);
                             } else {
                                 showMessage(getString(R.string.install_alipay));
                             }
@@ -417,7 +428,7 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
     //支付失败
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPayCancel(PayAbortEvent event) {
-        if (event != null) {
+        if (event != null && getUserVisibleHint()) {
             if (event.code == -1) {
                 showMessage(getString(R.string.pay_failed));
             } else if (event.code == -2) {

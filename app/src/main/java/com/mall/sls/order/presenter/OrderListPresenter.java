@@ -8,6 +8,7 @@ import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
+import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.Ignore;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderList;
@@ -16,6 +17,7 @@ import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.data.request.OrderPayRequest;
 import com.mall.sls.data.request.OrderRequest;
+import com.mall.sls.data.request.PayRequest;
 import com.mall.sls.order.OrderContract;
 
 import java.util.ArrayList;
@@ -101,54 +103,6 @@ public class OrderListPresenter implements OrderContract.OrderListPresenter {
     }
 
     @Override
-    public void orderAliPay(String orderId, String type) {
-        orderListView.showLoading(StaticData.PROCESSING);
-        OrderPayRequest request=new OrderPayRequest(orderId,type);
-        String sign= SignUnit.signPost(RequestUrl.ORDER_ALIPAY,gson.toJson(request));
-        Disposable disposable = restApiService.orderAliPay(sign,request)
-                .flatMap(new RxRemoteDataParse<String>())
-                .compose(new RxSchedulerTransformer<String>())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String alipayStr) throws Exception {
-                        orderListView.dismissLoading();
-                        orderListView.renderOrderAliPay(alipayStr);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        orderListView.dismissLoading();
-                        orderListView.showError(throwable);
-                    }
-                });
-        mDisposableList.add(disposable);
-    }
-
-    @Override
-    public void orderWxPay(String orderId, String type) {
-        orderListView.showLoading(StaticData.PROCESSING);
-        OrderPayRequest request=new OrderPayRequest(orderId,type);
-        String sign= SignUnit.signPost(RequestUrl.ORDER_WX_PAY,gson.toJson(request));
-        Disposable disposable = restApiService.orderWxPay(sign,request)
-                .flatMap(new RxRemoteDataParse<WXPaySignResponse>())
-                .compose(new RxSchedulerTransformer<WXPaySignResponse>())
-                .subscribe(new Consumer<WXPaySignResponse>() {
-                    @Override
-                    public void accept(WXPaySignResponse wxPaySignResponse) throws Exception {
-                        orderListView.dismissLoading();
-                        orderListView.renderOrderWxPay(wxPaySignResponse);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        orderListView.dismissLoading();
-                        orderListView.showError(throwable);
-                    }
-                });
-        mDisposableList.add(disposable);
-    }
-
-    @Override
     public void cancelOrder(String orderId) {
         orderListView.showLoading(StaticData.PROCESSING);
         OrderRequest request=new OrderRequest(orderId);
@@ -187,6 +141,78 @@ public class OrderListPresenter implements OrderContract.OrderListPresenter {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+                        orderListView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getWxPay(String orderId, String orderType, String paymentMethod) {
+        orderListView.showLoading(StaticData.PROCESSING);
+        PayRequest request=new PayRequest(orderId,orderType,paymentMethod);
+        String sign= SignUnit.signPost(RequestUrl.BEGIN_PAY,gson.toJson(request));
+        Disposable disposable = restApiService.getWxPay(sign,request)
+                .flatMap(new RxRemoteDataParse<WXPaySignResponse>())
+                .compose(new RxSchedulerTransformer<WXPaySignResponse>())
+                .subscribe(new Consumer<WXPaySignResponse>() {
+                    @Override
+                    public void accept(WXPaySignResponse wxPaySignResponse) throws Exception {
+                        orderListView.dismissLoading();
+                        orderListView.renderWxPay(wxPaySignResponse);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        orderListView.dismissLoading();
+                        orderListView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getAliPay(String orderId, String orderType, String paymentMethod) {
+        orderListView.showLoading(StaticData.PROCESSING);
+        PayRequest request=new PayRequest(orderId,orderType,paymentMethod);
+        String sign= SignUnit.signPost(RequestUrl.BEGIN_PAY,gson.toJson(request));
+        Disposable disposable = restApiService.getAliPay(sign,request)
+                .flatMap(new RxRemoteDataParse<String>())
+                .compose(new RxSchedulerTransformer<String>())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String aliPayStr) throws Exception {
+                        orderListView.dismissLoading();
+                        orderListView.renderAliPay(aliPayStr);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        orderListView.dismissLoading();
+                        orderListView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getBaoFuPay(String orderId, String orderType, String paymentMethod) {
+        orderListView.showLoading(StaticData.PROCESSING);
+        PayRequest request=new PayRequest(orderId,orderType,paymentMethod);
+        String sign= SignUnit.signPost(RequestUrl.BEGIN_PAY,gson.toJson(request));
+        Disposable disposable = restApiService.getBaoFuPay(sign,request)
+                .flatMap(new RxRemoteDataParse<BaoFuPayInfo>())
+                .compose(new RxSchedulerTransformer<BaoFuPayInfo>())
+                .subscribe(new Consumer<BaoFuPayInfo>() {
+                    @Override
+                    public void accept(BaoFuPayInfo baoFuPayInfo) throws Exception {
+                        orderListView.dismissLoading();
+                        orderListView.renderBaoFuPay(baoFuPayInfo);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        orderListView.dismissLoading();
                         orderListView.showError(throwable);
                     }
                 });

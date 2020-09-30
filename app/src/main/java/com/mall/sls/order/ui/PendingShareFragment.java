@@ -23,6 +23,7 @@ import com.mall.sls.common.unit.BriefUnit;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.WXShareManager;
+import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.GoodsOrderInfo;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderGoodsVo;
@@ -275,15 +276,6 @@ public class PendingShareFragment extends BaseFragment implements OrderContract.
         }
     }
 
-    @Override
-    public void renderOrderAliPay(String alipayStr) {
-
-    }
-
-    @Override
-    public void renderOrderWxPay(WXPaySignResponse wxPaySignResponse) {
-
-    }
 
     @Override
     public void renderCancelOrder() {
@@ -296,6 +288,21 @@ public class PendingShareFragment extends BaseFragment implements OrderContract.
             wxUrl = invitationCodeInfo.getBaseUrl();
             inviteCode = invitationCodeInfo.getInvitationCode();
         }
+    }
+
+    @Override
+    public void renderWxPay(WXPaySignResponse wxPaySignResponse) {
+
+    }
+
+    @Override
+    public void renderAliPay(String aliPayStr) {
+
+    }
+
+    @Override
+    public void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo) {
+
     }
 
     @Override

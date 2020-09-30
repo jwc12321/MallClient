@@ -2,6 +2,7 @@ package com.mall.sls.order;
 
 import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
+import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderAddCartInfo;
@@ -21,39 +22,43 @@ public interface OrderContract {
     interface OrderListPresenter extends BasePresenter{
         void getOrderList(String refreshType,String showType);
         void getMoreOrderList(String showType);
-        void orderAliPay(String orderId,String type);
-        void orderWxPay(String orderId,String type);
         void cancelOrder(String orderId);
         void getInvitationCodeInfo();
+        void getWxPay(String orderId, String orderType, String paymentMethod);
+        void getAliPay(String orderId, String orderType, String paymentMethod);
+        void getBaoFuPay(String orderId, String orderType, String paymentMethod);
 
     }
     interface OrderListView extends BaseView<OrderListPresenter>{
         void renderOrderList(OrderList orderList);
         void renderMoreOrderList(OrderList orderList);
-        void renderOrderAliPay(String alipayStr);
-        void renderOrderWxPay(WXPaySignResponse wxPaySignResponse);
         void renderCancelOrder();
         void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo);
+        void renderWxPay(WXPaySignResponse wxPaySignResponse);
+        void renderAliPay(String aliPayStr);
+        void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo);
     }
 
     interface OrderDetailsPresenter extends BasePresenter{
         void getOrderDetails(String orderId);
-        void orderAliPay(String orderId,String type);
-        void orderWxPay(String orderId,String type);
         void cancelOrder(String orderId);
         void getInvitationCodeInfo();
         void addCartBatch(String orderId);
         void orderAddCart(String orderId, Boolean forceAdd);
+        void getWxPay(String orderId, String orderType, String paymentMethod);
+        void getAliPay(String orderId, String orderType, String paymentMethod);
+        void getBaoFuPay(String orderId, String orderType, String paymentMethod);
     }
 
     interface OrderDetailsView extends BaseView<OrderDetailsPresenter>{
         void renderOrderDetails(GoodsOrderDetails goodsOrderDetails);
-        void renderOrderAliPay(String alipayStr);
-        void renderOrderWxPay(WXPaySignResponse wxPaySignResponse);
         void renderCancelOrder();
         void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo);
         void renderAddCartBatch(Boolean isBoolean);
         void renderOrderAddCart(OrderAddCartInfo orderAddCartInfo);
+        void renderWxPay(WXPaySignResponse wxPaySignResponse);
+        void renderAliPay(String aliPayStr);
+        void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo);
     }
 
     interface OrderLogisticsPresenter extends BasePresenter{

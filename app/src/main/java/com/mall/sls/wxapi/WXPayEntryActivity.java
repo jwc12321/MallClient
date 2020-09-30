@@ -48,12 +48,6 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
                 result = "发送成功";
-//                if (resp.getType() == ConstantsAPI.COMMAND_SENDAUTH) {  //登录
-//                    String code = ((SendAuth.Resp) resp).code;
-//                    EventBus.getDefault().post(new WXLoginEvent(code));
-//                } else if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX) {    //分享成功
-//                    EventBus.getDefault().post("分享成功");
-//                } else
                 if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {  //支付
                     EventBus.getDefault().post(new WXSuccessPayEvent());
                 }

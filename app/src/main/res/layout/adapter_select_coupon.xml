@@ -60,7 +60,7 @@
 
             <ImageView
                 android:id="@+id/select_iv"
-                style="@style/cerify_pay_right_iv_style"
+                style="@style/certify_pay_right_iv_style"
                 android:layout_marginRight="@dimen/dp_27" />
 
             <LinearLayout

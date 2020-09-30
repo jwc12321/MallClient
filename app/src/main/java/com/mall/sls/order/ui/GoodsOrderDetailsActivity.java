@@ -40,6 +40,7 @@ import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.CommonTearDownView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderAddCartInfo;
@@ -190,6 +191,8 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private Boolean hasChild = false;
     private Boolean general;
     private String hiddenType;
+    private String paymentMethod;
+    private String orderType;
 
     private OrderDetailGoodsItemAdapter orderGoodsItemAdapter;
 
@@ -216,6 +219,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
 
     private void initView() {
         EventBus.getDefault().register(this);
+        orderType=StaticData.TYPE_ORDER;
         wxShareManager = WXShareManager.getInstance(this);
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
@@ -323,20 +327,22 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             switch (requestCode) {
                 case RequestCodeStatic.PAY_TYPE:
                     if (data != null) {
-                        String selectType = data.getStringExtra(StaticData.SELECT_TYPE);
-                        if (TextUtils.equals(StaticData.REFRESH_ZERO, selectType)) {
+                        paymentMethod= data.getStringExtra(StaticData.PAYMENT_METHOD);
+                        if (TextUtils.equals(StaticData.WX_PAY, paymentMethod)) {
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(GoodsOrderDetailsActivity.this)) {
-                                orderDetailsPresenter.orderWxPay(goodsOrderId, StaticData.REFRESH_ZERO);
+                                orderDetailsPresenter.getWxPay(goodsOrderId,  orderType,paymentMethod);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
-                        } else if (TextUtils.equals(StaticData.REFRESH_ONE, selectType)) {
+                        } else if (TextUtils.equals(StaticData.ALI_PAY, paymentMethod)) {
                             if (PayTypeInstalledUtils.isAliPayInstalled(GoodsOrderDetailsActivity.this)) {
-                                orderDetailsPresenter.orderAliPay(goodsOrderId, StaticData.REFRESH_ONE);
+                                orderDetailsPresenter.getAliPay(goodsOrderId,  orderType,paymentMethod);
                             } else {
                                 showMessage(getString(R.string.install_alipay));
                             }
+                        }else if(TextUtils.equals(StaticData.BAO_FU_PAY, paymentMethod)){
+
                         }
                     }
                     break;
@@ -474,21 +480,6 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             sfH5Url = goodsOrderDetails.getSfH5Url();
         }
     }
-
-    @Override
-    public void renderOrderAliPay(String alipayStr) {
-        if (!TextUtils.isEmpty(alipayStr)) {
-            startAliPay(alipayStr);
-        }
-    }
-
-    @Override
-    public void renderOrderWxPay(WXPaySignResponse wxPaySignResponse) {
-        if (wxPaySignResponse != null) {
-            wechatPay(wxPaySignResponse);
-        }
-    }
-
     @Override
     public void renderCancelOrder() {
         activityResult = StaticData.REFRESH_ONE;
@@ -519,6 +510,25 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 MainFrameActivity.start(this);
             }
         }
+    }
+
+    @Override
+    public void renderWxPay(WXPaySignResponse wxPaySignResponse) {
+        if (wxPaySignResponse != null) {
+            wechatPay(wxPaySignResponse);
+        }
+    }
+
+    @Override
+    public void renderAliPay(String aliPayStr) {
+        if (!TextUtils.isEmpty(aliPayStr)) {
+            startAliPay(aliPayStr);
+        }
+    }
+
+    @Override
+    public void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo) {
+
     }
 
     //状态 101-待支付 102 -取消 103-系统自动取消 "202-待退款","203-已退款,"204-待分享 206-待发货 301-待收获 401-完成 402-完成(系统)

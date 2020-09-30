@@ -200,4 +200,13 @@ public class StaticData {
     public static final String BANK_PAY_FAILED="Failed";
     public static final String BANK_PAY_CANCEL="Cancel";
 
+    public static final String ALI_PAY="Alipay";
+    public static final String WX_PAY="WxPay";
+    public static final String BAO_FU_PAY="BaoFooPay";
+    public static final String PAYMENT_METHOD="paymentMethod";
+    //CERTIFY 认证支付 ，SUPER 超级会员支付， ORDER 订单支付
+    public static final String TYPE_ORDER="ORDER";
+    public static final String TYPE_CERTIFY="CERTIFY";
+    public static final String TYPE_SUPER="SUPER";
+
 }

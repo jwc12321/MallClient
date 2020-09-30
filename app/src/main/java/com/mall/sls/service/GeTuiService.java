@@ -39,7 +39,6 @@ public class GeTuiService extends GTIntentService {
     public void onReceiveMessageData(Context context, GTTransmitMessage msg) {
         // 透传消息的处理，详看 SDK demo
         String msgStr = new String(msg.getPayload());
-        Log.d("111", "数据GTTransmitMessage" + msgStr + "==" + msg.getMessageId());
         if(TextUtils.equals(msg.getMessageId(),clickMessageId)) {
             LinkUrlInfo linkUrlInfo = gson.fromJson(msgStr, LinkUrlInfo.class);
             linkUrlClick(linkUrlInfo);

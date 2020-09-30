@@ -48,44 +48,63 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_44"
+                android:id="@+id/weixin_rl"
+                style="@style/pay_method_rl_style"
                 android:layout_marginTop="@dimen/dp_15"
                 android:background="@color/backGround57">
 
                 <ImageView
                     android:id="@+id/weixin_iv"
-                    style="@style/cerify_pay_left_iv_style"
+                    style="@style/certify_pay_left_iv_style"
                     android:src="@mipmap/icon_pay_weixin" />
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
-                    style="@style/cerify_pay_down_left_tv_style"
+                    style="@style/certify_pay_down_left_tv_style"
                     android:layout_toRightOf="@id/weixin_iv"
                     android:text="@string/weixin_pay" />
 
                 <ImageView
                     android:id="@+id/select_weixin_iv"
-                    style="@style/cerify_pay_right_iv_style" />
+                    style="@style/certify_pay_right_iv_style" />
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_44"
+                android:id="@+id/ali_rl"
+                style="@style/pay_method_rl_style"
                 android:background="@color/backGround57">
 
                 <ImageView
                     android:id="@+id/ali_iv"
-                    style="@style/cerify_pay_left_iv_style"
+                    style="@style/certify_pay_left_iv_style"
                     android:src="@mipmap/icon_pay_zhifubao" />
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
-                    style="@style/cerify_pay_down_left_tv_style"
+                    style="@style/certify_pay_down_left_tv_style"
                     android:layout_toRightOf="@id/ali_iv"
                     android:text="@string/ali_pay" />
 
                 <ImageView
                     android:id="@+id/select_ali_iv"
-                    style="@style/cerify_pay_right_iv_style" />
+                    style="@style/certify_pay_right_iv_style" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/bank_rl"
+                style="@style/pay_method_rl_style"
+                android:background="@color/backGround57">
+
+                <ImageView
+                    android:id="@+id/bank_iv"
+                    style="@style/certify_pay_left_iv_style"
+                    android:src="@mipmap/icon_bank_pay" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/certify_pay_down_left_tv_style"
+                    android:layout_toRightOf="@id/bank_iv"
+                    android:text="@string/bank_pay" />
+
+                <ImageView
+                    android:id="@+id/select_bank_iv"
+                    style="@style/certify_pay_right_iv_style" />
             </RelativeLayout>
 
             <com.mall.sls.common.widget.textview.MediumThickTextView

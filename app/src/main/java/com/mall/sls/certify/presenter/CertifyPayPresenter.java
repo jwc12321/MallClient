@@ -7,9 +7,11 @@ import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
+import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
+import com.mall.sls.data.request.PayRequest;
 import com.mall.sls.data.request.UserPayDtoRequest;
 
 import java.util.ArrayList;
@@ -41,19 +43,20 @@ public class CertifyPayPresenter implements CertifyContract.CertifyPayPresenter 
         certifyPayView.setPresenter(this);
     }
 
+
     @Override
-    public void aliPay(String orderType, String payType) {
-        certifyPayView.showLoading(StaticData.PROCESSING);
-        UserPayDtoRequest request=new UserPayDtoRequest(orderType,payType);
-        String sign= SignUnit.signPost(RequestUrl.ALIPAY_URL,gson.toJson(request));
-        Disposable disposable = restApiService.alipayMember(sign,request)
-                .flatMap(new RxRemoteDataParse<String>())
-                .compose(new RxSchedulerTransformer<String>())
-                .subscribe(new Consumer<String>() {
+    public void getPayMethod(String devicePlatform) {
+        certifyPayView.showLoading(StaticData.LOADING);
+        String queryString="devicePlatform="+devicePlatform;
+        String sign = SignUnit.signGet(RequestUrl.PAY_METHOD, queryString);
+        Disposable disposable = restApiService.getPayMethod(sign,devicePlatform)
+                .flatMap(new RxRemoteDataParse<List<String>>())
+                .compose(new RxSchedulerTransformer<List<String>>())
+                .subscribe(new Consumer<List<String>>() {
                     @Override
-                    public void accept(String alipayStr) throws Exception {
+                    public void accept(List<String> payMethods) throws Exception {
                         certifyPayView.dismissLoading();
-                        certifyPayView.renderAliPay(alipayStr);
+                        certifyPayView.renderPayMethod(payMethods);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -66,11 +69,11 @@ public class CertifyPayPresenter implements CertifyContract.CertifyPayPresenter 
     }
 
     @Override
-    public void wxPay(String orderType, String payType) {
+    public void getWxPay(String orderId, String orderType, String paymentMethod) {
         certifyPayView.showLoading(StaticData.PROCESSING);
-        UserPayDtoRequest request=new UserPayDtoRequest(orderType,payType);
-        String sign= SignUnit.signPost(RequestUrl.USER_PAY_WX,gson.toJson(request));
-        Disposable disposable = restApiService.wxPayMember(sign,request)
+        PayRequest request=new PayRequest(orderId,orderType,paymentMethod);
+        String sign= SignUnit.signPost(RequestUrl.BEGIN_PAY,gson.toJson(request));
+        Disposable disposable = restApiService.getWxPay(sign,request)
                 .flatMap(new RxRemoteDataParse<WXPaySignResponse>())
                 .compose(new RxSchedulerTransformer<WXPaySignResponse>())
                 .subscribe(new Consumer<WXPaySignResponse>() {
@@ -78,6 +81,54 @@ public class CertifyPayPresenter implements CertifyContract.CertifyPayPresenter 
                     public void accept(WXPaySignResponse wxPaySignResponse) throws Exception {
                         certifyPayView.dismissLoading();
                         certifyPayView.renderWxPay(wxPaySignResponse);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        certifyPayView.dismissLoading();
+                        certifyPayView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getAliPay(String orderId, String orderType, String paymentMethod) {
+        certifyPayView.showLoading(StaticData.PROCESSING);
+        PayRequest request=new PayRequest(orderId,orderType,paymentMethod);
+        String sign= SignUnit.signPost(RequestUrl.BEGIN_PAY,gson.toJson(request));
+        Disposable disposable = restApiService.getAliPay(sign,request)
+                .flatMap(new RxRemoteDataParse<String>())
+                .compose(new RxSchedulerTransformer<String>())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String aliPayStr) throws Exception {
+                        certifyPayView.dismissLoading();
+                        certifyPayView.renderAliPay(aliPayStr);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        certifyPayView.dismissLoading();
+                        certifyPayView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getBaoFuPay(String orderId, String orderType, String paymentMethod) {
+        certifyPayView.showLoading(StaticData.PROCESSING);
+        PayRequest request=new PayRequest(orderId,orderType,paymentMethod);
+        String sign= SignUnit.signPost(RequestUrl.BEGIN_PAY,gson.toJson(request));
+        Disposable disposable = restApiService.getBaoFuPay(sign,request)
+                .flatMap(new RxRemoteDataParse<BaoFuPayInfo>())
+                .compose(new RxSchedulerTransformer<BaoFuPayInfo>())
+                .subscribe(new Consumer<BaoFuPayInfo>() {
+                    @Override
+                    public void accept(BaoFuPayInfo baoFuPayInfo) throws Exception {
+                        certifyPayView.dismissLoading();
+                        certifyPayView.renderBaoFuPay(baoFuPayInfo);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

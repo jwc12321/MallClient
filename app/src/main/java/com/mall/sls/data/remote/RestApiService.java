@@ -6,6 +6,7 @@ import com.mall.sls.data.entity.AddressInfo;
 import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.BankCardInfo;
 import com.mall.sls.data.entity.BankPayInfo;
+import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.BindResultInfo;
 import com.mall.sls.data.entity.CardInfo;
 import com.mall.sls.data.entity.CartAddInfo;
@@ -73,6 +74,7 @@ import com.mall.sls.data.request.OrderIdRequest;
 import com.mall.sls.data.request.OrderPayRequest;
 import com.mall.sls.data.request.OrderRequest;
 import com.mall.sls.data.request.OrderSubmitRequest;
+import com.mall.sls.data.request.PayRequest;
 import com.mall.sls.data.request.SmsCodeBindRequest;
 import com.mall.sls.data.request.StartBindBankRequest;
 import com.mall.sls.data.request.TypeRequest;
@@ -383,27 +385,27 @@ public interface RestApiService {
     Flowable<RemoteDataWrapper<Ignore>> deleteHistory(@Header("X-Hc-Sign") String sign);
 
     //查询绑定的银行卡记录
-    @GET("api/f/baofoo/list")
+    @GET("app/baofoo/list")
     Flowable<RemoteDataWrapper<List<BankCardInfo>>> getBankCardInfos(@Header("X-Hc-Sign") String sign);
 
     //查询银行卡的属性信息
-    @GET("api/f/baofoo/card-info")
+    @GET("app/baofoo/card-info")
     Flowable<RemoteDataWrapper<CardInfo>> getCardInfo(@Header("X-Hc-Sign") String sign, @Query("cardNo") String cardNo);
 
     //开始绑定银行卡
-    @POST("api/f/baofoo/begin-sign")
+    @POST("app/baofoo/begin-sign")
     Flowable<RemoteDataWrapper<BankCardInfo>> getStartBindBankInfo(@Header("X-Hc-Sign") String sign, @Body StartBindBankRequest request);
 
     //确认绑定银行卡
-    @POST("api/f/baofoo/confirm-sign")
+    @POST("app/baofoo/confirm-sign")
     Flowable<RemoteDataWrapper<BindResultInfo>> confirmBindBank(@Header("X-Hc-Sign") String sign, @Body ConfirmBindBankRequest request);
 
     //解绑银行卡
-    @POST("api/f/baofoo/{id}/cancel-sign")
+    @POST("app/baofoo/{id}/cancel-sign")
     Flowable<RemoteDataWrapper<Boolean>> untieBankCard(@Header("X-Hc-Sign") String sign, @Path("id") String id);
 
     //宝付直接支付
-    @POST("api/f/baofoo/single-pay")
+    @POST("app/baofoo/single-pay")
     Flowable<RemoteDataWrapper<BankPayInfo>> baoFooSinglePay(@Header("X-Hc-Sign") String sign, @Body BankPayRequest request);
 
     //获取宝付支付验证码
@@ -422,5 +424,18 @@ public interface RestApiService {
     @GET("app/common/invitation-open")
     Flowable<RemoteDataWrapper<Boolean>> getInvitationOpen(@Header("X-Hc-Sign") String sign);
 
+    //获取支付方式的接口
+    @GET("app/common/pay-method")
+    Flowable<RemoteDataWrapper<List<String>>> getPayMethod(@Header("X-Hc-Sign") String sign,@Query("devicePlatform") String devicePlatform);
+
+    //微信支付
+    @POST("app/pay/begin-pay")
+    Flowable<RemoteDataWrapper<WXPaySignResponse>> getWxPay(@Header("X-Hc-Sign") String sign, @Body PayRequest request);
+    //支付宝支付
+    @POST("app/pay/begin-pay")
+    Flowable<RemoteDataWrapper<String>> getAliPay(@Header("X-Hc-Sign") String sign, @Body PayRequest request);
+    //宝付支付
+    @POST("app/pay/begin-pay")
+    Flowable<RemoteDataWrapper<BaoFuPayInfo>> getBaoFuPay(@Header("X-Hc-Sign") String sign, @Body PayRequest request);
 
 }

@@ -75,16 +75,18 @@ public class RequestUrl {
     public static String SECOND_CATEGORY_ITEM ="/app/goods/l2/";//根据L2类目过滤全部商品
     public static String SEARCH_GOODS="/app/goods/search";//关键字搜索
     public static String SEARCH_HISTORY="/app/goods/search-history";//商品搜索历史记录
-    public static String BANK_CARD_LIST="/api/f/baofoo/list";//查询绑定的银行卡记录
-    public static String CARD_INFO="/api/f/baofoo/card-info";//查询银行卡的属性信息
-    public static String START_BANK_BIND="/api/f/baofoo/begin-sign";//开始绑定银行卡
-    public static String CONFIRM_BANK_BIND="/api/f/baofoo/confirm-sign";//确认绑定银行卡
-    public static String BANK_BEGIN="/api/f/baofoo/";//
+    public static String BANK_CARD_LIST="/app/baofoo/list";//查询绑定的银行卡记录
+    public static String CARD_INFO="/app/baofoo/card-info";//查询银行卡的属性信息
+    public static String START_BANK_BIND="/app/baofoo/begin-sign";//开始绑定银行卡
+    public static String CONFIRM_BANK_BIND="/app/baofoo/confirm-sign";//确认绑定银行卡
+    public static String BANK_BEGIN="/api/baofoo/";//
     public static String BANK_UNTIE="/cancel-sign";//解绑银行卡
-    public static String BAO_FOO_SINGLE_PAY="/api/f/baofoo/single-pay";//宝付直接支付
+    public static String BAO_FOO_SINGLE_PAY="/app/baofoo/single-pay";//宝付直接支付
     public static String SEND_BAO_FU_CODE="/public/f/code/baofoo";//获取宝付支付验证码
     public static String CERTIFY_INFO="/api/f/user/info/certify";//获取用户认证的信息
     public static String ORDER_ADD_CART="/app/order/general/add-cart";//普通商品订单再来一单
     public static String INVITATION_OPEN="/app/common/invitation-open";//是否打开邀请码
+    public static String PAY_METHOD="/app/common/pay-method";//获取支付方式
+    public static String BEGIN_PAY="/app/pay/begin-pay";//开始支付
 
 }

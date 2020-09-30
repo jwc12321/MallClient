@@ -74,7 +74,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_15"
-                android:background="@drawable/common_four_back_forty_three_bg" />
+                android:background="@drawable/common_four_back_forty_three_bg"
+                android:visibility="invisible"/>
         </RelativeLayout>
 
     </RelativeLayout>

@@ -9,6 +9,7 @@ import com.mall.sls.homepage.ui.ConfirmOrderActivity;
 import com.mall.sls.homepage.ui.GeneralGoodsDetailsActivity;
 import com.mall.sls.homepage.ui.HomepageFragment;
 import com.mall.sls.homepage.ui.OrdinaryGoodsDetailActivity;
+import com.mall.sls.homepage.ui.SelectPayTypeActivity;
 import com.mall.sls.homepage.ui.WXGoodsDetailsActivity;
 
 import dagger.Component;
@@ -24,4 +25,5 @@ public interface HomepageComponent {
     void inject(WXGoodsDetailsActivity wxGoodsDetailsActivity);
     void inject(GeneralGoodsDetailsActivity generalGoodsDetailsActivity);
     void inject(CartConfirmOrderActivity cartConfirmOrderActivity);
+    void inject(SelectPayTypeActivity selectPayTypeActivity);
 }

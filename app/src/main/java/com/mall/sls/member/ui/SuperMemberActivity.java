@@ -30,6 +30,7 @@ import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.unit.VerifyManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.LocalTeam;
 import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.event.PayAbortEvent;
@@ -103,6 +104,9 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     private boolean certifyPay;
     private String certifyAmount;
     private String vipExpireDate;
+    private String orderType;
+    private String paymentMethod;
+    private String orderId;
     @Inject
     SuperMemberPresenter superMemberPresenter;
 
@@ -129,6 +133,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
 
     private void initView() {
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
+        orderType=StaticData.TYPE_SUPER;
         EventBus.getDefault().register(this);
         avatarUrl = getIntent().getStringExtra(StaticData.AVATAR_URL);
         mobile = getIntent().getStringExtra(StaticData.MOBILE);
@@ -208,17 +213,17 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
             switch (requestCode) {
                 case RequestCodeStatic.PAY_TYPE:
                     if (data != null) {
-                        String selectType = data.getStringExtra(StaticData.SELECT_TYPE);
-                        if (TextUtils.equals(StaticData.REFRESH_ZERO, selectType)) {
+                        paymentMethod = data.getStringExtra(StaticData.PAYMENT_METHOD);
+                        if (TextUtils.equals(StaticData.WX_PAY, paymentMethod)) {
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(SuperMemberActivity.this)) {
-                                superMemberPresenter.wxPayMember(StaticData.REFRESH_ONE, selectType);
+                                superMemberPresenter.getWxPay(orderId,orderType,paymentMethod);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
-                        } else if (TextUtils.equals(StaticData.REFRESH_ONE, selectType)) {
+                        } else if (TextUtils.equals(StaticData.ALI_PAY, paymentMethod)) {
                             if (PayTypeInstalledUtils.isAliPayInstalled(SuperMemberActivity.this)) {
-                                superMemberPresenter.alipayMember(StaticData.REFRESH_ONE, selectType);
+                                superMemberPresenter.getAliPay(orderId,orderType,paymentMethod);
                             } else {
                                 showMessage(getString(R.string.install_alipay));
                             }
@@ -277,21 +282,6 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     }
 
     @Override
-    public void renderAlipayMember(String alipayStr) {
-        if (!TextUtils.isEmpty(alipayStr)) {
-            startAliPay(alipayStr);
-        }
-
-    }
-
-    @Override
-    public void renderWxpayMember(WXPaySignResponse wxPaySignResponse) {
-        if (wxPaySignResponse != null) {
-            wechatPay(wxPaySignResponse);
-        }
-    }
-
-    @Override
     public void renderVipOpen(Boolean isBoolean) {
         if (isBoolean) {
             showMessage(getString(R.string.open_vip));
@@ -299,6 +289,25 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
             confirmBt.setEnabled(false);
             status.setText(getString(R.string.is_open));
         }
+    }
+
+    @Override
+    public void renderWxPay(WXPaySignResponse wxPaySignResponse) {
+        if (wxPaySignResponse != null) {
+            wechatPay(wxPaySignResponse);
+        }
+    }
+
+    @Override
+    public void renderAliPay(String aliPayStr) {
+        if (!TextUtils.isEmpty(aliPayStr)) {
+            startAliPay(aliPayStr);
+        }
+    }
+
+    @Override
+    public void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo) {
+
     }
 
     @Override
