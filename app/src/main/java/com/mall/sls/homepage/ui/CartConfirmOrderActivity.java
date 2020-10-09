@@ -20,6 +20,8 @@ import com.alipay.sdk.app.PayTask;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.address.ui.AddressManageActivity;
+import com.mall.sls.bank.ui.BankCardPayActivity;
+import com.mall.sls.bank.ui.BankPayResultActivity;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.FlashCartManager;
@@ -35,13 +37,17 @@ import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.coupon.ui.SelectCouponActivity;
 import com.mall.sls.data.entity.AddressInfo;
+import com.mall.sls.data.entity.AliPay;
+import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.BindResultInfo;
 import com.mall.sls.data.entity.CartItemInfo;
 import com.mall.sls.data.entity.ConfirmCartOrderDetail;
 import com.mall.sls.data.entity.HiddenItemCartInfo;
 import com.mall.sls.data.entity.OrderSubmitInfo;
+import com.mall.sls.data.entity.UserPayInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.entity.WxPay;
 import com.mall.sls.data.event.PayAbortEvent;
 import com.mall.sls.data.event.WXSuccessPayEvent;
 import com.mall.sls.homepage.DaggerHomepageComponent;
@@ -162,6 +168,9 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
     private Handler mHandler = new MyHandler(this);
     private String hiddenType;
     private String orderType;
+    private UserPayInfo userPayInfo;
+    private String result;
+    private String choiceType;
 
 
     public static void start(Context context, List<String> ids, String purchaseType) {
@@ -182,6 +191,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
 
     private void initView() {
         EventBus.getDefault().register(this);
+        choiceType=StaticData.REFRESH_ONE;
         ids = (List<String>) getIntent().getSerializableExtra(StaticData.CART_ITEM_IDS);
         normalIds = new ArrayList<>();
         purchaseType = getIntent().getStringExtra(StaticData.PURCHASE_TYPE);
@@ -279,6 +289,8 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                     cartConfirmOrderPresenter.getWxPay(orderId,orderType,paymentMethod);
                 } else if(TextUtils.equals(StaticData.ALI_PAY, paymentMethod)){
                     cartConfirmOrderPresenter.getAliPay(orderId, orderType,paymentMethod);
+                }else if(TextUtils.equals(StaticData.BAO_FU_PAY, paymentMethod)){
+                    cartConfirmOrderPresenter.getBaoFuPay(orderId, orderType,paymentMethod);
                 }
             } else {
                 paySuccess();
@@ -287,22 +299,30 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
     }
 
     @Override
-    public void renderWxPay(WXPaySignResponse wxPaySignResponse) {
-        if (wxPaySignResponse != null) {
-            wechatPay(wxPaySignResponse);
+    public void renderWxPay(WxPay wxPay) {
+        if (wxPay != null) {
+            userPayInfo=wxPay.getUserPayInfo();
+            wechatPay(wxPay.getWxPayInfo());
         }
     }
 
     @Override
-    public void renderAliPay(String aliPayStr) {
-        if (!TextUtils.isEmpty(aliPayStr)) {
-            startAliPay(aliPayStr);
+    public void renderAliPay(AliPay aliPay) {
+        if (aliPay != null) {
+            userPayInfo=aliPay.getUserPayInfo();
+            if (!TextUtils.isEmpty(aliPay.getAliPayInfo())) {
+                startAliPay(aliPay.getAliPayInfo());
+            }
         }
     }
 
-    @Override
-    public void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo) {
 
+    @Override
+    public void renderBaoFuPay(BaoFuPay baoFuPay) {
+        if(baoFuPay!=null){
+            userPayInfo=baoFuPay.getUserPayInfo();
+            bankPay();
+        }
     }
 
     @Override
@@ -422,6 +442,12 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                         hiddenCart();
                     }
                     break;
+                case RequestCodeStatic.BACK_BANE_RESULT:
+                    if(data!=null){
+                        result=data.getStringExtra(StaticData.PAY_RESULT);
+                        backResult(result);
+                    }
+                    break;
                 default:
             }
         }
@@ -454,6 +480,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
             Intent intent = new Intent(this, SelectPayTypeActivity.class);
             intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_TWO);
             intent.putExtra(StaticData.PAYMENT_AMOUNT, orderTotalPrice);
+            intent.putExtra(StaticData.ORDER_TYPE,StaticData.TYPE_ORDER);
             startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
         }
     }
@@ -554,8 +581,30 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
     }
 
     private void paySuccess() {
-        CartPaySuccessActivity.start(this, orderId, orderTotalPrice);
+        CartPaySuccessActivity.start(this, orderId, userPayInfo);
         finish();
+    }
+
+
+    private void bankPay(){
+        Intent intent = new Intent(this, BankCardPayActivity.class);
+        intent.putExtra(StaticData.USER_PAY_INFO, userPayInfo);
+        startActivityForResult(intent, RequestCodeStatic.BACK_BANE_RESULT);
+    }
+
+    private void backResult(String result){
+        if(TextUtils.equals(StaticData.BANK_PAY_SUCCESS,result)){
+            paySuccess();
+        }else if(TextUtils.equals(StaticData.BANK_PAY_PROCESSING,result)){
+            BankPayResultActivity.start(this, orderId,result,choiceType);
+        }else if(TextUtils.equals(StaticData.BANK_PAY_FAILED,result)){
+            GoodsOrderDetailsActivity.start(this, orderId);
+            finish();
+        }else {
+            showMessage(getString(R.string.pay_cancel));
+            GoodsOrderDetailsActivity.start(this, orderId);
+            finish();
+        }
     }
 
 }

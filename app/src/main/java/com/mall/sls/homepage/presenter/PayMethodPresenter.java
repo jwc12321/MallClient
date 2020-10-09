@@ -4,6 +4,7 @@ import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
+import com.mall.sls.data.entity.PayMethodInfo;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.homepage.HomepageContract;
@@ -37,16 +38,16 @@ public class PayMethodPresenter implements HomepageContract.PayMethodPresenter {
     }
 
     @Override
-    public void getPayMethod(String devicePlatform) {
+    public void getPayMethod(String devicePlatform,String orderType) {
         payMethodView.showLoading(StaticData.LOADING);
-        String queryString="devicePlatform="+devicePlatform;
+        String queryString="devicePlatform="+devicePlatform+"&orderType"+orderType;
         String sign = SignUnit.signGet(RequestUrl.PAY_METHOD, queryString);
-        Disposable disposable = restApiService.getPayMethod(sign,devicePlatform)
-                .flatMap(new RxRemoteDataParse<List<String>>())
-                .compose(new RxSchedulerTransformer<List<String>>())
-                .subscribe(new Consumer<List<String>>() {
+        Disposable disposable = restApiService.getPayMethod(sign,devicePlatform,orderType)
+                .flatMap(new RxRemoteDataParse<List<PayMethodInfo>>())
+                .compose(new RxSchedulerTransformer<List<PayMethodInfo>>())
+                .subscribe(new Consumer<List<PayMethodInfo>>() {
                     @Override
-                    public void accept(List<String> payMethods) throws Exception {
+                    public void accept(List<PayMethodInfo> payMethods) throws Exception {
                         payMethodView.dismissLoading();
                         payMethodView.renderPayMethod(payMethods);
                     }

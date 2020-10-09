@@ -2424,5 +2424,20 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="randomly_reduced_tip_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/appText6</item>
+        <item name="android:textSize">@dimen/sp_15</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="size11_color_app6_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_11</item>
+        <item name="android:textColor">@color/appText6</item>
+    </style>
+
 
 </resources>

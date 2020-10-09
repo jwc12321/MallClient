@@ -14,8 +14,8 @@ public class BankPayRequest {
     private String mobile;
     @SerializedName("smsCode")
     private String smsCode;
-    @SerializedName("paymentLog")
-    private BaoFuPayInfo baoFuPayInfo;
+    @SerializedName("payId")
+    private String payId;
 
     public String getBindId() {
         return bindId;
@@ -41,11 +41,11 @@ public class BankPayRequest {
         this.smsCode = smsCode;
     }
 
-    public BaoFuPayInfo getBaoFuPayInfo() {
-        return baoFuPayInfo;
+    public String getPayId() {
+        return payId;
     }
 
-    public void setBaoFuPayInfo(BaoFuPayInfo baoFuPayInfo) {
-        this.baoFuPayInfo = baoFuPayInfo;
+    public void setPayId(String payId) {
+        this.payId = payId;
     }
 }

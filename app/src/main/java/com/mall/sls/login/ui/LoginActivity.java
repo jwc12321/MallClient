@@ -104,7 +104,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.LoginVi
         deviceId = SystemUtil.getAndroidId(this);
         deviceName=SystemUtil.getDeviceName(this);
         deviceOsVersion = SystemUtil.getSystemVersion();
-        devicePlatform = "android";
+        devicePlatform = SystemUtil.getChannel(this);
         TokenManager.saveToken("");
         PushManager.getInstance().unBindAlias(this,MobileManager.getMobile(),true);
 //        init();

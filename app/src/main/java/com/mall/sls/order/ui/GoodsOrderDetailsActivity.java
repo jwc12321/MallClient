@@ -25,6 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alipay.sdk.app.PayTask;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.bank.ui.BankCardPayActivity;
+import com.mall.sls.bank.ui.BankPayResultActivity;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
@@ -40,6 +42,8 @@ import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.CommonTearDownView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.AliPay;
+import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.InvitationCodeInfo;
@@ -47,7 +51,9 @@ import com.mall.sls.data.entity.OrderAddCartInfo;
 import com.mall.sls.data.entity.OrderGoodsVo;
 import com.mall.sls.data.entity.OrderTimeInfo;
 import com.mall.sls.data.entity.ShipOrderInfo;
+import com.mall.sls.data.entity.UserPayInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.entity.WxPay;
 import com.mall.sls.data.event.PayAbortEvent;
 import com.mall.sls.data.event.WXSuccessPayEvent;
 import com.mall.sls.homepage.ui.ActivityGroupGoodsActivity;
@@ -193,6 +199,9 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private String hiddenType;
     private String paymentMethod;
     private String orderType;
+    private UserPayInfo userPayInfo;
+    private String result;
+    private String choiceType;
 
     private OrderDetailGoodsItemAdapter orderGoodsItemAdapter;
 
@@ -220,6 +229,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private void initView() {
         EventBus.getDefault().register(this);
         orderType=StaticData.TYPE_ORDER;
+        choiceType=StaticData.REFRESH_THREE;
         wxShareManager = WXShareManager.getInstance(this);
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
@@ -262,6 +272,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                     Intent intent = new Intent(this, SelectPayTypeActivity.class);
                     intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_TWO);
                     intent.putExtra(StaticData.PAYMENT_AMOUNT, orderTotalPrice);
+                    intent.putExtra(StaticData.ORDER_TYPE,StaticData.TYPE_ORDER);
                     startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
                 } else if (TextUtils.equals(StaticData.TO_BE_SHARE, orderStatusText)) {
                     if (!PayTypeInstalledUtils.isWeixinAvilible(GoodsOrderDetailsActivity.this)) {
@@ -342,7 +353,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                                 showMessage(getString(R.string.install_alipay));
                             }
                         }else if(TextUtils.equals(StaticData.BAO_FU_PAY, paymentMethod)){
-
+                            orderDetailsPresenter.getBaoFuPay(goodsOrderId,  orderType,paymentMethod);
                         }
                     }
                     break;
@@ -360,6 +371,12 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                     if (data != null) {
                         hiddenType = data.getStringExtra(StaticData.HIDDEN_TYPE);
                         hiddenCart();
+                    }
+                    break;
+                case RequestCodeStatic.BACK_BANE_RESULT:
+                    if(data!=null){
+                        result=data.getStringExtra(StaticData.PAY_RESULT);
+                        backResult(result);
                     }
                     break;
                 default:
@@ -513,22 +530,30 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     }
 
     @Override
-    public void renderWxPay(WXPaySignResponse wxPaySignResponse) {
-        if (wxPaySignResponse != null) {
-            wechatPay(wxPaySignResponse);
+    public void renderWxPay(WxPay wxPay) {
+        if (wxPay != null) {
+            userPayInfo=wxPay.getUserPayInfo();
+            wechatPay(wxPay.getWxPayInfo());
         }
     }
 
     @Override
-    public void renderAliPay(String aliPayStr) {
-        if (!TextUtils.isEmpty(aliPayStr)) {
-            startAliPay(aliPayStr);
+    public void renderAliPay(AliPay aliPay) {
+        if (aliPay != null) {
+            userPayInfo=aliPay.getUserPayInfo();
+            if (!TextUtils.isEmpty(aliPay.getAliPayInfo())) {
+                startAliPay(aliPay.getAliPayInfo());
+            }
         }
     }
 
-    @Override
-    public void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo) {
 
+    @Override
+    public void renderBaoFuPay(BaoFuPay baoFuPay) {
+        if(baoFuPay!=null){
+            userPayInfo=baoFuPay.getUserPayInfo();
+            bankPay();
+        }
     }
 
     //状态 101-待支付 102 -取消 103-系统自动取消 "202-待退款","203-已退款,"204-待分享 206-待发货 301-待收获 401-完成 402-完成(系统)
@@ -768,5 +793,25 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             finish();
         }
     }
+
+    private void bankPay(){
+        Intent intent = new Intent(this, BankCardPayActivity.class);
+        intent.putExtra(StaticData.USER_PAY_INFO, userPayInfo);
+        startActivityForResult(intent, RequestCodeStatic.BACK_BANE_RESULT);
+    }
+
+    private void backResult(String result){
+        if(TextUtils.equals(StaticData.BANK_PAY_SUCCESS,result)){
+            activityResult = StaticData.REFRESH_ONE;
+            orderDetailsPresenter.getOrderDetails(goodsOrderId);
+        }else if(TextUtils.equals(StaticData.BANK_PAY_PROCESSING,result)){
+            BankPayResultActivity.start(this, goodsOrderId,result,choiceType);
+        }else if(TextUtils.equals(StaticData.BANK_PAY_FAILED,result)){
+
+        }else {
+            showMessage(getString(R.string.pay_cancel));
+        }
+    }
+
 
 }

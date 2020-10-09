@@ -2,6 +2,8 @@ package com.mall.sls.order;
 
 import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
+import com.mall.sls.data.entity.AliPay;
+import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.GoodsOrderDetails;
 import com.mall.sls.data.entity.InvitationCodeInfo;
@@ -10,6 +12,7 @@ import com.mall.sls.data.entity.OrderInfo;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.OrderPackageInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.entity.WxPay;
 import com.mall.sls.order.ui.ViewLogisticsActivity;
 
 import java.util.List;
@@ -34,9 +37,9 @@ public interface OrderContract {
         void renderMoreOrderList(OrderList orderList);
         void renderCancelOrder();
         void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo);
-        void renderWxPay(WXPaySignResponse wxPaySignResponse);
-        void renderAliPay(String aliPayStr);
-        void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo);
+        void renderWxPay(WxPay wxPay);
+        void renderAliPay(AliPay aliPay);
+        void renderBaoFuPay(BaoFuPay baoFuPay);
     }
 
     interface OrderDetailsPresenter extends BasePresenter{
@@ -56,9 +59,9 @@ public interface OrderContract {
         void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo);
         void renderAddCartBatch(Boolean isBoolean);
         void renderOrderAddCart(OrderAddCartInfo orderAddCartInfo);
-        void renderWxPay(WXPaySignResponse wxPaySignResponse);
-        void renderAliPay(String aliPayStr);
-        void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo);
+        void renderWxPay(WxPay wxPay);
+        void renderAliPay(AliPay aliPay);
+        void renderBaoFuPay(BaoFuPay baoFuPay);
     }
 
     interface OrderLogisticsPresenter extends BasePresenter{

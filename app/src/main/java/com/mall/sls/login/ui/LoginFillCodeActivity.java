@@ -93,7 +93,7 @@ public class LoginFillCodeActivity extends BaseActivity implements LoginContract
         deviceId = SystemUtil.getAndroidId(this);
         deviceName=SystemUtil.getDeviceName(this);
         deviceOsVersion = SystemUtil.getSystemVersion();
-        devicePlatform = "android";
+        devicePlatform = SystemUtil.getChannel(this);
         accessCode=getIntent().getStringExtra(StaticData.ACCESS_CODE);
         mobile=getIntent().getStringExtra(StaticData.MOBILE);
         smsCode=getIntent().getStringExtra(StaticData.SMS_CODE);

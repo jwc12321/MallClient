@@ -256,7 +256,7 @@
                     <ImageView
                         android:id="@+id/bank_iv"
                         style="@style/mine_order_iv_style"
-                        android:src="@mipmap/icon_my_invitation" />
+                        android:src="@mipmap/icon_mine_bank" />
                     <ImageView
                         android:id="@+id/my_invitation_iv"
                         style="@style/mine_order_iv_style"

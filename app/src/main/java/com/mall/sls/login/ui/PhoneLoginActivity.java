@@ -97,7 +97,7 @@ public class PhoneLoginActivity extends BaseActivity implements LoginContract.Lo
         deviceId = SystemUtil.getAndroidId(this);
         deviceName=SystemUtil.getDeviceName(this);
         deviceOsVersion = SystemUtil.getSystemVersion();
-        devicePlatform = "android";
+        devicePlatform = SystemUtil.getChannel(this);
     }
 
     @Override

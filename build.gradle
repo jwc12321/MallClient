@@ -7,6 +7,7 @@ buildscript {
         jcenter()
         maven { url 'https://dl.bintray.com/umsdk/release' }
         maven{ url 'https://raw.githubusercontent.com/TalkingData/SDKMaven/master/' }
+        maven {url 'http://maven.aliyun.com/nexus/content/repositories/releases/' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.1'
@@ -25,6 +26,7 @@ allprojects {
         maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/umsdk/release' }
         maven { url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/" }
+        maven {url 'http://maven.aliyun.com/nexus/content/repositories/releases/' }
     }
 }
 

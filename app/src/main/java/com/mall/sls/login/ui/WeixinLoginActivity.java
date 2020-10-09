@@ -139,7 +139,7 @@ public class WeixinLoginActivity extends BaseActivity implements LoginContract.W
         deviceId = SystemUtil.getAndroidId(this);
         deviceName=SystemUtil.getDeviceName(this);
         deviceOsVersion = SystemUtil.getSystemVersion();
-        devicePlatform = "android";
+        devicePlatform = SystemUtil.getChannel(this);
         TokenManager.saveToken("");
         init();
     }

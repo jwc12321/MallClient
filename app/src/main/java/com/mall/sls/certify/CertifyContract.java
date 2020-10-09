@@ -3,8 +3,12 @@ package com.mall.sls.certify;
 import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
 import com.mall.sls.common.unit.VerifyManager;
+import com.mall.sls.data.entity.AliPay;
+import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.BaoFuPayInfo;
+import com.mall.sls.data.entity.PayMethodInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.entity.WxPay;
 
 import java.util.List;
 
@@ -20,16 +24,16 @@ public interface CertifyContract {
     }
 
     interface CertifyPayPresenter extends BasePresenter{
-        void getPayMethod(String devicePlatform);
+        void getPayMethod(String devicePlatform,String orderType);
         void getWxPay(String orderId, String orderType, String paymentMethod);
         void getAliPay(String orderId, String orderType, String paymentMethod);
         void getBaoFuPay(String orderId, String orderType, String paymentMethod);
     }
 
     interface CertifyPayView extends BaseView<CertifyPayPresenter>{
-        void renderPayMethod(List<String> payMethods);
-        void renderWxPay(WXPaySignResponse wxPaySignResponse);
-        void renderAliPay(String aliPayStr);
-        void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo);
+        void renderPayMethod(List<PayMethodInfo> payMethods);
+        void renderWxPay(WxPay wxPay);
+        void renderAliPay(AliPay aliPay);
+        void renderBaoFuPay(BaoFuPay baoFuPay);
     }
 }

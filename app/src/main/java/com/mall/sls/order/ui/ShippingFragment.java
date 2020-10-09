@@ -15,11 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.data.entity.AliPay;
+import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.GoodsOrderInfo;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.entity.WxPay;
 import com.mall.sls.order.DaggerOrderComponent;
 import com.mall.sls.order.OrderContract;
 import com.mall.sls.order.OrderModule;
@@ -204,17 +207,16 @@ public class ShippingFragment extends BaseFragment implements OrderContract.Orde
     }
 
     @Override
-    public void renderWxPay(WXPaySignResponse wxPaySignResponse) {
-
+    public void renderWxPay(WxPay wxPay) {
     }
 
     @Override
-    public void renderAliPay(String aliPayStr) {
-
+    public void renderAliPay(AliPay aliPay) {
     }
 
+
     @Override
-    public void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo) {
+    public void renderBaoFuPay(BaoFuPay baoFuPay) {
 
     }
 

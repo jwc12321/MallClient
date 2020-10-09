@@ -63,6 +63,27 @@ public class SettingPresenter implements MineContract.SettingPresenter {
     }
 
     @Override
+    public void getConsumerPhone() {
+        String queryString = "null";
+        String sign = SignUnit.signGet(RequestUrl.CUSTOMER_PHONE_URL, queryString);
+        Disposable disposable = restApiService.getConsumerPhone(sign)
+                .flatMap(new RxRemoteDataParse<String>())
+                .compose(new RxSchedulerTransformer<String>())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String consumerPhone) throws Exception {
+                        settingView.renderConsumerPhone(consumerPhone);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        settingView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
     public void start() {
 
     }

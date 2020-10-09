@@ -194,6 +194,7 @@ public class StaticData {
     public static final String HIDDEN_CART_INFO_S="hiddenCartInfos";
     public static final String TOTAL_NUMBER="totalNumber";
     public static final String HIDDEN_TYPE="hiddenType";
+    public static final String PAY_ID="payId";
 
     public static final String BANK_PAY_SUCCESS="Success";
     public static final String BANK_PAY_PROCESSING="Processing";
@@ -208,5 +209,8 @@ public class StaticData {
     public static final String TYPE_ORDER="ORDER";
     public static final String TYPE_CERTIFY="CERTIFY";
     public static final String TYPE_SUPER="SUPER";
+    public static final String ORDER_TYPE="orderType";
+    public static final String USER_PAY_INFO="UserPayInfo";
+
 
 }

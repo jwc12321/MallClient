@@ -1,5 +1,6 @@
 package com.mall.sls.certify.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import androidx.annotation.Nullable;
 import com.alipay.sdk.app.PayTask;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.bank.ui.BankCardPayActivity;
 import com.mall.sls.certify.CertifyContract;
 import com.mall.sls.certify.CertifyModule;
 import com.mall.sls.certify.DaggerCertifyComponent;
@@ -28,8 +30,12 @@ import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.unit.SystemUtil;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
-import com.mall.sls.data.entity.BaoFuPayInfo;
+import com.mall.sls.data.entity.AliPay;
+import com.mall.sls.data.entity.BaoFuPay;
+import com.mall.sls.data.entity.PayMethodInfo;
+import com.mall.sls.data.entity.UserPayInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.entity.WxPay;
 import com.mall.sls.data.event.PayAbortEvent;
 import com.mall.sls.data.event.WXSuccessPayEvent;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -78,12 +84,28 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
     ImageView selectBankIv;
     @BindView(R.id.bank_rl)
     RelativeLayout bankRl;
+    @BindView(R.id.wx_tv)
+    ConventionalTextView wxTv;
+    @BindView(R.id.wx_tip)
+    ConventionalTextView wxTip;
+    @BindView(R.id.ali_tv)
+    ConventionalTextView aliTv;
+    @BindView(R.id.ali_tip)
+    ConventionalTextView aliTip;
+    @BindView(R.id.bank_tv)
+    ConventionalTextView bankTv;
+    @BindView(R.id.bank_tip)
+    ConventionalTextView bankTip;
     private Handler mHandler = new MyHandler(this);
     private String certifyAmount;
     private String paymentMethod;
     private String orderId;
     private String orderType;
     private String devicePlatform;
+
+    private UserPayInfo userPayInfo;
+    private String result;
+
 
     @Inject
     CertifyPayPresenter certifyPayPresenter;
@@ -107,9 +129,9 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
         EventBus.getDefault().register(this);
         certifyAmount = getIntent().getStringExtra(StaticData.CERTIFY_AMOUNT);
         amount.setText(NumberFormatUnit.goodsFormat(certifyAmount));
-        orderType=StaticData.TYPE_CERTIFY;
+        orderType = StaticData.TYPE_CERTIFY;
         devicePlatform = SystemUtil.getChannel(this);
-        certifyPayPresenter.getPayMethod(devicePlatform);
+        certifyPayPresenter.getPayMethod(devicePlatform,StaticData.TYPE_CERTIFY);
     }
 
     @Override
@@ -123,7 +145,7 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
     }
 
 
-    @OnClick({R.id.confirm_bt, R.id.back, R.id.weixin_rl, R.id.ali_rl,R.id.bank_rl})
+    @OnClick({R.id.confirm_bt, R.id.back, R.id.weixin_rl, R.id.ali_rl, R.id.bank_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.confirm_bt:
@@ -152,16 +174,18 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
         if (TextUtils.equals(StaticData.WX_PAY, paymentMethod)) {
             //微信
             if (PayTypeInstalledUtils.isWeixinAvilible(CerifyPayActivity.this)) {
-                certifyPayPresenter.getWxPay(orderId,orderType,paymentMethod);
+                certifyPayPresenter.getWxPay(orderId, orderType, paymentMethod);
             } else {
                 showMessage(getString(R.string.install_weixin));
             }
-        } else if(TextUtils.equals(StaticData.ALI_PAY, paymentMethod)){
+        } else if (TextUtils.equals(StaticData.ALI_PAY, paymentMethod)) {
             if (PayTypeInstalledUtils.isAliPayInstalled(CerifyPayActivity.this)) {
-                certifyPayPresenter.getAliPay(orderId,orderType,paymentMethod);
+                certifyPayPresenter.getAliPay(orderId, orderType, paymentMethod);
             } else {
                 showMessage(getString(R.string.install_alipay));
             }
+        }else if(TextUtils.equals(StaticData.BAO_FU_PAY, paymentMethod)){
+            certifyPayPresenter.getBaoFuPay(orderId, orderType, paymentMethod);
         }
     }
 
@@ -178,23 +202,47 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
 
 
     @Override
-    public void renderAliPay(String alipayStr) {
-        if (!TextUtils.isEmpty(alipayStr)) {
-            startAliPay(alipayStr);
+    public void renderWxPay(WxPay wxPay) {
+        if (wxPay != null) {
+            userPayInfo=wxPay.getUserPayInfo();
+            wechatPay(wxPay.getWxPayInfo());
         }
     }
 
     @Override
-    public void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo) {
+    public void renderAliPay(AliPay aliPay) {
+        if (aliPay != null) {
+            userPayInfo=aliPay.getUserPayInfo();
+            if (!TextUtils.isEmpty(aliPay.getAliPayInfo())) {
+                startAliPay(aliPay.getAliPayInfo());
+            }
+        }
+    }
 
+
+    @Override
+    public void renderBaoFuPay(BaoFuPay baoFuPay) {
+        if(baoFuPay!=null){
+            userPayInfo=baoFuPay.getUserPayInfo();
+            bankPay();
+        }
     }
 
     @Override
-    public void renderPayMethod(List<String> payMethods) {
+    public void renderPayMethod(List<PayMethodInfo> payMethods) {
         if (payMethods != null) {
-            weixinRl.setVisibility(payMethods.contains(StaticData.WX_PAY) ? View.VISIBLE : View.GONE);
-            aliRl.setVisibility(payMethods.contains(StaticData.ALI_PAY) ? View.VISIBLE : View.GONE);
-            bankRl.setVisibility(payMethods.contains(StaticData.BAO_FU_PAY) ? View.VISIBLE : View.GONE);
+            for (PayMethodInfo payMethodInfo : payMethods) {
+                if (TextUtils.equals(StaticData.WX_PAY, payMethodInfo.getPaymentMethod())) {
+                    weixinRl.setVisibility(View.VISIBLE);
+                    wxTip.setVisibility(payMethodInfo.getSubPercent()?View.VISIBLE:View.GONE);
+                } else if (TextUtils.equals(StaticData.ALI_PAY, payMethodInfo.getPaymentMethod())) {
+                    aliRl.setVisibility(View.VISIBLE);
+                    aliTip.setVisibility(payMethodInfo.getSubPercent()?View.VISIBLE:View.GONE);
+                } else if (TextUtils.equals(StaticData.BAO_FU_PAY, payMethodInfo.getPaymentMethod())) {
+                    bankRl.setVisibility(View.VISIBLE);
+                    bankTip.setVisibility(payMethodInfo.getSubPercent()?View.VISIBLE:View.GONE);
+                }
+            }
             if (weixinRl.getVisibility() == View.VISIBLE) {
                 paymentMethod = StaticData.WX_PAY;
                 selectPayType();
@@ -210,13 +258,6 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
                 selectPayType();
                 return;
             }
-        }
-    }
-
-    @Override
-    public void renderWxPay(WXPaySignResponse wxPaySignResponse) {
-        if (wxPaySignResponse != null) {
-            wechatPay(wxPaySignResponse);
         }
     }
 
@@ -311,5 +352,40 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    private void bankPay(){
+        Intent intent = new Intent(this, BankCardPayActivity.class);
+        intent.putExtra(StaticData.USER_PAY_INFO, userPayInfo);
+        startActivityForResult(intent, RequestCodeStatic.BACK_BANE_RESULT);
+    }
+
+    private void backResult(String result){
+        if(TextUtils.equals(StaticData.BANK_PAY_SUCCESS,result)){
+            NameVerifiedActivity.start(this);
+            finish();
+        }else if(TextUtils.equals(StaticData.BANK_PAY_PROCESSING,result)){
+            showMessage(getString(R.string.processing));
+        }else if(TextUtils.equals(StaticData.BANK_PAY_FAILED,result)){
+            showMessage(getString(R.string.pay_failed));
+        }else {
+            showMessage(getString(R.string.pay_cancel));
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RequestCodeStatic.BACK_BANE_RESULT:
+                    if(data!=null){
+                        result=data.getStringExtra(StaticData.PAY_RESULT);
+                        backResult(result);
+                    }
+                    break;
+                default:
+            }
+        }
     }
 }

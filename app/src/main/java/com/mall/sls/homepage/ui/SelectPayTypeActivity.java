@@ -18,7 +18,9 @@ import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.SystemUtil;
+import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.PayMethodInfo;
 import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
@@ -65,11 +67,24 @@ public class SelectPayTypeActivity extends BaseActivity implements HomepageContr
     ImageView selectBankIv;
     @BindView(R.id.bank_rl)
     RelativeLayout bankRl;
+    @BindView(R.id.wx_tv)
+    ConventionalTextView wxTv;
+    @BindView(R.id.wx_tip)
+    ConventionalTextView wxTip;
+    @BindView(R.id.ali_tv)
+    ConventionalTextView aliTv;
+    @BindView(R.id.ali_tip)
+    ConventionalTextView aliTip;
+    @BindView(R.id.bank_tv)
+    ConventionalTextView bankTv;
+    @BindView(R.id.bank_tip)
+    ConventionalTextView bankTip;
 
     private String choiceType;
     private String amount;
     private String devicePlatform;
     private String paymentMethod;
+    private String orderType;
     @Inject
     PayMethodPresenter payMethodPresenter;
 
@@ -91,9 +106,10 @@ public class SelectPayTypeActivity extends BaseActivity implements HomepageContr
         choiceType = getIntent().getStringExtra(StaticData.CHOICE_TYPE);
         confirmBt.setSelected(TextUtils.equals(StaticData.REFRESH_ONE, choiceType) ? true : false);
         amount = getIntent().getStringExtra(StaticData.PAYMENT_AMOUNT);
+        orderType=getIntent().getStringExtra(StaticData.ORDER_TYPE);
         payAmount.setText(getString(R.string.payment_amount) + NumberFormatUnit.goodsFormat(amount));
         devicePlatform = SystemUtil.getChannel(this);
-        payMethodPresenter.getPayMethod(devicePlatform);
+        payMethodPresenter.getPayMethod(devicePlatform,orderType);
     }
 
     @Override
@@ -110,7 +126,7 @@ public class SelectPayTypeActivity extends BaseActivity implements HomepageContr
         return null;
     }
 
-    @OnClick({R.id.all_rl, R.id.item_rl, R.id.close_iv, R.id.confirm_bt, R.id.weixin_rl, R.id.ali_rl})
+    @OnClick({R.id.all_rl, R.id.item_rl, R.id.close_iv, R.id.confirm_bt, R.id.weixin_rl, R.id.ali_rl,R.id.bank_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.all_rl:
@@ -164,11 +180,20 @@ public class SelectPayTypeActivity extends BaseActivity implements HomepageContr
 
 
     @Override
-    public void renderPayMethod(List<String> payMethods) {
+    public void renderPayMethod(List<PayMethodInfo> payMethods) {
         if (payMethods != null) {
-            weixinRl.setVisibility(payMethods.contains(StaticData.WX_PAY) ? View.VISIBLE : View.GONE);
-            aliRl.setVisibility(payMethods.contains(StaticData.ALI_PAY) ? View.VISIBLE : View.GONE);
-            bankRl.setVisibility(payMethods.contains(StaticData.BAO_FU_PAY) ? View.VISIBLE : View.GONE);
+            for (PayMethodInfo payMethodInfo : payMethods) {
+                if (TextUtils.equals(StaticData.WX_PAY, payMethodInfo.getPaymentMethod())) {
+                    weixinRl.setVisibility(View.VISIBLE);
+                    wxTip.setVisibility(payMethodInfo.getSubPercent()?View.VISIBLE:View.GONE);
+                } else if (TextUtils.equals(StaticData.ALI_PAY, payMethodInfo.getPaymentMethod())) {
+                    aliRl.setVisibility(View.VISIBLE);
+                    aliTip.setVisibility(payMethodInfo.getSubPercent()?View.VISIBLE:View.GONE);
+                } else if (TextUtils.equals(StaticData.BAO_FU_PAY, payMethodInfo.getPaymentMethod())) {
+                    bankRl.setVisibility(View.VISIBLE);
+                    bankTip.setVisibility(payMethodInfo.getSubPercent()?View.VISIBLE:View.GONE);
+                }
+            }
             if (weixinRl.getVisibility() == View.VISIBLE) {
                 paymentMethod = StaticData.WX_PAY;
                 selectPayType();

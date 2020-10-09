@@ -18,6 +18,8 @@ import com.alipay.sdk.app.PayTask;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.address.ui.AddressManageActivity;
+import com.mall.sls.bank.ui.BankCardPayActivity;
+import com.mall.sls.bank.ui.BankPayResultActivity;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
@@ -32,11 +34,14 @@ import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.coupon.ui.SelectCouponActivity;
 import com.mall.sls.data.entity.AddressInfo;
-import com.mall.sls.data.entity.BaoFuPayInfo;
+import com.mall.sls.data.entity.AliPay;
+import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.CheckedGoods;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.OrderSubmitInfo;
+import com.mall.sls.data.entity.UserPayInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.entity.WxPay;
 import com.mall.sls.data.event.PayAbortEvent;
 import com.mall.sls.data.event.WXSuccessPayEvent;
 import com.mall.sls.homepage.DaggerHomepageComponent;
@@ -147,6 +152,9 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private String paymentMethod;
     private String cartIds;
     private String orderType;
+    private UserPayInfo userPayInfo;
+    private String choiceType;
+    private String result;
 
     @Inject
     ConfirmOrderPresenter confirmOrderPresenter;
@@ -171,6 +179,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
 
     private void initView() {
         EventBus.getDefault().register(this);
+        choiceType=StaticData.REFRESH_ONE;
         confirmOrderDetail = (ConfirmOrderDetail) getIntent().getSerializableExtra(StaticData.CONFIRM_ORDER_DETAIL);
         purchaseType = getIntent().getStringExtra(StaticData.PURCHASE_TYPE);
         wxUrl = getIntent().getStringExtra(StaticData.WX_URL);
@@ -266,6 +275,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                     Intent intent = new Intent(this, SelectPayTypeActivity.class);
                     intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_TWO);
                     intent.putExtra(StaticData.PAYMENT_AMOUNT, orderTotalPrice);
+                    intent.putExtra(StaticData.ORDER_TYPE,StaticData.TYPE_ORDER);
                     startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
                 }
                 break;
@@ -339,11 +349,18 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                                 Intent intent = new Intent(this, SelectPayTypeActivity.class);
                                 intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_TWO);
                                 intent.putExtra(StaticData.PAYMENT_AMOUNT, orderTotalPrice);
+                                intent.putExtra(StaticData.ORDER_TYPE,StaticData.TYPE_ORDER);
                                 startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
                             }
                         } else {
                             finish();
                         }
+                    }
+                    break;
+                case RequestCodeStatic.BACK_BANE_RESULT:
+                    if(data!=null){
+                        result=data.getStringExtra(StaticData.PAY_RESULT);
+                        backResult(result);
                     }
                     break;
                 default:
@@ -380,6 +397,8 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                     confirmOrderPresenter.getWxPay(orderId, orderType,paymentMethod);
                 } else if(TextUtils.equals(StaticData.ALI_PAY, paymentMethod)){
                     confirmOrderPresenter.getAliPay(orderId, orderType,paymentMethod);
+                }else if(TextUtils.equals(StaticData.BAO_FU_PAY, paymentMethod)){
+                    confirmOrderPresenter.getBaoFuPay(orderId, orderType,paymentMethod);
                 }
             } else {
                 paySuccess();
@@ -388,22 +407,30 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     }
 
     @Override
-    public void renderWxPay(WXPaySignResponse wxPaySignResponse) {
-        if (wxPaySignResponse != null) {
-            wechatPay(wxPaySignResponse);
+    public void renderWxPay(WxPay wxPay) {
+        if (wxPay != null) {
+            userPayInfo=wxPay.getUserPayInfo();
+            wechatPay(wxPay.getWxPayInfo());
         }
     }
 
     @Override
-    public void renderAliPay(String aliPayStr) {
-        if (!TextUtils.isEmpty(aliPayStr)) {
-            startAliPay(aliPayStr);
+    public void renderAliPay(AliPay aliPay) {
+        if (aliPay != null) {
+            userPayInfo=aliPay.getUserPayInfo();
+            if (!TextUtils.isEmpty(aliPay.getAliPayInfo())) {
+                startAliPay(aliPay.getAliPayInfo());
+            }
         }
     }
 
-    @Override
-    public void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo) {
 
+    @Override
+    public void renderBaoFuPay(BaoFuPay baoFuPay) {
+        if(baoFuPay!=null){
+            userPayInfo=baoFuPay.getUserPayInfo();
+            bankPay();
+        }
     }
 
     @Override
@@ -507,7 +534,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     }
 
     private void paySuccess() {
-        WXShareBackActivity.start(this, purchaseType, nameText, briefText, goodsId, wxUrl, inviteCode, grouponId, goodsProductId, orderId, picUrl);
+        WXShareBackActivity.start(this, purchaseType, nameText, briefText, goodsId, wxUrl, inviteCode, grouponId, goodsProductId, orderId, picUrl,userPayInfo);
         finish();
     }
 
@@ -521,5 +548,26 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     protected void onPause() {
         super.onPause();
         TCAgentUnit.pageEnd(this, getString(R.string.submit_order_page));
+    }
+
+    private void bankPay(){
+        Intent intent = new Intent(this, BankCardPayActivity.class);
+        intent.putExtra(StaticData.USER_PAY_INFO, userPayInfo);
+        startActivityForResult(intent, RequestCodeStatic.BACK_BANE_RESULT);
+    }
+
+    private void backResult(String result){
+        if(TextUtils.equals(StaticData.BANK_PAY_SUCCESS,result)){
+            paySuccess();
+        }else if(TextUtils.equals(StaticData.BANK_PAY_PROCESSING,result)){
+            BankPayResultActivity.start(this, orderId,result,choiceType);
+        }else if(TextUtils.equals(StaticData.BANK_PAY_FAILED,result)){
+            GoodsOrderDetailsActivity.start(this, orderId);
+            finish();
+        }else {
+            showMessage(getString(R.string.pay_cancel));
+            GoodsOrderDetailsActivity.start(this, orderId);
+            finish();
+        }
     }
 }

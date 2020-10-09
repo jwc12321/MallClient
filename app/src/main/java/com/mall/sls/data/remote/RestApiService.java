@@ -3,9 +3,11 @@ package com.mall.sls.data.remote;
 
 import com.mall.sls.data.RemoteDataWrapper;
 import com.mall.sls.data.entity.AddressInfo;
+import com.mall.sls.data.entity.AliPay;
 import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.BankCardInfo;
 import com.mall.sls.data.entity.BankPayInfo;
+import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.BindResultInfo;
 import com.mall.sls.data.entity.CardInfo;
@@ -40,6 +42,7 @@ import com.mall.sls.data.entity.OrderAddCartInfo;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.OrderPackageInfo;
 import com.mall.sls.data.entity.OrderSubmitInfo;
+import com.mall.sls.data.entity.PayMethodInfo;
 import com.mall.sls.data.entity.ProvinceBean;
 import com.mall.sls.data.entity.SearchHistory;
 import com.mall.sls.data.entity.SecondCategory;
@@ -49,6 +52,7 @@ import com.mall.sls.data.entity.TeamInfo;
 import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.entity.VipAmountInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.entity.WxPay;
 import com.mall.sls.data.request.AddAddressRequest;
 import com.mall.sls.data.request.BankPayRequest;
 import com.mall.sls.data.request.BuyNowRequest;
@@ -426,16 +430,16 @@ public interface RestApiService {
 
     //获取支付方式的接口
     @GET("app/common/pay-method")
-    Flowable<RemoteDataWrapper<List<String>>> getPayMethod(@Header("X-Hc-Sign") String sign,@Query("devicePlatform") String devicePlatform);
+    Flowable<RemoteDataWrapper<List<PayMethodInfo>>> getPayMethod(@Header("X-Hc-Sign") String sign, @Query("devicePlatform") String devicePlatform, @Query("orderType") String orderType);
 
     //微信支付
     @POST("app/pay/begin-pay")
-    Flowable<RemoteDataWrapper<WXPaySignResponse>> getWxPay(@Header("X-Hc-Sign") String sign, @Body PayRequest request);
+    Flowable<RemoteDataWrapper<WxPay>> getWxPay(@Header("X-Hc-Sign") String sign, @Body PayRequest request);
     //支付宝支付
     @POST("app/pay/begin-pay")
-    Flowable<RemoteDataWrapper<String>> getAliPay(@Header("X-Hc-Sign") String sign, @Body PayRequest request);
+    Flowable<RemoteDataWrapper<AliPay>> getAliPay(@Header("X-Hc-Sign") String sign, @Body PayRequest request);
     //宝付支付
     @POST("app/pay/begin-pay")
-    Flowable<RemoteDataWrapper<BaoFuPayInfo>> getBaoFuPay(@Header("X-Hc-Sign") String sign, @Body PayRequest request);
+    Flowable<RemoteDataWrapper<BaoFuPay>> getBaoFuPay(@Header("X-Hc-Sign") String sign, @Body PayRequest request);
 
 }

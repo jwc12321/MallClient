@@ -435,6 +435,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
             Intent intent = new Intent(this, SelectPayTypeActivity.class);
             intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_TWO);
             intent.putExtra(StaticData.PAYMENT_AMOUNT, totalBg.toPlainString());
+            intent.putExtra(StaticData.ORDER_TYPE,StaticData.TYPE_ORDER);
             startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
         }else {
             selectType=StaticData.REFRESH_TWO;

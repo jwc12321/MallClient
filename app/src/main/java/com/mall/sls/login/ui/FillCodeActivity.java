@@ -92,7 +92,7 @@ public class FillCodeActivity extends BaseActivity implements LoginContract.Regi
         deviceId = SystemUtil.getAndroidId(this);
         deviceName=SystemUtil.getDeviceName(this);
         deviceOsVersion = SystemUtil.getSystemVersion();
-        devicePlatform = "android";
+        devicePlatform = SystemUtil.getChannel(this);
         unionId=getIntent().getStringExtra(StaticData.UNION_ID);
         accessCode=getIntent().getStringExtra(StaticData.ACCESS_CODE);
         mobile=getIntent().getStringExtra(StaticData.MOBILE);

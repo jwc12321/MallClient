@@ -1,7 +1,5 @@
 package com.mall.sls.mine.ui;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,12 +24,8 @@ import butterknife.OnClick;
 public class CustomerServiceActivity extends BaseActivity {
     @BindView(R.id.close_iv)
     ImageView closeIv;
-    @BindView(R.id.confirm_bt)
-    ConventionalTextView confirmBt;
     @BindView(R.id.phone)
     ConventionalTextView phone;
-    private ClipboardManager myClipboard;
-    private ClipData myClip;
     private String consumerPhone;
 
 
@@ -50,7 +44,6 @@ public class CustomerServiceActivity extends BaseActivity {
     }
 
     private void initView(){
-        myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         consumerPhone = getIntent().getStringExtra(StaticData.CONSUMER_PHONE);
         phone.setText(consumerPhone);
     }
@@ -60,16 +53,11 @@ public class CustomerServiceActivity extends BaseActivity {
         return null;
     }
 
-    @OnClick({R.id.close_iv, R.id.confirm_bt})
+    @OnClick({R.id.close_iv})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.close_iv://
+            case R.id.close_iv:
                 finish();
-                break;
-            case R.id.confirm_bt:
-                myClip = ClipData.newPlainText("text", consumerPhone);
-                myClipboard.setPrimaryClip(myClip);
-                showMessage(getString(R.string.copy_successfully));
                 break;
             default:
         }

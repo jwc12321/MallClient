@@ -23,13 +23,15 @@ import com.mall.sls.common.unit.BriefUnit;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.WXShareManager;
+import com.mall.sls.data.entity.AliPay;
+import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.GoodsOrderInfo;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderGoodsVo;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.WXPaySignResponse;
-import com.mall.sls.homepage.ui.SelectPayTypeActivity;
+import com.mall.sls.data.entity.WxPay;
 import com.mall.sls.mine.ui.SelectShareTypeActivity;
 import com.mall.sls.order.DaggerOrderComponent;
 import com.mall.sls.order.OrderContract;
@@ -291,17 +293,16 @@ public class PendingShareFragment extends BaseFragment implements OrderContract.
     }
 
     @Override
-    public void renderWxPay(WXPaySignResponse wxPaySignResponse) {
-
+    public void renderWxPay(WxPay wxPay) {
     }
 
     @Override
-    public void renderAliPay(String aliPayStr) {
-
+    public void renderAliPay(AliPay aliPay) {
     }
 
+
     @Override
-    public void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo) {
+    public void renderBaoFuPay(BaoFuPay baoFuPay) {
 
     }
 

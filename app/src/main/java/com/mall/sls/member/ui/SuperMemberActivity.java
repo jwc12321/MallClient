@@ -30,9 +30,12 @@ import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.unit.VerifyManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.AliPay;
+import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.LocalTeam;
 import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.entity.WxPay;
 import com.mall.sls.data.event.PayAbortEvent;
 import com.mall.sls.data.event.WXSuccessPayEvent;
 import com.mall.sls.homepage.ui.ActivityGroupGoodsActivity;
@@ -190,6 +193,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
                     Intent intent = new Intent(this, SelectPayTypeActivity.class);
                     intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_ONE);
                     intent.putExtra(StaticData.PAYMENT_AMOUNT, vipAmount);
+                    intent.putExtra(StaticData.ORDER_TYPE,StaticData.TYPE_SUPER);
                     startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
                 }
                 break;
@@ -292,21 +296,22 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     }
 
     @Override
-    public void renderWxPay(WXPaySignResponse wxPaySignResponse) {
-        if (wxPaySignResponse != null) {
-            wechatPay(wxPaySignResponse);
+    public void renderWxPay(WxPay wxPay) {
+        if (wxPay != null) {
+            wechatPay(wxPay.getWxPayInfo());
         }
     }
 
     @Override
-    public void renderAliPay(String aliPayStr) {
-        if (!TextUtils.isEmpty(aliPayStr)) {
-            startAliPay(aliPayStr);
+    public void renderAliPay(AliPay aliPay) {
+        if (aliPay != null && !TextUtils.isEmpty(aliPay.getAliPayInfo())) {
+            startAliPay(aliPay.getAliPayInfo());
         }
     }
 
+
     @Override
-    public void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo) {
+    public void renderBaoFuPay(BaoFuPay baoFuPay) {
 
     }
 

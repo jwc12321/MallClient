@@ -7,7 +7,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
 import androidx.annotation.Nullable;
+
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.bank.BankContract;
@@ -22,12 +24,15 @@ import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.BankCardInfo;
 import com.mall.sls.data.entity.BankPayInfo;
-import com.mall.sls.data.entity.BaoFuPayInfo;
+import com.mall.sls.data.entity.UserPayInfo;
 import com.mall.sls.data.request.BankPayRequest;
 import com.mall.sls.webview.ui.WebViewActivity;
+
 import java.lang.ref.WeakReference;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -59,10 +64,13 @@ public class BankCardPayActivity extends BaseActivity implements BankContract.Ba
     ImageView addIv;
     @BindView(R.id.cooperate_bank_tv)
     ConventionalTextView cooperateBankTv;
+    @BindView(R.id.sub_des)
+    ConventionalTextView subDes;
+    @BindView(R.id.order_sn_rl)
+    RelativeLayout orderSnRl;
 
-    private String goodsOrderId;
     private String payAmount;
-    private BaoFuPayInfo baoFuPayInfo;
+    private String payId;
     private String bankId;
     private BankCardInfo bankCardInfo;
     private String cardNo;
@@ -71,6 +79,7 @@ public class BankCardPayActivity extends BaseActivity implements BankContract.Ba
     private String result;
     private BankPayRequest request;
     private String mobile;
+    private UserPayInfo userPayInfo;
 
 
     @Inject
@@ -86,17 +95,22 @@ public class BankCardPayActivity extends BaseActivity implements BankContract.Ba
 
     private void initView() {
         sActivityRef = new WeakReference<>(this);
-        goodsOrderId = getIntent().getStringExtra(StaticData.GOODS_ORDER_ID);
-        payAmount = getIntent().getStringExtra(StaticData.PAYMENT_AMOUNT);
-        baoFuPayInfo = (BaoFuPayInfo) getIntent().getSerializableExtra(StaticData.BAO_FU_PAY_INFO);
-        orderNoTv.setText(goodsOrderId);
+        userPayInfo = (UserPayInfo) getIntent().getSerializableExtra(StaticData.USER_PAY_INFO);
+        if (userPayInfo != null) {
+            payId = userPayInfo.getId();
+            payAmount = userPayInfo.getOrderPrice();
+            subDes.setVisibility(TextUtils.isEmpty(userPayInfo.getSubDes()) ? View.GONE : View.VISIBLE);
+            subDes.setText(userPayInfo.getSubDes());
+            orderSnRl.setVisibility(TextUtils.isEmpty(userPayInfo.getOrderSn()) ? View.GONE : View.VISIBLE);
+            orderNoTv.setText(userPayInfo.getOrderSn());
+        }
         needPay.setText(NumberFormatUnit.numberFormat(payAmount) + "元");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(!haveCard) {
+        if (!haveCard) {
             bankCardPayPresenter.getBankCardInfos();
         }
     }
@@ -118,7 +132,6 @@ public class BankCardPayActivity extends BaseActivity implements BankContract.Ba
                 backResult(StaticData.BANK_PAY_CANCEL);
                 break;
             case R.id.confirm_bt:
-//                bankDetail();
                 confirm();
                 break;
             case R.id.cooperate_bank_rl://合作银行
@@ -139,7 +152,7 @@ public class BankCardPayActivity extends BaseActivity implements BankContract.Ba
         request = new BankPayRequest();
         request.setBindId(bankId);
         request.setMobile(mobile);
-        request.setBaoFuPayInfo(baoFuPayInfo);
+        request.setPayId(payId);
         bankCardPayPresenter.baoFooSinglePay(request);
     }
 
@@ -176,7 +189,7 @@ public class BankCardPayActivity extends BaseActivity implements BankContract.Ba
     @Override
     public void renderBankPayInfo(BankPayInfo bankPayInfo) {
         if (bankPayInfo != null) {
-            if(TextUtils.equals(StaticData.BANK_PAY_FAILED,bankPayInfo.getStatus())&&!TextUtils.isEmpty(bankPayInfo.getMessage())){
+            if (TextUtils.equals(StaticData.BANK_PAY_FAILED, bankPayInfo.getStatus()) && !TextUtils.isEmpty(bankPayInfo.getMessage())) {
                 showMessage(bankPayInfo.getMessage());
             }
             backResult(bankPayInfo.getStatus());

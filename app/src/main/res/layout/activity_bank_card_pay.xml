@@ -33,7 +33,9 @@
                     android:text="@string/payment_details" />
             </RelativeLayout>
 
-            <RelativeLayout style="@style/bank_pay_rl_style">
+            <RelativeLayout
+                android:id="@+id/order_sn_rl"
+                style="@style/bank_pay_rl_style">
 
                 <com.mall.sls.common.widget.textview.ConventionalTextView
                     style="@style/size15_app3_margin15_left_tv_style"
@@ -43,9 +45,10 @@
                     android:id="@+id/order_no_tv"
                     style="@style/size14_app3_margin15_right_tv_style"
                     tools:text="111111111111111" />
+                <View style="@style/fifteen_back_nine_line_style"
+                    android:layout_alignParentBottom="true"/>
             </RelativeLayout>
 
-            <View style="@style/fifteen_back_nine_line_style" />
 
             <RelativeLayout
                 android:id="@+id/bank_pay_type_rl"
@@ -64,8 +67,17 @@
                     style="@style/size14_color_app3_text_style"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/right_arrow_iv"
-                    tools:text="111111111111111" />
-
+                    tools:text="111111111111111"
+                    android:layout_marginRight="@dimen/dp_5"/>
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/sub_des"
+                    style="@style/size11_color_app6_text_style"
+                    android:layout_toLeftOf="@id/right_arrow_iv"
+                    tools:text="111111111111111"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/dp_2"
+                    android:visibility="gone"
+                    android:layout_marginRight="@dimen/dp_5"/>
                 <ImageView
                     android:id="@+id/add_iv"
                     android:layout_width="wrap_content"

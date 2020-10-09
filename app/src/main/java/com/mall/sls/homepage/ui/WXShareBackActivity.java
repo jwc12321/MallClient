@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,12 +18,14 @@ import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.MainStartManager;
+import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
+import com.mall.sls.data.entity.UserPayInfo;
 import com.mall.sls.mainframe.ui.MainFrameActivity;
 import com.mall.sls.mine.ui.SelectShareTypeActivity;
 import com.mall.sls.order.ui.GoodsOrderDetailsActivity;
@@ -60,6 +61,10 @@ public class WXShareBackActivity extends BaseActivity {
     ConventionalTextView lookOrder;
     @BindView(R.id.share_iv)
     ImageView shareIv;
+    @BindView(R.id.actualPrice)
+    MediumThickTextView actualPrice;
+    @BindView(R.id.subAmount)
+    MediumThickTextView subAmount;
     private String goodsId;
     private String wxUrl;
     private String inviteCode;
@@ -75,8 +80,9 @@ public class WXShareBackActivity extends BaseActivity {
 
     //1:单独购买 2：发起拼单 3：拼团 4：百人团
     private String purchaseType;
+    private UserPayInfo userPayInfo;
 
-    public static void start(Context context, String purchaseType, String nameText, String briefText, String goodsId, String wxUrl, String inviteCode, String grouponId, String goodsProductId, String goodsOrderId, String picUrl) {
+    public static void start(Context context, String purchaseType, String nameText, String briefText, String goodsId, String wxUrl, String inviteCode, String grouponId, String goodsProductId, String goodsOrderId, String picUrl, UserPayInfo userPayInfo) {
         Intent intent = new Intent(context, WXShareBackActivity.class);
         intent.putExtra(StaticData.GOODS_ID, goodsId);
         intent.putExtra(StaticData.GOODS_NAME, nameText);
@@ -88,6 +94,7 @@ public class WXShareBackActivity extends BaseActivity {
         intent.putExtra(StaticData.GOODS_PRODUCT_ID, goodsProductId);
         intent.putExtra(StaticData.GOODS_ORDER_ID, goodsOrderId);
         intent.putExtra(StaticData.PIC_URL, picUrl);
+        intent.putExtra(StaticData.USER_PAY_INFO, userPayInfo);
         context.startActivity(intent);
     }
 
@@ -124,7 +131,13 @@ public class WXShareBackActivity extends BaseActivity {
             tip.setVisibility(View.VISIBLE);
             lookOrder.setVisibility(View.VISIBLE);
         }
-        GlideHelper.load(this,picUrl, R.mipmap.icon_default_goods, shareIv);
+        GlideHelper.load(this, picUrl, R.mipmap.icon_default_goods, shareIv);
+        userPayInfo = (UserPayInfo) getIntent().getSerializableExtra(StaticData.USER_PAY_INFO);
+        if (userPayInfo != null) {
+            actualPrice.setText("实付：" + NumberFormatUnit.goodsFormat(userPayInfo.getActualPrice()));
+            subAmount.setVisibility(NumberFormatUnit.isZero(userPayInfo.getSubAmount()) ? View.INVISIBLE : View.VISIBLE);
+            subAmount.setText("（已优惠" + userPayInfo.getSubAmount() + "）");
+        }
     }
 
 
@@ -132,18 +145,18 @@ public class WXShareBackActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.home_iv://首页
-                TCAgentUnit.setEventId(this,getString(R.string.pay_success_home));
+                TCAgentUnit.setEventId(this, getString(R.string.pay_success_home));
                 MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
                 MainFrameActivity.start(this);
                 finish();
                 break;
             case R.id.weixin_iv://微信分享
-                TCAgentUnit.setEventId(this,getString(R.string.pay_success_share));
+                TCAgentUnit.setEventId(this, getString(R.string.pay_success_share));
                 if (!PayTypeInstalledUtils.isWeixinAvilible(WXShareBackActivity.this)) {
                     showMessage(getString(R.string.install_weixin));
                     return;
                 }
-                shareBitMap = QRCodeFileUtils.createBitmap3(shareIv,150,150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
+                shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, 150, 150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
                 Intent intent = new Intent(this, SelectShareTypeActivity.class);
                 startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
                 break;
@@ -152,7 +165,7 @@ public class WXShareBackActivity extends BaseActivity {
                 break;
             case R.id.order_iv:
             case R.id.look_order:
-                TCAgentUnit.setEventId(this,getString(R.string.pay_success_goods_details));
+                TCAgentUnit.setEventId(this, getString(R.string.pay_success_goods_details));
                 GoodsOrderDetailsActivity.start(this, goodsOrderId);
                 finish();
                 break;

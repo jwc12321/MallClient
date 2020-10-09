@@ -10,6 +10,7 @@
 
     <!--空格-->
     <string name="space_card_number">卡号&#8195;</string>
+    <string name="weixin_pay">微信支付&#12288;</string>
 
     <!--mai_dian-->
     <string name="bank_card_page">银行卡页</string>
@@ -41,7 +42,6 @@
     <string name="cerify_tip_tv"> 1:身份证信息仅供平台提供诚信保证使用。\n 2:我方承诺不向其他第三方透露您的个人信息</string>
     <string name="auth_now">立即认证</string>
     <string name="goods_amount">商品金额</string>
-    <string name="weixin_pay">微信支付</string>
     <string name="ali_pay">支付宝支付</string>
     <string name="to_pay">去支付</string>
     <string name="verified">实名认证</string>
@@ -515,4 +515,7 @@
     <string name="add_other_goods">以下商品卖光啦，先将其他有货商品加入购物车？</string>
     <string name="one_login_register">本机号码一键登录/注册</string>
     <string name="bank_pay">银行卡支付</string>
+    <string name="call_service">请电话联系客服</string>
+    <string name="contact_service">联系客服</string>
+    <string name="randomly_reduced_tip">（随机立减）</string>
 </resources>

@@ -20,17 +20,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alipay.sdk.app.PayTask;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
+import com.mall.sls.bank.ui.BankCardPayActivity;
+import com.mall.sls.bank.ui.BankPayResultActivity;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.ActivityForeground;
 import com.mall.sls.common.unit.PayResult;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.StaticHandler;
+import com.mall.sls.data.entity.AliPay;
+import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.GoodsOrderInfo;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderList;
+import com.mall.sls.data.entity.UserPayInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.entity.WxPay;
 import com.mall.sls.data.event.PayAbortEvent;
 import com.mall.sls.data.event.WXSuccessPayEvent;
 import com.mall.sls.data.request.OrderRequest;
@@ -80,6 +86,9 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     private String showType;
     private String paymentMethod;
     private String orderType;
+    private UserPayInfo userPayInfo;
+    private String whereType;
+    private String result;
 
     @Inject
     OrderListPresenter orderListPresenter;
@@ -117,6 +126,7 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     private void initView() {
         EventBus.getDefault().register(this);
         orderType=StaticData.TYPE_ORDER;
+        whereType=StaticData.REFRESH_TWO;
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
         showType = StaticData.REFRESH_ONE;
         addAdapter();
@@ -174,6 +184,7 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
         Intent intent = new Intent(getActivity(), SelectPayTypeActivity.class);
         intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_TWO);
         intent.putExtra(StaticData.PAYMENT_AMOUNT, amount);
+        intent.putExtra(StaticData.ORDER_TYPE,StaticData.TYPE_ORDER);
         startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
     }
 
@@ -239,22 +250,30 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
     }
 
     @Override
-    public void renderWxPay(WXPaySignResponse wxPaySignResponse) {
-        if (wxPaySignResponse != null) {
-            wechatPay(wxPaySignResponse);
+    public void renderWxPay(WxPay wxPay) {
+        if (wxPay != null) {
+            userPayInfo=wxPay.getUserPayInfo();
+            wechatPay(wxPay.getWxPayInfo());
         }
     }
 
     @Override
-    public void renderAliPay(String aliPayStr) {
-        if (!TextUtils.isEmpty(aliPayStr)) {
-            startAliPay(aliPayStr);
+    public void renderAliPay(AliPay aliPay) {
+        if (aliPay != null) {
+            userPayInfo=aliPay.getUserPayInfo();
+            if (!TextUtils.isEmpty(aliPay.getAliPayInfo())) {
+                startAliPay(aliPay.getAliPayInfo());
+            }
         }
     }
 
-    @Override
-    public void renderBaoFuPay(BaoFuPayInfo baoFuPayInfo) {
 
+    @Override
+    public void renderBaoFuPay(BaoFuPay baoFuPay) {
+        if(baoFuPay!=null){
+            userPayInfo=baoFuPay.getUserPayInfo();
+            bankPay();
+        }
     }
 
     @Override
@@ -283,11 +302,19 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
                             } else {
                                 showMessage(getString(R.string.install_alipay));
                             }
+                        }else if(TextUtils.equals(StaticData.BAO_FU_PAY, paymentMethod)){
+                            orderListPresenter.getBaoFuPay(goodsOrderId, orderType, paymentMethod);
                         }
                     }
                     break;
                 case RequestCodeStatic.ORDER_DETAIL:
                     orderListPresenter.getOrderList(StaticData.REFRESH_ONE, showType);
+                    break;
+                case RequestCodeStatic.BACK_BANE_RESULT:
+                    if(data!=null){
+                        result=data.getStringExtra(StaticData.PAY_RESULT);
+                        backResult(result);
+                    }
                     break;
                 default:
             }
@@ -380,4 +407,24 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
+    private void bankPay(){
+        Intent intent = new Intent(getActivity(), BankCardPayActivity.class);
+        intent.putExtra(StaticData.USER_PAY_INFO, userPayInfo);
+        startActivityForResult(intent, RequestCodeStatic.BACK_BANE_RESULT);
+    }
+
+    private void backResult(String result){
+        if(TextUtils.equals(StaticData.BANK_PAY_SUCCESS,result)){
+            orderListPresenter.getOrderList(StaticData.REFRESH_ZERO, showType);
+        }else if(TextUtils.equals(StaticData.BANK_PAY_PROCESSING,result)){
+            BankPayResultActivity.start(getActivity(), goodsOrderId,result,whereType);
+        }else if(TextUtils.equals(StaticData.BANK_PAY_FAILED,result)){
+
+        }else {
+            showMessage(getString(R.string.pay_cancel));
+
+        }
+    }
+
 }

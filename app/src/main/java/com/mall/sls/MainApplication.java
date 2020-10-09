@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDexApplication;
 
+import com.alibaba.ha.adapter.AliHaAdapter;
+import com.alibaba.ha.adapter.AliHaConfig;
+import com.alibaba.ha.adapter.Plugin;
 import com.igexin.sdk.IUserLoggerInterface;
 import com.igexin.sdk.PushManager;
 import com.meituan.android.walle.WalleChannelReader;
@@ -36,6 +39,10 @@ import update.UpdateAppUtils;
 public class MainApplication extends MultiDexApplication {
     private static ApplicationComponent mApplicationComponent;
     private static Context context;
+    private String channelId;
+    private final static String mAppKey = "31456956";
+    private final static String mAppSecret = "9fa403fd69987ba6aac1b4c433e47164";
+    private final static String mHARSAPublicKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCR+nGFAeZQ3AGQDLH/seHwQYfT14GIVuFJVHZAkERp1DpX2cilNc/Sx8gG6MocM+0QFLWOdO+Y5LmbHndPVq4YH9cFKq9bagBPzG+GVoJYhDkNj5qI9FIO/dLL7yWZM7kxjuQz1iZqMUGe2IlfIQLSeUzudHaZVQYJIiTmQeQT8QIDAQAB";
 
     static {
         //启用矢量图兼容
@@ -85,13 +92,32 @@ public class MainApplication extends MultiDexApplication {
             }
         });
 //        talkingdata
-//        String channelId = WalleChannelReader.getChannel(this.getApplicationContext());
-////        JLibrary.InitEntry(this); //移动安全联盟统一SDK初始化
+         channelId = WalleChannelReader.getChannel(this.getApplicationContext());
 //        TCAgent.LOG_ON=true;
 //        // 渠道 ID: 是渠道标识符，可通过不同渠道单独追踪数据。
 //        TCAgent.init(this, "466B709D82C84BED8F948E46D5F5755D", channelId);
 //        // 如果已经在AndroidManifest.xml配置了App ID和渠道ID，调用TCAgent.init(this)即可；或与AndroidManifest.xml中的对应参数保持一致。
 //        TCAgent.setReportUncaughtExceptions(true);
+//        initHa();
+    }
+
+    //阿里性能监控
+    private void initHa() {
+        AliHaConfig config = new AliHaConfig();
+        config.appKey = mAppKey;
+        config.appVersion = BuildConfig.VERSION_NAME;
+        config.appSecret = mAppSecret;
+        config.channel = channelId;
+        config.userNick = null;
+        config.application = this;
+        config.context = getApplicationContext();
+        config.isAliyunos = false;
+        config.rsaPublicKey = mHARSAPublicKey;
+        AliHaAdapter.getInstance().addPlugin(Plugin.crashreporter);    //崩溃分析，如不需要可注释掉
+        AliHaAdapter.getInstance().addPlugin(Plugin.apm);              //性能监控，如不需要可注释掉
+        AliHaAdapter.getInstance().addPlugin(Plugin.tlog);             //移动日志，如不需要可注释掉
+        AliHaAdapter.getInstance().openDebug(true);          //调试日志开关
+        AliHaAdapter.getInstance().start(config);                     //启动
     }
 
     @TargetApi(9)

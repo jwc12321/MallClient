@@ -60,6 +60,10 @@ public class SettingActivity extends BaseActivity implements MineContract.Settin
 
     @Inject
     SettingPresenter settingPresenter;
+    @BindView(R.id.contact_service_rl)
+    RelativeLayout contactServiceRl;
+
+    private String consumerPhone;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,9 +71,10 @@ public class SettingActivity extends BaseActivity implements MineContract.Settin
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
         setHeight(back, title, null);
+        settingPresenter.getConsumerPhone();
     }
 
-    @OnClick({R.id.back, R.id.confirm_bt, R.id.feedback_rl, R.id.clear_cache_rl, R.id.register_tv, R.id.privacy_tv, R.id.update_rl})
+    @OnClick({R.id.back, R.id.confirm_bt, R.id.feedback_rl, R.id.clear_cache_rl, R.id.register_tv, R.id.privacy_tv, R.id.update_rl,R.id.contact_service_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -96,9 +101,13 @@ public class SettingActivity extends BaseActivity implements MineContract.Settin
             case R.id.update_rl://版本检测
                 AboutAppActivity.start(this);
                 break;
+            case R.id.contact_service_rl:
+                CustomerServiceActivity.start(this,consumerPhone);
+                break;
             default:
         }
     }
+
     @Override
     protected void initializeInjector() {
         DaggerMineComponent.builder()
@@ -117,6 +126,11 @@ public class SettingActivity extends BaseActivity implements MineContract.Settin
     @Override
     public void renderAppUrlInfo(AppUrlInfo appUrlInfo) {
         updateApp(appUrlInfo);
+    }
+
+    @Override
+    public void renderConsumerPhone(String consumerPhone) {
+        this.consumerPhone = consumerPhone;
     }
 
     @Override

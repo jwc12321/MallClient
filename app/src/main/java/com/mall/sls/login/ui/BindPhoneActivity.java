@@ -101,7 +101,7 @@ public class BindPhoneActivity extends BaseActivity implements LoginContract.Bin
         deviceId = SystemUtil.getAndroidId(this);
         deviceName=SystemUtil.getDeviceName(this);
         deviceOsVersion = SystemUtil.getSystemVersion();
-        devicePlatform = "android";
+        devicePlatform = SystemUtil.getChannel(this);
     }
 
     @Override

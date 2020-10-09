@@ -71,10 +71,12 @@ public interface MineContract {
 
     interface SettingPresenter extends BasePresenter {
         void getAppUrlInfo();
+        void getConsumerPhone();
     }
 
     interface SettingView extends BaseView<SettingPresenter> {
         void renderAppUrlInfo(AppUrlInfo appUrlInfo);
+        void renderConsumerPhone(String consumerPhone);
     }
 
     interface AboutAppPresenter extends BasePresenter {
