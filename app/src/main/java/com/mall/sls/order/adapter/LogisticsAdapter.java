@@ -1,10 +1,10 @@
 package com.mall.sls.order.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +20,6 @@ import butterknife.ButterKnife;
 public class LogisticsAdapter extends RecyclerView.Adapter<LogisticsAdapter.LogisticsView> {
     private LayoutInflater layoutInflater;
     private List<ShipOrderInfo> shipOrderInfos;
-    private Context context;
 
     public void setData(List<ShipOrderInfo> shipOrderInfos) {
         this.shipOrderInfos = shipOrderInfos;
@@ -39,26 +38,7 @@ public class LogisticsAdapter extends RecyclerView.Adapter<LogisticsAdapter.Logi
     @Override
     public void onBindViewHolder(LogisticsView holder, int position) {
         ShipOrderInfo shipOrderInfo = shipOrderInfos.get(holder.getAdapterPosition());
-        holder.bindData(shipOrderInfo);
-        if(holder.getAdapterPosition()==0){
-            holder.upLine.setVisibility(View.GONE);
-            holder.downLine.setVisibility(View.VISIBLE);
-            holder.submitIv.setSelected(true);
-            holder.statusDesc.setSelected(true);
-            holder.statusTime.setSelected(true);
-        }else if(holder.getAdapterPosition()==shipOrderInfos.size()-1){
-            holder.upLine.setVisibility(View.VISIBLE);
-            holder.downLine.setVisibility(View.GONE);
-            holder.submitIv.setSelected(false);
-            holder.statusDesc.setSelected(false);
-            holder.statusTime.setSelected(false);
-        }else {
-            holder.upLine.setVisibility(View.VISIBLE);
-            holder.downLine.setVisibility(View.VISIBLE);
-            holder.submitIv.setSelected(false);
-            holder.statusDesc.setSelected(false);
-            holder.statusTime.setSelected(false);
-        }
+        holder.bindData(shipOrderInfo,holder.getAdapterPosition());
     }
 
     @Override
@@ -69,23 +49,31 @@ public class LogisticsAdapter extends RecyclerView.Adapter<LogisticsAdapter.Logi
     public class LogisticsView extends RecyclerView.ViewHolder {
         @BindView(R.id.submit_iv)
         ImageView submitIv;
-        @BindView(R.id.statusDesc)
-        ConventionalTextView statusDesc;
-        @BindView(R.id.statusTime)
-        ConventionalTextView statusTime;
         @BindView(R.id.up_line)
         View upLine;
+        @BindView(R.id.up_rl)
+        RelativeLayout upRl;
         @BindView(R.id.down_line)
         View downLine;
+        @BindView(R.id.title)
+        ConventionalTextView title;
+        @BindView(R.id.content)
+        ConventionalTextView content;
+        @BindView(R.id.time)
+        ConventionalTextView time;
 
         public LogisticsView(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindData(ShipOrderInfo shipOrderInfo) {
-            statusDesc.setText(shipOrderInfo.getStatusDesc());
-            statusTime.setText(shipOrderInfo.getStatusTime());
+        public void bindData(ShipOrderInfo shipOrderInfo,int position) {
+            submitIv.setSelected(position==0);
+            upLine.setVisibility(position==0?View.GONE:View.VISIBLE);
+            downLine.setVisibility(position==(shipOrderInfos.size()-1)?View.GONE:View.VISIBLE);
+            content.setText(shipOrderInfo.getRemark());
+            time.setText(shipOrderInfo.getStatusTime());
+            title.setText(shipOrderInfo.getStatusDesc());
         }
     }
 }

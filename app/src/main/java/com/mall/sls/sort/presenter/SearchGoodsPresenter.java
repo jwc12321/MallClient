@@ -100,7 +100,7 @@ public class SearchGoodsPresenter implements SortContract.SearchGoodsPresenter {
             searchGoodsView.showLoading(StaticData.LOADING);
         }
         currentIndex = 1;
-        String queryString = "keyword"+keyword+"&sortType" + sortType + "&orderType" + orderType + "&page=" + currentIndex + "&limit=" + StaticData.TEN_LIST_SIZE;
+        String queryString = "keyword="+keyword+"&sortType=" + sortType + "&orderType=" + orderType + "&page=" + currentIndex + "&limit=" + StaticData.TEN_LIST_SIZE;
         String sign = SignUnit.signGet(RequestUrl.SEARCH_GOODS , queryString);
         Disposable disposable = restApiService.getKeywordGoods(sign, keyword, sortType, orderType, String.valueOf(currentIndex), StaticData.TEN_LIST_SIZE)
                 .flatMap(new RxRemoteDataParse<GoodsItem>())
@@ -124,7 +124,7 @@ public class SearchGoodsPresenter implements SortContract.SearchGoodsPresenter {
     @Override
     public void getMoreKeywordGoods(String keyword, String sortType, String orderType) {
         currentIndex = currentIndex+1;
-        String queryString = "keyword"+keyword+"&sortType" + sortType + "&orderType" + orderType + "&page=" + currentIndex + "&limit=" + StaticData.TEN_LIST_SIZE;
+        String queryString = "keyword="+keyword+"&sortType=" + sortType + "&orderType=" + orderType + "&page=" + currentIndex + "&limit=" + StaticData.TEN_LIST_SIZE;
         String sign = SignUnit.signGet(RequestUrl.SEARCH_GOODS + keyword , queryString);
         Disposable disposable = restApiService.getKeywordGoods(sign, keyword, sortType, orderType, String.valueOf(currentIndex), StaticData.TEN_LIST_SIZE)
                 .flatMap(new RxRemoteDataParse<GoodsItem>())

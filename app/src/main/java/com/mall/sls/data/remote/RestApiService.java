@@ -417,7 +417,7 @@ public interface RestApiService {
     Flowable<RemoteDataWrapper<Ignore>> sendBaoFuCode(@Header("X-Hc-Sign") String sign, @Body MobileRequest request);
 
     //获取用户认证的信息
-    @GET("api/f/user/info/certify")
+    @GET("app/auth/certify-info")
     Flowable<RemoteDataWrapper<CertifyInfo>> getCertifyInfo(@Header("X-Hc-Sign") String sign);
 
     //普通商品订单再来一单

@@ -64,8 +64,6 @@ public class BankCardPayActivity extends BaseActivity implements BankContract.Ba
     ImageView addIv;
     @BindView(R.id.cooperate_bank_tv)
     ConventionalTextView cooperateBankTv;
-    @BindView(R.id.sub_des)
-    ConventionalTextView subDes;
     @BindView(R.id.order_sn_rl)
     RelativeLayout orderSnRl;
 
@@ -99,8 +97,6 @@ public class BankCardPayActivity extends BaseActivity implements BankContract.Ba
         if (userPayInfo != null) {
             payId = userPayInfo.getId();
             payAmount = userPayInfo.getOrderPrice();
-            subDes.setVisibility(TextUtils.isEmpty(userPayInfo.getSubDes()) ? View.GONE : View.VISIBLE);
-            subDes.setText(userPayInfo.getSubDes());
             orderSnRl.setVisibility(TextUtils.isEmpty(userPayInfo.getOrderSn()) ? View.GONE : View.VISIBLE);
             orderNoTv.setText(userPayInfo.getOrderSn());
         }

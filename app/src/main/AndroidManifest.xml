@@ -460,6 +460,9 @@
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"
             android:theme="@style/TranslucentFullScreenTheme"/>
+        <activity android:name=".order.ui.PayRecordActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

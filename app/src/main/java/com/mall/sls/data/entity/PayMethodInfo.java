@@ -10,9 +10,9 @@ public class PayMethodInfo {
     //可用值:WxPay,Alipay,MiniPay,BaoFooPay
     @SerializedName("paymentMethod")
     private String paymentMethod;
-    //是否可随机立减
-    @SerializedName("subPercent")
-    private Boolean subPercent;
+    //随机立减文案
+    @SerializedName("description")
+    private String description;
 
     public String getPaymentMethod() {
         return paymentMethod;
@@ -22,11 +22,11 @@ public class PayMethodInfo {
         this.paymentMethod = paymentMethod;
     }
 
-    public Boolean getSubPercent() {
-        return subPercent;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSubPercent(Boolean subPercent) {
-        this.subPercent = subPercent;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

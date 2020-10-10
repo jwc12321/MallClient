@@ -6,17 +6,12 @@
 
     <com.mall.sls.common.widget.textview.ConventionalTextView
         android:id="@+id/time_type"
-        style="@style/size12_color_app2_text_style"
-        android:layout_centerVertical="true"
-        tools:text="@string/order_time"
-        android:layout_marginLeft="@dimen/dp_15"/>
+        style="@style/order_information_left_text_style"
+        tools:text="@string/order_time" />
 
     <com.mall.sls.common.widget.textview.ConventionalTextView
         android:id="@+id/time"
-        style="@style/size12_color_app2_text_style"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/dp_4"
-        android:layout_toRightOf="@id/time_type"
+        style="@style/order_information_right_text_style"
         tools:text="2019-09-09" />
 
     <com.mall.sls.common.widget.textview.ConventionalTextView

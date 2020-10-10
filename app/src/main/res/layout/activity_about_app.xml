@@ -31,7 +31,7 @@
             <ImageView
                 android:layout_width="@dimen/dp_70"
                 android:layout_height="@dimen/dp_70"
-                android:src="@mipmap/icon_about_app"
+                android:src="@mipmap/app_icon"
                 android:layout_marginTop="@dimen/dp_59"
                 android:layout_gravity="center_horizontal"/>
             <com.mall.sls.common.widget.textview.ConventionalTextView

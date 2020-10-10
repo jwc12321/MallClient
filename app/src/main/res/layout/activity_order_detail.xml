@@ -80,7 +80,7 @@
                                 android:id="@+id/remaining_payment_time_tv"
                                 style="@style/size15_color_app1_text_style"
                                 android:layout_gravity="center_vertical"
-                                tools:text="@string/remaining_payment_time" />
+                                android:text="@string/remaining_payment_time" />
 
                             <com.mall.sls.common.widget.textview.CommonTearDownView
                                 android:id="@+id/count_down"
@@ -335,11 +335,31 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp_1"
-                            android:layout_marginBottom="@dimen/dp_7"
                             android:nestedScrollingEnabled="false"
                             android:orientation="vertical"
                             app:layoutManager="@string/layoutManager_LinearLayout"
                             tools:listitem="@layout/adapter_order_information" />
+
+                        <RelativeLayout
+                            android:id="@+id/pay_record_rl"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_32"
+                            android:layout_marginBottom="@dimen/dp_7">
+
+                            <com.mall.sls.common.widget.textview.ConventionalTextView
+                                style="@style/order_information_left_text_style"
+                                android:text="@string/pay_record" />
+
+                            <com.mall.sls.common.widget.textview.ConventionalTextView
+                                android:id="@+id/pay_record_bt"
+                                style="@style/order_information_right_text_style"
+                                android:textColor="@color/backGround1"
+                                android:text="@string/view_details" />
+
+                            <View
+                                style="@style/view_details_line_style"
+                                android:layout_below="@id/pay_record_bt" />
+                        </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

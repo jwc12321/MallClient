@@ -15,6 +15,9 @@ public class ShipOrderInfo implements Serializable {
     //物流时间
     @SerializedName("statusTime")
     private String statusTime;
+    //物流详情
+    @SerializedName("remark")
+    private String  remark;
 
     public String getStatusDesc() {
         return statusDesc;
@@ -30,5 +33,13 @@ public class ShipOrderInfo implements Serializable {
 
     public void setStatusTime(String statusTime) {
         this.statusTime = statusTime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

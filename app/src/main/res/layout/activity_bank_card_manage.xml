@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_above="@id/add_bt"
+        android:layout_above="@id/confirm_bt"
         android:layout_centerHorizontal="true"
         android:padding="@dimen/dp_8">
         <com.mall.sls.common.widget.textview.ConventionalTextView
@@ -65,7 +65,15 @@
             android:background="@color/backGround2"
             android:layout_marginTop="@dimen/dp_1"/>
     </LinearLayout>
-    <ImageView
-        android:id="@+id/add_bt"
-        style="@style/add_bank_card_bt_style" />
+
+    <LinearLayout
+        android:id="@+id/confirm_bt"
+        style="@style/add_bank_card_bt_style">
+        <ImageView
+            style="@style/confirm_bt_iv_style"
+            android:src="@mipmap/icon_white_add"/>
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            style="@style/confirm_bt_tv_style"
+            android:text="@string/add_bank_card"/>
+    </LinearLayout>
 </RelativeLayout>

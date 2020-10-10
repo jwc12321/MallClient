@@ -40,7 +40,7 @@ public class PayMethodPresenter implements HomepageContract.PayMethodPresenter {
     @Override
     public void getPayMethod(String devicePlatform,String orderType) {
         payMethodView.showLoading(StaticData.LOADING);
-        String queryString="devicePlatform="+devicePlatform+"&orderType"+orderType;
+        String queryString="devicePlatform="+devicePlatform+"&orderType="+orderType;
         String sign = SignUnit.signGet(RequestUrl.PAY_METHOD, queryString);
         Disposable disposable = restApiService.getPayMethod(sign,devicePlatform,orderType)
                 .flatMap(new RxRemoteDataParse<List<PayMethodInfo>>())

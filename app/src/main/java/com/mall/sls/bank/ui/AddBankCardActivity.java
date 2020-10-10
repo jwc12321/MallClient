@@ -165,7 +165,7 @@ public class AddBankCardActivity extends BaseActivity implements BankContract.Ad
 
             }
         }, 7, agreement.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString1.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.backGround2)), 7, agreement.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        spannableString1.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.backGround1)), 7, agreement.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         content.setText(spannableString1);
         content.setMovementMethod(LinkMovementMethod.getInstance());
     }

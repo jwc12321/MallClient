@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/backGround60"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:id="@+id/item_ll">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/pay_record_detail" />
+    </RelativeLayout>
+    <View
+        style="@style/back_nine_line_style"/>
+    <RelativeLayout
+        android:id="@+id/order_number_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_46">
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            style="@style/order_information_left_text_style"
+            android:textSize="@dimen/sp_13"
+            android:text="@string/order_number"
+            android:textColor="@color/appText25"/>
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/order_number_tv"
+            style="@style/order_information_right_text_style"
+            android:textSize="@dimen/sp_13"
+            tools:text="1234"
+            android:textColor="@color/appText25"/>
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/copy_bt"
+            style="@style/copy_bt_style"
+            android:text="@string/copy"/>
+    </RelativeLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/record_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="@string/layoutManager_LinearLayout"
+        tools:listitem="@layout/adapter_pay_record"
+        android:layout_marginBottom="@dimen/dp_14" />
+    <LinearLayout
+        android:id="@+id/no_record_ll"
+        style="@style/common_no_record_ll_style"
+        android:visibility="gone">
+
+        <ImageView
+            style="@style/common_no_record_iv_style"
+            android:src="@mipmap/icon_no_data" />
+
+        <TextView
+            style="@style/common_no_record_tv_style"
+            android:text="@string/no_data" />
+    </LinearLayout>
+</LinearLayout>

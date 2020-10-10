@@ -47,7 +47,7 @@ public class CategoryGoodsPresenter implements SortContract.CategoryGoodsPresent
             categoryGoodsView.showLoading(StaticData.LOADING);
         }
         currentIndex = 1;
-        String queryString = "sortType" + sortType + "&orderType" + orderType + "&page=" + currentIndex + "&limit=" + StaticData.TEN_LIST_SIZE;
+        String queryString = "sortType=" + sortType + "&orderType=" + orderType + "&page=" + currentIndex + "&limit=" + StaticData.TEN_LIST_SIZE;
         String sign = SignUnit.signGet(RequestUrl.SECOND_CATEGORY_ITEM + categoryId + RequestUrl.GOODS, queryString);
         Disposable disposable = restApiService.getCategoryGoods(sign, categoryId, sortType, orderType, String.valueOf(currentIndex), StaticData.TEN_LIST_SIZE)
                 .flatMap(new RxRemoteDataParse<GoodsItem>())
@@ -71,7 +71,7 @@ public class CategoryGoodsPresenter implements SortContract.CategoryGoodsPresent
     @Override
     public void getMoreCategoryGoods(String categoryId, String sortType, String orderType) {
         currentIndex = currentIndex + 1;
-        String queryString = "sortType" + sortType + "&orderType" + orderType + "&page=" + currentIndex + "&limit=" + StaticData.TEN_LIST_SIZE;
+        String queryString = "sortType=" + sortType + "&orderType=" + orderType + "&page=" + currentIndex + "&limit=" + StaticData.TEN_LIST_SIZE;
         String sign = SignUnit.signGet(RequestUrl.SECOND_CATEGORY_ITEM + categoryId + RequestUrl.GOODS, queryString);
         Disposable disposable = restApiService.getCategoryGoods(sign, categoryId, sortType, orderType, String.valueOf(currentIndex), StaticData.TEN_LIST_SIZE)
                 .flatMap(new RxRemoteDataParse<GoodsItem>())

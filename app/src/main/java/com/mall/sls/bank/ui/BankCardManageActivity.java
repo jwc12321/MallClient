@@ -37,6 +37,7 @@ import butterknife.OnClick;
  * 描述：银行卡管理
  */
 public class BankCardManageActivity extends BaseActivity implements BankContract.BankCardSView, BankCardManageAdapter.OnItemClickListener {
+
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.title)
@@ -45,13 +46,12 @@ public class BankCardManageActivity extends BaseActivity implements BankContract
     RelativeLayout titleRel;
     @BindView(R.id.record_rv)
     RecyclerView recordRv;
-    @BindView(R.id.add_bt)
-    ImageView addBt;
     @BindView(R.id.no_record_ll)
     LinearLayout noRecordLl;
     @BindView(R.id.cooperate_bank_ll)
     LinearLayout cooperateBankLl;
-
+    @BindView(R.id.confirm_bt)
+    LinearLayout confirmBt;
     private BankCardManageAdapter bankCardManageAdapter;
 
     @Inject
@@ -84,13 +84,13 @@ public class BankCardManageActivity extends BaseActivity implements BankContract
         TCAgentUnit.pageStart(this, getString(R.string.bank_card_page));
     }
 
-    @OnClick({R.id.back, R.id.add_bt,R.id.cooperate_bank_ll})
+    @OnClick({R.id.back, R.id.confirm_bt, R.id.cooperate_bank_ll})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
                 finish();
                 break;
-            case R.id.add_bt://添加银行卡
+            case R.id.confirm_bt://添加银行卡
                 AddBankCardActivity.start(this);
                 break;
             case R.id.cooperate_bank_ll://合作银行

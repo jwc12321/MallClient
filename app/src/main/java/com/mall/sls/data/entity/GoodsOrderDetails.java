@@ -100,6 +100,12 @@ public class GoodsOrderDetails {
     //是否是普通商品
     @SerializedName("general")
     private Boolean general;
+    //支付记录
+    @SerializedName("payList")
+    private List<PayRecordInfo> payRecordInfos;
+    //支付描述
+    @SerializedName("payDescription")
+    private String payDescription;
 
     public String getCouponPrice() {
         return couponPrice;
@@ -340,6 +346,22 @@ public class GoodsOrderDetails {
 
     public void setGeneral(Boolean general) {
         this.general = general;
+    }
+
+    public List<PayRecordInfo> getPayRecordInfos() {
+        return payRecordInfos;
+    }
+
+    public void setPayRecordInfos(List<PayRecordInfo> payRecordInfos) {
+        this.payRecordInfos = payRecordInfos;
+    }
+
+    public String getPayDescription() {
+        return payDescription;
+    }
+
+    public void setPayDescription(String payDescription) {
+        this.payDescription = payDescription;
     }
 }
 

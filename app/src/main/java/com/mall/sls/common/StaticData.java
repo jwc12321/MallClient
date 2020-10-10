@@ -35,7 +35,7 @@ public class StaticData {
     //合作银行
     public static final String COOPERATE_BANK="http://h5.easyluxury.cn/#/app/bank-sort";
     //特惠购快捷支付协议
-    public static final String FAST_PAYMENT_AGREEMENT="https://www.easyluxury.cn/quick-pay.html";
+    public static final String FAST_PAYMENT_AGREEMENT="http://www.specialbuy.cn/quick-pay.html";
     //选择的type
     public static final String CHOICE_TYPE="choiceType";
     //订单id
@@ -209,8 +209,11 @@ public class StaticData {
     public static final String TYPE_ORDER="ORDER";
     public static final String TYPE_CERTIFY="CERTIFY";
     public static final String TYPE_SUPER="SUPER";
+    public static final String TYPE_PRIZE="PRIZE";
     public static final String ORDER_TYPE="orderType";
     public static final String USER_PAY_INFO="UserPayInfo";
+    public static final String PAY_RECORD_INFO="PayRecordInfo";
+    public static final String ORDER_NUMBER="orderNumber";
 
 
 }

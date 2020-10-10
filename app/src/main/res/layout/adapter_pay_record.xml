@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/pay_no_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/order_information_left_text_style"
+            android:text="@string/pay_no" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/pay_no"
+            style="@style/order_information_right_text_style"
+            tools:text="1234" />
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/copy_bt"
+            style="@style/copy_bt_style"
+            android:text="@string/copy"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/pay_time_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/order_information_left_text_style"
+            android:text="@string/pay_time" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/pay_time"
+            style="@style/order_information_right_text_style"
+            tools:text="2020-05-06 15:53:22" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/order_information_left_text_style"
+            android:text="@string/payment_method" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/pay_type"
+            style="@style/order_information_right_text_style"
+            tools:text="支付宝" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/order_information_left_text_style"
+            android:text="@string/pay_status" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/pay_status"
+            style="@style/order_information_right_text_style"
+            tools:text="支付成功"
+            android:textColor="@color/backGround1"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/pay_number_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/order_information_left_text_style"
+            android:text="@string/payment_number" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/pay_number"
+            style="@style/order_information_right_text_style"
+            tools:text="1234" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/order_information_left_text_style"
+            android:text="@string/payment_amount" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/pay_amount"
+            style="@style/order_information_right_text_style"
+            tools:text="1234" />
+    </RelativeLayout>
+    <View
+        style="@style/fifteen_back_nine_line_style"
+        android:layout_marginTop="@dimen/dp_8"/>
+</LinearLayout>

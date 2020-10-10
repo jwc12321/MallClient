@@ -45,7 +45,7 @@ public class CertifyPayPresenter implements CertifyContract.CertifyPayPresenter 
     @Override
     public void getPayMethod(String devicePlatform,String orderType) {
         certifyPayView.showLoading(StaticData.LOADING);
-        String queryString="devicePlatform="+devicePlatform+"&orderType"+orderType;
+        String queryString="devicePlatform="+devicePlatform+"&orderType="+orderType;
         String sign = SignUnit.signGet(RequestUrl.PAY_METHOD, queryString);
         Disposable disposable = restApiService.getPayMethod(sign,devicePlatform,orderType)
                 .flatMap(new RxRemoteDataParse<List<PayMethodInfo>>())

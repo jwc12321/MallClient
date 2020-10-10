@@ -185,13 +185,13 @@ public class SelectPayTypeActivity extends BaseActivity implements HomepageContr
             for (PayMethodInfo payMethodInfo : payMethods) {
                 if (TextUtils.equals(StaticData.WX_PAY, payMethodInfo.getPaymentMethod())) {
                     weixinRl.setVisibility(View.VISIBLE);
-                    wxTip.setVisibility(payMethodInfo.getSubPercent()?View.VISIBLE:View.GONE);
+                    wxTip.setText(payMethodInfo.getDescription());
                 } else if (TextUtils.equals(StaticData.ALI_PAY, payMethodInfo.getPaymentMethod())) {
                     aliRl.setVisibility(View.VISIBLE);
-                    aliTip.setVisibility(payMethodInfo.getSubPercent()?View.VISIBLE:View.GONE);
+                    aliTip.setText(payMethodInfo.getDescription());
                 } else if (TextUtils.equals(StaticData.BAO_FU_PAY, payMethodInfo.getPaymentMethod())) {
                     bankRl.setVisibility(View.VISIBLE);
-                    bankTip.setVisibility(payMethodInfo.getSubPercent()?View.VISIBLE:View.GONE);
+                    bankTip.setText(payMethodInfo.getDescription());
                 }
             }
             if (weixinRl.getVisibility() == View.VISIBLE) {
