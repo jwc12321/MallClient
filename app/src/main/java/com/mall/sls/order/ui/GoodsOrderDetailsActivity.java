@@ -434,6 +434,11 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             hasChild = goodsOrderDetails.getHasChild();
             general = goodsOrderDetails.getGeneral();
             payRecordInfos=goodsOrderDetails.getPayRecordInfos();
+            if(payRecordInfos!=null&&payRecordInfos.size()>0){
+                payRecordRl.setVisibility(View.VISIBLE);
+            }else {
+                payRecordRl.setVisibility(View.GONE);
+            }
             if (orderGoodsVos != null && orderGoodsVos.size() > 0) {//分享时候用到
                 GlideHelper.load(this, orderGoodsVos.get(0).getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
                 nameText = BriefUnit.returnName(orderGoodsVos.get(0).getPrice(), orderGoodsVos.get(0).getGoodsName());
@@ -452,7 +457,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             totalAmount.setText(NumberFormatUnit.goodsFormat(goodsOrderDetails.getGoodsPrice()));
             deliveryFee.setText(NumberFormatUnit.goodsFormat(goodsOrderDetails.getFreightPrice()));
             coupon.setText("-" + NumberFormatUnit.goodsFormat(goodsOrderDetails.getCouponPrice()));
-            couponRl.setVisibility(TextUtils.equals("0.00", goodsOrderDetails.getCouponPrice()) ? View.GONE : View.VISIBLE);
+            couponRl.setVisibility(NumberFormatUnit.isZero(goodsOrderDetails.getCouponPrice()) ? View.GONE : View.VISIBLE);
             realPayment.setText(NumberFormatUnit.goodsFormat(goodsOrderDetails.getActualPrice()));
             deliveryMethod.setText(goodsOrderDetails.getPeiSongType());
             actualPrice = goodsOrderDetails.getActualPrice();
@@ -496,9 +501,9 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             if (TextUtils.equals(StaticData.TO_PAY, goodsOrderDetails.getOrderStatus())
                     || TextUtils.equals(StaticData.CANCELLED, goodsOrderDetails.getOrderStatus())
                     || TextUtils.equals(StaticData.SYS_CANCELLED, goodsOrderDetails.getOrderStatus())) {
-                isPay.setText(getString(R.string.to_be_paid));
+                isPay.setText(getString(R.string.payable));
             } else {
-                isPay.setText(getString(R.string.actually_paid_colon));
+                isPay.setText(getString(R.string.total_price));
             }
             isActivity = goodsOrderDetails.getActivity();
             grouponId = goodsOrderDetails.getGrouponLinkId();
@@ -575,7 +580,11 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private void setOrderStatus(String status,String payDescription) {
         switch (status) {
             case StaticData.TO_PAY://待支付
-                orderStatus.setText(getString(R.string.pending_payment)+payDescription);
+                if(TextUtils.isEmpty(payDescription)){
+                    orderStatus.setText(getString(R.string.pending_payment));
+                }else {
+                    orderStatus.setText(getString(R.string.pending_payment)+payDescription);
+                }
                 btRl.setVisibility(View.VISIBLE);
                 leftBt.setVisibility(View.VISIBLE);
                 rightBt.setVisibility(View.VISIBLE);

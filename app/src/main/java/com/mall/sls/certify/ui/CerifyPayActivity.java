@@ -234,12 +234,15 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
             for (PayMethodInfo payMethodInfo : payMethods) {
                 if (TextUtils.equals(StaticData.WX_PAY, payMethodInfo.getPaymentMethod())) {
                     weixinRl.setVisibility(View.VISIBLE);
+                    wxTip.setVisibility(TextUtils.isEmpty(payMethodInfo.getDescription())?View.GONE:View.VISIBLE);
                     wxTip.setText(payMethodInfo.getDescription());
                 } else if (TextUtils.equals(StaticData.ALI_PAY, payMethodInfo.getPaymentMethod())) {
                     aliRl.setVisibility(View.VISIBLE);
+                    aliTip.setVisibility(TextUtils.isEmpty(payMethodInfo.getDescription())?View.GONE:View.VISIBLE);
                     aliTip.setText(payMethodInfo.getDescription());
                 } else if (TextUtils.equals(StaticData.BAO_FU_PAY, payMethodInfo.getPaymentMethod())) {
                     bankRl.setVisibility(View.VISIBLE);
+                    bankTip.setVisibility(TextUtils.isEmpty(payMethodInfo.getDescription())?View.GONE:View.VISIBLE);
                     bankTip.setText(payMethodInfo.getDescription());
                 }
             }

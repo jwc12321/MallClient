@@ -22,7 +22,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PayRecordAdapter extends RecyclerView.Adapter<PayRecordAdapter.PayRecordView> {
-
     private LayoutInflater layoutInflater;
     private List<PayRecordInfo> payRecordInfos;
     private Context context;
@@ -52,7 +51,7 @@ public class PayRecordAdapter extends RecyclerView.Adapter<PayRecordAdapter.PayR
         holder.payNoRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onItemClickListener!=null){
+                if (onItemClickListener != null) {
                     onItemClickListener.copyOrderNo(payRecordInfo.getPayNo());
                 }
             }
@@ -65,10 +64,13 @@ public class PayRecordAdapter extends RecyclerView.Adapter<PayRecordAdapter.PayR
     }
 
     public class PayRecordView extends RecyclerView.ViewHolder {
+
         @BindView(R.id.pay_no)
         ConventionalTextView payNo;
         @BindView(R.id.copy_bt)
         MediumThickTextView copyBt;
+        @BindView(R.id.pay_no_rl)
+        RelativeLayout payNoRl;
         @BindView(R.id.pay_time)
         ConventionalTextView payTime;
         @BindView(R.id.pay_time_rl)
@@ -83,8 +85,10 @@ public class PayRecordAdapter extends RecyclerView.Adapter<PayRecordAdapter.PayR
         RelativeLayout payNumberRl;
         @BindView(R.id.pay_amount)
         ConventionalTextView payAmount;
-        @BindView(R.id.pay_no_rl)
-        RelativeLayout payNoRl;
+        @BindView(R.id.sub_amount)
+        ConventionalTextView subAmount;
+        @BindView(R.id.sub_amount_rl)
+        RelativeLayout subAmountRl;
 
         public PayRecordView(View itemView) {
             super(itemView);
@@ -107,11 +111,13 @@ public class PayRecordAdapter extends RecyclerView.Adapter<PayRecordAdapter.PayR
             } else if (TextUtils.equals(StaticData.REFRESH_THREE, payRecordInfo.getOrderStatus())) {
                 payStatus.setText(context.getString(R.string.payment_failed));
             }
-            payAmount.setText(NumberFormatUnit.numberFormat(payRecordInfo.getActualPrice()));
+            payAmount.setText(NumberFormatUnit.goodsFormat(payRecordInfo.getActualPrice()));
             payTime.setText(payRecordInfo.getPayTime());
             payNumber.setText(payRecordInfo.getPaySn());
-            payTimeRl.setVisibility(TextUtils.isEmpty(payRecordInfo.getPayTime())?View.GONE:View.VISIBLE);
-            payNumberRl.setVisibility(TextUtils.isEmpty(payRecordInfo.getPaySn())?View.GONE:View.VISIBLE);
+            subAmount.setText(NumberFormatUnit.goodsFormat(payRecordInfo.getSubAmount()));
+            payTimeRl.setVisibility(TextUtils.isEmpty(payRecordInfo.getPayTime()) ? View.GONE : View.VISIBLE);
+            payNumberRl.setVisibility(TextUtils.isEmpty(payRecordInfo.getPaySn()) ? View.GONE : View.VISIBLE);
+            subAmountRl.setVisibility(TextUtils.isEmpty(payRecordInfo.getSubAmount()) ? View.GONE : View.VISIBLE);
         }
     }
 

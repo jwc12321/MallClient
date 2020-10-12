@@ -88,5 +88,6 @@ public class RequestUrl {
     public static String INVITATION_OPEN="/app/common/invitation-open";//是否打开邀请码
     public static String PAY_METHOD="/app/common/pay-method";//获取支付方式
     public static String BEGIN_PAY="/app/pay/begin-pay";//开始支付
+    public static String TOKEN_REFRESH="/app/auth/token/refresh";//刷新token
 
 }

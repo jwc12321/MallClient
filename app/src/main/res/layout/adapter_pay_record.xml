@@ -91,6 +91,20 @@
             style="@style/order_information_right_text_style"
             tools:text="1234" />
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/sub_amount_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/order_information_left_text_style"
+            android:text="@string/sub_amount" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/sub_amount"
+            style="@style/order_information_right_text_style"
+            tools:text="1234" />
+    </RelativeLayout>
     <View
         style="@style/fifteen_back_nine_line_style"
         android:layout_marginTop="@dimen/dp_8"/>

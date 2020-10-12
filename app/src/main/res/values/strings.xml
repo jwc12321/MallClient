@@ -525,5 +525,7 @@
     <string name="pay_time">支付时间：</string>
     <string name="payment_success">支付成功</string>
     <string name="payment_failed">支付失败</string>
-    <string name="payment_process">支付处理中</string>
+    <string name="payment_process">支付处理中</string>、
+    <string name="total_price">合计</string>
+    <string name="sub_amount">优惠金额：</string>
 </resources>

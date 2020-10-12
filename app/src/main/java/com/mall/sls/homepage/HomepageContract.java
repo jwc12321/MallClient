@@ -2,14 +2,12 @@ package com.mall.sls.homepage;
 
 
 
-import androidx.viewpager.widget.ViewPager;
 
 import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
 import com.mall.sls.data.entity.AliPay;
 import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.BaoFuPay;
-import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.ConfirmCartOrderDetail;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CouponInfo;
@@ -17,11 +15,10 @@ import com.mall.sls.data.entity.GeneralGoodsDetailsInfo;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.HomeSnapUp;
-import com.mall.sls.data.entity.HomeSnapUpInfo;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderSubmitInfo;
 import com.mall.sls.data.entity.PayMethodInfo;
-import com.mall.sls.data.entity.WXPaySignResponse;
+import com.mall.sls.data.entity.TokenRefreshInfo;
 import com.mall.sls.data.entity.WxPay;
 
 import java.util.List;
@@ -33,6 +30,7 @@ public interface HomepageContract {
         void getAppUrlInfo();
         void couponReceive(String type);
         void getHomeSnapUp();
+        void getTokenRefreshInfo();
     }
 
     interface HomePageView extends BaseView<HomePagePresenter>{
@@ -41,6 +39,7 @@ public interface HomepageContract {
         void renderAppUrlInfo(AppUrlInfo appUrlInfo);
         void renderCouponReceive(List<CouponInfo> couponInfos);
         void renderHomeSnapUp(HomeSnapUp homeSnapUp);
+        void renderTokenRefreshInfo(TokenRefreshInfo tokenRefreshInfo);
     }
 
     interface GoodsDetailsPresenter extends BasePresenter{

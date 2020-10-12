@@ -71,7 +71,7 @@ public class CartPaySuccessActivity extends BaseActivity {
         if (userPayInfo != null) {
             actualPrice.setText("实付：" + NumberFormatUnit.goodsFormat(userPayInfo.getActualPrice()));
             subAmount.setVisibility(NumberFormatUnit.isZero(userPayInfo.getSubAmount())?View.INVISIBLE:View.VISIBLE);
-            subAmount.setText("（已优惠"+userPayInfo.getSubAmount()+"）");
+            subAmount.setText("（已优惠"+NumberFormatUnit.goodsFormat(userPayInfo.getSubAmount())+"）");
         }
     }
 

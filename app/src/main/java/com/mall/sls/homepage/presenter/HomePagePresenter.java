@@ -1,8 +1,6 @@
 package com.mall.sls.homepage.presenter;
 
 import android.text.TextUtils;
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mall.sls.BuildConfig;
@@ -14,8 +12,8 @@ import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.CouponInfo;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.HomeSnapUp;
-import com.mall.sls.data.entity.HomeSnapUpInfo;
 import com.mall.sls.data.entity.Ignore;
+import com.mall.sls.data.entity.TokenRefreshInfo;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.data.request.CodeRequest;
@@ -160,6 +158,26 @@ public class HomePagePresenter implements HomepageContract.HomePagePresenter {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         homePageView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getTokenRefreshInfo() {
+        String queryString = "null";
+        String sign = SignUnit.signGet(RequestUrl.TOKEN_REFRESH, queryString);
+        Disposable disposable = restApiService.getTokenRefreshInfo(sign)
+                .flatMap(new RxRemoteDataParse<TokenRefreshInfo>())
+                .compose(new RxSchedulerTransformer<TokenRefreshInfo>())
+                .subscribe(new Consumer<TokenRefreshInfo>() {
+                    @Override
+                    public void accept(TokenRefreshInfo tokenRefreshInfo) throws Exception {
+                        homePageView.renderTokenRefreshInfo(tokenRefreshInfo);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
                     }
                 });
         mDisposableList.add(disposable);

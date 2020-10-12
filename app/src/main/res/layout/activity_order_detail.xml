@@ -203,6 +203,8 @@
                             android:orientation="vertical"
                             app:layoutManager="@string/layoutManager_LinearLayout"
                             tools:listitem="@layout/adapter_order_goods_item" />
+                        <View
+                          style="@style/back_nine_line_style"/>
 
                         <RelativeLayout style="@style/confirm_order_rl_style">
 
@@ -289,16 +291,17 @@
 
                             <com.mall.sls.common.widget.textview.ConventionalTextView
                                 android:id="@+id/is_pay"
-                                style="@style/size12_color_app3_text_style"
+                                style="@style/size14_color_app3_text_style"
                                 android:layout_gravity="center_vertical"
                                 tools:text="@string/payable" />
 
                             <com.mall.sls.common.widget.textview.ConventionalTextView
                                 android:id="@+id/real_payment"
-                                style="@style/size16_color_back1_text_style"
+                                style="@style/size14_color_back1_text_style"
                                 tools:text="11111"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginRight="@dimen/dp_15"/>
+                                android:layout_marginRight="@dimen/dp_15"
+                                android:layout_marginLeft="@dimen/dp_12"/>
                         </LinearLayout>
                     </LinearLayout>
 

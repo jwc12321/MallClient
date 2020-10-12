@@ -35,6 +35,7 @@ import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.PermissionUtil;
 import com.mall.sls.common.unit.SpikeManager;
 import com.mall.sls.common.unit.TCAgentUnit;
+import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.common.unit.UpdateManager;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -48,6 +49,7 @@ import com.mall.sls.data.entity.GoodsItemInfo;
 import com.mall.sls.data.entity.HomeCouponInfo;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.HomeSnapUp;
+import com.mall.sls.data.entity.TokenRefreshInfo;
 import com.mall.sls.data.event.WXLoginEvent;
 import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
@@ -188,6 +190,9 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
         homePagePresenter.getHomePageInfo(StaticData.REFRESH_ONE);
         homePagePresenter.getAppUrlInfo();
         homePagePresenter.getHomeSnapUp();
+        if (!TextUtils.isEmpty(TokenManager.getToken())) {
+            homePagePresenter.getTokenRefreshInfo();
+        }
     }
 
     private void initAdapter() {
@@ -435,6 +440,13 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
             groupBuyingAdapter.setData(homeSnapUp.getGoodsItemInfos());
         }else {
             groupBuyingLl.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void renderTokenRefreshInfo(TokenRefreshInfo tokenRefreshInfo) {
+        if(tokenRefreshInfo!=null){
+            TokenManager.saveToken(tokenRefreshInfo.getToken());
         }
     }
 

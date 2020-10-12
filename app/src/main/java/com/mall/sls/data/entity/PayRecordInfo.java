@@ -27,6 +27,9 @@ public class PayRecordInfo implements Serializable {
     //三方支付单号
     @SerializedName("paySn")
     private String paySn;
+    //随机立减金额
+    @SerializedName("subAmount")
+    private String subAmount;
 
     public String getPaySn() {
         return paySn;
@@ -74,5 +77,13 @@ public class PayRecordInfo implements Serializable {
 
     public void setPayTime(String payTime) {
         this.payTime = payTime;
+    }
+
+    public String getSubAmount() {
+        return subAmount;
+    }
+
+    public void setSubAmount(String subAmount) {
+        this.subAmount = subAmount;
     }
 }

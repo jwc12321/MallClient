@@ -14,7 +14,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/backGround57"
         android:orientation="vertical"
-        android:layout_marginBottom="@dimen/dp_47">
+        android:layout_marginBottom="@dimen/dp_45">
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -50,6 +50,7 @@ import com.mall.sls.data.entity.SecondCategoryInfo;
 import com.mall.sls.data.entity.ShareInfo;
 import com.mall.sls.data.entity.TeamInfo;
 import com.mall.sls.data.entity.TokenInfo;
+import com.mall.sls.data.entity.TokenRefreshInfo;
 import com.mall.sls.data.entity.VipAmountInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.entity.WxPay;
@@ -441,5 +442,9 @@ public interface RestApiService {
     //宝付支付
     @POST("app/pay/begin-pay")
     Flowable<RemoteDataWrapper<BaoFuPay>> getBaoFuPay(@Header("X-Hc-Sign") String sign, @Body PayRequest request);
+
+    //刷新token
+    @GET("app/auth/token/refresh")
+    Flowable<RemoteDataWrapper<TokenRefreshInfo>> getTokenRefreshInfo(@Header("X-Hc-Sign") String sign);
 
 }
