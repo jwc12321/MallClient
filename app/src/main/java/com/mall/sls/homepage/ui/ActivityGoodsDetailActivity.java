@@ -152,6 +152,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     private List<ProductListCallableInfo> productListCallableInfos;
     private List<GoodsSpec> goodsSpecs;
     private String picUrl;
+    private String goodsType;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, ActivityGoodsDetailActivity.class);
@@ -357,6 +358,9 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
 //        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
         String url = wxUrl + "goods/activity/" + goodsId + StaticData.WX_INVITE_CODE + inviteCode;
         wxShareManager.shareUrlToWX(isFriend, url, shareBitMap, nameText, briefText);
+//        String userName="gh_da3fb310de4b";
+//        String path="pages/share/index?goodsId="+goodsId+"&goodsType="+ goodsType+"&invitationCode="+ inviteCode;
+//        wxShareManager.shareWXMini(url,userName,path, nameText, briefText,shareBitMap);
     }
 
     @Override
@@ -454,6 +458,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             }
             goodsDetailIv.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getDetail()) ? View.GONE : View.VISIBLE);
             GlideHelper.load(this, goodsDetailsInfo.getPicUrl(), R.mipmap.icon_default_goods, shareIv);
+            goodsType=goodsDetailsInfo.getGoodsType();
         }
     }
 

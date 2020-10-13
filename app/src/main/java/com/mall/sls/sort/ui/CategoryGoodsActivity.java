@@ -79,9 +79,9 @@ public class CategoryGoodsActivity extends BaseActivity implements SortContract.
     ImageView priceArrow;
     private String categoryId;
     private String categoryName;
-    private String sortType;
-    private String orderType;
-    private String selectType;//1:默认 2：价格降序 3：价格升序 4：销量
+    private String sortType="";
+    private String orderType="";
+    private String selectType=StaticData.REFRESH_ONE;//1:默认 2：价格降序 3：价格升序 4：销量
     private Boolean priceDesc = false;
 
     private GoodsItemAdapter goodsItemAdapter;

@@ -95,6 +95,7 @@ public class InviteFriendsActivity extends BaseActivity implements MineContract.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invite_friends);
         ButterKnife.bind(this);
+        navigationBar();
         setHeight(back, title, null);
         initView();
     }

@@ -327,7 +327,7 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
             confirmBt.setText(getString(R.string.settlement));
             selectAll.setChecked(true);
             selectAll.setEnabled(false);
-            totalPrice.setText("0.00");
+            totalPrice.setText("¥ 0");
         } else {
             selectAll.setEnabled(true);
             confirmBt.setEnabled(true);
@@ -337,7 +337,7 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
             } else {
                 selectAll.setChecked(false);
             }
-            totalPrice.setText(NumberFormatUnit.numberFormat(totalPriceBd.toString()));
+            totalPrice.setText(NumberFormatUnit.goodsFormat(totalPriceBd.toString()));
         }
     }
 
@@ -388,7 +388,7 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
 
     private void returnFirst() {
         confirmBt.setText(getString(R.string.settlement));
-        totalPrice.setText("0.00");
+        totalPrice.setText("¥ 0");
         selectAll.setChecked(false);
         confirmBt.setEnabled(true);
     }

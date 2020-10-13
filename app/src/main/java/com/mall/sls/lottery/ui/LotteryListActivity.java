@@ -98,6 +98,7 @@ public class LotteryListActivity extends BaseActivity implements LotteryContract
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lottery_list);
         ButterKnife.bind(this);
+        navigationBar();
         setHeight(back, title, null);
         initView();
     }

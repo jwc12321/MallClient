@@ -208,7 +208,7 @@
             style="@style/size14_color_back1_text_style"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_15"
-            android:text="@string/actually_paid_colon" />
+            android:text="@string/total_price" />
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/total_amount"

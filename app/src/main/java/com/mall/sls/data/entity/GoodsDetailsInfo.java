@@ -107,6 +107,9 @@ public class GoodsDetailsInfo implements Serializable {
     //发货方式 1同城配送 2快递配送
     @SerializedName("courierType")
     private String courierType;
+    //商品类型 1普通商品 2普通团商品 3活动团商品 4抽奖商品
+    @SerializedName("goodsType")
+    private String goodsType;
 
 
 
@@ -357,5 +360,13 @@ public class GoodsDetailsInfo implements Serializable {
 
     public void setCourierType(String courierType) {
         this.courierType = courierType;
+    }
+
+    public String getGoodsType() {
+        return goodsType;
+    }
+
+    public void setGoodsType(String goodsType) {
+        this.goodsType = goodsType;
     }
 }

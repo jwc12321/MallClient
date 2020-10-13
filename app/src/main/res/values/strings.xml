@@ -11,6 +11,8 @@
     <!--空格-->
     <string name="space_card_number">卡号&#8195;</string>
     <string name="weixin_pay">微信支付&#12288;</string>
+    <string name="payable">需付&#160;&#160;</string>
+    <string name="total_price">合计&#160;&#160;</string>
 
     <!--mai_dian-->
     <string name="bank_card_page">银行卡页</string>
@@ -407,7 +409,6 @@
     <string name="view_map">查看地图</string>
     <string name="refund_same_way">（退款将原路返回）</string>
     <string name="add_cart">加入购物车</string>
-    <string name="payable">需付</string>
     <string name="actually_paid">实付</string>
     <string name="selling_price">销售价</string>
     <string name="city_re_locate">重新定位</string>
@@ -526,6 +527,5 @@
     <string name="payment_success">支付成功</string>
     <string name="payment_failed">支付失败</string>
     <string name="payment_process">支付处理中</string>、
-    <string name="total_price">合计</string>
     <string name="sub_amount">优惠金额：</string>
 </resources>

@@ -63,7 +63,7 @@ public class BankTipActivity extends BaseActivity {
 
             }
         }, 10, str1.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString1.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.appText14)), 10, str1.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        spannableString1.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.backGround1)), 10, str1.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         content.setText(spannableString1);
         content.setMovementMethod(LinkMovementMethod.getInstance());
     }

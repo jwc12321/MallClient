@@ -62,7 +62,7 @@
         <View
             android:layout_width="@dimen/dp_63"
             android:layout_height="@dimen/dp_1"
-            android:background="@color/backGround2"
+            android:background="@color/backGround1"
             android:layout_marginTop="@dimen/dp_1"/>
     </LinearLayout>
 

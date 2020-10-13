@@ -227,6 +227,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
         ButterKnife.bind(this);
+        navigationBar();
         setHeight(back, title, null);
         initView();
     }
@@ -501,9 +502,9 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
             if (TextUtils.equals(StaticData.TO_PAY, goodsOrderDetails.getOrderStatus())
                     || TextUtils.equals(StaticData.CANCELLED, goodsOrderDetails.getOrderStatus())
                     || TextUtils.equals(StaticData.SYS_CANCELLED, goodsOrderDetails.getOrderStatus())) {
-                isPay.setText(getString(R.string.payable));
+//                isPay.setText(getString(R.string.payable));
             } else {
-                isPay.setText(getString(R.string.total_price));
+//                isPay.setText(getString(R.string.total_price));
             }
             isActivity = goodsOrderDetails.getActivity();
             grouponId = goodsOrderDetails.getGrouponLinkId();

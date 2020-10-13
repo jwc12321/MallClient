@@ -151,6 +151,14 @@ public abstract class BaseActivity extends AppCompatActivity implements LoadData
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES;
     }
 
+    public void navigationBar() {
+        if (!isNightMode(this)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            }
+        }
+    }
+
     protected void initializeInjector() {
         getApplicationComponent().inject(this);
     }

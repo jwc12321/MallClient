@@ -561,6 +561,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             paySuccess();
         }else if(TextUtils.equals(StaticData.BANK_PAY_PROCESSING,result)){
             BankPayResultActivity.start(this, orderId,result,choiceType);
+            finish();
         }else if(TextUtils.equals(StaticData.BANK_PAY_FAILED,result)){
             GoodsOrderDetailsActivity.start(this, orderId);
             finish();

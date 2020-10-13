@@ -54,7 +54,8 @@
                 android:id="@+id/wx_tip"
                 style="@style/randomly_reduced_tip_style"
                 android:layout_toRightOf="@id/wx_tv"
-                android:text="@string/randomly_reduced_tip" />
+                android:text="@string/randomly_reduced_tip"
+                android:layout_toLeftOf="@id/select_weixin_iv"/>
 
             <ImageView
                 android:id="@+id/select_weixin_iv"
@@ -82,7 +83,8 @@
                 android:id="@+id/ali_tip"
                 style="@style/randomly_reduced_tip_style"
                 android:layout_toRightOf="@id/ali_tv"
-                android:text="@string/randomly_reduced_tip" />
+                android:text="@string/randomly_reduced_tip"
+                android:layout_toLeftOf="@id/select_ali_iv"/>
 
             <ImageView
                 android:id="@+id/select_ali_iv"
@@ -110,7 +112,8 @@
                 android:id="@+id/bank_tip"
                 style="@style/randomly_reduced_tip_style"
                 android:layout_toRightOf="@id/bank_tv"
-                android:text="@string/randomly_reduced_tip" />
+                android:text="@string/randomly_reduced_tip"
+                android:layout_toLeftOf="@id/select_bank_iv"/>
 
             <ImageView
                 android:id="@+id/select_bank_iv"
