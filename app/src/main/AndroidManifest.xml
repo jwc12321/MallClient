@@ -463,6 +463,10 @@
         <activity android:name=".order.ui.PayRecordActivity"
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"/>
+        <activity android:name=".homepage.ui.DeliveryNoteActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"
+            android:theme="@style/TranslucentFullScreenTheme"/>
     </application>
 
 </manifest>

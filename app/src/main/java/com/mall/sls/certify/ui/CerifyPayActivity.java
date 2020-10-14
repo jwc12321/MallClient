@@ -288,7 +288,7 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
 
     }
 
-    public static class MyHandler extends StaticHandler<CerifyPayActivity> {
+    public class MyHandler extends StaticHandler<CerifyPayActivity> {
 
         public MyHandler(CerifyPayActivity target) {
             super(target);

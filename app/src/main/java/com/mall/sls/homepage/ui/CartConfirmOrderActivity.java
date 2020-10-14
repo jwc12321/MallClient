@@ -504,7 +504,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
         new Thread(runnable).start();
     }
 
-    public static class MyHandler extends StaticHandler<CartConfirmOrderActivity> {
+    public class MyHandler extends StaticHandler<CartConfirmOrderActivity> {
 
         public MyHandler(CartConfirmOrderActivity target) {
             super(target);

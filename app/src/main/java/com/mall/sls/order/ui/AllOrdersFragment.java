@@ -34,7 +34,6 @@ import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.unit.WXShareManager;
 import com.mall.sls.data.entity.AliPay;
 import com.mall.sls.data.entity.BaoFuPay;
-import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.GoodsOrderInfo;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.OrderGoodsVo;
@@ -401,7 +400,7 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
         new Thread(runnable).start();
     }
 
-    public static class MyHandler extends StaticHandler<AllOrdersFragment> {
+    public class MyHandler extends StaticHandler<AllOrdersFragment> {
 
         public MyHandler(AllOrdersFragment target) {
             super(target);

@@ -37,31 +37,30 @@ import update.UpdateAppUtils;
  * 描述：设置
  */
 public class SettingActivity extends BaseActivity implements MineContract.SettingView {
+
+
+    @Inject
+    SettingPresenter settingPresenter;
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.title)
     MediumThickTextView title;
     @BindView(R.id.title_rel)
     RelativeLayout titleRel;
-    @BindView(R.id.confirm_bt)
-    MediumThickTextView confirmBt;
-    @BindView(R.id.feedback_rl)
-    RelativeLayout feedbackRl;
+    @BindView(R.id.update_rl)
+    RelativeLayout updateRl;
     @BindView(R.id.clear_cache_rl)
     RelativeLayout clearCacheRl;
+    @BindView(R.id.contact_service_rl)
+    RelativeLayout contactServiceRl;
+    @BindView(R.id.confirm_bt)
+    MediumThickTextView confirmBt;
     @BindView(R.id.register_tv)
     ConventionalTextView registerTv;
     @BindView(R.id.privacy_tv)
     ConventionalTextView privacyTv;
-    @BindView(R.id.update_rl)
-    RelativeLayout updateRl;
     @BindView(R.id.item_rl)
     RelativeLayout itemRl;
-
-    @Inject
-    SettingPresenter settingPresenter;
-    @BindView(R.id.contact_service_rl)
-    RelativeLayout contactServiceRl;
 
     private String consumerPhone;
 
@@ -74,14 +73,11 @@ public class SettingActivity extends BaseActivity implements MineContract.Settin
         settingPresenter.getConsumerPhone();
     }
 
-    @OnClick({R.id.back, R.id.confirm_bt, R.id.feedback_rl, R.id.clear_cache_rl, R.id.register_tv, R.id.privacy_tv, R.id.update_rl,R.id.contact_service_rl})
+    @OnClick({R.id.back, R.id.confirm_bt, R.id.clear_cache_rl, R.id.register_tv, R.id.privacy_tv, R.id.update_rl, R.id.contact_service_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
                 finish();
-                break;
-            case R.id.feedback_rl:
-                FeedBackActivity.start(this);
                 break;
             case R.id.confirm_bt://确认退出登录
                 TokenManager.saveToken("");
@@ -102,7 +98,7 @@ public class SettingActivity extends BaseActivity implements MineContract.Settin
                 AboutAppActivity.start(this);
                 break;
             case R.id.contact_service_rl:
-                CustomerServiceActivity.start(this,consumerPhone);
+                CustomerServiceActivity.start(this, consumerPhone);
                 break;
             default:
         }

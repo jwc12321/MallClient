@@ -715,7 +715,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
         orderDetailsPresenter.getOrderDetails(goodsOrderId);
     }
 
-    public static class MyHandler extends StaticHandler<GoodsOrderDetailsActivity> {
+    public class MyHandler extends StaticHandler<GoodsOrderDetailsActivity> {
 
         public MyHandler(GoodsOrderDetailsActivity target) {
             super(target);

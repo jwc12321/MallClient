@@ -32,7 +32,6 @@ import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.AliPay;
 import com.mall.sls.data.entity.BaoFuPay;
-import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.LocalTeam;
 import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.entity.WxPay;
@@ -343,7 +342,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
         new Thread(runnable).start();
     }
 
-    public static class MyHandler extends StaticHandler<SuperMemberActivity> {
+    public class MyHandler extends StaticHandler<SuperMemberActivity> {
 
         public MyHandler(SuperMemberActivity target) {
             super(target);

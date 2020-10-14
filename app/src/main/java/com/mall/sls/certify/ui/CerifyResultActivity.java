@@ -79,7 +79,7 @@ public class CerifyResultActivity extends BaseActivity {
     public View getSnackBarHolderView() {
         return null;
     }
-    public static class MyHandler extends StaticHandler<CerifyResultActivity> {
+    public class MyHandler extends StaticHandler<CerifyResultActivity> {
 
         public MyHandler(CerifyResultActivity target) {
             super(target);

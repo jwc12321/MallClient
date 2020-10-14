@@ -2457,4 +2457,16 @@
         <item name="android:layout_marginLeft">@dimen/dp_90</item>
     </style>
 
+    <style name="back57_ver_ll_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/backGround57</item>
+    </style>
+
+    <style name="height49_rl_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_49</item>
+    </style>
+
 </resources>

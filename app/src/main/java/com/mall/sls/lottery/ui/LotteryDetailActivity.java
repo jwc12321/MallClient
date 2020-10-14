@@ -250,7 +250,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
     }
 
     private void initWebView() {
-        webView.setBackgroundColor(getResources().getColor(R.color.backGround83));
+//        webView.setBackgroundColor(getResources().getColor(R.color.backGround83));
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
@@ -467,7 +467,7 @@ public class LotteryDetailActivity extends BaseActivity implements LotteryContra
         lotteryDetailsPresenter.getSystemTime();
     }
 
-    public static class MyHandler extends StaticHandler<LotteryDetailActivity> {
+    public class MyHandler extends StaticHandler<LotteryDetailActivity> {
 
         public MyHandler(LotteryDetailActivity target) {
             super(target);

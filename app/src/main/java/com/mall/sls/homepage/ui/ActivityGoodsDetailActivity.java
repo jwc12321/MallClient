@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -17,7 +20,6 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 
@@ -74,7 +76,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/9.
  * 描述：活动商品详情
  */
-public class ActivityGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, CommonTearDownView.TimeOutListener, NestedScrollView.OnScrollChangeListener {
+public class ActivityGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, CommonTearDownView.TimeOutListener, NestedScrollView.OnScrollChangeListener,WXShareManager.OnItemClickListener {
 
 
     @BindView(R.id.banner)
@@ -125,6 +127,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     MediumThickTextView confirmBt;
     @BindView(R.id.share_iv)
     ImageView shareIv;
+    @BindView(R.id.delivery_method_ll)
+    LinearLayout deliveryMethodLl;
     private ProductListCallableInfo productListCallableInfo;
     private List<CustomViewsInfo> data;
     private String goodsId;
@@ -147,6 +151,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     private String wxUrl;
     private String inviteCode;
     private Bitmap shareBitMap;
+    private Bitmap returnBitMap;
     private int screenWidth;
     private int screenHeight;
     private List<ProductListCallableInfo> productListCallableInfos;
@@ -173,12 +178,12 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         goodsId = getIntent().getStringExtra(StaticData.GOODS_ID);
         EventBus.getDefault().register(this);
         wxShareManager = WXShareManager.getInstance(this);
+        wxShareManager.setOnItemClickListener(this);
         scrollview.setOnScrollChangeListener(this);
         settingHeight();
         xBannerInit();
         initWebView();
         goodsDetailsPresenter.getGoodsDetails(goodsId);
-        goodsDetailsPresenter.getConsumerPhone();
         goodsDetailsPresenter.getInvitationCodeInfo();
 
     }
@@ -196,7 +201,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     }
 
     private void initWebView() {
-        webView.setBackgroundColor(getResources().getColor(R.color.backGround83));
+//        webView.setBackgroundColor(getResources().getColor(R.color.backGround83));
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
@@ -253,7 +258,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 .inject(this);
     }
 
-    @OnClick({R.id.back, R.id.confirm_bt, R.id.service_iv, R.id.sku_rl, R.id.home_iv, R.id.share})
+    @OnClick({R.id.back, R.id.confirm_bt, R.id.service_iv, R.id.sku_rl, R.id.home_iv, R.id.share, R.id.delivery_method_ll})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -283,6 +288,9 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
                 shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, 150, 150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
                 Intent intent = new Intent(this, SelectShareTypeActivity.class);
                 startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
+                break;
+            case R.id.delivery_method_ll:
+                DeliveryNoteActivity.start(this);
                 break;
             default:
         }
@@ -358,9 +366,9 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
 //        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.app_icon);
         String url = wxUrl + "goods/activity/" + goodsId + StaticData.WX_INVITE_CODE + inviteCode;
         wxShareManager.shareUrlToWX(isFriend, url, shareBitMap, nameText, briefText);
-//        String userName="gh_da3fb310de4b";
-//        String path="pages/share/index?goodsId="+goodsId+"&goodsType="+ goodsType+"&invitationCode="+ inviteCode;
-//        wxShareManager.shareWXMini(url,userName,path, nameText, briefText,shareBitMap);
+//        String userName = "gh_da3fb310de4b";
+//        String path = "pages/share/index?goodsId=" + goodsId + "&goodsType=" + goodsType + "&invitationCode=" + inviteCode;
+//        wxShareManager.shareWXMini(url, userName, path, nameText, briefText, shareBitMap);
     }
 
     @Override
@@ -458,7 +466,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             }
             goodsDetailIv.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getDetail()) ? View.GONE : View.VISIBLE);
             GlideHelper.load(this, goodsDetailsInfo.getPicUrl(), R.mipmap.icon_default_goods, shareIv);
-            goodsType=goodsDetailsInfo.getGoodsType();
+            goodsType = goodsDetailsInfo.getGoodsType();
+//            wxShareManager.withRx(goodsDetailsInfo.getPicUrl());
         }
     }
 
@@ -547,4 +556,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         TCAgentUnit.pageEnd(this, getString(R.string.event_page_detail));
     }
 
+    @Override
+    public void returnBitmap(Bitmap bitmap) {
+        shareBitMap=bitmap;
+    }
 }

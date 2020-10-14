@@ -339,7 +339,7 @@ public class PendingPaymentFragment extends BaseFragment implements OrderContrac
         new Thread(runnable).start();
     }
 
-    public static class MyHandler extends StaticHandler<PendingPaymentFragment> {
+    public class MyHandler extends StaticHandler<PendingPaymentFragment> {
 
         public MyHandler(PendingPaymentFragment target) {
             super(target);

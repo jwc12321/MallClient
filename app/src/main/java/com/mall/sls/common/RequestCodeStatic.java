@@ -35,4 +35,5 @@ public class RequestCodeStatic {
     public static final int HIDDEN_CART=42;
 
     public static final int REQUEST_CAMERA=501;//权限相机
+    public static final int RETURN_BITMAP=502;
 }

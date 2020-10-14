@@ -228,7 +228,24 @@
                     android:outAnimation="@anim/anim_out"
                     android:visibility="gone"/>
             </LinearLayout>
-
+            <LinearLayout
+                android:id="@+id/delivery_method_ll"
+                style="@style/add_address_ll_style"
+                android:layout_marginTop="@dimen/dp_10"
+                android:visibility="gone">
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    style="@style/size13_app3_left_tv_style"
+                    android:text="@string/delivery_method"
+                    android:layout_gravity="center_vertical"/>
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/delivery_method_tv_style"
+                    android:text="@string/same_city"
+                    android:layout_marginLeft="@dimen/dp_10"/>
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/delivery_method_tv_style"
+                    android:text="@string/express_delivery"
+                    android:layout_marginLeft="@dimen/dp_8"/>
+            </LinearLayout>
             <ImageView
                 android:id="@+id/goods_detail_iv"
                 android:layout_width="wrap_content"

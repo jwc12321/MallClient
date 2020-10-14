@@ -457,7 +457,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
         new Thread(runnable).start();
     }
 
-    public static class MyHandler extends StaticHandler<ConfirmOrderActivity> {
+    public class MyHandler extends StaticHandler<ConfirmOrderActivity> {
 
         public MyHandler(ConfirmOrderActivity target) {
             super(target);

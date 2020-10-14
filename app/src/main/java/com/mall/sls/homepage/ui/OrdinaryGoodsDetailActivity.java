@@ -155,6 +155,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     LinearLayout individualShoppingTv;
     @BindView(R.id.share_iv)
     ImageView shareIv;
+    @BindView(R.id.delivery_method_ll)
+    LinearLayout deliveryMethodLl;
     private ProductListCallableInfo productListCallableInfo;
     private List<CustomViewsInfo> data;
     private String goodsId;
@@ -223,7 +225,6 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         xBannerInit();
         initWebView();
         goodsDetailsPresenter.getGoodsDetails(goodsId);
-        goodsDetailsPresenter.getConsumerPhone();
         goodsDetailsPresenter.getInvitationCodeInfo();
     }
 
@@ -240,7 +241,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
 
 
     private void initWebView() {
-        webView.setBackgroundColor(getResources().getColor(R.color.backGround83));
+//        webView.setBackgroundColor(getResources().getColor(R.color.backGround83));
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
@@ -298,7 +299,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 .inject(this);
     }
 
-    @OnClick({R.id.back, R.id.individual_shopping_tv, R.id.initiate_bill_bt, R.id.service_iv, R.id.sku_rl, R.id.up_spell_bt, R.id.down_spell_bt, R.id.home_iv, R.id.share})
+    @OnClick({R.id.back, R.id.individual_shopping_tv, R.id.initiate_bill_bt, R.id.service_iv, R.id.sku_rl, R.id.up_spell_bt, R.id.down_spell_bt, R.id.home_iv, R.id.share, R.id.delivery_method_ll})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -356,6 +357,9 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
                 shareBitMap = QRCodeFileUtils.createBitmap3(shareIv, 150, 150);//直接url转bitmap背景白色变成黑色，后面想到方法可以改善
                 Intent intent = new Intent(this, SelectShareTypeActivity.class);
                 startActivityForResult(intent, RequestCodeStatic.SELECT_SHARE_TYPE);
+                break;
+            case R.id.delivery_method_ll:
+                DeliveryNoteActivity.start(this);
                 break;
             default:
         }
@@ -478,8 +482,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             currentPrice.setText(NumberFormatUnit.numberFormat(goodsDetailsInfo.getRetailPrice()));
             unit = goodsDetailsInfo.getUnit();
             originalPrice.setText(NumberFormatUnit.goodsFormat(goodsDetailsInfo.getCounterPrice()));
-            sales.setVisibility(NumberFormatUnit.isZero(goodsDetailsInfo.getSalesQuantity())?View.GONE:View.VISIBLE);
-            sales.setText(getString(R.string.cumulative_sales) + goodsDetailsInfo.getSalesQuantity()+getString(R.string.pieces));
+            sales.setVisibility(NumberFormatUnit.isZero(goodsDetailsInfo.getSalesQuantity()) ? View.GONE : View.VISIBLE);
+            sales.setText(getString(R.string.cumulative_sales) + goodsDetailsInfo.getSalesQuantity() + getString(R.string.pieces));
             nameText = BriefUnit.returnName(goodsDetailsInfo.getRetailPrice(), goodsDetailsInfo.getName());
             briefText = BriefUnit.returnBrief(goodsDetailsInfo.getBrief());
             goodsName.setText(goodsDetailsInfo.getName());

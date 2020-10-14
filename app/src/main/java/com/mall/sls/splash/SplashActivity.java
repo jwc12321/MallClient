@@ -81,7 +81,7 @@ public class  SplashActivity extends BaseActivity {
     }
 
 
-    public static class MyHandler extends StaticHandler<SplashActivity> {
+    public class MyHandler extends StaticHandler<SplashActivity> {
 
         public MyHandler(SplashActivity target) {
             super(target);

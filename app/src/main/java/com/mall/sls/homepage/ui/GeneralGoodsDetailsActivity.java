@@ -96,6 +96,8 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
     RelativeLayout titleRel;
     @BindView(R.id.original_price)
     WhiteDrawTextView originalPrice;
+    @BindView(R.id.delivery_method_ll)
+    LinearLayout deliveryMethodLl;
     private String goodsId;
     private int screenWidth;
     private int screenHeight;
@@ -154,7 +156,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
     }
 
     private void initWebView() {
-        webView.setBackgroundColor(getResources().getColor(R.color.backGround83));
+//        webView.setBackgroundColor(getResources().getColor(R.color.backGround83));
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
@@ -211,7 +213,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                 .inject(this);
     }
 
-    @OnClick({R.id.back, R.id.home_iv, R.id.add_cart_bt, R.id.buy_now_bt, R.id.cart})
+    @OnClick({R.id.back, R.id.home_iv, R.id.add_cart_bt, R.id.buy_now_bt, R.id.cart,R.id.delivery_method_ll})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -234,6 +236,9 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                 MainStartManager.saveMainStart(StaticData.REFRESH_TWO);
                 MainFrameActivity.start(this);
                 finish();
+                break;
+            case R.id.delivery_method_ll:
+                DeliveryNoteActivity.start(this);
                 break;
             default:
         }
