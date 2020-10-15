@@ -216,7 +216,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             if (TextUtils.equals(StaticData.REFRESH_ZERO, confirmOrderDetail.getAvailableCouponLength())) {
                 coupon.setText(getString(R.string.no_available));
             } else {
-                if (TextUtils.equals("-1", couponId)) {
+                if (TextUtils.equals(StaticData.REFRESH_ZERO, userCouponId)||TextUtils.equals(StaticData.REFRESH_MINUS_ONE, userCouponId)) {
                     coupon.setText(confirmOrderDetail.getAvailableCouponLength() + "张优惠券可用");
                 } else {
                     coupon.setText("-" + NumberFormatUnit.goodsFormat(confirmOrderDetail.getCouponPrice()));

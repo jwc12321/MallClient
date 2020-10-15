@@ -160,7 +160,7 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     }
 
     private void initWebView() {
-//        webView.setBackgroundColor(getResources().getColor(R.color.backGround83));
+        webView.setBackgroundColor(getResources().getColor(R.color.backGround83));
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);

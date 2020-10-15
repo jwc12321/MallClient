@@ -56,8 +56,8 @@ android {
         }
         debug {
 //            buildConfigField "String", "API_BASE_URL", "\"https://api.specialbuy.cn/\""
-//            buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.98:8080/\""
-            buildConfigField "String", "API_BASE_URL", "\"http://47.114.169.229/mall-test/\""
+            buildConfigField "String", "API_BASE_URL", "\"http://192.168.31.98:8080/\""
+//            buildConfigField "String", "API_BASE_URL", "\"http://47.114.169.229/mall-test/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
@@ -92,7 +92,7 @@ walle {
     // 指定渠道包的输出路径
     apkOutputFolder = new File("${project.buildDir}/outputs/channels");
     // 定制渠道包的APK的文件名称
-    apkFileNameFormat = '${appName}-${packageName}-${channel}-${buildType}-v${versionName}-${versionCode}-${buildTime}.apk';
+    apkFileNameFormat = '${channel}-v${versionName}.apk';
     // 渠道配置文件
     channelFile = new File("${project.getProjectDir()}/channel")
 }

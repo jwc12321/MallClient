@@ -250,7 +250,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
             if (TextUtils.equals(StaticData.REFRESH_ZERO, confirmCartOrderDetail.getCouponCount())) {
                 coupon.setText(getString(R.string.no_available));
             } else {
-                if (TextUtils.equals(StaticData.REFRESH_ZERO, userCouponId)) {
+                if (TextUtils.equals(StaticData.REFRESH_ZERO, userCouponId)||TextUtils.equals(StaticData.REFRESH_MINUS_ONE, userCouponId)) {
                     coupon.setText(confirmCartOrderDetail.getCouponCount() + "张优惠券可用");
                 } else {
                     coupon.setText("-" + NumberFormatUnit.goodsFormat(confirmCartOrderDetail.getCouponPrice()));
