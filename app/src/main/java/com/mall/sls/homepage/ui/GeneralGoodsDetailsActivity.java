@@ -74,8 +74,6 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
     MediumThickTextView goodsName;
     @BindView(R.id.goods_brief)
     ConventionalTextView goodsBrief;
-    @BindView(R.id.courierType)
-    ConventionalTextView courierType;
     @BindView(R.id.goods_detail_iv)
     ImageView goodsDetailIv;
     @BindView(R.id.webView)
@@ -301,11 +299,6 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                 }
                 goodsDetailIv.setVisibility(TextUtils.isEmpty(goodsBaseVo.getDetail()) ? View.GONE : View.VISIBLE);
                 picUrl = goodsBaseVo.getPicUrl();
-                if (TextUtils.equals(StaticData.REFRESH_ONE, goodsBaseVo.getCourierType())) {
-                    courierType.setText(getString(R.string.same_city_delivery));
-                } else {
-                    courierType.setText(getString(R.string.type_express_delivery));
-                }
             }
             goodsSpecs = generalGoodsDetailsInfo.getGoodsSpecs();
             productListCallableInfos = generalGoodsDetailsInfo.getProductListCallableInfos();

@@ -67,7 +67,7 @@ public class OrderDetailGoodsItemAdapter extends RecyclerView.Adapter<OrderDetai
         @BindView(R.id.goods_number)
         ConventionalTextView goodsNumber;
         @BindView(R.id.goods_price)
-        ConventionalTextView goodsPrice;
+        MediumThickTextView goodsPrice;
         @BindView(R.id.item_rl)
         RelativeLayout itemRl;
 
@@ -80,7 +80,7 @@ public class OrderDetailGoodsItemAdapter extends RecyclerView.Adapter<OrderDetai
             GlideHelper.load((Activity) context, orderGoodsVo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(orderGoodsVo.getGoodsName());
             sku.setText(orderGoodsVo.getSpecifications());
-            goodsPrice.setText(NumberFormatUnit.goodsFormat(orderGoodsVo.getPrice()));
+            goodsPrice.setText(NumberFormatUnit.numberFormat(orderGoodsVo.getPrice()));
             goodsNumber.setText("x" + orderGoodsVo.getNumber());
         }
     }

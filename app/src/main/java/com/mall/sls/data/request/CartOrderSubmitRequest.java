@@ -24,12 +24,16 @@ public class CartOrderSubmitRequest {
     //来源 android
     @SerializedName("orderFrom")
     private String orderFrom;
+    //配送方式
+    @SerializedName("shipChannel")
+    private String shipChannel;
 
-    public CartOrderSubmitRequest(String addressId, List<String> ids, String userCouponId, String message, String orderFrom) {
+    public CartOrderSubmitRequest(String addressId, List<String> ids, String userCouponId, String message, String orderFrom,String shipChannel) {
         this.addressId = addressId;
         this.ids = ids;
         this.userCouponId = userCouponId;
         this.message = message;
         this.orderFrom = orderFrom;
+        this.shipChannel=shipChannel;
     }
 }

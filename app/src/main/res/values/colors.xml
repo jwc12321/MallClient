@@ -29,6 +29,7 @@
     <color name="appText23">#CACACA</color>
     <color name="appText24">#0091FF</color>
     <color name="appText25">#000000</color>
+    <color name="appText26">#E02020</color>
 
     <color name="backGround1">#EF3342</color>
     <color name="backGround2">#13000000</color>
@@ -113,5 +114,6 @@
     <color name="backGround83">#F5F5F5</color>
     <color name="backGround84">#F7B500</color>
     <color name="backGround85">#D5D5D5</color>
+    <color name="backGround86">#FFF2F3</color>
 
 </resources>

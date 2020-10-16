@@ -467,6 +467,9 @@
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"
             android:theme="@style/TranslucentFullScreenTheme"/>
+        <activity android:name=".order.ui.ViewFundActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

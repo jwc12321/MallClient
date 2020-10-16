@@ -18,10 +18,14 @@ public class CartGeneralCheckedRequest {
     //用户优惠券id 不传参数或0使用默认 传-1不使用优惠券
     @SerializedName("userCouponId")
     private String userCouponId;
+    //配送方式
+    @SerializedName("shipChannel")
+    private String shipChannel;
 
-    public CartGeneralCheckedRequest(String addressId, List<String> ids, String userCouponId) {
+    public CartGeneralCheckedRequest(String addressId, List<String> ids, String userCouponId,String shipChannel) {
         this.addressId = addressId;
         this.ids = ids;
         this.userCouponId = userCouponId;
+        this.shipChannel=shipChannel;
     }
 }

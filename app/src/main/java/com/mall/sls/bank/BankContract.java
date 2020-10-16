@@ -64,5 +64,13 @@ public interface BankContract {
         void renderBaoFuCode();
     }
 
+    interface AddChinaGCardPresenter extends BasePresenter{
+        void getCertifyInfo();
+    }
+
+    interface AddChinaGCardView extends BaseView<AddChinaGCardPresenter>{
+        void renderCertifyInfo(CertifyInfo certifyInfo);
+    }
+
 
 }

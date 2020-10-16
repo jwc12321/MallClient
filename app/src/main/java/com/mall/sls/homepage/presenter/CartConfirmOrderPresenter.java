@@ -51,9 +51,9 @@ public class CartConfirmOrderPresenter implements HomepageContract.CartConfirmOr
 
 
     @Override
-    public void cartGeneralChecked(String addressId, List<String> ids, String userCouponId) {
+    public void cartGeneralChecked(String addressId, List<String> ids, String userCouponId,String shipChannel) {
         cartConfirmOrderView.showLoading(StaticData.PROCESSING);
-        CartGeneralCheckedRequest request = new CartGeneralCheckedRequest(addressId,ids, userCouponId);
+        CartGeneralCheckedRequest request = new CartGeneralCheckedRequest(addressId,ids, userCouponId,shipChannel);
         String sign = SignUnit.signPost(RequestUrl.CART_GENERAL_CHECKED, gson.toJson(request));
         Disposable disposable = restApiService.cartGeneralChecked(sign, request)
                 .flatMap(new RxRemoteDataParse<ConfirmCartOrderDetail>())
@@ -75,9 +75,9 @@ public class CartConfirmOrderPresenter implements HomepageContract.CartConfirmOr
     }
 
     @Override
-    public void cartOrderSubmit(String addressId, List<String> ids, String userCouponId, String message) {
+    public void cartOrderSubmit(String addressId, List<String> ids, String userCouponId, String message,String shipChannel) {
         cartConfirmOrderView.showLoading(StaticData.PROCESSING);
-        CartOrderSubmitRequest request = new CartOrderSubmitRequest(addressId,ids, userCouponId,message,"android");
+        CartOrderSubmitRequest request = new CartOrderSubmitRequest(addressId,ids, userCouponId,message,"android",shipChannel);
         String sign = SignUnit.signPost(RequestUrl.ORDER_GENERAL_SUBMIT, gson.toJson(request));
         Disposable disposable = restApiService.cartOrderSubmit(sign, request)
                 .flatMap(new RxRemoteDataParse<OrderSubmitInfo>())

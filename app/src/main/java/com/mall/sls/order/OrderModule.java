@@ -12,6 +12,7 @@ public class OrderModule {
     private OrderContract.OrderListView orderListView;
     private OrderContract.OrderDetailsView orderDetailsView;
     private OrderContract.OrderLogisticsView orderLogisticsView;
+    private OrderContract.RefundView refundView;
 
     public OrderModule(OrderContract.OrderListView orderListView) {
         this.orderListView = orderListView;
@@ -23,6 +24,10 @@ public class OrderModule {
 
     public OrderModule(OrderContract.OrderLogisticsView orderLogisticsView) {
         this.orderLogisticsView = orderLogisticsView;
+    }
+
+    public OrderModule(OrderContract.RefundView refundView) {
+        this.refundView = refundView;
     }
 
     @Provides
@@ -38,5 +43,10 @@ public class OrderModule {
     @Provides
     OrderContract.OrderLogisticsView provideOrderLogisticsView(){
         return orderLogisticsView;
+    }
+
+    @Provides
+    OrderContract.RefundView provideRefundView(){
+        return refundView;
     }
 }

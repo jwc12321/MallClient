@@ -12,7 +12,7 @@
     <FrameLayout
         android:id="@+id/delete_layout"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_108"
+        android:layout_height="@dimen/dp_112"
         android:background="@color/backGround1">
 
         <TextView
@@ -27,7 +27,7 @@
     <RelativeLayout
         android:id="@+id/goods_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_108"
+        android:layout_height="@dimen/dp_112"
         android:background="@drawable/common_four_back_fifty_seven_bg">
 
         <ImageView
@@ -36,13 +36,10 @@
 
         <ImageView
             android:id="@+id/goods_iv"
-            android:layout_width="@dimen/dp_82"
-            android:layout_height="@dimen/dp_82"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_3"
+            style="@style/confirm_order_goods_iv_style"
+            tools:src="@mipmap/ic_launcher"
             android:layout_toRightOf="@id/choice_item"
-            android:scaleType="fitXY"
-            tools:src="@mipmap/ic_launcher" />
+            android:layout_marginLeft="@dimen/dp_5"/>
 
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/goods_name"
@@ -50,18 +47,22 @@
             android:layout_toRightOf="@id/goods_iv"
             tools:text="香蕉" />
 
-        <com.mall.sls.common.widget.textview.ConventionalTextView
-            android:id="@+id/goods_price"
-            style="@style/size14_color_back1_text_style"
+        <LinearLayout
+            android:id="@+id/goods_price_ll"
+            style="@style/confirm_order_goods_price_ll_style"
             android:layout_alignBottom="@id/goods_iv"
-            android:layout_marginLeft="@dimen/dp_12"
-            android:layout_toRightOf="@id/goods_iv"
-            tools:text="59" />
+            android:layout_toRightOf="@id/goods_iv">
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/confirm_order_goods_symbol_style"/>
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                android:id="@+id/goods_price"
+                style="@style/confirm_order_goods_price_style"
+                tools:text="10000"/>
+        </LinearLayout>
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/sku"
             style="@style/confirm_order_goods_sku_style"
-            android:layout_above="@id/goods_price"
             android:layout_below="@id/goods_name"
             android:layout_toRightOf="@id/goods_iv"
             tools:text="黑色" />

@@ -12,10 +12,11 @@
     <string name="space_card_number">卡号&#8195;</string>
     <string name="weixin_pay">微信支付&#12288;</string>
     <string name="payable">需付&#160;&#160;</string>
-    <string name="total_price">合计&#160;&#160;</string>
+    <string name="total_price">合计</string>
 
     <!--mai_dian-->
     <string name="bank_card_page">银行卡页</string>
+    <string name="view_fund_page">资金去向页</string>
 
     <!--按钮点击-->
     <string name="mine_bank_card_click">我的-银行卡</string>
@@ -341,7 +342,7 @@
     <string name="where_money_goes">钱款去向</string>
     <string name="refunded">已退款</string>
     <string name="refund_progress">退款进度</string>
-    <string name="refund_amount">（退款金额）</string>
+    <string name="refund_amount">退款金额</string>
     <string name="refund_processing">退款处理中</string>
     <string name="successful_account">到账成功</string>
     <string name="my_fans">我的粉丝</string>
@@ -529,4 +530,17 @@
     <string name="payment_process">支付处理中</string>
     <string name="sub_amount">优惠金额：</string>
     <string name="delivery_note">配送说明</string>
+
+    <!--1.1.4-->
+    <string name="free_shipping">免运费</string>
+    <string name="please_choose">请选择</string>
+    <string name="change_shipping_method">当前地址超出配送范围，请更改配送方式</string>
+    <string name="refund_number">退款编号</string>
+    <string name="starting_time">发起时间</string>
+    <string name="arrival_time">到账时间</string>
+    <string name="refund_success">退款成功</string>
+    <string name="refund_fail">退款失败</string>
+    <string name="fail_time">失败时间</string>
+    <string name="safe_code_tip">信用卡必填</string>
+    <string name="expire_date_tip">信用卡必填 格式YY/MM</string>
 </resources>

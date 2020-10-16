@@ -33,6 +33,7 @@ public class RequestCodeStatic {
     public static final int BACK_BANE_RESULT=40;
     public static final int BANK_DETAIL=41;
     public static final int HIDDEN_CART=42;
+    public static final int COMMON_TIP_PAGE=22;//提醒界面
 
     public static final int REQUEST_CAMERA=501;//权限相机
     public static final int RETURN_BITMAP=502;

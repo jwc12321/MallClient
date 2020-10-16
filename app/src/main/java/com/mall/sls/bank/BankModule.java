@@ -15,6 +15,7 @@ public class BankModule {
     private BankContract.ConfirmBindBankView confirmBindBankView;
     private BankContract.UntieBankCardView untieBankCardView;
     private BankContract.BankCardPayView bankCardPayView;
+    private BankContract.AddChinaGCardView addChinaGCardView;
 
     public BankModule(BankContract.BankCardSView bankCardSView) {
         this.bankCardSView = bankCardSView;
@@ -34,6 +35,10 @@ public class BankModule {
 
     public BankModule(BankContract.BankCardPayView bankCardPayView) {
         this.bankCardPayView = bankCardPayView;
+    }
+
+    public BankModule(BankContract.AddChinaGCardView addChinaGCardView) {
+        this.addChinaGCardView = addChinaGCardView;
     }
 
     @Provides
@@ -59,5 +64,10 @@ public class BankModule {
     @Provides
     BankContract.BankCardPayView provideBankCardPayView(){
         return bankCardPayView;
+    }
+
+    @Provides
+    BankContract.AddChinaGCardView provideAddChinaGCardView(){
+        return addChinaGCardView;
     }
 }

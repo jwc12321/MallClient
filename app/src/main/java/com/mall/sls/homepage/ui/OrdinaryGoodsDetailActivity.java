@@ -97,8 +97,6 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     MediumThickTextView goodsName;
     @BindView(R.id.goods_brief)
     ConventionalTextView goodsBrief;
-    @BindView(R.id.courierType)
-    ConventionalTextView courierType;
     @BindView(R.id.selected_goods)
     ConventionalTextView selectedGoods;
     @BindView(R.id.right_arrow_iv)
@@ -493,11 +491,6 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
             groupNumber.setText(goodsDetailsInfo.getGroupNum() + "人正在拼单，可直接参与");
             groupPurchases = goodsDetailsInfo.getGroupPurchases();
             oldGroupRulesId = goodsDetailsInfo.getRulesId();
-            if (TextUtils.equals(StaticData.REFRESH_ONE, goodsDetailsInfo.getCourierType())) {
-                courierType.setText(getString(R.string.same_city_delivery));
-            } else {
-                courierType.setText(getString(R.string.type_express_delivery));
-            }
             initGroup();
             picUrl = goodsDetailsInfo.getPicUrl();
             goodsSpecs = goodsDetailsInfo.getGoodsSpecs();

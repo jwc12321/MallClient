@@ -215,5 +215,7 @@ public class StaticData {
     public static final String PAY_RECORD_INFO="PayRecordInfo";
     public static final String ORDER_NUMBER="orderNumber";
 
+    public static final String SF_SAME_CITY="sfSameCity";
+    public static final String SF_EXPRESS="sfExpress";
 
 }

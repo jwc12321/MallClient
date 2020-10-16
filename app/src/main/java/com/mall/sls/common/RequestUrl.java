@@ -89,5 +89,6 @@ public class RequestUrl {
     public static String PAY_METHOD="/app/common/pay-method";//获取支付方式
     public static String BEGIN_PAY="/app/pay/begin-pay";//开始支付
     public static String TOKEN_REFRESH="/app/auth/token/refresh";//刷新token
+    public static String REFUND_LOGS="/app/order/refund-log/";//退款详情
 
 }

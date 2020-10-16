@@ -109,7 +109,7 @@ public class CartItemAdapter extends RecyclerView.Adapter {
         @BindView(R.id.goods_name)
         MediumThickTextView goodsName;
         @BindView(R.id.goods_price)
-        ConventionalTextView goodsPrice;
+        MediumThickTextView goodsPrice;
         @BindView(R.id.sku)
         ConventionalTextView sku;
         @BindView(R.id.decrease_count)
@@ -138,7 +138,7 @@ public class CartItemAdapter extends RecyclerView.Adapter {
             GlideHelper.load((Activity) context, cartItemInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(cartItemInfo.getGoodsName());
             sku.setText(cartItemInfo.getSpecifications());
-            goodsPrice.setText(NumberFormatUnit.goodsFormat(cartItemInfo.getPrice()));
+            goodsPrice.setText(NumberFormatUnit.numberFormat(cartItemInfo.getPrice()));
             choiceItem.setChecked(cartItemInfo.isIscheck());
             goodsCount.setText(cartItemInfo.getNumber());
             if (onItemClickListener != null) {
@@ -241,7 +241,7 @@ public class CartItemAdapter extends RecyclerView.Adapter {
         @BindView(R.id.goods_name)
         MediumThickTextView goodsName;
         @BindView(R.id.goods_price)
-        ConventionalTextView goodsPrice;
+        MediumThickTextView goodsPrice;
         @BindView(R.id.sku)
         ConventionalTextView sku;
         @BindView(R.id.goods_layout)
@@ -262,7 +262,7 @@ public class CartItemAdapter extends RecyclerView.Adapter {
             GlideHelper.load((Activity) context, hiddenItemCartInfo.getPicUrl(), R.mipmap.icon_default_goods, goodsIv);
             goodsName.setText(hiddenItemCartInfo.getGoodsName());
             sku.setText(hiddenItemCartInfo.getSpecifications());
-            goodsPrice.setText(NumberFormatUnit.goodsFormat(hiddenItemCartInfo.getPrice()));
+            goodsPrice.setText(NumberFormatUnit.numberFormat(hiddenItemCartInfo.getPrice()));
             deleteLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

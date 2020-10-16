@@ -105,7 +105,7 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
         @BindView(R.id.is_pay)
         ConventionalTextView isPay;
         @BindView(R.id.total_amount)
-        ConventionalTextView totalAmount;
+        MediumThickTextView totalAmount;
         @BindView(R.id.left_bt)
         ConventionalTextView leftBt;
         @BindView(R.id.right_bt)
@@ -132,7 +132,7 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
             time.setText(goodsOrderInfo.getAddTime());
             orderGoodsVos = goodsOrderInfo.getOrderGoodsVos();
             orderGoodsItemAdapter.setData(orderGoodsVos,goodsOrderInfo.getId());
-            totalAmount.setText(NumberFormatUnit.goodsFormat(goodsOrderInfo.getActualPrice()));
+            totalAmount.setText(NumberFormatUnit.numberFormat(goodsOrderInfo.getActualPrice()));
             setOrderStatus(goodsOrderInfo.getOrderStatus());
             if (TextUtils.equals(StaticData.TO_PAY, goodsOrderInfo.getOrderStatus())
                     ||TextUtils.equals(StaticData.CANCELLED, goodsOrderInfo.getOrderStatus())

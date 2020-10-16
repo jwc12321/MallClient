@@ -70,7 +70,7 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
     @BindView(R.id.confirm_bt)
     ConventionalTextView confirmBt;
     @BindView(R.id.total_price)
-    ConventionalTextView totalPrice;
+    MediumThickTextView totalPrice;
 
     @Inject
     CartPresenter cartPresenter;
@@ -337,7 +337,7 @@ public class CartFragment extends BaseFragment implements CartContract.CartView,
             } else {
                 selectAll.setChecked(false);
             }
-            totalPrice.setText(NumberFormatUnit.goodsFormat(totalPriceBd.toString()));
+            totalPrice.setText(NumberFormatUnit.numberFormat(totalPriceBd.toString()));
         }
     }
 

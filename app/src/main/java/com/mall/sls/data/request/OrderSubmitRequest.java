@@ -25,13 +25,17 @@ public class OrderSubmitRequest {
     //来源 android
     @SerializedName("orderFrom")
     private String orderFrom;
+    //配送方式
+    @SerializedName("shipChannel")
+    private String shipChannel;
 
-    public OrderSubmitRequest(String addressId, String cartId, String couponId, String userCouponId, String message, String orderFrom) {
+    public OrderSubmitRequest(String addressId, String cartId, String couponId, String userCouponId, String message, String orderFrom,String shipChannel) {
         this.addressId = addressId;
         this.cartId = cartId;
         this.couponId = couponId;
         this.userCouponId = userCouponId;
         this.message = message;
         this.orderFrom = orderFrom;
+        this.shipChannel=shipChannel;
     }
 }

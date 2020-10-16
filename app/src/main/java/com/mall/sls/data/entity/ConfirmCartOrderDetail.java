@@ -42,6 +42,12 @@ public class ConfirmCartOrderDetail {
     //可以下单的购物车id
     @SerializedName("cartIds")
     private String cartIds;
+    //免运费描述
+    @SerializedName("freeShipDes")
+    private String freeShipDes;
+    //是否在配送范围  true 超出配送范围
+    @SerializedName("outShip")
+    private Boolean outShip;
 
 
     public AddressInfo getAddressInfo() {
@@ -130,5 +136,21 @@ public class ConfirmCartOrderDetail {
 
     public void setCartIds(String cartIds) {
         this.cartIds = cartIds;
+    }
+
+    public String getFreeShipDes() {
+        return freeShipDes;
+    }
+
+    public void setFreeShipDes(String freeShipDes) {
+        this.freeShipDes = freeShipDes;
+    }
+
+    public Boolean getOutShip() {
+        return outShip;
+    }
+
+    public void setOutShip(Boolean outShip) {
+        this.outShip = outShip;
     }
 }

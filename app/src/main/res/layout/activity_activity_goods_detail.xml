@@ -142,23 +142,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_10" />
             </LinearLayout>
-
-            <com.mall.sls.common.widget.textview.ConventionalTextView
-                android:id="@+id/courierType"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_49"
-                android:background="@color/backGround57"
-                android:gravity="center_vertical"
-                tools:text="配送方式："
-                android:textColor="@color/appText3"
-                android:textSize="@dimen/sp_14"
-                android:paddingLeft="@dimen/dp_15"
-                android:layout_marginTop="@dimen/dp_10"/>
             <LinearLayout
                 android:id="@+id/delivery_method_ll"
                 style="@style/add_address_ll_style"
-                android:layout_marginTop="@dimen/dp_10"
-                android:visibility="gone">
+                android:layout_marginTop="@dimen/dp_10">
                 <com.mall.sls.common.widget.textview.MediumThickTextView
                    style="@style/size13_app3_left_tv_style"
                     android:text="@string/delivery_method"

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/bank_pay" />
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_rel"
+        android:layout_marginBottom="@dimen/dp_80"
+        android:fadingEdge="none"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/back57_ll_style">
+
+                <LinearLayout
+                    style="@style/add_bank_card_ll_style"
+                    android:layout_marginTop="@dimen/dp_20">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/add_bank_card_left_tv_style"
+                        android:text="@string/cardholder" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalEditTextView
+                        android:id="@+id/cardholder_et"
+                        style="@style/add_bank_card_et_style"
+                        android:hint="@string/cardholder_name"
+                        android:inputType="text"
+                        />
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/cardholder_tv"
+                        style="@style/add_bank_card_right_tv_style"
+                        tools:text="@string/cardholder_name"
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+                <View style="@style/fifteen_back_nine_line_style" />
+
+                <RelativeLayout style="@style/add_bank_card_ll_style">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/card_number_tv"
+                        style="@style/add_bank_card_left_tv_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/space_card_number" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalEditTextView
+                        android:id="@+id/card_number_et"
+                        style="@style/add_bank_card_et_style"
+                        android:layout_toLeftOf="@id/bank_camera_iv"
+                        android:layout_toRightOf="@id/card_number_tv"
+                        android:hint="@string/cardholder_card_number"
+                        android:inputType="number" />
+
+                    <ImageView
+                        android:id="@+id/bank_camera_iv"
+                        style="@style/add_right_iv_style"
+                        android:src="@mipmap/icon_bank_camera" />
+                </RelativeLayout>
+
+                <View style="@style/fifteen_back_nine_line_style" />
+
+                <LinearLayout style="@style/add_bank_card_ll_style">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/add_bank_card_left_tv_style"
+                        android:text="@string/id_card" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalEditTextView
+                        android:id="@+id/id_card_et"
+                        style="@style/add_bank_card_et_style"
+                        android:hint="@string/cardholder_id_card"
+                        android:inputType="text" />
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/id_card_tv"
+                        style="@style/add_bank_card_right_tv_style"
+                        tools:text="@string/cardholder_name"
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+                <View style="@style/fifteen_back_nine_line_style" />
+
+                <RelativeLayout style="@style/add_bank_card_ll_style">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        android:id="@+id/phone_number_tv"
+                        style="@style/add_bank_card_left_tv_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/phone_number" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalEditTextView
+                        android:id="@+id/phone_number_et"
+                        style="@style/add_bank_card_et_style"
+                        android:layout_toLeftOf="@id/bank_tip_iv"
+                        android:layout_toRightOf="@id/phone_number_tv"
+                        android:hint="@string/bank_phone_number"
+                        android:inputType="number" />
+
+                    <ImageView
+                        android:id="@+id/bank_tip_iv"
+                        style="@style/add_right_iv_style"
+                        android:src="@mipmap/icon_bank_tip" />
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/safe_code_line"
+                    style="@style/fifteen_back_nine_line_style" />
+
+                <LinearLayout
+                    android:id="@+id/safe_code_ll"
+                    style="@style/add_bank_card_ll_style">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/add_bank_card_left_tv_style"
+                        android:text="@string/safe_code" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalEditTextView
+                        android:id="@+id/safe_code_et"
+                        style="@style/add_bank_card_et_style"
+                        android:hint="@string/safe_code_tip"
+                        android:inputType="text" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/expire_date_line"
+                    style="@style/fifteen_back_nine_line_style" />
+
+                <LinearLayout
+                    android:id="@+id/expire_date_ll"
+                    style="@style/add_bank_card_ll_style">
+
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/add_bank_card_left_tv_style"
+                        android:text="@string/expire_date" />
+
+                    <com.mall.sls.common.widget.textview.ConventionalEditTextView
+                        android:id="@+id/expire_date_et"
+                        style="@style/add_bank_card_et_style"
+                        android:hint="@string/expire_date_tip"
+                        android:inputType="text" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/checkbox_ll"
+                style="@style/check_box_ll_style"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <CheckBox
+                    android:id="@+id/choice_item"
+                    style="@style/check_box_style" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/content"
+                    style="@style/check_box_tv_style"
+                    android:text="@string/fast_payment_agreement" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.mall.sls.common.widget.textview.MediumThickTextView
+        android:id="@+id/next_bt"
+        style="@style/common_bottom_30_next_bt_style"
+        android:text="@string/next" />
+</RelativeLayout>

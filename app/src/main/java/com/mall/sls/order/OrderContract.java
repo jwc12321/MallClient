@@ -11,6 +11,7 @@ import com.mall.sls.data.entity.OrderAddCartInfo;
 import com.mall.sls.data.entity.OrderInfo;
 import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.OrderPackageInfo;
+import com.mall.sls.data.entity.RefundInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.entity.WxPay;
 import com.mall.sls.order.ui.ViewLogisticsActivity;
@@ -71,4 +72,13 @@ public interface OrderContract {
     interface OrderLogisticsView extends BaseView<OrderLogisticsPresenter>{
         void renderOrderLogistics(List<OrderPackageInfo> orderPackageInfos);
     }
+
+    interface RefundPresenter extends BasePresenter{
+        void getRefundInfo(String refreshType,String orderId);
+    }
+
+    interface RefundView extends BaseView<RefundPresenter>{
+        void renderRefundInfo(List<RefundInfo> refundInfos);
+    }
+
 }

@@ -4,13 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -20,6 +17,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 
@@ -60,14 +58,18 @@ import com.mall.sls.mine.ui.CustomerServiceActivity;
 import com.mall.sls.mine.ui.SelectShareTypeActivity;
 import com.mall.sls.webview.unit.JSBridgeWebChromeClient;
 import com.stx.xhb.androidx.XBanner;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -76,7 +78,7 @@ import butterknife.OnClick;
  * @author jwc on 2020/5/9.
  * 描述：活动商品详情
  */
-public class ActivityGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, CommonTearDownView.TimeOutListener, NestedScrollView.OnScrollChangeListener,WXShareManager.OnItemClickListener {
+public class ActivityGoodsDetailActivity extends BaseActivity implements HomepageContract.GoodsDetailsView, CommonTearDownView.TimeOutListener, NestedScrollView.OnScrollChangeListener, WXShareManager.OnItemClickListener {
 
 
     @BindView(R.id.banner)
@@ -97,8 +99,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     MediumThickTextView goodsName;
     @BindView(R.id.goods_brief)
     ConventionalTextView goodsBrief;
-    @BindView(R.id.courierType)
-    ConventionalTextView courierType;
+    @BindView(R.id.delivery_method_ll)
+    LinearLayout deliveryMethodLl;
     @BindView(R.id.selected_goods)
     ConventionalTextView selectedGoods;
     @BindView(R.id.right_arrow_iv)
@@ -127,8 +129,6 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     MediumThickTextView confirmBt;
     @BindView(R.id.share_iv)
     ImageView shareIv;
-    @BindView(R.id.delivery_method_ll)
-    LinearLayout deliveryMethodLl;
     private ProductListCallableInfo productListCallableInfo;
     private List<CustomViewsInfo> data;
     private String goodsId;
@@ -402,11 +402,6 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             goodsBrief.setText(goodsDetailsInfo.getBrief());
             goodsBrief.setVisibility(TextUtils.isEmpty(goodsDetailsInfo.getBrief()) ? View.GONE : View.VISIBLE);
             selectedGoods.setText(getString(R.string.select_spec));
-            if (TextUtils.equals(StaticData.REFRESH_ONE, goodsDetailsInfo.getCourierType())) {
-                courierType.setText(getString(R.string.same_city_delivery));
-            } else {
-                courierType.setText(getString(R.string.type_express_delivery));
-            }
             if (!TextUtils.isEmpty(goodsDetailsInfo.getNow()) && !TextUtils.isEmpty(goodsDetailsInfo.getGroupExpireTime()) && !TextUtils.isEmpty(goodsDetailsInfo.getStartTime())) {
                 long now = FormatUtil.dateToStamp(goodsDetailsInfo.getNow());
                 long groupExpireTime = FormatUtil.dateToStamp(goodsDetailsInfo.getGroupExpireTime());
@@ -558,6 +553,6 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
 
     @Override
     public void returnBitmap(Bitmap bitmap) {
-        shareBitMap=bitmap;
+        shareBitMap = bitmap;
     }
 }

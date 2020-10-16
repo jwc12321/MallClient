@@ -44,6 +44,7 @@ import com.mall.sls.data.entity.OrderPackageInfo;
 import com.mall.sls.data.entity.OrderSubmitInfo;
 import com.mall.sls.data.entity.PayMethodInfo;
 import com.mall.sls.data.entity.ProvinceBean;
+import com.mall.sls.data.entity.RefundInfo;
 import com.mall.sls.data.entity.SearchHistory;
 import com.mall.sls.data.entity.SecondCategory;
 import com.mall.sls.data.entity.SecondCategoryInfo;
@@ -157,7 +158,7 @@ public interface RestApiService {
 
     //订单预提交
     @GET("app/cart/checkout")
-    Flowable<RemoteDataWrapper<ConfirmOrderDetail>> cartCheckout(@Header("X-Hc-Sign") String sign, @Query("addressId") String addressId, @Query("cartId") String cartId, @Query("couponId") String couponId, @Query("userCouponId") String userCouponId);
+    Flowable<RemoteDataWrapper<ConfirmOrderDetail>> cartCheckout(@Header("X-Hc-Sign") String sign, @Query("addressId") String addressId, @Query("cartId") String cartId, @Query("couponId") String couponId, @Query("userCouponId") String userCouponId,@Query("shipChannel") String shipChannel);
 
     //查询当前预提交订单可用优惠券
     @GET("app/coupon/selectlist")
@@ -446,5 +447,9 @@ public interface RestApiService {
     //刷新token
     @GET("app/auth/token/refresh")
     Flowable<RemoteDataWrapper<TokenRefreshInfo>> getTokenRefreshInfo(@Header("X-Hc-Sign") String sign);
+
+    //查询退款记录
+    @GET("app/order/refund-log/{orderId}")
+    Flowable<RemoteDataWrapper<List<RefundInfo>>> getRefundInfo(@Header("X-Hc-Sign") String sign, @Path("orderId") String orderId);
 
 }

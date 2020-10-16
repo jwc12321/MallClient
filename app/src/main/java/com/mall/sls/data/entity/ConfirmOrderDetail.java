@@ -46,6 +46,12 @@ public class ConfirmOrderDetail implements Serializable {
     //运费
     @SerializedName("freightPrice")
     private String freightPrice;
+    //免运费描述
+    @SerializedName("freeShipDes")
+    private String freeShipDes;
+    //是否在配送范围  true 超出配送范围
+    @SerializedName("outShip")
+    private Boolean outShip;
 
     public AddressInfo getAddressInfo() {
         return addressInfo;
@@ -141,5 +147,21 @@ public class ConfirmOrderDetail implements Serializable {
 
     public void setFreightPrice(String freightPrice) {
         this.freightPrice = freightPrice;
+    }
+
+    public String getFreeShipDes() {
+        return freeShipDes;
+    }
+
+    public void setFreeShipDes(String freeShipDes) {
+        this.freeShipDes = freeShipDes;
+    }
+
+    public Boolean getOutShip() {
+        return outShip;
+    }
+
+    public void setOutShip(Boolean outShip) {
+        this.outShip = outShip;
     }
 }

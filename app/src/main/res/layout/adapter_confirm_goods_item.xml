@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_108"
+    android:layout_height="@dimen/dp_112"
     android:background="@color/backGround57">
 
     <ImageView
@@ -20,7 +20,6 @@
     <com.mall.sls.common.widget.textview.ConventionalTextView
         android:id="@+id/sku"
         style="@style/confirm_order_goods_sku_style"
-        android:layout_above="@id/goods_price"
         android:layout_below="@id/goods_name"
         android:layout_toRightOf="@id/goods_iv"
         tools:text="黑色" />
@@ -31,18 +30,16 @@
         android:layout_alignBottom="@id/goods_iv"
         tools:text="x1" />
 
-    <com.mall.sls.common.widget.textview.ConventionalTextView
-        android:id="@+id/goods_price"
-        style="@style/size14_color_back1_text_style"
+    <LinearLayout
+        android:id="@+id/goods_price_ll"
+        style="@style/confirm_order_goods_price_ll_style"
         android:layout_alignBottom="@id/goods_iv"
-        android:layout_marginLeft="@dimen/dp_12"
-        android:layout_toRightOf="@id/goods_iv"
-        tools:text="111" />
-
-    <RelativeLayout
-        android:id="@+id/hide_rl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#50FFFFFF"
-        android:visibility="gone"/>
+        android:layout_toRightOf="@id/goods_iv">
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            style="@style/confirm_order_goods_symbol_style"/>
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/goods_price"
+            style="@style/confirm_order_goods_price_style"
+            tools:text="10000"/>
+    </LinearLayout>
 </RelativeLayout>

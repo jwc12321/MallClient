@@ -10,16 +10,19 @@
         android:layout_height="wrap_content"
         android:background="@drawable/common_four_back_fifty_seven_bg"
         android:orientation="vertical"
-        android:layout_marginLeft="@dimen/dp_44"
-        android:layout_marginRight="@dimen/dp_44"
+        android:layout_marginLeft="@dimen/dp_35"
+        android:layout_marginRight="@dimen/dp_35"
         android:layout_centerInParent="true">
 
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/title"
-            style="@style/size16_color_app3_text_style"
+            style="@style/size15_color_app3_text_style"
             android:layout_gravity="center_horizontal"
             tools:text="JFKDAJFK "
-            android:layout_margin="@dimen/dp_25" />
+            android:layout_marginTop="@dimen/dp_25"
+            android:layout_marginBottom="@dimen/dp_25"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginRight="@dimen/dp_8"/>
         <View
            style="@style/back_nine_line_style"/>
         <LinearLayout

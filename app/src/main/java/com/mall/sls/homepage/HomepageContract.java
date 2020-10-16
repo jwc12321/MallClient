@@ -60,8 +60,8 @@ public interface HomepageContract {
     }
 
     interface ConfirmOrderPresenter extends BasePresenter{
-        void cartCheckout(String addressId, String cartId, String couponId, String userCouponId);
-        void orderSubmit(String addressId, String cartId, String couponId, String userCouponId, String message);
+        void cartCheckout(String addressId, String cartId, String couponId, String userCouponId,String shipChannel);
+        void orderSubmit(String addressId, String cartId, String couponId, String userCouponId, String message,String shipChannel);
         void getWxPay(String orderId, String orderType, String paymentMethod);
         void getAliPay(String orderId, String orderType, String paymentMethod);
         void getBaoFuPay(String orderId, String orderType, String paymentMethod);
@@ -102,8 +102,8 @@ public interface HomepageContract {
     }
 
     interface CartConfirmOrderPresenter extends BasePresenter{
-        void cartGeneralChecked(String addressId, List<String> ids, String userCouponId);
-        void cartOrderSubmit(String addressId, List<String> ids, String userCouponId, String message);
+        void cartGeneralChecked(String addressId, List<String> ids, String userCouponId,String shipChannel);
+        void cartOrderSubmit(String addressId, List<String> ids, String userCouponId, String message,String shipChannel);
         void getWxPay(String orderId, String orderType, String paymentMethod);
         void getAliPay(String orderId, String orderType, String paymentMethod);
         void getBaoFuPay(String orderId, String orderType, String paymentMethod);

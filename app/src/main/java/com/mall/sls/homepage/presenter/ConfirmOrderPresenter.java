@@ -53,11 +53,11 @@ public class ConfirmOrderPresenter implements HomepageContract.ConfirmOrderPrese
 
 
     @Override
-    public void cartCheckout(String addressId, String cartId, String couponId, String userCouponId) {
+    public void cartCheckout(String addressId, String cartId, String couponId, String userCouponId,String shipChannel) {
         confirmOrderView.showLoading(StaticData.PROCESSING);
-        String queryString="addressId="+addressId+"&cartId="+cartId+"&couponId="+couponId+"&userCouponId="+userCouponId;
+        String queryString="addressId="+addressId+"&cartId="+cartId+"&couponId="+couponId+"&userCouponId="+userCouponId+"&shipChannel="+shipChannel;
         String sign= SignUnit.signGet(RequestUrl.CART_CHECKOUT_URL,queryString);
-        Disposable disposable = restApiService.cartCheckout(sign,addressId,cartId,couponId,userCouponId)
+        Disposable disposable = restApiService.cartCheckout(sign,addressId,cartId,couponId,userCouponId,shipChannel)
                 .flatMap(new RxRemoteDataParse<ConfirmOrderDetail>())
                 .compose(new RxSchedulerTransformer<ConfirmOrderDetail>())
                 .subscribe(new Consumer<ConfirmOrderDetail>() {
@@ -77,9 +77,9 @@ public class ConfirmOrderPresenter implements HomepageContract.ConfirmOrderPrese
     }
 
     @Override
-    public void orderSubmit(String addressId, String cartId, String couponId, String userCouponId, String message) {
+    public void orderSubmit(String addressId, String cartId, String couponId, String userCouponId, String message,String shipChannel) {
         confirmOrderView.showLoading(StaticData.PROCESSING);
-        OrderSubmitRequest request=new OrderSubmitRequest(addressId,cartId,couponId,userCouponId,message,"android");
+        OrderSubmitRequest request=new OrderSubmitRequest(addressId,cartId,couponId,userCouponId,message,"android",shipChannel);
         String sign= SignUnit.signPost(RequestUrl.ORDER_UBMIT_URL,gson.toJson(request));
         Disposable disposable = restApiService.orderSubmit(sign,request)
                 .flatMap(new RxRemoteDataParse<OrderSubmitInfo>())
