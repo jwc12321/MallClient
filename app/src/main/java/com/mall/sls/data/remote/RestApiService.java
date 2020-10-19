@@ -3,6 +3,7 @@ package com.mall.sls.data.remote;
 
 import com.mall.sls.data.RemoteDataWrapper;
 import com.mall.sls.data.entity.AddressInfo;
+import com.mall.sls.data.entity.AiNongPay;
 import com.mall.sls.data.entity.AliPay;
 import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.BankCardInfo;
@@ -64,6 +65,9 @@ import com.mall.sls.data.request.CartGeneralCheckedRequest;
 import com.mall.sls.data.request.CartOrderSubmitRequest;
 import com.mall.sls.data.request.CartUpdateNumberRequest;
 import com.mall.sls.data.request.CertifyIdRequest;
+import com.mall.sls.data.request.ChinaGPayRequest;
+import com.mall.sls.data.request.ChinaGPrepayRequest;
+import com.mall.sls.data.request.ChinaGSendCodeRequest;
 import com.mall.sls.data.request.CodeRequest;
 import com.mall.sls.data.request.ConfirmBindBankRequest;
 import com.mall.sls.data.request.DescriptionRequest;
@@ -443,6 +447,9 @@ public interface RestApiService {
     //宝付支付
     @POST("app/pay/begin-pay")
     Flowable<RemoteDataWrapper<BaoFuPay>> getBaoFuPay(@Header("X-Hc-Sign") String sign, @Body PayRequest request);
+    //爱农支付
+    @POST("app/pay/begin-pay")
+    Flowable<RemoteDataWrapper<AiNongPay>> getAiNongPay(@Header("X-Hc-Sign") String sign, @Body PayRequest request);
 
     //刷新token
     @GET("app/auth/token/refresh")
@@ -451,5 +458,17 @@ public interface RestApiService {
     //查询退款记录
     @GET("app/order/refund-log/{orderId}")
     Flowable<RemoteDataWrapper<List<RefundInfo>>> getRefundInfo(@Header("X-Hc-Sign") String sign, @Path("orderId") String orderId);
+
+    //爱农预支付
+    @POST("app/ainong/prepay")
+    Flowable<RemoteDataWrapper<String>> chinaGPrepay(@Header("X-Hc-Sign") String sign, @Body ChinaGPrepayRequest request);
+
+    //爱农发送验证码
+    @POST("app/ainong/sms")
+    Flowable<RemoteDataWrapper<Boolean>> chinaGSendCode(@Header("X-Hc-Sign") String sign, @Body ChinaGSendCodeRequest request);
+
+    //爱农支付
+    @POST("app/ainong/confirm-pay")
+    Flowable<RemoteDataWrapper<BankPayInfo>> chinaGPay(@Header("X-Hc-Sign") String sign, @Body ChinaGPayRequest request);
 
 }

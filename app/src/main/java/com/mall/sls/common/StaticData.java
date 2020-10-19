@@ -204,6 +204,7 @@ public class StaticData {
     public static final String ALI_PAY="Alipay";
     public static final String WX_PAY="WxPay";
     public static final String BAO_FU_PAY="BaoFooPay";
+    public static final String AI_NONG_PAY="AiNongPay";
     public static final String PAYMENT_METHOD="paymentMethod";
     //CERTIFY 认证支付 ，SUPER 超级会员支付， ORDER 订单支付
     public static final String TYPE_ORDER="ORDER";
@@ -217,5 +218,6 @@ public class StaticData {
 
     public static final String SF_SAME_CITY="sfSameCity";
     public static final String SF_EXPRESS="sfExpress";
+    public static final String CHINA_G_TN="chinaGTn";//爱农tn
 
 }

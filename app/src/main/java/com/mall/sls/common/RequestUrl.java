@@ -90,5 +90,7 @@ public class RequestUrl {
     public static String BEGIN_PAY="/app/pay/begin-pay";//开始支付
     public static String TOKEN_REFRESH="/app/auth/token/refresh";//刷新token
     public static String REFUND_LOGS="/app/order/refund-log/";//退款详情
-
+    public static String CHINA_G_PREPAY="/app/ainong/prepay";//爱农预支付
+    public static String CHINA_G_SEND_CODE="/app/ainong/sms";//爱农发送验证码
+    public static String CHINA_G_PAY="/app/ainong/confirm-pay";//爱农支付
 }

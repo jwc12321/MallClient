@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.data.entity.AiNongPay;
 import com.mall.sls.data.entity.AliPay;
 import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.BaoFuPayInfo;
@@ -218,6 +219,11 @@ public class PendingDeliveryFragment extends BaseFragment implements OrderContra
 
     @Override
     public void renderBaoFuPay(BaoFuPay baoFuPay) {
+
+    }
+
+    @Override
+    public void renderAiNongPay(AiNongPay aiNongPay) {
 
     }
 

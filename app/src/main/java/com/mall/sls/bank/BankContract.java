@@ -8,8 +8,8 @@ import com.mall.sls.data.entity.BindResultInfo;
 import com.mall.sls.data.entity.CardInfo;
 import com.mall.sls.data.entity.CertifyInfo;
 import com.mall.sls.data.request.BankPayRequest;
+import com.mall.sls.data.request.ChinaGPrepayRequest;
 import com.mall.sls.data.request.StartBindBankRequest;
-
 import java.util.List;
 
 /**
@@ -66,10 +66,22 @@ public interface BankContract {
 
     interface AddChinaGCardPresenter extends BasePresenter{
         void getCertifyInfo();
+        void chinaGPrepay(ChinaGPrepayRequest request);
     }
 
     interface AddChinaGCardView extends BaseView<AddChinaGCardPresenter>{
         void renderCertifyInfo(CertifyInfo certifyInfo);
+        void renderChinaGPrepay(String tn);
+    }
+
+    interface ChinaGPayPresenter extends BasePresenter{
+        void chinaGSendCode(String tn);
+        void chinaGPay(String payId, String smsCode, String tn);
+    }
+
+    interface ChinaGPayView extends BaseView<ChinaGPayPresenter>{
+        void renderChinaGSendCode(Boolean isBoolean);
+        void renderChinaGPay(BankPayInfo bankPayInfo);
     }
 
 

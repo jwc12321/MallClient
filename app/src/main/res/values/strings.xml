@@ -543,4 +543,6 @@
     <string name="fail_time">失败时间</string>
     <string name="safe_code_tip">信用卡必填</string>
     <string name="expire_date_tip">信用卡必填 格式YY/MM</string>
+    <string name="select_delivery_method">请选择配送方式</string>
+    <string name="ai_nong_pay">爱农支付</string>
 </resources>

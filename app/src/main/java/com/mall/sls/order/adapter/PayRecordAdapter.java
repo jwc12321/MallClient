@@ -101,7 +101,7 @@ public class PayRecordAdapter extends RecyclerView.Adapter<PayRecordAdapter.PayR
                 payType.setText(context.getString(R.string.weixin_pay));
             } else if (TextUtils.equals(StaticData.REFRESH_ONE, payRecordInfo.getPayType())) {
                 payType.setText(context.getString(R.string.ali_pay));
-            } else if (TextUtils.equals(StaticData.REFRESH_THREE, payRecordInfo.getPayType())) {
+            } else if (TextUtils.equals(StaticData.REFRESH_THREE, payRecordInfo.getPayType())||TextUtils.equals(StaticData.REFRESH_FOUR, payRecordInfo.getPayType())) {
                 payType.setText(context.getString(R.string.bank_pay));
             }
             if (TextUtils.equals(StaticData.REFRESH_ONE, payRecordInfo.getOrderStatus())) {

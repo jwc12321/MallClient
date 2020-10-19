@@ -6,6 +6,7 @@ import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.SignUnit;
 import com.mall.sls.data.RxSchedulerTransformer;
+import com.mall.sls.data.entity.AiNongPay;
 import com.mall.sls.data.entity.AliPay;
 import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.BaoFuPayInfo;
@@ -162,6 +163,31 @@ public class CartConfirmOrderPresenter implements HomepageContract.CartConfirmOr
                     public void accept(BaoFuPay baoFuPay) throws Exception {
                         cartConfirmOrderView.dismissLoading();
                         cartConfirmOrderView.renderBaoFuPay(baoFuPay);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        cartConfirmOrderView.dismissLoading();
+                        cartConfirmOrderView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
+    public void getAiNongPay(String orderId, String orderType, String paymentMethod) {
+        cartConfirmOrderView.dismissLoading();
+        cartConfirmOrderView.showLoading(StaticData.PROCESSING);
+        PayRequest request=new PayRequest(orderId,orderType,paymentMethod);
+        String sign= SignUnit.signPost(RequestUrl.BEGIN_PAY,gson.toJson(request));
+        Disposable disposable = restApiService.getAiNongPay(sign,request)
+                .flatMap(new RxRemoteDataParse<AiNongPay>())
+                .compose(new RxSchedulerTransformer<AiNongPay>())
+                .subscribe(new Consumer<AiNongPay>() {
+                    @Override
+                    public void accept(AiNongPay aiNongPay) throws Exception {
+                        cartConfirmOrderView.dismissLoading();
+                        cartConfirmOrderView.renderAiNongPay(aiNongPay);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

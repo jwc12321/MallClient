@@ -119,6 +119,33 @@
                 android:id="@+id/select_bank_iv"
                 style="@style/certify_pay_right_iv_style" />
         </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/ai_nong_rl"
+            style="@style/pay_method_rl_style"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/ai_nong_iv"
+                style="@style/certify_pay_left_iv_style"
+                android:src="@mipmap/icon_bank_pay" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/ai_nong_tv"
+                style="@style/certify_pay_down_left_tv_style"
+                android:layout_toRightOf="@id/ai_nong_iv"
+                android:text="@string/ai_nong_pay" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                android:id="@+id/ai_nong_tip"
+                style="@style/randomly_reduced_tip_style"
+                android:layout_toRightOf="@id/ai_nong_tv"
+                android:text="@string/randomly_reduced_tip"
+                android:layout_toLeftOf="@id/select_ai_nong_iv"/>
+
+            <ImageView
+                android:id="@+id/select_ai_nong_iv"
+                style="@style/certify_pay_right_iv_style" />
+        </RelativeLayout>
 
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/confirm_bt"

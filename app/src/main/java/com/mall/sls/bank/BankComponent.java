@@ -7,6 +7,7 @@ import com.mall.sls.bank.ui.AddChinaGCardActivity;
 import com.mall.sls.bank.ui.AuthenticationActivity;
 import com.mall.sls.bank.ui.BankCardManageActivity;
 import com.mall.sls.bank.ui.BankCardPayActivity;
+import com.mall.sls.bank.ui.ChinaGPayActivity;
 import com.mall.sls.bank.ui.SelectBankCardActivity;
 import com.mall.sls.bank.ui.UntieBankCardActivity;
 
@@ -26,4 +27,5 @@ public interface BankComponent {
     void inject(BankCardPayActivity bankCardPayActivity);
     void inject(SelectBankCardActivity selectBankCardActivity);
     void inject(AddChinaGCardActivity addChinaGCardActivity);
+    void inject(ChinaGPayActivity activity);
 }

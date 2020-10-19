@@ -20,6 +20,7 @@ import com.alipay.sdk.app.PayTask;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.address.ui.AddressManageActivity;
+import com.mall.sls.bank.ui.AddChinaGCardActivity;
 import com.mall.sls.bank.ui.BankCardPayActivity;
 import com.mall.sls.bank.ui.BankPayResultActivity;
 import com.mall.sls.common.RequestCodeStatic;
@@ -37,6 +38,7 @@ import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.coupon.ui.SelectCouponActivity;
 import com.mall.sls.data.entity.AddressInfo;
+import com.mall.sls.data.entity.AiNongPay;
 import com.mall.sls.data.entity.AliPay;
 import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.CartItemInfo;
@@ -302,6 +304,8 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                     cartConfirmOrderPresenter.getAliPay(orderId, orderType, paymentMethod);
                 } else if (TextUtils.equals(StaticData.BAO_FU_PAY, paymentMethod)) {
                     cartConfirmOrderPresenter.getBaoFuPay(orderId, orderType, paymentMethod);
+                }else if (TextUtils.equals(StaticData.AI_NONG_PAY, paymentMethod)) {
+                    cartConfirmOrderPresenter.getAiNongPay(orderId, orderType, paymentMethod);
                 }
             } else {
                 paySuccess();
@@ -333,6 +337,14 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
         if (baoFuPay != null) {
             userPayInfo = baoFuPay.getUserPayInfo();
             bankPay();
+        }
+    }
+
+    @Override
+    public void renderAiNongPay(AiNongPay aiNongPay) {
+        if (aiNongPay != null) {
+            userPayInfo = aiNongPay.getUserPayInfo();
+            aiNongPay();
         }
     }
 
@@ -434,6 +446,8 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                             }
                         } else if (TextUtils.equals(StaticData.BAO_FU_PAY, paymentMethod)) {
                             cartConfirmOrderPresenter.cartOrderSubmit(addressId, normalIds, userCouponId, message,shipChannel);
+                        } else if (TextUtils.equals(StaticData.AI_NONG_PAY, paymentMethod)) {
+                            cartConfirmOrderPresenter.cartOrderSubmit(addressId, normalIds, userCouponId, message,shipChannel);
                         }
                     }
                     break;
@@ -454,6 +468,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                     }
                     break;
                 case RequestCodeStatic.BACK_BANE_RESULT://宝付支付回调
+                case RequestCodeStatic.CHINA_PAY:
                     if (data != null) {
                         result = data.getStringExtra(StaticData.PAY_RESULT);
                         backResult(result);
@@ -496,7 +511,11 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
             showMessage(getString(R.string.select_address));
             return;
         }
-        if(outShip||TextUtils.isEmpty(shipChannel)){
+        if(TextUtils.isEmpty(shipChannel)){
+            showMessage(getString(R.string.select_delivery_method));
+            return;
+        }
+        if(outShip){
             commonTip();
             return;
         }
@@ -638,6 +657,12 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
         sameCityBt.setSelected(TextUtils.equals(StaticData.SF_SAME_CITY,shipChannel));
         expressDeliveryBt.setSelected(TextUtils.equals(StaticData.SF_EXPRESS,shipChannel));
         selectDeliveryMethodRl.setVisibility(View.GONE);
+    }
+
+    private void aiNongPay() {
+        Intent intent = new Intent(this, AddChinaGCardActivity.class);
+        intent.putExtra(StaticData.PAY_ID, userPayInfo.getId());
+        startActivityForResult(intent, RequestCodeStatic.CHINA_PAY);
     }
 
 }

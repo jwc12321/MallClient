@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alipay.sdk.app.PayTask;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
+import com.mall.sls.bank.ui.AddChinaGCardActivity;
 import com.mall.sls.bank.ui.BankCardPayActivity;
 import com.mall.sls.bank.ui.BankPayResultActivity;
 import com.mall.sls.common.RequestCodeStatic;
@@ -32,6 +33,7 @@ import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.unit.WXShareManager;
+import com.mall.sls.data.entity.AiNongPay;
 import com.mall.sls.data.entity.AliPay;
 import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.GoodsOrderInfo;
@@ -328,6 +330,14 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
     }
 
     @Override
+    public void renderAiNongPay(AiNongPay aiNongPay) {
+        if(aiNongPay!=null){
+            userPayInfo=aiNongPay.getUserPayInfo();
+            aiNongPay();
+        }
+    }
+
+    @Override
     public void setPresenter(OrderContract.OrderListPresenter presenter) {
 
     }
@@ -355,6 +365,8 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
                             }
                         }else if(TextUtils.equals(StaticData.BAO_FU_PAY, paymentMethod)){
                             orderListPresenter.getBaoFuPay(goodsOrderId, orderType, paymentMethod);
+                        }else if(TextUtils.equals(StaticData.AI_NONG_PAY, paymentMethod)){
+                            orderListPresenter.getAiNongPay(goodsOrderId, orderType, paymentMethod);
                         }
                     }
                     break;
@@ -372,6 +384,7 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
                     }
                     break;
                 case RequestCodeStatic.BACK_BANE_RESULT:
+                case RequestCodeStatic.CHINA_PAY:
                     if(data!=null){
                         result=data.getStringExtra(StaticData.PAY_RESULT);
                         backResult(result);
@@ -495,6 +508,12 @@ public class AllOrdersFragment extends BaseFragment implements OrderContract.Ord
             showMessage(getString(R.string.pay_cancel));
 
         }
+    }
+
+    private void aiNongPay() {
+        Intent intent = new Intent(getActivity(), AddChinaGCardActivity.class);
+        intent.putExtra(StaticData.PAY_ID, userPayInfo.getId());
+        startActivityForResult(intent, RequestCodeStatic.CHINA_PAY);
     }
 
 

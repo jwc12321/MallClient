@@ -5,6 +5,7 @@ package com.mall.sls.homepage;
 
 import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
+import com.mall.sls.data.entity.AiNongPay;
 import com.mall.sls.data.entity.AliPay;
 import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.BaoFuPay;
@@ -65,6 +66,7 @@ public interface HomepageContract {
         void getWxPay(String orderId, String orderType, String paymentMethod);
         void getAliPay(String orderId, String orderType, String paymentMethod);
         void getBaoFuPay(String orderId, String orderType, String paymentMethod);
+        void getAiNongPay(String orderId, String orderType, String paymentMethod);
     }
 
     interface ConfirmOrderView extends BaseView<ConfirmOrderPresenter>{
@@ -73,6 +75,7 @@ public interface HomepageContract {
         void renderWxPay(WxPay wxPay);
         void renderAliPay(AliPay aliPay);
         void renderBaoFuPay(BaoFuPay baoFuPay);
+        void renderAiNongPay(AiNongPay aiNongPay);
     }
 
     interface WXGoodsDetailsPresenter extends BasePresenter{
@@ -107,6 +110,7 @@ public interface HomepageContract {
         void getWxPay(String orderId, String orderType, String paymentMethod);
         void getAliPay(String orderId, String orderType, String paymentMethod);
         void getBaoFuPay(String orderId, String orderType, String paymentMethod);
+        void getAiNongPay(String orderId, String orderType, String paymentMethod);
     }
 
     interface CartConfirmOrderView extends BaseView<CartConfirmOrderPresenter>{
@@ -115,6 +119,7 @@ public interface HomepageContract {
         void renderWxPay(WxPay wxPay);
         void renderAliPay(AliPay aliPay);
         void renderBaoFuPay(BaoFuPay baoFuPay);
+        void renderAiNongPay(AiNongPay aiNongPay);
     }
     interface PayMethodPresenter extends BasePresenter{
         void getPayMethod(String devicePlatform,String orderType);

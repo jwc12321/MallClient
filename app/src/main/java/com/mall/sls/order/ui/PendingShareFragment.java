@@ -23,6 +23,7 @@ import com.mall.sls.common.unit.BriefUnit;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.WXShareManager;
+import com.mall.sls.data.entity.AiNongPay;
 import com.mall.sls.data.entity.AliPay;
 import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.BaoFuPayInfo;
@@ -303,6 +304,11 @@ public class PendingShareFragment extends BaseFragment implements OrderContract.
 
     @Override
     public void renderBaoFuPay(BaoFuPay baoFuPay) {
+
+    }
+
+    @Override
+    public void renderAiNongPay(AiNongPay aiNongPay) {
 
     }
 

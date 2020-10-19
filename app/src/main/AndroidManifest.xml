@@ -470,6 +470,12 @@
         <activity android:name=".order.ui.ViewFundActivity"
             android:screenOrientation="nosensor"
             android:launchMode="singleTop"/>
+        <activity android:name=".bank.ui.AddChinaGCardActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
+        <activity android:name=".bank.ui.ChinaGPayActivity"
+            android:screenOrientation="nosensor"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

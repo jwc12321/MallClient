@@ -35,6 +35,7 @@ import com.mall.sls.common.widget.textview.ConventionalEditTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.CertifyInfo;
+import com.mall.sls.data.request.ChinaGPrepayRequest;
 import com.mall.sls.data.request.StartBindBankRequest;
 import com.mall.sls.homepage.ui.CommonTipActivity;
 import com.mall.sls.mainframe.ui.ScanActivity;
@@ -112,10 +113,10 @@ public class AddChinaGCardActivity extends BaseActivity implements BankContract.
     private String expireDate;
     private List<String> group;
     private String scanData;
-    private String tipBack;
-    private Boolean isCreditCard = false;
     private static WeakReference<AddChinaGCardActivity> sActivityRef;
-    private StartBindBankRequest request;
+    private ChinaGPrepayRequest request;
+    private String payId;
+    private String result;
 
 
     @Inject
@@ -135,6 +136,7 @@ public class AddChinaGCardActivity extends BaseActivity implements BankContract.
         group.add(Manifest.permission_group.CAMERA);
         sActivityRef = new WeakReference<>(this);
         content();
+        payId=getIntent().getStringExtra(StaticData.PAY_ID);
         addChinaGCardPresenter.getCertifyInfo();
     }
 
@@ -188,7 +190,7 @@ public class AddChinaGCardActivity extends BaseActivity implements BankContract.
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
-                back();
+                backResult(StaticData.BANK_PAY_CANCEL);
                 break;
             case R.id.next_bt:
                 confirm();
@@ -201,14 +203,6 @@ public class AddChinaGCardActivity extends BaseActivity implements BankContract.
                 break;
             default:
         }
-    }
-
-    private void back() {
-        Intent intent = new Intent(this, CommonTipActivity.class);
-        intent.putExtra(StaticData.COMMON_TITLE, getString(R.string.is_give_up_binding));
-        intent.putExtra(StaticData.CANCEL_TEXT, getString(R.string.no));
-        intent.putExtra(StaticData.CONFIRM_TEXT, getString(R.string.yes));
-        startActivityForResult(intent, RequestCodeStatic.TIP_PAGE);
     }
 
     private void scanBankCard() {
@@ -229,12 +223,10 @@ public class AddChinaGCardActivity extends BaseActivity implements BankContract.
                         inputResult(scanData);
                     }
                     break;
-                case RequestCodeStatic.TIP_PAGE://点击返回
+                case RequestCodeStatic.CHINA_PAY_DETAIL:
                     if (data != null) {
-                        tipBack = data.getStringExtra(StaticData.TIP_BACK);
-                        if (TextUtils.equals(StaticData.REFRESH_ONE, tipBack)) {
-                            finish();
-                        }
+                        result = data.getStringExtra(StaticData.PAY_RESULT);
+                        backResult(result);
                     }
                     break;
                 default:
@@ -275,14 +267,15 @@ public class AddChinaGCardActivity extends BaseActivity implements BankContract.
             showMessage(getString(R.string.agree_fast_payment_agreement));
             return;
         }
-        request = new StartBindBankRequest();
-        request.setCardNo(cardNumber);
-        request.setCreditCard(isCreditCard);
-        request.setExpireDate(expireDate);
-        request.setSafeCode(safeCode);
+        request = new ChinaGPrepayRequest();
+        request.setAccNo(cardNumber);
+        request.setExpired(expireDate);
+        request.setCvv2(safeCode);
         request.setName(cardName);
         request.setIdCard(idCardNumber);
         request.setMobile(phoneNumber);
+        request.setPayId(payId);
+        addChinaGCardPresenter.chinaGPrepay(request);
 
     }
 
@@ -337,9 +330,22 @@ public class AddChinaGCardActivity extends BaseActivity implements BankContract.
         }
     }
 
+    @Override
+    public void renderChinaGPrepay(String tn) {
+        ChinaGPayActivity.start(this,phoneNumber,payId,tn);
+    }
+
 
     @Override
     public void setPresenter(BankContract.AddChinaGCardPresenter presenter) {
 
     }
+
+    private void backResult(String result) {
+        Intent backIntent = new Intent();
+        backIntent.putExtra(StaticData.PAY_RESULT, result);
+        setResult(Activity.RESULT_OK, backIntent);
+        finish();
+    }
+
 }

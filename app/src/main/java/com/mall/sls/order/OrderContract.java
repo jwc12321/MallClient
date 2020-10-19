@@ -2,6 +2,7 @@ package com.mall.sls.order;
 
 import com.mall.sls.BasePresenter;
 import com.mall.sls.BaseView;
+import com.mall.sls.data.entity.AiNongPay;
 import com.mall.sls.data.entity.AliPay;
 import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.BaoFuPayInfo;
@@ -31,6 +32,7 @@ public interface OrderContract {
         void getWxPay(String orderId, String orderType, String paymentMethod);
         void getAliPay(String orderId, String orderType, String paymentMethod);
         void getBaoFuPay(String orderId, String orderType, String paymentMethod);
+        void getAiNongPay(String orderId, String orderType, String paymentMethod);
 
     }
     interface OrderListView extends BaseView<OrderListPresenter>{
@@ -41,6 +43,7 @@ public interface OrderContract {
         void renderWxPay(WxPay wxPay);
         void renderAliPay(AliPay aliPay);
         void renderBaoFuPay(BaoFuPay baoFuPay);
+        void renderAiNongPay(AiNongPay aiNongPay);
     }
 
     interface OrderDetailsPresenter extends BasePresenter{
@@ -52,6 +55,7 @@ public interface OrderContract {
         void getWxPay(String orderId, String orderType, String paymentMethod);
         void getAliPay(String orderId, String orderType, String paymentMethod);
         void getBaoFuPay(String orderId, String orderType, String paymentMethod);
+        void getAiNongPay(String orderId, String orderType, String paymentMethod);
     }
 
     interface OrderDetailsView extends BaseView<OrderDetailsPresenter>{
@@ -63,6 +67,7 @@ public interface OrderContract {
         void renderWxPay(WxPay wxPay);
         void renderAliPay(AliPay aliPay);
         void renderBaoFuPay(BaoFuPay baoFuPay);
+        void renderAiNongPay(AiNongPay aiNongPay);
     }
 
     interface OrderLogisticsPresenter extends BasePresenter{

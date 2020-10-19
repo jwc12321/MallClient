@@ -79,6 +79,16 @@ public class SelectPayTypeActivity extends BaseActivity implements HomepageContr
     ConventionalTextView bankTv;
     @BindView(R.id.bank_tip)
     ConventionalTextView bankTip;
+    @BindView(R.id.ai_nong_iv)
+    ImageView aiNongIv;
+    @BindView(R.id.ai_nong_tv)
+    ConventionalTextView aiNongTv;
+    @BindView(R.id.ai_nong_tip)
+    ConventionalTextView aiNongTip;
+    @BindView(R.id.select_ai_nong_iv)
+    ImageView selectAiNongIv;
+    @BindView(R.id.ai_nong_rl)
+    RelativeLayout aiNongRl;
 
     private String choiceType;
     private String amount;
@@ -106,10 +116,10 @@ public class SelectPayTypeActivity extends BaseActivity implements HomepageContr
         choiceType = getIntent().getStringExtra(StaticData.CHOICE_TYPE);
         confirmBt.setSelected(TextUtils.equals(StaticData.REFRESH_ONE, choiceType) ? true : false);
         amount = getIntent().getStringExtra(StaticData.PAYMENT_AMOUNT);
-        orderType=getIntent().getStringExtra(StaticData.ORDER_TYPE);
+        orderType = getIntent().getStringExtra(StaticData.ORDER_TYPE);
         payAmount.setText(getString(R.string.payment_amount) + NumberFormatUnit.goodsFormat(amount));
         devicePlatform = SystemUtil.getChannel(this);
-        payMethodPresenter.getPayMethod(devicePlatform,orderType);
+        payMethodPresenter.getPayMethod(devicePlatform, orderType);
     }
 
     @Override
@@ -126,7 +136,7 @@ public class SelectPayTypeActivity extends BaseActivity implements HomepageContr
         return null;
     }
 
-    @OnClick({R.id.all_rl, R.id.item_rl, R.id.close_iv, R.id.confirm_bt, R.id.weixin_rl, R.id.ali_rl,R.id.bank_rl})
+    @OnClick({R.id.all_rl, R.id.item_rl, R.id.close_iv, R.id.confirm_bt, R.id.weixin_rl, R.id.ali_rl, R.id.bank_rl, R.id.ai_nong_rl})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.all_rl:
@@ -153,6 +163,10 @@ public class SelectPayTypeActivity extends BaseActivity implements HomepageContr
                 paymentMethod = StaticData.BAO_FU_PAY;
                 selectPayType();
                 break;
+            case R.id.ai_nong_rl:
+                paymentMethod = StaticData.AI_NONG_PAY;
+                selectPayType();
+                break;
             default:
         }
     }
@@ -161,6 +175,7 @@ public class SelectPayTypeActivity extends BaseActivity implements HomepageContr
         selectWeixinIv.setSelected(TextUtils.equals(StaticData.WX_PAY, paymentMethod));
         selectAliIv.setSelected(TextUtils.equals(StaticData.ALI_PAY, paymentMethod));
         selectBankIv.setSelected(TextUtils.equals(StaticData.BAO_FU_PAY, paymentMethod));
+        selectAiNongIv.setSelected(TextUtils.equals(StaticData.AI_NONG_PAY, paymentMethod));
     }
 
 
@@ -185,16 +200,20 @@ public class SelectPayTypeActivity extends BaseActivity implements HomepageContr
             for (PayMethodInfo payMethodInfo : payMethods) {
                 if (TextUtils.equals(StaticData.WX_PAY, payMethodInfo.getPaymentMethod())) {
                     weixinRl.setVisibility(View.VISIBLE);
-                    wxTip.setVisibility(TextUtils.isEmpty(payMethodInfo.getDescription())?View.GONE:View.VISIBLE);
+                    wxTip.setVisibility(TextUtils.isEmpty(payMethodInfo.getDescription()) ? View.GONE : View.VISIBLE);
                     wxTip.setText(payMethodInfo.getDescription());
                 } else if (TextUtils.equals(StaticData.ALI_PAY, payMethodInfo.getPaymentMethod())) {
                     aliRl.setVisibility(View.VISIBLE);
-                    aliTip.setVisibility(TextUtils.isEmpty(payMethodInfo.getDescription())?View.GONE:View.VISIBLE);
+                    aliTip.setVisibility(TextUtils.isEmpty(payMethodInfo.getDescription()) ? View.GONE : View.VISIBLE);
                     aliTip.setText(payMethodInfo.getDescription());
                 } else if (TextUtils.equals(StaticData.BAO_FU_PAY, payMethodInfo.getPaymentMethod())) {
                     bankRl.setVisibility(View.VISIBLE);
-                    bankTip.setVisibility(TextUtils.isEmpty(payMethodInfo.getDescription())?View.GONE:View.VISIBLE);
+                    bankTip.setVisibility(TextUtils.isEmpty(payMethodInfo.getDescription()) ? View.GONE : View.VISIBLE);
                     bankTip.setText(payMethodInfo.getDescription());
+                }else if (TextUtils.equals(StaticData.AI_NONG_PAY, payMethodInfo.getPaymentMethod())) {
+                    aiNongRl.setVisibility(View.VISIBLE);
+                    aiNongTip.setVisibility(TextUtils.isEmpty(payMethodInfo.getDescription()) ? View.GONE : View.VISIBLE);
+                    aiNongTip.setText(payMethodInfo.getDescription());
                 }
             }
             if (weixinRl.getVisibility() == View.VISIBLE) {
