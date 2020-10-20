@@ -219,8 +219,7 @@
             <LinearLayout
                 android:id="@+id/delivery_method_ll"
                 style="@style/add_address_ll_style"
-                android:layout_marginTop="@dimen/dp_10"
-                android:visibility="gone">
+                android:layout_marginTop="@dimen/dp_10">
                 <com.mall.sls.common.widget.textview.MediumThickTextView
                     style="@style/size13_app3_left_tv_style"
                     android:text="@string/delivery_method"

@@ -15,7 +15,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
-            android:background="@color/backGround86">
+            android:background="@drawable/common_two_back_eighty_six_bg">
 
             <View
                 android:id="@+id/black_view"
@@ -23,7 +23,7 @@
                 android:layout_height="@dimen/dp_15"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:background="@color/backGround58" />
+                android:background="@color/appText3" />
 
             <com.mall.sls.common.widget.textview.ConventionalTextView
                 android:id="@+id/refund_number_tv"

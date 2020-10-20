@@ -51,13 +51,7 @@
                         style="@style/add_bank_card_et_style"
                         android:hint="@string/cardholder_name"
                         android:inputType="text"
-                        />
-
-                    <com.mall.sls.common.widget.textview.ConventionalTextView
-                        android:id="@+id/cardholder_tv"
-                        style="@style/add_bank_card_right_tv_style"
-                        tools:text="@string/cardholder_name"
-                        android:visibility="gone"/>
+                        android:layout_marginRight="@dimen/dp_56"/>
                 </LinearLayout>
 
                 <View style="@style/fifteen_back_nine_line_style" />
@@ -96,12 +90,8 @@
                         android:id="@+id/id_card_et"
                         style="@style/add_bank_card_et_style"
                         android:hint="@string/cardholder_id_card"
-                        android:inputType="text" />
-                    <com.mall.sls.common.widget.textview.ConventionalTextView
-                        android:id="@+id/id_card_tv"
-                        style="@style/add_bank_card_right_tv_style"
-                        tools:text="@string/cardholder_name"
-                        android:visibility="gone"/>
+                        android:inputType="text"
+                        android:layout_marginRight="@dimen/dp_56"/>
                 </LinearLayout>
 
                 <View style="@style/fifteen_back_nine_line_style" />
@@ -144,7 +134,8 @@
                         android:id="@+id/safe_code_et"
                         style="@style/add_bank_card_et_style"
                         android:hint="@string/safe_code_tip"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:layout_marginRight="@dimen/dp_56"/>
                 </LinearLayout>
 
                 <View
@@ -163,7 +154,8 @@
                         android:id="@+id/expire_date_et"
                         style="@style/add_bank_card_et_style"
                         android:hint="@string/expire_date_tip"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:layout_marginRight="@dimen/dp_56"/>
                 </LinearLayout>
 
             </LinearLayout>

@@ -471,4 +471,9 @@ public interface RestApiService {
     @POST("app/ainong/confirm-pay")
     Flowable<RemoteDataWrapper<BankPayInfo>> chinaGPay(@Header("X-Hc-Sign") String sign, @Body ChinaGPayRequest request);
 
+    //获取快递费用描述
+    @GET("app/common/ship-info")
+    Flowable<RemoteDataWrapper<String>> getShipInfo(@Header("X-Hc-Sign") String sign);
+
+
 }

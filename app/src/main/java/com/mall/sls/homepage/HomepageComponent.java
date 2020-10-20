@@ -6,6 +6,7 @@ import com.mall.sls.homepage.ui.ActivityGoodsDetailActivity;
 import com.mall.sls.homepage.ui.ActivityGroupGoodsActivity;
 import com.mall.sls.homepage.ui.CartConfirmOrderActivity;
 import com.mall.sls.homepage.ui.ConfirmOrderActivity;
+import com.mall.sls.homepage.ui.DeliveryNoteActivity;
 import com.mall.sls.homepage.ui.GeneralGoodsDetailsActivity;
 import com.mall.sls.homepage.ui.HomepageFragment;
 import com.mall.sls.homepage.ui.OrdinaryGoodsDetailActivity;
@@ -26,4 +27,5 @@ public interface HomepageComponent {
     void inject(GeneralGoodsDetailsActivity generalGoodsDetailsActivity);
     void inject(CartConfirmOrderActivity cartConfirmOrderActivity);
     void inject(SelectPayTypeActivity selectPayTypeActivity);
+    void inject(DeliveryNoteActivity activity);
 }

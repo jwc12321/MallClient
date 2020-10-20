@@ -174,7 +174,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private String choiceType;
     private String result;
     private String shipChannel = "";
-    private Boolean outShip;
+    private Boolean outShip=false;
 
     @Inject
     ConfirmOrderPresenter confirmOrderPresenter;
@@ -243,14 +243,18 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                     coupon.setText("-" + NumberFormatUnit.goodsFormat(confirmOrderDetail.getCouponPrice()));
                 }
             }
-            if (NumberFormatUnit.isZero(confirmOrderDetail.getFreightPrice())) {
-                deliveryFee.setText(getString(R.string.free_shipping));
-            } else {
-                deliveryFee.setText(NumberFormatUnit.goodsFormat(confirmOrderDetail.getFreightPrice()));
+            if(TextUtils.isEmpty(shipChannel)){
+                deliveryFee.setText("¥ 0");
+            }else {
+                if (NumberFormatUnit.isZero(confirmOrderDetail.getFreightPrice())) {
+                    deliveryFee.setText(getString(R.string.free_shipping));
+                } else {
+                    deliveryFee.setText(NumberFormatUnit.goodsFormat(confirmOrderDetail.getFreightPrice()));
+                }
             }
             deliveryFeeTip.setVisibility(TextUtils.isEmpty(confirmOrderDetail.getFreeShipDes()) ? View.GONE : View.VISIBLE);
             deliveryFeeTip.setText("(" + confirmOrderDetail.getFreeShipDes() + ")");
-            if (outShip) {
+            if (outShip!=null&&outShip) {
                 commonTip();
             }
         }
@@ -439,7 +443,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             showMessage(getString(R.string.select_delivery_method));
             return;
         }
-        if (outShip) {
+        if (outShip!=null&&outShip) {
             commonTip();
             return;
         }

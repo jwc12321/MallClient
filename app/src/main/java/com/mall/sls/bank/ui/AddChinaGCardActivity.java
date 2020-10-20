@@ -2,7 +2,6 @@ package com.mall.sls.bank.ui;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -36,10 +35,9 @@ import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.CertifyInfo;
 import com.mall.sls.data.request.ChinaGPrepayRequest;
-import com.mall.sls.data.request.StartBindBankRequest;
-import com.mall.sls.homepage.ui.CommonTipActivity;
 import com.mall.sls.mainframe.ui.ScanActivity;
 import com.mall.sls.webview.ui.WebViewActivity;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +53,7 @@ import butterknife.OnTextChanged;
  * @author jwc on 2020/9/9.
  * 描述：添加银行卡
  */
-public class AddChinaGCardActivity extends BaseActivity implements BankContract.AddChinaGCardView{
+public class AddChinaGCardActivity extends BaseActivity implements BankContract.AddChinaGCardView {
 
     @BindView(R.id.back)
     ImageView back;
@@ -65,8 +63,6 @@ public class AddChinaGCardActivity extends BaseActivity implements BankContract.
     RelativeLayout titleRel;
     @BindView(R.id.cardholder_et)
     ConventionalEditTextView cardholderEt;
-    @BindView(R.id.cardholder_tv)
-    ConventionalTextView cardholderTv;
     @BindView(R.id.card_number_tv)
     ConventionalTextView cardNumberTv;
     @BindView(R.id.card_number_et)
@@ -75,8 +71,6 @@ public class AddChinaGCardActivity extends BaseActivity implements BankContract.
     ImageView bankCameraIv;
     @BindView(R.id.id_card_et)
     ConventionalEditTextView idCardEt;
-    @BindView(R.id.id_card_tv)
-    ConventionalTextView idCardTv;
     @BindView(R.id.phone_number_tv)
     ConventionalTextView phoneNumberTv;
     @BindView(R.id.phone_number_et)
@@ -136,7 +130,7 @@ public class AddChinaGCardActivity extends BaseActivity implements BankContract.
         group.add(Manifest.permission_group.CAMERA);
         sActivityRef = new WeakReference<>(this);
         content();
-        payId=getIntent().getStringExtra(StaticData.PAY_ID);
+        payId = getIntent().getStringExtra(StaticData.PAY_ID);
         addChinaGCardPresenter.getCertifyInfo();
     }
 
@@ -306,21 +300,11 @@ public class AddChinaGCardActivity extends BaseActivity implements BankContract.
         if (certifyInfo != null) {
             if (!TextUtils.isEmpty(certifyInfo.getRealName())) {
                 cardName = certifyInfo.getRealName();
-                cardholderEt.setVisibility(View.GONE);
-                cardholderTv.setVisibility(View.VISIBLE);
-                cardholderTv.setText(cardName);
-            } else {
-                cardholderEt.setVisibility(View.VISIBLE);
-                cardholderTv.setVisibility(View.GONE);
+                cardholderEt.setText(cardName);
             }
             if (!TextUtils.isEmpty(certifyInfo.getIdCard())) {
                 idCardNumber = certifyInfo.getIdCard();
-                idCardEt.setVisibility(View.GONE);
-                idCardTv.setVisibility(View.VISIBLE);
-                idCardTv.setText(idCardNumber);
-            } else {
-                idCardEt.setVisibility(View.VISIBLE);
-                idCardTv.setVisibility(View.GONE);
+                idCardEt.setText(idCardNumber);
             }
             if (!TextUtils.isEmpty(certifyInfo.getMobile())) {
                 phoneNumber = certifyInfo.getMobile();
@@ -332,7 +316,7 @@ public class AddChinaGCardActivity extends BaseActivity implements BankContract.
 
     @Override
     public void renderChinaGPrepay(String tn) {
-        ChinaGPayActivity.start(this,phoneNumber,payId,tn);
+        ChinaGPayActivity.start(this, phoneNumber, payId, tn);
     }
 
 

@@ -170,6 +170,7 @@ public class GoodsOrderAdapter extends RecyclerView.Adapter<GoodsOrderAdapter.Go
                     break;
                 case StaticData.TO_BE_RECEIVED:
                 case StaticData.PENDING_REFUND:
+                case StaticData.TO_BE_PROCESSED://待处理
                     orderStatus.setText(context.getString(R.string.shipping));
                     btLl.setVisibility(View.GONE);
                     break;

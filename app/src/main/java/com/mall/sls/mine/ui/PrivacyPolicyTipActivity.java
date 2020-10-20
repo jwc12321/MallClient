@@ -74,7 +74,7 @@ public class PrivacyPolicyTipActivity extends BaseActivity {
             }
         }, 27, 33, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString1.setSpan(new ForegroundColorSpan(getResources()
-                .getColor(R.color.backGround51)), 27, 33, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                .getColor(R.color.backGround1)), 27, 33, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         spannableString1.setSpan(new ClickableSpan() {
             public void onClick(View widget) {
                 WebViewActivity.start(PrivacyPolicyTipActivity.this, StaticData.USER_PRIVACY);
@@ -82,7 +82,7 @@ public class PrivacyPolicyTipActivity extends BaseActivity {
             }
         }, 34, 40, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString1.setSpan(new ForegroundColorSpan(getResources()
-                        .getColor(R.color.backGround51)), 34,
+                        .getColor(R.color.backGround1)), 34,
                 40, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         content.setText(spannableString1);
         content.setMovementMethod(LinkMovementMethod.getInstance());

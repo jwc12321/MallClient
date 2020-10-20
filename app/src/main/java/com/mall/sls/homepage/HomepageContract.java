@@ -128,4 +128,12 @@ public interface HomepageContract {
     interface PayMethodView extends BaseView<PayMethodPresenter>{
         void renderPayMethod(List<PayMethodInfo> payMethods);
     }
+
+    interface ShipInfoPresenter extends BasePresenter{
+        void getShipInfo();
+    }
+
+    interface ShipInfoView extends BaseView<ShipInfoPresenter>{
+        void renderShipInfo(String shipInfo);
+    }
 }

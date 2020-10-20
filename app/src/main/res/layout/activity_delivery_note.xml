@@ -19,6 +19,12 @@
         <ImageView
             android:id="@+id/close_iv"
             style="@style/right_close_iv_style" />
-
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_50"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginRight="@dimen/dp_24"/>
     </RelativeLayout>
 </RelativeLayout>

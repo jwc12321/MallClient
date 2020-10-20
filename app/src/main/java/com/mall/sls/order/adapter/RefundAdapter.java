@@ -81,7 +81,7 @@ public class RefundAdapter extends RecyclerView.Adapter<RefundAdapter.RefundView
         public void bindData(RefundInfo refundInfo) {
             refundNumber.setText(refundInfo.getRefundNo());
             refundAmount.setText(NumberFormatUnit.goodsFormat(refundInfo.getRefundAmount()));
-            startingTime.setText(refundInfo.getStartTime());
+            startingTime.setText(refundInfo.getAddTime());
             if (refundInfo.getRefundSuccess() != null && refundInfo.getRefundSuccess()) {
                 status.setText(context.getString(R.string.refund_success));
                 status.setSelected(true);
@@ -92,7 +92,7 @@ public class RefundAdapter extends RecyclerView.Adapter<RefundAdapter.RefundView
                 status.setText(context.getString(R.string.refund_fail));
                 status.setSelected(false);
                 arrivalTimeTv.setText(context.getString(R.string.fail_time));
-                arrivalTime.setText(refundInfo.getEndTime());
+                arrivalTime.setText(refundInfo.getUpdateTime());
                 fundTip.setVisibility(View.GONE);
             }
         }

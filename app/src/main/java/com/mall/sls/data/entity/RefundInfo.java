@@ -14,11 +14,11 @@ public class RefundInfo {
     @SerializedName("refundAmount")
     private String refundAmount;
     //发起时间
-    @SerializedName("startTime")
-    private String startTime;
+    @SerializedName("addTime")
+    private String addTime;
     //到账时间
-    @SerializedName("endTime")
-    private String endTime;
+    @SerializedName("updateTime")
+    private String updateTime;
     //是否到账成功
     @SerializedName("refundSuccess")
     private Boolean refundSuccess;
@@ -39,20 +39,20 @@ public class RefundInfo {
         this.refundAmount = refundAmount;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public String getAddTime() {
+        return addTime;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public String getUpdateTime() {
+        return updateTime;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 
     public Boolean getRefundSuccess() {

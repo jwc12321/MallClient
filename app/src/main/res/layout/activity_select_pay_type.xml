@@ -127,7 +127,7 @@
             <ImageView
                 android:id="@+id/ai_nong_iv"
                 style="@style/certify_pay_left_iv_style"
-                android:src="@mipmap/icon_bank_pay" />
+                android:src="@mipmap/icon_china_g_pay" />
 
             <com.mall.sls.common.widget.textview.ConventionalTextView
                 android:id="@+id/ai_nong_tv"

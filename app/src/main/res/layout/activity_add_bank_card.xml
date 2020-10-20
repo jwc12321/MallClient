@@ -57,7 +57,7 @@
                         style="@style/add_bank_card_et_style"
                         android:hint="@string/cardholder_name"
                         android:inputType="text"
-                        />
+                        android:layout_marginRight="@dimen/dp_56"/>
 
                     <com.mall.sls.common.widget.textview.ConventionalTextView
                         android:id="@+id/cardholder_tv"
@@ -115,7 +115,8 @@
                         android:id="@+id/id_card_et"
                         style="@style/add_bank_card_et_style"
                         android:hint="@string/cardholder_id_card"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:layout_marginRight="@dimen/dp_56"/>
                     <com.mall.sls.common.widget.textview.ConventionalTextView
                         android:id="@+id/id_card_tv"
                         style="@style/add_bank_card_right_tv_style"
@@ -165,7 +166,8 @@
                         android:id="@+id/safe_code_et"
                         style="@style/add_bank_card_et_style"
                         android:hint=""
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:layout_marginRight="@dimen/dp_56"/>
                 </LinearLayout>
 
                 <View
@@ -186,7 +188,8 @@
                         android:id="@+id/expire_date_et"
                         style="@style/add_bank_card_et_style"
                         android:hint="YY/MM"
-                        android:inputType="text" />
+                        android:inputType="text"
+                        android:layout_marginRight="@dimen/dp_56"/>
                 </LinearLayout>
 
                 <View

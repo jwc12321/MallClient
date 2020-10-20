@@ -74,7 +74,7 @@ public class StaticData {
     //待退款
     public static final String PENDING_REFUND="202";
     //已退款
-    public static final String REFUNDED="203";
+    public static final String REFUNDED="403";
     //代分享
     public static final String TO_BE_SHARE="204";
     //代发货
@@ -85,6 +85,8 @@ public class StaticData {
     public static final String RECEIVED="401";
     //已收货
     public static final String SYS_RECEIVED="402";
+    //待处理
+    public static final String TO_BE_PROCESSED="302";
     //typeId
     public static final String TYPE_ID="typeId";
     //电话

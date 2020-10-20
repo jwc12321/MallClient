@@ -57,6 +57,7 @@ public class OrderListPresenter implements OrderContract.OrderListPresenter {
     //订单信息： 0，全部订单； 1，待付款； 2，待分享； 3，待发货； 4，待收货。5，已完成
     @Override
     public void getOrderList(String refreshType, String showType) {
+        orderListView.dismissLoading();
         if (TextUtils.equals(StaticData.REFRESH_ONE, refreshType)) {
             orderListView.showLoading(StaticData.LOADING);
         }

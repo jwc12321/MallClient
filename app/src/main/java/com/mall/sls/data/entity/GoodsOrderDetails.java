@@ -106,6 +106,9 @@ public class GoodsOrderDetails {
     //支付描述
     @SerializedName("payDescription")
     private String payDescription;
+    //是否存在退款记录
+    @SerializedName("hasRefund")
+    private Boolean hasRefund;
 
     public String getCouponPrice() {
         return couponPrice;
@@ -362,6 +365,14 @@ public class GoodsOrderDetails {
 
     public void setPayDescription(String payDescription) {
         this.payDescription = payDescription;
+    }
+
+    public Boolean getHasRefund() {
+        return hasRefund;
+    }
+
+    public void setHasRefund(Boolean hasRefund) {
+        this.hasRefund = hasRefund;
     }
 }
 

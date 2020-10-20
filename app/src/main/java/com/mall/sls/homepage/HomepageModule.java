@@ -13,6 +13,7 @@ public class HomepageModule {
     private HomepageContract.GeneralGoodsDetailsView generalGoodsDetailsView;
     private HomepageContract.CartConfirmOrderView cartConfirmOrderView;
     private HomepageContract.PayMethodView payMethodView;
+    private HomepageContract.ShipInfoView shipInfoView;
 
     public HomepageModule(HomepageContract.HomePageView homePageView) {
         this.homePageView = homePageView;
@@ -40,6 +41,10 @@ public class HomepageModule {
 
     public HomepageModule(HomepageContract.PayMethodView payMethodView) {
         this.payMethodView = payMethodView;
+    }
+
+    public HomepageModule(HomepageContract.ShipInfoView shipInfoView) {
+        this.shipInfoView = shipInfoView;
     }
 
     @Provides
@@ -75,6 +80,11 @@ public class HomepageModule {
     @Provides
     HomepageContract.PayMethodView providePayMethodView(){
         return payMethodView;
+    }
+
+    @Provides
+    HomepageContract.ShipInfoView provideShipInfoView(){
+        return shipInfoView;
     }
 
 }

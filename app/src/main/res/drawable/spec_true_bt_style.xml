@@ -4,7 +4,7 @@
     android:shape="rectangle">
     <!--设置渐变-->
     <gradient android:startColor="@color/backGround1"
-        android:endColor="@color/backGround63"
+        android:endColor="@color/backGround1"
         android:angle="0"/>
     <!--angle控制渐变的方向-->
     <!-- 设置按钮的四个角为弧形 -->
