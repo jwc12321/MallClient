@@ -650,7 +650,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 break;
             case StaticData.CANCELLED://取消
             case StaticData.SYS_CANCELLED:
-                orderStatus.setText(getString(R.string.transaction_cancel));
+                orderStatus.setText(getString(R.string.cancelled));
                 rightBt.setVisibility(hasRefund?View.VISIBLE:View.GONE);
                 rightBt.setText(getString(R.string.where_money_goes));
                 oneMoreAddCart();

@@ -20,7 +20,7 @@
         <com.mall.sls.common.widget.textview.MediumThickTextView
             android:id="@+id/title"
             style="@style/title_text_style"
-            android:text="@string/bank_pay" />
+            android:text="@string/ai_nong_pay" />
     </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView

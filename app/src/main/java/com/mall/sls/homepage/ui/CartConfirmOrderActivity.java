@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alipay.sdk.app.PayTask;
@@ -26,7 +25,6 @@ import com.mall.sls.bank.ui.BankPayResultActivity;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.FlashCartManager;
-import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayResult;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
@@ -54,9 +52,7 @@ import com.mall.sls.homepage.DaggerHomepageComponent;
 import com.mall.sls.homepage.HomepageContract;
 import com.mall.sls.homepage.HomepageModule;
 import com.mall.sls.homepage.adapter.ConfirmGoodsItemAdapter;
-import com.mall.sls.homepage.adapter.HiddenCartGoodsAdapter;
 import com.mall.sls.homepage.presenter.CartConfirmOrderPresenter;
-import com.mall.sls.mainframe.ui.MainFrameActivity;
 import com.mall.sls.order.ui.GoodsOrderDetailsActivity;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -147,6 +143,8 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
     ConventionalTextView totalAmountTv;
     @BindView(R.id.total_amount)
     MediumThickTextView totalAmount;
+    @BindView(R.id.item_rl)
+    RelativeLayout itemRl;
 
 
     private ConfirmGoodsItemAdapter confirmGoodsItemAdapter;
@@ -376,12 +374,15 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
+                goneDelivery();
                 back();
                 break;
             case R.id.confirm_bt://去支付
+                goneDelivery();
                 confirm();
                 break;
             case R.id.coupon_rl:
+                goneDelivery();
                 isBulletBox = false;
                 Intent couponIntent = new Intent(this, SelectCouponActivity.class);
                 couponIntent.putExtra(StaticData.CART_IDS, cartIds);
@@ -389,6 +390,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                 startActivityForResult(couponIntent, RequestCodeStatic.SELECT_COUPON);
                 break;
             case R.id.address_all://选择地址
+                goneDelivery();
                 isBulletBox = true;
                 Intent intent = new Intent(this, AddressManageActivity.class);
                 intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_ZERO);
@@ -396,15 +398,17 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                 startActivityForResult(intent, RequestCodeStatic.REQUEST_ADDRESS);
                 break;
             case R.id.delivery_method_rl://配送方式
-                selectDeliveryMethodRl.setVisibility(View.VISIBLE);
+                clickDelivery();
                 break;
             case R.id.same_city_bt://同城
+                deliveryFeeIv.setSelected(false);
                 shipChannel = StaticData.SF_SAME_CITY;
                 deliveryMethodSelect();
                 deliveryMethod.setText(getString(R.string.same_city));
                 cartConfirmOrderPresenter.cartGeneralChecked(addressId, ids, userCouponId, shipChannel);
                 break;
             case R.id.express_delivery_bt://快递
+                deliveryFeeIv.setSelected(false);
                 shipChannel = StaticData.SF_EXPRESS;
                 deliveryMethodSelect();
                 deliveryMethod.setText(getString(R.string.express_delivery));
@@ -492,6 +496,21 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
                 default:
             }
         }
+    }
+
+    private void clickDelivery(){
+        if(selectDeliveryMethodRl.getVisibility()==View.VISIBLE){
+            deliveryFeeIv.setSelected(false);
+            selectDeliveryMethodRl.setVisibility(View.GONE);
+        }else {
+            deliveryFeeIv.setSelected(true);
+            selectDeliveryMethodRl.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void goneDelivery(){
+        deliveryFeeIv.setSelected(false);
+        selectDeliveryMethodRl.setVisibility(View.GONE);
     }
 
     private void hiddenCart() {

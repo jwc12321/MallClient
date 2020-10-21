@@ -30,6 +30,7 @@ import com.mall.sls.common.unit.PayResult;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
 import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.unit.TCAgentUnit;
+import com.mall.sls.common.widget.scrollview.ReboundScrollView;
 import com.mall.sls.common.widget.textview.ConventionalEditTextView;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
@@ -145,6 +146,12 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     ConventionalTextView expressDeliveryBt;
     @BindView(R.id.select_delivery_method_rl)
     LinearLayout selectDeliveryMethodRl;
+    @BindView(R.id.goods_price_ll)
+    LinearLayout goodsPriceLl;
+    @BindView(R.id.item_rl)
+    RelativeLayout itemRl;
+    @BindView(R.id.scrollView)
+    ReboundScrollView scrollView;
     private ConfirmOrderDetail confirmOrderDetail;
     private AddressInfo addressInfo;
     private String addressId;
@@ -174,7 +181,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     private String choiceType;
     private String result;
     private String shipChannel = "";
-    private Boolean outShip=false;
+    private Boolean outShip = false;
 
     @Inject
     ConfirmOrderPresenter confirmOrderPresenter;
@@ -243,9 +250,9 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
                     coupon.setText("-" + NumberFormatUnit.goodsFormat(confirmOrderDetail.getCouponPrice()));
                 }
             }
-            if(TextUtils.isEmpty(shipChannel)){
+            if (TextUtils.isEmpty(shipChannel)) {
                 deliveryFee.setText("¥ 0");
-            }else {
+            } else {
                 if (NumberFormatUnit.isZero(confirmOrderDetail.getFreightPrice())) {
                     deliveryFee.setText(getString(R.string.free_shipping));
                 } else {
@@ -254,7 +261,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             }
             deliveryFeeTip.setVisibility(TextUtils.isEmpty(confirmOrderDetail.getFreeShipDes()) ? View.GONE : View.VISIBLE);
             deliveryFeeTip.setText("(" + confirmOrderDetail.getFreeShipDes() + ")");
-            if (outShip!=null&&outShip) {
+            if (outShip != null && outShip) {
                 commonTip();
             }
         }
@@ -302,33 +309,39 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
+                goneDelivery();
                 back();
                 break;
             case R.id.confirm_bt://去支付
+                goneDelivery();
                 confirm();
                 break;
             case R.id.coupon_rl:
+                goneDelivery();
                 Intent couponIntent = new Intent(this, SelectCouponActivity.class);
                 couponIntent.putExtra(StaticData.CART_IDS, (Serializable) cartIds);
                 couponIntent.putExtra(StaticData.USER_COUPON_ID, userCouponId);
                 startActivityForResult(couponIntent, RequestCodeStatic.SELECT_COUPON);
                 break;
             case R.id.address_all://选择地址
+                goneDelivery();
                 Intent intent = new Intent(this, AddressManageActivity.class);
                 intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_ZERO);
                 intent.putExtra(StaticData.SELECT_ID, addressId);
                 startActivityForResult(intent, RequestCodeStatic.REQUEST_ADDRESS);
                 break;
             case R.id.delivery_method_rl://配送方式
-                selectDeliveryMethodRl.setVisibility(View.VISIBLE);
+                clickDelivery();
                 break;
             case R.id.same_city_bt://同城
+                deliveryFeeIv.setSelected(false);
                 shipChannel = StaticData.SF_SAME_CITY;
                 deliveryMethodSelect();
                 deliveryMethod.setText(getString(R.string.same_city));
                 confirmOrderPresenter.cartCheckout(addressId, cartIds, couponId, userCouponId, shipChannel);
                 break;
             case R.id.express_delivery_bt://快递
+                deliveryFeeIv.setSelected(false);
                 shipChannel = StaticData.SF_EXPRESS;
                 deliveryMethodSelect();
                 deliveryMethod.setText(getString(R.string.express_delivery));
@@ -425,6 +438,21 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
         }
     }
 
+    private void clickDelivery(){
+        if(selectDeliveryMethodRl.getVisibility()==View.VISIBLE){
+            deliveryFeeIv.setSelected(false);
+            selectDeliveryMethodRl.setVisibility(View.GONE);
+        }else {
+            deliveryFeeIv.setSelected(true);
+            selectDeliveryMethodRl.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void goneDelivery() {
+        deliveryFeeIv.setSelected(false);
+        selectDeliveryMethodRl.setVisibility(View.GONE);
+    }
+
     private void back() {
         Intent intent = new Intent(this, CommonTipActivity.class);
         intent.putExtra(StaticData.COMMON_TITLE, getString(R.string.cancel_pay_tip));
@@ -443,7 +471,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
             showMessage(getString(R.string.select_delivery_method));
             return;
         }
-        if (outShip!=null&&outShip) {
+        if (outShip != null && outShip) {
             commonTip();
             return;
         }

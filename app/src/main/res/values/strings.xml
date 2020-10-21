@@ -545,4 +545,5 @@
     <string name="expire_date_tip">信用卡必填 格式YY/MM</string>
     <string name="select_delivery_method">请选择配送方式</string>
     <string name="ai_nong_pay">爱农支付</string>
+    <string name="cancelled">已取消</string>
 </resources>
