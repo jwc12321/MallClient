@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/backGround8">
 
     <LinearLayout
@@ -14,30 +14,50 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_448"
-            android:layout_marginLeft="@dimen/dp_50"
-            android:layout_marginRight="@dimen/dp_50"
-            android:background="@drawable/common_four_back_fifty_seven_bg"
+            android:layout_height="@dimen/dp_492"
+            android:layout_marginLeft="@dimen/dp_22"
+            android:layout_marginRight="@dimen/dp_22"
+            android:background="@drawable/common_eight_back_fifty_seven_all_bg"
             android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/logistics_no_rl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_37"
+                android:background="@drawable/common_eight_back_eighty_eight_bg" >
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/logistics_no"
+                   style="@style/size12_app3_left15_right_tv_style"
+                    tools:text="顺丰快递 Y93783398979438"/>
+                <ImageView
+                    android:id="@+id/copy_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icon_logistics_no"
+                    android:layout_toRightOf="@id/logistics_no"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_6"/>
+            </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/record_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_12"
+                android:layout_marginBottom="@dimen/dp_12"
                 android:clickable="true"
                 android:nestedScrollingEnabled="false"
+                android:visibility="visible"
                 app:layoutManager="@string/layoutManager_LinearLayout"
-                tools:listitem="@layout/adapter_logistics"
-                android:layout_marginBottom="@dimen/dp_12"
-                android:layout_marginTop="@dimen/dp_12"
-                android:visibility="visible"/>
+                tools:listitem="@layout/adapter_logistics" />
         </LinearLayout>
+
         <ImageView
             android:id="@+id/close_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:src="@mipmap/icon_big_close"
-            android:layout_marginTop="@dimen/dp_22"/>
+            android:layout_marginTop="@dimen/dp_22"
+            android:src="@mipmap/icon_big_close" />
     </LinearLayout>
 </RelativeLayout>

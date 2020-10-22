@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround60"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/merchant_certify" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/number_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_33"
+        android:layout_below="@id/title_rel">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/verify_iv_first"
+            style="@style/verify_step_iv_style"
+            android:layout_marginLeft="@dimen/dp_44"
+            android:text="1" />
+
+        <View
+            android:id="@+id/verify_line_first"
+            style="@style/verify_line_style"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/verify_iv_second"
+            android:layout_toRightOf="@id/verify_iv_first" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/verify_iv_second"
+            style="@style/verify_step_iv_style"
+            android:layout_centerInParent="true"
+            android:text="2" />
+
+        <View
+            android:id="@+id/verify_line_second"
+            style="@style/verify_line_style"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/verify_iv_third"
+            android:layout_toRightOf="@id/verify_iv_second" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/verify_iv_third"
+            style="@style/verify_step_iv_style"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_44"
+            android:text="3" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_11"
+        android:layout_below="@id/number_rl">
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/verify_tv_first"
+            style="@style/verify_step_tv_style"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:text="@string/certify_process_first" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/verify_tv_second"
+            style="@style/verify_step_tv_style"
+            android:layout_centerInParent="true"
+            android:text="@string/certify_process_second" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/verify_tv_third"
+            style="@style/verify_step_tv_style"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_30"
+            android:text="@string/certify_process_third" />
+    </RelativeLayout>
+
+    <com.mall.sls.common.widget.textview.MediumThickTextView
+        android:id="@+id/next_bt"
+        style="@style/common_bottom_30_next_bt_style"
+        android:enabled="false"
+        android:text="@string/next"/>
+</RelativeLayout>

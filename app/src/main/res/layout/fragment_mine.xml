@@ -138,6 +138,28 @@
                                 android:text="@string/coupon"/>
                         </LinearLayout>
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/merchant_certify_ll"
+                        android:layout_width="@dimen/dp_76"
+                        android:layout_height="@dimen/dp_30"
+                        android:orientation="vertical"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/member_type_iv"
+                        android:gravity="center"
+                        android:visibility="gone">
+                        <com.mall.sls.common.widget.textview.ConventionalTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/appText31"
+                            android:textSize="@dimen/sp_12"
+                            android:text="@string/merchant_certify"/>
+                        <ImageView
+                            android:layout_width="@dimen/dp_59"
+                            android:layout_height="@dimen/dp_0_5"
+                            android:src="@color/appText31"/>
+                    </LinearLayout>
+
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -332,6 +354,12 @@
                         style="@style/mine_order_iv_style"
                         android:layout_marginTop="@dimen/dp_2"
                         android:src="@mipmap/icon_feedback" />
+                    <ImageView
+                        android:id="@+id/merchant_rights"
+                        style="@style/mine_order_iv_style"
+                        android:layout_marginTop="@dimen/dp_2"
+                        android:src="@mipmap/icon_merchant_rights"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
             </LinearLayout>

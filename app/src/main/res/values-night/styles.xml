@@ -428,7 +428,7 @@
         <item name="android:layout_marginRight">@dimen/dp_30</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/sp_16</item>
-        <item name="android:background">@drawable/common_two_two_five_back_one_bg</item>
+        <item name="android:background">@drawable/common_six_back_one_bg</item>
         <item name="android:textColor">@color/appText1</item>
     </style>
 
@@ -2148,7 +2148,7 @@
         <item name="android:layout_height">@dimen/dp_45</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/sp_16</item>
-        <item name="android:background">@drawable/confirm_four_bt_select</item>
+        <item name="android:background">@drawable/confirm_bt_select</item>
         <item name="android:textColor">@color/appText1</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_marginLeft">@dimen/dp_15</item>

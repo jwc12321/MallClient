@@ -684,4 +684,12 @@ public class FormatUtil {
         long surplus = (endTime - now) / (24 * 60 * 60) / 1000;
         return surplus;
     }
+
+    public static String cutYearSecond(String time){
+        if(TextUtils.isEmpty(time)){
+            return "";
+        }else {
+            return time.substring(5,time.length()-3);
+        }
+    }
 }

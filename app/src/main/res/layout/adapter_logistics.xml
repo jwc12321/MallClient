@@ -8,11 +8,10 @@
     <RelativeLayout
         android:layout_width="@dimen/dp_49"
         android:layout_height="match_parent">
-
         <RelativeLayout
             android:id="@+id/up_rl"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_22">
+            android:layout_height="@dimen/dp_14">
 
             <ImageView
                 android:id="@+id/submit_iv"
@@ -22,47 +21,50 @@
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/delivery_circle_select" />
 
-            <View
+            <ImageView
                 android:id="@+id/up_line"
                 android:layout_width="@dimen/dp_1"
                 android:layout_height="match_parent"
                 android:layout_above="@id/submit_iv"
                 android:layout_centerHorizontal="true"
-                android:background="@color/backGround15" />
+                android:src="@color/backGround89" />
         </RelativeLayout>
 
-        <View
+        <ImageView
             android:id="@+id/down_line"
             android:layout_width="@dimen/dp_1"
             android:layout_height="match_parent"
             android:layout_below="@id/up_rl"
             android:layout_centerHorizontal="true"
-            android:background="@color/backGround15" />
+            android:src="@color/backGround89" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/title"
-            style="@style/size15_color_app3_text_style"
+            style="@style/size13_color_app3_text_style"
             tools:text="退款成功" />
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/content"
-            style="@style/size14_color_app2_text_style"
-            android:layout_marginTop="@dimen/dp_4"
-            android:layout_marginRight="@dimen/dp_32"
-            tools:text="简奢已处理完您的退款，预计1-5个工作日原路退回，到账详情往原支付账户查询" />
+            style="@style/size11_color_app3_text_style"
+            android:layout_marginTop="@dimen/dp_1"
+            tools:text="简奢已处理完您的退款，预计1-5个工作日原路退回，到账详情往原支付账户查询"
+            android:layout_below="@id/title"
+            android:layout_width="match_parent"
+            android:layout_toLeftOf="@id/time"
+            android:layout_marginBottom="@dimen/dp_18"/>
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/time"
-            style="@style/size15_color_app2_text_style"
-            android:layout_marginTop="@dimen/dp_4"
-            android:layout_marginRight="@dimen/dp_32"
-            android:layout_marginBottom="@dimen/dp_30"
-            tools:text="07-01  16:00" />
-    </LinearLayout>
+            style="@style/size12_color_app2_text_style"
+            android:layout_marginRight="@dimen/dp_15"
+            tools:text="07-01  16:00"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/dp_10"/>
+    </RelativeLayout>
 </LinearLayout>

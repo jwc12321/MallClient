@@ -13,6 +13,7 @@
     <string name="weixin_pay">微信支付&#12288;</string>
     <string name="payable">需付&#160;&#160;</string>
     <string name="total_price">合计</string>
+    <string name="sf_no">顺丰单号&#160; </string>
 
     <!--mai_dian-->
     <string name="bank_card_page">银行卡页</string>
@@ -546,4 +547,26 @@
     <string name="select_delivery_method">请选择配送方式</string>
     <string name="ai_nong_pay">爱农支付</string>
     <string name="cancelled">已取消</string>
+
+    <!--1.1.5-->
+    <string name="merchant_rights">渠道商权益</string>
+    <string name="channel_points">渠道积分</string>
+    <string name="channel_points_tip">实际消费可获得相应\n积分，可兑换商品</string>
+    <string name="hc_gold_card">红尘金卡</string>
+    <string name="hc_gold_card_tip">方便、快捷、安心的\n借款服务</string>
+    <string name="accumulated_points">累计积分</string>
+    <string name="redeemable_points">可兑换积分</string>
+    <string name="points_record">积分纪录</string>
+    <string name="view_points_details">查看积分明细</string>
+    <string name="redeem">积分兑换</string>
+    <string name="redeem_tip">多重好物等你兑</string>
+    <string name="change_information">更改信息</string>
+    <string name="certify_rights">认证权益</string>
+    <string name="certify_channel_points_tip">实际消费可获得相应积分，可兑换商品</string>
+    <string name="certify_hc_gold_card_tip">方便、快捷、安心的借款服务</string>
+    <string name="certify_process">认证流程</string>
+    <string name="certify_process_first">实人认证</string>
+    <string name="certify_process_second">上传渠道商资料</string>
+    <string name="certify_process_third">完成认证</string>
+    <string name="merchant_certify">渠道商认证</string>
 </resources>

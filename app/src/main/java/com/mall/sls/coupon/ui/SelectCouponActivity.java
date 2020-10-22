@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -110,8 +111,8 @@ public class SelectCouponActivity extends BaseActivity implements CouponContract
                 confirm();
                 break;
             case R.id.select_iv:
-                couponId = "-1";
-                userCouponId = "-1";
+                couponId =StaticData.REFRESH_MINUS_ONE;;
+                userCouponId =StaticData.REFRESH_MINUS_ONE;;
                 selectIv.setSelected(true);
                 selectCouponAdapter.setData(userCouponId);
                 break;
@@ -120,6 +121,12 @@ public class SelectCouponActivity extends BaseActivity implements CouponContract
     }
 
     private void confirm() {
+        if(TextUtils.isEmpty(couponId)){
+            couponId=StaticData.REFRESH_MINUS_ONE;
+        }
+        if(TextUtils.isEmpty(userCouponId)){
+            userCouponId=StaticData.REFRESH_MINUS_ONE;
+        }
         Intent backIntent = new Intent();
         backIntent.putExtra(StaticData.COUPON_ID, couponId);
         backIntent.putExtra(StaticData.USER_COUPON_ID, userCouponId);

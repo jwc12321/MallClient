@@ -109,6 +109,9 @@ public class GoodsOrderDetails {
     //是否存在退款记录
     @SerializedName("hasRefund")
     private Boolean hasRefund;
+    //物流单号
+    @SerializedName("waybillNo")
+    private String waybillNo;
 
     public String getCouponPrice() {
         return couponPrice;
@@ -373,6 +376,14 @@ public class GoodsOrderDetails {
 
     public void setHasRefund(Boolean hasRefund) {
         this.hasRefund = hasRefund;
+    }
+
+    public String getWaybillNo() {
+        return waybillNo;
+    }
+
+    public void setWaybillNo(String waybillNo) {
+        this.waybillNo = waybillNo;
     }
 }
 

@@ -22,6 +22,7 @@ import com.mall.sls.R;
 import com.mall.sls.address.ui.AddressManageActivity;
 import com.mall.sls.bank.ui.BankCardManageActivity;
 import com.mall.sls.certify.ui.CerifyTipActivity;
+import com.mall.sls.certify.ui.MerchantCertifyTipActivity;
 import com.mall.sls.certify.ui.NameVerifiedActivity;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
@@ -38,6 +39,7 @@ import com.mall.sls.data.entity.VipAmountInfo;
 import com.mall.sls.login.ui.WeixinLoginActivity;
 import com.mall.sls.lottery.ui.LotteryListActivity;
 import com.mall.sls.member.ui.SuperMemberActivity;
+import com.mall.sls.merchant.ui.MerchantRightsActivity;
 import com.mall.sls.mine.DaggerMineComponent;
 import com.mall.sls.mine.MineContract;
 import com.mall.sls.mine.MineModule;
@@ -124,6 +126,10 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     LinearLayout mineCouponLl;
     @BindView(R.id.bank_iv)
     ImageView bankIv;
+    @BindView(R.id.merchant_rights)
+    ImageView merchantRights;
+    @BindView(R.id.merchant_certify_ll)
+    LinearLayout merchantCertifyLl;
     private String goVerify = StaticData.REFRESH_ZERO;
 
     private UserInfo userInfo;
@@ -182,7 +188,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     }
 
     @OnClick({R.id.right_iv, R.id.all_order_rl, R.id.pending_payment_iv, R.id.pending_share_iv, R.id.pending_delivery_iv, R.id.shipping_iv, R.id.completed_iv, R.id.address_manage, R.id.invite_friends, R.id.verified_rl, R.id.my_invitation_iv,
-            R.id.super_member_rl, R.id.member_type_iv, R.id.feedback, R.id.copy, R.id.lottery, R.id.taobao_orde, R.id.mission_center, R.id.mine_invite_ll, R.id.mine_coupon_ll,R.id.bank_iv})
+            R.id.super_member_rl, R.id.member_type_iv, R.id.feedback, R.id.copy, R.id.lottery, R.id.taobao_orde, R.id.mission_center, R.id.mine_invite_ll, R.id.mine_coupon_ll, R.id.bank_iv, R.id.merchant_rights,R.id.merchant_certify_ll})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.right_iv://设置
@@ -263,6 +269,12 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 break;
             case R.id.bank_iv://银行卡
                 BankCardManageActivity.start(getActivity());
+                break;
+            case R.id.merchant_rights://商家权益
+                MerchantRightsActivity.start(getActivity());
+                break;
+            case R.id.merchant_certify_ll:
+                MerchantCertifyTipActivity.start(getActivity());
                 break;
             default:
         }

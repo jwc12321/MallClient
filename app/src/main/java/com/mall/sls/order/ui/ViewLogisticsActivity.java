@@ -118,7 +118,7 @@ public class ViewLogisticsActivity extends BaseActivity implements OrderContract
 
     @Override
     public void goDeliveryInfoActivity(List<ShipOrderInfo> shipOrderInfos) {
-        DeliveryinfoActivity.start(this, shipOrderInfos);
+        DeliveryinfoActivity.start(this, "" ,shipOrderInfos);
     }
 
     @Override

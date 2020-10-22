@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/icon_merchant_rights_bg"
+        android:layout_below="@id/small_title_rel"/>
+
+    <RelativeLayout
+        android:id="@+id/small_title_rel"
+        style="@style/back35_title_rl_style">
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/small_title"
+            style="@style/small_title_text_style" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/small_title_rel">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_white_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_white_text_style"
+            android:text="@string/merchant_rights" />
+
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/right_bt"
+            style="@style/size10_app28_title_right_tv_style"
+            android:text="@string/change_information" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/channel_points_ll"
+        style="@style/channel_points_ll"
+        android:layout_below="@id/title_rel">
+
+        <LinearLayout style="@style/channel_points_item_ll">
+
+            <ImageView
+                style="@style/channel_points_iv_style"
+                android:src="@mipmap/icon_channel_points" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/channel_points_up_tv_style"
+                android:text="@string/channel_points" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/channel_points_down_tv_style"
+                android:text="@string/channel_points_tip" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/channel_points_item_ll">
+
+            <ImageView
+                style="@style/channel_points_iv_style"
+                android:src="@mipmap/icon_hc_gold_card" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/channel_points_up_tv_style"
+                android:text="@string/hc_gold_card" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/channel_points_down_tv_style"
+                android:text="@string/hc_gold_card_tip" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/points_data_ll"
+        android:layout_below="@id/channel_points_ll">
+
+        <RelativeLayout style="@style/channel_points_item_ll">
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                android:id="@+id/accumulated_points_number"
+                style="@style/accumulated_points_number_tv_style"
+                tools:text="10000" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/accumulated_points_number_tip_tv_style"
+                android:text="@string/accumulated_points" />
+
+            <ImageView
+                style="@style/points_record_iv_style"
+                android:src="@mipmap/icon_points_record" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/points_record_up_tv_style"
+                android:text="@string/points_record" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/points_record_down_tv_style"
+                android:text="@string/view_points_details" />
+        </RelativeLayout>
+        <RelativeLayout style="@style/channel_points_item_ll">
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                android:id="@+id/redeem_number"
+                style="@style/accumulated_points_number_tv_style"
+                tools:text="10000" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/accumulated_points_number_tip_tv_style"
+                android:text="@string/redeemable_points" />
+
+            <ImageView
+                style="@style/points_record_iv_style"
+                android:src="@mipmap/icon_redeem" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/points_record_up_tv_style"
+                android:text="@string/redeem" />
+
+            <com.mall.sls.common.widget.textview.ConventionalTextView
+                style="@style/points_record_down_tv_style"
+                android:text="@string/redeem_tip" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6">
+
+    <com.mall.sls.common.widget.scrollview.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadingEdge="none"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@mipmap/icon_merchant_certify_bg" />
+
+            <RelativeLayout style="@style/back57_ver_ll_style">
+
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    style="@style/size16_color_app3_text_style"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_14"
+                    android:text="@string/certify_rights" />
+
+                <ImageView
+                    style="@style/certify_rights_iv_style"
+                    android:layout_marginTop="@dimen/dp_56"
+                    android:src="@mipmap/icon_channel_points_certify" />
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/certify_rights_up_iv_style"
+                    android:layout_marginTop="@dimen/dp_62"
+                    android:text="@string/channel_points" />
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/certify_rights_down_iv_style"
+                    android:layout_marginTop="@dimen/dp_85"
+                    android:text="@string/certify_channel_points_tip" />
+                <ImageView
+                    style="@style/certify_rights_iv_style"
+                    android:layout_marginTop="@dimen/dp_122"
+                    android:src="@mipmap/icon_hc_gold_card_certify"
+                    android:layout_marginBottom="@dimen/dp_22"/>
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/certify_rights_up_iv_style"
+                    android:layout_marginTop="@dimen/dp_128"
+                    android:text="@string/hc_gold_card" />
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    style="@style/certify_rights_down_iv_style"
+                    android:layout_marginTop="@dimen/dp_151"
+                    android:text="@string/certify_hc_gold_card_tip" />
+            </RelativeLayout>
+            <LinearLayout style="@style/back57_ll_style"
+                android:layout_marginBottom="@dimen/dp_105">
+                <com.mall.sls.common.widget.textview.MediumThickTextView
+                    style="@style/size16_color_app3_text_style"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_14"
+                    android:text="@string/certify_process" />
+                <LinearLayout
+                   style="@style/certify_process_ll_style">
+                    <ImageView
+                        style="@style/certify_process_left_iv_style"
+                        android:src="@mipmap/icon_certify_process_first"/>
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/certify_process_right_iv_style"
+                        android:text="@string/certify_process_first"/>
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/certify_process_ll_style">
+                    <ImageView
+                        style="@style/certify_process_left_iv_style"
+                        android:src="@mipmap/icon_certify_process_second"/>
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/certify_process_right_iv_style"
+                        android:text="@string/certify_process_second"/>
+                </LinearLayout>
+                <LinearLayout
+                    style="@style/certify_process_ll_style"
+                    android:layout_marginBottom="@dimen/dp_45">
+                    <ImageView
+                        style="@style/certify_process_left_iv_style"
+                        android:src="@mipmap/icon_certify_process_third"/>
+                    <com.mall.sls.common.widget.textview.ConventionalTextView
+                        style="@style/certify_process_right_iv_style"
+                        android:text="@string/certify_process_third"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.mall.sls.common.widget.scrollview.ReboundScrollView>
+
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_white_back_style" />
+    </RelativeLayout>
+    <com.mall.sls.common.widget.textview.MediumThickTextView
+        android:id="@+id/confirm_bt"
+        style="@style/common_bottom_30_next_bt_style"
+        android:enabled="false"
+        android:text="@string/auth_now"/>
+</RelativeLayout>

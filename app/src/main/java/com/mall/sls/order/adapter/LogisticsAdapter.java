@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mall.sls.R;
+import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.data.entity.ShipOrderInfo;
 
@@ -38,7 +39,7 @@ public class LogisticsAdapter extends RecyclerView.Adapter<LogisticsAdapter.Logi
     @Override
     public void onBindViewHolder(LogisticsView holder, int position) {
         ShipOrderInfo shipOrderInfo = shipOrderInfos.get(holder.getAdapterPosition());
-        holder.bindData(shipOrderInfo,holder.getAdapterPosition());
+        holder.bindData(shipOrderInfo, holder.getAdapterPosition());
     }
 
     @Override
@@ -50,11 +51,11 @@ public class LogisticsAdapter extends RecyclerView.Adapter<LogisticsAdapter.Logi
         @BindView(R.id.submit_iv)
         ImageView submitIv;
         @BindView(R.id.up_line)
-        View upLine;
+        ImageView upLine;
         @BindView(R.id.up_rl)
         RelativeLayout upRl;
         @BindView(R.id.down_line)
-        View downLine;
+        ImageView downLine;
         @BindView(R.id.title)
         ConventionalTextView title;
         @BindView(R.id.content)
@@ -67,12 +68,12 @@ public class LogisticsAdapter extends RecyclerView.Adapter<LogisticsAdapter.Logi
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindData(ShipOrderInfo shipOrderInfo,int position) {
-            submitIv.setSelected(position==0);
+        public void bindData(ShipOrderInfo shipOrderInfo, int position) {
+            submitIv.setSelected(position == 0);
             upLine.setVisibility(position==0?View.GONE:View.VISIBLE);
-            downLine.setVisibility(position==(shipOrderInfos.size()-1)?View.GONE:View.VISIBLE);
+            downLine.setVisibility(position == (shipOrderInfos.size() - 1) ? View.GONE : View.VISIBLE);
             content.setText(shipOrderInfo.getRemark());
-            time.setText(shipOrderInfo.getStatusTime());
+            time.setText(FormatUtil.cutYearSecond(shipOrderInfo.getStatusTime()));
             title.setText(shipOrderInfo.getStatusDesc());
         }
     }

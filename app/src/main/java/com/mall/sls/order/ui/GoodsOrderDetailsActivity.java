@@ -206,6 +206,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     private String result;
     private String choiceType;
     private Boolean hasRefund;
+    private String waybillNo;
 
     private OrderDetailGoodsItemAdapter orderGoodsItemAdapter;
     private List<PayRecordInfo> payRecordInfos;
@@ -320,7 +321,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
                 if (hasChild) {
                     ViewLogisticsActivity.start(this, goodsOrderId);
                 } else {
-                    DeliveryinfoActivity.start(this, shipOrderInfos);
+                    DeliveryinfoActivity.start(this, waybillNo,shipOrderInfos);
                 }
                 break;
             case R.id.pay_record_rl://支付记录
@@ -430,6 +431,7 @@ public class GoodsOrderDetailsActivity extends BaseActivity implements OrderCont
     public void renderOrderDetails(GoodsOrderDetails goodsOrderDetails) {
         refreshLayout.finishRefresh();
         if (goodsOrderDetails != null) {
+            waybillNo=goodsOrderDetails.getWaybillNo();
             orderStatusText = goodsOrderDetails.getOrderStatus();
             address.setText(goodsOrderDetails.getAddress());
             name.setText(goodsOrderDetails.getConsignee());

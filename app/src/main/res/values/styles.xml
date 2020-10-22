@@ -437,7 +437,7 @@
         <item name="android:layout_marginRight">@dimen/dp_30</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/sp_16</item>
-        <item name="android:background">@drawable/common_two_two_five_back_one_bg</item>
+        <item name="android:background">@drawable/common_six_back_one_bg</item>
         <item name="android:textColor">@color/appText1</item>
     </style>
 
@@ -2165,7 +2165,7 @@
         <item name="android:layout_height">@dimen/dp_45</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/sp_16</item>
-        <item name="android:background">@drawable/confirm_four_bt_select</item>
+        <item name="android:background">@drawable/confirm_bt_select</item>
         <item name="android:textColor">@color/appText1</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_marginLeft">@dimen/dp_15</item>
@@ -2699,7 +2699,173 @@
         <item name="android:layout_marginRight">@dimen/dp_15</item>
         <item name="android:layout_alignParentRight">true</item>
     </style>
+    
+    <style name="size10_app28_title_right_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/dp_44</item>
+        <item name="android:textColor">@color/appText28</item>
+        <item name="android:textSize">@dimen/sp_10</item>
+        <item name="android:drawableRight">@mipmap/icon_change_information</item>
+        <item name="android:drawablePadding">@dimen/dp_3</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:paddingRight">@dimen/dp_15</item>
+        <item name="android:paddingLeft">@dimen/dp_15</item>
+        <item name="android:gravity">center</item>
+    </style>
 
+    <style name="channel_points_ll">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:weightSum">2</item>
+        <item name="android:layout_marginTop">@dimen/dp_17</item>
+        <item name="android:layout_marginLeft">@dimen/dp_6</item>
+        <item name="android:layout_marginRight">@dimen/dp_6</item>
+    </style>
+
+    <style name="channel_points_item_ll">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="channel_points_iv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <style name="channel_points_up_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_15</item>
+        <item name="android:textColor">@color/appText1</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/dp_8</item>
+    </style>
+
+    <style name="channel_points_down_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_13</item>
+        <item name="android:textColor">@color/appText29</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">@dimen/dp_14</item>
+    </style>
+
+    <style name="points_data_ll">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_163</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:weightSum">2</item>
+        <item name="android:layout_marginTop">@dimen/dp_22</item>
+        <item name="android:layout_marginLeft">@dimen/dp_15</item>
+        <item name="android:layout_marginRight">@dimen/dp_15</item>
+        <item name="android:background">@drawable/common_four_back_fifty_seven_bg</item>
+    </style>
+
+    <style name="accumulated_points_number_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/backGround1</item>
+        <item name="android:textSize">@dimen/sp_25</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginTop">@dimen/dp_32</item>
+    </style>
+
+    <style name="accumulated_points_number_tip_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/appText2</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginTop">@dimen/dp_70</item>
+    </style>
+
+    <style name="points_record_iv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/dp_30</item>
+        <item name="android:layout_marginTop">@dimen/dp_124</item>
+    </style>
+
+    <style name="points_record_up_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/appText3</item>
+        <item name="android:layout_marginLeft">@dimen/dp_59</item>
+        <item name="android:layout_marginTop">@dimen/dp_115</item>
+    </style>
+
+    <style name="points_record_down_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_10</item>
+        <item name="android:textColor">@color/appText2</item>
+        <item name="android:layout_marginLeft">@dimen/dp_59</item>
+        <item name="android:layout_marginTop">@dimen/dp_137</item>
+    </style>
+
+
+    <!--每个activity的title-->
+    <style name="back35_title_rl_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/backGround35</item>
+    </style>
+
+    <style name="size12_app3_left15_right_tv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/appText3</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">@dimen/dp_15</item>
+    </style>
+
+    <style name="certify_rights_iv_style">
+        <item name="android:layout_width">@dimen/dp_52</item>
+        <item name="android:layout_height">@dimen/dp_52</item>
+        <item name="android:layout_marginLeft">@dimen/dp_20</item>
+    </style>
+    <style name="certify_rights_up_iv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/appText3</item>
+        <item name="android:textSize">@dimen/sp_15</item>
+        <item name="android:layout_marginLeft">@dimen/dp_82</item>
+    </style>
+    <style name="certify_rights_down_iv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/appText2</item>
+        <item name="android:textSize">@dimen/sp_13</item>
+        <item name="android:layout_marginLeft">@dimen/dp_82</item>
+    </style>
+
+    <style name="certify_process_ll_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/dp_22</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="certify_process_left_iv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/dp_20</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="certify_process_right_iv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/appText3</item>
+        <item name="android:textSize">@dimen/sp_13</item>
+        <item name="android:layout_marginLeft">@dimen/dp_10</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
 
 
 

@@ -221,5 +221,6 @@ public class StaticData {
     public static final String SF_SAME_CITY="sfSameCity";
     public static final String SF_EXPRESS="sfExpress";
     public static final String CHINA_G_TN="chinaGTn";//爱农tn
+    public static final String WAY_BILL_NO="waybillNo";//物流单号
 
 }
