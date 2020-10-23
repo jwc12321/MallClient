@@ -213,6 +213,7 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
         inviteCode = getIntent().getStringExtra(StaticData.INVITE_CODE);
         orderType = StaticData.TYPE_ORDER;
         confirmDetail();
+        confirmOrderPresenter.getDeliveryMethod();
     }
 
     private void confirmDetail() {
@@ -550,6 +551,14 @@ public class ConfirmOrderActivity extends BaseActivity implements HomepageContra
         if (aiNongPay != null) {
             userPayInfo = aiNongPay.getUserPayInfo();
             aiNongPay();
+        }
+    }
+
+    @Override
+    public void renderDeliveryMethod(List<String> methods) {
+        if(methods!=null){
+            sameCityBt.setVisibility(methods.contains(StaticData.SF_SAME_CITY) ? View.VISIBLE : View.GONE);
+            expressDeliveryBt.setVisibility(methods.contains(StaticData.SF_EXPRESS) ? View.VISIBLE : View.GONE);
         }
     }
 

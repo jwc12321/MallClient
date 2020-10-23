@@ -85,7 +85,7 @@
         <RelativeLayout style="@style/channel_points_item_ll">
 
             <com.mall.sls.common.widget.textview.MediumThickTextView
-                android:id="@+id/accumulated_points_number"
+                android:id="@+id/total_points"
                 style="@style/accumulated_points_number_tv_style"
                 tools:text="10000" />
 
@@ -108,7 +108,7 @@
         <RelativeLayout style="@style/channel_points_item_ll">
 
             <com.mall.sls.common.widget.textview.MediumThickTextView
-                android:id="@+id/redeem_number"
+                android:id="@+id/last_points"
                 style="@style/accumulated_points_number_tv_style"
                 tools:text="10000" />
 

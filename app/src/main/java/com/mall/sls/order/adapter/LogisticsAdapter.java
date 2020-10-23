@@ -75,6 +75,10 @@ public class LogisticsAdapter extends RecyclerView.Adapter<LogisticsAdapter.Logi
             content.setText(shipOrderInfo.getRemark());
             time.setText(FormatUtil.cutYearSecond(shipOrderInfo.getStatusTime()));
             title.setText(shipOrderInfo.getStatusDesc());
+            title.setSelected(position == 0);
+            content.setSelected(position == 0);
+            time.setSelected(position == 0);
+
         }
     }
 }

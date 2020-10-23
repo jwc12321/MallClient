@@ -110,6 +110,5 @@
     <com.mall.sls.common.widget.textview.MediumThickTextView
         android:id="@+id/confirm_bt"
         style="@style/common_bottom_30_next_bt_style"
-        android:enabled="false"
         android:text="@string/auth_now"/>
 </RelativeLayout>

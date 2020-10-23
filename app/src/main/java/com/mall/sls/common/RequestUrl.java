@@ -94,4 +94,8 @@ public class RequestUrl {
     public static String CHINA_G_SEND_CODE="/app/ainong/sms";//爱农发送验证码
     public static String CHINA_G_PAY="/app/ainong/confirm-pay";//爱农支付
     public static String SHIP_INFO="/app/common/ship-info";//获取快递费用描述
+    public static String COMMON_EXPRESS="/app/common/express";//获取配送方式
+    public static String CERTIFY_MERCHANT ="/app/certify/merchant";//商家认证
+    public static String UPLOAD_FILE="/app/storage/upload";//上传图片
+    public static String INTEGRAL_POINTS="/app/integral/points";//查询总积分和可兑换积分
 }

@@ -37,6 +37,7 @@ public class RequestCodeStatic {
     public static final int COMMON_TIP_PAGE=22;//提醒界面
     public static final int CHINA_PAY=23;//爱农支付
     public static final int CHINA_PAY_DETAIL=24;//爱农支付
+    public static final int CODE_TAKE_PHOTO=25;//选择照片
 
     public static final int REQUEST_CAMERA=501;//权限相机
     public static final int RETURN_BITMAP=502;

@@ -222,5 +222,11 @@ public class StaticData {
     public static final String SF_EXPRESS="sfExpress";
     public static final String CHINA_G_TN="chinaGTn";//爱农tn
     public static final String WAY_BILL_NO="waybillNo";//物流单号
-
+    public static final String MERCHANT_STATUS="merchantStatus";
+    public static final String FAIL_REASON="failReason";
+    public static final String MERCHANT_CERTIFY_WAIT="waitVerify";
+    public static final String MERCHANT_CERTIFY_FAIL="fail";
+    public static final String MERCHANT="merchant";
+    public static final String USER_LEVEL="userLevel";
+    public static final String WHERE_TYPE="whereType";
 }

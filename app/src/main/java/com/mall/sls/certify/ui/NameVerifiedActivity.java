@@ -111,9 +111,11 @@ public class NameVerifiedActivity extends BaseActivity implements CertifyContrac
     @Inject
     NameVerifiedPresenter nameVerifiedPresenter;
     private String certifyId;
+    private String whereType;//1:商家认证来 2：其他
 
-    public static void start(Context context) {
+    public static void start(Context context, String whereType) {
         Intent intent = new Intent(context, NameVerifiedActivity.class);
+        intent.putExtra(StaticData.WHERE_TYPE, whereType);
         context.startActivity(intent);
     }
 
@@ -127,6 +129,7 @@ public class NameVerifiedActivity extends BaseActivity implements CertifyContrac
     }
 
     private void initView() {
+        whereType = getIntent().getStringExtra(StaticData.WHERE_TYPE);
         pageType = 1;
         ZIMFacade.install(this);
         metaInfos = ZIMFacade.getMetaInfos(this);
@@ -199,8 +202,9 @@ public class NameVerifiedActivity extends BaseActivity implements CertifyContrac
                 }
                 break;
             case R.id.confirm_bt:
-                Intent intent = new Intent();
-                setResult(RESULT_OK, intent);
+                if (TextUtils.equals(StaticData.REFRESH_ONE, whereType)) {
+                    MerchantCertifyActivity.start(this, "", "");
+                }
                 finish();
                 break;
             case R.id.next_bt:

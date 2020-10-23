@@ -67,6 +67,7 @@ public interface HomepageContract {
         void getAliPay(String orderId, String orderType, String paymentMethod);
         void getBaoFuPay(String orderId, String orderType, String paymentMethod);
         void getAiNongPay(String orderId, String orderType, String paymentMethod);
+        void getDeliveryMethod();
     }
 
     interface ConfirmOrderView extends BaseView<ConfirmOrderPresenter>{
@@ -76,6 +77,7 @@ public interface HomepageContract {
         void renderAliPay(AliPay aliPay);
         void renderBaoFuPay(BaoFuPay baoFuPay);
         void renderAiNongPay(AiNongPay aiNongPay);
+        void renderDeliveryMethod(List<String> methods);
     }
 
     interface WXGoodsDetailsPresenter extends BasePresenter{
@@ -111,6 +113,7 @@ public interface HomepageContract {
         void getAliPay(String orderId, String orderType, String paymentMethod);
         void getBaoFuPay(String orderId, String orderType, String paymentMethod);
         void getAiNongPay(String orderId, String orderType, String paymentMethod);
+        void getDeliveryMethod();
     }
 
     interface CartConfirmOrderView extends BaseView<CartConfirmOrderPresenter>{
@@ -120,6 +123,7 @@ public interface HomepageContract {
         void renderAliPay(AliPay aliPay);
         void renderBaoFuPay(BaoFuPay baoFuPay);
         void renderAiNongPay(AiNongPay aiNongPay);
+        void renderDeliveryMethod(List<String> methods);
     }
     interface PayMethodPresenter extends BasePresenter{
         void getPayMethod(String devicePlatform,String orderType);

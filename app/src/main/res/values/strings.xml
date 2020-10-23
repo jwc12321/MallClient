@@ -569,4 +569,14 @@
     <string name="certify_process_second">上传渠道商资料</string>
     <string name="certify_process_third">完成认证</string>
     <string name="merchant_certify">渠道商认证</string>
+    <string name="upload_business_license">上传营业执照</string>
+    <string name="upload_door_head_photos">上传门头照片</string>
+    <string name="add_shop_address">添加店铺地址</string>
+    <string name="select_store">请选择门店</string>
+    <string name="please_upload_business_license">请上传营业执照</string>
+    <string name="please_upload_door_head_photos">请上传门头照片</string>
+    <string name="certify_fail">很遗憾，认证失败</string>
+    <string name="certify_submit">认证信息提交成功</string>
+    <string name="certify_wait">(正在审核中，请稍后…)</string>
+    <string name="view_homepage">去首页看看</string>
 </resources>

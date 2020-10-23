@@ -16,12 +16,14 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.gson.annotations.SerializedName;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
 import com.mall.sls.address.ui.AddressManageActivity;
 import com.mall.sls.bank.ui.BankCardManageActivity;
 import com.mall.sls.certify.ui.CerifyTipActivity;
+import com.mall.sls.certify.ui.MerchantCertifyActivity;
 import com.mall.sls.certify.ui.MerchantCertifyTipActivity;
 import com.mall.sls.certify.ui.NameVerifiedActivity;
 import com.mall.sls.common.GlideHelper;
@@ -144,6 +146,9 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     private ClipData myClip;
     private String vipDescription;
     private String vipExpireDate;
+    private String failReason;
+    private String merchantStatus;
+    private String userLevel;
 
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
@@ -227,7 +232,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 if (TextUtils.equals(StaticData.REFRESH_ZERO, VerifyManager.getVerify())) {
                     goVerify = StaticData.REFRESH_ONE;
                     if (certifyPay) {
-                        NameVerifiedActivity.start(getActivity());
+                        NameVerifiedActivity.start(getActivity(),StaticData.REFRESH_ZERO);
                     } else {
                         CerifyTipActivity.start(getActivity(), certifyAmount);
                     }
@@ -238,10 +243,11 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 MyInvitationActivity.start(getActivity());
                 break;
             case R.id.super_member_rl://超级会员
-            case R.id.member_type_iv:
                 goVerify = StaticData.REFRESH_ONE;
                 SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount, vipDescription, certifyPay, certifyAmount, vipExpireDate);
                 TCAgentUnit.setEventId(getActivity(), getString(R.string.member));
+                break;
+            case R.id.member_type_iv:
                 break;
             case R.id.feedback://意见反馈
                 TCAgentUnit.setEventId(getActivity(), getString(R.string.mine_feedback));
@@ -274,7 +280,12 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 MerchantRightsActivity.start(getActivity());
                 break;
             case R.id.merchant_certify_ll:
-                MerchantCertifyTipActivity.start(getActivity());
+                goVerify = StaticData.REFRESH_ONE;
+                if(TextUtils.isEmpty(merchantStatus)) {
+                    MerchantCertifyTipActivity.start(getActivity(),userLevel,certifyPay,certifyAmount);
+                }else {
+                    MerchantCertifyActivity.start(getActivity(),merchantStatus,failReason);
+                }
                 break;
             default:
         }
@@ -317,29 +328,40 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 phone.setText(mobile);
                 VerifyManager.saveVerify(userInfo.getUserLevel());
                 vipExpireDate = mineInfo.getVipExpireDate();
-
-                if (TextUtils.equals(StaticData.REFRESH_ZERO, userInfo.getUserLevel())) {
+                userLevel=userInfo.getUserLevel();
+                if (TextUtils.equals(StaticData.REFRESH_ZERO, userLevel)) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_ordinary_member);
                     verifiedIv.setSelected(false);
                     verifiedIv.setText(getString(R.string.not_certified));
                     vipType.setText(getString(R.string.open_now));
                     superMemberRl.setVisibility(View.GONE);
-                } else if (TextUtils.equals(StaticData.REFRESH_ONE, userInfo.getUserLevel())) {
+                    merchantCertifyLl.setVisibility(View.VISIBLE);
+                } else if (TextUtils.equals(StaticData.REFRESH_ONE, userLevel)) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_certified_member);
                     verifiedIv.setSelected(true);
                     verifiedIv.setText(getString(R.string.is_verified));
                     vipType.setText(getString(R.string.open_now));
                     superMemberRl.setVisibility(View.GONE);
-                } else if (TextUtils.equals(StaticData.REFRESH_TWO, userInfo.getUserLevel())) {
+                    merchantCertifyLl.setVisibility(View.VISIBLE);
+                } else if (TextUtils.equals(StaticData.REFRESH_TWO, userLevel)) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_super_member);
                     verifiedIv.setSelected(true);
                     verifiedIv.setText(getString(R.string.is_verified));
                     vipType.setText(getString(R.string.view_now));
                     superMemberRl.setVisibility(View.GONE);
+                    merchantCertifyLl.setVisibility(View.VISIBLE);
+                }else if(TextUtils.equals(StaticData.REFRESH_THREE,userLevel)){
+                    memberTypeIv.setBackgroundResource(R.mipmap.icon_merchant_member);
+                    verifiedIv.setSelected(true);
+                    verifiedIv.setText(getString(R.string.is_verified));
+                    superMemberRl.setVisibility(View.GONE);
+                    merchantCertifyLl.setVisibility(View.GONE);
                 }
                 verifiedIv.setVisibility(View.VISIBLE);
             }
             vipDescription = mineInfo.getVipDescription();
+            failReason=mineInfo.getFailReason();
+            merchantStatus=mineInfo.getMerchantStatus();
         }
     }
 

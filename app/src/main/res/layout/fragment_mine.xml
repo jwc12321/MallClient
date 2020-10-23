@@ -358,8 +358,7 @@
                         android:id="@+id/merchant_rights"
                         style="@style/mine_order_iv_style"
                         android:layout_marginTop="@dimen/dp_2"
-                        android:src="@mipmap/icon_merchant_rights"
-                        android:visibility="gone"/>
+                        android:src="@mipmap/icon_merchant_rights" />
                 </LinearLayout>
 
             </LinearLayout>

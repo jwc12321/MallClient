@@ -8,6 +8,7 @@ import dagger.Provides;
 public class CertifyModule {
     private CertifyContract.NameVerifiedView nameVerifiedView;
     private CertifyContract.CertifyPayView certifyPayView;
+    private CertifyContract.MerchantCertifyView merchantCertifyView;
 
     public CertifyModule(CertifyContract.NameVerifiedView nameVerifiedView) {
         this.nameVerifiedView = nameVerifiedView;
@@ -15,6 +16,10 @@ public class CertifyModule {
 
     public CertifyModule(CertifyContract.CertifyPayView certifyPayView) {
         this.certifyPayView = certifyPayView;
+    }
+
+    public CertifyModule(CertifyContract.MerchantCertifyView merchantCertifyView) {
+        this.merchantCertifyView = merchantCertifyView;
     }
 
     @Provides
@@ -25,5 +30,10 @@ public class CertifyModule {
     @Provides
     CertifyContract.CertifyPayView provideCertifyPayView(){
         return certifyPayView;
+    }
+
+    @Provides
+    CertifyContract.MerchantCertifyView provideMerchantCertifyView(){
+        return merchantCertifyView;
     }
 }

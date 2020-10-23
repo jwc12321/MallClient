@@ -199,6 +199,7 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
         confirmGoodsItemAdapter = new ConfirmGoodsItemAdapter(this);
         goodsRv.setAdapter(confirmGoodsItemAdapter);
         cartConfirmOrderPresenter.cartGeneralChecked(addressId, ids, userCouponId, shipChannel);
+        cartConfirmOrderPresenter.getDeliveryMethod();
         SoftKeyBoardListener.setListener(this, new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
             @Override
             public void keyBoardShow(int height) {
@@ -347,6 +348,14 @@ public class CartConfirmOrderActivity extends BaseActivity implements HomepageCo
         if (aiNongPay != null) {
             userPayInfo = aiNongPay.getUserPayInfo();
             aiNongPay();
+        }
+    }
+
+    @Override
+    public void renderDeliveryMethod(List<String> methods) {
+        if(methods!=null){
+            sameCityBt.setVisibility(methods.contains(StaticData.SF_SAME_CITY) ? View.VISIBLE : View.GONE);
+            expressDeliveryBt.setVisibility(methods.contains(StaticData.SF_EXPRESS) ? View.VISIBLE : View.GONE);
         }
     }
 

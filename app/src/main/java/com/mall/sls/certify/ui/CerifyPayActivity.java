@@ -105,6 +105,7 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
 
     private UserPayInfo userPayInfo;
     private String result;
+    private String whereType;
 
 
     @Inject
@@ -126,6 +127,7 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
     }
 
     private void initView() {
+        whereType=StaticData.REFRESH_ZERO;
         EventBus.getDefault().register(this);
         certifyAmount = getIntent().getStringExtra(StaticData.CERTIFY_AMOUNT);
         amount.setText(NumberFormatUnit.goodsFormat(certifyAmount));
@@ -309,7 +311,7 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
         PayResult payResult = new PayResult((Map<String, String>) msg.obj);
         String resultStatus = payResult.getResultStatus();
         if (TextUtils.equals(resultStatus, "9000")) {
-            NameVerifiedActivity.start(this);
+            NameVerifiedActivity.start(this,whereType);
             finish();
         } else if (TextUtils.equals(resultStatus, "6001")) {
             showMessage(getString(R.string.pay_cancel));
@@ -335,7 +337,7 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
     //支付成功
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPaySuccess(WXSuccessPayEvent event) {
-        NameVerifiedActivity.start(this);
+        NameVerifiedActivity.start(this,whereType);
         finish();
     }
 
@@ -365,7 +367,7 @@ public class CerifyPayActivity extends BaseActivity implements CertifyContract.C
 
     private void backResult(String result){
         if(TextUtils.equals(StaticData.BANK_PAY_SUCCESS,result)){
-            NameVerifiedActivity.start(this);
+            NameVerifiedActivity.start(this,whereType);
             finish();
         }else if(TextUtils.equals(StaticData.BANK_PAY_PROCESSING,result)){
             showMessage(getString(R.string.processing));

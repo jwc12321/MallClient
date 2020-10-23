@@ -2502,13 +2502,15 @@
 
     <style name="select_delivery_method_ll_style">
         <item name="android:layout_width">@dimen/dp_92</item>
-        <item name="android:layout_height">@dimen/dp_84</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/common_all_four_back_fifty_eight_bg</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_marginTop">@dimen/dp_135</item>
         <item name="android:layout_marginRight">@dimen/dp_15</item>
         <item name="android:orientation">vertical</item>
         <item name="android:visibility">gone</item>
+        <item name="android:paddingTop">@dimen/dp_8</item>
+        <item name="android:paddingBottom">@dimen/dp_8</item>
     </style>
     <style name="select_delivery_method_tv_style">
         <item name="android:layout_width">match_parent</item>
@@ -2867,6 +2869,24 @@
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 
-
-
+    <style name="upload_photos_rl_style">
+        <item name="android:layout_width">@dimen/dp_70</item>
+        <item name="android:layout_height">@dimen/dp_70</item>
+        <item name="android:layout_marginLeft">@dimen/dp_17</item>
+        <item name="android:layout_marginTop">@dimen/dp_10</item>
+    </style>
+    
+    <style name="upload_photos_iv_style">
+        <item name="android:layout_width">@dimen/dp_60</item>
+        <item name="android:layout_height">@dimen/dp_60</item>
+        <item name="android:src">@mipmap/icon_upload_photo</item>
+        <item name="android:layout_centerInParent">true</item>
+    </style>
+    <style name="upload_photos_delete_iv_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@mipmap/icon_red_close</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:visibility">gone</item>
+    </style>
 </resources>

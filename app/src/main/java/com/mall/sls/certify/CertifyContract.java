@@ -6,7 +6,9 @@ import com.mall.sls.common.unit.VerifyManager;
 import com.mall.sls.data.entity.AliPay;
 import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.BaoFuPayInfo;
+import com.mall.sls.data.entity.MerchantCertifyInfo;
 import com.mall.sls.data.entity.PayMethodInfo;
+import com.mall.sls.data.entity.UploadUrlInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.entity.WxPay;
 
@@ -35,5 +37,17 @@ public interface CertifyContract {
         void renderWxPay(WxPay wxPay);
         void renderAliPay(AliPay aliPay);
         void renderBaoFuPay(BaoFuPay baoFuPay);
+    }
+
+    interface MerchantCertifyPresenter extends BasePresenter{
+        void getMerchantCertifyInfo();
+        void merchantCertify(String businessLicense, String doorHeader, String address, String detail);
+        void uploadFile(String photoUrl,String type);
+    }
+
+    interface MerchantCertifyView extends BaseView<MerchantCertifyPresenter>{
+        void renderMerchantCertifyInfo(MerchantCertifyInfo merchantCertifyInfo);
+        void renderMerchantCertify(Boolean isBoolean);
+        void renderUploadFile(UploadUrlInfo uploadUrlInfo);
     }
 }

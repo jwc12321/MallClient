@@ -30,6 +30,9 @@ public class GoodsOrderInfo {
     //活动id
     @SerializedName("grouponLinkId")
     private String grouponLinkId;
+    //商品总数
+    @SerializedName("goodsCount")
+    private String goodsCount;
 
     public String getId() {
         return id;
@@ -85,5 +88,13 @@ public class GoodsOrderInfo {
 
     public void setGrouponLinkId(String grouponLinkId) {
         this.grouponLinkId = grouponLinkId;
+    }
+
+    public String getGoodsCount() {
+        return goodsCount;
+    }
+
+    public void setGoodsCount(String goodsCount) {
+        this.goodsCount = goodsCount;
     }
 }

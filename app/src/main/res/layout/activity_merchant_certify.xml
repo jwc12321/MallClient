@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/backGround60"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:id="@+id/item_rl">
+
     <RelativeLayout
         android:id="@+id/title_rel"
         style="@style/title_rl_style">
@@ -19,12 +21,13 @@
             style="@style/title_text_style"
             android:text="@string/merchant_certify" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/number_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_33"
-        android:layout_below="@id/title_rel">
+        android:layout_below="@id/title_rel"
+        android:layout_marginTop="@dimen/dp_33">
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/verify_iv_first"
@@ -61,10 +64,11 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/verify_tv_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_11"
-        android:layout_below="@id/number_rl">
+        android:layout_below="@id/number_rl"
+        android:layout_marginTop="@dimen/dp_11">
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/verify_tv_first"
@@ -86,9 +90,141 @@
             android:text="@string/certify_process_third" />
     </RelativeLayout>
 
+    <com.mall.sls.common.widget.scrollview.ReboundScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/verify_tv_rl"
+        android:fadingEdge="none"
+        android:overScrollMode="never"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                style="@style/size14_color_app3_text_style"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_63"
+                android:text="@string/upload_business_license" />
+
+            <RelativeLayout
+                style="@style/upload_photos_rl_style">
+                <ImageView
+                    android:id="@+id/business_license_iv"
+                    style="@style/upload_photos_iv_style"
+                    android:scaleType="fitXY"/>
+                <ImageView
+                    android:id="@+id/business_license_delete_iv"
+                    style="@style/upload_photos_delete_iv_style"/>
+            </RelativeLayout>
+
+            <View
+                style="@style/fifteen_back_nine_line_style"
+                android:layout_marginTop="@dimen/dp_14" />
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                style="@style/size14_color_app3_text_style"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_14"
+                android:text="@string/upload_door_head_photos" />
+
+            <RelativeLayout
+               style="@style/upload_photos_rl_style">
+                <ImageView
+                    android:id="@+id/door_photos_iv"
+                    style="@style/upload_photos_iv_style"
+                    android:scaleType="fitXY"/>
+                <ImageView
+                    android:id="@+id/door_photos_delete_iv"
+                    style="@style/upload_photos_delete_iv_style"/>
+            </RelativeLayout>
+
+
+            <View
+                style="@style/fifteen_back_nine_line_style"
+                android:layout_marginTop="@dimen/dp_14" />
+
+            <com.mall.sls.common.widget.textview.MediumThickTextView
+                style="@style/size14_color_app3_text_style"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_14"
+                android:text="@string/add_shop_address" />
+
+            <RelativeLayout
+                android:id="@+id/city_rv"
+                style="@style/add_address_ll_style">
+
+                <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/city_tv"
+                    style="@style/add_address_right_tv_style"
+                    android:layout_toLeftOf="@id/right_arrow_iv"
+                    android:hint="@string/select_store"
+                    android:layout_marginLeft="@dimen/dp_15"/>
+
+                <ImageView
+                    android:id="@+id/right_arrow_iv"
+                    style="@style/black_right_arrow_iv_style" />
+            </RelativeLayout>
+            <View
+                style="@style/fifteen_back_nine_line_style" />
+            <LinearLayout style="@style/add_address_ll_style">
+
+                <com.mall.sls.common.widget.textview.ConventionalEditTextView
+                    android:id="@+id/detail_address_et"
+                    style="@style/address_et_style"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:hint="@string/detail_address"
+                    android:inputType="text"
+                    android:layout_marginRight="@dimen/dp_15"/>
+            </LinearLayout>
+            <View
+                style="@style/fifteen_back_nine_line_style"
+                android:layout_marginBottom="@dimen/dp_114"/>
+        </LinearLayout>
+    </com.mall.sls.common.widget.scrollview.ReboundScrollView>
+
+
     <com.mall.sls.common.widget.textview.MediumThickTextView
         android:id="@+id/next_bt"
         style="@style/common_bottom_30_next_bt_style"
-        android:enabled="false"
-        android:text="@string/next"/>
+        android:text="@string/next"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/result_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/verify_tv_rl"
+        android:orientation="vertical"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/result_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/merchant_certify_result_select"
+            android:layout_marginTop="@dimen/dp_84"
+            android:layout_gravity="center_horizontal"/>
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/result_tv"
+            style="@style/size16_color_back1_text_style"
+            tools:text="很遗憾，认证失败"
+            android:layout_marginTop="@dimen/dp_22"
+            android:layout_gravity="center_horizontal"/>
+        <com.mall.sls.common.widget.textview.ConventionalTextView
+            android:id="@+id/result_reason"
+            style="@style/size16_color_app3_text_style"
+            tools:text="（失败原因）"
+            android:layout_marginTop="@dimen/dp_9"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_15"/>
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/confirm_bt"
+            style="@style/common_next_bt_style"
+            android:layout_marginTop="@dimen/dp_108"
+            tools:text="@string/next" />
+    </LinearLayout>
 </RelativeLayout>

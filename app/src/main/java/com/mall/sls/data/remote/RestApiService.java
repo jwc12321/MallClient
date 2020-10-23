@@ -1,6 +1,7 @@
 package com.mall.sls.data.remote;
 
 
+import com.google.gson.annotations.SerializedName;
 import com.mall.sls.data.RemoteDataWrapper;
 import com.mall.sls.data.entity.AddressInfo;
 import com.mall.sls.data.entity.AiNongPay;
@@ -29,12 +30,14 @@ import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.HomeSnapUp;
 import com.mall.sls.data.entity.HomeSnapUpInfo;
 import com.mall.sls.data.entity.Ignore;
+import com.mall.sls.data.entity.IntegralPointsInfo;
 import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.InviteInfo;
 import com.mall.sls.data.entity.JoinPrizeInfo;
 import com.mall.sls.data.entity.LocalTeam;
 import com.mall.sls.data.entity.LotteryItemInfo;
 import com.mall.sls.data.entity.LotteryRecord;
+import com.mall.sls.data.entity.MerchantCertifyInfo;
 import com.mall.sls.data.entity.MessageInfo;
 import com.mall.sls.data.entity.MessageTypeInfo;
 import com.mall.sls.data.entity.MineInfo;
@@ -53,6 +56,7 @@ import com.mall.sls.data.entity.ShareInfo;
 import com.mall.sls.data.entity.TeamInfo;
 import com.mall.sls.data.entity.TokenInfo;
 import com.mall.sls.data.entity.TokenRefreshInfo;
+import com.mall.sls.data.entity.UploadUrlInfo;
 import com.mall.sls.data.entity.VipAmountInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
 import com.mall.sls.data.entity.WxPay;
@@ -74,6 +78,7 @@ import com.mall.sls.data.request.DescriptionRequest;
 import com.mall.sls.data.request.GroupRemindRequest;
 import com.mall.sls.data.request.JoinPrizeRequest;
 import com.mall.sls.data.request.LoginRequest;
+import com.mall.sls.data.request.MerchantCertifyRequest;
 import com.mall.sls.data.request.MobileRequest;
 import com.mall.sls.data.request.MsgIdRequest;
 import com.mall.sls.data.request.MsgReadRequest;
@@ -92,13 +97,18 @@ import com.mall.sls.data.request.UserPayDtoRequest;
 import com.mall.sls.data.request.WeiXinLoginRequest;
 
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.Flowable;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -474,6 +484,28 @@ public interface RestApiService {
     //获取快递费用描述
     @GET("app/common/ship-info")
     Flowable<RemoteDataWrapper<String>> getShipInfo(@Header("X-Hc-Sign") String sign);
+
+    //获取配送方式
+    @GET("app/common/express")
+    Flowable<RemoteDataWrapper<List<String>>> getDeliveryMethod(@Header("X-Hc-Sign") String sign);
+
+    //获取商户认证信息
+    @GET("app/certify/merchant")
+    Flowable<RemoteDataWrapper<MerchantCertifyInfo>> getMerchantCertifyInfo(@Header("X-Hc-Sign") String sign);
+
+    //提交商户认证
+    @POST("app/certify/merchant")
+    Flowable<RemoteDataWrapper<Boolean>> merchantCertify(@Header("X-Hc-Sign") String sign, @Body MerchantCertifyRequest request);
+
+    //上传图片
+    @Multipart
+    @POST("app/storage/upload")
+    Flowable<RemoteDataWrapper<UploadUrlInfo>> uploadFile(@Header("X-Hc-Sign") String sign, @PartMap Map<String, RequestBody> requestBodyMap);
+
+    //查询总积分和可兑换积分
+    @GET("app/integral/points")
+    Flowable<RemoteDataWrapper<IntegralPointsInfo>> getIntegralPointsInfo(@Header("X-Hc-Sign") String sign);
+
 
 
 }

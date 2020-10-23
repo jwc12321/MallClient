@@ -19,6 +19,12 @@ public class MineInfo {
     //超级过期日期
     @SerializedName("vipExpireDate")
     private String vipExpireDate;
+    //审核失败原因
+    @SerializedName("failReason")
+    private String failReason;
+    //商户审核状态  fail, success, waitVerify
+    @SerializedName("merchantStatus")
+    private String merchantStatus;
 
     public UserInfo getUserInfo() {
         return userInfo;
@@ -50,5 +56,21 @@ public class MineInfo {
 
     public void setVipExpireDate(String vipExpireDate) {
         this.vipExpireDate = vipExpireDate;
+    }
+
+    public String getFailReason() {
+        return failReason;
+    }
+
+    public void setFailReason(String failReason) {
+        this.failReason = failReason;
+    }
+
+    public String getMerchantStatus() {
+        return merchantStatus;
+    }
+
+    public void setMerchantStatus(String merchantStatus) {
+        this.merchantStatus = merchantStatus;
     }
 }

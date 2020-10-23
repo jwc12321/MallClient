@@ -184,7 +184,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
                 if (TextUtils.equals(StaticData.REFRESH_ZERO, VerifyManager.getVerify())) {
                     showMessage(getString(R.string.to_open_person_authentication));
                     if (certifyPay) {
-                        NameVerifiedActivity.start(this);
+                        NameVerifiedActivity.start(this,StaticData.REFRESH_ZERO);
                     } else {
                         CerifyTipActivity.start(this, certifyAmount);
                     }

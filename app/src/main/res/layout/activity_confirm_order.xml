@@ -224,7 +224,6 @@
                     <com.mall.sls.common.widget.textview.ConventionalTextView
                         android:id="@+id/same_city_bt"
                         style="@style/select_delivery_method_tv_style"
-                        android:layout_marginTop="@dimen/dp_8"
                         android:text="@string/same_city" />
 
                     <com.mall.sls.common.widget.textview.ConventionalTextView
