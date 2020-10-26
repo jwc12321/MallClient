@@ -8,6 +8,7 @@ package com.mall.sls.merchant;
 import com.mall.sls.ActivityScope;
 import com.mall.sls.ApplicationComponent;
 import com.mall.sls.merchant.ui.MerchantRightsActivity;
+import com.mall.sls.merchant.ui.PointsRecordActivity;
 
 import dagger.Component;
 
@@ -15,4 +16,5 @@ import dagger.Component;
 @Component(dependencies = ApplicationComponent.class, modules = {MerchantModule.class})
 public interface MerchantComponent {
     void inject(MerchantRightsActivity activity);
+    void inject(PointsRecordActivity activity);
 }

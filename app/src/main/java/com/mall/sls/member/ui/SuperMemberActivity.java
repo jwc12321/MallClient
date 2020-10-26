@@ -20,7 +20,6 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.certify.ui.CerifyTipActivity;
-import com.mall.sls.certify.ui.NameVerifiedActivity;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
@@ -135,7 +134,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
 
     private void initView() {
         refreshLayout.setOnMultiPurposeListener(simpleMultiPurposeListener);
-        orderType=StaticData.TYPE_SUPER;
+        orderType = StaticData.TYPE_SUPER;
         EventBus.getDefault().register(this);
         avatarUrl = getIntent().getStringExtra(StaticData.AVATAR_URL);
         mobile = getIntent().getStringExtra(StaticData.MOBILE);
@@ -183,16 +182,12 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
             case R.id.confirm_bt:
                 if (TextUtils.equals(StaticData.REFRESH_ZERO, VerifyManager.getVerify())) {
                     showMessage(getString(R.string.to_open_person_authentication));
-                    if (certifyPay) {
-                        NameVerifiedActivity.start(this,StaticData.REFRESH_ZERO);
-                    } else {
-                        CerifyTipActivity.start(this, certifyAmount);
-                    }
+                    CerifyTipActivity.start(this, certifyAmount);
                 } else {
                     Intent intent = new Intent(this, SelectPayTypeActivity.class);
                     intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_ONE);
                     intent.putExtra(StaticData.PAYMENT_AMOUNT, vipAmount);
-                    intent.putExtra(StaticData.ORDER_TYPE,StaticData.TYPE_SUPER);
+                    intent.putExtra(StaticData.ORDER_TYPE, StaticData.TYPE_SUPER);
                     startActivityForResult(intent, RequestCodeStatic.PAY_TYPE);
                 }
                 break;
@@ -220,13 +215,13 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
                         if (TextUtils.equals(StaticData.WX_PAY, paymentMethod)) {
                             //微信
                             if (PayTypeInstalledUtils.isWeixinAvilible(SuperMemberActivity.this)) {
-                                superMemberPresenter.getWxPay(orderId,orderType,paymentMethod);
+                                superMemberPresenter.getWxPay(orderId, orderType, paymentMethod);
                             } else {
                                 showMessage(getString(R.string.install_weixin));
                             }
                         } else if (TextUtils.equals(StaticData.ALI_PAY, paymentMethod)) {
                             if (PayTypeInstalledUtils.isAliPayInstalled(SuperMemberActivity.this)) {
-                                superMemberPresenter.getAliPay(orderId,orderType,paymentMethod);
+                                superMemberPresenter.getAliPay(orderId, orderType, paymentMethod);
                             } else {
                                 showMessage(getString(R.string.install_alipay));
                             }
@@ -256,7 +251,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
     public void renderVipGroupons(LocalTeam localTeam) {
         refreshLayout.finishRefresh();
         if (localTeam != null) {
-            if (localTeam.getGoodsItemInfos()!= null && localTeam.getGoodsItemInfos().size() > 0) {
+            if (localTeam.getGoodsItemInfos() != null && localTeam.getGoodsItemInfos().size() > 0) {
                 recordRv.setVisibility(View.VISIBLE);
                 if (localTeam.getGoodsItemInfos().size() == Integer.parseInt(StaticData.TEN_LIST_SIZE)) {
                     refreshLayout.resetNoMoreData();

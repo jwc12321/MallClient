@@ -226,6 +226,7 @@ public class StaticData {
     public static final String FAIL_REASON="failReason";
     public static final String MERCHANT_CERTIFY_WAIT="waitVerify";
     public static final String MERCHANT_CERTIFY_FAIL="fail";
+    public static final String MERCHANT_CERTIFY_SUCCESS="success";
     public static final String MERCHANT="merchant";
     public static final String USER_LEVEL="userLevel";
     public static final String WHERE_TYPE="whereType";

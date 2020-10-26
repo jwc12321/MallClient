@@ -1,7 +1,5 @@
 package com.mall.sls.common;
 
-import retrofit2.http.PUT;
-
 public class RequestUrl {
     public static String APP_URL_INFO_URL="/app/version/android";
     public static String LOGIN_IN_URL="/app/auth/login/code";//登录
@@ -15,14 +13,14 @@ public class RequestUrl {
     public static String COMMON_AREA_URL="/app/common/area";//获取所有三级地址
     public static String ADDRESS_SAVE_URL="/app/address/save";//添加地址
     public static String DELETE_ADDRESS_URL="/app/address/";//删除地址
-    public static String CART_FAST_ADD_URL="/app/cart/fastadd";//商品购买接口
-    public static String CART_CHECKOUT_URL="/app/cart/checkout";//订单预提交
+    public static String CART_FAST_ADD_URL="/app/cart/v2/fastadd";//商品购买接口
+    public static String CART_CHECKOUT_URL="/app/cart/v2/checkout";//订单预提交
     public static String COUPON_SELECT_LIST_URL="/app/coupon/selectlist";//查询当前预提交订单可用优惠券
-    public static String ORDER_UBMIT_URL="/app/order/submit";//提交订单
+    public static String ORDER_UBMIT_URL="/app/order/v2/submit";//提交订单
     public static String COUPON_MY_LIST_URL="/app/coupon/mylist";//优惠卷列表
     public static String MINE_INFO_URL="/app/auth/info";//我的
     public static String LOCAL_GOODS_URL="/app/goods";//本地拼团
-    public static String GET_CERTIFY_ID_URL="/app/certify";//实人认证
+    public static String GET_CERTIFY_ID_URL="/app/certify/v2";//实人认证
     public static String ORDER_LIST="/app/order/list";//订单列表
     public static String ORDER_DETAILS="/app/order/detail";//订单详情
     public static String AUTH_INVITER="/app/auth/inviter";//我的邀请
@@ -57,13 +55,13 @@ public class RequestUrl {
     public static String COUPON_RECEIVE="/app/coupon/receive";//领取优惠卷
     public static String CART_COUNT="/app/cart/general/count";//查询购物车商品数量
     public static String CART_ADD="/app/cart/general/add";//加入购物车
-    public static String CART_GENERAL_CHECKED="/app/cart/general/checked";//购物车选中商品购买
+    public static String CART_GENERAL_CHECKED="/app/cart/general/v2/checked";//购物车选中商品购买
     public static String DELETE_CART_ITEM="/app/cart/general/delete/";//删除购物车item
     public static String CART_GENERAL_LIST ="/app/cart/general/list";//查询购物车列表
     public static String CART_UPDATE_NUMBER="/app/cart/general/update";//修改购物车商品数量
     public static String GOODS_BASE_GOOD="/app/goods/baseGood";//普通商品详情
-    public static String CART_FAST_ADD="/app/cart/general/fastadd";//立即购买
-    public static String ORDER_GENERAL_SUBMIT="/app/order/general/submit";//普通商品下单
+    public static String CART_FAST_ADD="/app/cart/general/v2/fastadd";//立即购买
+    public static String ORDER_GENERAL_SUBMIT="/app/order/general/v2/submit";//普通商品下单
     public static String ORDER_LOGISTICS="/app/order/logistics/";//查询物流接口
     public static String ADD_CART_BATCH="/app/order/general/addCartBatch";//订单详情加入购物车
     public static String GOODS_RUSH_BUY="/app/goods/rushBuy";//正在疯抢
@@ -98,4 +96,5 @@ public class RequestUrl {
     public static String CERTIFY_MERCHANT ="/app/certify/merchant";//商家认证
     public static String UPLOAD_FILE="/app/storage/upload";//上传图片
     public static String INTEGRAL_POINTS="/app/integral/points";//查询总积分和可兑换积分
+    public static String POINT_RECORD="/app/integral/page";//查询积分记录
 }

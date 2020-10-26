@@ -2889,4 +2889,10 @@
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:visibility">gone</item>
     </style>
+
+    <style name="height49_hor_ll_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_49</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
 </resources>

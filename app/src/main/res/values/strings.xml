@@ -556,7 +556,7 @@
     <string name="hc_gold_card_tip">方便、快捷、安心的\n借款服务</string>
     <string name="accumulated_points">累计积分</string>
     <string name="redeemable_points">可兑换积分</string>
-    <string name="points_record">积分纪录</string>
+    <string name="points_record">积分记录</string>
     <string name="view_points_details">查看积分明细</string>
     <string name="redeem">积分兑换</string>
     <string name="redeem_tip">多重好物等你兑</string>
@@ -579,4 +579,7 @@
     <string name="certify_submit">认证信息提交成功</string>
     <string name="certify_wait">(正在审核中，请稍后…)</string>
     <string name="view_homepage">去首页看看</string>
+    <string name="coming_soon">即将上线</string>
+    <string name="stay_tuned_point">敬请期待…</string>
+    <string name="first_merchant_certify">请先渠道商认证</string>
 </resources>

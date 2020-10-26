@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/redeem" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_62"
+        android:src="@mipmap/icon_integral_no_data" />
+
+    <com.mall.sls.common.widget.textview.ConventionalTextView
+        style="@style/size13_color_app2_text_style"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/coming_soon" />
+
+    <com.mall.sls.common.widget.textview.MediumThickTextView
+        style="@style/size15_color_back1_text_style"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_9"
+        android:text="@string/stay_tuned_point" />
+
+</LinearLayout>

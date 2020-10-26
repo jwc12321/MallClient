@@ -162,7 +162,7 @@ public class MerchantCertifyActivity extends BaseActivity implements CertifyCont
         group = new ArrayList<>();
         themeId = R.style.picture_WeChat_style;
         authStatus();
-        if (TextUtils.isEmpty(merchantStatus)) {
+        if (TextUtils.isEmpty(merchantStatus)||TextUtils.equals(StaticData.MERCHANT_CERTIFY_SUCCESS, merchantStatus)) {
             scrollView.setVisibility(View.VISIBLE);
             resultLl.setVisibility(View.GONE);
             nextBt.setVisibility(View.VISIBLE);
@@ -173,7 +173,7 @@ public class MerchantCertifyActivity extends BaseActivity implements CertifyCont
             if (TextUtils.equals(StaticData.MERCHANT_CERTIFY_FAIL, merchantStatus)) {
                 resultIv.setSelected(false);
                 resultTv.setText(getString(R.string.certify_fail));
-                resultReason.setText("("+failReason+")");
+                resultReason.setText(failReason);
                 confirmBt.setText(getString(R.string.recertify));
             } else if (TextUtils.equals(StaticData.MERCHANT_CERTIFY_WAIT, merchantStatus)) {
                 resultIv.setSelected(true);

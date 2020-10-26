@@ -288,11 +288,11 @@
                         android:id="@+id/invite_friends"
                         style="@style/mine_order_iv_style"
                         android:src="@mipmap/icon_invite_friends" />
-
                     <ImageView
-                        android:id="@+id/lottery"
+                        android:id="@+id/merchant_rights"
                         style="@style/mine_order_iv_style"
-                        android:src="@mipmap/icon_lottery" />
+                        android:layout_marginTop="@dimen/dp_2"
+                        android:src="@mipmap/icon_merchant_rights" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -343,7 +343,10 @@
                         android:layout_marginTop="@dimen/dp_2"
                         android:src="@mipmap/icon_mission_center"
                         android:visibility="gone"/>
-
+                    <ImageView
+                        android:id="@+id/lottery"
+                        style="@style/mine_order_iv_style"
+                        android:src="@mipmap/icon_lottery" />
                     <ImageView
                         android:id="@+id/address_manage"
                         style="@style/mine_order_iv_style"
@@ -354,11 +357,6 @@
                         style="@style/mine_order_iv_style"
                         android:layout_marginTop="@dimen/dp_2"
                         android:src="@mipmap/icon_feedback" />
-                    <ImageView
-                        android:id="@+id/merchant_rights"
-                        style="@style/mine_order_iv_style"
-                        android:layout_marginTop="@dimen/dp_2"
-                        android:src="@mipmap/icon_merchant_rights" />
                 </LinearLayout>
 
             </LinearLayout>

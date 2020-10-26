@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.certify.ui.MerchantCertifyActivity;
+import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.IntegralPointsInfo;
@@ -49,13 +51,21 @@ public class MerchantRightsActivity extends BaseActivity implements MerchantCont
     MediumThickTextView totalPoints;
     @BindView(R.id.last_points)
     MediumThickTextView lastPoints;
+    @BindView(R.id.record_rl)
+    RelativeLayout recordRl;
+    @BindView(R.id.redeem_rl)
+    RelativeLayout redeemRl;
+    private String failReason;
+    private String merchantStatus;
 
 
     @Inject
     MerchantRightsPresenter merchantRightsPresenter;
 
-    public static void start(Context context) {
+    public static void start(Context context,String merchantStatus, String failReason) {
         Intent intent = new Intent(context, MerchantRightsActivity.class);
+        intent.putExtra(StaticData.MERCHANT_STATUS, merchantStatus);
+        intent.putExtra(StaticData.FAIL_REASON, failReason);
         context.startActivity(intent);
     }
 
@@ -66,6 +76,12 @@ public class MerchantRightsActivity extends BaseActivity implements MerchantCont
         ButterKnife.bind(this);
         navigationBar();
         setHeight(null, smallTitle, null);
+        initView();
+    }
+
+    private void initView(){
+        failReason = getIntent().getStringExtra(StaticData.FAIL_REASON);
+        merchantStatus = getIntent().getStringExtra(StaticData.MERCHANT_STATUS);
         merchantRightsPresenter.getIntegralPointsInfo();
     }
 
@@ -83,11 +99,20 @@ public class MerchantRightsActivity extends BaseActivity implements MerchantCont
         return null;
     }
 
-    @OnClick({R.id.back})
+    @OnClick({R.id.back,R.id.record_rl,R.id.redeem_rl,R.id.right_bt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
                 finish();
+                break;
+            case R.id.record_rl:
+                PointsRecordActivity.start(this);
+                break;
+            case R.id.redeem_rl://可兑换
+                RedeemActivity.start(this);
+                break;
+            case R.id.right_bt:
+                MerchantCertifyActivity.start(this, merchantStatus, failReason);
                 break;
             default:
         }

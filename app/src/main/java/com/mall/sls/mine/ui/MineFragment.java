@@ -15,8 +15,6 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.google.gson.annotations.SerializedName;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
@@ -25,7 +23,6 @@ import com.mall.sls.bank.ui.BankCardManageActivity;
 import com.mall.sls.certify.ui.CerifyTipActivity;
 import com.mall.sls.certify.ui.MerchantCertifyActivity;
 import com.mall.sls.certify.ui.MerchantCertifyTipActivity;
-import com.mall.sls.certify.ui.NameVerifiedActivity;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
@@ -47,9 +44,7 @@ import com.mall.sls.mine.MineContract;
 import com.mall.sls.mine.MineModule;
 import com.mall.sls.mine.presenter.MineInfoPresenter;
 import com.mall.sls.order.ui.GoodsOrderActivity;
-
 import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -193,7 +188,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     }
 
     @OnClick({R.id.right_iv, R.id.all_order_rl, R.id.pending_payment_iv, R.id.pending_share_iv, R.id.pending_delivery_iv, R.id.shipping_iv, R.id.completed_iv, R.id.address_manage, R.id.invite_friends, R.id.verified_rl, R.id.my_invitation_iv,
-            R.id.super_member_rl, R.id.member_type_iv, R.id.feedback, R.id.copy, R.id.lottery, R.id.taobao_orde, R.id.mission_center, R.id.mine_invite_ll, R.id.mine_coupon_ll, R.id.bank_iv, R.id.merchant_rights,R.id.merchant_certify_ll})
+            R.id.super_member_rl, R.id.member_type_iv, R.id.feedback, R.id.copy, R.id.lottery, R.id.taobao_orde, R.id.mission_center, R.id.mine_invite_ll, R.id.mine_coupon_ll, R.id.bank_iv, R.id.merchant_rights, R.id.merchant_certify_ll})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.right_iv://设置
@@ -231,11 +226,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 TCAgentUnit.setEventId(getActivity(), getString(R.string.mine_verified));
                 if (TextUtils.equals(StaticData.REFRESH_ZERO, VerifyManager.getVerify())) {
                     goVerify = StaticData.REFRESH_ONE;
-                    if (certifyPay) {
-                        NameVerifiedActivity.start(getActivity(),StaticData.REFRESH_ZERO);
-                    } else {
-                        CerifyTipActivity.start(getActivity(), certifyAmount);
-                    }
+                    CerifyTipActivity.start(getActivity(), certifyAmount);
                 }
                 break;
             case R.id.my_invitation_iv://我的邀请
@@ -248,6 +239,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 TCAgentUnit.setEventId(getActivity(), getString(R.string.member));
                 break;
             case R.id.member_type_iv:
+                memberTypeClick();
                 break;
             case R.id.feedback://意见反馈
                 TCAgentUnit.setEventId(getActivity(), getString(R.string.mine_feedback));
@@ -277,14 +269,18 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 BankCardManageActivity.start(getActivity());
                 break;
             case R.id.merchant_rights://商家权益
-                MerchantRightsActivity.start(getActivity());
+                MerchantRightsActivity.start(getActivity(), merchantStatus, failReason);
                 break;
             case R.id.merchant_certify_ll:
+                if(!TextUtils.equals(StaticData.REFRESH_THREE, userLevel)){
+                    showMessage(getString(R.string.first_merchant_certify));
+                    return;
+                }
                 goVerify = StaticData.REFRESH_ONE;
-                if(TextUtils.isEmpty(merchantStatus)) {
-                    MerchantCertifyTipActivity.start(getActivity(),userLevel,certifyPay,certifyAmount);
-                }else {
-                    MerchantCertifyActivity.start(getActivity(),merchantStatus,failReason);
+                if (TextUtils.isEmpty(merchantStatus)) {
+                    MerchantCertifyTipActivity.start(getActivity(), userLevel, certifyPay, certifyAmount);
+                } else {
+                    MerchantCertifyActivity.start(getActivity(), merchantStatus, failReason);
                 }
                 break;
             default:
@@ -328,7 +324,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 phone.setText(mobile);
                 VerifyManager.saveVerify(userInfo.getUserLevel());
                 vipExpireDate = mineInfo.getVipExpireDate();
-                userLevel=userInfo.getUserLevel();
+                userLevel = userInfo.getUserLevel();
                 if (TextUtils.equals(StaticData.REFRESH_ZERO, userLevel)) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_ordinary_member);
                     verifiedIv.setSelected(false);
@@ -350,7 +346,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                     vipType.setText(getString(R.string.view_now));
                     superMemberRl.setVisibility(View.GONE);
                     merchantCertifyLl.setVisibility(View.VISIBLE);
-                }else if(TextUtils.equals(StaticData.REFRESH_THREE,userLevel)){
+                } else if (TextUtils.equals(StaticData.REFRESH_THREE, userLevel)) {
                     memberTypeIv.setBackgroundResource(R.mipmap.icon_merchant_member);
                     verifiedIv.setSelected(true);
                     verifiedIv.setText(getString(R.string.is_verified));
@@ -360,8 +356,8 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 verifiedIv.setVisibility(View.VISIBLE);
             }
             vipDescription = mineInfo.getVipDescription();
-            failReason=mineInfo.getFailReason();
-            merchantStatus=mineInfo.getMerchantStatus();
+            failReason = mineInfo.getFailReason();
+            merchantStatus = mineInfo.getMerchantStatus();
         }
     }
 
@@ -400,6 +396,16 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
             TCAgentUnit.pageStart(getActivity(), getString(R.string.mine));
         } else if (getActivity() != null && !getActivity().isDestroyed()) {
             TCAgentUnit.pageEnd(getActivity(), getString(R.string.mine));
+        }
+    }
+
+    private void memberTypeClick(){
+        goVerify = StaticData.REFRESH_ONE;
+        if(TextUtils.equals(StaticData.REFRESH_THREE, userLevel)){
+            MerchantRightsActivity.start(getActivity(), merchantStatus, failReason);
+        }else {
+            SuperMemberActivity.start(getActivity(), avatarUrl, mobile, vipAmount, vipDescription, certifyPay, certifyAmount, vipExpireDate);
+            TCAgentUnit.setEventId(getActivity(), getString(R.string.member));
         }
     }
 }

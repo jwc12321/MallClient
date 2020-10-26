@@ -10,13 +10,23 @@ import dagger.Provides;
 @Module
 public class MerchantModule {
     private MerchantContract.MerchantRightsView merchantRightsView;
+    private MerchantContract.PointsRecordView pointsRecordView;
 
     public MerchantModule(MerchantContract.MerchantRightsView merchantRightsView) {
         this.merchantRightsView = merchantRightsView;
     }
 
+    public MerchantModule(MerchantContract.PointsRecordView pointsRecordView) {
+        this.pointsRecordView = pointsRecordView;
+    }
+
     @Provides
     MerchantContract.MerchantRightsView provideMerchantRightsView(){
         return merchantRightsView;
+    }
+
+    @Provides
+    MerchantContract.PointsRecordView providePointsRecordView(){
+        return pointsRecordView;
     }
 }

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backGround6"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/title_rel"
+        style="@style/title_rl_style">
+
+        <ImageView
+            android:id="@+id/back"
+            style="@style/title_left_back_style" />
+
+        <com.mall.sls.common.widget.textview.MediumThickTextView
+            android:id="@+id/title"
+            style="@style/title_text_style"
+            android:text="@string/points_record" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/common_four_back_fifty_seven_top_bg"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15">
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/title_rel"
+            app:srlEnablePreviewInEditMode="false">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlAccentColor="@color/appText3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/record_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="@string/layoutManager_LinearLayout"
+                    tools:listitem="@layout/adapter_points_record" />
+
+                <LinearLayout
+                    android:id="@+id/no_record_ll"
+                    style="@style/common_no_record_ll_style"
+                    android:visibility="gone">
+
+                    <ImageView
+                        style="@style/common_no_record_iv_style"
+                        android:src="@mipmap/icon_no_data" />
+
+                    <TextView
+                        style="@style/common_no_record_tv_style"
+                        android:text="@string/no_data" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </LinearLayout>
+
+</LinearLayout>

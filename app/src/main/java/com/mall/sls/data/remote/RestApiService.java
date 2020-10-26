@@ -47,11 +47,10 @@ import com.mall.sls.data.entity.OrderList;
 import com.mall.sls.data.entity.OrderPackageInfo;
 import com.mall.sls.data.entity.OrderSubmitInfo;
 import com.mall.sls.data.entity.PayMethodInfo;
+import com.mall.sls.data.entity.PointsRecord;
 import com.mall.sls.data.entity.ProvinceBean;
 import com.mall.sls.data.entity.RefundInfo;
-import com.mall.sls.data.entity.SearchHistory;
 import com.mall.sls.data.entity.SecondCategory;
-import com.mall.sls.data.entity.SecondCategoryInfo;
 import com.mall.sls.data.entity.ShareInfo;
 import com.mall.sls.data.entity.TeamInfo;
 import com.mall.sls.data.entity.TokenInfo;
@@ -167,11 +166,11 @@ public interface RestApiService {
     Flowable<RemoteDataWrapper<Ignore>> deleteAddress(@Header("X-Hc-Sign") String sign, @Path("id") String id);
 
     //商品购买接口
-    @POST("app/cart/fastadd")
+    @POST("app/cart/v2/fastadd")
     Flowable<RemoteDataWrapper<ConfirmOrderDetail>> cartFastAdd(@Header("X-Hc-Sign") String sign, @Body CartFastaddRequest request);
 
     //订单预提交
-    @GET("app/cart/checkout")
+    @GET("app/cart/v2/checkout")
     Flowable<RemoteDataWrapper<ConfirmOrderDetail>> cartCheckout(@Header("X-Hc-Sign") String sign, @Query("addressId") String addressId, @Query("cartId") String cartId, @Query("couponId") String couponId, @Query("userCouponId") String userCouponId,@Query("shipChannel") String shipChannel);
 
     //查询当前预提交订单可用优惠券
@@ -179,7 +178,7 @@ public interface RestApiService {
     Flowable<RemoteDataWrapper<List<CouponInfo>>> getCouponSelect(@Header("X-Hc-Sign") String sign, @Query("cartIds") String cartIds);
 
     //提交订单
-    @POST("app/order/submit")
+    @POST("app/order/v2/submit")
     Flowable<RemoteDataWrapper<OrderSubmitInfo>> orderSubmit(@Header("X-Hc-Sign") String sign, @Body OrderSubmitRequest request);
 
     //获取优惠卷列表
@@ -195,7 +194,7 @@ public interface RestApiService {
     Flowable<RemoteDataWrapper<MineInfo>> getMineInfo(@Header("X-Hc-Sign") String sign);
 
     //开始认证流程
-    @POST("app/certify")
+    @POST("app/certify/v2")
     Flowable<RemoteDataWrapper<String>> getCertifyId(@Header("X-Hc-Sign") String sign, @Body CertifyIdRequest request);
 
     //获取订单列表
@@ -333,7 +332,7 @@ public interface RestApiService {
     Flowable<RemoteDataWrapper<CartAddInfo>> cartAdd(@Header("X-Hc-Sign") String sign, @Body CartAddRequest request);
 
     //购物车选中商品购买
-    @POST("app/cart/general/checked")
+    @POST("app/cart/general/v2/checked")
     Flowable<RemoteDataWrapper<ConfirmCartOrderDetail>> cartGeneralChecked(@Header("X-Hc-Sign") String sign, @Body CartGeneralCheckedRequest request);
 
     //删除购物车指定商品
@@ -349,7 +348,7 @@ public interface RestApiService {
     Flowable<RemoteDataWrapper<CartAddInfo>> cartUpdateNumer(@Header("X-Hc-Sign") String sign, @Body CartUpdateNumberRequest request);
 
     //立即购买
-    @POST("app/cart/general/fastadd")
+    @POST("app/cart/general/v2/fastadd")
     Flowable<RemoteDataWrapper<ConfirmCartOrderDetail>> buyNow(@Header("X-Hc-Sign") String sign, @Body BuyNowRequest request);
 
     //普通商品详情
@@ -357,7 +356,7 @@ public interface RestApiService {
     Flowable<RemoteDataWrapper<GeneralGoodsDetailsInfo>> getGeneralGoodsDetailsInfo(@Header("X-Hc-Sign") String sign, @Query("goodsId") String goodsId);
 
     //普通商品提交订单
-    @POST("app/order/general/submit")
+    @POST("app/order/general/v2/submit")
     Flowable<RemoteDataWrapper<OrderSubmitInfo>> cartOrderSubmit(@Header("X-Hc-Sign") String sign, @Body CartOrderSubmitRequest request);
 
     //查询物流接口
@@ -505,6 +504,10 @@ public interface RestApiService {
     //查询总积分和可兑换积分
     @GET("app/integral/points")
     Flowable<RemoteDataWrapper<IntegralPointsInfo>> getIntegralPointsInfo(@Header("X-Hc-Sign") String sign);
+
+    //查询积分记录
+    @GET("app/integral/page")
+    Flowable<RemoteDataWrapper<PointsRecord>> getPointsRecord(@Header("X-Hc-Sign") String sign, @Query("page") String page, @Query("limit") String limit);
 
 
 

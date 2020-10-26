@@ -57,7 +57,7 @@ public class CerifyTipActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.confirm_bt:
-                CerifyPayActivity.start(this,certifyAmount);
+                NameVerifiedActivity.start(this,StaticData.REFRESH_ZERO);
                 finish();
                 break;
             case R.id.back:
