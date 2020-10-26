@@ -38,6 +38,7 @@ import com.mall.sls.common.unit.HtmlUnit;
 import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
+import com.mall.sls.common.unit.PictureSelectorUnit;
 import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.WXShareManager;
@@ -193,6 +194,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
     private int themeId;
     private int screenWidth;
     private int screenHeight;
+    private List<LocalMedia> medias;
+    private LocalMedia localMedia;
 
     @Inject
     GoodsDetailsPresenter goodsDetailsPresenter;
@@ -219,6 +222,8 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         scrollview.setOnScrollChangeListener(this);
         themeId = R.style.picture_default_style;
         allGroupPurchases = new ArrayList<>();
+        data = new ArrayList<>();
+        medias = new ArrayList<>();
         settingHeight();
         xBannerInit();
         initWebView();
@@ -273,7 +278,7 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         banner.setOnItemClickListener(new XBanner.OnItemClickListener() {
             @Override
             public void onItemClick(XBanner banner, Object model, View view, int position) {
-//                zoom(banners,position);
+                PictureSelectorUnit.loadImage(OrdinaryGoodsDetailActivity.this, position,medias );
             }
         });
         //加载广告图片
@@ -465,14 +470,14 @@ public class OrdinaryGoodsDetailActivity extends BaseActivity implements Homepag
         this.goodsDetailsInfo = goodsDetailsInfo;
         if (goodsDetailsInfo != null) {
             banners = goodsDetailsInfo.getGallerys();
-            if (data == null) {
-                data = new ArrayList<>();
-            } else {
-                data.clear();
-            }
+            data.clear();
+            medias.clear();
             if (banners != null) {
                 for (String bannerInfo : banners) {
                     data.add(new CustomViewsInfo(bannerInfo));
+                    localMedia=new LocalMedia();
+                    localMedia.setPath(bannerInfo);
+                    medias.add(localMedia);
                 }
             }
             banner.setPointsIsVisible(data.size() > 1);

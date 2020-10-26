@@ -23,6 +23,7 @@ import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
@@ -35,6 +36,7 @@ import com.mall.sls.common.unit.HtmlUnit;
 import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.NumberFormatUnit;
 import com.mall.sls.common.unit.PayTypeInstalledUtils;
+import com.mall.sls.common.unit.PictureSelectorUnit;
 import com.mall.sls.common.unit.QRCodeFileUtils;
 import com.mall.sls.common.unit.TCAgentUnit;
 import com.mall.sls.common.unit.WXShareManager;
@@ -158,6 +160,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     private List<GoodsSpec> goodsSpecs;
     private String picUrl;
     private String goodsType;
+    private List<LocalMedia> medias;
+    private LocalMedia localMedia;
 
     public static void start(Context context, String goodsId) {
         Intent intent = new Intent(context, ActivityGoodsDetailActivity.class);
@@ -177,6 +181,8 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     private void initView() {
         goodsId = getIntent().getStringExtra(StaticData.GOODS_ID);
         EventBus.getDefault().register(this);
+        data = new ArrayList<>();
+        medias = new ArrayList<>();
         wxShareManager = WXShareManager.getInstance(this);
         wxShareManager.setOnItemClickListener(this);
         scrollview.setOnScrollChangeListener(this);
@@ -235,6 +241,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         banner.setOnItemClickListener(new XBanner.OnItemClickListener() {
             @Override
             public void onItemClick(XBanner banner, Object model, View view, int position) {
+                PictureSelectorUnit.loadImage(ActivityGoodsDetailActivity.this, position,medias );
             }
         });
         //加载广告图片
@@ -381,14 +388,14 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         this.goodsDetailsInfo = goodsDetailsInfo;
         if (goodsDetailsInfo != null) {
             banners = goodsDetailsInfo.getGallerys();
-            if (data == null) {
-                data = new ArrayList<>();
-            } else {
-                data.clear();
-            }
+            data.clear();
+            medias.clear();
             if (banners != null) {
                 for (String bannerInfo : banners) {
                     data.add(new CustomViewsInfo(bannerInfo));
+                    localMedia=new LocalMedia();
+                    localMedia.setPath(bannerInfo);
+                    medias.add(localMedia);
                 }
             }
             banner.setPointsIsVisible(data.size() > 1);

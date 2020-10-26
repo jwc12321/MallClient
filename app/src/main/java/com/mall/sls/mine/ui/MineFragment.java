@@ -269,13 +269,13 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 BankCardManageActivity.start(getActivity());
                 break;
             case R.id.merchant_rights://商家权益
-                MerchantRightsActivity.start(getActivity(), merchantStatus, failReason);
-                break;
-            case R.id.merchant_certify_ll:
                 if(!TextUtils.equals(StaticData.REFRESH_THREE, userLevel)){
                     showMessage(getString(R.string.first_merchant_certify));
                     return;
                 }
+                MerchantRightsActivity.start(getActivity(), merchantStatus, failReason);
+                break;
+            case R.id.merchant_certify_ll:
                 goVerify = StaticData.REFRESH_ONE;
                 if (TextUtils.isEmpty(merchantStatus)) {
                     MerchantCertifyTipActivity.start(getActivity(), userLevel, certifyPay, certifyAmount);

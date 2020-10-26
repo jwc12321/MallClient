@@ -22,6 +22,7 @@ import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
@@ -30,6 +31,7 @@ import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.HtmlUnit;
 import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.NumberFormatUnit;
+import com.mall.sls.common.unit.PictureSelectorUnit;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.common.widget.textview.WhiteDrawTextView;
@@ -112,6 +114,8 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
     private int goodsCount = 1;
     private String type;
     private List<String> ids;
+    private List<LocalMedia> medias;
+    private LocalMedia localMedia;
 
 
     @Inject
@@ -137,6 +141,8 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
         goodsId = getIntent().getStringExtra(StaticData.GOODS_ID);
         scrollview.setOnScrollChangeListener(this);
         ids = new ArrayList<>();
+        data = new ArrayList<>();
+        medias = new ArrayList<>();
         settingHeight();
         xBannerInit();
         initWebView();
@@ -188,6 +194,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
         banner.setOnItemClickListener(new XBanner.OnItemClickListener() {
             @Override
             public void onItemClick(XBanner banner, Object model, View view, int position) {
+                PictureSelectorUnit.loadImage(GeneralGoodsDetailsActivity.this, position,medias );
             }
         });
         //加载广告图片
@@ -276,14 +283,14 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
             goodsBaseVo = generalGoodsDetailsInfo.getGoodsBaseVo();
             if (goodsBaseVo != null) {
                 banners = goodsBaseVo.getGallerys();
-                if (data == null) {
-                    data = new ArrayList<>();
-                } else {
-                    data.clear();
-                }
+                data.clear();
+                medias.clear();
                 if (banners != null) {
                     for (String bannerInfo : banners) {
                         data.add(new CustomViewsInfo(bannerInfo));
+                        localMedia=new LocalMedia();
+                        localMedia.setPath(bannerInfo);
+                        medias.add(localMedia);
                     }
                 }
                 banner.setPointsIsVisible(data.size() > 1);
