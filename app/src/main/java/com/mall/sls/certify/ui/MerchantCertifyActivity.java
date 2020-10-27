@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,9 +40,12 @@ import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.MerchantCertifyInfo;
 import com.mall.sls.data.entity.UploadUrlInfo;
 import com.mall.sls.mainframe.ui.MainFrameActivity;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -103,8 +105,6 @@ public class MerchantCertifyActivity extends BaseActivity implements CertifyCont
     ImageView doorPhotosDeleteIv;
     @BindView(R.id.item_rl)
     RelativeLayout itemRl;
-    @BindView(R.id.scrollView)
-    ReboundScrollView scrollView;
     @BindView(R.id.result_iv)
     ImageView resultIv;
     @BindView(R.id.result_tv)
@@ -115,6 +115,8 @@ public class MerchantCertifyActivity extends BaseActivity implements CertifyCont
     MediumThickTextView confirmBt;
     @BindView(R.id.result_ll)
     LinearLayout resultLl;
+    @BindView(R.id.upload_ll)
+    LinearLayout uploadLl;
     private String photoType; //1:上传营业执照 2：上传门头照片
     private CameraUnit cameraUnit;
     private int chooseMode = PictureMimeType.ofImage();
@@ -162,14 +164,16 @@ public class MerchantCertifyActivity extends BaseActivity implements CertifyCont
         group = new ArrayList<>();
         themeId = R.style.picture_WeChat_style;
         authStatus();
-        if (TextUtils.isEmpty(merchantStatus)||TextUtils.equals(StaticData.MERCHANT_CERTIFY_SUCCESS, merchantStatus)) {
-            scrollView.setVisibility(View.VISIBLE);
+        if (TextUtils.isEmpty(merchantStatus) || TextUtils.equals(StaticData.MERCHANT_CERTIFY_SUCCESS, merchantStatus) || TextUtils.equals(StaticData.MERCHANT_CERTIFY_CANCEL, merchantStatus)) {
+            uploadLl.setVisibility(View.VISIBLE);
             resultLl.setVisibility(View.GONE);
             nextBt.setVisibility(View.VISIBLE);
+            confirmBt.setVisibility(View.GONE);
         } else {
-            scrollView.setVisibility(View.GONE);
+            uploadLl.setVisibility(View.GONE);
             resultLl.setVisibility(View.VISIBLE);
             nextBt.setVisibility(View.GONE);
+            confirmBt.setVisibility(View.VISIBLE);
             if (TextUtils.equals(StaticData.MERCHANT_CERTIFY_FAIL, merchantStatus)) {
                 resultIv.setSelected(false);
                 resultTv.setText(getString(R.string.certify_fail));
@@ -216,7 +220,7 @@ public class MerchantCertifyActivity extends BaseActivity implements CertifyCont
         verifyIvThird.setSelected(false);
     }
 
-    @OnClick({R.id.back, R.id.business_license_iv, R.id.door_photos_iv, R.id.city_rv, R.id.next_bt, R.id.door_photos_delete_iv, R.id.business_license_delete_iv,R.id.confirm_bt})
+    @OnClick({R.id.back, R.id.business_license_iv, R.id.door_photos_iv, R.id.city_rv, R.id.next_bt, R.id.door_photos_delete_iv, R.id.business_license_delete_iv, R.id.confirm_bt})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -246,21 +250,24 @@ public class MerchantCertifyActivity extends BaseActivity implements CertifyCont
                 doorHeaderFile = "";
                 GlideHelper.load(this, doorHeaderFile, R.mipmap.icon_upload_photo, doorPhotosIv);
                 doorPhotosDeleteIv.setVisibility(View.GONE);
+                nextBtEnable();
                 break;
             case R.id.business_license_delete_iv:
                 businessLicense = "";
                 businessLicenseFile = "";
                 GlideHelper.load(this, businessLicenseFile, R.mipmap.icon_upload_photo, businessLicenseIv);
                 businessLicenseDeleteIv.setVisibility(View.GONE);
+                nextBtEnable();
                 break;
             case R.id.confirm_bt:
-                if(TextUtils.equals(StaticData.MERCHANT_CERTIFY_WAIT, merchantStatus)){
+                if (TextUtils.equals(StaticData.MERCHANT_CERTIFY_WAIT, merchantStatus)) {
                     MainStartManager.saveMainStart(StaticData.REFRESH_ZERO);
                     MainFrameActivity.start(this);
-                }else {
+                } else {
                     resultLl.setVisibility(View.GONE);
-                    scrollView.setVisibility(View.VISIBLE);
+                    uploadLl.setVisibility(View.VISIBLE);
                     nextBt.setVisibility(View.VISIBLE);
+                    confirmBt.setVisibility(View.GONE);
                 }
                 break;
             default:
@@ -320,7 +327,7 @@ public class MerchantCertifyActivity extends BaseActivity implements CertifyCont
                 .isEnableCrop(false)// 是否裁剪
                 .isCompress(true)// 是否压缩
                 .synOrAsy(false)//同步true或异步false 压缩 默认同步
-                .selectionData(selectList)// 是否传入已选图片
+//                .selectionData(selectList)// 是否传入已选图片
                 .forResult(PictureConfig.CHOOSE_REQUEST);
     }
 
@@ -341,10 +348,11 @@ public class MerchantCertifyActivity extends BaseActivity implements CertifyCont
                         province = data.getStringExtra(StaticData.PROVINCE);
                         city = data.getStringExtra(StaticData.CITY);
                         county = data.getStringExtra(StaticData.COUNT);
-                        detailAddress = data.getStringExtra(StaticData.DETAIL_ADDRESS)+data.getStringExtra(StaticData.ADDRESS_TITLE);
-                        address=province + city + county;
+                        detailAddress = data.getStringExtra(StaticData.DETAIL_ADDRESS) + data.getStringExtra(StaticData.ADDRESS_TITLE);
+                        address = province + city + county;
                         cityTv.setText(address);
                         initDetailAddress();
+                        nextBtEnable();
                     }
                     break;
             }
@@ -364,8 +372,8 @@ public class MerchantCertifyActivity extends BaseActivity implements CertifyCont
                 GlideHelper.load(this, doorHeaderFile, R.mipmap.icon_upload_photo, doorPhotosIv);
                 doorPhotosDeleteIv.setVisibility(View.VISIBLE);
             }
-            if(!TextUtils.isEmpty(file)){
-                merchantCertifyPresenter.uploadFile(file,StaticData.MERCHANT);
+            if (!TextUtils.isEmpty(file)) {
+                merchantCertifyPresenter.uploadFile(file, StaticData.MERCHANT);
             }
         }
     }
@@ -380,19 +388,21 @@ public class MerchantCertifyActivity extends BaseActivity implements CertifyCont
             GlideHelper.load(this, businessLicense, R.mipmap.icon_upload_photo, businessLicenseIv);
             GlideHelper.load(this, doorHeader, R.mipmap.icon_upload_photo, doorPhotosIv);
             detailAddress = merchantCertifyInfo.getDetail();
-            address=merchantCertifyInfo.getAddress();
+            address = merchantCertifyInfo.getAddress();
             cityTv.setText(address);
             detailAddressEt.setText(detailAddress);
+            nextBtEnable();
         }
     }
 
     @Override
     public void renderMerchantCertify(Boolean isBoolean) {
         if (isBoolean) {
-            merchantStatus=StaticData.MERCHANT_CERTIFY_WAIT;
-            scrollView.setVisibility(View.GONE);
+            merchantStatus = StaticData.MERCHANT_CERTIFY_WAIT;
+            uploadLl.setVisibility(View.GONE);
             resultLl.setVisibility(View.VISIBLE);
             nextBt.setVisibility(View.GONE);
+            confirmBt.setVisibility(View.VISIBLE);
             resultIv.setSelected(true);
             resultTv.setText(getString(R.string.certify_submit));
             resultReason.setText(getString(R.string.certify_wait));
@@ -402,12 +412,13 @@ public class MerchantCertifyActivity extends BaseActivity implements CertifyCont
 
     @Override
     public void renderUploadFile(UploadUrlInfo uploadUrlInfo) {
-        if(uploadUrlInfo!=null) {
+        if (uploadUrlInfo != null) {
             if (TextUtils.equals(StaticData.REFRESH_ONE, photoType)) {
                 businessLicense = uploadUrlInfo.getUrl();
-            }else if (TextUtils.equals(StaticData.REFRESH_TWO, photoType)){
-                doorHeader=uploadUrlInfo.getUrl();
+            } else if (TextUtils.equals(StaticData.REFRESH_TWO, photoType)) {
+                doorHeader = uploadUrlInfo.getUrl();
             }
+            nextBtEnable();
         }
     }
 
@@ -416,13 +427,21 @@ public class MerchantCertifyActivity extends BaseActivity implements CertifyCont
 
     }
 
-    private void initDetailAddress(){
+    private void initDetailAddress() {
         detailAddressEt.setFocusable(true);
         detailAddressEt.setFocusableInTouchMode(true);
         detailAddressEt.requestFocus();
         detailAddressEt.setText(detailAddress);
-        if(!TextUtils.isEmpty(detailAddress)) {
+        if (!TextUtils.isEmpty(detailAddress)) {
             detailAddressEt.setSelection(detailAddress.length());//将光标移至文字末尾
+        }
+    }
+
+    private void nextBtEnable() {
+        if (!TextUtils.isEmpty(businessLicense) && !TextUtils.isEmpty(doorHeader) && !TextUtils.isEmpty(address) && !TextUtils.isEmpty(detailAddress)) {
+            nextBt.setEnabled(true);
+        } else {
+            nextBt.setEnabled(false);
         }
     }
 }

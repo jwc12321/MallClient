@@ -151,10 +151,12 @@
                     android:text="@string/delivery_method"
                     android:layout_gravity="center_vertical"/>
                 <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/same_city_bt"
                     style="@style/delivery_method_tv_style"
                     android:text="@string/same_city"
                     android:layout_marginLeft="@dimen/dp_10"/>
                 <com.mall.sls.common.widget.textview.ConventionalTextView
+                    android:id="@+id/express_delivery_bt"
                     style="@style/delivery_method_tv_style"
                     android:text="@string/express_delivery"
                     android:layout_marginLeft="@dimen/dp_8"/>

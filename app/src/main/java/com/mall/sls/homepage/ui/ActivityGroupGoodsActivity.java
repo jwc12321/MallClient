@@ -295,6 +295,11 @@ public class ActivityGroupGoodsActivity extends BaseActivity implements Homepage
     }
 
     @Override
+    public void renderDeliveryMethod(List<String> methods) {
+
+    }
+
+    @Override
     public void setPresenter(HomepageContract.GoodsDetailsPresenter presenter) {
 
     }

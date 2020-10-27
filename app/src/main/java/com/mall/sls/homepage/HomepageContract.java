@@ -49,6 +49,7 @@ public interface HomepageContract {
         void cartFastAdd(String goodsId, String productId, boolean isGroup, String number, String groupId, String groupRulesId);
         void groupRemind(String ruleId);
         void getInvitationCodeInfo();
+        void getDeliveryMethod();
     }
 
     interface GoodsDetailsView extends BaseView<GoodsDetailsPresenter>{
@@ -57,6 +58,7 @@ public interface HomepageContract {
         void renderCartFastAdd(ConfirmOrderDetail confirmOrderDetail);
         void renderGroupRemind();
         void renderInvitationCodeInfo(InvitationCodeInfo invitationCodeInfo);
+        void renderDeliveryMethod(List<String> methods);
 
     }
 
@@ -97,6 +99,7 @@ public interface HomepageContract {
         void cartAdd(String productId, String number);
         void getGeneralGoodsDetailsInfo(String goodsId);
         void buyNow(String productId, String number);
+        void getDeliveryMethod();
     }
 
     interface GeneralGoodsDetailsView extends BaseView<GeneralGoodsDetailsPresenter>{
@@ -104,6 +107,7 @@ public interface HomepageContract {
         void renderCartAdd();
         void renderGeneralGoodsDetailsInfo(GeneralGoodsDetailsInfo generalGoodsDetailsInfo);
         void renderBuyNow(ConfirmCartOrderDetail confirmCartOrderDetail);
+        void renderDeliveryMethod(List<String> methods);
     }
 
     interface CartConfirmOrderPresenter extends BasePresenter{

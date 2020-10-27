@@ -172,4 +172,9 @@ dependencies {
     implementation ('com.aliyun.ams:alicloud-android-networkmonitor:1.0.0'){
         exclude(module: 'alicloud-android-utdid')
         exclude module: 'jetified-alicloud-android-utdid-1.5.2' }
+    implementation ('com.aliyun.ams:alicloud-android-httpdns:1.3.3@aar') {
+        transitive true
+        exclude(module: 'alicloud-android-utdid')
+        exclude module: 'jetified-alicloud-android-utdid-1.5.2'
+    }
 }

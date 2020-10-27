@@ -13,10 +13,12 @@ import com.mall.sls.data.entity.PointsRecord;
 public interface MerchantContract {
     interface MerchantRightsPresenter extends BasePresenter{
         void getIntegralPointsInfo();
+        void merchantCancel();
     }
 
     interface MerchantRightsView extends BaseView<MerchantRightsPresenter>{
         void renderMerchantRights(IntegralPointsInfo integralPointsInfo);
+        void renderMerchantCancel(Boolean isBoolean);
     }
 
     interface PointsRecordPresenter extends BasePresenter{

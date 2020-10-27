@@ -38,8 +38,8 @@
 
         <com.mall.sls.common.widget.textview.ConventionalTextView
             android:id="@+id/right_bt"
-            style="@style/size10_app28_title_right_tv_style"
-            android:text="@string/change_information" />
+            style="@style/size10_app28_title_right_text_style"
+            android:text="@string/cancel_certify" />
     </RelativeLayout>
 
     <LinearLayout
@@ -107,6 +107,11 @@
                 style="@style/points_record_down_tv_style"
                 android:text="@string/view_points_details" />
         </RelativeLayout>
+        <View
+            android:layout_width="@dimen/dp_0_5"
+            android:layout_height="@dimen/dp_35"
+            android:layout_marginTop="@dimen/dp_116"
+            android:background="@color/backGround9"/>
         <RelativeLayout
             android:id="@+id/redeem_rl"
             style="@style/channel_points_item_ll">

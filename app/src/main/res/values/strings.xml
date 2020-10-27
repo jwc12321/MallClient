@@ -30,7 +30,7 @@
     <string name="processing">处理中</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
-    <string name="alipay_verify">实名认证</string>
+    <string name="alipay_verify">实人认证</string>
     <string name="input_phone_number">输入手机号</string>
     <string name="input_vcode">输入验证码</string>
     <string name="send_verification_code">发送验证码</string>
@@ -48,7 +48,7 @@
     <string name="goods_amount">商品金额</string>
     <string name="ali_pay">支付宝支付</string>
     <string name="to_pay">去支付</string>
-    <string name="verified">实名认证</string>
+    <string name="verified">实人认证</string>
     <string name="upload_id_photo">上传身份证照片</string>
     <string name="upload_id_tip">温馨提示：请保证照片身份证号码清晰可见，遮挡、模糊或传不相关图片的都将导致审核不通过。</string>
     <string name="id_photo_requirements">身份证照片要求：</string>
@@ -206,7 +206,7 @@
     <string name="input_idcard_name">请填写身份证上的姓名</string>
     <string name="input_idcard_number">请填写身份证号码</string>
     <string name="confirm_id">请如实填写，一旦认证不可更改。</string>
-    <string name="verfiy_success">恭喜！您的实名认证已经通过审核</string>
+    <string name="verfiy_success">恭喜！您的实人认证已经通过审核</string>
     <string name="verfiy_failed">很遗憾，认证失败</string>
     <string name="next">下一步</string>
     <string name="auth_again">重新认证</string>
@@ -243,7 +243,7 @@
     <string name="pay_failed">支付失败</string>
     <string name="open_vip">您已开通超级会员</string>
     <string name="is_open">已开通</string>
-    <string name="to_open_person_authentication">请先开通实名认证</string>
+    <string name="to_open_person_authentication">请先开通实人认证</string>
     <string name="view_now">立即查看</string>
     <string name="stay_tuned">敬请期待</string>
     <string name="sys_message">系统通知</string>
@@ -380,7 +380,7 @@
     <string name="member">会员</string>
     <string name="mine_invite_friends">我的-邀请好友</string>
     <string name="mine_lottery">我的-抽奖</string>
-    <string name="mine_verified">我的-实名认证</string>
+    <string name="mine_verified">我的-实人认证</string>
     <string name="mine_feedback">我的-意见反馈</string>
 
     <!--1.0.0-->
@@ -582,4 +582,7 @@
     <string name="coming_soon">即将上线</string>
     <string name="stay_tuned_point">敬请期待…</string>
     <string name="first_merchant_certify">请先渠道商认证</string>
+    <string name="merchant_cancel">商家认证已取消</string>
+    <string name="cancel_certify">取消认证</string>
+    <string name="cancel_merchant_certify">您确定要取消渠道商认证吗？</string>
 </resources>

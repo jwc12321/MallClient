@@ -2486,6 +2486,7 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:background">@drawable/common_two_back_one_air_bg</item>
+        <item name="android:visibility">gone</item>
     </style>
 
     <style name="back57_ver_ll_style">
@@ -2894,5 +2895,16 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_49</item>
         <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="size10_app28_title_right_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/dp_44</item>
+        <item name="android:textColor">@color/appText28</item>
+        <item name="android:textSize">@dimen/sp_10</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:paddingRight">@dimen/dp_15</item>
     </style>
 </resources>

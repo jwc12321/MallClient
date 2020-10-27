@@ -131,6 +131,10 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
     MediumThickTextView confirmBt;
     @BindView(R.id.share_iv)
     ImageView shareIv;
+    @BindView(R.id.same_city_bt)
+    ConventionalTextView sameCityBt;
+    @BindView(R.id.express_delivery_bt)
+    ConventionalTextView expressDeliveryBt;
     private ProductListCallableInfo productListCallableInfo;
     private List<CustomViewsInfo> data;
     private String goodsId;
@@ -191,6 +195,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         initWebView();
         goodsDetailsPresenter.getGoodsDetails(goodsId);
         goodsDetailsPresenter.getInvitationCodeInfo();
+        goodsDetailsPresenter.getDeliveryMethod();
 
     }
 
@@ -241,7 +246,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         banner.setOnItemClickListener(new XBanner.OnItemClickListener() {
             @Override
             public void onItemClick(XBanner banner, Object model, View view, int position) {
-                PictureSelectorUnit.loadImage(ActivityGoodsDetailActivity.this, position,medias );
+                PictureSelectorUnit.loadImage(ActivityGoodsDetailActivity.this, position, medias);
             }
         });
         //加载广告图片
@@ -393,7 +398,7 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
             if (banners != null) {
                 for (String bannerInfo : banners) {
                     data.add(new CustomViewsInfo(bannerInfo));
-                    localMedia=new LocalMedia();
+                    localMedia = new LocalMedia();
                     localMedia.setPath(bannerInfo);
                     medias.add(localMedia);
                 }
@@ -493,6 +498,14 @@ public class ActivityGoodsDetailActivity extends BaseActivity implements Homepag
         if (invitationCodeInfo != null) {
             wxUrl = invitationCodeInfo.getBaseUrl();
             inviteCode = invitationCodeInfo.getInvitationCode();
+        }
+    }
+
+    @Override
+    public void renderDeliveryMethod(List<String> methods) {
+        if (methods != null) {
+            sameCityBt.setVisibility(methods.contains(StaticData.SF_SAME_CITY) ? View.VISIBLE : View.GONE);
+            expressDeliveryBt.setVisibility(methods.contains(StaticData.SF_EXPRESS) ? View.VISIBLE : View.GONE);
         }
     }
 

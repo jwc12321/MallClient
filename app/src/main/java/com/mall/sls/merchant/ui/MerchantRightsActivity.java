@@ -1,8 +1,10 @@
 package com.mall.sls.merchant.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,10 +15,12 @@ import androidx.annotation.Nullable;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.certify.ui.MerchantCertifyActivity;
+import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.ConventionalTextView;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
 import com.mall.sls.data.entity.IntegralPointsInfo;
+import com.mall.sls.homepage.ui.CommonTipActivity;
 import com.mall.sls.merchant.DaggerMerchantComponent;
 import com.mall.sls.merchant.MerchantContract;
 import com.mall.sls.merchant.MerchantModule;
@@ -57,6 +61,7 @@ public class MerchantRightsActivity extends BaseActivity implements MerchantCont
     RelativeLayout redeemRl;
     private String failReason;
     private String merchantStatus;
+    private String tipBack;
 
 
     @Inject
@@ -112,7 +117,11 @@ public class MerchantRightsActivity extends BaseActivity implements MerchantCont
                 RedeemActivity.start(this);
                 break;
             case R.id.right_bt:
-                MerchantCertifyActivity.start(this, merchantStatus, failReason);
+                Intent intent = new Intent(this, CommonTipActivity.class);
+                intent.putExtra(StaticData.COMMON_TITLE, getString(R.string.cancel_merchant_certify));
+                intent.putExtra(StaticData.CANCEL_TEXT, getString(R.string.no));
+                intent.putExtra(StaticData.CONFIRM_TEXT, getString(R.string.yes));
+                startActivityForResult(intent, RequestCodeStatic.TIP_PAGE);
                 break;
             default:
         }
@@ -123,6 +132,32 @@ public class MerchantRightsActivity extends BaseActivity implements MerchantCont
         if (integralPointsInfo != null) {
             totalPoints.setText(integralPointsInfo.getTotalPoints());
             lastPoints.setText(integralPointsInfo.getLastPoints());
+        }
+    }
+
+    @Override
+    public void renderMerchantCancel(Boolean isBoolean) {
+        if(isBoolean){
+            showMessage(getString(R.string.merchant_cancel));
+            finish();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case RequestCodeStatic.TIP_PAGE://点击返回
+                    if (data != null) {
+                        tipBack = data.getStringExtra(StaticData.TIP_BACK);
+                        if (TextUtils.equals(StaticData.REFRESH_ONE, tipBack)) {
+                            merchantRightsPresenter.merchantCancel();
+                        }
+                    }
+                    break;
+                default:
+            }
         }
     }
 

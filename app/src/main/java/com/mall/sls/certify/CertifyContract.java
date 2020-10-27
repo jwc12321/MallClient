@@ -7,6 +7,7 @@ import com.mall.sls.data.entity.AliPay;
 import com.mall.sls.data.entity.BaoFuPay;
 import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.MerchantCertifyInfo;
+import com.mall.sls.data.entity.MineInfo;
 import com.mall.sls.data.entity.PayMethodInfo;
 import com.mall.sls.data.entity.UploadUrlInfo;
 import com.mall.sls.data.entity.WXPaySignResponse;
@@ -50,4 +51,13 @@ public interface CertifyContract {
         void renderMerchantCertify(Boolean isBoolean);
         void renderUploadFile(UploadUrlInfo uploadUrlInfo);
     }
+
+    interface MerchantCertifyTipPresenter extends BasePresenter{
+        void getMineInfo();
+    }
+
+    interface MerchantCertifyTipView extends BaseView<MerchantCertifyTipPresenter>{
+        void renderMineInfo(MineInfo mineInfo);
+    }
+
 }

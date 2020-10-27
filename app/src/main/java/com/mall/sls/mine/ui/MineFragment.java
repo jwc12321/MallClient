@@ -23,6 +23,7 @@ import com.mall.sls.bank.ui.BankCardManageActivity;
 import com.mall.sls.certify.ui.CerifyTipActivity;
 import com.mall.sls.certify.ui.MerchantCertifyActivity;
 import com.mall.sls.certify.ui.MerchantCertifyTipActivity;
+import com.mall.sls.certify.ui.NameVerifiedActivity;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
@@ -226,7 +227,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 TCAgentUnit.setEventId(getActivity(), getString(R.string.mine_verified));
                 if (TextUtils.equals(StaticData.REFRESH_ZERO, VerifyManager.getVerify())) {
                     goVerify = StaticData.REFRESH_ONE;
-                    CerifyTipActivity.start(getActivity(), certifyAmount);
+                    NameVerifiedActivity.start(getActivity(), StaticData.REFRESH_ZERO);
                 }
                 break;
             case R.id.my_invitation_iv://我的邀请
@@ -273,12 +274,13 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                     showMessage(getString(R.string.first_merchant_certify));
                     return;
                 }
+                goVerify = StaticData.REFRESH_ONE;
                 MerchantRightsActivity.start(getActivity(), merchantStatus, failReason);
                 break;
             case R.id.merchant_certify_ll:
                 goVerify = StaticData.REFRESH_ONE;
-                if (TextUtils.isEmpty(merchantStatus)) {
-                    MerchantCertifyTipActivity.start(getActivity(), userLevel, certifyPay, certifyAmount);
+                if (TextUtils.isEmpty(merchantStatus)||TextUtils.equals(StaticData.MERCHANT_CERTIFY_CANCEL,merchantStatus)) {
+                    MerchantCertifyTipActivity.start(getActivity());
                 } else {
                     MerchantCertifyActivity.start(getActivity(), merchantStatus, failReason);
                 }

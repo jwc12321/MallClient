@@ -59,6 +59,29 @@ public class MerchantRightsPresenter implements MerchantContract.MerchantRightsP
     }
 
     @Override
+    public void merchantCancel() {
+        merchantRightsView.showLoading(StaticData.PROCESSING);
+        String sign= SignUnit.signPost(RequestUrl.MERCHANT_CANCEL,"null");
+        Disposable disposable = restApiService.merchantCancel(sign)
+                .flatMap(new RxRemoteDataParse<Boolean>())
+                .compose(new RxSchedulerTransformer<Boolean>())
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean isBoolean) throws Exception {
+                        merchantRightsView.dismissLoading();
+                        merchantRightsView.renderMerchantCancel(isBoolean);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        merchantRightsView.dismissLoading();
+                        merchantRightsView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+    }
+
+    @Override
     public void start() {
 
     }

@@ -251,7 +251,7 @@ public class HomepageFragment extends BaseFragment implements HomepageContract.H
                         if (TextUtils.equals(StaticData.REFRESH_ZERO, groupType)) {
                             OrdinaryGoodsDetailActivity.start(getActivity(), goodsId);
                         } else if(TextUtils.equals(StaticData.REFRESH_ONE, groupType)){
-                            ActivityGroupGoodsActivity.start(getActivity(), goodsId);
+                            ActivityGoodsDetailActivity.start(getActivity(), goodsId);
                         }else {
                             GeneralGoodsDetailsActivity.start(getActivity(), goodsId);
                         }

@@ -1,24 +1,19 @@
 package com.mall.sls.local.ui;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.mall.sls.BaseFragment;
 import com.mall.sls.R;
-import com.mall.sls.common.ErrorCodeStatic;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.unit.TCAgentUnit;
-import com.mall.sls.data.RemoteDataException;
 import com.mall.sls.data.entity.GoodsItemInfo;
 import com.mall.sls.data.entity.LocalTeam;
 import com.mall.sls.homepage.ui.ActivityGoodsDetailActivity;
@@ -26,16 +21,12 @@ import com.mall.sls.local.DaggerLocalComponent;
 import com.mall.sls.local.LocalContract;
 import com.mall.sls.local.LocalModule;
 import com.mall.sls.local.adapter.LootingSoonAdapter;
-import com.mall.sls.local.presenter.LocalTeamPresenter;
 import com.mall.sls.local.presenter.WaitBuyPresenter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
-
 import java.util.List;
-
 import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

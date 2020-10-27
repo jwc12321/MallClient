@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mall.sls.R;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.StaticData;
@@ -31,7 +32,7 @@ public class OrderMessageAdapter extends RecyclerView.Adapter<OrderMessageAdapte
     private LayoutInflater layoutInflater;
     private List<MessageItemInfo> messageItemInfos;
     private Context context;
-    private Gson gson = new Gson();
+    private Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 
     public OrderMessageAdapter(Context context) {
         this.context = context;

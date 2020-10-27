@@ -7,19 +7,22 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import androidx.annotation.Nullable;
-
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
+import com.mall.sls.certify.CertifyContract;
+import com.mall.sls.certify.CertifyModule;
+import com.mall.sls.certify.DaggerCertifyComponent;
+import com.mall.sls.certify.presenter.MerchantCertifyTipPresenter;
 import com.mall.sls.common.StaticData;
 import com.mall.sls.common.widget.textview.MediumThickTextView;
-
+import com.mall.sls.data.entity.MineInfo;
+import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MerchantCertifyTipActivity extends BaseActivity {
+public class MerchantCertifyTipActivity extends BaseActivity implements CertifyContract.MerchantCertifyTipView {
 
     @BindView(R.id.back)
     ImageView back;
@@ -27,17 +30,15 @@ public class MerchantCertifyTipActivity extends BaseActivity {
     RelativeLayout titleRel;
     @BindView(R.id.confirm_bt)
     MediumThickTextView confirmBt;
+    private String userLevel;
     private String failReason;
     private String merchantStatus;
-    private String userLevel;
-    private Boolean certifyPay;
-    private String certifyAmount;
 
-    public static void start(Context context, String userLevel, Boolean certifyPay, String certifyAmount) {
+    @Inject
+    MerchantCertifyTipPresenter presenter;
+
+    public static void start(Context context) {
         Intent intent = new Intent(context, MerchantCertifyTipActivity.class);
-        intent.putExtra(StaticData.USER_LEVEL, userLevel);
-        intent.putExtra(StaticData.CERTIFY_AMOUNT, certifyAmount);
-        intent.putExtra(StaticData.CERTIFY_PAY, certifyPay);
         context.startActivity(intent);
     }
 
@@ -47,25 +48,34 @@ public class MerchantCertifyTipActivity extends BaseActivity {
         setContentView(R.layout.activity_merchant_certify_tip);
         ButterKnife.bind(this);
         setHeight(back, null, null);
-        initView();
     }
 
-    private void initView() {
-        userLevel = getIntent().getStringExtra(StaticData.USER_LEVEL);
-        certifyPay = getIntent().getBooleanExtra(StaticData.CERTIFY_PAY, false);
-        certifyAmount = getIntent().getStringExtra(StaticData.CERTIFY_AMOUNT);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.getMineInfo();
     }
+
+    @Override
+    protected void initializeInjector() {
+        DaggerCertifyComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .certifyModule(new CertifyModule(this))
+                .build()
+                .inject(this);
+
+    }
+
 
     @OnClick({R.id.confirm_bt, R.id.back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.confirm_bt:
                 if (TextUtils.equals(StaticData.REFRESH_ZERO, userLevel)) {
-                    CerifyTipActivity.start(this, certifyAmount);
+                    NameVerifiedActivity.start(this,StaticData.REFRESH_ONE);
                 } else {
                     MerchantCertifyActivity.start(this, merchantStatus, failReason);
                 }
-                finish();
                 break;
             case R.id.back:
                 finish();
@@ -77,5 +87,19 @@ public class MerchantCertifyTipActivity extends BaseActivity {
     @Override
     public View getSnackBarHolderView() {
         return null;
+    }
+
+    @Override
+    public void renderMineInfo(MineInfo mineInfo) {
+        if(mineInfo!=null&&mineInfo.getUserInfo()!=null){
+            userLevel=mineInfo.getUserInfo().getUserLevel();
+            failReason=mineInfo.getFailReason();
+            merchantStatus=mineInfo.getMerchantStatus();
+        }
+    }
+
+    @Override
+    public void setPresenter(CertifyContract.MerchantCertifyTipPresenter presenter) {
+
     }
 }

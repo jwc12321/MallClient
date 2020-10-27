@@ -97,4 +97,5 @@ public class RequestUrl {
     public static String UPLOAD_FILE="/app/storage/upload";//上传图片
     public static String INTEGRAL_POINTS="/app/integral/points";//查询总积分和可兑换积分
     public static String POINT_RECORD="/app/integral/page";//查询积分记录
+    public static String MERCHANT_CANCEL="/app/certify/merchant/cancel";//取消渠道商户认证信息
 }

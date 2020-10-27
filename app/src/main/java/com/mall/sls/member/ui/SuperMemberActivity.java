@@ -20,6 +20,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.mall.sls.BaseActivity;
 import com.mall.sls.R;
 import com.mall.sls.certify.ui.CerifyTipActivity;
+import com.mall.sls.certify.ui.NameVerifiedActivity;
 import com.mall.sls.common.GlideHelper;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
@@ -182,7 +183,7 @@ public class SuperMemberActivity extends BaseActivity implements MemberContract.
             case R.id.confirm_bt:
                 if (TextUtils.equals(StaticData.REFRESH_ZERO, VerifyManager.getVerify())) {
                     showMessage(getString(R.string.to_open_person_authentication));
-                    CerifyTipActivity.start(this, certifyAmount);
+                    NameVerifiedActivity.start(this, StaticData.REFRESH_ZERO);
                 } else {
                     Intent intent = new Intent(this, SelectPayTypeActivity.class);
                     intent.putExtra(StaticData.CHOICE_TYPE, StaticData.REFRESH_ONE);

@@ -509,6 +509,10 @@ public interface RestApiService {
     @GET("app/integral/page")
     Flowable<RemoteDataWrapper<PointsRecord>> getPointsRecord(@Header("X-Hc-Sign") String sign, @Query("page") String page, @Query("limit") String limit);
 
+    //取消渠道商户认证信息
+    @POST("app/certify/merchant/cancel")
+    Flowable<RemoteDataWrapper<Boolean>> merchantCancel(@Header("X-Hc-Sign") String sign);
+
 
 
 }

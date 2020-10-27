@@ -98,6 +98,10 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
     WhiteDrawTextView originalPrice;
     @BindView(R.id.delivery_method_ll)
     LinearLayout deliveryMethodLl;
+    @BindView(R.id.same_city_bt)
+    ConventionalTextView sameCityBt;
+    @BindView(R.id.express_delivery_bt)
+    ConventionalTextView expressDeliveryBt;
     private String goodsId;
     private int screenWidth;
     private int screenHeight;
@@ -135,6 +139,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
         setHeight(back, null, cart);
         initView();
         generalGoodsDetailsPresenter.getGeneralGoodsDetailsInfo(goodsId);
+        generalGoodsDetailsPresenter.getDeliveryMethod();
     }
 
     private void initView() {
@@ -194,7 +199,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
         banner.setOnItemClickListener(new XBanner.OnItemClickListener() {
             @Override
             public void onItemClick(XBanner banner, Object model, View view, int position) {
-                PictureSelectorUnit.loadImage(GeneralGoodsDetailsActivity.this, position,medias );
+                PictureSelectorUnit.loadImage(GeneralGoodsDetailsActivity.this, position, medias);
             }
         });
         //加载广告图片
@@ -218,7 +223,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                 .inject(this);
     }
 
-    @OnClick({R.id.back, R.id.home_iv, R.id.add_cart_bt, R.id.buy_now_bt, R.id.cart,R.id.delivery_method_ll})
+    @OnClick({R.id.back, R.id.home_iv, R.id.add_cart_bt, R.id.buy_now_bt, R.id.cart, R.id.delivery_method_ll})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
@@ -288,7 +293,7 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
                 if (banners != null) {
                     for (String bannerInfo : banners) {
                         data.add(new CustomViewsInfo(bannerInfo));
-                        localMedia=new LocalMedia();
+                        localMedia = new LocalMedia();
                         localMedia.setPath(bannerInfo);
                         medias.add(localMedia);
                     }
@@ -327,6 +332,14 @@ public class GeneralGoodsDetailsActivity extends BaseActivity implements Homepag
         if (confirmCartOrderDetail != null && confirmCartOrderDetail.getCartItemInfos() != null && confirmCartOrderDetail.getCartItemInfos().size() > 0) {
             ids.add(confirmCartOrderDetail.getCartItemInfos().get(0).getId());
             CartConfirmOrderActivity.start(this, ids, StaticData.REFRESH_ONE);
+        }
+    }
+
+    @Override
+    public void renderDeliveryMethod(List<String> methods) {
+        if (methods != null) {
+            sameCityBt.setVisibility(methods.contains(StaticData.SF_SAME_CITY) ? View.VISIBLE : View.GONE);
+            expressDeliveryBt.setVisibility(methods.contains(StaticData.SF_EXPRESS) ? View.VISIBLE : View.GONE);
         }
     }
 

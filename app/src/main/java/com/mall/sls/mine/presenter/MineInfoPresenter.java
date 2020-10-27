@@ -1,6 +1,5 @@
 package com.mall.sls.mine.presenter;
 
-import android.util.Log;
 
 import com.mall.sls.common.RequestUrl;
 import com.mall.sls.common.StaticData;

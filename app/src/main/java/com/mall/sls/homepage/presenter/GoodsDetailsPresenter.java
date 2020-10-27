@@ -161,6 +161,28 @@ public class GoodsDetailsPresenter implements HomepageContract.GoodsDetailsPrese
     }
 
     @Override
+    public void getDeliveryMethod() {
+        String queryString = "null";
+        String sign = SignUnit.signGet(RequestUrl.COMMON_EXPRESS, queryString);
+        Disposable disposable = restApiService.getDeliveryMethod(sign)
+                .flatMap(new RxRemoteDataParse<List<String>>())
+                .compose(new RxSchedulerTransformer<List<String>>())
+                .subscribe(new Consumer<List<String>>() {
+                    @Override
+                    public void accept(List<String> methods) throws Exception {
+                        goodsDetailsView.renderDeliveryMethod(methods);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        goodsDetailsView.showError(throwable);
+                    }
+                });
+        mDisposableList.add(disposable);
+
+    }
+
+    @Override
     public void start() {
 
     }

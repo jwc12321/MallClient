@@ -9,6 +9,7 @@ public class CertifyModule {
     private CertifyContract.NameVerifiedView nameVerifiedView;
     private CertifyContract.CertifyPayView certifyPayView;
     private CertifyContract.MerchantCertifyView merchantCertifyView;
+    private CertifyContract.MerchantCertifyTipView merchantCertifyTipView;
 
     public CertifyModule(CertifyContract.NameVerifiedView nameVerifiedView) {
         this.nameVerifiedView = nameVerifiedView;
@@ -20,6 +21,10 @@ public class CertifyModule {
 
     public CertifyModule(CertifyContract.MerchantCertifyView merchantCertifyView) {
         this.merchantCertifyView = merchantCertifyView;
+    }
+
+    public CertifyModule(CertifyContract.MerchantCertifyTipView merchantCertifyTipView) {
+        this.merchantCertifyTipView = merchantCertifyTipView;
     }
 
     @Provides
@@ -35,5 +40,10 @@ public class CertifyModule {
     @Provides
     CertifyContract.MerchantCertifyView provideMerchantCertifyView(){
         return merchantCertifyView;
+    }
+
+    @Provides
+    CertifyContract.MerchantCertifyTipView provideMerchantCertifyTipView(){
+        return merchantCertifyTipView;
     }
 }
