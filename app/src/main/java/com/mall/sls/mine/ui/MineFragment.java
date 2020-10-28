@@ -36,6 +36,7 @@ import com.mall.sls.data.entity.InvitationCodeInfo;
 import com.mall.sls.data.entity.MineInfo;
 import com.mall.sls.data.entity.UserInfo;
 import com.mall.sls.data.entity.VipAmountInfo;
+import com.mall.sls.homepage.ui.CommonTipActivity;
 import com.mall.sls.login.ui.WeixinLoginActivity;
 import com.mall.sls.lottery.ui.LotteryListActivity;
 import com.mall.sls.member.ui.SuperMemberActivity;
@@ -145,6 +146,7 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
     private String failReason;
     private String merchantStatus;
     private String userLevel;
+    private String tipBack;
 
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
@@ -270,11 +272,15 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                 BankCardManageActivity.start(getActivity());
                 break;
             case R.id.merchant_rights://商家权益
+                goVerify = StaticData.REFRESH_ONE;
                 if(!TextUtils.equals(StaticData.REFRESH_THREE, userLevel)){
-                    showMessage(getString(R.string.first_merchant_certify));
+                    Intent tipIntent = new Intent(getActivity(), CommonTipActivity.class);
+                    tipIntent.putExtra(StaticData.COMMON_TITLE, getString(R.string.first_merchant_certify));
+                    tipIntent.putExtra(StaticData.CANCEL_TEXT, getString(R.string.cancel));
+                    tipIntent.putExtra(StaticData.CONFIRM_TEXT, getString(R.string.go_certify));
+                    startActivityForResult(tipIntent, RequestCodeStatic.TIP_PAGE);
                     return;
                 }
-                goVerify = StaticData.REFRESH_ONE;
                 MerchantRightsActivity.start(getActivity(), merchantStatus, failReason);
                 break;
             case R.id.merchant_certify_ll:
@@ -298,6 +304,17 @@ public class MineFragment extends BaseFragment implements MineContract.MineInfoV
                     WeixinLoginActivity.start(getActivity());
                     getActivity().finish();
                     break;
+                case RequestCodeStatic.TIP_PAGE://点击返回
+                    if (data != null) {
+                        tipBack = data.getStringExtra(StaticData.TIP_BACK);
+                        if (TextUtils.equals(StaticData.REFRESH_ONE, tipBack)) {
+                            if (TextUtils.isEmpty(merchantStatus)||TextUtils.equals(StaticData.MERCHANT_CERTIFY_CANCEL,merchantStatus)) {
+                                MerchantCertifyTipActivity.start(getActivity());
+                            } else {
+                                MerchantCertifyActivity.start(getActivity(), merchantStatus, failReason);
+                            }
+                        }
+                    }
                 default:
             }
         }

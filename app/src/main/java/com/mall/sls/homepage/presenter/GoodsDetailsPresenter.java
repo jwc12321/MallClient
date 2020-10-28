@@ -1,5 +1,6 @@
 package com.mall.sls.homepage.presenter;
 
+import com.mall.sls.homepage.HomepageContract;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -11,22 +12,18 @@ import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.Ignore;
 import com.mall.sls.data.entity.InvitationCodeInfo;
-import com.mall.sls.data.entity.ShareInfo;
 import com.mall.sls.data.remote.RestApiService;
 import com.mall.sls.data.remote.RxRemoteDataParse;
 import com.mall.sls.data.request.CartFastaddRequest;
 import com.mall.sls.data.request.GroupRemindRequest;
-import com.mall.sls.homepage.HomepageContract;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 /**
- * @author jwc on 2020/5/13.
+ * @author jwc on 2020/10/28.
  * 描述：
  */
 public class GoodsDetailsPresenter implements HomepageContract.GoodsDetailsPresenter {

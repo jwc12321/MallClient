@@ -138,8 +138,8 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
             if (!TextUtils.isEmpty(couponInfo.getMin())) {
                 stringBuilder.append("\n");
                 stringBuilder.append("满" + NumberFormatUnit.numberFormat(couponInfo.getMin()) + "元可使用");
-                stringBuilder.append("\n");
             }
+            stringBuilder.append("\n");
             stringBuilder.append("不可与其他优惠活动叠加使用");
             limit.setText(stringBuilder.toString());
             useTip.setText(couponInfo.getDescription());
