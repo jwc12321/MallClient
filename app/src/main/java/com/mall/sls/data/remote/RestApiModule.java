@@ -3,18 +3,15 @@ package com.mall.sls.data.remote;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.mall.sls.BuildConfig;
-import com.mall.sls.common.unit.AreaCodeManager;
-import com.mall.sls.common.unit.FormatUtil;
+import com.mall.sls.MainApplication;
 import com.mall.sls.common.unit.TimeManager;
 import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.data.EntitySerializer;
 import com.mall.sls.data.GsonSerializer;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.Proxy;
@@ -22,7 +19,6 @@ import java.net.URLDecoder;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.concurrent.TimeUnit;
-
 import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.net.ssl.HostnameVerifier;
@@ -31,7 +27,6 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
@@ -163,6 +158,7 @@ public class RestApiModule {
                 })
 //                .sslSocketFactory(sslSocketFactory)
                 .proxy(Proxy.NO_PROXY)
+                .dns(OkHttpDns.getInstance(MainApplication.getContext()))
                 .build();
     }
 
