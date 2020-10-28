@@ -581,7 +581,7 @@
     <string name="view_homepage">去首页看看</string>
     <string name="coming_soon">即将上线</string>
     <string name="stay_tuned_point">敬请期待…</string>
-    <string name="first_merchant_certify">请先渠道商认证</string>
+    <string name="first_merchant_certify">请先进行渠道商认证</string>
     <string name="merchant_cancel">商家认证已取消</string>
     <string name="cancel_certify">取消认证</string>
     <string name="cancel_merchant_certify">您确定要取消渠道商认证吗？</string>
