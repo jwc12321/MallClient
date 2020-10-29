@@ -8,6 +8,7 @@ import com.alibaba.sdk.android.httpdns.HttpDnsService;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,11 +20,14 @@ import okhttp3.Dns;
  */
 public class OkHttpDns implements Dns {
     private static final Dns SYSTEM = Dns.SYSTEM;
-    private static final String ACCOUNT_ID  = "111914";
+    private String ACCOUNT_ID  = "111914";
+    private String FIRST_HOST="api.specialbuy.cn";
     HttpDnsService httpdns;//httpdns 解析服务
     private static OkHttpDns instance = null;
     private OkHttpDns(Context context) {
         this.httpdns = HttpDns.getService(context, ACCOUNT_ID);
+        ArrayList<String> hostList = new ArrayList<>(Arrays.asList(FIRST_HOST));
+        httpdns.setPreResolveHosts(hostList);
     }
     public static OkHttpDns getInstance(Context context) {
         if(instance == null) {

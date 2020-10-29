@@ -13,7 +13,6 @@ import androidx.multidex.MultiDexApplication;
 import com.alibaba.ha.adapter.AliHaAdapter;
 import com.alibaba.ha.adapter.AliHaConfig;
 import com.alibaba.ha.adapter.Plugin;
-import com.alibaba.sdk.android.httpdns.HttpDns;
 import com.alibaba.sdk.android.httpdns.HttpDnsService;
 import com.igexin.sdk.IUserLoggerInterface;
 import com.igexin.sdk.PushManager;
@@ -94,13 +93,13 @@ public class MainApplication extends MultiDexApplication {
             }
         });
 //        talkingdata
-//         channelId = WalleChannelReader.getChannel(this.getApplicationContext());
-//        TCAgent.LOG_ON=true;
-//        // 渠道 ID: 是渠道标识符，可通过不同渠道单独追踪数据。
-//        TCAgent.init(this, "466B709D82C84BED8F948E46D5F5755D", channelId);
-//        // 如果已经在AndroidManifest.xml配置了App ID和渠道ID，调用TCAgent.init(this)即可；或与AndroidManifest.xml中的对应参数保持一致。
-//        TCAgent.setReportUncaughtExceptions(true);
-//        initHa();
+         channelId = WalleChannelReader.getChannel(this.getApplicationContext());
+        TCAgent.LOG_ON=true;
+        // 渠道 ID: 是渠道标识符，可通过不同渠道单独追踪数据。
+        TCAgent.init(this, "466B709D82C84BED8F948E46D5F5755D", channelId);
+        // 如果已经在AndroidManifest.xml配置了App ID和渠道ID，调用TCAgent.init(this)即可；或与AndroidManifest.xml中的对应参数保持一致。
+        TCAgent.setReportUncaughtExceptions(true);
+        initHa();
     }
 
     //阿里性能监控
