@@ -1,13 +1,12 @@
 package com.mall.sls.data.remote;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import com.mall.sls.BuildConfig;
 import com.mall.sls.MainApplication;
+import com.mall.sls.common.unit.BaseUrlManager;
 import com.mall.sls.common.unit.TimeManager;
 import com.mall.sls.common.unit.TokenManager;
 import com.mall.sls.data.EntitySerializer;
@@ -165,21 +164,12 @@ public class RestApiModule {
     @Singleton
     @Provides
     Retrofit provideRetrofit(@Named("NoCache") OkHttpClient okHttpClient, Gson gson) {
-        if (TextUtils.isEmpty(url)) {
             return new Retrofit.Builder()
-                    .baseUrl(BuildConfig.API_BASE_URL)
+                    .baseUrl(BaseUrlManager.getBaseUrl())
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
-        } else {
-            return new Retrofit.Builder()
-                    .baseUrl(url)
-                    .client(okHttpClient)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .build();
-        }
     }
 
 

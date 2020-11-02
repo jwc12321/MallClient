@@ -22,11 +22,12 @@ public class OkHttpDns implements Dns {
     private static final Dns SYSTEM = Dns.SYSTEM;
     private String ACCOUNT_ID  = "111914";
     private String FIRST_HOST="api.specialbuy.cn";
+    private String SECOND_HOST="api.specialgou.com";
     HttpDnsService httpdns;//httpdns 解析服务
     private static OkHttpDns instance = null;
     private OkHttpDns(Context context) {
         this.httpdns = HttpDns.getService(context, ACCOUNT_ID);
-        ArrayList<String> hostList = new ArrayList<>(Arrays.asList(FIRST_HOST));
+        ArrayList<String> hostList = new ArrayList<>(Arrays.asList(FIRST_HOST,SECOND_HOST));
         httpdns.setPreResolveHosts(hostList);
     }
     public static OkHttpDns getInstance(Context context) {

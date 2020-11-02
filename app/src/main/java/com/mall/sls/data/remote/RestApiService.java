@@ -1,7 +1,6 @@
 package com.mall.sls.data.remote;
 
 
-import com.google.gson.annotations.SerializedName;
 import com.mall.sls.data.RemoteDataWrapper;
 import com.mall.sls.data.entity.AddressInfo;
 import com.mall.sls.data.entity.AiNongPay;
@@ -10,7 +9,6 @@ import com.mall.sls.data.entity.AppUrlInfo;
 import com.mall.sls.data.entity.BankCardInfo;
 import com.mall.sls.data.entity.BankPayInfo;
 import com.mall.sls.data.entity.BaoFuPay;
-import com.mall.sls.data.entity.BaoFuPayInfo;
 import com.mall.sls.data.entity.BindResultInfo;
 import com.mall.sls.data.entity.CardInfo;
 import com.mall.sls.data.entity.CartAddInfo;
@@ -20,15 +18,13 @@ import com.mall.sls.data.entity.ConfirmCartOrderDetail;
 import com.mall.sls.data.entity.ConfirmOrderDetail;
 import com.mall.sls.data.entity.CouponInfo;
 import com.mall.sls.data.entity.FirstCategory;
-import com.mall.sls.data.entity.FirstCategoryInfo;
 import com.mall.sls.data.entity.GeneralGoodsDetailsInfo;
 import com.mall.sls.data.entity.GoodsDetailsInfo;
 import com.mall.sls.data.entity.GoodsItem;
-import com.mall.sls.data.entity.GoodsItemInfo;
 import com.mall.sls.data.entity.GoodsOrderDetails;
+import com.mall.sls.data.entity.HealthInfo;
 import com.mall.sls.data.entity.HomePageInfo;
 import com.mall.sls.data.entity.HomeSnapUp;
-import com.mall.sls.data.entity.HomeSnapUpInfo;
 import com.mall.sls.data.entity.Ignore;
 import com.mall.sls.data.entity.IntegralPointsInfo;
 import com.mall.sls.data.entity.InvitationCodeInfo;
@@ -99,6 +95,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -106,7 +103,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -512,6 +508,10 @@ public interface RestApiService {
     //取消渠道商户认证信息
     @POST("app/certify/merchant/cancel")
     Flowable<RemoteDataWrapper<Boolean>> merchantCancel(@Header("X-Hc-Sign") String sign);
+
+    //检测域名是否可用
+    @GET("/actuator/health")
+    Observable<HealthInfo> getHealth();
 
 
 

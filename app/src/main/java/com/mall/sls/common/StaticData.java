@@ -3,6 +3,7 @@ package com.mall.sls.common;
 
 public class StaticData {
     public static final String  WX_APP_ID = "wxcea8bff4c8e832be";
+    public static final String SPARE_BASE_URL="https://api.specialbuy.cn/";
     //登录中
     public static final String LOGGING="1";
     //加载中
@@ -231,4 +232,5 @@ public class StaticData {
     public static final String MERCHANT="merchant";
     public static final String USER_LEVEL="userLevel";
     public static final String WHERE_TYPE="whereType";
+    public static final String HEALTH_UP="UP";
 }

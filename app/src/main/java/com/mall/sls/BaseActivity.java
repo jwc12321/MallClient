@@ -238,7 +238,7 @@ public abstract class BaseActivity extends AppCompatActivity implements LoadData
             } else {
                 if (e instanceof HttpException) {
                     HttpException exception = (HttpException) e;
-                    if (TextUtils.equals("401", exception.response().code() + "")) {
+                    if (TextUtils.equals("401", String.valueOf(exception.response().code()))) {
                         WeixinLoginActivity.start(this);
                         MainFrameActivity.finishActivity();
                     } else {

@@ -6,26 +6,32 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import com.mall.sls.BaseActivity;
+import com.mall.sls.BuildConfig;
 import com.mall.sls.R;
 import com.mall.sls.common.RequestCodeStatic;
 import com.mall.sls.common.StaticData;
+import com.mall.sls.common.unit.BaseUrlManager;
 import com.mall.sls.common.unit.FormatUtil;
 import com.mall.sls.common.unit.MainStartManager;
 import com.mall.sls.common.unit.PrivacyManager;
+import com.mall.sls.common.unit.RetrofitUtil;
 import com.mall.sls.common.unit.SpikeManager;
 import com.mall.sls.common.unit.StaticHandler;
 import com.mall.sls.common.unit.TimeManager;
 import com.mall.sls.common.unit.TokenManager;
+import com.mall.sls.data.entity.HealthInfo;
 import com.mall.sls.login.ui.WeixinLoginActivity;
 import com.mall.sls.mainframe.ui.MainFrameActivity;
 import com.mall.sls.mine.ui.PrivacyPolicyTipActivity;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
-
-import java.sql.Time;
-
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class  SplashActivity extends BaseActivity {
@@ -54,18 +60,24 @@ public class  SplashActivity extends BaseActivity {
         ButterKnife.bind(this);
         MainStartManager.saveMainStart(StaticData.REFRESH_MINUS_ONE);
         SpikeManager.saveSpike(StaticData.REFRESH_ZERO);
-//        initData();
+        BaseUrlManager.saveBaseUrl(BuildConfig.API_BASE_URL);
         if(TextUtils.isEmpty(PrivacyManager.getPrivacy())){//隐私政策弹框
             Intent intent = new Intent(this, PrivacyPolicyTipActivity.class);
             startActivityForResult(intent, RequestCodeStatic.PRIVACY_POLICY);
         }else {
-            if (!TextUtils.isEmpty(TokenManager.getToken())) {
-                mHandler.sendEmptyMessageDelayed(GO_MAIN, 300);
-            } else {
-                mHandler.sendEmptyMessageDelayed(GO_LOGIN, 300);
-            }
+            getHealth();
         }
     }
+
+    private void goActivity(){
+        if (!TextUtils.isEmpty(TokenManager.getToken())) {
+            mHandler.sendEmptyMessageDelayed(GO_MAIN, 300);
+        } else {
+            mHandler.sendEmptyMessageDelayed(GO_LOGIN, 300);
+        }
+    }
+
+
 
     //跳转到主页
     private void goMain() {
@@ -110,11 +122,7 @@ public class  SplashActivity extends BaseActivity {
                         backType = data.getStringExtra(StaticData.BACK_TYPE);
                         if (TextUtils.equals(StaticData.REFRESH_ONE, backType)) {//同意
                             PrivacyManager.savePrivacy(StaticData.REFRESH_ONE);
-                            if(!TextUtils.isEmpty(TokenManager.getToken())) {
-                                mHandler.sendEmptyMessageDelayed(GO_MAIN, 300);
-                            }else {
-                                mHandler.sendEmptyMessageDelayed(GO_LOGIN, 300);
-                            }
+                            getHealth();
                         } else {//不同意
                             finish();
                         }
@@ -123,5 +131,40 @@ public class  SplashActivity extends BaseActivity {
                 default:
             }
         }
+    }
+
+    private void getHealth() {
+        RetrofitUtil.getInstance().getTestService()
+                .getHealth()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<HealthInfo>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(HealthInfo healthInfo) {
+                        if(healthInfo==null||!TextUtils.equals(StaticData.HEALTH_UP,healthInfo.getStatus())){
+                            BaseUrlManager.saveBaseUrl(StaticData.SPARE_BASE_URL);
+                        }
+                        goActivity();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        BaseUrlManager.saveBaseUrl(StaticData.SPARE_BASE_URL);
+                        goActivity();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    private Disposable mDisposable;
+
+                });
     }
 }
