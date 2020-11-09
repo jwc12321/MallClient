@@ -49,7 +49,7 @@ android {
     }
     buildTypes {
         release {
-            buildConfigField "String", "API_BASE_URL", "\"https://api.specialbuy.cn/\""
+            buildConfigField "String", "API_BASE_URL", "\"https://api.specialgou.com/\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
